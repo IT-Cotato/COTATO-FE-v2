@@ -1,0 +1,69 @@
+@theme {
+  /* typography - headings */
+  --text-h1: 48px;
+  --text-h1--line-height: 1.2;
+  --text-h1--font-weight: 700;
+
+  --text-h2: 36px;
+  --text-h2--line-height: 1.25;
+  --text-h2--font-weight: 700;
+
+  --text-h3: 28px;
+  --text-h3--line-height: 1.3;
+  --text-h3--font-weight: 700;
+
+  --text-h4: 22px;
+  --text-h4--line-height: 1.35;
+  --text-h4--font-weight: 700;
+
+  /* typography - body */
+  --text-body-l: 18px;
+  --text-body-l--line-height: 1.55;
+  --text-body-l--font-weight: 400;
+
+  --text-body-m: 16px;
+  --text-body-m--line-height: 1.55;
+  --text-body-m--font-weight: 400;
+
+  --text-body-s: 14px;
+  --text-body-s--line-height: 1.6;
+  --text-body-s--font-weight: 400;
+
+  --text-caption: 12px;
+  --text-caption--line-height: 1.6;
+  --text-caption--font-weight: 400;
+}
+
+/* mobile typo 
+TODO: max width 조절 
+*/
+@media (max-width: 640px) {
+  @theme {
+    /* headings */
+    --text-h1: 34px;
+    --text-h1--line-height: 1.25;
+
+    --text-h2: 28px;
+    --text-h2--line-height: 1.3;
+
+    --text-h3: 22px;
+    --text-h3--line-height: 1.35;
+
+    --text-h4: 18px;
+    --text-h3--line-height: 1.35;
+
+    /* body */
+    --text-body-l: 18px;
+    --text-body-l--line-height: 1.55;
+
+    --text-body-m: 17px;
+    --text-body-m--line-height: 1.55;
+
+    --text-body-s: 16px;
+    --text-body-s--line-height: 1.55;
+
+    --text-footer: 13px;
+
+    --text-caption: 12px;
+  }
+}
