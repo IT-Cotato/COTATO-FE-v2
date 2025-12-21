@@ -18,7 +18,7 @@ reviews:
   fail_commit_status: false
   abort_on_close: true
   high_level_summary_in_walkthrough: true
-  high_level_summary_placeholder: '이 PR의 주요 변경 사항을 요약합니다.'
+  high_level_summary_placeholder: '@coderabbitai summary'
   collapse_walkthrough: true
 
   path_instructions:
