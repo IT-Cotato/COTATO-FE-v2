@@ -1,0 +1,118 @@
+language: 'ko-KR'
+early_access: true
+
+tone_instructions: |
+  1. 피드백은 명확하고 구체적으로 작성하고, 문제 원인과 개선 방법을 함께 제시하세요.
+  2. 리뷰는 교육적인 방향을 지향하며, 관련 공식 문서 링크를 함께 추천하세요.
+  3. 비판보다는 개선 제안을 우선하세요.
+  4. 칭찬은 짧고 위트 있게 작성하세요.
+
+reviews:
+  profile: chill
+  request_changes_workflow: false
+  high_level_summary: true
+  poem: false
+  review_status: true
+  suggested_labels: true
+  commit_status: true
+  fail_commit_status: false
+  abort_on_close: true
+  high_level_summary_in_walkthrough: true
+  high_level_summary_placeholder: '@coderabbitai summary'
+  collapse_walkthrough: true
+
+  path_instructions:
+    - path: 'src/**/components/**/*.tsx'
+      instructions: |
+        React 컴포넌트 리뷰 시:
+        - 파일명은 PascalCase인지 확인
+        - Props 타입은 컴포넌트명Props 형식인지 확인
+        - 단일 export는 default export 권장 (팀 규칙 우선)
+        - 이벤트 핸들러는 handle 접두사 사용
+        - 접근성 고려 (label 연결, aria-* 속성)
+        - 불필요한 re-render 방지를 위한 memo/useCallback 검토
+
+    - path: 'src/**/hooks/**/*.ts'
+      instructions: |
+        커스텀 훅 리뷰 시:
+        - 파일명과 함수명은 use* 접두사 사용
+        - 반환 타입의 일관성 유지 (object 또는 tuple)
+        - 에러/로딩 상태 명확히 분리
+        - TanStack Query 훅 네이밍 규칙 준수
+          (use + Action + Target + Query/Mutation)
+
+    - path: 'src/**/*.ts'
+      instructions: |
+        TypeScript 코드 리뷰 시:
+        - 타입/인터페이스는 PascalCase 사용
+        - interface는 객체 타입, type은 union/alias에 사용
+        - API 응답 타입은 XXXResponse 네이밍
+        - var 사용 금지, const 우선
+        - type-only import 적극 사용
+        - any 사용 시 사유 명확히 작성
+
+    - path: 'src/**'
+      instructions: |
+        프로젝트 전반 리뷰 기준:
+
+        # 기본 기술 스택
+        - Next.js + React + TypeScript 사용
+        - 스타일링은 Tailwind CSS 사용
+        - 절대 경로 임포트(@/...) 사용
+        - Client / Server 컴포넌트 구분 명확
+
+        # 네이밍 컨벤션
+        - 컴포넌트: PascalCase
+        - 폴더명: kebab-case
+        - 일반 파일명: kebab-case
+        - 변수/함수: camelCase
+        - 상수: BIG_SNAKE_CASE
+        - Props 타입: 컴포넌트명Props
+
+        # 환경 변수
+        - 환경 변수는 process.env.NEXT_PUBLIC_* 사용
+        - 민감 정보 하드코딩 금지
+
+        # 성능
+        - 불필요한 클라이언트 컴포넌트 사용 지양
+        - 리스트 렌더링 시 key 안정성 확인
+
+        # Git 규칙
+        - 커밋 메시지: type: subject (#issue)
+          (예: feat: 소셜 로그인 연동 (#32))
+        - 브랜치 패턴: type/issuenumber-issue-short-description
+          (예: feat/1-auth)
+
+  auto_review:
+    enabled: true
+    drafts: false
+    base_branches:
+      - 'main'
+      - 'develop'
+    labels:
+      - '!wip'
+      - '!draft'
+    ignore_usernames:
+      - 'dependabot'
+      - 'renovate'
+
+  tools:
+    eslint:
+      enabled: true
+    markdownlint:
+      enabled: true
+    gitleaks:
+      enabled: true
+    yamllint:
+      enabled: true
+    actionlint:
+      enabled: true
+
+chat:
+  auto_reply: true
+
+knowledge_base:
+  code_guidelines:
+    enabled: true
+    filePatterns:
+      - 'README.md'
