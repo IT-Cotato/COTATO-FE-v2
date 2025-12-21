@@ -3,7 +3,7 @@
 
 @font-face {
   font-family: 'Pretendard';
-  src: url('../fonts/Pretendard/Pretendard-Regular.woff') format(truetype);
+  src: url('../fonts/Pretendard/Pretendard-Regular.woff') format('woff');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -11,7 +11,7 @@
 
 @font-face {
   font-family: 'Pretendard';
-  src: url('../fonts/Pretendard/Pretendard-Bold.woff') format(truetype);
+  src: url('../fonts/Pretendard/Pretendard-Bold.woff') format('woff');
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -19,7 +19,7 @@
 
 @font-face {
   font-family: 'SebangGothic';
-  src: url('../fonts/Sebang-gothic/SEBANG\ Gothic\ OTF.otf') format(truetype);
+  src: url('../fonts/Sebang-gothic/SEBANG\ Gothic\ OTF.otf') format('opentype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -28,7 +28,7 @@
 @font-face {
   font-family: 'SebangGothic';
   src: url('../fonts/Sebang-gothic/SEBANG\ Gothic\ OTF\ Bold.otf')
-    format(truetype);
+    format('opentype');
   font-weight: 700;
   font-style: normal;
   font-display: swap;
