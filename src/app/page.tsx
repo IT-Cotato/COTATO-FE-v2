@@ -1,3 +1,7 @@
 export default function Home() {
-  return <section className='text-red-500'>COTATO RECRUIT WEB</section>;
+  return (
+    <section className='text-h1 text-primary'>
+      <p>COTATO RECRUIT WEB</p>
+    </section>
+  );
 }
