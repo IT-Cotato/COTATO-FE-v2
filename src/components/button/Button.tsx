@@ -9,7 +9,7 @@ import {ButtonProps, ColorKey} from './button.types';
 import {BUTTON_DEFAULT_HEIGHT, BUTTON_DEFAULT_WIDTH} from './button.constants';
 import {toColorVar} from '@/utils/color';
 
-interface Props extends ButtonProps {
+interface ButtonComponentProps extends ButtonProps {
   enableHover?: boolean;
   defaultWidth?: number | string;
   subLabelSpacing?: number;
@@ -54,13 +54,13 @@ interface Props extends ButtonProps {
  *
  * @param subLabelSpacing 버튼과 subLabel 사이 간격
  *
- *  * @param backgroundColor 버튼 배경색 (CSS 변수 키, optional)
+ * @param backgroundColor 버튼 배경색 (CSS 변수 키, optional)
  *  - 예: 'primary', 'secondary', 'alert', 'neutral-50' 등
  *
  * @param textColor 버튼 라벨 텍스트 색상 (CSS 변수 키, optional)
  *  - 예: 'primary', 'secondary', 'alert', 'neutral-50' 등
  *
- */
+ **/
 
 export function Button({
   variant = 'primary',
@@ -77,7 +77,7 @@ export function Button({
   backgroundColor,
   textColor,
   ...props
-}: Props) {
+}: ButtonComponentProps) {
   const isOutline = variant === 'outline';
 
   return (
@@ -96,7 +96,10 @@ export function Button({
         )}
         style={{
           width: width ?? defaultWidth,
-          height: height ?? `${BUTTON_DEFAULT_HEIGHT}px`,
+          height:
+            typeof height === 'number'
+              ? `${height}px`
+              : (height ?? `${BUTTON_DEFAULT_HEIGHT}px`),
           backgroundColor: toColorVar(backgroundColor),
         }}
         {...props}>
