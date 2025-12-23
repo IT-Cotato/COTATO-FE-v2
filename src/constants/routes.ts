@@ -3,6 +3,7 @@ export const ROUTES = {
   ABOUT: '/about',
   PROJECT: '/project',
   RECRUIT: '/recruit',
+  LOGIN: '/login',
 
   //admin routes
   ADMIN: '/admin',

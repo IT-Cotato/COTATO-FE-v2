@@ -8,6 +8,7 @@ import {usePathname} from 'next/navigation';
 import clsx from 'clsx';
 import {Dropdown} from './Dropdown';
 import Logout from '@/assets/logout/logout.svg';
+import {ROUTES} from '@/constants/routes';
 
 type User = {
   name: string;
@@ -85,7 +86,7 @@ export default function Header() {
           </Dropdown>
         ) : (
           <Link
-            href='/login'
+            href={ROUTES.LOGIN}
             className='text-body-m flex h-22 items-center justify-center gap-2.5 px-[17px] py-6 text-primary'>
             LOGIN
           </Link>
