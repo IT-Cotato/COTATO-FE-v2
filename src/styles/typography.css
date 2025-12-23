@@ -1,4 +1,4 @@
-:root {
+@theme static {
   /* typography - headings */
   --text-h1: 48px;
   --text-h1--line-height: 52px;
@@ -67,53 +67,5 @@ TODO: max width 조절
 
     --text-body-s: 14px;
     --text-body-s--line-height: 18px;
-  }
-}
-
-@layer components {
-  .text-h1 {
-    font-size: var(--text-h1);
-    line-height: var(--text-h1--line-height);
-    font-weight: var(--text-h1--font-weight);
-  }
-  .text-h2 {
-    font-size: var(--text-h2);
-    line-height: var(--text-h2--line-height);
-    font-weight: var(--text-h2--font-weight);
-  }
-  .text-h3 {
-    font-size: var(--text-h3);
-    line-height: var(--text-h3--line-height);
-    font-weight: var(--text-h3--font-weight);
-  }
-  .text-h4 {
-    font-size: var(--text-h4);
-    line-height: var(--text-h4--line-height);
-    font-weight: var(--text-h4--font-weight);
-  }
-  .text-h5 {
-    font-size: var(--text-h5);
-    line-height: var(--text-h5--line-height);
-    font-weight: var(--text-h5--font-weight);
-  }
-  .text-body-l {
-    font-size: var(--text-body-l);
-    line-height: var(--text-body-l--line-height);
-    font-weight: var(--text-body-l--font-weight);
-  }
-  .text-body-m {
-    font-size: var(--text-body-m);
-    line-height: var(--text-body-m--line-height);
-    font-weight: var(--text-body-m--font-weight);
-  }
-  .text-body-s {
-    font-size: var(--text-body-s);
-    line-height: var(--text-body-s--line-height);
-    font-weight: var(--text-body-s--font-weight);
-  }
-  .text-caption {
-    font-size: var(--text-caption);
-    line-height: var(--text-caption--line-height);
-    font-weight: var(--text-caption--font-weight);
   }
 }
