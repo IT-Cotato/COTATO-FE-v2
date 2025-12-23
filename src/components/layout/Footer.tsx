@@ -1,4 +1,9 @@
 import MainLogo from '@/assets/main-logo/main-logo.svg';
+import Email from '@/assets/footer/email/email.svg';
+import Github from '@/assets/footer/github/github.svg';
+import Insta from '@/assets/footer/insta/insta.svg';
+import Kakao from '@/assets/footer/kakao/kakao.svg';
+import NaverCafe from '@/assets/footer/naver-cafe/naver-cafe.svg';
 
 export default function Footer() {
   return (
@@ -21,7 +26,36 @@ export default function Footer() {
         <section className='flex items-center gap-[21px]'>
           <h3 className='text-h3'>Contact Us</h3>
           <div className='flex items-center gap-[12px]'>
-            {/* 아이콘 들어갈 공간 */}
+            <a
+              href='mailto:itcotato@gmail.com'
+              target='_blank'
+              rel='noopener noreferrer'>
+              <Email />
+            </a>
+            <a
+              href='https://github.com/IT-Cotato'
+              target='_blank'
+              rel='noopener noreferrer'>
+              <Github />
+            </a>
+            <a
+              href='https://www.instagram.com/cotato_official/'
+              target='_blank'
+              rel='noopener noreferrer'>
+              <Insta />
+            </a>
+            <a
+              href='https://pf.kakao.com/_LQLyG'
+              target='_blank'
+              rel='noopener noreferrer'>
+              <Kakao />
+            </a>
+            <a
+              href='https://cafe.naver.com/cotato'
+              target='_blank'
+              rel='noopener noreferrer'>
+              <NaverCafe />
+            </a>
           </div>
         </section>
       </div>
