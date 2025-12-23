@@ -9,11 +9,7 @@ type DropdownProps = {
   className?: string;
 };
 
-export const Dropdown: React.FC<DropdownProps> = ({
-  trigger,
-  children,
-  className,
-}) => {
+export function Dropdown({trigger, children, className}: DropdownProps) {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
@@ -41,4 +37,4 @@ export const Dropdown: React.FC<DropdownProps> = ({
       )}
     </div>
   );
-};
+}
