@@ -1,3 +1,4 @@
+import Footer from '@/components/layout/Footer';
 import Header from '@/components/layout/Header';
 import '@/styles/globals.css';
 import {Metadata} from 'next';
@@ -32,18 +33,15 @@ const sebangGothic = localFont({
   display: 'swap',
 });
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({children}: {children: React.ReactNode}) {
   return (
     <html
       lang='ko'
       className={`${pretendard.variable} ${sebangGothic.variable} antialiased`}>
-      <body className='min-h-screen w-full'>
+      <body className='flex min-h-screen w-full flex-col'>
         <Header />
-        <main>{children}</main>
+        <main className='flex-1'>{children}</main>
+        <Footer />
       </body>
     </html>
   );
