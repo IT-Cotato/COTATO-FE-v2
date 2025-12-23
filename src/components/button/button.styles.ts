@@ -2,18 +2,18 @@ import {ButtonLabelTypo, ButtonVariant} from './button.types';
 
 export const buttonVariantStyles: Record<ButtonVariant, string> = {
   primary: `
-    bg-[var(--color-primary)]
-    disabled:bg-[var(--color-text-disabled)]
+    bg-primary
+    disabled:bg-text-disabled
   `,
   outline: `
     border
-    border-[var(--color-primary)]
+    border-primary
     bg-transparent
   `,
 };
 
 export const buttonHoverStyles = `
-  hover:bg-[var(--color-hover)]
+  hover:bg-hover
   hover:shadow-[0_4px_40px_0_rgba(255,255,255,0.8)]
 `;
 
@@ -29,16 +29,16 @@ export const buttonLabelTextStyles: Record<
     body_s: `text-neutral-50 text-body-s`,
   },
   outline: {
-    h4: `text-[var(--color-primary)] text-h4`,
-    h5: `text-[var(--color-primary)] text-h5`,
-    body_l: `text-[var(--color-primary)] text-body-l`,
-    body_m: `text-[var(--color-primary)] text-body-m`,
-    body_s: `text-[var(--color-primary)] text-body-s`,
+    h4: `text-primary text-h4`,
+    h5: `text-primary text-h5`,
+    body_l: `text-primary text-body-l`,
+    body_m: `text-primary text-body-m`,
+    body_s: `text-primary text-body-s`,
   },
 };
 
 export const buttonSubLabelTextStyle = `
-  text-[var(--color-primary)]
+  text-primary
   text-body-l
   px-[10px]
   py-[19px]
