@@ -9,7 +9,7 @@ type DropdownProps = {
   className?: string;
 };
 
-export function Dropdown({trigger, children, className}: DropdownProps) {
+export const Dropdown = ({trigger, children, className}: DropdownProps) => {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
@@ -37,4 +37,4 @@ export function Dropdown({trigger, children, className}: DropdownProps) {
       )}
     </div>
   );
-}
+};

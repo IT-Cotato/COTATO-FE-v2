@@ -1,4 +1,4 @@
-import {ROUTES} from '../routes';
+import {ROUTES} from '@/constants/routes';
 
 export const HEADER_ITEMS = [
   {label: 'ABOUT US', href: ROUTES.ABOUT},
