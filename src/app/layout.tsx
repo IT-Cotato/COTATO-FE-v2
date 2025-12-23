@@ -1,3 +1,4 @@
+import Header from '@/components/layout/Header';
 import '@/styles/globals.css';
 import {Metadata} from 'next';
 import localFont from 'next/font/local';
@@ -40,7 +41,10 @@ export default function RootLayout({
     <html
       lang='ko'
       className={`${pretendard.variable} ${sebangGothic.variable} antialiased`}>
-      <body>{children}</body>
+      <body className='min-h-screen w-full'>
+        <Header />
+        <main>{children}</main>
+      </body>
     </html>
   );
 }

@@ -1,8 +1,7 @@
 import {ROUTES} from '../routes';
 
 export const HEADER_ITEMS = [
-  {label: '홈', href: ROUTES.HOME},
-  {label: 'About', href: ROUTES.ABOUT},
-  {label: 'Project', href: ROUTES.PROJECT},
-  {label: 'Recruit', href: ROUTES.RECRUIT},
+  {label: 'ABOUT US', href: ROUTES.ABOUT},
+  {label: 'PROJECT', href: ROUTES.PROJECT},
+  {label: 'RECRUIT', href: ROUTES.RECRUIT},
 ];
