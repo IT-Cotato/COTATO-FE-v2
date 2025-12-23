@@ -1,10 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: [
-    './app/**/*.{js,ts,jsx,tsx}',
-    './pages/**/*.{js,ts,jsx,tsx}',
-    './components/**/*.{js,ts,jsx,tsx}',
-  ],
+  content: ['./src/**/*.{ts,tsx,js,jsx}'],
   theme: {
     extend: {
       colors: {
@@ -14,15 +10,15 @@ module.exports = {
         active: 'var(--color-active)',
         'text-disabled': 'var(--color-text-disabled)',
         alert: 'var(--color-alert)',
-        neutral50: 'var(--color-neutral-50)',
-        neutral100: 'var(--color-neutral-100)',
-        neutral200: 'var(--color-neutral-200)',
-        neutral300: 'var(--color-neutral-300)',
-        neutral400: 'var(--color-neutral-400)',
-        neutral500: 'var(--color-neutral-500)',
-        neutral600: 'var(--color-neutral-600)',
-        neutral700: 'var(--color-neutral-700)',
-        neutral800: 'var(--color-neutral-800)',
+        'neutral-50': 'var(--color-neutral-50)',
+        'neutral-100': 'var(--color-neutral-100)',
+        'neutral-200': 'var(--color-neutral-200)',
+        'neutral-300': 'var(--color-neutral-300)',
+        'neutral-400': 'var(--color-neutral-400)',
+        'neutral-500': 'var(--color-neutral-500)',
+        'neutral-600': 'var(--color-neutral-600)',
+        'neutral-700': 'var(--color-neutral-700)',
+        'neutral-800': 'var(--color-neutral-800)',
       },
     },
   },
