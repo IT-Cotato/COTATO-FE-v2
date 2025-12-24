@@ -8,8 +8,8 @@ export default function AdminApplicationPage() {
       <h1 className='text-h4'>지원서 열람</h1>
       <SuspenseWrapper>
         <AdminApplicationInformation />
+        <AdminApplicationTabs />
       </SuspenseWrapper>
-      <AdminApplicationTabs />
     </section>
   );
 }
