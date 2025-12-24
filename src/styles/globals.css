@@ -1,5 +1,6 @@
 @import 'tailwindcss';
 @import './typography.css';
+@import './scrollbar.css';
 
 @theme static {
   /* primary */
