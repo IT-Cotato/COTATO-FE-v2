@@ -45,7 +45,7 @@ export const Header = () => {
     );
 
   return (
-    <header className='sticky top-0 z-50 flex h-22 w-full items-center justify-between bg-black px-[105px]'>
+    <header className='sticky top-0 z-9999 flex h-22 w-full items-center justify-between bg-black px-[105px]'>
       <div>
         <Link href='/'>
           <MainLogo />
