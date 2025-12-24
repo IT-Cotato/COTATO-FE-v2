@@ -1,7 +1,7 @@
 @import 'tailwindcss';
 @import './typography.css';
 
-@theme {
+@theme static {
   /* primary */
   --color-primary: #f87d02;
 
@@ -41,18 +41,35 @@
 }
 
 @layer base {
+  html,
+  body {
+    height: 100%;
+    width: 100%;
+    overflow: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  html::-webkit-scrollbar,
+  body::-webkit-scrollbar {
+    display: none;
+  }
+
   body {
     font-family: var(--font-pretendard), sans-serif;
     width: 100%;
     min-height: 100vh;
   }
+
   button {
     cursor: pointer;
   }
+
   .scrollbar-hide {
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
+
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
   }
