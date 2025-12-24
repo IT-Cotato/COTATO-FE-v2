@@ -16,7 +16,6 @@ interface ButtonComponentProps extends ButtonProps {
   backgroundColor?: ColorKey;
   textColor?: ColorKey;
 }
-
 /**
  * 공통 Button 컴포넌트
  *
@@ -31,6 +30,7 @@ interface ButtonComponentProps extends ButtonProps {
  * @param variant 버튼 스타일 타입 (default: 'primary')
  *  - `primary`: 기본 강조 버튼
  *  - `outline`: 테두리 버튼 (subLabel 사용 가능)
+ * - outline일 경우 textColor를 지정하면 border와 subLabel 색이 textColor와 동기화됩니다.
  *
  * @param label 버튼에 표시될 텍스트 (필수)
  *
@@ -79,6 +79,7 @@ export const Button = ({
   ...props
 }: ButtonComponentProps) => {
   const isOutline = variant === 'outline';
+  const resolvedTextColor = toColorVar(textColor);
 
   return (
     <div className='flex flex-col items-center'>
@@ -88,6 +89,7 @@ export const Button = ({
           'flex flex-col items-center justify-center transition-colors',
           'rounded-[10px]',
           buttonVariantStyles[variant],
+          disabled ? 'cursor-not-allowed opacity-50' : 'cursor-pointer',
           enableHover &&
             !disabled &&
             !(variant === 'outline') &&
@@ -101,12 +103,13 @@ export const Button = ({
               ? `${height}px`
               : (height ?? `${BUTTON_DEFAULT_HEIGHT}px`),
           backgroundColor: toColorVar(backgroundColor),
+          borderColor: isOutline ? resolvedTextColor : undefined,
         }}
         {...props}>
         <span
           className={buttonLabelTextStyles[variant][labelTypo]}
           style={{
-            color: toColorVar(textColor),
+            color: resolvedTextColor,
           }}>
           {label}
         </span>
@@ -115,7 +118,10 @@ export const Button = ({
       {isOutline && subLabel && (
         <span
           className={clsx('text-center', buttonSubLabelTextStyle)}
-          style={{marginTop: subLabelSpacing}}>
+          style={{
+            marginTop: subLabelSpacing,
+            color: resolvedTextColor,
+          }}>
           {subLabel}
         </span>
       )}

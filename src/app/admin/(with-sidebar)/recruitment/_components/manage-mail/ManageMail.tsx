@@ -1,38 +1,76 @@
 'use client';
 
-import {useEffect, useRef, useState} from 'react';
+import {useRef, useState} from 'react';
 import {Button} from '@/components/button/Button';
 import {MOCK_MAIL_CONTENT} from '@/mocks/mock-mail';
 
 export const ManageMail = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [content, setContent] = useState(MOCK_MAIL_CONTENT);
+
+  // 수정 전 원본 데이터 보관
+  const [originalContent, setOriginalContent] = useState(MOCK_MAIL_CONTENT);
   const scrollRef = useRef<HTMLDivElement>(null);
 
-  const handleButtonClick = () => {
-    if (isEditing) {
-      console.log(content);
-    }
-    setIsEditing(!isEditing);
+  // 내용이 변경되었는지 확인
+  const isChanged = content !== originalContent;
+
+  const handleEditClick = () => {
+    setIsEditing(true);
   };
 
-  useEffect(() => {
-    if (isEditing && scrollRef.current) {
-    }
-  }, [isEditing]);
+  const handleCancelClick = () => {
+    setContent(originalContent); // 수정한 내용 원본으로
+    setIsEditing(false);
+  };
+
+  const handleSaveClick = () => {
+    if (!isChanged) return; // 변경사항 없으면 저장 x
+    console.log('저장된 내용:', content);
+    setOriginalContent(content);
+    setIsEditing(false);
+  };
 
   return (
     <div className='flex w-full flex-col items-start gap-5'>
       <div className='flex h-12 w-full items-center justify-between'>
         <div className='text-h4 text-neutral-800'>메일 관리</div>
-        <Button
-          label={isEditing ? '저장' : '수정'}
-          labelTypo='body_l'
-          backgroundColor={isEditing ? 'primary' : 'secondary'}
-          width={112}
-          height={36}
-          onClick={handleButtonClick}
-        />
+        <div className='flex gap-4'>
+          {isEditing ? (
+            <>
+              <Button
+                variant='outline'
+                label='취소'
+                labelTypo='body_l'
+                backgroundColor='white'
+                textColor='neutral-400'
+                width={80}
+                height={36}
+                onClick={handleCancelClick}
+              />
+              <Button
+                label='저장'
+                labelTypo='body_l'
+                // 변경사항이 있으면 alert, 없으면 disabled
+                backgroundColor={isChanged ? 'alert' : 'neutral-400'}
+                width={80}
+                height={36}
+                onClick={handleSaveClick}
+                // 변경사항이 없을 때 클릭 방지
+                disabled={!isChanged}
+              />
+            </>
+          ) : (
+            <Button
+              label='수정'
+              labelTypo='body_l'
+              backgroundColor='secondary'
+              width={112}
+              height={36}
+              onClick={handleEditClick}
+            />
+          )}
+        </div>
       </div>
       <div className='h-[357px] w-full rounded-[10px] border border-none bg-white px-5 py-4.25'>
         <div

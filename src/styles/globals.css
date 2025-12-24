@@ -40,6 +40,8 @@
   /* alert */
   --color-alert: #e5484d;
 
+  --color-white: #ffffff;
+
   /* z-index */
   --z-index-header: 100;
   --z-index-dropdown: 101;
