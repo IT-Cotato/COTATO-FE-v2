@@ -2,6 +2,7 @@
 
 import {AdminApplicationPart} from '@/app/admin/(with-sidebar)/applications/_components/AdminApplicationPart';
 import {AdminApplicationTable} from '@/app/admin/(with-sidebar)/applications/_components/AdminApplicationTable';
+import {SuspenseWrapper} from '@/components/wrappers/SuspenseWrapper';
 import {useRouter, useSearchParams} from 'next/navigation';
 
 type PartType = 'all' | 'plan' | 'design' | 'frontend' | 'backend';
@@ -40,8 +41,9 @@ export const AdminApplicationTabs = () => {
           />
         ))}
       </div>
-
-      <AdminApplicationTable />
+      <SuspenseWrapper>
+        <AdminApplicationTable />
+      </SuspenseWrapper>
     </>
   );
 };
