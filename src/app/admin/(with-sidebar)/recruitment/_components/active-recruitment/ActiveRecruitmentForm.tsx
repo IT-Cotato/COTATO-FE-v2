@@ -5,11 +5,12 @@ import {Button} from '@/components/button/Button';
 import {GenerationField} from './GenerationField';
 import {PeriodField} from './PeriodField';
 import {RecruitmentModal} from './RecruitmentModal';
+import {useRecruitmentStore} from '@/store/useRecruitmentStore';
 
 export const ActiveRecruitmentForm = () => {
-  const [generation, setGeneration] = useState('');
+  const {isRecruiting, setIsRecruiting, generation, setGeneration} =
+    useRecruitmentStore();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isRecruiting, setIsRecruiting] = useState(false);
   const [startDate, setStartDate] = useState<Date | null>(new Date());
   const [endDate, setEndDate] = useState<Date | null>(new Date());
 
@@ -22,11 +23,12 @@ export const ActiveRecruitmentForm = () => {
       return;
     }
 
-    setIsRecruiting((prev) => !prev); // 모집 시작/종료 토글
+    setIsRecruiting(!isRecruiting);
     setIsModalOpen(false);
 
     console.log(`${generation}기 모집 ${isRecruiting ? '종료' : '시작'}`);
   };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!generation) return console.log('실패. 기수를 입력해주세요.');

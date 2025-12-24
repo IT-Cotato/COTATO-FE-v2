@@ -2,11 +2,13 @@
 
 import {useRef, useState} from 'react';
 import {Button} from '@/components/button/Button';
-import {MOCK_MAIL_CONTENT} from '@/mocks/mock-mail';
+import {MAIL_WAITING, MOCK_MAIL_CONTENT} from '@/mocks/mock-mail';
+import {useRecruitmentStore} from '@/store/useRecruitmentStore';
 
 export const ManageMail = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [content, setContent] = useState(MOCK_MAIL_CONTENT);
+  const isRecruiting = useRecruitmentStore((state) => state.isRecruiting);
 
   // 수정 전 원본 데이터 보관
   const [originalContent, setOriginalContent] = useState(MOCK_MAIL_CONTENT);
@@ -14,6 +16,7 @@ export const ManageMail = () => {
 
   // 내용이 변경되었는지 확인
   const isChanged = content !== originalContent;
+  const canSendMail = isRecruiting && !isEditing;
 
   const handleEditClick = () => {
     setIsEditing(true);
@@ -99,6 +102,19 @@ export const ManageMail = () => {
               {content}
             </div>
           )}
+        </div>
+      </div>
+      <div className='flex w-full flex-col items-end justify-end'>
+        <div className='flex items-center gap-[21px] text-body-l text-neutral-500'>
+          <p>대기자 수 : {MAIL_WAITING}명</p>
+          <Button
+            width={156}
+            height={36}
+            label='메일 전송하기'
+            backgroundColor={canSendMail ? 'primary' : 'text-disabled'}
+            disabled={!canSendMail}
+            textColor='neutral-50'
+          />
         </div>
       </div>
     </div>

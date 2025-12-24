@@ -29,3 +29,5 @@ export const MOCK_MAIL_CONTENT = `안녕하세요. 코테이토 13기 운영진�
 모집과 관련한 궁금한 점이 있다면 카카오톡 채널로 편하게 문의주세요.
 
 코테이토 카카오 채널`;
+
+export const MAIL_WAITING = 7;
