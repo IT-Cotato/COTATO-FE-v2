@@ -21,7 +21,7 @@ const mockUser: User = {
   isAdmin: true,
 };
 // const mockUser: User = {name: '김감자', isAdmin: false};
-// const mockUser: User = null; // 로그아웃 상태
+//const mockUser: User = null as User; // 로그아웃 상태
 
 export const Header = () => {
   const pathname = usePathname();
@@ -29,9 +29,9 @@ export const Header = () => {
   const menuItems = [...HEADER_ITEMS];
 
   if (mockUser?.isAdmin) {
-    const aboutIndex = menuItems.findIndex((item) => item.label === 'ABOUT US');
-    if (aboutIndex >= 0) {
-      menuItems.splice(aboutIndex, 0, {
+    const applyIndex = menuItems.findIndex((item) => item.label === '지원하기');
+    if (applyIndex >= 0) {
+      menuItems.splice(applyIndex, 0, {
         label: 'ADMIN',
         href: '/admin/applications',
       });
