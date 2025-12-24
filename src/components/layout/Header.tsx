@@ -23,7 +23,7 @@ const mockUser: User = {
 // const mockUser: User = {name: '김감자', isAdmin: false};
 // const mockUser: User = null; // 로그아웃 상태
 
-export default function Header() {
+export const Header = () => {
   const pathname = usePathname();
 
   const menuItems = [...HEADER_ITEMS];
@@ -74,12 +74,12 @@ export default function Header() {
         {mockUser ? (
           <Dropdown
             trigger={
-              <div className='text-body-m flex h-22 cursor-pointer items-center justify-center gap-2.5 px-[17px] py-6 text-white'>
+              <div className='flex h-22 cursor-pointer items-center justify-center gap-2.5 px-[17px] py-6 text-body-m text-white'>
                 <SmallLogo /> {mockUser.name}
               </div>
             }
             className='absolute flex h-[30px] w-[102px] flex-col items-start gap-[10px] rounded-[4px] border border-primary bg-black px-[11px] py-[6px]'>
-            <button className='text-body-s flex w-full items-center justify-start gap-[3px] text-primary'>
+            <button className='flex w-full items-center justify-start gap-[3px] text-body-s text-primary'>
               <Logout />
               LOGOUT
             </button>
@@ -87,11 +87,11 @@ export default function Header() {
         ) : (
           <Link
             href={ROUTES.LOGIN}
-            className='text-body-m flex h-22 items-center justify-center gap-2.5 px-[17px] py-6 text-primary'>
+            className='flex h-22 items-center justify-center gap-2.5 px-[17px] py-6 text-body-m text-primary'>
             LOGIN
           </Link>
         )}
       </div>
     </header>
   );
-}
+};

@@ -3,10 +3,10 @@ interface SocialLinkProps {
   children: React.ReactNode;
 }
 
-export default function SocialLink({href, children}: SocialLinkProps) {
+export const SocialLink = ({href, children}: SocialLinkProps) => {
   return (
     <a href={href} target='_blank' rel='noopener noreferrer'>
       {children}
     </a>
   );
-}
+};

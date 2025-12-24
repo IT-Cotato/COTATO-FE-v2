@@ -1,8 +1,8 @@
 import {Button} from './Button';
 
-export function FullButton(
+export const FullButton = (
   props: Omit<Parameters<typeof Button>[0], 'defaultWidth' | 'enableHover'>
-) {
+) => {
   return (
     <Button
       {...props}
@@ -11,4 +11,4 @@ export function FullButton(
       subLabelSpacing={14}
     />
   );
-}
+};
