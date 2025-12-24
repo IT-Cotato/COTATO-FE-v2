@@ -16,12 +16,12 @@ export const RecruitmentModal = ({
   if (!isOpen) return null;
 
   return (
-    <div className='fixed inset-0 z-[999] flex items-center justify-center'>
+    <div className='fixed inset-0 flex items-center justify-center'>
       <div
         className='absolute inset-0 bg-black/50 backdrop-blur-sm'
         onClick={onClose}
       />
-      <div className='relative z-10 flex h-58.25 w-126.75 flex-col items-center justify-center gap-10 rounded-[20px] bg-white px-7.5 py-10'>
+      <div className='relative z-modal flex h-58.25 w-126.75 flex-col items-center justify-center gap-10 rounded-[20px] bg-white px-7.5 py-10'>
         <h3 className='text-h5'>{content}</h3>
         <div className='flex justify-center gap-2.25'>
           <Button
