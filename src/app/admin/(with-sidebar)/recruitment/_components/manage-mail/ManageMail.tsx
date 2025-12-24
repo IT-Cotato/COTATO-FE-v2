@@ -1,8 +1,10 @@
 'use client';
 
+import {useState} from 'react';
+import {MailHeader} from './MailHeader';
 import {MailField} from './MailField';
 import {MailSendFooter} from './MailSendFooter';
-import {MailHeader} from './MailHeader';
+import {RecruitmentModal} from '../RecruitmentModal';
 import {MAIL_WAITING} from '@/mocks/mock-mail';
 import {useManageMail} from '@/hooks/useManageMail';
 
@@ -18,8 +20,11 @@ export const ManageMail = () => {
     handleSaveClick,
   } = useManageMail();
 
-  const handleSendMail = () => {
-    console.log('메일 전송');
+  const [isSendModalOpen, setIsSendModalOpen] = useState(false);
+
+  const handleConfirmSend = () => {
+    console.log('메일 전송:', content);
+    setIsSendModalOpen(false);
   };
 
   return (
@@ -39,7 +44,13 @@ export const ManageMail = () => {
       <MailSendFooter
         waitingCount={MAIL_WAITING}
         canSendMail={canSendMail}
-        onSend={handleSendMail}
+        onSend={() => setIsSendModalOpen(true)}
+      />
+      <RecruitmentModal
+        isOpen={isSendModalOpen}
+        onClose={() => setIsSendModalOpen(false)}
+        onConfirm={handleConfirmSend}
+        content=' 메일을 전송하시겠습니까?'
       />
     </div>
   );

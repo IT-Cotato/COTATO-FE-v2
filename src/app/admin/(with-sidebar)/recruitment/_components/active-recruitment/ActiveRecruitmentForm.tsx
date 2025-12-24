@@ -4,7 +4,7 @@ import {useState} from 'react';
 import {Button} from '@/components/button/Button';
 import {GenerationField} from './GenerationField';
 import {PeriodField} from './PeriodField';
-import {RecruitmentModal} from './RecruitmentModal';
+import {RecruitmentModal} from '../RecruitmentModal';
 import {useRecruitmentStore} from '@/store/useRecruitmentStore';
 
 export const ActiveRecruitmentForm = () => {
