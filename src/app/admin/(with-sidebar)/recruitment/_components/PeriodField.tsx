@@ -1,18 +1,24 @@
 'use client';
 
-import {useState} from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import '@/styles/datepicker-custom.css';
 import {CustomInput} from './calendar/CustomInput';
 import {CustomHeader} from './calendar/CustomHeader';
 
-export const PeriodField = () => {
-  const today = new Date();
+interface PeriodFieldProps {
+  startDate: Date | null;
+  setStartDate: (date: Date | null) => void;
+  endDate: Date | null;
+  setEndDate: (date: Date | null) => void;
+}
 
-  const [startDate, setStartDate] = useState<Date | null>(today);
-  const [endDate, setEndDate] = useState<Date | null>(today);
-
+export const PeriodField = ({
+  startDate,
+  setStartDate,
+  endDate,
+  setEndDate,
+}: PeriodFieldProps) => {
   return (
     <div className='flex w-full flex-col gap-4'>
       <label>지원기간</label>
