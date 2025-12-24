@@ -9,6 +9,7 @@ import {RecruitmentModal} from './RecruitmentModal';
 export const ActiveRecruitmentForm = () => {
   const [generation, setGeneration] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isRecruiting, setIsRecruiting] = useState(false);
   const [startDate, setStartDate] = useState<Date | null>(new Date());
   const [endDate, setEndDate] = useState<Date | null>(new Date());
 
@@ -16,10 +17,16 @@ export const ActiveRecruitmentForm = () => {
     /* 추후 api에 맞춰 수정 예정입니다. 임의로 로그를 찍어둠 */
   }
   const handleConfirm = () => {
-    console.log(`${generation}기 모집 시작`);
-    setIsModalOpen(false);
-  };
+    if (!generation) {
+      alert('기수를 입력해주세요.');
+      return;
+    }
 
+    setIsRecruiting((prev) => !prev); // 모집 시작/종료 토글
+    setIsModalOpen(false);
+
+    console.log(`${generation}기 모집 ${isRecruiting ? '종료' : '시작'}`);
+  };
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!generation) return console.log('실패. 기수를 입력해주세요.');
@@ -43,15 +50,20 @@ export const ActiveRecruitmentForm = () => {
         </fieldset>
         <Button
           type='submit'
-          label='모집 시작하기'
+          label={isRecruiting ? '모집 종료하기' : '모집 시작하기'}
           width={156}
           height={36}
           labelTypo='body_l'
+          backgroundColor={isRecruiting ? 'alert' : 'primary'}
         />
       </form>
       <RecruitmentModal
         isOpen={isModalOpen}
-        content={`${generation}기 모집을 시작하시겠습니까?`}
+        content={
+          isRecruiting
+            ? '모집을 종료하시겠습니까?'
+            : `${generation}기 모집을 시작하시겠습니까?`
+        }
         onClose={() => setIsModalOpen(false)}
         onConfirm={handleConfirm}
       />
