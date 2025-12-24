@@ -3,8 +3,8 @@
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import '@/styles/datepicker-custom.css';
-import {CustomInput} from './calendar/CustomInput';
-import {CustomHeader} from './calendar/CustomHeader';
+import {CustomInput} from '../calendar/CustomInput';
+import {CustomHeader} from '../calendar/CustomHeader';
 
 interface PeriodFieldProps {
   startDate: Date | null;
