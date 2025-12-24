@@ -20,8 +20,8 @@ export const PeriodField = ({
   setEndDate,
 }: PeriodFieldProps) => {
   return (
-    <div className='flex w-full flex-col gap-4'>
-      <label>지원기간</label>
+    <fieldset className='flex w-full flex-col gap-4'>
+      <legend className='mb-4'>지원기간</legend>
       <div className='flex items-center gap-2.5'>
         <div className='relative'>
           <DatePicker
@@ -47,6 +47,6 @@ export const PeriodField = ({
           />
         </div>
       </div>
-    </div>
+    </fieldset>
   );
 };
