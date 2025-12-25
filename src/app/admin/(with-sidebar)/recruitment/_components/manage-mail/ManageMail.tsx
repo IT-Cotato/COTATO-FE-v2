@@ -1,7 +1,6 @@
 'use client';
 
 import {useState} from 'react';
-
 import {MAIL_WAITING} from '@/mocks/mock-mail';
 import {useManageMail} from '@/hooks/useManageMail';
 import {MailHeader} from '@/app/admin/(with-sidebar)/recruitment/_components/manage-mail/MailHeader';

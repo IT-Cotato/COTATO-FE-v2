@@ -25,6 +25,7 @@ export const MailHeader = ({
               variant='outline'
               label='취소'
               labelTypo='body_l'
+              borderRadius={5}
               backgroundColor='white'
               textColor='neutral-400'
               width={80}
@@ -34,6 +35,7 @@ export const MailHeader = ({
             <Button
               label='저장'
               labelTypo='body_l'
+              borderRadius={5}
               backgroundColor={isChanged ? 'alert' : 'neutral-400'}
               width={80}
               height={36}
@@ -45,6 +47,7 @@ export const MailHeader = ({
           <Button
             label='수정'
             labelTypo='body_l'
+            borderRadius={5}
             backgroundColor='secondary'
             width={112}
             height={36}

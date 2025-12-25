@@ -17,6 +17,7 @@ interface ButtonComponentProps extends ButtonProps {
   enableHover?: boolean;
   defaultWidth?: number | string;
   subLabelSpacing?: number;
+  borderRadius?: number;
   backgroundColor?: ColorKey;
   textColor?: ColorKey;
 }
@@ -58,6 +59,9 @@ interface ButtonComponentProps extends ButtonProps {
  *
  * @param subLabelSpacing 버튼과 subLabel 사이 간격
  *
+ * @param borderRadius 버튼 모서리 둥글기 (default: 10)
+ * - 숫자 입력 시 'px' 단위로 적용
+ *
  * @param backgroundColor 버튼 배경색 (CSS 변수 키, optional)
  *  - 예: 'primary', 'secondary', 'alert', 'neutral-50' 등
  *
@@ -78,6 +82,7 @@ export const Button = ({
   enableHover = false,
   defaultWidth = BUTTON_DEFAULT_WIDTH,
   subLabelSpacing = 22,
+  borderRadius = 10,
   backgroundColor,
   textColor,
   ...props
@@ -91,7 +96,6 @@ export const Button = ({
         disabled={disabled}
         className={clsx(
           'flex flex-col items-center justify-center transition-colors',
-          'rounded-[10px]',
           buttonVariantStyles[variant],
           disabled ? 'cursor-not-allowed opacity-50' : 'cursor-pointer',
           enableHover &&
@@ -108,6 +112,7 @@ export const Button = ({
               : (height ?? `${BUTTON_DEFAULT_HEIGHT}px`),
           backgroundColor: toColorVar(backgroundColor),
           borderColor: isOutline ? resolvedTextColor : undefined,
+          borderRadius: `${borderRadius}px`,
         }}
         {...props}>
         <span
