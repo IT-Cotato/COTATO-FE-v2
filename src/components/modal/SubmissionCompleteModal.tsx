@@ -1,7 +1,7 @@
 import {FullButton} from '../button/FullButton';
 import {Modal} from './Modal';
 
-interface ApplicationConfirmModalProps {
+interface SubmissionCompleteModalProps {
   isOpen: boolean;
   onClose: () => void;
   onConfirm: () => void;
@@ -11,7 +11,7 @@ export const SubmissionCompleteModal = ({
   isOpen,
   onClose,
   onConfirm,
-}: ApplicationConfirmModalProps) => {
+}: SubmissionCompleteModalProps) => {
   return (
     <Modal
       isOpen={isOpen}
