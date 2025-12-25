@@ -2,7 +2,18 @@ import {useState} from 'react';
 import {MOCK_MAIL_CONTENT} from '@/mocks/mock-mail';
 import {useRecruitmentStore} from '@/store/useRecruitmentStore';
 
-export const useManageMail = () => {
+interface UseManageMailReturn {
+  isEditing: boolean;
+  content: string;
+  setContent: (content: string) => void;
+  isChanged: boolean;
+  canSendMail: boolean;
+  handleEditClick: () => void;
+  handleCancelClick: () => void;
+  handleSaveClick: () => void;
+}
+
+export const useManageMail = (): UseManageMailReturn => {
   const [isEditing, setIsEditing] = useState(false);
   const [content, setContent] = useState(MOCK_MAIL_CONTENT);
   const [originalContent, setOriginalContent] = useState(MOCK_MAIL_CONTENT);
