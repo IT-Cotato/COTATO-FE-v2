@@ -3,7 +3,9 @@ import clsx from 'clsx';
 import {toColorVar} from '@/utils/color';
 import {ButtonProps, ColorKey} from '@/components/button/button.types';
 import {
+  BUTTON_DEFAULT_BORDER_RADIUS,
   BUTTON_DEFAULT_HEIGHT,
+  BUTTON_DEFAULT_SUBLABEL_SPACING,
   BUTTON_DEFAULT_WIDTH,
 } from '@/components/button/button.constants';
 import {
@@ -81,8 +83,8 @@ export const Button = ({
   disabled,
   enableHover = false,
   defaultWidth = BUTTON_DEFAULT_WIDTH,
-  subLabelSpacing = 22,
-  borderRadius = 10,
+  subLabelSpacing = BUTTON_DEFAULT_SUBLABEL_SPACING,
+  borderRadius = BUTTON_DEFAULT_BORDER_RADIUS,
   backgroundColor,
   textColor,
   ...props
