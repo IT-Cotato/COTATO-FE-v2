@@ -5,10 +5,10 @@ import {HEADER_ITEMS} from '@/constants/layout/layout-header';
 import MainLogo from '@/assets/main-logo/main-logo.svg';
 import SmallLogo from '@/assets/small-logo/small-logo.svg';
 import {usePathname} from 'next/navigation';
-import clsx from 'clsx';
-import {Dropdown} from './Dropdown';
 import Logout from '@/assets/logout/logout.svg';
 import {ROUTES} from '@/constants/routes';
+import {Dropdown} from '@/components/layout/Dropdown';
+import clsx from 'clsx';
 
 type User = {
   name: string;

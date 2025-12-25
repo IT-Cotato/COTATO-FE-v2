@@ -1,4 +1,4 @@
-import {ButtonLabelTypo, ButtonVariant} from './button.types';
+import {ButtonLabelTypo, ButtonVariant} from '@/components/button/button.types';
 
 export const buttonVariantStyles: Record<ButtonVariant, string> = {
   primary: `

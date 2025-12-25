@@ -2,10 +2,10 @@
 
 import {useState} from 'react';
 import {Button} from '@/components/button/Button';
-import {GenerationField} from './GenerationField';
-import {PeriodField} from './PeriodField';
-import {RecruitmentModal} from '../RecruitmentModal';
+import {PeriodField} from '@/app/admin/(with-sidebar)/recruitment/_components/active-recruitment/PeriodField';
 import {useRecruitmentStore} from '@/store/useRecruitmentStore';
+import {GenerationField} from '@/app/admin/(with-sidebar)/recruitment/_components/active-recruitment/GenerationField';
+import {RecruitmentModal} from '@/app/admin/(with-sidebar)/recruitment/_components/RecruitmentModal';
 
 export const ActiveRecruitmentForm = () => {
   const {isRecruiting, setIsRecruiting, generation, setGeneration} =

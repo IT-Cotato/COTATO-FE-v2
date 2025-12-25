@@ -1,12 +1,13 @@
 'use client';
 
 import {useState} from 'react';
-import {MailHeader} from './MailHeader';
-import {MailField} from './MailField';
-import {MailSendFooter} from './MailSendFooter';
-import {RecruitmentModal} from '../RecruitmentModal';
+
 import {MAIL_WAITING} from '@/mocks/mock-mail';
 import {useManageMail} from '@/hooks/useManageMail';
+import {MailHeader} from '@/app/admin/(with-sidebar)/recruitment/_components/manage-mail/MailHeader';
+import {MailField} from '@/app/admin/(with-sidebar)/recruitment/_components/manage-mail/MailField';
+import {MailSendFooter} from '@/app/admin/(with-sidebar)/recruitment/_components/manage-mail/MailSendFooter';
+import {RecruitmentModal} from '@/app/admin/(with-sidebar)/recruitment/_components/RecruitmentModal';
 
 export const ManageMail = () => {
   const {

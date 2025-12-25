@@ -1,5 +1,5 @@
-import {FooterContact} from './FooterContact';
-import {FooterInfo} from './FooterInfo';
+import {FooterContact} from '@/components/layout/FooterContact';
+import {FooterInfo} from '@/components/layout/FooterInfo';
 
 export const Footer = () => {
   return (

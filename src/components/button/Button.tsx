@@ -1,13 +1,17 @@
 import clsx from 'clsx';
+
+import {toColorVar} from '@/utils/color';
+import {ButtonProps, ColorKey} from '@/components/button/button.types';
 import {
-  buttonVariantStyles,
+  BUTTON_DEFAULT_HEIGHT,
+  BUTTON_DEFAULT_WIDTH,
+} from '@/components/button/button.constants';
+import {
+  buttonHoverStyles,
   buttonLabelTextStyles,
   buttonSubLabelTextStyle,
-  buttonHoverStyles,
-} from './button.styles';
-import {ButtonProps, ColorKey} from './button.types';
-import {BUTTON_DEFAULT_HEIGHT, BUTTON_DEFAULT_WIDTH} from './button.constants';
-import {toColorVar} from '@/utils/color';
+  buttonVariantStyles,
+} from '@/components/button/button.styles';
 
 interface ButtonComponentProps extends ButtonProps {
   enableHover?: boolean;

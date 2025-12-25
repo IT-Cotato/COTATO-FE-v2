@@ -1,9 +1,9 @@
-import {SocialLink} from './SocialLink';
 import Email from '@/assets/footer/email/email.svg';
 import Github from '@/assets/footer/github/github.svg';
 import Insta from '@/assets/footer/insta/insta.svg';
 import Kakao from '@/assets/footer/kakao/kakao.svg';
 import NaverCafe from '@/assets/footer/naver-cafe/naver-cafe.svg';
+import {SocialLink} from '@/components/layout/SocialLink';
 
 export const FooterContact = () => {
   return (

@@ -1,4 +1,4 @@
-import {Button} from './Button';
+import {Button} from '@/components/button/Button';
 
 export const FullButton = (
   props: Omit<Parameters<typeof Button>[0], 'defaultWidth' | 'enableHover'>

@@ -1,4 +1,4 @@
-import {ActiveRecruitmentForm} from './ActiveRecruitmentForm';
+import {ActiveRecruitmentForm} from '@/app/admin/(with-sidebar)/recruitment/_components/active-recruitment/ActiveRecruitmentForm';
 
 export const ActiveRecruitment = () => {
   return (
