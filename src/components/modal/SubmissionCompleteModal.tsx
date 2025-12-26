@@ -1,5 +1,5 @@
-import {FullButton} from '../button/FullButton';
-import {Modal} from './Modal';
+import {FullButton} from '@/components/button/FullButton';
+import {Modal} from '@/components/modal/Modal';
 
 interface SubmissionCompleteModalProps {
   isOpen: boolean;
