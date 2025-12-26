@@ -3,6 +3,7 @@
 import {ReactNode} from 'react';
 import Close from '@/assets/modal/close.svg';
 import clsx from 'clsx';
+import {FocusTrap} from 'focus-trap-react';
 
 interface ModalProps {
   isOpen: boolean; /** 모달의 열림/닫힘 상태를 제어합니다. */
@@ -29,49 +30,52 @@ export const Modal = ({
 }: ModalProps) => {
   if (!isOpen) return null;
 
-  const handleBackdropClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (e.target === e.currentTarget) onClose();
-  };
-
   return (
-    <div
-      className='fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm'
-      onClick={handleBackdropClick}>
-      <div className='relative w-full max-w-[507px] rounded-[10px] bg-white px-[43px] py-[62px]'>
-        <button
-          onClick={onClose}
-          className='absolute top-4 right-5'
-          aria-label='닫기'>
-          <Close className='h-[21px] w-[21px] cursor-pointer' />
-        </button>
+    <div className='fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm'>
+      <FocusTrap
+        focusTrapOptions={{
+          escapeDeactivates: true,
+          clickOutsideDeactivates: true,
+          onDeactivate: onClose,
+          initialFocus: false,
+          returnFocusOnDeactivate: true,
+        }}>
+        <div className='relative w-full max-w-[507px] rounded-[10px] bg-white px-[43px] py-[62px]'>
+          <button
+            onClick={onClose}
+            className='absolute top-4 right-5'
+            aria-label='닫기'>
+            <Close className='h-[21px] w-[21px] cursor-pointer' />
+          </button>
 
-        <div
-          className={clsx(
-            'flex flex-col items-center gap-[30px] text-center',
-            contentWrapperClassName
-          )}>
-          <h4 className='text-[28px] leading-tight font-semibold text-neutral-800'>
-            {title}
-          </h4>
+          <div
+            className={clsx(
+              'flex flex-col items-center gap-[30px] text-center',
+              contentWrapperClassName
+            )}>
+            <h4 className='text-[28px] leading-tight font-semibold text-neutral-800'>
+              {title}
+            </h4>
 
-          {content && (
-            <div className='text-body-m text-neutral-800'>{content}</div>
-          )}
+            {content && (
+              <div className='text-body-m text-neutral-800'>{content}</div>
+            )}
 
-          {actions && (
-            <div
-              className={clsx('flex w-full gap-2.25', {
-                'justify-center': actionsAlign === 'center',
-              })}>
-              {actions}
-            </div>
-          )}
+            {actions && (
+              <div
+                className={clsx('flex w-full gap-2.25', {
+                  'justify-center': actionsAlign === 'center',
+                })}>
+                {actions}
+              </div>
+            )}
 
-          {warning && (
-            <div className='text-body-s text-neutral-800'>{warning}</div>
-          )}
+            {warning && (
+              <div className='text-body-s text-neutral-800'>{warning}</div>
+            )}
+          </div>
         </div>
-      </div>
+      </FocusTrap>
     </div>
   );
 };
