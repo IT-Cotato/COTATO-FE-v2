@@ -65,7 +65,7 @@ interface ButtonComponentProps extends ButtonProps {
  *
  **/
 
-export function Button({
+export const Button = ({
   variant = 'primary',
   labelTypo = 'h5',
   width,
@@ -81,7 +81,7 @@ export function Button({
   textColor,
   wrapperClassName,
   ...props
-}: ButtonComponentProps) {
+}: ButtonComponentProps) => {
   const isOutline = variant === 'outline';
 
   return (
@@ -125,4 +125,4 @@ export function Button({
       )}
     </div>
   );
-}
+};

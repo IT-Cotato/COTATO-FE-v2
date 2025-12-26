@@ -38,6 +38,11 @@
 
   /* alert */
   --color-alert: #e5484d;
+
+  /* z-index */
+  --z-index-header: 100;
+  --z-index-dropdown: 101;
+  --z-index-modal: 99;
 }
 
 @layer base {
@@ -63,6 +68,10 @@
 
   button {
     cursor: pointer;
+  }
+
+  input:focus {
+    outline: none;
   }
 
   .scrollbar-hide {

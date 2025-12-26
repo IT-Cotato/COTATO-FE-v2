@@ -29,7 +29,7 @@ export const Dropdown = ({trigger, children, className}: DropdownProps) => {
       {open && (
         <div
           className={clsx(
-            'absolute top-full left-0 z-50 mt-[-20px]',
+            'absolute top-full left-0 z-dropdown mt-[-20px]',
             className
           )}>
           {children}
