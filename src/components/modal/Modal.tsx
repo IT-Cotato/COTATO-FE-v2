@@ -31,23 +31,26 @@ export const Modal = ({
   if (!isOpen) return null;
 
   return (
-    <div className='fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm'>
+    <div
+      className='fixed inset-0 z-modal flex items-center justify-center bg-black/50 backdrop-blur-sm'
+      onClick={onClose}>
       <FocusTrap
         focusTrapOptions={{
           escapeDeactivates: true,
           clickOutsideDeactivates: true,
-          onDeactivate: onClose,
+          // onDeactivate: onClose,
           initialFocus: false,
           returnFocusOnDeactivate: true,
         }}>
-        <div className='relative w-full max-w-[507px] rounded-[10px] bg-white px-[43px] py-[62px]'>
+        <div
+          className='relative w-full max-w-[507px] rounded-[10px] bg-white px-[43px] py-[62px]'
+          onClick={(e) => e.stopPropagation()}>
           <button
             onClick={onClose}
             className='absolute top-4 right-5'
             aria-label='닫기'>
             <Close className='h-[21px] w-[21px] cursor-pointer' />
           </button>
-
           <div
             className={clsx(
               'flex flex-col items-center gap-[30px] text-center',
@@ -56,11 +59,9 @@ export const Modal = ({
             <h4 className='text-[28px] leading-tight font-semibold text-neutral-800'>
               {title}
             </h4>
-
             {content && (
               <div className='text-body-m text-neutral-800'>{content}</div>
             )}
-
             {actions && (
               <div
                 className={clsx('flex w-full gap-2.25', {
@@ -69,7 +70,6 @@ export const Modal = ({
                 {actions}
               </div>
             )}
-
             {warning && (
               <div className='text-body-s text-neutral-800'>{warning}</div>
             )}
