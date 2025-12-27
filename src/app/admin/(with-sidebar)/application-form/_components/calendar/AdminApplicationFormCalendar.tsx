@@ -19,7 +19,9 @@ export const AdminApplicationFormCalendar = ({
   onChange,
 }: AdminDatePickerProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+  const [selectedDate, setSelectedDate] = useState<Date>(
+    value ? new Date(value) : new Date()
+  );
 
   const calendarRef = useRef<HTMLDivElement>(null);
 
