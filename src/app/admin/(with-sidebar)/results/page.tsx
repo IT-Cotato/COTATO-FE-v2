@@ -5,7 +5,7 @@ import {SuspenseWrapper} from '@/components/wrappers/SuspenseWrapper';
 export default function AdminResultsPage() {
   return (
     <SuspenseWrapper>
-      <div className='flex flex-col gap-6'>
+      <div className='flex flex-col gap-13.5'>
         <ManageResult />
         <ManageResultMail />
       </div>
