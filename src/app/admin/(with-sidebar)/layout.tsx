@@ -7,7 +7,10 @@ export default function AdminWithSideBarLayout({
 }>) {
   return (
     <section className='flex min-h-screen w-full flex-row gap-23.5 bg-neutral-50 px-60 py-16.75'>
-      <AdminSideBar />
+      <aside>
+        <AdminSideBar />
+      </aside>
+
       <main className='flex-1'>{children}</main>
     </section>
   );
