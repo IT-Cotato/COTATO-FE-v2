@@ -1,23 +1,29 @@
 import clsx from 'clsx';
+
+import {toColorVar} from '@/utils/color';
+import {ButtonProps, ColorKey} from '@/components/button/button.types';
 import {
-  buttonVariantStyles,
+  BUTTON_DEFAULT_BORDER_RADIUS,
+  BUTTON_DEFAULT_HEIGHT,
+  BUTTON_DEFAULT_SUBLABEL_SPACING,
+  BUTTON_DEFAULT_WIDTH,
+} from '@/components/button/button.constants';
+import {
+  buttonHoverStyles,
   buttonLabelTextStyles,
   buttonSubLabelTextStyle,
-  buttonHoverStyles,
-} from './button.styles';
-import {ButtonProps, ColorKey} from './button.types';
-import {BUTTON_DEFAULT_HEIGHT, BUTTON_DEFAULT_WIDTH} from './button.constants';
-import {toColorVar} from '@/utils/color';
+  buttonVariantStyles,
+} from '@/components/button/button.styles';
 
 interface ButtonComponentProps extends ButtonProps {
   enableHover?: boolean;
   defaultWidth?: number | string;
   subLabelSpacing?: number;
+  borderRadius?: number;
   backgroundColor?: ColorKey;
   textColor?: ColorKey;
   wrapperClassName?: string;
 }
-
 /**
  * 공통 Button 컴포넌트
  *
@@ -32,6 +38,7 @@ interface ButtonComponentProps extends ButtonProps {
  * @param variant 버튼 스타일 타입 (default: 'primary')
  *  - `primary`: 기본 강조 버튼
  *  - `outline`: 테두리 버튼 (subLabel 사용 가능)
+ * - outline일 경우 textColor를 지정하면 border와 subLabel 색이 textColor와 동기화됩니다.
  *
  * @param label 버튼에 표시될 텍스트 (필수)
  *
@@ -55,6 +62,9 @@ interface ButtonComponentProps extends ButtonProps {
  *
  * @param subLabelSpacing 버튼과 subLabel 사이 간격
  *
+ * @param borderRadius 버튼 모서리 둥글기 (default: 10)
+ * - 숫자 입력 시 'px' 단위로 적용
+ *
  * @param backgroundColor 버튼 배경색 (CSS 변수 키, optional)
  *  - 예: 'primary', 'secondary', 'alert', 'neutral-50' 등
  *
@@ -76,13 +86,15 @@ export const Button = ({
   disabled,
   enableHover = false,
   defaultWidth = BUTTON_DEFAULT_WIDTH,
-  subLabelSpacing = 22,
+  subLabelSpacing = BUTTON_DEFAULT_SUBLABEL_SPACING,
+  borderRadius = BUTTON_DEFAULT_BORDER_RADIUS,
   backgroundColor,
   textColor,
   wrapperClassName,
   ...props
 }: ButtonComponentProps) => {
   const isOutline = variant === 'outline';
+  const resolvedTextColor = toColorVar(textColor);
 
   return (
     <div className={clsx('flex flex-col items-center', wrapperClassName)}>
@@ -90,8 +102,8 @@ export const Button = ({
         disabled={disabled}
         className={clsx(
           'flex flex-col items-center justify-center transition-colors',
-          'rounded-[10px]',
           buttonVariantStyles[variant],
+          disabled ? 'cursor-not-allowed opacity-50' : 'cursor-pointer',
           enableHover &&
             !disabled &&
             !(variant === 'outline') &&
@@ -105,12 +117,14 @@ export const Button = ({
               ? `${height}px`
               : (height ?? `${BUTTON_DEFAULT_HEIGHT}px`),
           backgroundColor: toColorVar(backgroundColor),
+          borderColor: isOutline ? resolvedTextColor : undefined,
+          borderRadius: `${borderRadius}px`,
         }}
         {...props}>
         <span
           className={buttonLabelTextStyles[variant][labelTypo]}
           style={{
-            color: toColorVar(textColor),
+            color: resolvedTextColor,
           }}>
           {label}
         </span>
@@ -119,7 +133,10 @@ export const Button = ({
       {isOutline && subLabel && (
         <span
           className={clsx('text-center', buttonSubLabelTextStyle)}
-          style={{marginTop: subLabelSpacing}}>
+          style={{
+            marginTop: subLabelSpacing,
+            color: resolvedTextColor,
+          }}>
           {subLabel}
         </span>
       )}

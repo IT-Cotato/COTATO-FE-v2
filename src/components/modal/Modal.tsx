@@ -16,6 +16,7 @@ interface ModalProps {
     | 'stretch'; /** 버튼 정렬 방식: 'center'(기본값) 또는 'stretch' */
   warning?: ReactNode; /** 버튼(actions) 아래에 표시될 경고 또는 추가 안내 텍스트입니다. */
   contentWrapperClassName?: string; /** 컨텐츠 영역(제목, 내용, 버튼)을 감싸는 div에 적용할 추가 클래스입니다. (예: gap 조절) */
+  noContent?: boolean; /** 컨텐츠 영역이 없는 모달의 경우에 해당합니다. true일 경우 title과 actions 사이 gap이 107px가 됩니다.*/
 }
 
 export const Modal = ({
@@ -27,40 +28,43 @@ export const Modal = ({
   actionsAlign = 'center',
   warning,
   contentWrapperClassName,
+  noContent = false,
 }: ModalProps) => {
   if (!isOpen) return null;
 
   return (
-    <div className='fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm'>
+    <div
+      className='fixed inset-0 z-modal flex items-center justify-center bg-black/50 backdrop-blur-sm'
+      onClick={onClose}>
       <FocusTrap
         focusTrapOptions={{
           escapeDeactivates: true,
           clickOutsideDeactivates: true,
-          onDeactivate: onClose,
+          // onDeactivate: onClose,
           initialFocus: false,
           returnFocusOnDeactivate: true,
         }}>
-        <div className='relative w-full max-w-[507px] rounded-[10px] bg-white px-[43px] py-[62px]'>
+        <div
+          className='relative w-full max-w-[507px] rounded-[10px] bg-white px-[43px] py-[62px]'
+          onClick={(e) => e.stopPropagation()}>
           <button
             onClick={onClose}
             className='absolute top-4 right-5'
             aria-label='닫기'>
             <Close className='h-[21px] w-[21px] cursor-pointer' />
           </button>
-
           <div
             className={clsx(
-              'flex flex-col items-center gap-[30px] text-center',
+              'flex flex-col items-center text-center',
+              noContent ? 'gap-[107px]' : 'gap-[30px]',
               contentWrapperClassName
             )}>
             <h4 className='text-[28px] leading-tight font-semibold text-neutral-800'>
               {title}
             </h4>
-
             {content && (
               <div className='text-body-m text-neutral-800'>{content}</div>
             )}
-
             {actions && (
               <div
                 className={clsx('flex w-full gap-2.25', {
@@ -69,7 +73,6 @@ export const Modal = ({
                 {actions}
               </div>
             )}
-
             {warning && (
               <div className='text-body-s text-neutral-800'>{warning}</div>
             )}

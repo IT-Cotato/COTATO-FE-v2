@@ -1,4 +1,4 @@
-import {ButtonLabelTypo, ButtonVariant} from './button.types';
+import {ButtonLabelTypo, ButtonVariant} from '@/components/button/button.types';
 
 export const buttonVariantStyles: Record<ButtonVariant, string> = {
   primary: `
@@ -7,7 +7,6 @@ export const buttonVariantStyles: Record<ButtonVariant, string> = {
   `,
   outline: `
     border
-    border-primary
     bg-transparent
   `,
 };
@@ -38,7 +37,6 @@ export const buttonLabelTextStyles: Record<
 };
 
 export const buttonSubLabelTextStyle = `
-  text-primary
   text-body-l
   px-[10px]
   py-[19px]

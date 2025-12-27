@@ -2,14 +2,15 @@
 
 import {useState} from 'react';
 import {Button} from '@/components/button/Button';
-import {GenerationField} from './GenerationField';
-import {PeriodField} from './PeriodField';
-import {RecruitmentModal} from './RecruitmentModal';
+import {PeriodField} from '@/app/admin/(with-sidebar)/recruitment/_components/active-recruitment/PeriodField';
+import {useRecruitmentStore} from '@/store/useRecruitmentStore';
+import {GenerationField} from '@/app/admin/(with-sidebar)/recruitment/_components/active-recruitment/GenerationField';
+import {RecruitmentConfirmModal} from '@/components/modal/RecruitConfirmModal';
 
 export const ActiveRecruitmentForm = () => {
-  const [generation, setGeneration] = useState('');
+  const {isRecruiting, setIsRecruiting, generation, setGeneration} =
+    useRecruitmentStore();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isRecruiting, setIsRecruiting] = useState(false);
   const [startDate, setStartDate] = useState<Date | null>(new Date());
   const [endDate, setEndDate] = useState<Date | null>(new Date());
 
@@ -22,11 +23,12 @@ export const ActiveRecruitmentForm = () => {
       return;
     }
 
-    setIsRecruiting((prev) => !prev); // 모집 시작/종료 토글
+    setIsRecruiting(!isRecruiting);
     setIsModalOpen(false);
 
     console.log(`${generation}기 모집 ${isRecruiting ? '종료' : '시작'}`);
   };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!generation) return console.log('실패. 기수를 입력해주세요.');
@@ -37,7 +39,7 @@ export const ActiveRecruitmentForm = () => {
     <>
       <form
         onSubmit={handleSubmit}
-        className='flex h-25 w-full items-end justify-between rounded-[10px] bg-neutral-100 pt-3 pr-5 pb-3 pl-3.5'>
+        className='flex h-25 items-end justify-between rounded-[10px] bg-neutral-100 pt-3 pr-5 pb-3 pl-3.5'>
         <fieldset className='flex h-19 gap-19 pb-1 text-body-m font-semibold'>
           <legend className='sr-only'>모집 설정</legend>
           <GenerationField value={generation} onChange={setGeneration} />
@@ -57,13 +59,10 @@ export const ActiveRecruitmentForm = () => {
           backgroundColor={isRecruiting ? 'alert' : 'primary'}
         />
       </form>
-      <RecruitmentModal
+      <RecruitmentConfirmModal
         isOpen={isModalOpen}
-        content={
-          isRecruiting
-            ? '모집을 종료하시겠습니까?'
-            : `${generation}기 모집을 시작하시겠습니까?`
-        }
+        isRecruiting={isRecruiting}
+        generation={generation}
         onClose={() => setIsModalOpen(false)}
         onConfirm={handleConfirm}
       />

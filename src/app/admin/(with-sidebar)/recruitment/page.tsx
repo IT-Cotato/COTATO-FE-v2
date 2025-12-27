@@ -1,5 +1,5 @@
-import {ActiveRecruitment} from './_components/ActiveRecruitment';
-import {ManageMail} from './_components/ManageMail';
+import {ActiveRecruitment} from '@/app/admin/(with-sidebar)/recruitment/_components/active-recruitment/ActiveRecruitment';
+import {ManageMail} from '@/app/admin/(with-sidebar)/recruitment/_components/manage-mail/ManageMail';
 
 export default function AdminRecruitmentPage() {
   return (
