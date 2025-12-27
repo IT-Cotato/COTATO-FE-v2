@@ -51,6 +51,7 @@ export const AdminApplicationInformation = () => {
           <input
             type='text'
             placeholder='이름 혹은 학교 검색'
+            aria-label='지원자 이름 또는 학교 검색'
             value={keyword}
             onChange={(e) => setKeyword(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
