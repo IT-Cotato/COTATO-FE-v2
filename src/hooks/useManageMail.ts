@@ -9,10 +9,9 @@ export const useManageMail = (
   alwaysAble: boolean = false
 ) => {
   const initialData =
-    MAIL_DATA_MAP[mailType] || MAIL_DATA_MAP['지원 완료 메일'];
+    MAIL_DATA_MAP[mailType] || MAIL_DATA_MAP['지원 알림 메일'];
 
   const [isEditing, setIsEditing] = useState(false);
-
   const [content, setContent] = useState(initialData);
   const [originalContent, setOriginalContent] = useState(initialData);
 

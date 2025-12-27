@@ -6,8 +6,7 @@ import {MailHeader} from './MailHeader';
 import {MailField} from './MailField';
 import {MailSendFooter} from './MailSendFooter';
 import {MailConfirmModal} from '@/components/modal/MailConfirmModal';
-import {MAIL_WAITING} from '@/mocks/mock-mail';
-import {MAIL_DATA_MAP} from '@/schemas/admin-result-type';
+import {MAIL_DATA_MAP, MAIL_NUM_MAP} from '@/schemas/admin-result-type';
 
 interface ManageMailProps {
   mailType?: keyof typeof MAIL_DATA_MAP;
@@ -57,13 +56,13 @@ export const ManageMail = ({
       <MailSendFooter
         canSendMail={finalCanSend}
         onSend={() => setIsSendModalOpen(true)}
-        waitingCount={MAIL_WAITING}
+        waitingCount={MAIL_NUM_MAP[mailType]}
       />
       <MailConfirmModal
         isOpen={isSendModalOpen}
         onClose={() => setIsSendModalOpen(false)}
         onConfirm={handleConfirmSend}
-        title={`메일을 전송하시겠습니까?`}
+        title={'메일을 전송하시겠습니까?'}
       />
     </div>
   );

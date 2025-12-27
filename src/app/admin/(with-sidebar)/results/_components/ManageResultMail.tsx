@@ -1,7 +1,8 @@
 'use client';
+
+import {useState} from 'react';
 import {ManageMail} from '@/app/admin/(with-sidebar)/recruitment/_components/manage-mail/ManageMail';
 import {MailSelect} from '@/app/admin/(with-sidebar)/results/_components/MailSelect';
-import {useState} from 'react';
 
 export const ManageResultMail = () => {
   const [activeTab, setActiveTab] = useState('합격자 메일');

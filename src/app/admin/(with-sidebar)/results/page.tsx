@@ -1,6 +1,6 @@
+import {SuspenseWrapper} from '@/components/wrappers/SuspenseWrapper';
 import {ManageResult} from '@/app/admin/(with-sidebar)/results/_components/ManageResult';
 import {ManageResultMail} from '@/app/admin/(with-sidebar)/results/_components/ManageResultMail';
-import {SuspenseWrapper} from '@/components/wrappers/SuspenseWrapper';
 
 export default function AdminResultsPage() {
   return (
