@@ -28,9 +28,7 @@ export const TermSelect = ({value, onChange, options}: TermSelectProps) => {
           {isOpen ? <DropdownChevronUp /> : <DropdownChevronDown />}
         </div>
         {isOpen && (
-          <div
-            className='absolute right-0 left-0 z-dropdown mt-[3px] flex flex-col gap-[10px] rounded-[4px] bg-neutral-700 p-[6px_2px]'
-            style={{display: 'flex', alignItems: 'center'}}>
+          <div className='absolute right-0 left-0 z-dropdown mt-[3px] flex flex-col items-center gap-[10px] rounded-[4px] bg-neutral-700 p-[6px_2px]'>
             {options.map((option) => (
               <div
                 key={option}
