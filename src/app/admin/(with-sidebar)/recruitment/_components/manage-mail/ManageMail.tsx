@@ -6,7 +6,6 @@ import {useManageMail} from '@/hooks/useManageMail';
 import {MailHeader} from '@/app/admin/(with-sidebar)/recruitment/_components/manage-mail/MailHeader';
 import {MailField} from '@/app/admin/(with-sidebar)/recruitment/_components/manage-mail/MailField';
 import {MailSendFooter} from '@/app/admin/(with-sidebar)/recruitment/_components/manage-mail/MailSendFooter';
-import {RecruitmentModal} from '@/app/admin/(with-sidebar)/recruitment/_components/RecruitmentModal';
 import {MailConfirmModal} from '@/components/modal/MailConfirmModal';
 
 export const ManageMail = () => {
