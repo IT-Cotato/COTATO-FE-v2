@@ -2,7 +2,7 @@
 
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import '@/app/admin/(with-sidebar)/recruitment/_components/calendar/style/datepicker-custom.css';
+import '@/styles/datepicker-custom.css';
 import {CustomInput} from '@/app/admin/(with-sidebar)/recruitment/_components/calendar/CustomInput';
 import {CustomHeader} from '@/app/admin/(with-sidebar)/recruitment/_components/calendar/CustomHeader';
 
