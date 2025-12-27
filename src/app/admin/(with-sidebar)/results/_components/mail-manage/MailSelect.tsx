@@ -1,7 +1,6 @@
 'use client';
 
 import {mailTabs} from '@/constants/admin/admin-result';
-import {Button} from '@/components/button/Button';
 import clsx from 'clsx';
 import {FullButton} from '@/components/button/FullButton';
 

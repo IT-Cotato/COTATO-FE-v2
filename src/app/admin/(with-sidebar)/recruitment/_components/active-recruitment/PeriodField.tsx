@@ -32,6 +32,7 @@ export const PeriodField = ({
             popperPlacement='bottom-start'
             formatWeekDay={(nameOfDay) => nameOfDay.toLowerCase().slice(0, 3)}
             renderCustomHeader={(props) => <CustomHeader {...props} />}
+            disabledKeyboardNavigation
           />
         </div>
         <div className='relative'>
@@ -44,6 +45,7 @@ export const PeriodField = ({
             popperPlacement='bottom-start'
             formatWeekDay={(nameOfDay) => nameOfDay.toLowerCase().slice(0, 3)}
             renderCustomHeader={(props) => <CustomHeader {...props} />}
+            disabledKeyboardNavigation
           />
         </div>
       </div>
