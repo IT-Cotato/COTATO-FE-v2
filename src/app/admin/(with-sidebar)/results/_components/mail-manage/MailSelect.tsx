@@ -1,6 +1,9 @@
 'use client';
 
 import {mailTabs} from '@/constants/admin/admin-result';
+import {Button} from '@/components/button/Button';
+import clsx from 'clsx';
+import {FullButton} from '@/components/button/FullButton';
 
 interface MailSelectProps {
   activeTab: string;
@@ -9,17 +12,25 @@ interface MailSelectProps {
 
 export const MailSelect = ({activeTab, onTabChange}: MailSelectProps) => {
   return (
-    <div className='flex gap-17.5'>
-      {mailTabs.map((tab) => (
-        <section
-          key={tab}
-          onClick={() => onTabChange(tab)}
-          className={`cursor-pointer text-h5 transition-colors ${
-            activeTab === tab ? 'text-neutral-800' : 'text-neutral-500'
-          }`}>
-          {tab}
-        </section>
-      ))}
-    </div>
+    <nav aria-label='합격자 관리 - 메일 전송 탭'>
+      <ul className='flex gap-17.5'>
+        {mailTabs.map((tab) => {
+          const isActive = activeTab === tab;
+          return (
+            <li key={tab}>
+              <FullButton
+                label={tab}
+                height={40}
+                borderRadius={0}
+                backgroundColor='neutral-50'
+                textColor={isActive ? 'neutral-800' : 'neutral-500'}
+                className={clsx('px-0', 'border-none')}
+                onClick={() => onTabChange(tab)}
+              />
+            </li>
+          );
+        })}
+      </ul>
+    </nav>
   );
 };
