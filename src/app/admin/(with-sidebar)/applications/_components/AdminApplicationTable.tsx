@@ -1,10 +1,11 @@
 import {AdminApplicationResultBadge} from '@/app/admin/(with-sidebar)/applications/_components/AdminApplicationResultBadge';
 import {APPLICATION_COLUMNS} from '@/constants/admin/admin-applications';
-
 import {useRouter, useSearchParams} from 'next/navigation';
 import {useState} from 'react';
 import {AdminApplicationPagination} from '@/app/admin/(with-sidebar)/applications/_components/AdminApplicationPagination';
+import ArrowDownIcon from '@/assets/icons/arrow-down.svg';
 import {mockApplications} from '@/mocks/mock-application';
+import clsx from 'clsx';
 
 const ITEMS_PER_PAGE = 9;
 
@@ -36,9 +37,13 @@ export const AdminApplicationTable = () => {
 
   const handleNameSortToggle = () => {
     setNameSortOrder((prev) => (prev === 'asc' ? 'desc' : 'asc'));
+    // TODO: 이름 내림차순 / 오름차순으로 정렬 API 호출 혹은 정렬 로직 작성
   };
 
+  // TODO: 합격, 예비합격, 불합격, 평가전 필터링 컴포넌트 및 로직 추가
+
   const hasApplications = mockApplications.length > 0;
+
   return (
     <>
       {hasApplications ? (
@@ -64,10 +69,12 @@ export const AdminApplicationTable = () => {
                           {col.label}
 
                           {isNameColumn && (
-                            <span className='text-body-s font-bold'>
-                              {nameSortOrder === 'asc' && '↑'}
-                              {nameSortOrder === 'desc' && '↓'}
-                            </span>
+                            <ArrowDownIcon
+                              className={clsx(
+                                'transition-transform duration-200',
+                                nameSortOrder === 'desc' && 'rotate-180'
+                              )}
+                            />
                           )}
                         </div>
                       </th>
