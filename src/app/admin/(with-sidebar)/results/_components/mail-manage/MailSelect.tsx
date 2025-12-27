@@ -1,6 +1,6 @@
 'use client';
 
-import {mailTabs} from '@/schemas/admin-result-type';
+import {mailTabs} from '@/constants/admin/admin-result';
 
 interface MailSelectProps {
   activeTab: string;
@@ -15,9 +15,7 @@ export const MailSelect = ({activeTab, onTabChange}: MailSelectProps) => {
           key={tab}
           onClick={() => onTabChange(tab)}
           className={`cursor-pointer text-h5 transition-colors ${
-            activeTab === tab
-              ? 'font-bold text-neutral-800'
-              : 'font-medium text-neutral-500 hover:text-neutral-600'
+            activeTab === tab ? 'text-neutral-800' : 'text-neutral-500'
           }`}>
           {tab}
         </section>

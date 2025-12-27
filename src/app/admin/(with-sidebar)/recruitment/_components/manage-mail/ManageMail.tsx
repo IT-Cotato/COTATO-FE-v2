@@ -6,7 +6,7 @@ import {MailHeader} from './MailHeader';
 import {MailField} from './MailField';
 import {MailSendFooter} from './MailSendFooter';
 import {MailConfirmModal} from '@/components/modal/MailConfirmModal';
-import {MAIL_DATA_MAP, MAIL_NUM_MAP} from '@/schemas/admin-result-type';
+import {MAIL_DATA_MAP, MAIL_NUM_MAP} from '@/constants/admin/admin-result';
 
 interface ManageMailProps {
   mailType?: keyof typeof MAIL_DATA_MAP;

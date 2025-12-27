@@ -1,9 +1,9 @@
 'use client';
 import {useState} from 'react';
-import {ResultTable} from '@/app/admin/(with-sidebar)/results/_components/ResultTable';
-import {TermSelect} from '@/app/admin/(with-sidebar)/results/_components/TermSelect';
-import {ResultSummaryData} from '@/constants/admin/admin-result';
 import {RESULT_DATA} from '@/mocks/mock-result';
+import {TermSelect} from '@/app/admin/(with-sidebar)/results/_components/result-manage/TermSelect';
+import {ResultTable} from '@/app/admin/(with-sidebar)/results/_components/result-manage/ResultTable';
+import {ResultSummaryData} from '@/schemas/admin-result-type';
 
 export const ManageResult = () => {
   const terms = Object.keys(RESULT_DATA).sort((a, b) => Number(b) - Number(a));
