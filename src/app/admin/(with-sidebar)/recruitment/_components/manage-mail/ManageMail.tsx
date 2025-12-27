@@ -62,7 +62,7 @@ export const ManageMail = ({
         isOpen={isSendModalOpen}
         onClose={() => setIsSendModalOpen(false)}
         onConfirm={handleConfirmSend}
-        title={'메일을 전송하시겠습니까?'}
+        title='메일을 전송하시겠습니까?'
       />
     </div>
   );

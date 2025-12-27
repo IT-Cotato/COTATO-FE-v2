@@ -3,9 +3,10 @@
 import {useState} from 'react';
 import {useRecruitmentStore} from '@/store/useRecruitmentStore';
 import {MAIL_DATA_MAP} from '@/constants/admin/admin-result';
+import {MailType} from '@/schemas/admin-result-type';
 
 export const useManageMail = (
-  mailType: string,
+  mailType: MailType,
   alwaysAble: boolean = false
 ) => {
   const initialData =
