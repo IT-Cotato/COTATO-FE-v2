@@ -22,6 +22,7 @@ interface ButtonComponentProps extends ButtonProps {
   borderRadius?: number;
   backgroundColor?: ColorKey;
   textColor?: ColorKey;
+  wrapperClassName?: string;
 }
 /**
  * 공통 Button 컴포넌트
@@ -70,6 +71,8 @@ interface ButtonComponentProps extends ButtonProps {
  * @param textColor 버튼 라벨 텍스트 색상 (CSS 변수 키, optional)
  *  - 예: 'primary', 'secondary', 'alert', 'neutral-50' 등
  *
+ * @param wrapperClassName 버튼을 감싸는 div에 적용할 클래스
+ *
  **/
 
 export const Button = ({
@@ -87,13 +90,14 @@ export const Button = ({
   borderRadius = BUTTON_DEFAULT_BORDER_RADIUS,
   backgroundColor,
   textColor,
+  wrapperClassName,
   ...props
 }: ButtonComponentProps) => {
   const isOutline = variant === 'outline';
   const resolvedTextColor = toColorVar(textColor);
 
   return (
-    <div className='flex flex-col items-center'>
+    <div className={clsx('flex flex-col items-center', wrapperClassName)}>
       <button
         disabled={disabled}
         className={clsx(
