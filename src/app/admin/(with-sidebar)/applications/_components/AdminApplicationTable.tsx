@@ -3,7 +3,7 @@ import {APPLICATION_COLUMNS} from '@/constants/admin/admin-applications';
 import {useRouter, useSearchParams} from 'next/navigation';
 import {useState} from 'react';
 import {AdminApplicationPagination} from '@/app/admin/(with-sidebar)/applications/_components/AdminApplicationPagination';
-import ArrowDownIcon from '@/assets/icons/arrow-down.svg';
+import DownArrowIcon from '@/assets/arrow/down-arrow.svg';
 import {mockApplications} from '@/mocks/mock-application';
 import clsx from 'clsx';
 
@@ -48,7 +48,7 @@ export const AdminApplicationTable = () => {
     <>
       {hasApplications ? (
         <>
-          <div className='w-244 overflow-hidden'>
+          <div className='overflow-hidden'>
             <table className='border-collapse'>
               <thead className='bg-neutral-100'>
                 <tr>
@@ -69,7 +69,7 @@ export const AdminApplicationTable = () => {
                           {col.label}
 
                           {isNameColumn && (
-                            <ArrowDownIcon
+                            <DownArrowIcon
                               className={clsx(
                                 'transition-transform duration-200',
                                 nameSortOrder === 'desc' && 'rotate-180'
