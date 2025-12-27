@@ -1,40 +1,42 @@
 'use client';
 
+import {ReactNode} from 'react';
 import {Button} from '@/components/button/Button';
 import {Modal} from '@/components/modal/Modal';
 
-interface RecruitmentConfirmModalProps {
+interface MailConfirmModalProps {
   isOpen: boolean;
-  isRecruiting: boolean;
-  generation: string;
-  onClose: () => void;
+  title: string;
+  description?: ReactNode;
+  confirmLabel?: string;
+  cancelLabel?: string;
   onConfirm: () => void;
+  onClose: () => void;
 }
 
-export const RecruitmentConfirmModal = ({
+export const MailConfirmModal = ({
   isOpen,
-  isRecruiting,
-  generation,
-  onClose,
+  title,
+  description,
+  confirmLabel = '확인',
+  cancelLabel = '취소',
   onConfirm,
-}: RecruitmentConfirmModalProps) => {
+  onClose,
+}: MailConfirmModalProps) => {
   return (
     <Modal
       isOpen={isOpen}
       onClose={onClose}
-      title={
-        isRecruiting
-          ? '모집을 종료하시겠습니까?'
-          : `${generation}기 모집을 시작하시겠습니까?`
-      }
-      noContent
+      title={title}
+      content={description}
+      noContent={!description}
       actions={
         <>
           <Button
             width={219}
             height={47}
             onClick={onClose}
-            label='취소'
+            label={cancelLabel}
             textColor='neutral-50'
             labelTypo='body_l'
             backgroundColor='neutral-300'
@@ -43,10 +45,10 @@ export const RecruitmentConfirmModal = ({
             width={219}
             height={47}
             onClick={onConfirm}
-            label='확인'
+            label={confirmLabel}
             textColor='neutral-50'
             labelTypo='body_l'
-            backgroundColor='primary' //디자인 컨펌에 따라 색 변경 필요할 수도...
+            backgroundColor='primary'
           />
         </>
       }

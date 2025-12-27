@@ -7,6 +7,7 @@ import {MailHeader} from '@/app/admin/(with-sidebar)/recruitment/_components/man
 import {MailField} from '@/app/admin/(with-sidebar)/recruitment/_components/manage-mail/MailField';
 import {MailSendFooter} from '@/app/admin/(with-sidebar)/recruitment/_components/manage-mail/MailSendFooter';
 import {RecruitmentModal} from '@/app/admin/(with-sidebar)/recruitment/_components/RecruitmentModal';
+import {MailConfirmModal} from '@/components/modal/MailConfirmModal';
 
 export const ManageMail = () => {
   const {
@@ -46,11 +47,11 @@ export const ManageMail = () => {
         canSendMail={canSendMail}
         onSend={() => setIsSendModalOpen(true)}
       />
-      <RecruitmentModal
+      <MailConfirmModal
         isOpen={isSendModalOpen}
         onClose={() => setIsSendModalOpen(false)}
         onConfirm={handleConfirmSend}
-        content='메일을 전송하시겠습니까?'
+        title='메일을 전송하시겠습니까?'
       />
     </div>
   );
