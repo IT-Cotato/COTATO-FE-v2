@@ -66,7 +66,6 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  outline: none !important;
 }
 
 .react-datepicker__day--selected,
@@ -78,7 +77,8 @@
 }
 
 .react-datepicker__day--keyboard-selected {
-  background-color: transparent !important;
+  outline: 2px solid var(--color-primary) !important;
+  outline-offset: 1px !important;
 }
 
 .react-datepicker__day--outside-month {
