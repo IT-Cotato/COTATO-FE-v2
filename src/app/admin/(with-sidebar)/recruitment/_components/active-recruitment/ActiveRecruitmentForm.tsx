@@ -5,8 +5,7 @@ import {Button} from '@/components/button/Button';
 import {PeriodField} from '@/app/admin/(with-sidebar)/recruitment/_components/active-recruitment/PeriodField';
 import {useRecruitmentStore} from '@/store/useRecruitmentStore';
 import {GenerationField} from '@/app/admin/(with-sidebar)/recruitment/_components/active-recruitment/GenerationField';
-import {RecruitmentModal} from '@/app/admin/(with-sidebar)/recruitment/_components/RecruitmentModal';
-import {Modal} from '@/components/modal/Modal';
+import {RecruitmentConfirmModal} from '@/components/modal/RecruitConfirmModal';
 
 export const ActiveRecruitmentForm = () => {
   const {isRecruiting, setIsRecruiting, generation, setGeneration} =
@@ -60,37 +59,12 @@ export const ActiveRecruitmentForm = () => {
           backgroundColor={isRecruiting ? 'alert' : 'primary'}
         />
       </form>
-      <Modal
+      <RecruitmentConfirmModal
         isOpen={isModalOpen}
+        isRecruiting={isRecruiting}
+        generation={generation}
         onClose={() => setIsModalOpen(false)}
-        title={isRecruiting ? '모집 종료' : '모집 시작'}
-        content={
-          isRecruiting
-            ? '모집을 종료하시겠습니까?'
-            : `${generation}기 모집을 시작하시겠습니까?`
-        }
-        actions={
-          <>
-            <Button
-              width={219}
-              height={47}
-              onClick={() => setIsModalOpen(false)}
-              label='취소'
-              textColor='neutral-50'
-              labelTypo='body_l'
-              backgroundColor='neutral-300'
-            />
-            <Button
-              width={219}
-              height={47}
-              onClick={handleConfirm}
-              label='확인'
-              textColor='neutral-50'
-              labelTypo='body_l'
-              backgroundColor='neutral-600'
-            />
-          </>
-        }
+        onConfirm={handleConfirm}
       />
     </>
   );
