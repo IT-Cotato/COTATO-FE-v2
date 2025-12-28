@@ -1,7 +1,7 @@
 'use client';
 
 import {Button} from '@/components/button/Button';
-import {useAdminApplicationFormStore} from '@/stores/useAdminApplicationFormStore';
+import {useAdminApplicationFormStore} from '@/store/useAdminApplicationFormStore';
 
 export const AdminApplicationFormControl = () => {
   const startEdit = useAdminApplicationFormStore((s) => s.startApplicationEdit);

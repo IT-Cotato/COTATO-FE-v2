@@ -4,7 +4,7 @@ import {RecruitmentInfoEditRow} from '@/app/admin/(with-sidebar)/application-for
 import {RecruitmentInfoViewRow} from '@/app/admin/(with-sidebar)/application-form/_components/recruitment/RecruitmentInfoViewRow';
 import {scheduleSections} from '@/constants/admin/admin-application-form';
 import {mockRecruitmentInfo} from '@/mocks/mock-application-form';
-import {useAdminApplicationFormStore} from '@/stores/useAdminApplicationFormStore';
+import {useAdminApplicationFormStore} from '@/store/useAdminApplicationFormStore';
 
 type RecruitmentValue = {
   start?: string;

@@ -3,7 +3,7 @@
 import {Button} from '@/components/button/Button';
 import {FullButton} from '@/components/button/FullButton';
 import {mockPlanApplicationForm} from '@/mocks/mock-application-form';
-import {useAdminApplicationFormStore} from '@/stores/useAdminApplicationFormStore';
+import {useAdminApplicationFormStore} from '@/store/useAdminApplicationFormStore';
 import {useEffect, useState} from 'react';
 
 export const ApplicationFormEdit = () => {

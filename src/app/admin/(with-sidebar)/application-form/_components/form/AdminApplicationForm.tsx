@@ -4,7 +4,7 @@ import {AdminApplicationFormTabs} from '@/app/admin/(with-sidebar)/application-f
 import {ApplicationFormEdit} from '@/app/admin/(with-sidebar)/application-form/_components/form/ApplicationFormEdit';
 import {ApplicationFormView} from '@/app/admin/(with-sidebar)/application-form/_components/form/ApplicationFormView';
 import {SuspenseWrapper} from '@/components/wrappers/SuspenseWrapper';
-import {useAdminApplicationFormStore} from '@/stores/useAdminApplicationFormStore';
+import {useAdminApplicationFormStore} from '@/store/useAdminApplicationFormStore';
 
 export const AdminApplicationForm = () => {
   const isEditingApplicationForm = useAdminApplicationFormStore(

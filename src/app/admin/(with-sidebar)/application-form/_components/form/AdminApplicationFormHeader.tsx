@@ -2,7 +2,7 @@
 
 import {GenerationDropdown} from '@/components/dropdown/GenerationDropdown';
 import {Button} from '@/components/button/Button';
-import {useAdminApplicationFormStore} from '@/stores/useAdminApplicationFormStore';
+import {useAdminApplicationFormStore} from '@/store/useAdminApplicationFormStore';
 
 export const AdminApplicationFormHeader = () => {
   const generation = useAdminApplicationFormStore((s) => s.generation);
