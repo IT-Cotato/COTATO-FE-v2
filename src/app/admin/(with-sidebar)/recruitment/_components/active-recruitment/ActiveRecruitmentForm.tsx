@@ -6,6 +6,7 @@ import {PeriodField} from '@/app/admin/(with-sidebar)/recruitment/_components/ac
 import {useRecruitmentStore} from '@/store/useRecruitmentStore';
 import {GenerationField} from '@/app/admin/(with-sidebar)/recruitment/_components/active-recruitment/GenerationField';
 import {RecruitmentConfirmModal} from '@/components/modal/RecruitConfirmModal';
+import {formatDate} from '@/utils/formatDate';
 
 export const ActiveRecruitmentForm = () => {
   const {isRecruiting, setIsRecruiting, generation, setGeneration} =
@@ -26,7 +27,11 @@ export const ActiveRecruitmentForm = () => {
     setIsRecruiting(!isRecruiting);
     setIsModalOpen(false);
 
+    const formattedStartDate = formatDate(startDate);
+    const formattedEndDate = formatDate(endDate);
+
     console.log(`${generation}기 모집 ${isRecruiting ? '종료' : '시작'}`);
+    console.log(formattedStartDate, formattedEndDate);
   };
 
   const handleSubmit = (e: React.FormEvent) => {
