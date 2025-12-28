@@ -6,7 +6,7 @@ import {getInitialTime} from '@/utils/getInitialTime';
 import {useState} from 'react';
 import DatePicker, {CalendarContainer} from 'react-datepicker';
 
-interface CusotomDateTimePickerProps {
+interface CustomDateTimePickerProps {
   selected: Date | null;
   onChange: (date: Date) => void;
 }
@@ -14,11 +14,11 @@ interface CusotomDateTimePickerProps {
 export const CustomDateTimePicker = ({
   selected,
   onChange,
-}: CusotomDateTimePickerProps) => {
+}: CustomDateTimePickerProps) => {
   const initialTime = getInitialTime();
   const [hour, setHour] = useState(initialTime.hour);
   const [minute, setMinute] = useState(initialTime.minute);
-  const [period, setPeriod] = useState<'오전' | '오후'>('오전');
+  const [period, setPeriod] = useState<'오전' | '오후'>(initialTime.period);
 
   const handlePrevMonth = () => {
     if (!selected) return;
