@@ -1,26 +1,24 @@
+'use client';
+
 import {useState} from 'react';
-import {MOCK_MAIL_CONTENT} from '@/mocks/mock-mail';
 import {useRecruitmentStore} from '@/store/useRecruitmentStore';
+import {MAIL_DATA_MAP} from '@/constants/admin/admin-result';
+import type {MailType} from '@/schemas/admin-result-type';
 
-interface UseManageMailReturn {
-  isEditing: boolean;
-  content: string;
-  setContent: (content: string) => void;
-  isChanged: boolean;
-  canSendMail: boolean;
-  handleEditClick: () => void;
-  handleCancelClick: () => void;
-  handleSaveClick: () => void;
-}
+export const useManageMail = (
+  mailType: MailType,
+  alwaysAble: boolean = false
+) => {
+  const initialData =
+    MAIL_DATA_MAP[mailType] || MAIL_DATA_MAP['지원 알림 메일'];
 
-export const useManageMail = (): UseManageMailReturn => {
   const [isEditing, setIsEditing] = useState(false);
-  const [content, setContent] = useState(MOCK_MAIL_CONTENT);
-  const [originalContent, setOriginalContent] = useState(MOCK_MAIL_CONTENT);
+  const [content, setContent] = useState(initialData);
+  const [originalContent, setOriginalContent] = useState(initialData);
 
   const isRecruiting = useRecruitmentStore((state) => state.isRecruiting);
   const isChanged = content !== originalContent;
-  const canSendMail = isRecruiting && !isEditing;
+  const canSendMail = !isEditing && (alwaysAble || isRecruiting);
 
   const handleEditClick = () => setIsEditing(true);
 
