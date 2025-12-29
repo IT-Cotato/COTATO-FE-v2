@@ -31,7 +31,7 @@ export const AdminApplicationFormCalendar = ({
     <div className='relative w-fit' ref={calendarRef}>
       <button
         type='button'
-        className='flex w-57 items-center justify-between rounded-[10px] bg-neutral-100 px-4 py-3'
+        className='flex w-fit items-center justify-between gap-3 rounded-[10px] bg-neutral-100 px-4 py-3 2xl:min-w-50'
         onClick={() => setIsOpen((prev) => !prev)}>
         <span className='text-body-m font-normal text-neutral-600'>
           {value ?? placeholder}
