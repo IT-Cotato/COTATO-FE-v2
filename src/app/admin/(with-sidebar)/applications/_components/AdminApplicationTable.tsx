@@ -6,6 +6,7 @@ import {AdminApplicationPagination} from '@/app/admin/(with-sidebar)/application
 import DownArrowIcon from '@/assets/arrow/down-arrow.svg';
 import {mockApplications} from '@/mocks/mock-application';
 import clsx from 'clsx';
+import {ROUTES} from '@/constants/routes';
 
 const ITEMS_PER_PAGE = 9;
 
@@ -42,15 +43,19 @@ export const AdminApplicationTable = () => {
 
   // TODO: 합격, 예비합격, 불합격, 평가전 필터링 컴포넌트 및 로직 추가
 
+  const handleNameClick = (id: number) => {
+    router.push(`${ROUTES.ADMIN_APPLICATION_FORM}/${id}`);
+  };
+
   const hasApplications = mockApplications.length > 0;
 
   return (
     <>
       {hasApplications ? (
         <>
-          <div className='overflow-hidden'>
-            <table className='border-collapse'>
-              <thead className='bg-neutral-100'>
+          <div className='w-full'>
+            <table className='w-full table-fixed border-collapse'>
+              <thead className='bg-neutral-200'>
                 <tr>
                   {APPLICATION_COLUMNS.map((col) => {
                     const isNameColumn = col.key === 'name';
@@ -58,7 +63,7 @@ export const AdminApplicationTable = () => {
                     return (
                       <th
                         key={col.key}
-                        className='w-44 px-3 py-4 text-left text-body-l font-semibold text-neutral-600'>
+                        className='px-3 py-4 text-left text-body-l font-semibold text-neutral-600'>
                         <div
                           className={`flex items-center gap-2.5 ${
                             isNameColumn ? 'cursor-pointer select-none' : ''
@@ -85,12 +90,20 @@ export const AdminApplicationTable = () => {
 
               <tbody>
                 {currentItems.map((app) => (
-                  <tr key={app.id} className='text-body-l text-neutral-600'>
-                    <td className='px-3 py-4'>{app.name}</td>
-                    <td className='px-3 py-4'>{app.gender}</td>
-                    <td className='px-3 py-4'>{app.part}</td>
-                    <td className='px-3 py-4'>{app.school}</td>
-                    <td className='px-3 py-4'>{app.phone}</td>
+                  <tr
+                    key={app.id}
+                    className='bg-white text-body-l text-neutral-600'>
+                    <td className='px-3 py-4'>
+                      <button
+                        className='cursor-pointer hover:border-b'
+                        onClick={() => handleNameClick(app.id)}>
+                        {app.name}
+                      </button>
+                    </td>
+                    <td className='truncate px-3 py-4'>{app.gender}</td>
+                    <td className='truncate px-3 py-4'>{app.part}</td>
+                    <td className='truncate px-3 py-4'>{app.school}</td>
+                    <td className='truncate px-3 py-4'>{app.phone}</td>
                     <td className='px-3 py-4'>
                       <AdminApplicationResultBadge result={app.result} />
                     </td>
@@ -99,12 +112,14 @@ export const AdminApplicationTable = () => {
               </tbody>
             </table>
           </div>
-          <div className='flex w-244 justify-center'>
-            <AdminApplicationPagination
-              currentPage={currentPage}
-              totalPages={totalPages}
-              onPageChange={updatePage}
-            />
+          <div className='flex w-full justify-center'>
+            <div className='-ml-86'>
+              <AdminApplicationPagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={updatePage}
+              />
+            </div>
           </div>
         </>
       ) : (

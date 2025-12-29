@@ -1,3 +1,15 @@
+import {AdminApplicationForm} from '@/app/admin/(with-sidebar)/application-form/_components/form/AdminApplicationForm';
+import {AdminApplicationFormControl} from '@/app/admin/(with-sidebar)/application-form/_components/form/AdminApplicationFormControl';
+import {AdminApplicationFormHeader} from '@/app/admin/(with-sidebar)/application-form/_components/form/AdminApplicationFormHeader';
+import {AdminRecruitmentInformation} from '@/app/admin/(with-sidebar)/application-form/_components/recruitment/AdminRecruitmentInformation';
+
 export default function AdminApplicationFormPage() {
-  return <div>어드민 지원서 수정</div>;
+  return (
+    <section className='flex flex-col gap-6'>
+      <AdminApplicationFormHeader />
+      <AdminRecruitmentInformation />
+      <AdminApplicationFormControl />
+      <AdminApplicationForm />
+    </section>
+  );
 }
