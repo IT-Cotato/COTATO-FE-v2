@@ -55,7 +55,7 @@ export const AdminApplicationTable = () => {
         <>
           <div className='w-full'>
             <table className='w-full table-fixed border-collapse'>
-              <thead className='bg-neutral-100'>
+              <thead className='bg-neutral-200'>
                 <tr>
                   {APPLICATION_COLUMNS.map((col) => {
                     const isNameColumn = col.key === 'name';
@@ -90,7 +90,9 @@ export const AdminApplicationTable = () => {
 
               <tbody>
                 {currentItems.map((app) => (
-                  <tr key={app.id} className='text-body-l text-neutral-600'>
+                  <tr
+                    key={app.id}
+                    className='bg-white text-body-l text-neutral-600'>
                     <td className='px-3 py-4'>
                       <button
                         className='cursor-pointer hover:border-b'
@@ -111,11 +113,13 @@ export const AdminApplicationTable = () => {
             </table>
           </div>
           <div className='flex w-full justify-center'>
-            <AdminApplicationPagination
-              currentPage={currentPage}
-              totalPages={totalPages}
-              onPageChange={updatePage}
-            />
+            <div className='-ml-86'>
+              <AdminApplicationPagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={updatePage}
+              />
+            </div>
           </div>
         </>
       ) : (
