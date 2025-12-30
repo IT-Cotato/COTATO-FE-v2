@@ -44,7 +44,7 @@ export const AdminApplicationTable = () => {
   // TODO: 합격, 예비합격, 불합격, 평가전 필터링 컴포넌트 및 로직 추가
 
   const handleNameClick = (id: number) => {
-    router.push(`${ROUTES.ADMIN_APPLICATION_FORM}/${id}`);
+    router.push(`${ROUTES.ADMIN_APPLICATION}/${id}`);
   };
 
   const hasApplications = mockApplications.length > 0;
