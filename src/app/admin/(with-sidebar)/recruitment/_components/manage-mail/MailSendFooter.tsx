@@ -19,7 +19,6 @@ export const MailSendFooter = ({
           width={156}
           height={36}
           label='메일 전송하기'
-          borderRadius={5}
           labelTypo='body_l'
           backgroundColor={canSendMail ? 'primary' : 'text-disabled'}
           disabled={!canSendMail}
