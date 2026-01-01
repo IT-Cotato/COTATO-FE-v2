@@ -1,4 +1,4 @@
-import Background from '@/app/background.svg';
+import Image from 'next/image';
 import {Button} from '@/components/button/Button';
 import Link from 'next/link';
 
@@ -15,9 +15,12 @@ const NOTICES = [
 export default function Home() {
   return (
     <section className='relative h-[calc(100dvh-88px)] w-full overflow-hidden bg-black'>
-      <Background
-        className='absolute inset-0 h-full w-full'
-        preserveAspectRatio='xMidYMid slice'
+      <Image
+        src='/background/background.svg'
+        alt='배경 이미지'
+        fill
+        priority
+        className='object-cover object-center'
       />
       <div className='relative z-10 mx-auto flex w-full max-w-[960px] flex-col gap-5 pt-24'>
         <h1 className='text-h4 text-white'>🥔 코테이토 12기 지원서 🥔</h1>
