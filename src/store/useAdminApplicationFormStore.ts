@@ -18,7 +18,7 @@ interface AdminApplicationFormState {
 
 export const useAdminApplicationFormStore = create<AdminApplicationFormState>(
   (set) => ({
-    generation: '13기',
+    generation: '13',
     isEditingRecruitmentInfo: false,
     isEditingApplicationForm: false,
     isFormValid: true,
