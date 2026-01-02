@@ -6,7 +6,7 @@ interface NotifyInputProps  {
   className?: string;
 };
 
-export default function NotifyInput({className}: NotifyInputProps) {
+export const NotifyInput = ({className}: NotifyInputProps) => {
   const [email, setEmail] = useState('');
 
   const isValidEmail =
