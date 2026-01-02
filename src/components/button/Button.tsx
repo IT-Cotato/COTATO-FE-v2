@@ -21,6 +21,7 @@ interface ButtonComponentProps extends ButtonProps {
   subLabelSpacing?: number;
   borderRadius?: number;
   backgroundColor?: ColorKey;
+  disabledBackgroundColor?: ColorKey;
   textColor?: ColorKey;
   wrapperClassName?: string;
 }
@@ -68,6 +69,10 @@ interface ButtonComponentProps extends ButtonProps {
  * @param backgroundColor 버튼 배경색 (CSS 변수 키, optional)
  *  - 예: 'primary', 'secondary', 'alert', 'neutral-50' 등
  *
+ * @param disabledBackgroundColor 버튼 비활성화 상태일 때 배경색 (CSS 변수 키, optional)
+ *  - 예: 'primary', 'secondary', 'alert', 'neutral-50' 등
+
+ *
  * @param textColor 버튼 라벨 텍스트 색상 (CSS 변수 키, optional)
  *  - 예: 'primary', 'secondary', 'alert', 'neutral-50' 등
  *
@@ -89,6 +94,7 @@ export const Button = ({
   subLabelSpacing = BUTTON_DEFAULT_SUBLABEL_SPACING,
   borderRadius = BUTTON_DEFAULT_BORDER_RADIUS,
   backgroundColor,
+  disabledBackgroundColor,
   textColor,
   wrapperClassName,
   ...props
@@ -116,7 +122,10 @@ export const Button = ({
             typeof height === 'number'
               ? `${height}px`
               : (height ?? `${BUTTON_DEFAULT_HEIGHT}px`),
-          backgroundColor: toColorVar(backgroundColor),
+          backgroundColor:
+            disabled && disabledBackgroundColor
+              ? toColorVar(disabledBackgroundColor)
+              : toColorVar(backgroundColor),
           borderColor: isOutline ? resolvedTextColor : undefined,
           borderRadius: `${borderRadius}px`,
         }}
