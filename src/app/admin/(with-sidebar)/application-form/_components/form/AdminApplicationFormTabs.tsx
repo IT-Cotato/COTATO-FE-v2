@@ -2,16 +2,17 @@
 
 import {Button} from '@/components/button/Button';
 import {PART_TABS} from '@/constants/admin/admin-application-form';
-import {PartTypeEtc} from '@/schemas/admin-application-type';
+import {PartEtcType} from '@/schemas/admin/admin-application-type';
+
 import {useRouter, useSearchParams} from 'next/navigation';
 
 export const AdminApplicationFormTabs = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const activePart = (searchParams.get('part') as PartTypeEtc) ?? 'plan';
+  const activePart = (searchParams.get('part') as PartEtcType) ?? 'plan';
 
-  const handleTabClick = (part: PartTypeEtc) => {
+  const handleTabClick = (part: PartEtcType) => {
     const params = new URLSearchParams(searchParams.toString());
     params.set('part', part);
 

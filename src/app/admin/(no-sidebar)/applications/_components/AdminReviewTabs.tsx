@@ -2,7 +2,7 @@
 
 import {Button} from '@/components/button/Button';
 import {REVIEWER_TABS} from '@/constants/admin/admin-applications';
-import {ReviewerType} from '@/schemas/admin-application-type';
+import {ReviewerType} from '@/schemas/admin/admin-application-type';
 import {useAdminReviewStore} from '@/store/useAdminReviewStore';
 import {useRouter, useSearchParams} from 'next/navigation';
 import {useEffect} from 'react';
