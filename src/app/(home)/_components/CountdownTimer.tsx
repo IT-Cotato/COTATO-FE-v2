@@ -7,7 +7,7 @@ interface CountdownTimerProps {
 }
 
 const calculateTimeLeft = (targetTimestamp: number) => {
-  const now = new Date().getTime();
+  const now = Date.now();
   const difference = targetTimestamp - now;
 
   if (difference <= 0) {
@@ -26,26 +26,36 @@ const calculateTimeLeft = (targetTimestamp: number) => {
 };
 
 export default function CountdownTimer({isDark = false}: CountdownTimerProps) {
-  // TODO: 추후 API에서 받아온 targetDate로 교체 예정
+  // 서버/첫 렌더에서도 항상 동일한 값
+  const [timeLeft, setTimeLeft] = useState<{h: string; m: string; s: string}>(
+    () => ({h: '00', m: '00', s: '00'})
+  );
+
+  // 목표 시간 (추후 API 연동 가능)
   const targetDate = useMemo(
     () => new Date('2026-03-01T00:00:00').getTime(),
     []
   );
 
-  const [timeLeft, setTimeLeft] = useState(() => calculateTimeLeft(targetDate));
-
   useEffect(() => {
-    const timer = setInterval(() => {
+    const tick = () => {
       setTimeLeft(calculateTimeLeft(targetDate));
-    }, 1000);
+    };
 
-    return () => clearInterval(timer);
+    // 첫 업데이트는 브라우저 페인트 이후에 실행
+    const rafId = requestAnimationFrame(tick);
+    const timerId = setInterval(tick, 1000);
+
+    return () => {
+      cancelAnimationFrame(rafId);
+      clearInterval(timerId);
+    };
   }, [targetDate]);
 
   const textColor = isDark ? 'text-white' : 'text-neutral-600';
 
   return (
-    <div className='flex items-center justify-center gap-12 text-h1'>
+    <div className="flex items-center justify-center gap-12 text-h1">
       <span className={textColor}>{timeLeft.h}</span>
       <span className={textColor}>:</span>
       <span className={textColor}>{timeLeft.m}</span>
