@@ -5,7 +5,12 @@ import MinusIcon from '@/assets/icons/minus.svg';
 import {useState} from 'react';
 import clsx from 'clsx';
 
-const FaqAccordion = () => {
+interface FaqAccordionProps {
+  question: string;
+  answer: string;
+}
+
+const FaqAccordion = ({question, answer}: FaqAccordionProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -21,7 +26,7 @@ const FaqAccordion = () => {
             'text-body-l',
             isOpen ? 'text-neutral-800' : 'text-neutral-600'
           )}>
-          코테이토에 가면 무엇을 하나요?
+          {question}
         </h1>
         {isOpen ? (
           <MinusIcon className='h-6 w-6' />
@@ -32,12 +37,7 @@ const FaqAccordion = () => {
 
       {isOpen && (
         <p className='self-stretch text-body-m font-normal text-neutral-600'>
-          정기 세션에서는 팀별 진행상황 발표, CS 교육, IT 이슈 발표, 네트워킹
-          등의 활동이 진행됩니다.정기 세션에서는 팀별 진행상황 발표, CS 교육, IT
-          이슈 발표, 네트워킹 등의 활동이 진행됩니다.정기 세션에서는 팀별
-          진행상황 발표, CS 교육, IT 이슈 발표, 네트워킹 등의 활동이 진행됩니다.
-          등의 활동이 진행됩 등의 활동이 진행됩 등의 활동이 진행됩 등의 활동이
-          진행됩니다.
+          {answer}
         </p>
       )}
     </div>
