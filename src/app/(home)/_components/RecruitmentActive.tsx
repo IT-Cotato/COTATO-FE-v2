@@ -6,7 +6,7 @@ import Link from 'next/link';
 import {RECRUITMENT_NOTICES} from '@/constants/home/recruitment';
 import {useRecruitmentStore} from '@/store/useRecruitmentStore';
 
-export default function RecruitmentActive() {
+export const RecruitmentActive() => {
   const generation = useRecruitmentStore((state) => state.generation);
 
   return (
