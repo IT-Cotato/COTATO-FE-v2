@@ -23,7 +23,7 @@ export default function RecruitmentLayout({
       className={`relative flex h-[calc(100vh-80px)] flex-col items-center ${
         isDark ? 'bg-black text-white' : 'bg-neutral-50 text-black'
       } overflow-hidden`}>
-      <div className='z-10 flex w-full flex-col items-center gap-7.5 pt-[246px]'>
+      <div className='z-10 flex w-full flex-col items-center gap-7.5 pt-12 pb-60 lg:pt-[246px] lg:pb-[260px]'>
         {/* 타이틀 영역 */}
         <h1
           className='bg-clip-text text-center text-h1 text-transparent'
@@ -52,7 +52,7 @@ export default function RecruitmentLayout({
       <div className='absolute bottom-0 left-0 h-[239px] w-full'>
         <Image
           src={bgImage}
-          alt='배경 이미지'
+          alt=''
           fill
           priority
           className='object-cover object-bottom'
