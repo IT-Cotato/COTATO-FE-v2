@@ -1,4 +1,6 @@
-export const mockApplications = [
+import {ApplicationType} from '@/schemas/admin/admin-application-type';
+
+export const mockApplications: ApplicationType[] = [
   {
     id: 1,
     name: '김민아',
