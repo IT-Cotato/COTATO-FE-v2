@@ -89,4 +89,8 @@
   .shadow-default {
     box-shadow: 0 6px 15px 0 rgba(0, 0, 0, 0.1);
   }
+
+  .shadow-card {
+    box-shadow: 8px 3px 22px 10px rgba(150, 150, 150, 0.11);
+  }
 }
