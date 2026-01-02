@@ -7,5 +7,3 @@ export const RECRUITMENT_NOTICES = [
   '마감 시간 이후에는 제출을 받지 않습니다. 늦지 않게 꼭 제출해주세요!',
   '지원 마감 시간이 임박하면 지원자가 몰려 서버가 불안정할 수 있으므로 가급적 여유롭게 제출하는 것을 권장드립니다.',
 ] as const;
-
-export const CURRENT_GENERATION = '12';
