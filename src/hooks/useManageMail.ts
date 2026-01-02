@@ -3,7 +3,7 @@
 import {useState} from 'react';
 import {useRecruitmentStore} from '@/store/useRecruitmentStore';
 import {MAIL_DATA_MAP} from '@/constants/admin/admin-result';
-import type {MailType} from '@/schemas/admin-result-type';
+import type {MailType} from '@/schemas/admin/admin-result-type';
 
 export const useManageMail = (
   mailType: MailType,

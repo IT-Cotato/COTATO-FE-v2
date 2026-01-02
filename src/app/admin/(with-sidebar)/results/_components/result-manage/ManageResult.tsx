@@ -3,7 +3,7 @@ import {useState} from 'react';
 import {RESULT_DATA} from '@/mocks/mock-result';
 import {TermSelect} from '@/app/admin/(with-sidebar)/results/_components/result-manage/TermSelect';
 import {ResultTable} from '@/app/admin/(with-sidebar)/results/_components/result-manage/ResultTable';
-import {ResultSummaryData} from '@/schemas/admin-result-type';
+import {ResultSummaryData} from '@/schemas/admin/admin-result-type';
 
 export const ManageResult = () => {
   const terms = Object.keys(RESULT_DATA).sort((a, b) => Number(b) - Number(a));
