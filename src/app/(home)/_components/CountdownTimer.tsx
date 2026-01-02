@@ -55,7 +55,7 @@ export default function CountdownTimer({isDark = false}: CountdownTimerProps) {
   const textColor = isDark ? 'text-white' : 'text-neutral-600';
 
   return (
-    <div className="flex items-center justify-center gap-12 text-h1">
+    <div className='flex items-center justify-center gap-12 text-h1'>
       <span className={textColor}>{timeLeft.h}</span>
       <span className={textColor}>:</span>
       <span className={textColor}>{timeLeft.m}</span>
