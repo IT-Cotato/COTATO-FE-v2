@@ -6,7 +6,7 @@ import Link from 'next/link';
 import {RECRUITMENT_NOTICES} from '@/constants/home/recruitment';
 import {useRecruitmentStore} from '@/store/useRecruitmentStore';
 
-export const RecruitmentActive() => {
+export const RecruitmentActive = () => {
   const generation = useRecruitmentStore((state) => state.generation);
 
   return (
@@ -41,4 +41,4 @@ export const RecruitmentActive() => {
       </div>
     </section>
   );
-}
+};
