@@ -85,4 +85,8 @@
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
   }
+
+  .shadow-default {
+    box-shadow: 0 6px 15px 0 rgba(0, 0, 0, 0.1);
+  }
 }
