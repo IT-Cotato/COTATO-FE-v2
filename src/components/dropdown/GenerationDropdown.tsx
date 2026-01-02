@@ -36,28 +36,28 @@ export const GenerationDropdown = ({
       <button
         type='button'
         onClick={handleToggle}
-        className='flex items-center gap-2 rounded-sm bg-primary px-3.75 py-1.5 text-body-m text-neutral-800'>
-        <span>{generation}</span>
+        className='shadow-default flex items-center gap-1.5 rounded-[30px] bg-white px-3.75 py-2 text-body-m text-neutral-800'>
+        <span>{generation}기</span>
 
         <ChevronDown
-          className={`transition-transform duration-200 ${
+          className={`text-primary transition-transform duration-200 ${
             isOpen ? 'rotate-180' : 'rotate-0'
           }`}
         />
       </button>
       {isOpen && (
-        <ul className='absolute top-full left-0 z-10 mt-2 rounded-sm bg-neutral-700'>
+        <ul className='absolute top-full left-0 z-10 mt-2 rounded-sm bg-neutral-700 text-center'>
           {generations.map((gen) => (
             <li
               key={gen}
               onClick={() => handleSelect(gen)}
-              className='cursor-pointer px-4 py-1.5 text-body-m font-normal text-neutral-400 hover:text-primary'>
-              {gen}기
+              className='cursor-pointer px-6 py-1.5 text-body-m font-normal text-neutral-400 hover:text-primary'>
+              {gen}
             </li>
           ))}
         </ul>
       )}
-      <p className='text-body-m text-neutral-800'>기</p>
+      <p className='text-body-m text-neutral-800'></p>
     </div>
   );
 };

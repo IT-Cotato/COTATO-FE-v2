@@ -23,7 +23,7 @@ export const AdminApplicationFormHeader = () => {
       <div className='flex flex-row justify-between'>
         <GenerationDropdown
           generation={generation}
-          generations={['13', '14', '15']}
+          generations={['13기', '14기', '15기']}
           onSelect={setGeneration}
         />
         {isEditingRecruitmentInfo ? (
