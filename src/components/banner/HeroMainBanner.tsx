@@ -1,7 +1,12 @@
 import Image from 'next/image';
 import HeroBanner from '@/assets/banners/hero-main.webp';
 
-const HeroMainBanner = () => {
+interface HeroMainBannerProps {
+  heading?: string;
+  subheading?: string;
+}
+
+const HeroMainBanner = ({heading, subheading}: HeroMainBannerProps) => {
   return (
     <aside role='banner' className='relative flex h-106.5 w-full'>
       <div
@@ -16,6 +21,20 @@ const HeroMainBanner = () => {
         priority={true}
         className='h-full w-full object-cover'
       />
+      {heading && (
+        <div className='absolute top-0 right-0 left-0 flex justify-center py-21.75'>
+          <div className='w-292.75'>
+            <h1 className='text-4xl leading-12.5 whitespace-nowrap text-white'>
+              {heading}
+            </h1>
+            {subheading && (
+              <p className='text-xl leading-12.5 whitespace-nowrap text-white'>
+                {subheading}
+              </p>
+            )}
+          </div>
+        </div>
+      )}
     </aside>
   );
 };
