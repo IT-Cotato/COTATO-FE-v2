@@ -2,7 +2,7 @@
 import {Button} from '@/components/button/Button';
 import {useState} from 'react';
 
-type NotifyInputProps = {
+interface NotifyInputProps  {
   className?: string;
 };
 
