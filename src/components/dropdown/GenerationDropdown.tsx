@@ -57,7 +57,6 @@ export const GenerationDropdown = ({
           ))}
         </ul>
       )}
-      <p className='text-body-m text-neutral-800'></p>
     </div>
   );
 };
