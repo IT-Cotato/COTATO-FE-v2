@@ -15,7 +15,6 @@ export default function NotifyInput({className}: NotifyInputProps) {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (isValidEmail) {
-      console.log('알림 신청:', email);
       // TODO: API 호출
     }
   };
