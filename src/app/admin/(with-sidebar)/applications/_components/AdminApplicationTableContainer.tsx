@@ -12,7 +12,9 @@ export const AdminApplicationTableContainer = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
 
-  const [nameSortOrder, setNameSortOrder] = useState<'asc' | 'desc'>('asc');
+  const [nameSortOrder, setNameSortOrder] = useState<
+    'asc' | 'desc' | 'default'
+  >('default');
   const [selectedResults, setSelectedResults] = useState<
     ApplicationResultType[]
   >([]);
@@ -23,15 +25,26 @@ export const AdminApplicationTableContainer = () => {
       ? mockApplications
       : mockApplications.filter((app) => selectedResults.includes(app.result));
 
+  const sortedApplications = (() => {
+    if (nameSortOrder === 'default') return filteredApplications;
+
+    return [...filteredApplications].sort((a, b) => {
+      if (nameSortOrder === 'asc') {
+        return a.name.localeCompare(b.name, 'ko');
+      }
+      return b.name.localeCompare(a.name, 'ko');
+    });
+  })();
+
   const pageParam = Number(searchParams.get('page'));
 
   const currentPage = pageParam > 0 ? pageParam : 1;
 
-  const totalPages = Math.ceil(filteredApplications.length / ITEMS_PER_PAGE);
+  const totalPages = Math.ceil(sortedApplications.length / ITEMS_PER_PAGE);
 
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
 
-  const currentItems = filteredApplications.slice(
+  const currentItems = sortedApplications.slice(
     startIndex,
     startIndex + ITEMS_PER_PAGE
   );
@@ -44,11 +57,12 @@ export const AdminApplicationTableContainer = () => {
   };
 
   const handleNameSortToggle = () => {
-    setNameSortOrder((prev) => (prev === 'asc' ? 'desc' : 'asc'));
-    // TODO: 이름 내림차순 / 오름차순으로 정렬 API 호출 혹은 정렬 로직 작성
+    setNameSortOrder((prev) => {
+      if (prev === 'default') return 'asc';
+      if (prev === 'asc') return 'desc';
+      return 'default';
+    });
   };
-
-  // TODO: 합격, 예비합격, 불합격, 평가전 필터링 컴포넌트 및 로직 추가
 
   const hasApplications = mockApplications.length > 0;
 

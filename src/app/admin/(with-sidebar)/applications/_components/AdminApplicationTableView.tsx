@@ -4,12 +4,12 @@ import {ROUTES} from '@/constants/routes';
 import DefaultFilterIcon from '@/assets/icons/filter-default.svg';
 import FinishFilterIcon from '@/assets/icons/filter-finish.svg';
 import DownArrowIcon from '@/assets/arrow/down-arrow.svg';
+import MinusArrowIcon from '@/assets/arrow/minus-arrow.svg';
 import {mockApplications} from '@/mocks/mock-application';
-import clsx from 'clsx';
 
 interface AdminApplicationTableViewProps {
   items: typeof mockApplications;
-  nameSortOrder: 'asc' | 'desc';
+  nameSortOrder: 'asc' | 'desc' | 'default';
   isFilterActive: boolean;
   onNameSortToggle: () => void;
   onFilterToggle: () => void;
@@ -55,12 +55,11 @@ export const AdminApplicationTableView = ({
                       type='button'
                       onClick={onNameSortToggle}
                       className='cursor-pointer'>
-                      <DownArrowIcon
-                        className={clsx(
-                          'transition-transform duration-200',
-                          nameSortOrder === 'desc' && 'rotate-180'
-                        )}
-                      />
+                      {nameSortOrder === 'default' && <MinusArrowIcon />}
+                      {nameSortOrder === 'asc' && (
+                        <DownArrowIcon className='rotate-180' />
+                      )}
+                      {nameSortOrder === 'desc' && <DownArrowIcon />}
                     </button>
                   )}
                 </div>
