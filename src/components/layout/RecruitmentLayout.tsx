@@ -44,7 +44,7 @@ export default function RecruitmentLayout({
 
         {topAction && <div className='w-full max-w-[611px]'>{topAction}</div>}
 
-        <CountdownTimer />
+        <CountdownTimer isDark={isDark} />
 
         {bottomAction && <div className='self-stretch'>{bottomAction}</div>}
       </div>
