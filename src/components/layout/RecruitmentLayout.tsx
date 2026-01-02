@@ -20,17 +20,16 @@ export default function RecruitmentLayout({
 }: RecruitmentLayoutProps) {
   return (
     <div
-      className={`relative flex h-[calc(100vh-80px)] flex-col items-center ${
+      className={`relative flex min-h-[calc(100vh-80px)] flex-col items-center ${
         isDark ? 'bg-black text-white' : 'bg-neutral-50 text-black'
       } overflow-hidden`}>
-      <div className='z-10 flex w-full flex-col items-center gap-7.5 pt-12 pb-60 lg:pt-[246px] lg:pb-[260px]'>
+      <div className='z-10 flex w-full flex-1 flex-col items-center justify-center gap-[4vh] pt-10 pb-[260px] lg:gap-7.5'>
         {/* 타이틀 영역 */}
         <h1
           className='bg-clip-text text-center text-h1 text-transparent'
           style={{backgroundImage: 'var(--branding-gradient)'}}>
           COde Together, Arrive TOgether
         </h1>
-
         {/* 상태 설명 텍스트 */}
         <div className='flex flex-col gap-[5px] text-center'>
           <p
@@ -41,11 +40,8 @@ export default function RecruitmentLayout({
             {descriptionText}
           </p>
         </div>
-
         {topAction && <div className='w-full max-w-[611px]'>{topAction}</div>}
-
         <CountdownTimer isDark={isDark} />
-
         {bottomAction && <div className='self-stretch'>{bottomAction}</div>}
       </div>
       {/* 하단 배경 이미지 (props로 받은 bgImage 사용) */}

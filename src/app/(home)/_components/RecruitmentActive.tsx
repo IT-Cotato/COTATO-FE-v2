@@ -10,7 +10,7 @@ export const RecruitmentActive() => {
   const generation = useRecruitmentStore((state) => state.generation);
 
   return (
-    <section className='relative h-[calc(100dvh-88px)] w-full overflow-hidden bg-black'>
+    <section className='relative flex min-h-[calc(100dvh-88px)] w-full flex-col items-center justify-center overflow-hidden bg-black px-4 py-10'>
       <Image
         src='/background/background.svg'
         alt='배경 이미지'
@@ -18,11 +18,10 @@ export const RecruitmentActive() => {
         priority
         className='object-cover object-center'
       />
-      <div className='relative z-10 mx-auto flex w-full max-w-[960px] flex-col gap-5 pt-24'>
+      <div className='relative z-10 flex w-full max-w-[960px] flex-col gap-5'>
         <h1 className='text-h4 text-white'>
           🥔 코테이토 {generation}기 지원서 🥔
         </h1>
-
         <div className='flex flex-col gap-8 rounded-[10px] bg-white px-[82px] pt-[44px] pb-[84px]'>
           <h4 className='text-h4 text-black'>⚠️ 지원 전 유의 사항 ⚠️</h4>
 
@@ -34,7 +33,6 @@ export const RecruitmentActive() => {
             ))}
           </ul>
         </div>
-
         <div className='flex justify-end'>
           <Link href='/apply'>
             <Button label='지원하기' />
