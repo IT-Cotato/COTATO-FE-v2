@@ -1,5 +1,5 @@
 import {mockFaq} from '@/mocks/mock-faq';
-import FaqAccordion from './FaqAccordion';
+import FaqAccordion from '@/app/faq/_components/FaqAccordion';
 
 const FaqAccordionList = () => {
   return (

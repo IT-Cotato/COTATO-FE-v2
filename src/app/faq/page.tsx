@@ -1,7 +1,7 @@
 import HeroMainBanner from '@/components/banner/HeroMainBanner';
 import FaqSideBar from '@/app/faq/_components/FaqSideBar';
 import FaqAccordionList from '@/app/faq/_components/FaqAccordionList';
-import FaqContact from './_components/FaqContact';
+import FaqContact from '@/app/faq/_components/FaqContact';
 
 export default function FaqPage() {
   return (
