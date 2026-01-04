@@ -35,7 +35,9 @@ export const GenerationDropdown = ({
         <button
           type='button'
           onClick={handleToggle}
-          className='shadow-default flex items-center gap-1.5 rounded-[30px] bg-white px-3.75 py-2 text-body-m text-neutral-800'>
+          className='shadow-default flex items-center gap-1.5 rounded-[30px] bg-white px-3.75 py-2 text-body-m text-neutral-800'
+          aria-expanded={isOpen}
+          aria-haspopup='listbox'>
           <span>{generation}기</span>
           <ChevronDown
             className={`text-primary transition-transform duration-200 ${
@@ -45,9 +47,13 @@ export const GenerationDropdown = ({
         </button>
 
         {isOpen && (
-          <ul className='absolute top-full left-0 z-10 mt-2 w-full rounded-sm bg-neutral-700 text-center'>
+          <ul
+            role='listbox'
+            className='absolute top-full left-0 z-10 mt-2 w-full rounded-sm bg-neutral-700 text-center'>
             {generations.map((gen) => (
               <li
+                role='option'
+                aria-selected={gen === generation}
                 key={gen}
                 onClick={() => handleSelect(gen)}
                 className='cursor-pointer py-1.5 text-body-m font-normal text-neutral-400 hover:text-primary'>
