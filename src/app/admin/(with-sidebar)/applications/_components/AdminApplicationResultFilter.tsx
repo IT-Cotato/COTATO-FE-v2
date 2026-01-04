@@ -2,7 +2,8 @@ import {RESULT_OPTIONS} from '@/constants/admin/admin-applications';
 import {ApplicationResultType} from '@/schemas/admin/admin-application-type';
 import CheckIcon from '@/assets/icons/check.svg';
 import clsx from 'clsx';
-import {useEffect, useState} from 'react';
+import {useEffect, useRef, useState} from 'react';
+import {useClickOutside} from '@/hooks/useClickOutside';
 
 interface AdminApplicationResultFilterProps {
   selected: ApplicationResultType[];
@@ -17,6 +18,9 @@ export const AdminApplicationResultFilter = ({
 }: AdminApplicationResultFilterProps) => {
   const [draftSelected, setDraftSelected] =
     useState<ApplicationResultType[]>(selected);
+  const filterRef = useRef<HTMLDivElement | null>(null);
+
+  useClickOutside(filterRef, onClose);
 
   useEffect(() => {
     setDraftSelected(selected);
@@ -43,7 +47,9 @@ export const AdminApplicationResultFilter = ({
   };
 
   return (
-    <div className='flex flex-col gap-0.75 rounded-sm bg-neutral-700 p-1.25 text-body-s text-neutral-300'>
+    <div
+      ref={filterRef}
+      className='flex flex-col gap-0.75 rounded-sm bg-neutral-700 p-1.25 text-body-s text-neutral-300'>
       {RESULT_OPTIONS.map((option) => {
         const isAllSelected = draftSelected.length === 0;
         const isChecked = isAllSelected || draftSelected.includes(option);
