@@ -49,7 +49,7 @@ export const ApplicationSchema = z.object({
   id: z.number(),
   name: z.string(),
   phone: z.string(),
-  part: z.string(),
+  part: PartEtcSchema,
   school: z.string(),
   gender: z.string(),
   result: ApplicationResultSchema,
