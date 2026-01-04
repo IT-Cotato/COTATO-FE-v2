@@ -6,6 +6,7 @@ import FinishFilterIcon from '@/assets/icons/filter-finish.svg';
 import DownArrowIcon from '@/assets/arrow/down-arrow.svg';
 import MinusArrowIcon from '@/assets/arrow/minus-arrow.svg';
 import {mockApplications} from '@/mocks/mock-application';
+import {PART_TABS} from '@/constants/admin/admin-application-form';
 
 interface AdminApplicationTableViewProps {
   items: typeof mockApplications;
@@ -82,7 +83,9 @@ export const AdminApplicationTableView = ({
               </a>
             </td>
             <td className='truncate px-3 py-4'>{app.gender}</td>
-            <td className='truncate px-3 py-4'>{app.part}</td>
+            <td className='truncate px-3 py-4'>
+              {PART_TABS.find((tab) => tab.value === app.part)?.label ?? '-'}
+            </td>
             <td className='truncate px-3 py-4'>{app.school}</td>
             <td className='truncate px-3 py-4'>{app.phone}</td>
             <td className='px-3 py-4'>
