@@ -23,11 +23,15 @@ export const AdminApplicationResultFilter = ({
   }, [selected]);
 
   const handleClick = (value: ApplicationResultType) => {
-    setDraftSelected((prev) =>
-      prev.includes(value) ? prev.filter((v) => v !== value) : [...prev, value]
-    );
+    setDraftSelected((prev) => {
+      if (prev.length === 0) {
+        return RESULT_OPTIONS.filter((v) => v !== value);
+      }
+      return prev.includes(value)
+        ? prev.filter((v) => v !== value)
+        : [...prev, value];
+    });
   };
-
   const handleConfirm = () => {
     onChange(draftSelected);
     onClose();
@@ -41,7 +45,8 @@ export const AdminApplicationResultFilter = ({
   return (
     <div className='flex flex-col gap-0.75 rounded-sm bg-neutral-700 p-1.25 text-body-s text-neutral-300'>
       {RESULT_OPTIONS.map((option) => {
-        const isChecked = draftSelected.includes(option);
+        const isAllSelected = draftSelected.length === 0;
+        const isChecked = isAllSelected || draftSelected.includes(option);
 
         return (
           <button
