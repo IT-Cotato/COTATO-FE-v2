@@ -99,7 +99,7 @@ export function AdditionalInfo({
             {label && (
               <label className='text-h5 text-neutral-600'>{label}</label>
             )}
-            <div className={clsx('flex gap-[58px]', className)}>
+            <div className={clsx('flex w-full gap-[58px]', className)}>
               {options?.map((opt) => (
                 <FormRadio
                   key={opt.value}
