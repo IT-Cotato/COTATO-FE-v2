@@ -2,6 +2,7 @@ import HeroMainBanner from '@/components/banner/HeroMainBanner';
 import {FaqSideBar} from '@/app/faq/_components/FaqSideBar';
 import {FaqAccordionList} from '@/app/faq/_components/FaqAccordionList';
 import {FaqContact} from '@/app/faq/_components/FaqContact';
+import {SuspenseWrapper} from '@/components/wrappers/SuspenseWrapper';
 
 export default function FaqPage() {
   return (
@@ -12,8 +13,10 @@ export default function FaqPage() {
       />
       <div className='flex flex-col items-center gap-17.5'>
         <div className='flex gap-28.25 self-stretch'>
-          <FaqSideBar />
-          <FaqAccordionList />
+          <SuspenseWrapper>
+            <FaqSideBar />
+            <FaqAccordionList />
+          </SuspenseWrapper>
         </div>
         <FaqContact />
       </div>
