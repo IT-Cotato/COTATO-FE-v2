@@ -14,7 +14,7 @@ const FaqAccordion = ({question, answer}: FaqAccordionProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div
+    <button
       onClick={() => setIsOpen(!isOpen)}
       className={clsx(
         'flex w-257 cursor-pointer flex-col gap-5 self-stretch rounded-[10px] px-5.5 py-2.5 shadow-[0_6px_15px_0_rgba(0,0,0,0.10)] transition-all duration-300',
@@ -40,7 +40,7 @@ const FaqAccordion = ({question, answer}: FaqAccordionProps) => {
           {answer}
         </p>
       )}
-    </div>
+    </button>
   );
 };
 
