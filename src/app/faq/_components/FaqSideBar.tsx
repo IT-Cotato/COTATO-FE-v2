@@ -48,5 +48,3 @@ export const FaqSideBar = () => {
     </nav>
   );
 };
-
-export default FaqSideBar;

@@ -10,7 +10,7 @@ interface FaqAccordionProps {
   answer: string;
 }
 
-const FaqAccordion = ({question, answer}: FaqAccordionProps) => {
+export const FaqAccordion = ({question, answer}: FaqAccordionProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -43,5 +43,3 @@ const FaqAccordion = ({question, answer}: FaqAccordionProps) => {
     </button>
   );
 };
-
-export default FaqAccordion;

@@ -1,4 +1,4 @@
-const FaqContact = () => {
+export const FaqContact = () => {
   return (
     <div className='flex flex-col gap-3.5'>
       <p className='self-stretch text-body-l font-normal text-neutral-600'>
@@ -14,5 +14,3 @@ const FaqContact = () => {
     </div>
   );
 };
-
-export default FaqContact;
