@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import {Button} from '@/components/button/Button';
 
 export const FullButton = (
@@ -9,6 +10,7 @@ export const FullButton = (
       defaultWidth='100%'
       enableHover={false}
       subLabelSpacing={14}
+      wrapperClassName={clsx('w-full', props.wrapperClassName)}
     />
   );
 };

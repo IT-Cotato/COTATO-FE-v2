@@ -104,7 +104,7 @@ export const Button = ({
 
   return (
     <div
-      className={clsx('flex w-full flex-col items-center', wrapperClassName)}>
+      className={clsx('flex flex-col items-center', wrapperClassName)}>
       <button
         disabled={disabled}
         className={clsx(
