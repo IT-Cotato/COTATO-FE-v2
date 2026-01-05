@@ -45,7 +45,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
     <html
       lang='ko'
       className={`${pretendard.variable} ${sebangGothic.variable} ${roboto.variable} antialiased`}>
-      <body className='flex min-h-screen w-full flex-col'>
+      <body className='flex min-h-screen w-full flex-col bg-black'>
         <Header />
         <main className='flex-1'>{children}</main>
         <Footer />
