@@ -24,7 +24,6 @@ export const FaqSideBar = () => {
                   query: {faq: part},
                 }}
                 scroll={false}
-                key={part}
                 aria-current={isActive ? 'page' : undefined}
                 className={clsx(
                   'flex items-center rounded-[10px] p-2 text-body-m font-normal transition-colors',
