@@ -4,9 +4,9 @@ import FaqAccordion from '@/app/faq/_components/FaqAccordion';
 const FaqAccordionList = () => {
   return (
     <div className='flex flex-col gap-6.25'>
-      {mockFaq.map((item, index) => (
+      {mockFaq.map((item) => (
         <FaqAccordion
-          key={index}
+          key={item.question}
           question={item.question}
           answer={item.answer}
         />
