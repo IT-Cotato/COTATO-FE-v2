@@ -37,11 +37,11 @@ export const RecruitmentActive = () => {
           priority
           className='object-cover object-center'
         />
-        <div className='relative z-10 flex w-full max-w-[960px] flex-col gap-5'>
+        <div className='relative z-10 flex w-full max-w-240 flex-col gap-5'>
           <h1 className='text-h4 text-white'>
             🥔 코테이토 {generation}기 지원서 🥔
           </h1>
-          <div className='flex flex-col gap-8 rounded-[10px] bg-white px-[82px] pt-[44px] pb-[84px]'>
+          <div className='flex flex-col gap-8 rounded-[10px] bg-white px-20.5 pt-11 pb-21'>
             <h4 className='text-h4 text-black'>⚠️ 지원 전 유의 사항 ⚠️</h4>
 
             <ul className='list-disc space-y-3 pl-6 text-neutral-800'>
