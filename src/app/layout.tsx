@@ -33,11 +33,18 @@ const sebangGothic = localFont({
   display: 'swap',
 });
 
+const roboto = localFont({
+  src: '../fonts/Roboto/RobotoVariable.ttf',
+  variable: '--font-roboto',
+  display: 'swap',
+  weight: '100 900',
+});
+
 export default function RootLayout({children}: {children: React.ReactNode}) {
   return (
     <html
       lang='ko'
-      className={`${pretendard.variable} ${sebangGothic.variable} antialiased`}>
+      className={`${pretendard.variable} ${sebangGothic.variable} ${roboto.variable} antialiased`}>
       <body className='flex min-h-screen w-full flex-col'>
         <Header />
         <main className='flex-1'>{children}</main>
