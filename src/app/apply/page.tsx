@@ -11,16 +11,52 @@ export default function ApplyPage() {
   const [step, setStep] = useState(1);
   const methods = useForm({mode: 'onChange'});
 
-  const handleNext = () => setStep((prev) => prev + 1);
-  const handlePrev = () => setStep((prev) => prev - 1);
+  // 저장하기: validation 체크 X, 그냥 현재 값만 저장
   const handleSave = () => {
-    const data = methods.getValues();
+    const data = methods.getValues(); // validation 없이 값만 가져옴
     console.log('저장된 데이터:', data);
+    // TODO: API 호출 - 임시저장
   };
-  const handleSubmit = () => {
-    const data = methods.getValues();
-    console.log('제출된 데이터:', data);
+
+  // 다음 버튼: 저장 먼저 → validation 체크 → 통과하면 이동
+  const handleNext = async () => {
+    // 1. 먼저 저장 (무조건 실행)
+    handleSave();
+
+    // 2. validation 체크
+    let fieldsToValidate: string[] = [];
+
+    if (step === 1) {
+      fieldsToValidate = [
+        'name',
+        'email',
+        'phoneNumber',
+        'major',
+        'studentId',
+        'gender',
+      ];
+    } else if (step === 2) {
+      const values = methods.getValues();
+      fieldsToValidate = Object.keys(values).filter((key) =>
+        key.startsWith('ans_')
+      );
+    }
+
+    const isValid = await methods.trigger(fieldsToValidate);
+
+    // 3. validation 통과하면 이동
+    if (isValid) {
+      setStep((prev) => prev + 1);
+    }
   };
+
+  // 최종 제출: validation 체크 O
+  const handleFinalSubmit = methods.handleSubmit((data) => {
+    console.log('최종 제출 데이터 (validation 통과):', data);
+    // TODO: API 호출 - 최종 제출
+  });
+
+  const handlePrev = () => setStep((prev) => prev - 1);
 
   return (
     <div className='flex w-full justify-center'>
@@ -37,7 +73,7 @@ export default function ApplyPage() {
           </div>
 
           <FormProvider {...methods}>
-            <form onSubmit={methods.handleSubmit(handleSave)}>
+            <form onSubmit={handleFinalSubmit}>
               {step === 1 && (
                 <BasicInfo onNext={handleNext} onSave={handleSave} />
               )}
@@ -49,11 +85,7 @@ export default function ApplyPage() {
                 />
               )}
               {step === 3 && (
-                <AdditionalInfo
-                  onPrev={handlePrev}
-                  onSave={handleSave}
-                  onSubmit={handleSubmit}
-                />
+                <AdditionalInfo onPrev={handlePrev} onSave={handleSave} />
               )}
             </form>
           </FormProvider>

@@ -118,7 +118,7 @@ export function BasicInfo({onNext, onSave, readOnly = false}: BasicInfoProps) {
           variant='primary'
           labelTypo='h4'
           onClick={onNext}
-          type='submit'
+          type='button'
         />
         <FullButton
           label='저장하기'

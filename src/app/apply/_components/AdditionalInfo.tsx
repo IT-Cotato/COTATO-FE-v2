@@ -26,11 +26,9 @@ interface FieldConfig {
 export function AdditionalInfo({
   onPrev,
   onSave,
-  onSubmit,
 }: {
   onPrev: () => void;
   onSave: () => void;
-  onSubmit: () => void;
 }) {
   const {
     register,
@@ -146,13 +144,13 @@ export function AdditionalInfo({
             backgroundColor='neutral-300'
             labelTypo='h4'
             onClick={onPrev}
+            type='button'
           />
           <FullButton
             label='제출하기'
             variant='primary'
             labelTypo='h4'
-            type='button'
-            onClick={onSubmit}
+            type='submit'
           />
         </div>
         <FullButton
