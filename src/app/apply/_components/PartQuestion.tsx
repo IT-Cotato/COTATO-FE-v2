@@ -7,7 +7,7 @@ import {FormTextarea} from '@/components/form/FormTextarea';
 import {FullButton} from '@/components/button/FullButton';
 import {mockPlanApplicationForm} from '@/mocks/mock-application-form';
 import {PART_TABS} from '@/constants/admin/admin-application-form';
-import {PartTypeEtc} from '@/schemas/admin-application-type';
+import {PartEtcType} from '@/schemas/admin/admin-application-type';
 
 interface PartQuestionProps {
   onPrev: () => void;
@@ -32,7 +32,7 @@ export function PartQuestion({onPrev, onNext, onSave}: PartQuestionProps) {
     formState: {errors},
   } = useFormContext();
 
-  const activePart = (searchParams.get('part') as PartTypeEtc) || 'plan';
+  const activePart = (searchParams.get('part') as PartEtcType) || 'plan';
 
   const handlePartChange = (part: string) => {
     const params = new URLSearchParams(searchParams.toString());
@@ -87,6 +87,7 @@ export function PartQuestion({onPrev, onNext, onSave}: PartQuestionProps) {
             backgroundColor='neutral-300'
             labelTypo='h4'
             onClick={onPrev}
+            type='button'
           />
           <FullButton
             label='다음'
