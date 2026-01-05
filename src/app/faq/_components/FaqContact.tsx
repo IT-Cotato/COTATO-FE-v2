@@ -1,9 +1,9 @@
 const FaqContact = () => {
   return (
     <div className='flex flex-col gap-3.5'>
-      <h1 className='self-stretch text-body-l font-normal text-neutral-600'>
+      <p className='self-stretch text-body-l font-normal text-neutral-600'>
         더 자세한 궁금한 내용이 있다면?
-      </h1>
+      </p>
       <a
         href='https://open.kakao.com/o/gyQHDG7e'
         target='_blank'

@@ -21,13 +21,13 @@ const FaqAccordion = ({question, answer}: FaqAccordionProps) => {
         isOpen ? 'bg-neutral-50/85' : 'bg-neutral-50/40'
       )}>
       <div className='flex w-full items-center justify-between self-stretch'>
-        <h1
+        <p
           className={clsx(
             'text-body-l',
             isOpen ? 'text-neutral-800' : 'text-neutral-600'
           )}>
           {question}
-        </h1>
+        </p>
         {isOpen ? (
           <MinusIcon className='h-6 w-6' />
         ) : (
