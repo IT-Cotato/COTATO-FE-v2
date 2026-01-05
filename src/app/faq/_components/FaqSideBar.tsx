@@ -1,9 +1,19 @@
 'use client';
 
+import type {Metadata} from 'next';
 import {FAQ_NAV_ITEMS} from '@/constants/faq/faq-sidebar';
 import clsx from 'clsx';
 import Link from 'next/link';
 import {useSearchParams} from 'next/navigation';
+
+export const metadata: Metadata = {
+  title: 'FAQ | COTATO',
+  description: 'COTATO와 함께할 여정에 대한 자주 묻는 질문들을 확인하세요.',
+  openGraph: {
+    title: 'FAQ | COTATO',
+    description: 'COTATO와 함께할 여정에 대한 자주 묻는 질문들을 확인하세요.',
+  },
+};
 
 export const FaqSideBar = () => {
   const searchParams = useSearchParams();
@@ -24,7 +34,6 @@ export const FaqSideBar = () => {
                   query: {faq: part},
                 }}
                 scroll={false}
-                key={part}
                 aria-current={isActive ? 'page' : undefined}
                 className={clsx(
                   'flex items-center rounded-[10px] p-2 text-body-m font-normal transition-colors',
@@ -39,5 +48,3 @@ export const FaqSideBar = () => {
     </nav>
   );
 };
-
-export default FaqSideBar;

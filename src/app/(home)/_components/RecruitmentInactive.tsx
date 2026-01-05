@@ -1,7 +1,7 @@
-import NotifyInput from '@/app/(home)/_components/NotifyInput';
+import {NotifyInput} from '@/app/(home)/_components/NotifyInput';
 import RecruitmentLayout from '@/components/layout/RecruitmentLayout';
 
-export default function RecruitmentInactive() {
+export const RecruitmentInactive = () => {
   return (
     <RecruitmentLayout
       statusText='코테이토 모집이 마감되었습니다!'
@@ -10,4 +10,4 @@ export default function RecruitmentInactive() {
       bgImage='/background/visual-strip.svg'
     />
   );
-}
+};

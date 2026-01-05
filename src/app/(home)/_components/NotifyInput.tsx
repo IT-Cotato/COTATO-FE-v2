@@ -2,11 +2,11 @@
 import {Button} from '@/components/button/Button';
 import {useState} from 'react';
 
-type NotifyInputProps = {
+interface NotifyInputProps  {
   className?: string;
 };
 
-export default function NotifyInput({className}: NotifyInputProps) {
+export const NotifyInput = ({className}: NotifyInputProps) => {
   const [email, setEmail] = useState('');
 
   const isValidEmail =

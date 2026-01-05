@@ -1,4 +1,4 @@
-import {PartTypeEtc} from '@/schemas/admin-application-type';
+import {PartEtcType} from '@/schemas/admin/admin-application-type';
 
 export const scheduleSections = [
   {key: 'recruitmentPeriod', label: '지원 기간', type: 'range'},
@@ -8,7 +8,7 @@ export const scheduleSections = [
   {key: 'orientationDate', label: 'OT 날짜', type: 'single'},
 ] as const;
 
-export const PART_TABS: {label: string; value: PartTypeEtc}[] = [
+export const PART_TABS: {label: string; value: PartEtcType}[] = [
   {label: '기획', value: 'plan'},
   {label: '디자인', value: 'design'},
   {label: '프론트엔드', value: 'frontend'},
