@@ -4,16 +4,16 @@ import {AdminApplicationPart} from '@/app/admin/(with-sidebar)/applications/_com
 import {AdminApplicationTableContainer} from '@/app/admin/(with-sidebar)/applications/_components/AdminApplicationTableContainer';
 import {SuspenseWrapper} from '@/components/wrappers/SuspenseWrapper';
 import {PART_TABS} from '@/constants/admin/admin-applications';
-import {PartType} from '@/schemas/admin/admin-application-type';
+import {PartEtcType} from '@/schemas/admin/admin-application-type';
 import {useRouter, useSearchParams} from 'next/navigation';
 
 export const AdminApplicationTabs = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const activePart = (searchParams.get('part') as PartType) ?? 'all';
+  const activePart = (searchParams.get('part') as PartEtcType) ?? 'all';
 
-  const handleTabClick = (part: PartType) => {
+  const handleTabClick = (part: PartEtcType) => {
     const params = new URLSearchParams(searchParams.toString());
     params.set('part', part);
 
@@ -29,7 +29,7 @@ export const AdminApplicationTabs = () => {
             partName={label}
             applyNumber={32}
             isActive={activePart === value}
-            onClick={() => handleTabClick(value)}
+            onClick={() => handleTabClick(value as PartEtcType)}
           />
         ))}
       </div>

@@ -1,8 +1,9 @@
 'use client';
 
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import {useForm, FormProvider} from 'react-hook-form';
 import {StepIndicator} from '@/components/navigation/StepIndicator';
+import {BASIC_INFO_FIELDS} from '@/constants/form/formConfig';
 import {BasicInfo} from './_components/BasicInfo';
 import {PartQuestion} from './_components/PartQuestion';
 import {AdditionalInfo} from './_components/AdditionalInfo';
@@ -10,6 +11,10 @@ import {AdditionalInfo} from './_components/AdditionalInfo';
 export default function ApplyPage() {
   const [step, setStep] = useState(1);
   const methods = useForm({mode: 'onChange'});
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [step]);
 
   // 저장하기: validation 체크 X, 그냥 현재 값만 저장
   const handleSave = () => {
@@ -27,14 +32,11 @@ export default function ApplyPage() {
     let fieldsToValidate: string[] = [];
 
     if (step === 1) {
-      fieldsToValidate = [
-        'name',
-        'email',
-        'phoneNumber',
-        'major',
-        'studentId',
-        'gender',
-      ];
+      fieldsToValidate = BASIC_INFO_FIELDS.flatMap((field) =>
+        'row' in field && field.row
+          ? field.row.map((f) => f.name)
+          : [field.name]
+      );
     } else if (step === 2) {
       const values = methods.getValues();
       fieldsToValidate = Object.keys(values).filter((key) =>

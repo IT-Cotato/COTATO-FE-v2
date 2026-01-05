@@ -1,5 +1,6 @@
 'use client';
 
+import {useEffect} from 'react';
 import {useFormContext, RegisterOptions} from 'react-hook-form';
 import {FormDropdown} from '@/components/form/FormDropdown';
 import {FormInput} from '@/components/form/FormInput';
@@ -32,6 +33,17 @@ export function BasicInfo({onNext, onSave, readOnly = false}: BasicInfoProps) {
     setValue,
     formState: {errors},
   } = useFormContext<BasicInfoFormData>();
+
+  useEffect(() => {
+    BASIC_INFO_FIELDS.forEach((item) => {
+      const fields = 'row' in item && item.row ? item.row : [item];
+      fields.forEach((field) => {
+        if (field.type === 'dropdown') {
+          register(field.name as keyof BasicInfoFormData, field.rules);
+        }
+      });
+    });
+  }, [register]);
 
   const renderField = (field: FieldConfig) => {
     const {type, name, label, options, rules, placeholder} = field;
