@@ -43,10 +43,6 @@ export const AdminApplicationTable = () => {
 
   // TODO: 합격, 예비합격, 불합격, 평가전 필터링 컴포넌트 및 로직 추가
 
-  const handleNameClick = (id: number) => {
-    router.push(`${ROUTES.ADMIN_APPLICATION_FORM}/${id}`);
-  };
-
   const hasApplications = mockApplications.length > 0;
 
   return (
@@ -94,11 +90,13 @@ export const AdminApplicationTable = () => {
                     key={app.id}
                     className='bg-white text-body-l text-neutral-600'>
                     <td className='px-3 py-4'>
-                      <button
-                        className='cursor-pointer hover:border-b'
-                        onClick={() => handleNameClick(app.id)}>
+                      <a
+                        href={`${ROUTES.ADMIN_APPLICATION}/${app.id}`}
+                        target='_blank'
+                        rel='noopener noreferrer'
+                        className='cursor-pointer hover:border-b'>
                         {app.name}
-                      </button>
+                      </a>
                     </td>
                     <td className='truncate px-3 py-4'>{app.gender}</td>
                     <td className='truncate px-3 py-4'>{app.part}</td>
