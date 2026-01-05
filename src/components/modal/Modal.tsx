@@ -70,7 +70,9 @@ export const Modal = ({
               {title}
             </h4>
             {content && (
-              <div className='text-body-m text-neutral-800'>{content}</div>
+              <div className='text-body-m font-normal text-neutral-800'>
+                {content}
+              </div>
             )}
             {actions && (
               <div
@@ -81,7 +83,9 @@ export const Modal = ({
               </div>
             )}
             {warning && (
-              <div className='text-body-s text-neutral-800'>{warning}</div>
+              <div className='text-body-s font-normal text-neutral-600'>
+                {warning}
+              </div>
             )}
           </div>
         </div>
