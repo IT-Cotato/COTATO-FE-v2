@@ -1,4 +1,8 @@
-import {PartType, ReviewerType} from '@/schemas/admin-application-type';
+import {
+  ApplicationResultType,
+  PartType,
+  ReviewerType,
+} from '@/schemas/admin/admin-application-type';
 
 export const APPLICATION_COLUMNS = [
   {key: 'name', label: '이름'},
@@ -22,4 +26,11 @@ export const REVIEWER_TABS: {label: string; value: ReviewerType}[] = [
   {label: '운영진2', value: 'admin2'},
   {label: '운영진3', value: 'admin3'},
   {label: '운영진4', value: 'admin4'},
+];
+
+export const RESULT_OPTIONS: ApplicationResultType[] = [
+  '합격',
+  '불합격',
+  '예비합격',
+  '평가전',
 ];

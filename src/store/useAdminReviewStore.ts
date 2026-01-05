@@ -1,5 +1,5 @@
 import {create} from 'zustand';
-import {ReviewerType} from '@/schemas/admin-application-type';
+import {ReviewerType} from '@/schemas/admin/admin-application-type';
 
 const STORAGE_KEY = 'admin-review-draft';
 let saveTimeout: NodeJS.Timeout | null = null;
