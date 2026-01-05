@@ -1,8 +1,8 @@
 'use client';
 
-import { forwardRef, useId, type InputHTMLAttributes } from 'react';
+import {forwardRef, useId, type InputHTMLAttributes} from 'react';
 import clsx from 'clsx';
-import { formFieldStyles } from './form.styles';
+import {formFieldStyles} from './form.styles';
 
 interface FormInputProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string;
@@ -10,7 +10,7 @@ interface FormInputProps extends InputHTMLAttributes<HTMLInputElement> {
 }
 
 export const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
-  function FormInput({ label, error, id, className, ...props }, ref) {
+  function FormInput({label, error, id, className, ...props}, ref) {
     const generatedId = useId();
     const inputId = id ?? generatedId;
 
