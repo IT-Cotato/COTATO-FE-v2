@@ -47,18 +47,18 @@ export const Modal = ({
           returnFocusOnDeactivate: true,
         }}>
         <div
-          className='relative w-full max-w-[507px] rounded-[10px] bg-white px-[43px] py-[62px]'
+          className='relative w-full max-w-126.75 rounded-[20px] bg-white px-10.75 py-15.5'
           onClick={(e) => e.stopPropagation()}>
           <button
             onClick={onClose}
             className='absolute top-4 right-5'
             aria-label='닫기'>
-            <Close className='h-[21px] w-[21px] cursor-pointer' />
+            <Close className='h-5.25 w-5.25 cursor-pointer' />
           </button>
           <div
             className={clsx(
               'flex flex-col items-center text-center',
-              noContent ? 'gap-[107px]' : 'gap-[30px]',
+              noContent ? 'gap-26.75' : 'gap-7.5',
               contentWrapperClassName
             )}>
             <h4
