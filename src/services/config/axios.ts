@@ -5,6 +5,13 @@ import axios, {
 } from 'axios';
 import {API_BASE_URL, ENDPOINT} from '../constant/endpoint';
 import {RefreshTokenResponse} from '../types/auth.types';
+import {
+  clearTokens,
+  getAccessToken,
+  getRefreshToken,
+  setAccessToken,
+  setRefreshToken,
+} from '../utils/tokenManager';
 
 /**
  * Axios 인스턴스 생성 함수
@@ -74,7 +81,7 @@ const processQueue = (error: AxiosError | null = null) => {
 const clearAuthState = async () => {
   try {
     // 1. 토큰 삭제
-    // TODO: 토큰 삭제 로직
+    clearTokens();
 
     // 2. React Query 캐시 클리어
     // TODO: React Query 캐시 삭제 로직
@@ -104,8 +111,7 @@ privateAxios.interceptors.request.use(
       );
     }
 
-    // TODO: localStorage에서 accessToken 받아오는 로직
-    const token = 'accessToken';
+    const token = getAccessToken();
 
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
@@ -140,8 +146,7 @@ privateAxios.interceptors.response.use(
         failedQueue.push({resolve, reject});
       })
         .then(() => {
-          // TODO: localStorage에서 accessToken 받아오는 로직
-          const token = 'accessToken';
+          const token = getAccessToken();
           if (token && originalRequest.headers) {
             originalRequest.headers.Authorization = `Bearer ${token}`;
           }
@@ -155,8 +160,7 @@ privateAxios.interceptors.response.use(
     originalRequest._retry = true;
     isRefreshing = true;
 
-    // TODO: localStorage에서 refreshToken 받아오는 로직
-    const refreshToken = 'refreshToken';
+    const refreshToken = getRefreshToken();
     if (!refreshToken) {
       isRefreshing = false;
       await clearAuthState();
@@ -169,7 +173,8 @@ privateAxios.interceptors.response.use(
         {refreshToken}
       );
 
-      // TODO: localStorage에서 accessToken, refreshToken 설정 로직 추가
+      setAccessToken(data.accessToken);
+      setRefreshToken(data.refreshToken);
 
       if (originalRequest.headers) {
         originalRequest.headers.Authorization = `Bearer ${data.accessToken}`;
