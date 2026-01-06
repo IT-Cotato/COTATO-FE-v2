@@ -2,9 +2,11 @@
 
 import {useEffect, useRef} from 'react';
 import {useSearchParams} from 'next/navigation';
+import {useOAuthLogin} from '@/hooks/mutations/useAuth';
 
 export default function OAuthCallbackPage() {
   const params = useSearchParams();
+  const {mutate} = useOAuthLogin();
 
   const hasRequested = useRef(false);
 
@@ -23,9 +25,8 @@ export default function OAuthCallbackPage() {
       window.location.origin +
       process.env.NEXT_PUBLIC_GOOGLE_REDIRECT_URI_ENDPOINT!;
 
-    console.log('code >>', code);
-    console.log('redirectUri >>', redirectUri);
-  }, [, params]);
+    mutate({code, redirectUri});
+  }, [mutate, params]);
 
-  return <div>Google 로그인 처리 중...</div>;
+  return;
 }
