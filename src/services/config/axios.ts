@@ -1,0 +1,189 @@
+import axios, {
+  AxiosError,
+  AxiosInstance,
+  InternalAxiosRequestConfig,
+} from 'axios';
+import {API_BASE_URL, ENDPOINT} from '../constant/endpoint';
+import {RefreshTokenResponse} from '../types/auth.types';
+
+/**
+ * Axios 인스턴스 생성 함수
+ */
+const createAxiosInstance = (): AxiosInstance => {
+  return axios.create({
+    baseURL: API_BASE_URL,
+    adapter: 'fetch',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    timeout: 10000,
+  });
+};
+
+/**
+ * Public Axios - 인증 불필요
+ */
+export const publicAxios = createAxiosInstance();
+
+/**
+ * Public Axios Request Interceptor
+ */
+publicAxios.interceptors.request.use(
+  (config: InternalAxiosRequestConfig) => {
+    // 개발 환경에서 요청 로깅
+    if (process.env.NODE_ENV === 'development') {
+      console.log(
+        `[API Request] ${config.method?.toUpperCase()} ${config.url} ${config.data.json} ${config.params}`
+      );
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
+/**
+ * Private Axios - 인증 필요
+ */
+export const privateAxios = createAxiosInstance();
+
+let isRefreshing = false;
+let failedQueue: Array<{
+  resolve: (value?: unknown) => void;
+  reject: (reason?: unknown) => void;
+}> = [];
+
+/**
+ * 큐에 쌓인 요청들을 처리
+ */
+const processQueue = (error: AxiosError | null = null) => {
+  failedQueue.forEach((promise) => {
+    if (error) {
+      promise.reject(error);
+    } else {
+      promise.resolve();
+    }
+  });
+  failedQueue = [];
+};
+
+/**
+ * 전역 상태 및 토큰 클리어
+ */
+const clearAuthState = async () => {
+  try {
+    // 1. 토큰 삭제
+    // TODO: 토큰 삭제 로직
+
+    // 2. React Query 캐시 클리어
+    // TODO: React Query 캐시 삭제 로직
+
+    // 3. 전역 상태 초기화
+    // TODO: 전역 상태 초기화 로직
+
+    // 4. 기본 페이지로 리다이렉트
+    if (typeof window !== 'undefined') {
+      window.location.href = '/';
+    }
+  } catch (error) {
+    console.error('Failed to clear auth state:', error);
+  }
+};
+
+/**
+ * Private Axios Request Interceptor
+ * localStorage의 accessToken을 헤더에 추가
+ */
+privateAxios.interceptors.request.use(
+  (config: InternalAxiosRequestConfig) => {
+    // 개발 환경에서 요청 로깅
+    if (process.env.NODE_ENV === 'development') {
+      console.log(
+        `[API Request] ${config.method?.toUpperCase()} ${config.url} ${config.data} ${config.params}`
+      );
+    }
+
+    // TODO: localStorage에서 accessToken 받아오는 로직
+    const token = 'accessToken';
+
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
+/**
+ * Private Axios Response Interceptor
+ * 401 에러 시 토큰 갱신 및 재요청 큐 관리
+ */
+privateAxios.interceptors.response.use(
+  (response) => response,
+  async (error: AxiosError) => {
+    const originalRequest = error.config as InternalAxiosRequestConfig & {
+      _retry?: boolean;
+    };
+
+    // 401 에러가 아니거나 이미 재시도한 경우
+    if (error.response?.status !== 401 || originalRequest._retry) {
+      return Promise.reject(error);
+    }
+
+    // 토큰 갱신 중인 경우 큐에 추가
+    if (isRefreshing) {
+      return new Promise((resolve, reject) => {
+        failedQueue.push({resolve, reject});
+      })
+        .then(() => {
+          // TODO: localStorage에서 accessToken 받아오는 로직
+          const token = 'accessToken';
+          if (token && originalRequest.headers) {
+            originalRequest.headers.Authorization = `Bearer ${token}`;
+          }
+          return privateAxios(originalRequest);
+        })
+        .catch((err) => {
+          return Promise.reject(err);
+        });
+    }
+
+    originalRequest._retry = true;
+    isRefreshing = true;
+
+    // TODO: localStorage에서 refreshToken 받아오는 로직
+    const refreshToken = 'refreshToken';
+    if (!refreshToken) {
+      isRefreshing = false;
+      await clearAuthState();
+      return Promise.reject(error);
+    }
+
+    try {
+      const {data} = await publicAxios.post<RefreshTokenResponse>(
+        ENDPOINT.AUTH.REFRESH,
+        {refreshToken}
+      );
+
+      // TODO: localStorage에서 accessToken, refreshToken 설정 로직 추가
+
+      if (originalRequest.headers) {
+        originalRequest.headers.Authorization = `Bearer ${data.accessToken}`;
+      }
+
+      processQueue();
+      isRefreshing = false;
+
+      return privateAxios(originalRequest);
+    } catch (refreshError) {
+      processQueue(refreshError as AxiosError);
+      isRefreshing = false;
+      await clearAuthState();
+      return Promise.reject(refreshError);
+    }
+  }
+);
