@@ -3,6 +3,7 @@ import {Header} from '@/components/layout/Header';
 import {Metadata} from 'next';
 import '@/styles/globals.css';
 import localFont from 'next/font/local';
+import Providers from './providers';
 
 export const metadata: Metadata = {
   title: 'COTATO RECRUIT',
@@ -46,9 +47,11 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
       lang='ko'
       className={`${pretendard.variable} ${sebangGothic.variable} ${roboto.variable} antialiased`}>
       <body className='flex min-h-screen w-full flex-col bg-black'>
-        <Header />
-        <main className='flex-1'>{children}</main>
-        <Footer />
+        <Providers>
+          <Header />
+          <main className='flex-1'>{children}</main>
+          <Footer />
+        </Providers>
       </body>
     </html>
   );
