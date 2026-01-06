@@ -1,11 +1,11 @@
 'use client';
 
-import {useMutation} from '@tanstack/react-query';
+import {useMutation, useQueryClient} from '@tanstack/react-query';
 import {OAuthLoginRequest} from '@/services/types/auth.types';
 import {useRouter} from 'next/navigation';
 import {AxiosError} from 'axios';
 import {useAuthStore} from '@/store/useAuthStore';
-import {getMe, oauthLogin} from '@/services/api/auth.api';
+import {getMe, logout, oauthLogin} from '@/services/api/auth.api';
 import {
   clearTokens,
   setAccessToken,
@@ -37,6 +37,41 @@ export const useOAuthLogin = () => {
     },
     onError: (error: AxiosError) => {
       console.error('[Login failed]', error);
+    },
+  });
+};
+
+/**
+ * 로그아웃 Mutation Hook
+ */
+export const useLogout = () => {
+  const router = useRouter();
+  const queryClient = useQueryClient();
+  const authLogout = useAuthStore((state) => state.logout);
+
+  return useMutation({
+    mutationFn: logout,
+    onSuccess: () => {
+      // 1. 토큰 삭제
+      clearTokens();
+
+      // 2. React Query 캐시 클리어
+      queryClient.clear();
+
+      // 3. Zustand 상태 초기화
+      authLogout();
+
+      // 4. 기본 페이지로 이동
+      router.push('/');
+    },
+    onError: (error: AxiosError) => {
+      console.error('[Logout API failed]', error);
+
+      // 로그아웃 API 실패해도 클라이언트 정리
+      clearTokens();
+      queryClient.clear();
+      authLogout();
+      router.push('/');
     },
   });
 };
