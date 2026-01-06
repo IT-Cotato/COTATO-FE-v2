@@ -10,27 +10,22 @@ import {ROUTES} from '@/constants/routes';
 import {Dropdown} from '@/components/layout/Dropdown';
 import clsx from 'clsx';
 import {useLogout} from '@/hooks/mutations/useAuth';
-
-type User = {
-  name: string;
-  isAdmin: boolean;
-} | null;
-
-// 목데이터 - 추후 API 데이터 형식에 맞춰 수정 예정
-const mockUser: User = {
-  name: '김감자',
-  isAdmin: true,
-};
-// const mockUser: User = {name: '김감자', isAdmin: false};
-//const mockUser: User = null as User; // 로그아웃 상태
+import {useAuthStore} from '@/store/useAuthStore';
+import {useShallow} from 'zustand/shallow';
 
 export const Header = () => {
   const pathname = usePathname();
   const {mutate} = useLogout();
 
+  const {user} = useAuthStore(
+    useShallow((state) => ({
+      user: state.user,
+    }))
+  );
+
   const menuItems = [...HEADER_ITEMS];
 
-  if (mockUser?.isAdmin) {
+  if (user?.role === 'STAFF') {
     const applyIndex = menuItems.findIndex((item) => item.label === '지원하기');
     if (applyIndex >= 0) {
       menuItems.splice(applyIndex, 0, {
@@ -73,11 +68,11 @@ export const Header = () => {
             );
           })}
         </nav>
-        {mockUser ? (
+        {user ? (
           <Dropdown
             trigger={
               <div className='flex h-22 cursor-pointer items-center justify-center gap-2.5 px-[17px] py-6 text-body-m text-white'>
-                <SmallLogo /> {mockUser.name}
+                <SmallLogo /> {user.name}
               </div>
             }
             className='absolute flex h-[30px] w-[102px] flex-col items-start gap-[10px] rounded-[4px] border border-primary bg-black px-[11px] py-[6px]'>
