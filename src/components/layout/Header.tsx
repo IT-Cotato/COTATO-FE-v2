@@ -9,6 +9,7 @@ import Logout from '@/assets/logout/logout.svg';
 import {ROUTES} from '@/constants/routes';
 import {Dropdown} from '@/components/layout/Dropdown';
 import clsx from 'clsx';
+import {useLogout} from '@/hooks/mutations/useAuth';
 
 type User = {
   name: string;
@@ -25,6 +26,7 @@ const mockUser: User = {
 
 export const Header = () => {
   const pathname = usePathname();
+  const {mutate} = useLogout();
 
   const menuItems = [...HEADER_ITEMS];
 
@@ -79,7 +81,9 @@ export const Header = () => {
               </div>
             }
             className='absolute flex h-[30px] w-[102px] flex-col items-start gap-[10px] rounded-[4px] border border-primary bg-black px-[11px] py-[6px]'>
-            <button className='flex w-full items-center justify-start gap-[3px] text-body-s text-primary'>
+            <button
+              onClick={() => mutate()}
+              className='flex w-full items-center justify-start gap-[3px] text-body-s text-primary'>
               <Logout />
               LOGOUT
             </button>
