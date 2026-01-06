@@ -39,7 +39,7 @@ export type LogoutResponse = void;
 /**
  * 사용자 정보 응답
  */
-export interface UserResponse {
+export interface GetMeResponse {
   userId: number;
   email: string;
   name: string;
