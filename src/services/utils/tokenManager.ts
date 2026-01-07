@@ -80,11 +80,6 @@ export const clearAuthState = async () => {
       const {useAuthStore} = await import('@/store/useAuthStore');
       useAuthStore.getState().logout();
     }
-
-    // 4. 기본 페이지로 리다이렉트
-    if (typeof window !== 'undefined') {
-      window.location.href = '/';
-    }
   } catch (error) {
     console.error('Failed to clear auth state:', error);
   }
