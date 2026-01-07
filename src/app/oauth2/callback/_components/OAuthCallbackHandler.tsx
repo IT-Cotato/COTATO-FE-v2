@@ -19,14 +19,23 @@ export const OAuthCallbackHandler = () => {
 
   useEffect(() => {
     if (hasRequested.current) return;
+    hasRequested.current = true;
+
+    const error = params.get('error');
+    if (error) {
+      console.error('[OAuth error]', error, params.get('error_description'));
+      alert('로그인 중 오류가 발생했습니다. 다시 시도해주세요.');
+      window.location.href = '/';
+      return;
+    }
 
     const code = params.get('code');
     if (!code) {
       console.error('Authorization code not found');
+      alert('인증 코드를 찾을 수 없습니다.');
+      window.location.href = '/';
       return;
     }
-
-    hasRequested.current = true;
 
     const redirectEndpoint =
       process.env.NEXT_PUBLIC_GOOGLE_REDIRECT_URI_ENDPOINT;
