@@ -3,8 +3,8 @@ import {Header} from '@/components/layout/Header';
 import {Metadata} from 'next';
 import '@/styles/globals.css';
 import localFont from 'next/font/local';
-import {AuthProvider} from '@/components/providers/AuthProvider';
 import Providers from '@/app/providers';
+import {ConditionalAuthProvider} from '@/components/providers/ConditionalAuthProvider';
 
 export const metadata: Metadata = {
   title: 'COTATO RECRUIT',
@@ -49,11 +49,11 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
       className={`${pretendard.variable} ${sebangGothic.variable} ${roboto.variable} antialiased`}>
       <body className='flex min-h-screen w-full flex-col bg-black'>
         <Providers>
-          <AuthProvider>
+          <ConditionalAuthProvider>
             <Header />
             <main className='flex-1'>{children}</main>
             <Footer />
-          </AuthProvider>
+          </ConditionalAuthProvider>
         </Providers>
       </body>
     </html>
