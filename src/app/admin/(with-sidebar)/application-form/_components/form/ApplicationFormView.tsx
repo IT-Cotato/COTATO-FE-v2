@@ -9,7 +9,7 @@ export const ApplicationFormView = () => {
             {questionId}. {content}
           </div>
           <div className='text-h5 text-neutral-500'>
-            글자 제한: {maxLength} byte
+            글자 제한: {maxLength} 자
           </div>
         </div>
       ))}

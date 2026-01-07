@@ -32,8 +32,17 @@ export const PartQuestion = ({onPrev, onNext, onSave}: PartQuestionProps) => {
     formState: {errors},
   } = useFormContext();
 
-  const activePart = (searchParams.get('part') as PartEtcType) || 'plan';
-
+  const VALID_PARTS: PartEtcType[] = [
+    'plan',
+    'design',
+    'frontend',
+    'backend',
+    'etc',
+  ];
+  const partParam = searchParams.get('part');
+  const activePart: PartEtcType = (
+    VALID_PARTS.includes(partParam as PartEtcType) ? partParam : ''
+  ) as PartEtcType;
   const handlePartChange = (part: string) => {
     const params = new URLSearchParams(searchParams.toString());
     params.set('part', part);

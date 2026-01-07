@@ -1,23 +1,15 @@
 'use client';
 
-import {useFormContext, RegisterOptions, Controller} from 'react-hook-form';
+import {useFormContext, Controller} from 'react-hook-form';
 import {FormDropdown} from '@/components/form/FormDropdown';
 import {FormInput} from '@/components/form/FormInput';
 import {FormRadio} from '@/components/form/FormRadio';
 import {FullButton} from '@/components/button/FullButton';
 import {BASIC_INFO_FIELDS} from '@/constants/form/formConfig';
-import {BasicInfoFormData} from '@/schemas/apply-type';
-
-interface FieldConfig {
-  name: keyof BasicInfoFormData;
-  label: string;
-  type: 'input' | 'dropdown' | 'radio';
-  placeholder?: string;
-  options?: {value: string; label: string}[];
-  rules?: RegisterOptions<BasicInfoFormData, keyof BasicInfoFormData>;
-}
-
-type FormItem = FieldConfig | {row: readonly FieldConfig[]};
+import {
+  BasicInfoFormData,
+  BasicInfoFieldConfig,
+} from '@/schemas/apply-type';
 
 interface BasicInfoProps {
   onSave: () => void;
@@ -36,7 +28,7 @@ export const BasicInfo = ({
     formState: {errors},
   } = useFormContext<BasicInfoFormData>();
 
-  const renderField = (field: FieldConfig) => {
+  const renderField = (field: BasicInfoFieldConfig) => {
     const {type, name, label, options, rules, placeholder} = field;
     const error = errors[name];
 
@@ -50,14 +42,14 @@ export const BasicInfo = ({
                 key={opt.value}
                 label={opt.label}
                 value={opt.value}
-                disabled={readOnly}
+                readOnly={readOnly}
                 {...register(name, rules)}
               />
             ))}
           </div>
           {error && (
             <span className='-mt-[33px] text-body-l text-alert'>
-              {error.message as string}
+              {error.message ?? ''}
             </span>
           )}
         </div>
@@ -78,7 +70,7 @@ export const BasicInfo = ({
                 options={options || []}
                 value={field.value}
                 onChange={field.onChange}
-                disabled={readOnly}
+                readOnly={readOnly}
                 className='w-full'
               />
             )}
@@ -99,7 +91,7 @@ export const BasicInfo = ({
           placeholder={placeholder}
           readOnly={readOnly}
           {...register(name, rules)}
-          error={error?.message as string}
+          error={error?.message ?? ''}
           className='w-full'
         />
       </div>
@@ -109,15 +101,21 @@ export const BasicInfo = ({
   return (
     <div className='flex w-full flex-col gap-[81px]'>
       <div className='flex flex-col gap-[81px]'>
-        {(BASIC_INFO_FIELDS as unknown as FormItem[]).map((item, idx) => (
-          <div
-            key={idx}
-            className='flex w-full flex-col gap-6 md:flex-row md:items-end'>
-            {'row' in item
-              ? item.row.map((field) => renderField(field))
-              : renderField(item)}
-          </div>
-        ))}
+        {BASIC_INFO_FIELDS.map((item) => {
+          const key =
+            'row' in item
+              ? item.row.map((f) => f.name).join('-')
+              : item.name;
+          return (
+            <div
+              key={key}
+              className='flex w-full flex-col gap-6 md:flex-row md:items-end'>
+              {'row' in item
+                ? item.row.map((field) => renderField(field))
+                : renderField(item)}
+            </div>
+          );
+        })}
       </div>
 
       <div className='flex flex-col gap-[26px]'>

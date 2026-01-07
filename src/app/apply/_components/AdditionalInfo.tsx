@@ -1,10 +1,6 @@
 'use client';
 
-import {
-  useFormContext,
-  type RegisterOptions,
-  Controller,
-} from 'react-hook-form';
+import {useFormContext, Controller} from 'react-hook-form';
 import clsx from 'clsx';
 import {FormTextarea} from '@/components/form/FormTextarea';
 import {FormDropdown} from '@/components/form/FormDropdown';
@@ -12,20 +8,7 @@ import {FullButton} from '@/components/button/FullButton';
 import {FormRadio} from '@/components/form/FormRadio';
 import {FormInput} from '@/components/form/FormInput';
 import {ADDITIONAL_FIELDS} from '@/constants/form/formConfig';
-
-interface FieldConfig {
-  name?: string;
-  label?: string;
-  type: string;
-  placeholder?: string;
-  options?: {value: string; label: string}[];
-  rules?: RegisterOptions;
-  maxLength?: number;
-  readOnly?: boolean;
-  defaultValue?: string;
-  className?: string;
-  row?: FieldConfig[];
-}
+import {AdditionalFieldConfig} from '@/schemas/apply-type';
 
 export const AdditionalInfo = ({
   onPrev,
@@ -41,7 +24,7 @@ export const AdditionalInfo = ({
     formState: {errors},
   } = useFormContext();
 
-  const renderField = (field: FieldConfig) => {
+  const renderField = (field: AdditionalFieldConfig) => {
     const {
       type,
       name,
@@ -58,7 +41,10 @@ export const AdditionalInfo = ({
 
     switch (type) {
       case 'group_label':
-        return <label className='text-h5 text-neutral-800'>{label}</label>;
+        if (!label) return null;
+        return (
+          <label className='text-h5 text-neutral-800'>{label ?? ''}</label>
+        );
       case 'textarea':
         return (
           <FormTextarea
@@ -77,7 +63,7 @@ export const AdditionalInfo = ({
         return (
           <Controller
             key={name}
-            name={name!}
+            name={name ?? ''}
             control={control}
             rules={rules}
             render={({field: controllerField}) => (
@@ -134,7 +120,7 @@ export const AdditionalInfo = ({
     <div className='flex w-full flex-col gap-[81px]'>
       <div className='flex flex-col gap-10'>
         {ADDITIONAL_FIELDS.map((field, idx) => {
-          if (field.type === 'row' && field.row) {
+          if (field.type === 'row' && 'row' in field) {
             return (
               <div
                 key={`row-${idx}`}
@@ -144,7 +130,7 @@ export const AdditionalInfo = ({
             );
           }
           const fieldKey = field.name || `${field.type}-${idx}`;
-          return <div key={fieldKey}>{renderField(field as FieldConfig)}</div>;
+          return <div key={fieldKey}>{renderField(field)}</div>;
         })}
       </div>
 

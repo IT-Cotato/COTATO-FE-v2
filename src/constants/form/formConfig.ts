@@ -1,3 +1,8 @@
+import {
+  AdditionalFormItem,
+  BasicInfoFormItem,
+} from '@/schemas/apply-type';
+
 export const SEMESTER_OPTIONS = [
   {value: '4', label: '4학기'},
   {value: '5', label: '5학기'},
@@ -6,7 +11,7 @@ export const SEMESTER_OPTIONS = [
   {value: '8', label: '8학기 이상'},
 ];
 
-export const BASIC_INFO_FIELDS = [
+export const BASIC_INFO_FIELDS: BasicInfoFormItem[] = [
   {
     name: 'name',
     label: '이름',
@@ -95,7 +100,7 @@ export const BASIC_INFO_FIELDS = [
   },
 ];
 
-export const ADDITIONAL_FIELDS = [
+export const ADDITIONAL_FIELDS: AdditionalFormItem[] = [
   {
     name: 'discovery',
     label: '동아리를 알게 된 경로를 선택해주세요.',

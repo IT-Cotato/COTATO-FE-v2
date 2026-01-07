@@ -47,7 +47,7 @@ export const FormTextarea = forwardRef<HTMLTextAreaElement, FormTextareaProps>(
                 className={clsx(currentLength > maxLength && 'text-red-500')}>
                 {currentLength}
               </span>
-              / {maxLength} byte
+              / {maxLength} 자
             </div>
           )}
         </div>
