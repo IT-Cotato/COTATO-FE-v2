@@ -10,16 +10,19 @@ export const OAuthCallbackHandler = () => {
 
   const hasRequested = useRef(false);
 
-  const receivedState = params.get('state');
-  const savedState = sessionStorage.getItem('oauth_state');
-  if (receivedState !== savedState) {
-    // CSRF 공격 가능성 - 요청 거부
-    throw new Error('Invalid state parameter');
-  }
-
   useEffect(() => {
     if (hasRequested.current) return;
     hasRequested.current = true;
+
+    const receivedState = params.get('state');
+    const savedState = sessionStorage.getItem('oauth_state');
+    if (receivedState !== savedState) {
+      console.error('[CSRF detection] State parameter mismatch');
+      alert('잘못된 요청입니다. 처음부터 다시 시도해주세요.');
+      window.location.href = '/';
+      return;
+    }
+    sessionStorage.removeItem('oauth_state');
 
     const error = params.get('error');
     if (error) {
