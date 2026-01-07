@@ -4,7 +4,7 @@ import Link from 'next/link';
 import {HEADER_ITEMS} from '@/constants/layout/layout-header';
 import MainLogo from '@/assets/main-logo/main-logo.svg';
 import SmallLogo from '@/assets/small-logo/small-logo.svg';
-import {usePathname} from 'next/navigation';
+import {usePathname, useRouter} from 'next/navigation';
 import Logout from '@/assets/logout/logout.svg';
 import {Dropdown} from '@/components/layout/Dropdown';
 import clsx from 'clsx';
@@ -15,6 +15,7 @@ import {LoginModal} from '@/components/modal/LoginModal';
 import {useState} from 'react';
 
 export const Header = () => {
+  const router = useRouter();
   const pathname = usePathname();
   const {mutate} = useLogout();
 
@@ -26,6 +27,11 @@ export const Header = () => {
       isInitialized: state.isInitialized,
     }))
   );
+
+  const handleLogoutClick = () => {
+    mutate();
+    router.push('/');
+  };
 
   const menuItems = [...HEADER_ITEMS];
 
@@ -83,7 +89,7 @@ export const Header = () => {
                 }
                 className='absolute flex h-[30px] w-[102px] flex-col items-start gap-[10px] rounded-[4px] border border-primary bg-black px-[11px] py-[6px]'>
                 <button
-                  onClick={() => mutate()}
+                  onClick={handleLogoutClick}
                   className='flex w-full items-center justify-start gap-[3px] text-body-s text-primary'>
                   <Logout />
                   LOGOUT
