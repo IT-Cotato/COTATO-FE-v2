@@ -59,6 +59,7 @@ export const RecruitmentActive = () => {
 
       <LoginModal
         title='로그인 후 이용할 수 있는 서비스입니다.'
+        content='지원서 작성을 위해 로그인을 해주세요!'
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
       />
