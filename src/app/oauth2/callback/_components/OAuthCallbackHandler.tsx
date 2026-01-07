@@ -10,6 +10,13 @@ export const OAuthCallbackHandler = () => {
 
   const hasRequested = useRef(false);
 
+  const receivedState = params.get('state');
+  const savedState = sessionStorage.getItem('oauth_state');
+  if (receivedState !== savedState) {
+    // CSRF 공격 가능성 - 요청 거부
+    throw new Error('Invalid state parameter');
+  }
+
   useEffect(() => {
     if (hasRequested.current) return;
 

@@ -12,12 +12,15 @@ export const startGoogleLogin = () => {
 
   const redirectUri = window.location.origin + redirectUriEndpoint;
 
+  const state = crypto.randomUUID();
+  sessionStorage.setItem('oauth_state', state);
+
   const params = new URLSearchParams({
     client_id: clientId,
     redirect_uri: redirectUri,
     response_type: 'code',
     scope: 'openid email profile',
-    state: 'state_parameter_passthrough_value',
+    state: state,
     prompt: 'consent',
   });
 
