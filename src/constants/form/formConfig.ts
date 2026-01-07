@@ -56,6 +56,7 @@ export const BASIC_INFO_FIELDS: BasicInfoFormItem[] = [
       },
       {
         name: 'isCollegeStudent',
+        label: '',
         type: 'radio',
         options: [
           {label: '재학', value: 'enrolled'},
