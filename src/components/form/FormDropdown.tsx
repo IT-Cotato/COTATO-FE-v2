@@ -12,8 +12,10 @@ import {formFieldStyles} from './form.styles';
 import {useClickOutside} from '@/hooks/useClickOutside';
 import ChevronDown from '@/assets/chevrons/chevron-down.svg';
 
-interface FormDropdownProps
-  extends Omit<InputHTMLAttributes<HTMLInputElement>, 'onChange'> {
+interface FormDropdownProps extends Omit<
+  InputHTMLAttributes<HTMLInputElement>,
+  'onChange'
+> {
   label: string;
   options: {value: string; label: string}[];
   value?: string;
