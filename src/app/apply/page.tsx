@@ -1,3 +1,5 @@
+import {ProtectedRoute} from '@/components/auth/ProtectedRoute';
+
 /**
  * 지원서 작성 페이지
  *
@@ -7,8 +9,10 @@
  */
 export default function ApplyPage() {
   return (
-    <section className='flex min-h-screen w-full flex-col items-center bg-neutral-100'>
-      <p>ApplyPage</p>
-    </section>
+    <ProtectedRoute>
+      <section className='flex min-h-screen w-full flex-col items-center bg-neutral-100'>
+        <p>ApplyPage</p>
+      </section>
+    </ProtectedRoute>
   );
 }
