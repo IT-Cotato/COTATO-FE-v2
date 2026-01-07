@@ -6,12 +6,12 @@ import axios, {
 import {API_BASE_URL, ENDPOINT} from '../constant/endpoint';
 import {RefreshTokenResponse} from '../types/auth.types';
 import {
-  clearTokens,
+  clearAuthState,
   getAccessToken,
   getRefreshToken,
   setAccessToken,
   setRefreshToken,
-} from '../utils/tokenManager';
+} from '@/services/utils/tokenManager';
 
 /**
  * Axios 인스턴스 생성 함수
@@ -73,36 +73,6 @@ const processQueue = (error: AxiosError | null = null) => {
     }
   });
   failedQueue = [];
-};
-
-/**
- * 전역 상태 및 토큰 클리어
- */
-const clearAuthState = async () => {
-  try {
-    // 1. 토큰 삭제
-    clearTokens();
-
-    // 2. React Query 캐시 클리어
-    if (typeof window !== 'undefined') {
-      const {getQueryClient} = await import('@/app/providers');
-      const queryClient = getQueryClient();
-      queryClient.clear();
-    }
-
-    // 3. 전역 상태 초기화
-    if (typeof window !== 'undefined') {
-      const {useAuthStore} = await import('@/store/useAuthStore');
-      useAuthStore.getState().logout();
-    }
-
-    // 4. 기본 페이지로 리다이렉트
-    if (typeof window !== 'undefined') {
-      window.location.href = '/';
-    }
-  } catch (error) {
-    console.error('Failed to clear auth state:', error);
-  }
 };
 
 /**
