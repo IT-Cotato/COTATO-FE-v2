@@ -1,3 +1,5 @@
+'use client';
+
 import {Modal} from '@/components/modal/Modal';
 import {GoogleLoginButton} from '@/components/button/GoogleLoginButton';
 
@@ -8,7 +10,12 @@ interface LoginModalProps {
   onClose: () => void;
 }
 
-export const LoginModal = ({title, content, isOpen, onClose}: LoginModalProps) => {
+export const LoginModal = ({
+  title,
+  content,
+  isOpen,
+  onClose,
+}: LoginModalProps) => {
   return (
     <Modal
       isOpen={isOpen}
