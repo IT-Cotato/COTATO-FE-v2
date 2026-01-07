@@ -21,9 +21,18 @@ export const OAuthCallbackHandler = () => {
 
     hasRequested.current = true;
 
-    const redirectUri =
-      window.location.origin +
-      process.env.NEXT_PUBLIC_GOOGLE_REDIRECT_URI_ENDPOINT!;
+    const redirectEndpoint =
+      process.env.NEXT_PUBLIC_GOOGLE_REDIRECT_URI_ENDPOINT;
+    if (!redirectEndpoint) {
+      console.error(
+        'NEXT_PUBLIC_GOOGLE_REDIRECT_URI_ENDPOINT is not configured'
+      );
+      alert('시스템 설정 오류입니다. 관리자에게 문의하세요.');
+      window.location.href = '/';
+      return;
+    }
+
+    const redirectUri = window.location.origin + redirectEndpoint;
 
     mutate({code, redirectUri});
   }, [mutate, params]);
