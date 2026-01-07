@@ -70,14 +70,14 @@ export const clearAuthState = async () => {
 
     // 2. React Query 캐시 클리어
     if (typeof window !== 'undefined') {
-      const {getQueryClient} = await import('@/app/providers');
+      const {getQueryClient} = await import('../../app/providers');
       const queryClient = getQueryClient();
       queryClient.clear();
     }
 
     // 3. 전역 상태 초기화
     if (typeof window !== 'undefined') {
-      const {useAuthStore} = await import('@/store/useAuthStore');
+      const {useAuthStore} = await import('../../store/useAuthStore');
       useAuthStore.getState().logout();
     }
   } catch (error) {
