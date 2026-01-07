@@ -100,7 +100,7 @@ export const Header = () => {
       </header>
 
       <LoginModal
-        title='로그인 후 이용할 수 있는 서비스입니다.'
+        title='COTATO에 오신 것을 환영합니다!'
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
       />
