@@ -2,7 +2,6 @@ export const ROUTES = {
   HOME: '/',
   ABOUT: '/about',
   PROJECT: '/project',
-  LOGIN: '/login',
   APPLY: '/apply', //지원하기
   RECRUIT: '/recruit', //모집공고
   FAQ: '/faq',
