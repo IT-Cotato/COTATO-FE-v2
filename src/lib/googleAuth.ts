@@ -1,4 +1,9 @@
 export const startGoogleLogin = () => {
+  if (typeof window === 'undefined') {
+    console.error('startGoogleLogin can only be called in browser environment');
+    return;
+  }
+
   const clientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID;
   const redirectUriEndpoint =
     process.env.NEXT_PUBLIC_GOOGLE_REDIRECT_URI_ENDPOINT;
