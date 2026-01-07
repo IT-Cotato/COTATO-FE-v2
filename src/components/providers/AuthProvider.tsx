@@ -38,6 +38,13 @@ export function AuthProvider({children}: AuthProviderProps) {
      * - 브라우저 재시작 후 접속
      */
     const initializeAuth = async () => {
+      const storedAccessToken = getAccessToken();
+      const storedRefreshToken = getRefreshToken();
+
+      if (!storedAccessToken || !storedRefreshToken) {
+        return;
+      }
+
       try {
         const userResponse = await getMe();
         setUser(userResponse);
