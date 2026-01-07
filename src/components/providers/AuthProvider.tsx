@@ -7,6 +7,8 @@ import {
   getRefreshToken,
   getAccessToken,
   clearAuthState,
+  ACCESS_TOKEN_KEY,
+  REFRESH_TOKEN_KEY,
 } from '@/services/utils/tokenManager';
 
 interface AuthProviderProps {
@@ -72,12 +74,12 @@ export function AuthProvider({children}: AuthProviderProps) {
      * - 탭 B도 로그인 UI로 변경
      */
     const handleStorageChange = async (e: StorageEvent) => {
-      if (e.key === 'accessToken' || e.key === 'refreshToken') {
+      if (e.key === ACCESS_TOKEN_KEY || e.key === REFRESH_TOKEN_KEY) {
         const hasTokens = getAccessToken() && getRefreshToken();
 
         if (!hasTokens) {
           await clearAuthState();
-        } else if (e.key === 'accessToken' && e.newValue && !e.oldValue) {
+        } else if (e.key === ACCESS_TOKEN_KEY && e.newValue && !e.oldValue) {
           try {
             const userResponse = await getMe();
             setUser(userResponse);

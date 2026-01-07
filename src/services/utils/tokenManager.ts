@@ -4,8 +4,8 @@
  * - refreshToken: localStorage에 저장
  */
 
-const ACCESS_TOKEN_KEY = 'accessToken';
-const REFRESH_TOKEN_KEY = 'refreshToken';
+export const ACCESS_TOKEN_KEY = 'accessToken';
+export const REFRESH_TOKEN_KEY = 'refreshToken';
 
 /**
  * Access Token 저장 (localStorage)
