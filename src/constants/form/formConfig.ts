@@ -1,7 +1,4 @@
-import {
-  AdditionalFormItem,
-  BasicInfoFormItem,
-} from '@/schemas/apply-type';
+import {AdditionalFormItem, BasicInfoFormItem} from '@/schemas/apply-type';
 
 export const SEMESTER_OPTIONS = [
   {value: '4', label: '4학기'},

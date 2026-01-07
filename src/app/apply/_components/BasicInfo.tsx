@@ -6,10 +6,7 @@ import {FormInput} from '@/components/form/FormInput';
 import {FormRadio} from '@/components/form/FormRadio';
 import {FullButton} from '@/components/button/FullButton';
 import {BASIC_INFO_FIELDS} from '@/constants/form/formConfig';
-import {
-  BasicInfoFormData,
-  BasicInfoFieldConfig,
-} from '@/schemas/apply-type';
+import {BasicInfoFormData, BasicInfoFieldConfig} from '@/schemas/apply-type';
 
 interface BasicInfoProps {
   onSave: () => void;
@@ -103,9 +100,7 @@ export const BasicInfo = ({
       <div className='flex flex-col gap-[81px]'>
         {BASIC_INFO_FIELDS.map((item) => {
           const key =
-            'row' in item
-              ? item.row.map((f) => f.name).join('-')
-              : item.name;
+            'row' in item ? item.row.map((f) => f.name).join('-') : item.name;
           return (
             <div
               key={key}
