@@ -8,7 +8,7 @@ import type {
   RefreshTokenResponse,
 } from '@/services/types/auth.types';
 import {ENDPOINT} from '@/services/constant/endpoint';
-import {SuccessResponse} from '../types/common.types';
+import {SuccessResponse} from '@/services/types/common.types';
 
 /**
  * OAuth 로그인

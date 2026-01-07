@@ -3,8 +3,8 @@ import axios, {
   AxiosInstance,
   InternalAxiosRequestConfig,
 } from 'axios';
-import {API_BASE_URL, ENDPOINT} from '../constant/endpoint';
-import {RefreshTokenResponse} from '../types/auth.types';
+import {API_BASE_URL, ENDPOINT} from '@/services/constant/endpoint';
+import {RefreshTokenResponse} from '@/services/types/auth.types';
 import {
   clearAuthState,
   getAccessToken,

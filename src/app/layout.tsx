@@ -4,7 +4,7 @@ import {Metadata} from 'next';
 import '@/styles/globals.css';
 import localFont from 'next/font/local';
 import {AuthProvider} from '@/components/providers/AuthProvider';
-import Providers from './providers';
+import Providers from '@/app/providers';
 
 export const metadata: Metadata = {
   title: 'COTATO RECRUIT',
