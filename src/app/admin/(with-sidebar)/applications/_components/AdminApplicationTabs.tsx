@@ -1,10 +1,10 @@
 'use client';
 
 import {AdminApplicationPart} from '@/app/admin/(with-sidebar)/applications/_components/AdminApplicationPart';
-import {AdminApplicationTable} from '@/app/admin/(with-sidebar)/applications/_components/AdminApplicationTable';
+import {AdminApplicationTableContainer} from '@/app/admin/(with-sidebar)/applications/_components/AdminApplicationTableContainer';
 import {SuspenseWrapper} from '@/components/wrappers/SuspenseWrapper';
 import {PART_TABS} from '@/constants/admin/admin-applications';
-import {PartType} from '@/schemas/admin-application-type';
+import {PartType} from '@/schemas/admin/admin-application-type';
 import {useRouter, useSearchParams} from 'next/navigation';
 
 export const AdminApplicationTabs = () => {
@@ -34,7 +34,7 @@ export const AdminApplicationTabs = () => {
         ))}
       </div>
       <SuspenseWrapper>
-        <AdminApplicationTable />
+        <AdminApplicationTableContainer />
       </SuspenseWrapper>
     </>
   );

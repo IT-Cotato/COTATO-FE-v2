@@ -2,9 +2,9 @@
 
 import {RESULT_DATA} from '@/mocks/mock-result';
 import {ResultTable} from '@/app/admin/(with-sidebar)/results/_components/result-manage/ResultTable';
-import {ResultSummaryData} from '@/schemas/admin-result-type';
-import {GenerationDropdown} from '@/components/dropdown/GenerationDropdown';
 import {useRecruitmentStore} from '@/store/useRecruitmentStore';
+import {ResultSummaryData} from '@/schemas/admin/admin-result-type';
+import {GenerationDropdown} from '@/components/dropdown/GenerationDropdown';
 
 export const ManageResult = () => {
   const generation = useRecruitmentStore((s) => s.generation);
