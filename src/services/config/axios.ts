@@ -12,6 +12,7 @@ import {
   setAccessToken,
   setRefreshToken,
 } from '@/services/utils/tokenManager';
+import {SuccessResponse} from '@/services/types/common.types';
 
 /**
  * Axios 인스턴스 생성 함수
@@ -145,16 +146,15 @@ privateAxios.interceptors.response.use(
     }
 
     try {
-      const {data} = await publicAxios.post<RefreshTokenResponse>(
-        ENDPOINT.AUTH.REFRESH,
-        {refreshToken}
-      );
+      const {data} = await publicAxios.post<
+        SuccessResponse<RefreshTokenResponse>
+      >(ENDPOINT.AUTH.REFRESH, {refreshToken});
 
-      setAccessToken(data.accessToken);
-      setRefreshToken(data.refreshToken);
+      setAccessToken(data.data.accessToken);
+      setRefreshToken(data.data.refreshToken);
 
       if (originalRequest.headers) {
-        originalRequest.headers.Authorization = `Bearer ${data.accessToken}`;
+        originalRequest.headers.Authorization = `Bearer ${data.data.accessToken}`;
       }
 
       processQueue();
