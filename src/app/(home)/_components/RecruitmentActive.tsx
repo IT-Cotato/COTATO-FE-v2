@@ -8,9 +8,7 @@ import {useRouter} from 'next/navigation';
 import {ROUTES} from '@/constants/routes';
 import {useState} from 'react';
 import {LoginModal} from '@/components/modal/LoginModal';
-
-// mockAuthenticated
-const session = false;
+import {useAuthStore} from '@/store/useAuthStore';
 
 export const RecruitmentActive = () => {
   const router = useRouter();
@@ -18,9 +16,10 @@ export const RecruitmentActive = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const generation = useRecruitmentStore((state) => state.generation);
+  const {isAuthenticated} = useAuthStore();
 
   const handleApplyClick = () => {
-    if (!session) {
+    if (!isAuthenticated) {
       setIsModalOpen(true);
     } else {
       router.push(ROUTES.APPLY);
