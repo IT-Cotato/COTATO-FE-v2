@@ -2,7 +2,7 @@
 
 import {Button} from '@/components/button/Button';
 import {REVIEWER_TABS} from '@/constants/admin/admin-applications';
-import {ReviewerType} from '@/schemas/admin-application-type';
+import {ReviewerType} from '@/schemas/admin/admin-application-type';
 import {useAdminReviewStore} from '@/store/useAdminReviewStore';
 import {useRouter, useSearchParams} from 'next/navigation';
 import {useEffect} from 'react';
@@ -61,7 +61,7 @@ export const AdminReviewTabs = () => {
         value={reviews[activeReviewer] ?? ''}
         onChange={(e) => setReview(activeReviewer, e.target.value)}
         placeholder='면접 질문 및 서류평가에 대해 자유롭게 작성해주세요.'
-        className='min-h-100 w-full resize-none rounded-[10px] border-[1.5px] border-neutral-500 bg-white px-8 py-6.25 text-h5 outline-none placeholder:text-black'
+        className='min-h-100 w-full resize-none rounded-[10px] border-[1.5px] border-neutral-300 bg-white px-8 py-6.25 text-h5 outline-none placeholder:text-neutral-800'
       />
     </div>
   );

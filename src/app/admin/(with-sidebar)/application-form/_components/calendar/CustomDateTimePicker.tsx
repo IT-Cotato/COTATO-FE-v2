@@ -52,7 +52,7 @@ export const CustomDateTimePicker = ({
       customInput={<CustomInput />}
       calendarContainer={(props) => (
         <CalendarContainer>
-          <div className='custom-datetime-picker rounded-2xl bg-white p-6 shadow-xl'>
+          <div className='custom-datetime-picker shadow-card rounded-2xl bg-white p-6'>
             <CustomHeader
               date={selected ?? new Date()}
               onPrevMonth={handlePrevMonth}

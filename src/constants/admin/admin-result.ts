@@ -8,7 +8,7 @@ import {
   MOCK_MAIL_CONTENT_PASS,
   MOCK_MAIL_CONTENT_WAITING,
 } from '@/mocks/mock-mail';
-import {MailType} from '@/schemas/admin-result-type';
+import {MailType} from '@/schemas/admin/admin-result-type';
 
 export const RESULT_PARTS = [
   {label: '전체', value: 'total'},
