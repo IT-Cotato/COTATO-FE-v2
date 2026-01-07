@@ -22,7 +22,7 @@ interface QuestionItem {
   maxLength: number;
 }
 
-export function PartQuestion({onPrev, onNext, onSave}: PartQuestionProps) {
+export const PartQuestion = ({onPrev, onNext, onSave}: PartQuestionProps) => {
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
@@ -109,4 +109,4 @@ export function PartQuestion({onPrev, onNext, onSave}: PartQuestionProps) {
       </div>
     </div>
   );
-}
+};

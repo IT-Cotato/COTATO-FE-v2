@@ -12,10 +12,8 @@ import {formFieldStyles} from './form.styles';
 import {useClickOutside} from '@/hooks/useClickOutside';
 import ChevronDown from '@/assets/chevrons/chevron-down.svg';
 
-interface FormDropdownProps extends Omit<
-  InputHTMLAttributes<HTMLInputElement>,
-  'onChange'
-> {
+interface FormDropdownProps
+  extends Omit<InputHTMLAttributes<HTMLInputElement>, 'onChange'> {
   label: string;
   options: {value: string; label: string}[];
   value?: string;
@@ -35,6 +33,7 @@ export const FormDropdown = forwardRef<HTMLInputElement, FormDropdownProps>(
       placeholder,
       id,
       className,
+      readOnly,
       ...props
     },
     ref
@@ -47,6 +46,7 @@ export const FormDropdown = forwardRef<HTMLInputElement, FormDropdownProps>(
     useClickOutside(dropdownRef, () => setIsOpen(false));
 
     const handleToggle = () => {
+      if (readOnly) return;
       setIsOpen((prev) => !prev);
     };
 
@@ -67,6 +67,7 @@ export const FormDropdown = forwardRef<HTMLInputElement, FormDropdownProps>(
           <button
             type='button'
             onClick={handleToggle}
+            readOnly={readOnly}
             className={clsx(
               formFieldStyles.field,
               'flex w-full items-center justify-between',
@@ -88,7 +89,7 @@ export const FormDropdown = forwardRef<HTMLInputElement, FormDropdownProps>(
             />
           </button>
 
-          {isOpen && (
+          {isOpen && !readOnly && (
             <ul className='absolute z-10 w-full rounded-[10px] bg-neutral-100'>
               {options.map((option) => (
                 <li

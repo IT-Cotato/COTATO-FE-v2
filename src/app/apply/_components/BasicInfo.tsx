@@ -1,7 +1,6 @@
 'use client';
 
-import {useEffect} from 'react';
-import {useFormContext, RegisterOptions} from 'react-hook-form';
+import {useFormContext, RegisterOptions, Controller} from 'react-hook-form';
 import {FormDropdown} from '@/components/form/FormDropdown';
 import {FormInput} from '@/components/form/FormInput';
 import {FormRadio} from '@/components/form/FormRadio';
@@ -26,24 +25,16 @@ interface BasicInfoProps {
   readOnly?: boolean;
 }
 
-export function BasicInfo({onNext, onSave, readOnly = false}: BasicInfoProps) {
+export const BasicInfo = ({
+  onNext,
+  onSave,
+  readOnly = false,
+}: BasicInfoProps) => {
   const {
     register,
-    watch,
-    setValue,
+    control,
     formState: {errors},
   } = useFormContext<BasicInfoFormData>();
-
-  useEffect(() => {
-    BASIC_INFO_FIELDS.forEach((item) => {
-      const fields = 'row' in item && item.row ? item.row : [item];
-      fields.forEach((field) => {
-        if (field.type === 'dropdown') {
-          register(field.name as keyof BasicInfoFormData, field.rules);
-        }
-      });
-    });
-  }, [register]);
 
   const renderField = (field: FieldConfig) => {
     const {type, name, label, options, rules, placeholder} = field;
@@ -76,20 +67,25 @@ export function BasicInfo({onNext, onSave, readOnly = false}: BasicInfoProps) {
     if (type === 'dropdown') {
       return (
         <div key={name} className='flex flex-1 flex-col gap-2'>
-          <FormDropdown
-            label={label}
-            placeholder={placeholder}
-            options={options || []}
-            value={watch(name)}
-            onChange={(val: string) =>
-              setValue(name, val, {shouldValidate: true})
-            }
-            disabled={readOnly}
-            className='w-full'
+          <Controller
+            name={name}
+            control={control}
+            rules={rules}
+            render={({field}) => (
+              <FormDropdown
+                label={label}
+                placeholder={placeholder}
+                options={options || []}
+                value={field.value}
+                onChange={field.onChange}
+                disabled={readOnly}
+                className='w-full'
+              />
+            )}
           />
           {error && (
             <span className='text-body-l text-alert'>
-              {error.message as string}
+              {error.message ?? ''}
             </span>
           )}
         </div>
@@ -143,4 +139,4 @@ export function BasicInfo({onNext, onSave, readOnly = false}: BasicInfoProps) {
       </div>
     </div>
   );
-}
+};

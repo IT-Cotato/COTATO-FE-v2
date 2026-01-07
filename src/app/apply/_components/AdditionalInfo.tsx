@@ -1,6 +1,6 @@
 'use client';
 
-import {useFormContext, type RegisterOptions} from 'react-hook-form';
+import {useFormContext, type RegisterOptions, Controller} from 'react-hook-form';
 import clsx from 'clsx';
 import {FormTextarea} from '@/components/form/FormTextarea';
 import {FormDropdown} from '@/components/form/FormDropdown';
@@ -23,17 +23,17 @@ interface FieldConfig {
   row?: FieldConfig[];
 }
 
-export function AdditionalInfo({
+export const AdditionalInfo = ({
   onPrev,
   onSave,
 }: {
   onPrev: () => void;
   onSave: () => void;
-}) {
+}) => {
   const {
     register,
+    control,
     watch,
-    setValue,
     formState: {errors},
   } = useFormContext();
 
@@ -59,7 +59,7 @@ export function AdditionalInfo({
         return (
           <FormTextarea
             key={name}
-            label={label!}
+            label={label ?? ''}
             placeholder={placeholder}
             maxLength={maxLength}
             readOnly={readOnly}
@@ -71,23 +71,28 @@ export function AdditionalInfo({
         );
       case 'dropdown':
         return (
-          <FormDropdown
+          <Controller
             key={name}
-            label={label!}
-            placeholder={placeholder}
-            options={options || []}
-            value={name ? watch(name) : ''}
-            onChange={(val: string) =>
-              name && setValue(name, val, {shouldValidate: true})
-            }
-            error={error?.message as string}
+            name={name!}
+            control={control}
+            rules={rules}
+            render={({field: controllerField}) => (
+              <FormDropdown
+                label={label ?? ''}
+                placeholder={placeholder}
+                options={options || []}
+                value={controllerField.value}
+                onChange={controllerField.onChange}
+                error={error?.message as string}
+              />
+            )}
           />
         );
       case 'input':
         return (
           <FormInput
             key={name}
-            label={label!}
+            label={label ?? ''}
             placeholder={placeholder}
             error={error?.message as string}
             {...(name && register(name, rules))}
@@ -125,14 +130,17 @@ export function AdditionalInfo({
     <div className='flex w-full flex-col gap-[81px]'>
       <div className='flex flex-col gap-10'>
         {ADDITIONAL_FIELDS.map((field, idx) => {
-          if (field.type === 'row') {
+          if (field.type === 'row' && field.row) {
             return (
-              <div key={idx} className='flex w-full flex-col gap-4 md:flex-row'>
-                {field.row!.map(renderField)}
+              <div
+                key={`row-${idx}`}
+                className='flex w-full flex-col gap-4 md:flex-row'>
+                {field.row.map(renderField)}
               </div>
             );
           }
-          return <div key={idx}>{renderField(field as FieldConfig)}</div>;
+          const fieldKey = field.name || `${field.type}-${idx}`;
+          return <div key={fieldKey}>{renderField(field as FieldConfig)}</div>;
         })}
       </div>
 
@@ -164,4 +172,4 @@ export function AdditionalInfo({
       </div>
     </div>
   );
-}
+};
