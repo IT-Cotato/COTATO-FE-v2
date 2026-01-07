@@ -83,6 +83,7 @@ export function AuthProvider({children}: AuthProviderProps) {
             setUser(userResponse);
           } catch (error) {
             console.error('[AuthProvider - Failed to sync login state]', error);
+            await clearAuthState();
           }
         }
       }
