@@ -17,9 +17,10 @@ export const Header = () => {
   const pathname = usePathname();
   const {mutate} = useLogout();
 
-  const {user} = useAuthStore(
+  const {user, isInitialized} = useAuthStore(
     useShallow((state) => ({
       user: state.user,
+      isInitialized: state.isInitialized,
     }))
   );
 
@@ -68,28 +69,29 @@ export const Header = () => {
             );
           })}
         </nav>
-        {user ? (
-          <Dropdown
-            trigger={
-              <div className='flex h-22 cursor-pointer items-center justify-center gap-2.5 px-[17px] py-6 text-body-m text-white'>
-                <SmallLogo /> {user.name}
-              </div>
-            }
-            className='absolute flex h-[30px] w-[102px] flex-col items-start gap-[10px] rounded-[4px] border border-primary bg-black px-[11px] py-[6px]'>
-            <button
-              onClick={() => mutate()}
-              className='flex w-full items-center justify-start gap-[3px] text-body-s text-primary'>
-              <Logout />
-              LOGOUT
-            </button>
-          </Dropdown>
-        ) : (
-          <Link
-            href={ROUTES.LOGIN}
-            className='flex h-22 items-center justify-center gap-2.5 px-[17px] py-6 text-body-m text-primary'>
-            LOGIN
-          </Link>
-        )}
+        {isInitialized &&
+          (user ? (
+            <Dropdown
+              trigger={
+                <div className='flex h-22 cursor-pointer items-center justify-center gap-2.5 px-[17px] py-6 text-body-m text-white'>
+                  <SmallLogo /> {user.name}
+                </div>
+              }
+              className='absolute flex h-[30px] w-[102px] flex-col items-start gap-[10px] rounded-[4px] border border-primary bg-black px-[11px] py-[6px]'>
+              <button
+                onClick={() => mutate()}
+                className='flex w-full items-center justify-start gap-[3px] text-body-s text-primary'>
+                <Logout />
+                LOGOUT
+              </button>
+            </Dropdown>
+          ) : (
+            <Link
+              href={ROUTES.LOGIN}
+              className='flex h-22 items-center justify-center gap-2.5 px-[17px] py-6 text-body-m text-primary'>
+              LOGIN
+            </Link>
+          ))}
       </div>
     </header>
   );

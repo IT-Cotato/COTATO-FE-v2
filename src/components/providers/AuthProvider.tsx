@@ -26,7 +26,7 @@ interface AuthProviderProps {
  * - 이 Provider가 localStorage ↔ Zustand 동기화 담당
  */
 export function AuthProvider({children}: AuthProviderProps) {
-  const {setUser} = useAuthStore();
+  const {setUser, setInitialized} = useAuthStore();
 
   useEffect(() => {
     /**
@@ -42,6 +42,7 @@ export function AuthProvider({children}: AuthProviderProps) {
       const storedRefreshToken = getRefreshToken();
 
       if (!storedAccessToken || !storedRefreshToken) {
+        setInitialized(true);
         return;
       }
 
@@ -51,6 +52,8 @@ export function AuthProvider({children}: AuthProviderProps) {
       } catch (error) {
         console.error('[AuthProvider - Failed to initialize auth]', error);
         await clearAuthState();
+      } finally {
+        setInitialized(true);
       }
     };
 
@@ -90,7 +93,7 @@ export function AuthProvider({children}: AuthProviderProps) {
     return () => {
       window.removeEventListener('storage', handleStorageChange);
     };
-  }, [setUser]);
+  }, [setInitialized, setUser]);
 
   return <>{children}</>;
 }
