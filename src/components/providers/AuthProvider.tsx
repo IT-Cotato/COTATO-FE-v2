@@ -27,7 +27,7 @@ interface AuthProviderProps {
  * - 하지만 Zustand 같은 메모리 상태는 탭마다 독립적
  * - 이 Provider가 localStorage ↔ Zustand 동기화 담당
  */
-export function AuthProvider({children}: AuthProviderProps) {
+export const AuthProvider = ({children}: AuthProviderProps) => {
   const {setUser, setInitialized} = useAuthStore();
 
   useEffect(() => {
@@ -99,4 +99,4 @@ export function AuthProvider({children}: AuthProviderProps) {
   }, [setInitialized, setUser]);
 
   return <>{children}</>;
-}
+};

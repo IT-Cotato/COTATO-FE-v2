@@ -29,7 +29,10 @@ interface ProtectedRouteProps {
  *   {children}
  * </ProtectedRoute>
  */
-export function ProtectedRoute({children, requireRole}: ProtectedRouteProps) {
+export const ProtectedRoute = ({
+  children,
+  requireRole,
+}: ProtectedRouteProps) => {
   const router = useRouter();
   const {isAuthenticated, user, isInitialized} = useAuthStore();
   const hasShownAlert = useRef(false);
@@ -64,4 +67,4 @@ export function ProtectedRoute({children, requireRole}: ProtectedRouteProps) {
   }
 
   return <>{children}</>;
-}
+};
