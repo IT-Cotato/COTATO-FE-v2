@@ -10,7 +10,7 @@ export const UserRoleSchema = z.enum(['APPLICANT', 'STAFF']);
  */
 export const oAuthLoginRequestSchema = z.object({
   code: z.string(),
-  redirectUri: z.string().url(),
+  redirectUri: z.url(),
 });
 
 /**
@@ -48,7 +48,7 @@ export const logoutResponseSchema = z.void();
  */
 export const getMeResponseSchema = z.object({
   userId: z.number(),
-  email: z.string().email(),
+  email: z.email(),
   name: z.string(),
   role: UserRoleSchema,
 });
