@@ -16,6 +16,10 @@ export const createSuccessResponseSchema = <T extends z.ZodTypeAny>(
 };
 
 /**
- * 타입 추출
+ * 제네릭 헬퍼 타입 제공
  */
-export type SuccessResponse = z.infer<typeof createSuccessResponseSchema>;
+export type SuccessResponse<T extends z.ZodTypeAny> = {
+  code: string;
+  message: string;
+  data: z.infer<T>;
+};
