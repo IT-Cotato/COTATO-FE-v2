@@ -7,7 +7,7 @@ import {useEffect, type RefObject} from 'react';
  */
 export const useScrollToTop = (
   dependencies: React.DependencyList = [],
-  elementRef?: RefObject<HTMLElement>,
+  elementRef?: RefObject<HTMLElement>
 ) => {
   useEffect(() => {
     const animationFrameId = requestAnimationFrame(() => {
