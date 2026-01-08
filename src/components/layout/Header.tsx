@@ -13,6 +13,7 @@ import {useAuthStore} from '@/store/useAuthStore';
 import {useShallow} from 'zustand/shallow';
 import {LoginModal} from '@/components/modal/LoginModal';
 import {useState} from 'react';
+import {ROUTES} from '@/constants/routes';
 
 export const Header = () => {
   const router = useRouter();
@@ -65,7 +66,7 @@ export const Header = () => {
               let isActive =
                 pathname === item.href || pathname.startsWith(`${item.href}/`);
 
-              if (item.label === 'ADMIN' && pathname.startsWith('/admin')) {
+              if (item.label === 'ADMIN' && pathname.startsWith(ROUTES.ADMIN)) {
                 isActive = true;
               }
 

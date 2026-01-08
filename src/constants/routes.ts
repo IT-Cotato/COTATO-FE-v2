@@ -6,6 +6,9 @@ export const ROUTES = {
   RECRUIT: '/recruit', //모집공고
   FAQ: '/faq',
 
+  // oauth routes
+  OAUTH2_CALLBACK: '/oauth2/callback',
+
   //admin routes
   ADMIN: '/admin',
   ADMIN_APPLICATION: '/admin/applications',
