@@ -71,19 +71,23 @@ export const AuthProvider = ({children}: AuthProviderProps) => {
      * - 탭 B도 로그인 UI로 변경
      */
     const handleStorageChange = async (e: StorageEvent) => {
-      if (e.key === ACCESS_TOKEN_KEY || e.key === REFRESH_TOKEN_KEY) {
-        const hasTokens = getAccessToken() && getRefreshToken();
+      if (!e.key || ![ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY].includes(e.key))
+        return;
 
-        if (!hasTokens) {
+      if (e.newValue === null) {
+        if (useAuthStore.getState().isAuthenticated) {
+          useAuthStore.getState().logout();
+        }
+        return;
+      }
+
+      if (e.key === ACCESS_TOKEN_KEY && e.newValue && !e.oldValue) {
+        try {
+          const userResponse = await getMe();
+          setUser(userResponse);
+        } catch (error) {
+          console.error('[AuthProvider - Failed to sync login state]', error);
           await clearAuthState();
-        } else if (e.key === ACCESS_TOKEN_KEY && e.newValue && !e.oldValue) {
-          try {
-            const userResponse = await getMe();
-            setUser(userResponse);
-          } catch (error) {
-            console.error('[AuthProvider - Failed to sync login state]', error);
-            await clearAuthState();
-          }
         }
       }
     };
