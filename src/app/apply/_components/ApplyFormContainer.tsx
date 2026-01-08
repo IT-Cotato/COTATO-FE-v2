@@ -1,6 +1,5 @@
 'use client';
 
-import {useRef} from 'react';
 import {FormProvider} from 'react-hook-form';
 import {StepIndicator} from '@/components/navigation/StepIndicator';
 import {BasicInfo} from '@/app/apply/_components/BasicInfo';
@@ -20,7 +19,6 @@ export const ApplyFormContainer = () => {
     useApplyFormController();
 
   useScrollToTop([step]);
-
   return (
     <div className='flex w-full justify-center'>
       <div className='flex w-full max-w-[1196px] flex-col gap-[125px] py-20'>
@@ -34,7 +32,7 @@ export const ApplyFormContainer = () => {
           </div>
 
           <FormProvider {...methods}>
-            <form onSubmit={handleFinalSubmit}>
+            <form onSubmit={handleFinalSubmit} key={step}>
               {step === 1 && (
                 <BasicInfo onNext={handleNext} onSave={handleSave} />
               )}

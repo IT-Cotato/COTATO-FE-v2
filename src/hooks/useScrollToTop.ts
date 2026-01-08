@@ -15,13 +15,15 @@ export const useScrollToTop = (
 
       if (target) {
         // ref로 받은 엘리먼트가 있으면, 그 엘리먼트를 스크롤
-        target.scrollTo({top: 0});
+        target.scrollTo({top: 0, behavior: 'instant'});
       } else {
-        // 없으면 window를 스크롤
-        window.scrollTo({top: 0});
+        // 없으면 window와 document 모두 스크롤
+        window.scrollTo({top: 0, behavior: 'instant'});
+        document.documentElement.scrollTop = 0;
+        document.body.scrollTop = 0;
       }
     });
 
     return () => cancelAnimationFrame(animationFrameId);
-  }, [...dependencies, elementRef]);
+  }, dependencies);
 };
