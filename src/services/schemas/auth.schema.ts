@@ -54,7 +54,7 @@ export const getMeResponseSchema = z.object({
 });
 
 // 타입 추출
-export type userRole = z.infer<typeof userRoleSchema>;
+export type UserRole = z.infer<typeof userRoleSchema>;
 export type OAuthLoginRequest = z.infer<typeof oAuthLoginRequestSchema>;
 export type OAuthLoginResponse = z.infer<typeof oAuthLoginResponseSchema>;
 export type RefreshTokenRequest = z.infer<typeof refreshTokenRequestSchema>;
