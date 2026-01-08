@@ -49,25 +49,25 @@
 }
 
 @layer base {
-  html,
+  html {
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+  }
+
   body {
     height: 100%;
     width: 100%;
-    overflow: auto;
+    overflow-y: auto;
     -ms-overflow-style: none;
     scrollbar-width: none;
     overflow-wrap: break-word;
+    font-family: var(--font-pretendard), sans-serif;
+    min-height: 100vh;
   }
 
-  html::-webkit-scrollbar,
   body::-webkit-scrollbar {
     display: none;
-  }
-
-  body {
-    font-family: var(--font-pretendard), sans-serif;
-    width: 100%;
-    min-height: 100vh;
   }
 
   button {
