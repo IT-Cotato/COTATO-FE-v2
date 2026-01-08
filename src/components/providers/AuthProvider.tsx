@@ -1,14 +1,14 @@
 'use client';
 
-import {useEffect, ReactNode} from 'react';
+import {useEffect, ReactNode, useRef} from 'react';
 import {useAuthStore} from '@/store/useAuthStore';
 import {getMe} from '@/services/api/auth.api';
 import {
-  getRefreshToken,
   getAccessToken,
-  clearAuthState,
   ACCESS_TOKEN_KEY,
   REFRESH_TOKEN_KEY,
+  getRefreshToken,
+  clearAuthState,
 } from '@/services/utils/tokenManager';
 
 interface AuthProviderProps {
@@ -41,9 +41,7 @@ export const AuthProvider = ({children}: AuthProviderProps) => {
      */
     const initializeAuth = async () => {
       const storedAccessToken = getAccessToken();
-      const storedRefreshToken = getRefreshToken();
-
-      if (!storedAccessToken || !storedRefreshToken) {
+      if (!storedAccessToken) {
         setInitialized(true);
         return;
       }
@@ -53,7 +51,6 @@ export const AuthProvider = ({children}: AuthProviderProps) => {
         setUser(userResponse);
       } catch (error) {
         console.error('[AuthProvider - Failed to initialize auth]', error);
-        await clearAuthState();
       } finally {
         setInitialized(true);
       }
