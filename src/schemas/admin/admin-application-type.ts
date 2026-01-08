@@ -87,6 +87,14 @@ export const ApplicationDetailSchema = z.object({
     ans_2: z.string().max(600),
     ans_3: z.string().max(600),
     ans_4: z.string().max(600),
+    files: z
+      .array(
+        z.object({
+          name: z.string(),
+        })
+      )
+      .optional(),
+    links: z.array(z.string().optional()),
   }),
 
   EtcQuestionInfo: z.object({
