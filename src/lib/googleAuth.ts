@@ -1,5 +1,7 @@
 import {ROUTES} from '@/constants/routes';
 
+export const OAUTH_STATE_KEY = 'oauth_state';
+
 export const startGoogleLogin = () => {
   if (typeof window === 'undefined') {
     console.error('startGoogleLogin can only be called in browser environment');
@@ -17,7 +19,7 @@ export const startGoogleLogin = () => {
   const redirectUri = window.location.origin + ROUTES.OAUTH2_CALLBACK;
 
   const state = crypto.randomUUID();
-  sessionStorage.setItem('oauth_state', state);
+  sessionStorage.setItem(OAUTH_STATE_KEY, state);
 
   const params = new URLSearchParams({
     client_id: clientId,

@@ -4,6 +4,7 @@ import {useEffect, useRef} from 'react';
 import {useSearchParams} from 'next/navigation';
 import {useOAuthLogin} from '@/hooks/mutations/useAuth';
 import {ROUTES} from '@/constants/routes';
+import {OAUTH_STATE_KEY} from '@/lib/googleAuth';
 
 export const OAuthCallbackHandler = () => {
   const params = useSearchParams();
@@ -16,14 +17,14 @@ export const OAuthCallbackHandler = () => {
     hasRequested.current = true;
 
     const receivedState = params.get('state');
-    const savedState = sessionStorage.getItem('oauth_state');
+    const savedState = sessionStorage.getItem(OAUTH_STATE_KEY);
     if (receivedState !== savedState) {
       console.error('[CSRF detection] State parameter mismatch');
       alert('잘못된 요청입니다. 처음부터 다시 시도해주세요.');
       window.location.href = '/';
       return;
     }
-    sessionStorage.removeItem('oauth_state');
+    sessionStorage.removeItem(OAUTH_STATE_KEY);
 
     const error = params.get('error');
     if (error) {
