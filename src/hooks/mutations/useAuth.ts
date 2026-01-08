@@ -1,7 +1,6 @@
 'use client';
 
 import {useMutation} from '@tanstack/react-query';
-import {OAuthLoginRequest} from '@/services/types/auth.types';
 import {useRouter} from 'next/navigation';
 import {AxiosError} from 'axios';
 import {useAuthStore} from '@/store/useAuthStore';
@@ -11,6 +10,7 @@ import {
   setAccessToken,
   setRefreshToken,
 } from '@/services/utils/tokenManager';
+import {OAuthLoginRequest} from '@/services/schemas/auth.schema';
 
 /**
  * OAuth 로그인 Mutation Hook
