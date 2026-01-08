@@ -1,5 +1,6 @@
 'use client';
 
+import {useEffect} from 'react';
 import {FormProvider} from 'react-hook-form';
 import {StepIndicator} from '@/components/navigation/StepIndicator';
 import {BasicInfo} from '@/app/apply/_components/BasicInfo';
@@ -18,7 +19,11 @@ export const ApplyFormContainer = () => {
   const {step, methods, handleNext, handlePrev, handleSave, handleFinalSubmit} =
     useApplyFormController();
 
-  useScrollToTop([step]);
+  const scrollToTop = useScrollToTop();
+
+  useEffect(() => {
+    scrollToTop();
+  }, [step, scrollToTop]);
   return (
     <div className='flex w-full justify-center'>
       <div className='flex w-full max-w-[1196px] flex-col gap-[125px] py-20'>
