@@ -3,8 +3,7 @@ import axios, {
   AxiosInstance,
   InternalAxiosRequestConfig,
 } from 'axios';
-import {API_BASE_URL, ENDPOINT} from '@/services/constant/endpoint';
-import {RefreshTokenResponse} from '@/services/types/auth.types';
+import {API_BASE_URL} from '@/services/constant/endpoint';
 import {
   clearAuthState,
   getAccessToken,
@@ -12,7 +11,7 @@ import {
   setAccessToken,
   setRefreshToken,
 } from '@/services/utils/tokenManager';
-import {SuccessResponse} from '@/services/types/common.types';
+import {refreshToken} from '@/services/utils/tokenRefresh';
 
 /**
  * Axios 인스턴스 생성 함수
@@ -138,23 +137,23 @@ privateAxios.interceptors.response.use(
     originalRequest._retry = true;
     isRefreshing = true;
 
-    const refreshToken = getRefreshToken();
-    if (!refreshToken) {
+    const refreshTokenValue = getRefreshToken();
+    if (!refreshTokenValue) {
       isRefreshing = false;
       await clearAuthState();
       return Promise.reject(error);
     }
 
     try {
-      const {data} = await publicAxios.post<
-        SuccessResponse<RefreshTokenResponse>
-      >(ENDPOINT.AUTH.REFRESH, {refreshToken});
+      const validatedResponse = await refreshToken({
+        refreshToken: refreshTokenValue,
+      });
 
-      setAccessToken(data.data.accessToken);
-      setRefreshToken(data.data.refreshToken);
+      setAccessToken(validatedResponse.accessToken);
+      setRefreshToken(validatedResponse.refreshToken);
 
       if (originalRequest.headers) {
-        originalRequest.headers.Authorization = `Bearer ${data.data.accessToken}`;
+        originalRequest.headers.Authorization = `Bearer ${validatedResponse.accessToken}`;
       }
 
       processQueue();
