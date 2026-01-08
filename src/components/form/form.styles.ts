@@ -6,6 +6,6 @@ export const formFieldStyles = {
   error: 'border-alert',
   errorMessage: 'text-body-l text-alert',
   errorContainer: 'min-h-[24px]',
-  readOnlyForm: 'text-h5 text-neutral-800 ',
+  readOnlyForm: 'text-h5 text-neutral-800 cursor-default',
   readOnlyTextarea: 'text-body-l font-normal text-black',
 };
