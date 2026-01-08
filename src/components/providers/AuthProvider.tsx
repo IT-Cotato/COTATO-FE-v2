@@ -15,6 +15,7 @@ interface AuthProviderProps {
 
 /**
  * 인증 상태 관리 Provider
+ * ConditionalAuthProvider에서 사용됨
  *
  * 핵심 역할:
  * 1. 앱 시작/새 탭 오픈 시 localStorage의 토큰으로 Zustand 상태 복구
