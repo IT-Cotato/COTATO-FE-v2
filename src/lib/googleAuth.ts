@@ -1,3 +1,5 @@
+import {ROUTES} from '@/constants/routes';
+
 export const startGoogleLogin = () => {
   if (typeof window === 'undefined') {
     console.error('startGoogleLogin can only be called in browser environment');
@@ -5,17 +7,14 @@ export const startGoogleLogin = () => {
   }
 
   const clientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID;
-  const redirectUriEndpoint =
-    process.env.NEXT_PUBLIC_GOOGLE_REDIRECT_URI_ENDPOINT;
-
-  if (!clientId || !redirectUriEndpoint) {
-    console.error('NEXT_PUBLIC_GOOGLE_REDIRECT_URI_ENDPOINT is not configured');
+  if (!clientId) {
+    console.error('NEXT_PUBLIC_GOOGLE_CLIENT_ID is not configured');
     throw new Error(
       '구글 로그인 설정이 올바르지 않습니다. 관리자에게 문의해주세요.'
     );
   }
 
-  const redirectUri = window.location.origin + redirectUriEndpoint;
+  const redirectUri = window.location.origin + ROUTES.OAUTH2_CALLBACK;
 
   const state = crypto.randomUUID();
   sessionStorage.setItem('oauth_state', state);
