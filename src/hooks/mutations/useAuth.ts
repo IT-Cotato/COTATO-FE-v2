@@ -32,7 +32,6 @@ export const useOAuthLogin = () => {
         router.push('/');
       } catch (error) {
         console.error('[Failed to fetch user info]', error);
-        await clearAuthState();
       }
     },
     onError: (error: AxiosError) => {
@@ -52,7 +51,6 @@ export const useLogout = () => {
     },
     onError: async (error: AxiosError) => {
       console.error('[Logout API failed]', error);
-      await clearAuthState();
     },
   });
 };
