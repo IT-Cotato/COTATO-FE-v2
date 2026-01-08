@@ -13,10 +13,15 @@ export const ApplicationDetailContainer = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
 
-  const step = Number(searchParams.get('step') ?? 1);
+  const rawStep = Number(searchParams.get('step') ?? 1);
+  const step = Math.min(Math.max(rawStep, 1), 3);
 
-  const handleNext = () => router.push(`?step=${step + 1}`);
-  const handlePrev = () => router.push(`?step=${step - 1}`);
+  const handleNext = () => {
+    if (step < 3) router.push(`?step=${step + 1}`);
+  };
+  const handlePrev = () => {
+    if (step > 1) router.push(`?step=${step - 1}`);
+  };
 
   return (
     <div className='flex w-full flex-col gap-31.25'>
