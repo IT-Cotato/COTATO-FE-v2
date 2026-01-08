@@ -51,7 +51,7 @@ export const EtcQuestionView = ({onPrev, data}: EtcQuestionViewProps) => {
         <FormRadio
           label={ETC_QUESTION_LABELS.sessionDate_answer}
           readOnly
-          checked={true}
+          checked={data.agreeSessionTime}
         />
       </div>
       <div>
@@ -61,7 +61,7 @@ export const EtcQuestionView = ({onPrev, data}: EtcQuestionViewProps) => {
         <FormRadio
           label={ETC_QUESTION_LABELS.notice_answer}
           readOnly
-          checked={true}
+          checked={data.agreeMandatorySchedule}
         />
       </div>
 
@@ -72,7 +72,7 @@ export const EtcQuestionView = ({onPrev, data}: EtcQuestionViewProps) => {
         <FormRadio
           label={ETC_QUESTION_LABELS.termsAgree_answer}
           readOnly
-          checked={true}
+          checked={data.agreePrivacyPolicy}
         />
       </div>
 
