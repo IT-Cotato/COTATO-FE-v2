@@ -31,9 +31,9 @@ export const BasicInfo = ({
 
     if (type === 'radio') {
       return (
-        <div key={name} className='flex flex-1 flex-col gap-6'>
-          <label className='text-h5 text-neutral-600'>{label}</label>
-          <div className='flex gap-[58px]'>
+        <div key={name} className='flex flex-1 flex-col gap-2'>
+          <label className='mb-3.5 text-h5 text-neutral-600'>{label}</label>
+          <div className='flex gap-[58px] pt-19'>
             {options?.map((opt) => (
               <FormRadio
                 key={opt.value}
@@ -44,11 +44,13 @@ export const BasicInfo = ({
               />
             ))}
           </div>
-          {error && (
-            <span className='-mt-[33px] text-body-l text-alert'>
-              {error.message ?? ''}
-            </span>
-          )}
+          <div className='min-h-[24px]'>
+            {error && (
+              <span className='text-body-l text-alert'>
+                {error.message ?? ''}
+              </span>
+            )}
+          </div>
         </div>
       );
     }
@@ -72,11 +74,13 @@ export const BasicInfo = ({
               />
             )}
           />
-          {error && (
-            <span className='text-body-l text-alert'>
-              {error.message ?? ''}
-            </span>
-          )}
+          <div className='min-h-[24px]'>
+            {error && (
+              <span className='text-body-l text-alert'>
+                {error.message ?? ''}
+              </span>
+            )}
+          </div>
         </div>
       );
     }
@@ -102,9 +106,7 @@ export const BasicInfo = ({
           const key =
             'row' in item ? item.row.map((f) => f.name).join('-') : item.name;
           return (
-            <div
-              key={key}
-              className='flex w-full flex-col gap-6 md:flex-row md:items-end'>
+            <div key={key} className='flex w-full flex-col gap-6 md:flex-row'>
               {'row' in item
                 ? item.row.map((field) => renderField(field))
                 : renderField(item)}

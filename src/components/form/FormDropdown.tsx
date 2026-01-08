@@ -69,11 +69,11 @@ export const FormDropdown = forwardRef<HTMLInputElement, FormDropdownProps>(
           <button
             type='button'
             onClick={handleToggle}
-            readOnly={readOnly}
+            disabled={readOnly}
             className={clsx(
               formFieldStyles.field,
               'flex w-full items-center justify-between',
-              'read-only:cursor-default read-only:focus:ring-0',
+              'disabled:cursor-default disabled:focus:ring-0',
               error && formFieldStyles.error,
               className
             )}>
@@ -92,12 +92,12 @@ export const FormDropdown = forwardRef<HTMLInputElement, FormDropdownProps>(
           </button>
 
           {isOpen && !readOnly && (
-            <ul className='absolute z-10 w-full rounded-[10px] bg-neutral-100'>
+            <ul className='absolute z-10 mt-2 w-full rounded-[10px] bg-neutral-100 shadow-lg border border-neutral-200'>
               {options.map((option) => (
                 <li
                   key={option.value}
                   onClick={() => handleSelect(option.value)}
-                  className='cursor-pointer px-4 py-3 text-body-l text-neutral-800'>
+                  className='cursor-pointer px-4 py-3 text-body-l text-neutral-800 hover:bg-neutral-200 transition-colors'>
                   {option.label}
                 </li>
               ))}
