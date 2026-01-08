@@ -3,7 +3,7 @@ import {z} from 'zod';
 /**
  * 사용자 역할 enum
  */
-export const UserRoleSchema = z.enum(['APPLICANT', 'STAFF']);
+export const userRoleSchema = z.enum(['APPLICANT', 'STAFF']);
 
 /**
  * OAuth 로그인 요청 스키마
@@ -50,11 +50,11 @@ export const getMeResponseSchema = z.object({
   userId: z.number(),
   email: z.email(),
   name: z.string(),
-  role: UserRoleSchema,
+  role: userRoleSchema,
 });
 
 // 타입 추출
-export type UserRole = z.infer<typeof UserRoleSchema>;
+export type userRole = z.infer<typeof userRoleSchema>;
 export type OAuthLoginRequest = z.infer<typeof oAuthLoginRequestSchema>;
 export type OAuthLoginResponse = z.infer<typeof oAuthLoginResponseSchema>;
 export type RefreshTokenRequest = z.infer<typeof refreshTokenRequestSchema>;
