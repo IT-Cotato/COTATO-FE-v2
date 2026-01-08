@@ -7,8 +7,6 @@ import {
   getAccessToken,
   ACCESS_TOKEN_KEY,
   REFRESH_TOKEN_KEY,
-  getRefreshToken,
-  clearAuthState,
 } from '@/services/utils/tokenManager';
 
 interface AuthProviderProps {
@@ -29,6 +27,8 @@ interface AuthProviderProps {
  */
 export const AuthProvider = ({children}: AuthProviderProps) => {
   const {setUser, setInitialized} = useAuthStore();
+
+  const isSyncing = useRef(false);
 
   useEffect(() => {
     /**
@@ -81,13 +81,18 @@ export const AuthProvider = ({children}: AuthProviderProps) => {
         return;
       }
 
-      if (e.key === ACCESS_TOKEN_KEY && e.newValue && !e.oldValue) {
+      if (e.key === ACCESS_TOKEN_KEY && e.newValue && !isSyncing.current) {
         try {
+          isSyncing.current = true;
+          // 저장 시차 대비 대기
+          await new Promise((r) => setTimeout(r, 200));
+
           const userResponse = await getMe();
           setUser(userResponse);
         } catch (error) {
-          console.error('[AuthProvider - Failed to sync login state]', error);
-          await clearAuthState();
+          console.error('[AuthProvider - Sync failed]', error);
+        } finally {
+          isSyncing.current = false;
         }
       }
     };
