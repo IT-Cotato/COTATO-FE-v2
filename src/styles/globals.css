@@ -58,7 +58,6 @@
     scrollbar-width: none;
     overflow-wrap: break-word;
   }
-
   html::-webkit-scrollbar,
   body::-webkit-scrollbar {
     display: none;

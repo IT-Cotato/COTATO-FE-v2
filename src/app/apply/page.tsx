@@ -1,4 +1,5 @@
 import {ProtectedRoute} from '@/components/auth/ProtectedRoute';
+import {ApplyFormContainer} from '@/app/apply/_components/ApplyFormContainer';
 
 /**
  * 지원서 작성 페이지
@@ -10,9 +11,7 @@ import {ProtectedRoute} from '@/components/auth/ProtectedRoute';
 export default function ApplyPage() {
   return (
     <ProtectedRoute>
-      <section className='flex min-h-screen w-full flex-col items-center bg-neutral-100'>
-        <p>ApplyPage</p>
-      </section>
+      <ApplyFormContainer />
     </ProtectedRoute>
   );
 }
