@@ -1,6 +1,12 @@
 'use client';
 
-import {forwardRef, useState, type InputHTMLAttributes} from 'react';
+import {
+  forwardRef,
+  useEffect,
+  useMemo,
+  useState,
+  type InputHTMLAttributes,
+} from 'react';
 import clsx from 'clsx';
 import FolderIcon from '@/assets/icons/folder.svg';
 import DeleteIcon from '@/assets/icons/delete.svg';
@@ -16,19 +22,23 @@ interface FormFileProps extends InputHTMLAttributes<HTMLInputElement> {
 export const FormFile = forwardRef<HTMLInputElement, FormFileProps>(
   function FormFile({label, className, placeholder, value, ...props}, ref) {
     const [files, setFiles] = useState<File[]>([]);
-    const [fileUrls] = useState(() =>
-      props.readOnly && value ? value.map((v) => v) : []
-    );
+
+    const fileUrls = useMemo(() => {
+      return files.map((f) => URL.createObjectURL(f));
+    }, [files]);
+
+    useEffect(() => {
+      return () => {
+        fileUrls.forEach((url) => URL.revokeObjectURL(url));
+      };
+    }, [fileUrls]);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       if (props.readOnly) return;
       if (!e.target.files || e.target.files.length === 0) return;
 
-      const newFile = e.target.files[0];
-      if (newFile) {
-        setFiles((prev) => [...prev, newFile]);
-      }
-
+      const newFiles = Array.from(e.target.files);
+      setFiles((prev) => [...prev, ...newFiles]);
       e.target.value = '';
     };
 
@@ -37,10 +47,16 @@ export const FormFile = forwardRef<HTMLInputElement, FormFileProps>(
       setFiles((prev) => prev.filter((_, i) => i !== index));
     };
 
+    /**
+     * 파일 렌더링
+     * readOnly: value가 url로 전달됨.
+     * edit: value가 파일명으로 전달됨.
+     */
+
     const filesToRender =
       props.readOnly && value
-        ? value.map((name, i) => ({name, url: fileUrls[i]}))
-        : files.map((f) => ({name: f.name, url: URL.createObjectURL(f)}));
+        ? value.map((name) => ({name, url: name}))
+        : files.map((f, i) => ({name: f.name, url: fileUrls[i]}));
 
     return (
       <div className={clsx(formFieldStyles.wrapper, className)}>
