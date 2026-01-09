@@ -12,6 +12,7 @@
   "dependencies": {
     "@tanstack/react-query": "^5.90.12",
     "@tanstack/react-query-devtools": "^5.91.1",
+    "axios": "^1.13.2",
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
     "focus-trap-react": "^11.0.4",
@@ -19,6 +20,7 @@
     "react": "19.2.3",
     "react-datepicker": "^9.1.0",
     "react-dom": "19.2.3",
+    "react-hook-form": "^7.70.0",
     "zod": "^4.3.2",
     "zustand": "^5.0.9"
   },

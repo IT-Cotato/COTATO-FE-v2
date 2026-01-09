@@ -3,6 +3,8 @@ import {Header} from '@/components/layout/Header';
 import {Metadata} from 'next';
 import '@/styles/globals.css';
 import localFont from 'next/font/local';
+import Providers from '@/app/providers';
+import {ConditionalAuthProvider} from '@/components/providers/ConditionalAuthProvider';
 
 export const metadata: Metadata = {
   title: 'COTATO RECRUIT',
@@ -33,15 +35,26 @@ const sebangGothic = localFont({
   display: 'swap',
 });
 
+const roboto = localFont({
+  src: '../fonts/Roboto/RobotoVariable.ttf',
+  variable: '--font-roboto',
+  display: 'swap',
+  weight: '100 900',
+});
+
 export default function RootLayout({children}: {children: React.ReactNode}) {
   return (
     <html
       lang='ko'
-      className={`${pretendard.variable} ${sebangGothic.variable} antialiased`}>
-      <body className='flex min-h-screen w-full flex-col'>
-        <Header />
-        <main className='flex-1'>{children}</main>
-        <Footer />
+      className={`${pretendard.variable} ${sebangGothic.variable} ${roboto.variable} antialiased`}>
+      <body className='flex min-h-screen w-full flex-col bg-black'>
+        <Providers>
+          <ConditionalAuthProvider>
+            <Header />
+            <main className='flex-1'>{children}</main>
+            <Footer />
+          </ConditionalAuthProvider>
+        </Providers>
       </body>
     </html>
   );
