@@ -8,7 +8,7 @@ import {FullButton} from '@/components/button/FullButton';
 import {FormRadio} from '@/components/form/FormRadio';
 import {FormInput} from '@/components/form/FormInput';
 import {ADDITIONAL_FIELDS} from '@/constants/form/formConfig';
-import {AdditionalFieldConfig} from '@/schemas/apply-type';
+import {EtcFieldConfig} from '@/schemas/apply-type';
 
 export const EtcInfo = ({
   onPrev,
@@ -24,7 +24,7 @@ export const EtcInfo = ({
     formState: {errors},
   } = useFormContext();
 
-  const renderField = (field: AdditionalFieldConfig) => {
+  const renderField = (field: EtcFieldConfig) => {
     const {
       type,
       name,
