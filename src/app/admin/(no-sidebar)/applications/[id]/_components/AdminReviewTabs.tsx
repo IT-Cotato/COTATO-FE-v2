@@ -7,7 +7,7 @@ import {useAdminReviewStore} from '@/store/useAdminReviewStore';
 import {useRouter, useSearchParams} from 'next/navigation';
 import {useEffect} from 'react';
 
-const DEFAULT_REVIEWER: ReviewerType = 'admin1';
+const DEFAULT_REVIEWER: ReviewerType = 'staff1';
 
 export const AdminReviewTabs = () => {
   const router = useRouter();
