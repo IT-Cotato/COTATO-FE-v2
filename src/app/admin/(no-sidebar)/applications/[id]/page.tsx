@@ -1,5 +1,6 @@
-import {AdminReviewTabs} from '@/app/admin/(no-sidebar)/applications/_components/AdminReviewTabs';
-import {ApplicationDetailHeader} from '@/app/admin/(no-sidebar)/applications/_components/ApplicationDetailHeader';
+import {AdminReviewTabs} from '@/app/admin/(no-sidebar)/applications/[id]/_components/AdminReviewTabs';
+import {ApplicationDetailContainer} from '@/app/admin/(no-sidebar)/applications/[id]/_components/ApplicationDetailContainer';
+import {ApplicationDetailHeader} from '@/app/admin/(no-sidebar)/applications/[id]/_components/ApplicationDetailHeader';
 import {SuspenseWrapper} from '@/components/wrappers/SuspenseWrapper';
 
 export default function ApplicationDetailPage() {
@@ -8,6 +9,7 @@ export default function ApplicationDetailPage() {
       <ApplicationDetailHeader />
       <SuspenseWrapper>
         <AdminReviewTabs />
+        <ApplicationDetailContainer />
       </SuspenseWrapper>
     </section>
   );

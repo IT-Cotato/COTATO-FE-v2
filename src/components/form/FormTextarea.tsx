@@ -35,6 +35,7 @@ export const FormTextarea = forwardRef<HTMLTextAreaElement, FormTextareaProps>(
               'py-4 pr-28 pb-10',
               'read-only:cursor-default read-only:focus:ring-0',
               error && formFieldStyles.error,
+              props.readOnly && formFieldStyles.readOnlyTextarea,
               className
             )}
             maxLength={maxLength}
