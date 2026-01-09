@@ -1,6 +1,7 @@
 import {useState} from 'react';
 import {useForm, UseFormReturn} from 'react-hook-form';
 import {BASIC_INFO_FIELDS} from '@/constants/form/formConfig';
+import {useRouter} from 'next/navigation';
 
 interface UseApplyFormControllerReturn {
   step: number;
@@ -9,13 +10,41 @@ interface UseApplyFormControllerReturn {
   handlePrev: () => void;
   handleSave: () => void;
   handleFinalSubmit: (e?: React.BaseSyntheticEvent) => Promise<void>;
+  isConfirmModalOpen: boolean;
+  openConfirmModal: () => void;
+  closeConfirmModal: () => void;
+  isSubmissionCompleteModalOpen: boolean;
+  openSubmissionCompleteModal: () => void;
+  closeSubmissionCompleteModal: () => void;
+  isSubmissionIncompleteModalOpen: boolean;
+  openSubmissionIncompleteModal: () => void;
+  closeSubmissionIncompleteModal: () => void;
+  handleConfirmSubmit: () => void;
 }
 
 export const useApplyFormController = (): UseApplyFormControllerReturn => {
   const [step, setStep] = useState(1);
+  const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
+  const [isSubmissionCompleteModalOpen, setIsSubmissionCompleteModalOpen] =
+    useState(false);
+  const [isSubmissionIncompleteModalOpen, setIsSubmissionIncompleteModalOpen] =
+    useState(false);
+
+  const router = useRouter();
   const methods = useForm({mode: 'onChange'});
 
   const {trigger, handleSubmit, getValues} = methods;
+
+  const openConfirmModal = () => setIsConfirmModalOpen(true);
+  const closeConfirmModal = () => setIsConfirmModalOpen(false);
+  const openSubmissionCompleteModal = () =>
+    setIsSubmissionCompleteModalOpen(true);
+  const closeSubmissionCompleteModal = () =>
+    setIsSubmissionCompleteModalOpen(false);
+  const openSubmissionIncompleteModal = () =>
+    setIsSubmissionIncompleteModalOpen(true);
+  const closeSubmissionIncompleteModal = () =>
+    setIsSubmissionIncompleteModalOpen(false);
 
   // 저장하기: validation 체크 X, 그냥 현재 값만 저장
   const handleSave = () => {
@@ -47,16 +76,38 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
 
     const isValid = await trigger(fieldsToValidate);
 
-    // 3. validation 통과하면 이동
     if (isValid) {
       setStep((prev: number) => prev + 1);
     }
   };
 
-  // 최종 제출: validation 체크 O
-  const handleFinalSubmit = handleSubmit((data) => {
-    console.log('최종 제출 데이터 (validation 통과):', data);
-    // TODO: API 호출 - 최종 제출
+  const handleConfirmSubmit = async () => {
+    closeConfirmModal();
+
+    try {
+      const isSuccess = await new Promise<boolean>((resolve) => {
+        setTimeout(() => {
+          resolve(Math.random() > 0.5);
+        }, 1000);
+      });
+
+      if (isSuccess) {
+        const data = getValues();
+        console.log('최종 제출 데이터 (validation 통과):', data);
+        // TODO: API 호출 - 최종 제출
+        sessionStorage.setItem('submissionComplete', 'true');
+        router.push('/');
+      } else {
+        throw new Error('Submission failed');
+      }
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    } catch (error) {
+      openSubmissionIncompleteModal();
+    }
+  };
+
+  const handleFinalSubmit = handleSubmit(() => {
+    openConfirmModal();
   });
 
   const handlePrev = () => setStep((prev: number) => prev - 1);
@@ -68,5 +119,15 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
     handlePrev,
     handleSave,
     handleFinalSubmit,
+    isConfirmModalOpen,
+    openConfirmModal,
+    closeConfirmModal,
+    isSubmissionCompleteModalOpen,
+    openSubmissionCompleteModal,
+    closeSubmissionCompleteModal,
+    isSubmissionIncompleteModalOpen,
+    openSubmissionIncompleteModal,
+    closeSubmissionIncompleteModal,
+    handleConfirmSubmit,
   };
 };
