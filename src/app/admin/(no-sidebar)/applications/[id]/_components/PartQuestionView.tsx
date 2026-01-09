@@ -62,7 +62,7 @@ export const PartQuestionView = ({
         <label className='text-h5 text-neutral-600'>
           5. {PART_QUESTION_LABELS.fileAccept}
         </label>
-        {data.links?.map((link, idx) => (
+        {data.links?.map((link: string | undefined, idx: number) => (
           <FormLink key={idx} readOnly value={link} />
         ))}
 
