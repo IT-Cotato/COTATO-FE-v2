@@ -9,6 +9,7 @@ interface ModalProps {
   isOpen: boolean; /** 모달의 열림/닫힘 상태를 제어합니다. */
   onClose: () => void; /** 모달을 닫는 함수입니다. 배경 클릭 또는 닫기 버튼 클릭 시 호출됩니다. */
   title: string; /** 모달의 제목입니다. (필수) */
+  titleStyle?: string; /** 제목의 스타일이 다를 때 적용할 수 있도록 합니다. 값이 없는 경우 기본 스타일이 적용됩니다. (예: LoginModal에 사용됩니다.) */
   content?: ReactNode; /** 모달의 주 내용(body)입니다. 제목 아래에 표시됩니다. */
   actions?: ReactNode; /** 모달 하단에 표시될 버튼 그룹입니다. */
   actionsAlign?:
@@ -23,6 +24,7 @@ export const Modal = ({
   isOpen,
   onClose,
   title,
+  titleStyle,
   content,
   actions,
   actionsAlign = 'center',
@@ -45,25 +47,32 @@ export const Modal = ({
           returnFocusOnDeactivate: true,
         }}>
         <div
-          className='relative w-full max-w-[507px] rounded-[10px] bg-white px-[43px] py-[62px]'
+          className='relative w-full max-w-126.75 rounded-[20px] bg-white px-10.75 py-15.5'
           onClick={(e) => e.stopPropagation()}>
           <button
             onClick={onClose}
             className='absolute top-4 right-5'
             aria-label='닫기'>
-            <Close className='h-[21px] w-[21px] cursor-pointer' />
+            <Close className='h-5.25 w-5.25 cursor-pointer' />
           </button>
           <div
             className={clsx(
-              'flex flex-col items-center text-center',
-              noContent ? 'gap-[107px]' : 'gap-[30px]',
+              'flex min-h-58.25 flex-col items-center justify-center text-center',
+              noContent ? 'gap-26.75' : 'gap-7.5',
               contentWrapperClassName
             )}>
-            <h4 className='text-[28px] leading-tight font-semibold text-neutral-800'>
+            <h4
+              className={
+                titleStyle
+                  ? titleStyle
+                  : 'text-[28px] leading-tight font-semibold text-neutral-800'
+              }>
               {title}
             </h4>
             {content && (
-              <div className='text-body-m text-neutral-800'>{content}</div>
+              <div className='text-body-m font-normal text-neutral-800'>
+                {content}
+              </div>
             )}
             {actions && (
               <div
@@ -74,7 +83,9 @@ export const Modal = ({
               </div>
             )}
             {warning && (
-              <div className='text-body-s text-neutral-800'>{warning}</div>
+              <div className='text-body-s font-normal text-neutral-600'>
+                {warning}
+              </div>
             )}
           </div>
         </div>

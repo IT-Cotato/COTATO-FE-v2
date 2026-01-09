@@ -1,0 +1,51 @@
+'use client';
+
+import {useEffect, useRef} from 'react';
+import {useSearchParams} from 'next/navigation';
+import {useOAuthLogin} from '@/hooks/mutations/useAuth';
+import {ROUTES} from '@/constants/routes';
+import {OAUTH_STATE_KEY} from '@/lib/googleAuth';
+
+export const OAuthCallbackHandler = () => {
+  const params = useSearchParams();
+  const {mutate} = useOAuthLogin();
+
+  const hasRequested = useRef(false);
+
+  useEffect(() => {
+    if (hasRequested.current) return;
+    hasRequested.current = true;
+
+    const receivedState = params.get('state');
+    const savedState = sessionStorage.getItem(OAUTH_STATE_KEY);
+    if (receivedState !== savedState) {
+      console.error('[CSRF detection] State parameter mismatch');
+      alert('잘못된 요청입니다. 처음부터 다시 시도해주세요.');
+      window.location.href = '/';
+      return;
+    }
+    sessionStorage.removeItem(OAUTH_STATE_KEY);
+
+    const error = params.get('error');
+    if (error) {
+      console.error('[OAuth error]', error, params.get('error_description'));
+      alert('로그인 중 오류가 발생했습니다. 다시 시도해주세요.');
+      window.location.href = '/';
+      return;
+    }
+
+    const code = params.get('code');
+    if (!code) {
+      console.error('Authorization code not found');
+      alert('인증 코드를 찾을 수 없습니다.');
+      window.location.href = '/';
+      return;
+    }
+
+    const redirectUri = window.location.origin + ROUTES.OAUTH2_CALLBACK;
+
+    mutate({code, redirectUri});
+  }, [mutate, params]);
+
+  return null;
+};
