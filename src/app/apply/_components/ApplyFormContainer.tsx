@@ -36,14 +36,16 @@ export const ApplyFormContainer = () => {
       <div className='flex w-full max-w-[1196px] flex-col justify-center gap-[125px] py-20'>
         <div className='flex flex-col gap-15'>
           <h1 className='text-h1 text-neutral-800'>
-            🥔 코테이토 {generation}기 지원서 🥔
+            <span aria-hidden='true'>🥔</span>
+            &nbsp;코테이토 {generation}기 지원서&nbsp;
+            <span aria-hidden='true'>🥔</span>
           </h1>
           <AdminRecruitmentInformation variant='plain' />
         </div>
 
-        <h1 className='text-h2 text-neutral-800'>
+        <h2 className='text-h2 text-neutral-800'>
           {STEP_TITLES[step as keyof typeof STEP_TITLES]}
-        </h1>
+        </h2>
 
         <div className='flex w-full flex-col gap-[81px]'>
           <div className='flex justify-center'>
