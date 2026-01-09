@@ -39,11 +39,6 @@ export const refreshTokenResponseSchema = z.object({
 });
 
 /**
- * 로그아웃 응답 스키마
- */
-export const logoutResponseSchema = z.void();
-
-/**
  * 사용자 정보 응답 스키마
  */
 export const getMeResponseSchema = z.object({
@@ -59,5 +54,4 @@ export type OAuthLoginRequest = z.infer<typeof oAuthLoginRequestSchema>;
 export type OAuthLoginResponse = z.infer<typeof oAuthLoginResponseSchema>;
 export type RefreshTokenRequest = z.infer<typeof refreshTokenRequestSchema>;
 export type RefreshTokenResponse = z.infer<typeof refreshTokenResponseSchema>;
-export type LogoutResponse = z.infer<typeof logoutResponseSchema>;
 export type GetMeResponse = z.infer<typeof getMeResponseSchema>;

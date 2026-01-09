@@ -3,7 +3,6 @@ import {ENDPOINT} from '@/services/constant/endpoint';
 import {
   GetMeResponse,
   getMeResponseSchema,
-  LogoutResponse,
   OAuthLoginRequest,
   oAuthLoginRequestSchema,
   OAuthLoginResponse,
@@ -43,7 +42,7 @@ export const oauthLogin = async (
  * 로그아웃
  * 인증 / 세션 관련 API에만 명시적으로 no-store를 추가합니다.
  */
-export const logout = async (): Promise<LogoutResponse> => {
+export const logout = async (): Promise<void> => {
   await privateAxios.post(ENDPOINT.AUTH.LOGOUT, undefined, {
     fetchOptions: {
       cache: 'no-store',
