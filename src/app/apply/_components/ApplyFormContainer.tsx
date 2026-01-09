@@ -30,7 +30,7 @@ export const ApplyFormContainer = () => {
     scrollToTop();
   }, [step, scrollToTop]);
   return (
-    <div className='flex flex-col items-center'>
+    <div className='flex flex-col items-center bg-neutral-50'>
       {step === 1 && <HeroMainBanner />}
 
       <div className='flex w-full max-w-[1196px] flex-col justify-center gap-[125px] py-20'>
