@@ -26,8 +26,8 @@ export type BasicInfoFormItem =
   | BasicInfoFieldConfig
   | {row: readonly BasicInfoFieldConfig[]; name?: never; type?: never};
 
-// AdditionalInfo
-export interface AdditionalFieldConfig {
+// EtcInfo
+export interface EtcFieldConfig {
   name?: string;
   label?: string;
   type: string;
@@ -41,5 +41,5 @@ export interface AdditionalFieldConfig {
 }
 
 export type AdditionalFormItem =
-  | AdditionalFieldConfig
-  | {type: 'row'; row: AdditionalFieldConfig[]; name?: never};
+  | EtcFieldConfig
+  | {type: 'row'; row: EtcFieldConfig[]; name?: never};
