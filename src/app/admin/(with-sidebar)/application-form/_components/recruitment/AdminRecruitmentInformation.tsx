@@ -12,11 +12,13 @@ type RecruitmentValue = {
   end?: string;
 };
 
-type Props = {
+interface AdminRecruitmentInformationProps {
   variant?: 'bordered' | 'plain';
-};
+}
 
-export const AdminRecruitmentInformation = ({variant = 'bordered'}: Props) => {
+export const AdminRecruitmentInformation = ({
+  variant = 'bordered',
+}: AdminRecruitmentInformationProps) => {
   const isEditing = useAdminApplicationFormStore(
     (s) => s.isEditingRecruitmentInfo
   );
