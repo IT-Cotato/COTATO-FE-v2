@@ -10,7 +10,7 @@ import {FormInput} from '@/components/form/FormInput';
 import {ADDITIONAL_FIELDS} from '@/constants/form/formConfig';
 import {AdditionalFieldConfig} from '@/schemas/apply-type';
 
-export const AdditionalInfo = ({
+export const EtcInfo = ({
   onPrev,
   onSave,
 }: {
