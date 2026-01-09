@@ -5,9 +5,12 @@ import {FormProvider} from 'react-hook-form';
 import {StepIndicator} from '@/components/navigation/StepIndicator';
 import {BasicInfo} from '@/app/apply/_components/BasicInfo';
 import {PartQuestion} from '@/app/apply/_components/PartQuestion';
-import {AdditionalInfo} from '@/app/apply/_components/AdditionalInfo';
+import {EtcInfo} from '@/app/apply/_components/EtcInfo';
 import {useApplyFormController} from '@/app/apply/_hooks/useApplyFormController';
 import {useScrollToTop} from '@/hooks/useScrollToTop';
+import {AdminRecruitmentInformation} from '@/app/admin/(with-sidebar)/application-form/_components/recruitment/AdminRecruitmentInformation';
+import {useRecruitmentStore} from '@/store/useRecruitmentStore';
+import HeroMainBanner from '@/components/banner/HeroMainBanner';
 import {ApplicationConfirmModal} from '@/components/modal/ApplicationConfirmModal';
 import {SubmissionCompleteModal} from '@/components/modal/SubmissionCompleteModal';
 import {SubmissionIncompleteModal} from '@/components/modal/SubmissionIncompleteModal';
@@ -36,6 +39,8 @@ export const ApplyFormContainer = () => {
     closeSubmissionIncompleteModal,
   } = useApplyFormController();
 
+  const generation = useRecruitmentStore((state) => state.generation);
+
   const scrollToTop = useScrollToTop();
 
   useEffect(() => {
@@ -52,11 +57,22 @@ export const ApplyFormContainer = () => {
   }, [openSubmissionCompleteModal]);
   return (
     <>
-      <div className='flex w-full justify-center'>
-        <div className='flex w-full max-w-[1196px] flex-col gap-[125px] py-20'>
-          <h1 className='text-h2 font-bold text-neutral-800'>
+      <div className='flex flex-col items-center bg-neutral-50'>
+        {step === 1 && <HeroMainBanner />}
+
+        <div className='flex w-full max-w-[1196px] flex-col justify-center gap-[125px] py-20'>
+          <div className='flex flex-col gap-15'>
+            <h1 className='text-h1 text-neutral-800'>
+              <span aria-hidden='true'>🥔</span>
+              &nbsp;코테이토 {generation}기 지원서&nbsp;
+              <span aria-hidden='true'>🥔</span>
+            </h1>
+            <AdminRecruitmentInformation variant='plain' />
+          </div>
+
+          <h2 className='text-h2 text-neutral-800'>
             {STEP_TITLES[step as keyof typeof STEP_TITLES]}
-          </h1>
+          </h2>
 
           <div className='flex w-full flex-col gap-[81px]'>
             <div className='flex justify-center'>
@@ -76,11 +92,29 @@ export const ApplyFormContainer = () => {
                   />
                 )}
                 {step === 3 && (
-                  <AdditionalInfo onPrev={handlePrev} onSave={handleSave} />
+                  <EtcInfo onPrev={handlePrev} onSave={handleSave} />
                 )}
               </form>
             </FormProvider>
           </div>
+
+          <FormProvider {...methods}>
+            <form onSubmit={handleFinalSubmit} key={step}>
+              {step === 1 && (
+                <BasicInfo onNext={handleNext} onSave={handleSave} />
+              )}
+              {step === 2 && (
+                <PartQuestion
+                  onPrev={handlePrev}
+                  onNext={handleNext}
+                  onSave={handleSave}
+                />
+              )}
+              {step === 3 && (
+                <EtcInfo onPrev={handlePrev} onSave={handleSave} />
+              )}
+            </form>
+          </FormProvider>
         </div>
       </div>
       <ApplicationConfirmModal

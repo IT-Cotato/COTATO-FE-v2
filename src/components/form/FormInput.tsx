@@ -16,7 +16,9 @@ export const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
 
     return (
       <div className={formFieldStyles.wrapper}>
-        <label htmlFor={inputId} className={formFieldStyles.label}>
+        <label
+          htmlFor={inputId}
+          className={clsx(formFieldStyles.label, className)}>
           {label}
         </label>
         <input
@@ -24,6 +26,7 @@ export const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
           id={inputId}
           className={clsx(
             formFieldStyles.field,
+            props.readOnly && formFieldStyles.readOnlyForm,
             error && formFieldStyles.error,
             className
           )}

@@ -5,13 +5,20 @@ import {RecruitmentInfoViewRow} from '@/app/admin/(with-sidebar)/application-for
 import {scheduleSections} from '@/constants/admin/admin-application-form';
 import {mockRecruitmentInfo} from '@/mocks/mock-application-form';
 import {useAdminApplicationFormStore} from '@/store/useAdminApplicationFormStore';
+import {clsx} from 'clsx';
 
 type RecruitmentValue = {
   start?: string;
   end?: string;
 };
 
-export const AdminRecruitmentInformation = () => {
+interface AdminRecruitmentInformationProps {
+  variant?: 'bordered' | 'plain';
+}
+
+export const AdminRecruitmentInformation = ({
+  variant = 'bordered',
+}: AdminRecruitmentInformationProps) => {
   const isEditing = useAdminApplicationFormStore(
     (s) => s.isEditingRecruitmentInfo
   );
@@ -36,7 +43,11 @@ export const AdminRecruitmentInformation = () => {
   };
 
   return (
-    <div className='flex flex-col gap-3 rounded-[10px] border border-neutral-300 px-4 py-5.25'>
+    <div
+      className={clsx(
+        'flex flex-col gap-3 rounded-[10px]',
+        variant === 'bordered' && 'border border-neutral-300 px-4 py-5.25'
+      )}>
       {scheduleSections.map(({key, label, type}) =>
         isEditing ? (
           <RecruitmentInfoEditRow
