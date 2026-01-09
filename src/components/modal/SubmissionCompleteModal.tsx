@@ -20,11 +20,8 @@ export const SubmissionCompleteModal = ({
       content={
         <p>
           합격 발표 여부는
-          <span className='text-primary'>2월 28일 (토) 오후 12시</span>에
-          작성해주신 연락처로 개별적으로 전달드립니다. <br />
-          코테이토를 지원해주셔서 감사합니다!
-          <br />
-          좋은 결과 있으시길 바랍니다 🌿
+          <span className='text-primary'>2월 28일 (토) 오후 12시</span>에<br />
+          작성해주신 이메일로 개별적으로 전달드립니다. <br />
         </p>
       }
       actionsAlign='stretch'
@@ -37,7 +34,7 @@ export const SubmissionCompleteModal = ({
           labelTypo='body_l'
         />
       }
-      contentWrapperClassName='gap-[57px]'
+      contentWrapperClassName='gap-[37px]'
     />
   );
 };
