@@ -73,8 +73,10 @@ export const AdminApplicationResultFilter = ({
       })}
 
       <div className='mt-1 flex flex-row justify-end gap-2 px-1.75 pb-1'>
-        <button onClick={handleCancel}>취소</button>
-        <button onClick={handleConfirm} className='text-white'>
+        <button type='button' onClick={handleCancel}>
+          취소
+        </button>
+        <button type='button' onClick={handleConfirm} className='text-white'>
           확인
         </button>
       </div>
