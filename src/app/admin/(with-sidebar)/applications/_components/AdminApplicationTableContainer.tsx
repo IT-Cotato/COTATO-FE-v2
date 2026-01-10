@@ -12,29 +12,37 @@ export const AdminApplicationTableContainer = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
 
-  const [nameSortOrder, setNameSortOrder] = useState<
-    'asc' | 'desc' | 'default'
-  >('default');
   const [selectedResults, setSelectedResults] = useState<
     ApplicationResultType[]
   >([]);
+  const [submitDateSortOrder, setSubmitDateSortOrder] = useState<
+    'asc' | 'desc'
+  >('desc');
   const [isFilterOpen, setIsFilterOpen] = useState<boolean>(false);
+
+  /**
+   * 테이블 합격 여부 필터링, 최종 제출일자 기준 정렬 로직
+   */
 
   const filteredApplications =
     selectedResults.length === 0
       ? mockApplications
       : mockApplications.filter((app) => selectedResults.includes(app.result));
 
-  const sortedApplications = (() => {
-    if (nameSortOrder === 'default') return filteredApplications;
+  const sortedApplications = [...filteredApplications].sort((a, b) => {
+    const aTime = new Date(a.submitDate).getTime();
+    const bTime = new Date(b.submitDate).getTime();
 
-    return [...filteredApplications].sort((a, b) => {
-      if (nameSortOrder === 'asc') {
-        return a.name.localeCompare(b.name, 'ko');
-      }
-      return b.name.localeCompare(a.name, 'ko');
-    });
-  })();
+    if (submitDateSortOrder === 'asc') {
+      return aTime - bTime;
+    }
+
+    return bTime - aTime;
+  });
+
+  /**
+   * 테이블 페이지네이션 컨트롤 로직
+   */
 
   const pageParam = Number(searchParams.get('page'));
 
@@ -49,19 +57,19 @@ export const AdminApplicationTableContainer = () => {
     startIndex + ITEMS_PER_PAGE
   );
 
-  const updatePage = (page: number) => {
+  /**
+   * 테이블 핸들러
+   */
+
+  const handleUpdatePage = (page: number) => {
     const params = new URLSearchParams(searchParams.toString());
     params.set('page', String(page));
 
-    router.push(`?${params.toString()}`, {scroll: false});
+    router.push(`?${params.toString()}`);
   };
 
-  const handleNameSortToggle = () => {
-    setNameSortOrder((prev) => {
-      if (prev === 'default') return 'asc';
-      if (prev === 'asc') return 'desc';
-      return 'default';
-    });
+  const handleSubmitDateSortToggle = () => {
+    setSubmitDateSortOrder((prev) => (prev === 'asc' ? 'desc' : 'asc'));
   };
 
   const hasApplications = mockApplications.length > 0;
@@ -73,9 +81,9 @@ export const AdminApplicationTableContainer = () => {
           <div className='relative'>
             <AdminApplicationTableView
               items={currentItems}
-              nameSortOrder={nameSortOrder}
+              submitDateSortOrder={submitDateSortOrder}
               isFilterActive={selectedResults.length > 0}
-              onNameSortToggle={handleNameSortToggle}
+              onSubmitDateSortToggle={handleSubmitDateSortToggle}
               onFilterToggle={() => setIsFilterOpen((prev) => !prev)}
             />
 
@@ -95,7 +103,7 @@ export const AdminApplicationTableContainer = () => {
               <AdminApplicationPagination
                 currentPage={currentPage}
                 totalPages={totalPages}
-                onPageChange={updatePage}
+                onPageChange={handleUpdatePage}
               />
             </div>
           </div>
