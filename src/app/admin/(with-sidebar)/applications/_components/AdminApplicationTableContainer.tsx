@@ -5,6 +5,7 @@ import {mockApplications} from '@/mocks/mock-application';
 import {AdminApplicationResultFilter} from '@/app/admin/(with-sidebar)/applications/_components/AdminApplicationResultFilter';
 import {ApplicationResultType} from '@/schemas/admin/admin-application-type';
 import {AdminApplicationTableView} from '@/app/admin/(with-sidebar)/applications/_components/AdminApplicationTableView';
+import {RESULT_OPTIONS} from '@/constants/admin/admin-applications';
 
 const ITEMS_PER_PAGE = 9;
 
@@ -83,7 +84,10 @@ export const AdminApplicationTableContainer = () => {
             <AdminApplicationTableView
               items={currentItems}
               submitDateSortOrder={submitDateSortOrder}
-              isFilterActive={selectedResults.length > 0}
+              isFilterActive={
+                selectedResults.length > 0 &&
+                selectedResults.length !== RESULT_OPTIONS.length
+              }
               onSubmitDateSortToggle={handleSubmitDateSortToggle}
               onFilterToggle={() => setIsFilterOpen((prev) => !prev)}
             />
