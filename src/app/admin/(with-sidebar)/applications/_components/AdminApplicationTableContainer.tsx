@@ -1,5 +1,5 @@
 import {useRouter, useSearchParams} from 'next/navigation';
-import {useState} from 'react';
+import {useRef, useState} from 'react';
 import {AdminApplicationPagination} from '@/app/admin/(with-sidebar)/applications/_components/AdminApplicationPagination';
 import {mockApplications} from '@/mocks/mock-application';
 import {AdminApplicationResultFilter} from '@/app/admin/(with-sidebar)/applications/_components/AdminApplicationResultFilter';
@@ -19,6 +19,7 @@ export const AdminApplicationTableContainer = () => {
     'asc' | 'desc'
   >('desc');
   const [isFilterOpen, setIsFilterOpen] = useState<boolean>(false);
+  const filterAreaRef = useRef<HTMLDivElement>(null);
 
   /**
    * 테이블 합격 여부 필터링, 최종 제출일자 기준 정렬 로직
@@ -78,7 +79,7 @@ export const AdminApplicationTableContainer = () => {
     <>
       {hasApplications ? (
         <>
-          <div className='relative'>
+          <div className='relative' ref={filterAreaRef}>
             <AdminApplicationTableView
               items={currentItems}
               submitDateSortOrder={submitDateSortOrder}
@@ -90,6 +91,7 @@ export const AdminApplicationTableContainer = () => {
             {isFilterOpen && (
               <aside className='absolute top-0 left-full mt-5.5 ml-2 w-33.25'>
                 <AdminApplicationResultFilter
+                  filterAreaRef={filterAreaRef}
                   selected={selectedResults}
                   onChange={setSelectedResults}
                   onClose={() => setIsFilterOpen(false)}
