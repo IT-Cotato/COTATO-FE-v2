@@ -9,6 +9,7 @@ import {ROUTES} from '@/constants/routes';
 import {useState} from 'react';
 import {LoginModal} from '@/components/modal/LoginModal';
 import {useAuthStore} from '@/store/useAuthStore';
+import {useSubmissionStore} from '@/store/useSubmissionStore';
 
 export const RecruitmentActive = () => {
   const router = useRouter();
@@ -25,6 +26,8 @@ export const RecruitmentActive = () => {
       router.push(ROUTES.APPLY);
     }
   };
+
+  const hasSubmitted = useSubmissionStore((state) => state.hasSubmitted);
 
   return (
     <>
@@ -52,7 +55,11 @@ export const RecruitmentActive = () => {
             </ul>
           </div>
           <div className='flex justify-end'>
-            <Button label='지원하기' onClick={handleApplyClick} />
+            <Button
+              label='지원하기'
+              onClick={handleApplyClick}
+              disabled={hasSubmitted}
+            />
           </div>
         </div>
       </section>
