@@ -1,8 +1,7 @@
 'use client';
 
-import {useSearchParams, useRouter, usePathname} from 'next/navigation';
+import {useSearchParams} from 'next/navigation';
 import {useFormContext} from 'react-hook-form';
-import {FormDropdown} from '@/components/form/FormDropdown';
 import {FormTextarea} from '@/components/form/FormTextarea';
 import {FullButton} from '@/components/button/FullButton';
 import {mockPlanApplicationForm} from '@/mocks/mock-application-form';
@@ -24,8 +23,6 @@ interface QuestionItem {
 
 export const PartQuestion = ({onPrev, onNext, onSave}: PartQuestionProps) => {
   const searchParams = useSearchParams();
-  const router = useRouter();
-  const pathname = usePathname();
   const {
     register,
     watch,
@@ -42,11 +39,6 @@ export const PartQuestion = ({onPrev, onNext, onSave}: PartQuestionProps) => {
   const partParam = searchParams.get('part');
   const activePart: PartEtcType =
     VALID_PARTS.find((p) => p === partParam) || 'plan';
-  const handlePartChange = (part: string) => {
-    const params = new URLSearchParams(searchParams.toString());
-    params.set('part', part);
-    router.push(`${pathname}?${params.toString()}`, {scroll: false});
-  };
 
   const activePartLabel = PART_TABS.find(
     (tab) => tab.value === activePart
@@ -58,14 +50,6 @@ export const PartQuestion = ({onPrev, onNext, onSave}: PartQuestionProps) => {
 
   return (
     <div className='flex w-full flex-col gap-[30px]'>
-      <FormDropdown
-        label='지원하실 파트를 선택해 주세요.'
-        options={PART_TABS}
-        value={activePart}
-        onChange={handlePartChange}
-        className='w-full'
-      />
-
       <div className='flex flex-col gap-7.5'>
         <h3 className='text-h3 text-neutral-600'>
           {activePartLabel} 파트에 관한 질문입니다.
