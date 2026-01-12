@@ -9,8 +9,6 @@ import {EtcInfo} from '@/app/apply/_components/EtcInfo';
 import {useApplyFormController} from '@/app/apply/_hooks/useApplyFormController';
 import {useScrollToTop} from '@/hooks/useScrollToTop';
 import {ApplicationConfirmModal} from '@/components/modal/ApplicationConfirmModal';
-import {SubmissionCompleteModal} from '@/components/modal/SubmissionCompleteModal';
-import {SubmissionIncompleteModal} from '@/components/modal/SubmissionIncompleteModal';
 import {useRecruitmentStore} from '@/store/useRecruitmentStore';
 import HeroMainBanner from '@/components/banner/HeroMainBanner';
 import {AdminRecruitmentInformation} from '@/app/admin/(with-sidebar)/application-form/_components/recruitment/AdminRecruitmentInformation';
@@ -32,11 +30,6 @@ export const ApplyFormContainer = () => {
     isConfirmModalOpen,
     closeConfirmModal,
     handleConfirmSubmit,
-    isSubmissionCompleteModalOpen,
-    openSubmissionCompleteModal,
-    closeSubmissionCompleteModal,
-    isSubmissionIncompleteModalOpen,
-    closeSubmissionIncompleteModal,
   } = useApplyFormController();
 
   const generation = useRecruitmentStore((state) => state.generation);
@@ -47,14 +40,6 @@ export const ApplyFormContainer = () => {
     scrollToTop();
   }, [step, scrollToTop]);
 
-  // Check for submission complete flag on mount
-  useEffect(() => {
-    const submissionComplete = sessionStorage.getItem('submissionComplete');
-    if (submissionComplete === 'true') {
-      sessionStorage.removeItem('submissionComplete');
-      openSubmissionCompleteModal();
-    }
-  }, [openSubmissionCompleteModal]);
   return (
     <>
       <div className='flex w-full flex-col items-center bg-neutral-50'>
@@ -73,9 +58,6 @@ export const ApplyFormContainer = () => {
           <h2 className='text-h2 text-neutral-800'>
             {STEP_TITLES[step as keyof typeof STEP_TITLES]}
           </h2>
-          <h1 className='text-h2 font-bold text-neutral-800'>
-            {STEP_TITLES[step as keyof typeof STEP_TITLES]}
-          </h1>
 
           <div className='flex w-full flex-col gap-[81px]'>
             <div className='flex justify-center'>
@@ -106,16 +88,6 @@ export const ApplyFormContainer = () => {
         isOpen={isConfirmModalOpen}
         onClose={closeConfirmModal}
         onConfirm={handleConfirmSubmit}
-      />
-      <SubmissionCompleteModal
-        isOpen={isSubmissionCompleteModalOpen}
-        onClose={closeSubmissionCompleteModal}
-        onConfirm={closeSubmissionCompleteModal}
-      />
-      <SubmissionIncompleteModal
-        isOpen={isSubmissionIncompleteModalOpen}
-        onClose={closeSubmissionIncompleteModal}
-        onConfirm={closeSubmissionIncompleteModal}
       />
     </>
   );
