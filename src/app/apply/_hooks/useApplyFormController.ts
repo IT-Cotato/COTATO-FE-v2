@@ -1,7 +1,7 @@
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import {useForm, UseFormReturn} from 'react-hook-form';
 import {BASIC_INFO_FIELDS} from '@/constants/form/formConfig';
-import {useRouter} from 'next/navigation';
+import {useRouter, useSearchParams} from 'next/navigation';
 import {useRecruitmentStore} from '@/store/useRecruitmentStore';
 import {useSubmissionStore} from '@/store/useSubmissionStore';
 
@@ -19,12 +19,22 @@ interface UseApplyFormControllerReturn {
 }
 
 export const useApplyFormController = (): UseApplyFormControllerReturn => {
-  const [step, setStep] = useState(1);
+  const searchParams = useSearchParams();
+  const router = useRouter();
+
+  // URL의 step 읽기 (기본값: 1)
+  const urlStep = parseInt(searchParams.get('step') || '1');
+  const [step, setStep] = useState(urlStep);
+
+  // URL과 로컬 step 동기화
+  useEffect(() => {
+    setStep(urlStep);
+  }, [urlStep]);
+
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
-  const setHasSubmitted = useSubmissionStore((state) => state.setHasSubmitted);
 
   const {isRecruiting} = useRecruitmentStore();
-  const router = useRouter();
+  const setHasSubmitted = useSubmissionStore((state) => state.setHasSubmitted);
   const methods = useForm({mode: 'onChange'});
 
   const {trigger, handleSubmit, getValues} = methods;
@@ -32,19 +42,15 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
   const openConfirmModal = () => setIsConfirmModalOpen(true);
   const closeConfirmModal = () => setIsConfirmModalOpen(false);
 
-  // 저장하기: validation 체크 X, 그냥 현재 값만 저장
   const handleSave = () => {
     const data = getValues();
     console.log('저장된 데이터:', data);
     // TODO: API 호출 - 임시저장
   };
 
-  // 다음 버튼: 저장 먼저 → validation 체크 → 통과하면 이동
   const handleNext = async () => {
-    // 1. 먼저 저장 (무조건 실행)
     handleSave();
 
-    // 2. validation 체크
     let fieldsToValidate: string[] = [];
 
     if (step === 1) {
@@ -63,7 +69,30 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
     const isValid = await trigger(fieldsToValidate);
 
     if (isValid) {
-      setStep((prev: number) => prev + 1);
+      const nextStep = step + 1;
+
+      if (step === 1) {
+        // step 1 → 2: part 포함
+        const part = getValues('part');
+        router.push(`/apply?part=${part}&step=${nextStep}`);
+      } else if (step === 2) {
+        // step 2 → 3: part 유지
+        const part = searchParams.get('part');
+        router.push(`/apply?part=${part}&step=${nextStep}`);
+      }
+    }
+  };
+
+  const handlePrev = () => {
+    const prevStep = step - 1;
+
+    if (step === 2) {
+      // step 2 → 1: part 제거
+      router.push(`/apply?step=${prevStep}`);
+    } else if (step === 3) {
+      // step 3 → 2: part 유지
+      const part = searchParams.get('part');
+      router.push(`/apply?part=${part}&step=${prevStep}`);
     }
   };
 
@@ -71,21 +100,19 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
     closeConfirmModal();
 
     try {
-      // 실제 API 호출로 교체 예정
+      // TODO: 실제 API 호출로 교체
       const isSuccess = await new Promise<boolean>((resolve) => {
-        setTimeout(() => {
-          resolve(Math.random() > 0.5);
-        }, 1000);
+        setTimeout(() => resolve(Math.random() > 0.5), 1000);
       });
 
       if (isSuccess) {
-        // TODO: API 호출 - 최종 제출
+        const data = getValues();
+        console.log('최종 제출 데이터:', data);
         setHasSubmitted(true);
         router.push('/?submitted=true');
       } else {
         throw new Error('Submission failed');
       }
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
       router.push('/?submitted=false');
     }
@@ -95,12 +122,9 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
     if (isRecruiting) {
       openConfirmModal();
     } else {
-      sessionStorage.setItem('submissionFailed', 'true');
       router.push('/?submitted=false');
     }
   });
-
-  const handlePrev = () => setStep((prev: number) => prev - 1);
 
   return {
     step,
