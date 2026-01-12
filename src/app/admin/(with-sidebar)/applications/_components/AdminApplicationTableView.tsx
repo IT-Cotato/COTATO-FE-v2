@@ -4,23 +4,23 @@ import {ROUTES} from '@/constants/routes';
 import DefaultFilterIcon from '@/assets/icons/filter-default.svg';
 import FinishFilterIcon from '@/assets/icons/filter-finish.svg';
 import DownArrowIcon from '@/assets/arrow/down-arrow.svg';
-import MinusArrowIcon from '@/assets/arrow/minus-arrow.svg';
 import {mockApplications} from '@/mocks/mock-application';
 import {PART_TABS} from '@/constants/admin/admin-application-form';
+import clsx from 'clsx';
 
 interface AdminApplicationTableViewProps {
   items: typeof mockApplications;
-  nameSortOrder: 'asc' | 'desc' | 'default';
+  submitDateSortOrder: 'asc' | 'desc';
   isFilterActive: boolean;
-  onNameSortToggle: () => void;
+  onSubmitDateSortToggle: () => void;
   onFilterToggle: () => void;
 }
 
 export const AdminApplicationTableView = ({
   items,
-  nameSortOrder,
+  submitDateSortOrder,
   isFilterActive,
-  onNameSortToggle,
+  onSubmitDateSortToggle,
   onFilterToggle,
 }: AdminApplicationTableViewProps) => {
   return (
@@ -28,7 +28,8 @@ export const AdminApplicationTableView = ({
       <thead className='bg-neutral-200'>
         <tr>
           {APPLICATION_COLUMNS.map((col) => {
-            const isNameColumn = col.key === 'name';
+            const isSubmitDateColumn = col.key === 'submitDate';
+
             const isResultColumn = col.key === 'result';
 
             return (
@@ -51,16 +52,20 @@ export const AdminApplicationTableView = ({
                     </button>
                   )}
 
-                  {isNameColumn && (
+                  {isSubmitDateColumn && (
                     <button
                       type='button'
-                      onClick={onNameSortToggle}
+                      onClick={onSubmitDateSortToggle}
                       className='cursor-pointer'>
-                      {nameSortOrder === 'default' && <MinusArrowIcon />}
-                      {nameSortOrder === 'asc' && (
-                        <DownArrowIcon className='rotate-180' />
-                      )}
-                      {nameSortOrder === 'desc' && <DownArrowIcon />}
+                      <DownArrowIcon
+                        className={clsx(
+                          'transition-transform duration-200 ease-in-out',
+                          {
+                            'rotate-180': submitDateSortOrder === 'asc',
+                            'rotate-0': submitDateSortOrder === 'desc',
+                          }
+                        )}
+                      />
                     </button>
                   )}
                 </div>
@@ -82,12 +87,12 @@ export const AdminApplicationTableView = ({
                 {app.name}
               </a>
             </td>
-            <td className='truncate px-3 py-4'>{app.gender}</td>
             <td className='truncate px-3 py-4'>
               {PART_TABS.find((tab) => tab.value === app.part)?.label ?? '-'}
             </td>
             <td className='truncate px-3 py-4'>{app.school}</td>
             <td className='truncate px-3 py-4'>{app.phone}</td>
+            <td className='truncate px-3 py-4'>{app.submitDate}</td>
             <td className='px-3 py-4'>
               <AdminApplicationResultDropdown result={app.result} />
             </td>
