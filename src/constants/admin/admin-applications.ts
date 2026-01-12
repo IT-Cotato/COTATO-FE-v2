@@ -6,10 +6,10 @@ import {
 
 export const APPLICATION_COLUMNS = [
   {key: 'name', label: '이름'},
-  {key: 'gender', label: '성별'},
   {key: 'part', label: '직군'},
   {key: 'school', label: '학교'},
   {key: 'phone', label: '전화번호'},
+  {key: 'submitDate', label: '최종 제출일자'},
   {key: 'result', label: '합격 여부'},
 ] as const;
 
@@ -22,10 +22,10 @@ export const PART_TABS: {label: string; value: PartType}[] = [
 ];
 
 export const REVIEWER_TABS: {label: string; value: ReviewerType}[] = [
-  {label: '운영진1', value: 'admin1'},
-  {label: '운영진2', value: 'admin2'},
-  {label: '운영진3', value: 'admin3'},
-  {label: '운영진4', value: 'admin4'},
+  {label: '운영진1', value: 'staff1'},
+  {label: '운영진2', value: 'staff2'},
+  {label: '운영진3', value: 'staff3'},
+  {label: '운영진4', value: 'staff4'},
 ];
 
 export const RESULT_OPTIONS: ApplicationResultType[] = [

@@ -27,7 +27,7 @@ export type PartEtcType = z.infer<typeof PartEtcSchema>;
 /**
  * 리뷰어
  */
-export const ReviewerSchema = z.enum(['admin1', 'admin2', 'admin3', 'admin4']);
+export const ReviewerSchema = z.enum(['staff1', 'staff2', 'staff3', 'staff4']);
 export type ReviewerType = z.infer<typeof ReviewerSchema>;
 
 /**
@@ -51,7 +51,7 @@ export const ApplicationSchema = z.object({
   phone: z.string(),
   part: PartEtcSchema,
   school: z.string(),
-  gender: z.string(),
+  submitDate: z.string(),
   result: ApplicationResultSchema,
 });
 export type ApplicationType = z.infer<typeof ApplicationSchema>;
