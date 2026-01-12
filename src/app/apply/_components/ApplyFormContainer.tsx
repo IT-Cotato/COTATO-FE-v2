@@ -1,13 +1,11 @@
 'use client';
 
-import {useEffect} from 'react';
 import {FormProvider} from 'react-hook-form';
 import {StepIndicator} from '@/components/navigation/StepIndicator';
 import {BasicInfo} from '@/app/apply/_components/BasicInfo';
 import {PartQuestion} from '@/app/apply/_components/PartQuestion';
 import {EtcInfo} from '@/app/apply/_components/EtcInfo';
 import {useApplyFormController} from '@/app/apply/_hooks/useApplyFormController';
-import {useScrollToTop} from '@/hooks/useScrollToTop';
 import {ApplicationConfirmModal} from '@/components/modal/ApplicationConfirmModal';
 import {useRecruitmentStore} from '@/store/useRecruitmentStore';
 import HeroMainBanner from '@/components/banner/HeroMainBanner';
@@ -33,12 +31,6 @@ export const ApplyFormContainer = () => {
   } = useApplyFormController();
 
   const generation = useRecruitmentStore((state) => state.generation);
-
-  const scrollToTop = useScrollToTop();
-
-  useEffect(() => {
-    scrollToTop();
-  }, [step, scrollToTop]);
 
   return (
     <>
