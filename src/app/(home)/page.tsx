@@ -1,9 +1,8 @@
 'use client';
 
-import {useState} from 'react';
+import {useState, Suspense} from 'react';
 import {useSearchParams, useRouter} from 'next/navigation';
 import {useRecruitmentStore} from '@/store/useRecruitmentStore';
-import {useSubmissionStore} from '@/store/useSubmissionStore';
 import {RecruitmentActive} from '@/app/(home)/_components/RecruitmentActive';
 import {RecruitmentInactive} from '@/app/(home)/_components/RecruitmentInactive';
 import {SubmissionCompleteModal} from '@/components/modal/SubmissionCompleteModal';
@@ -33,7 +32,7 @@ export default function HomePage() {
   };
 
   return (
-    <>
+    <Suspense fallback={null}>
       <main>
         {isRecruiting ? <RecruitmentActive /> : <RecruitmentInactive />}
       </main>
@@ -47,6 +46,6 @@ export default function HomePage() {
         onClose={closeSubmissionIncompleteModal}
         onConfirm={closeSubmissionIncompleteModal}
       />
-    </>
+    </Suspense>
   );
 }
