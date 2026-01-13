@@ -61,8 +61,34 @@ export const RESULT_VALUE_MAP = {
 export type ApplicationResultLabel =
   (typeof RESULT_LABEL_MAP)[keyof typeof RESULT_LABEL_MAP];
 
-// ['합격', '불합격', '예비합격', '평가전']
+/* ['합격', '불합격', '예비합격', '평가전']*/
 export const RESULT_OPTIONS = Object.values(RESULT_LABEL_MAP);
+
+/** 합격 드롭다운용 UI config  */
+export const APPLICATION_RESULT_CONFIG = {
+  PASS: {
+    label: '합격',
+    bg: 'bg-[#68CA3A]',
+  },
+  FAIL: {
+    label: '불합격',
+    bg: 'bg-alert',
+  },
+  WAITLISTED: {
+    label: '예비합격',
+    bg: 'bg-hover',
+  },
+  PENDING: {
+    label: '평가전',
+    bg: 'bg-text-disabled',
+  },
+} as const;
+
+export type ApplicationResultStatus = keyof typeof APPLICATION_RESULT_CONFIG;
+
+export const APPLICATION_RESULT_OPTIONS = Object.keys(
+  APPLICATION_RESULT_CONFIG
+) as ApplicationResultStatus[];
 
 /**
  * 지원서 상세 페이지 관련 상수

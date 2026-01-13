@@ -22,13 +22,23 @@ export const ApplicationPartViewTypeSchema = z.enum([
 
 /**
  * 합불 상태 필터
- *  */
+ */
 export const ApplicationPassViewStatusSchema = z.enum([
   'PASS',
   'FAIL',
   'WAITLISTED',
   'PENDING',
   'ALL',
+]);
+
+/**
+ * 합불 드롭다운용 필터 스키마
+ */
+export const ApplicationPassStatusSchema = z.enum([
+  'PASS',
+  'FAIL',
+  'WAITLISTED',
+  'PENDING',
 ]);
 
 /**
@@ -54,7 +64,7 @@ export const ApplicantSchema = z.object({
   applicationPartType: z.string().nullable(),
   university: z.string(),
   phoneNumber: z.string(),
-  passStatus: ApplicationPassViewStatusSchema,
+  passStatus: ApplicationPassStatusSchema,
   submittedAt: z.string(),
 });
 
@@ -121,6 +131,7 @@ export type ApplicationPartViewType = z.infer<
 export type ApplicationPassViewStatus = z.infer<
   typeof ApplicationPassViewStatusSchema
 >;
+export type ApplicationPassStatus = z.infer<typeof ApplicationPassStatusSchema>;
 export type GetAdminApplicationsParamsType = z.infer<
   typeof GetAdminApplicationsParamsSchema
 >;
