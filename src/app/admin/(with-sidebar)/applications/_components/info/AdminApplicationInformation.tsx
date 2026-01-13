@@ -34,6 +34,7 @@ export const AdminApplicationInformation = ({
       params.delete('keyword');
     }
 
+    params.set('page', '1');
     router.push(`?${params.toString()}`, {scroll: false});
   };
 
