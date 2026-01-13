@@ -10,6 +10,7 @@ import DownArrowIcon from '@/assets/arrow/down-arrow.svg';
 import clsx from 'clsx';
 import {ApplicantType} from '@/schemas/admin/admin-applications-schema';
 import {AdminApplicationResultDropdown} from '@/app/admin/(with-sidebar)/applications/_components/table/AdminApplicationResultDropdown';
+import {formatKoreanDate} from '@/utils/formatDate';
 
 interface AdminApplicationTableViewProps {
   items?: ApplicantType[];
@@ -99,7 +100,7 @@ export const AdminApplicationTableView = ({
             <td className='truncate px-3 py-4'>{app.university}</td>
             <td className='truncate px-3 py-4'>{app.phoneNumber}</td>
             <td className='truncate px-3 py-4'>
-              {app.submittedAt.slice(0, 10)}
+              {formatKoreanDate(app.submittedAt)}
             </td>
             <td className='px-3 py-4'>
               <AdminApplicationResultDropdown result={app.passStatus} />
