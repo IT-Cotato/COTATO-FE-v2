@@ -3,9 +3,11 @@
 import {AdminApplicationInformation} from '@/app/admin/(with-sidebar)/applications/_components/info/AdminApplicationInformation';
 import {AdminApplicationTableContainer} from '@/app/admin/(with-sidebar)/applications/_containers/AdminApplicationTableContainer';
 import {AdminApplicationTabContainer} from '@/app/admin/(with-sidebar)/applications/_containers/AdminApplicationTabContainer';
-import {useAdminApplications} from '@/hooks/queries/useAdminApplications';
+
 import {GetAdminApplicationsParamsSchema} from '@/schemas/admin/admin-applications-schema';
 import {useSearchParams} from 'next/navigation';
+import {useAdminApplicationsQuery} from '@/hooks/queries/useAdminApplicationsQuery';
+import {useEffect} from 'react';
 
 export const AdminApplicationContainer = () => {
   const searchParams = useSearchParams();
@@ -24,7 +26,14 @@ export const AdminApplicationContainer = () => {
 
   const filter = GetAdminApplicationsParamsSchema.parse(rawParams);
 
-  const {data, isLoading, isFetching} = useAdminApplications(filter);
+  const {data, isLoading, isFetching, isError, error} =
+    useAdminApplicationsQuery(filter);
+
+  useEffect(() => {
+    if (isError) {
+      alert(error.message);
+    }
+  }, [isError, error]);
 
   const isInitialLoading = isLoading && !data;
   const isRefreshing = isFetching && !!data;
