@@ -37,6 +37,7 @@ export const AdminApplicationResultFilter = ({
         : [...prev, value];
     });
   };
+
   const handleConfirm = () => {
     onChange(draftSelected);
     onClose();

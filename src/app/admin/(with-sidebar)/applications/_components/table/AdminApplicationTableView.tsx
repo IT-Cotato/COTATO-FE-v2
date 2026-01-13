@@ -1,15 +1,18 @@
-import {AdminApplicationResultDropdown} from '@/app/admin/(with-sidebar)/applications/_components/AdminApplicationResultDropdown';
-import {APPLICATION_COLUMNS} from '@/constants/admin/admin-applications';
+import {
+  APPLICATION_COLUMNS,
+  PART_TABS,
+} from '@/constants/admin/admin-applications';
 import {ROUTES} from '@/constants/routes';
 import DefaultFilterIcon from '@/assets/icons/filter-default.svg';
 import FinishFilterIcon from '@/assets/icons/filter-finish.svg';
 import DownArrowIcon from '@/assets/arrow/down-arrow.svg';
-import {mockApplications} from '@/mocks/mock-application';
-import {PART_TABS} from '@/constants/admin/admin-application-form';
+
 import clsx from 'clsx';
+import {ApplicantType} from '@/schemas/admin/admin-applications-schema';
+import {AdminApplicationResultDropdown} from '@/app/admin/(with-sidebar)/applications/_components/table/AdminApplicationResultDropdown';
 
 interface AdminApplicationTableViewProps {
-  items: typeof mockApplications;
+  items?: ApplicantType[];
   submitDateSortOrder: 'asc' | 'desc';
   isFilterActive: boolean;
   onSubmitDateSortToggle: () => void;
@@ -76,11 +79,13 @@ export const AdminApplicationTableView = ({
       </thead>
 
       <tbody>
-        {items.map((app) => (
-          <tr key={app.id} className='bg-white text-body-l text-neutral-600'>
+        {items?.map((app) => (
+          <tr
+            key={app.applicationId}
+            className='bg-white text-body-l text-neutral-600'>
             <td className='px-3 py-4'>
               <a
-                href={`${ROUTES.ADMIN_APPLICATION}/${app.id}`}
+                href={`${ROUTES.ADMIN_APPLICATION}/${app.applicationId}`}
                 target='_blank'
                 rel='noopener noreferrer'
                 className='cursor-pointer hover:border-b'>
@@ -88,13 +93,16 @@ export const AdminApplicationTableView = ({
               </a>
             </td>
             <td className='truncate px-3 py-4'>
-              {PART_TABS.find((tab) => tab.value === app.part)?.label ?? '-'}
+              {PART_TABS.find((tab) => tab.value === app.applicationPartType)
+                ?.label ?? '-'}
             </td>
-            <td className='truncate px-3 py-4'>{app.school}</td>
-            <td className='truncate px-3 py-4'>{app.phone}</td>
-            <td className='truncate px-3 py-4'>{app.submitDate}</td>
+            <td className='truncate px-3 py-4'>{app.university}</td>
+            <td className='truncate px-3 py-4'>{app.phoneNumber}</td>
+            <td className='truncate px-3 py-4'>
+              {app.submittedAt.slice(0, 10)}
+            </td>
             <td className='px-3 py-4'>
-              <AdminApplicationResultDropdown result={app.result} />
+              <AdminApplicationResultDropdown result={app.passStatus} />
             </td>
           </tr>
         ))}

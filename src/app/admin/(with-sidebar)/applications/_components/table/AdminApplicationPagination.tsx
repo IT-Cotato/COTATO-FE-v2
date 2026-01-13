@@ -8,12 +8,14 @@ interface AdminApplicationPaginationProps {
   currentPage: number;
   totalPages: number;
   onPageChange: (page: number) => void;
+  disabled?: boolean;
 }
 
 export const AdminApplicationPagination = ({
   currentPage,
   totalPages,
   onPageChange,
+  disabled,
 }: AdminApplicationPaginationProps) => {
   const isPrevDisabled = currentPage <= 1;
   const isNextDisabled = currentPage >= totalPages;
@@ -41,7 +43,7 @@ export const AdminApplicationPagination = ({
     <div className='mt-6 flex items-center justify-center gap-4'>
       <button
         onClick={() => onPageChange(currentPage - 1)}
-        disabled={isPrevDisabled}
+        disabled={isPrevDisabled || disabled}
         className={`flex items-center gap-2 text-body-m font-medium ${
           isPrevDisabled
             ? 'cursor-not-allowed text-neutral-300'
@@ -65,6 +67,7 @@ export const AdminApplicationPagination = ({
             <button
               key={page}
               onClick={() => onPageChange(page)}
+              disabled={disabled}
               className={clsx(
                 'flex h-9 w-9 items-center justify-center rounded-lg text-body-m',
                 isActive ? 'bg-neutral-100 font-semibold' : 'text-neutral-600'
@@ -83,6 +86,7 @@ export const AdminApplicationPagination = ({
 
               <button
                 onClick={() => onPageChange(totalPages)}
+                disabled={disabled}
                 className={clsx(
                   'flex h-9 w-9 items-center justify-center rounded-lg text-body-m',
                   currentPage === totalPages
@@ -97,7 +101,7 @@ export const AdminApplicationPagination = ({
 
       <button
         onClick={() => onPageChange(currentPage + 1)}
-        disabled={isNextDisabled}
+        disabled={isNextDisabled || disabled}
         className={`flex items-center gap-3 text-body-m font-medium ${
           isNextDisabled
             ? 'cursor-not-allowed text-neutral-300'
