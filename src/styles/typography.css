@@ -34,17 +34,17 @@
   --text-body-s--font-weight: 400;
 
   /* typography - body (semibold) */
-  --text-body-l: 14px;
-  --text-body-l--line-height: 22px;
-  --text-body-l--font-weight: 600;
+  --text-body-l-sb: 14px;
+  --text-body-l-sb--line-height: 22px;
+  --text-body-l-sb--font-weight: 600;
 
-  --text-body-m: 12px;
-  --text-body-m--line-height: 20px;
-  --text-body-m--font-weight: 600;
+  --text-body-m-sb: 12px;
+  --text-body-m-sb--line-height: 20px;
+  --text-body-m-sb--font-weight: 600;
 
-  --text-body-s: 10px;
-  --text-body-s--line-height: 18px;
-  --text-body-s--font-weight: 600;
+  --text-body-s-sb: 10px;
+  --text-body-s-sb--line-height: 18px;
+  --text-body-s-sb--font-weight: 600;
 }
 
 /* mobile typo 
