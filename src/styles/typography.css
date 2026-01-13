@@ -55,11 +55,11 @@ TODO: max width 조절
     /* headings */
     --text-h1: 34px;
     --text-h1--line-height: 38px;
-    --text-h3--font-weight: 700;
+    --text-h1--font-weight: 700;
 
     --text-h2: 28px;
     --text-h2--line-height: 32px;
-    --text-h3--font-weight: 700;
+    --text-h2--font-weight: 700;
 
     --text-h3: 22px;
     --text-h3--line-height: 26px;
@@ -72,11 +72,11 @@ TODO: max width 조절
     /* body */
     --text-body-l: 18px;
     --text-body-l--line-height: 22px;
-    --text-body-s--font-weight: 400;
+    --text-body-l--font-weight: 400;
 
     --text-body-m: 17px;
     --text-body-m--line-height: 21px;
-    --text-body-s--font-weight: 400;
+    --text-body-m--font-weight: 400;
 
     --text-body-s: 14px;
     --text-body-s--line-height: 18px;
