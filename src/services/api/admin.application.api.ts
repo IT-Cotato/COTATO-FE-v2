@@ -5,6 +5,8 @@ import {
 } from '@/schemas/admin/admin-applications-schema';
 import {privateAxios} from '@/services/config/axios';
 import {ENDPOINT} from '@/services/constant/endpoint';
+import {ErrorResponseSchema} from '@/services/schemas/common.schema';
+import axios from 'axios';
 import qs from 'qs';
 
 /**
@@ -15,13 +17,24 @@ import qs from 'qs';
 export const getAdminApplications = async (
   params: GetAdminApplicationsParamsType
 ): Promise<GetAdminApplicationsResponse> => {
-  const response = await privateAxios.get(ENDPOINT.ADMIN.APPLICATIONS, {
-    params,
-    paramsSerializer: (params) =>
-      qs.stringify(params, {
-        arrayFormat: 'repeat',
-      }),
-  });
+  try {
+    const response = await privateAxios.get(ENDPOINT.ADMIN.APPLICATIONS, {
+      params,
+      paramsSerializer: (params) =>
+        qs.stringify(params, {arrayFormat: 'repeat'}),
+    });
 
-  return GetAdminApplicationsResponseSchema.parse(response.data);
+    return GetAdminApplicationsResponseSchema.parse(response.data);
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error)) {
+      const data = error.response?.data;
+
+      const parsed = ErrorResponseSchema.safeParse(data);
+      if (parsed.success) {
+        throw parsed.data;
+      }
+    }
+
+    throw new Error('알 수 없는 에러가 발생했습니다.');
+  }
 };
