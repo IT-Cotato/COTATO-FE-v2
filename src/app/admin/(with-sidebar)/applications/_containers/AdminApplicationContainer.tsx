@@ -5,12 +5,13 @@ import {AdminApplicationTableContainer} from '@/app/admin/(with-sidebar)/applica
 import {AdminApplicationTabContainer} from '@/app/admin/(with-sidebar)/applications/_containers/AdminApplicationTabContainer';
 
 import {GetAdminApplicationsParamsSchema} from '@/schemas/admin/admin-applications-schema';
-import {useSearchParams} from 'next/navigation';
+import {useRouter, useSearchParams} from 'next/navigation';
 import {useAdminApplicationsQuery} from '@/hooks/queries/useAdminApplicationsQuery';
 import {useEffect} from 'react';
 
 export const AdminApplicationContainer = () => {
   const searchParams = useSearchParams();
+  const router = useRouter();
 
   const statusParams = searchParams.getAll('passViewStatuses');
 
@@ -32,8 +33,9 @@ export const AdminApplicationContainer = () => {
   useEffect(() => {
     if (isError) {
       alert(error.message);
+      router.back();
     }
-  }, [isError, error]);
+  }, [isError, error, router]);
 
   const isInitialLoading = isLoading && !data;
   const isRefreshing = isFetching && !!data;
