@@ -1,5 +1,5 @@
 interface TimeButtonProps {
-  value: string;
+  value: number;
 }
 
 export const TimeButton = ({value}: TimeButtonProps) => {

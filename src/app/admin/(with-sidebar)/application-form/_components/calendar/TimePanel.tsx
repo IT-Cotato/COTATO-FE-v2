@@ -2,11 +2,11 @@ import {TimeButton} from '@/app/admin/(with-sidebar)/application-form/_component
 import {TimeList} from '@/app/admin/(with-sidebar)/application-form/_components/calendar/TimeList';
 
 interface TimePanelProps {
-  hour: string;
-  minute: string;
+  hour: number;
+  minute: number;
   period: '오전' | '오후';
-  onHourChange: (v: string) => void;
-  onMinuteChange: (v: string) => void;
+  onHourChange: (v: number) => void;
+  onMinuteChange: (v: number) => void;
   onPeriodChange: (v: '오전' | '오후') => void;
 }
 export const TimePanel = ({
@@ -23,9 +23,7 @@ export const TimePanel = ({
         <div className='flex flex-col items-center gap-3'>
           <TimeButton value={hour} />
           <TimeList
-            values={Array.from({length: 12}, (_, i) =>
-              String(i + 1).padStart(2, '0')
-            )}
+            values={Array.from({length: 12}, (_, i) => i + 1)}
             onSelect={onHourChange}
           />
         </div>
@@ -33,9 +31,7 @@ export const TimePanel = ({
         <div className='flex flex-col items-center gap-3'>
           <TimeButton value={minute} />
           <TimeList
-            values={Array.from({length: 60}, (_, i) =>
-              String(i).padStart(2, '0')
-            )}
+            values={Array.from({length: 60}, (_, i) => i + 1)}
             onSelect={onMinuteChange}
           />
         </div>

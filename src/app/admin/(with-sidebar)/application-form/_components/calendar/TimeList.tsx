@@ -1,6 +1,6 @@
 interface TimeListProps {
-  values: string[];
-  onSelect: (value: string) => void;
+  values: number[];
+  onSelect: (value: number) => void;
 }
 
 export const TimeList = ({values, onSelect}: TimeListProps) => {
@@ -11,7 +11,7 @@ export const TimeList = ({values, onSelect}: TimeListProps) => {
           key={value}
           onClick={() => onSelect(value)}
           className='cursor-pointer px-3 py-1 text-center text-body-s font-normal'>
-          {value}
+          {String(value).padStart(2, '0')}
         </li>
       ))}
     </ul>
