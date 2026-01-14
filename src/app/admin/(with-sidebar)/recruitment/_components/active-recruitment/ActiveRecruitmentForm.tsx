@@ -8,10 +8,16 @@ import {GenerationField} from '@/app/admin/(with-sidebar)/recruitment/_component
 import {RecruitmentConfirmModal} from '@/components/modal/RecruitConfirmModal';
 import {formatDate} from '@/utils/formatDate';
 import {useAdminRecruitmentMutation} from '@/hooks/mutations/useAdminRecruitmentMutation';
+import {Checkbox} from '@/components/checkbox/CheckBox';
 
 export const ActiveRecruitmentForm = () => {
-  const {isRecruiting, setIsRecruiting, generation, setGeneration} =
-    useRecruitmentStore();
+  const {
+    isRecruiting,
+    generation,
+    setGeneration,
+    isAdditional,
+    setIsAdditional,
+  } = useRecruitmentStore();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [startDate, setStartDate] = useState<Date | null>(new Date());
   const [endDate, setEndDate] = useState<Date | null>(new Date());
@@ -40,7 +46,7 @@ export const ActiveRecruitmentForm = () => {
     } else {
       activate({
         generationId: Number(generation),
-        isAdditionalRecruitmentActive: false,
+        isAdditionalRecruitmentActive: isAdditional,
         startDate: formattedStartDate,
         endDate: formattedEndDate,
       });
@@ -60,7 +66,7 @@ export const ActiveRecruitmentForm = () => {
       <form
         onSubmit={handleSubmit}
         className='flex h-25 items-end justify-between rounded-[10px] bg-neutral-100 pt-3 pr-5 pb-3 pl-3.5'>
-        <fieldset className='flex h-19 gap-19 pb-1 text-body-m font-semibold'>
+        <fieldset className='flex h-19 gap-11.75 pb-1 text-body-m font-semibold'>
           <legend className='sr-only'>모집 설정</legend>
           <GenerationField value={generation} onChange={setGeneration} />
           <PeriodField
@@ -69,12 +75,18 @@ export const ActiveRecruitmentForm = () => {
             endDate={endDate}
             setEndDate={setEndDate}
           />
+          <div
+            className='flex cursor-pointer items-center gap-2 select-none'
+            onClick={() => setIsAdditional(!isAdditional)}>
+            <span className='text-body-L text-neutral-600'>추가모집 여부</span>
+            <Checkbox checked={isAdditional} onChange={setIsAdditional} />
+          </div>
         </fieldset>
         <Button
           type='submit'
           disabled={isLoading}
           label={isRecruiting ? '모집 종료하기' : '모집 시작하기'}
-          width={156}
+          width={145}
           height={36}
           labelTypo='body_l'
           backgroundColor={isRecruiting ? 'alert' : 'primary'}

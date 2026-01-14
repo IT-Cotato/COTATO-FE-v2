@@ -8,7 +8,8 @@ import {useEffect} from 'react';
 export const RECRUITMENT_STATUS_KEY = 'recruitmentStatus';
 
 export const useRecruitmentStatusQuery = () => {
-  const {setIsRecruiting, setGeneration} = useRecruitmentStore();
+  const {setIsRecruiting, setGeneration, setIsAdditional} =
+    useRecruitmentStore();
 
   const query = useQuery({
     queryKey: [RECRUITMENT_STATUS_KEY],
@@ -21,16 +22,17 @@ export const useRecruitmentStatusQuery = () => {
   // 서버 데이터로 store 동기화
   useEffect(() => {
     if (query.data?.data) {
-      const {isActive, generationId} = query.data.data;
+      const {isActive, generationId, isAdditionalRecruitmentActive} =
+        query.data.data;
+
       setIsRecruiting(isActive);
+      setIsAdditional(isAdditionalRecruitmentActive);
 
       if (generationId !== null) {
-        if (isActive) {
-          setGeneration(generationId.toString());
-        }
+        setGeneration(generationId.toString());
       }
     }
-  }, [query.data, setIsRecruiting, setGeneration]);
+  }, [query.data, setIsRecruiting, setIsAdditional, setGeneration]);
 
   return query;
 };
