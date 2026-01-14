@@ -66,7 +66,7 @@ export const ActiveRecruitmentForm = () => {
       <form
         onSubmit={handleSubmit}
         className='flex h-25 items-end justify-between rounded-[10px] bg-neutral-100 pt-3 pr-5 pb-3 pl-3.5'>
-        <fieldset className='flex h-19 gap-11.75 pb-1 text-body-m font-semibold'>
+        <fieldset className='flex h-19 items-end justify-end gap-11.75 pb-1 text-body-m font-semibold'>
           <legend className='sr-only'>모집 설정</legend>
           <GenerationField value={generation} onChange={setGeneration} />
           <PeriodField
@@ -76,7 +76,7 @@ export const ActiveRecruitmentForm = () => {
             setEndDate={setEndDate}
           />
           <div
-            className='flex cursor-pointer items-center gap-2 select-none'
+            className='flex shrink-0 cursor-pointer items-center gap-5 whitespace-nowrap select-none'
             onClick={() => setIsAdditional(!isAdditional)}>
             <span className='text-body-L text-neutral-600'>추가모집 여부</span>
             <Checkbox checked={isAdditional} onChange={setIsAdditional} />
@@ -88,6 +88,7 @@ export const ActiveRecruitmentForm = () => {
           label={isRecruiting ? '모집 종료하기' : '모집 시작하기'}
           width={145}
           height={36}
+          borderRadius={5}
           labelTypo='body_l'
           backgroundColor={isRecruiting ? 'alert' : 'primary'}
         />

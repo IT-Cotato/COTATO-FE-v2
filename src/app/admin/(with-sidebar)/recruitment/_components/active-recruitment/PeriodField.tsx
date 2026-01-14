@@ -21,7 +21,7 @@ export const PeriodField = ({
 }: PeriodFieldProps) => {
   return (
     <fieldset className='flex w-full flex-col gap-4'>
-      <legend className='mb-4'>지원기간</legend>
+      <legend className='mb-2.5'>지원기간</legend>
       <div className='flex items-center gap-2.5'>
         <div className='relative'>
           <DatePicker
