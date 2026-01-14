@@ -1,4 +1,4 @@
-import {AdminSideBar} from '@/app/admin/_components/AdminSideBar';
+import {AdminSideBar} from '@/app/admin/(with-sidebar)/_components/AdminSideBar';
 import {ProtectedRoute} from '@/components/auth/ProtectedRoute';
 
 export default function AdminWithSideBarLayout({
@@ -12,7 +12,6 @@ export default function AdminWithSideBarLayout({
         <aside>
           <AdminSideBar />
         </aside>
-
         <main className='min-w-0 flex-1'>{children}</main>
       </section>
     </ProtectedRoute>

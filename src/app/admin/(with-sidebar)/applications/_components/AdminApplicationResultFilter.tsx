@@ -2,25 +2,26 @@ import {RESULT_OPTIONS} from '@/constants/admin/admin-applications';
 import {ApplicationResultType} from '@/schemas/admin/admin-application-type';
 import CheckIcon from '@/assets/icons/check.svg';
 import clsx from 'clsx';
-import {useEffect, useRef, useState} from 'react';
+import {RefObject, useEffect, useState} from 'react';
 import {useClickOutside} from '@/hooks/useClickOutside';
 
 interface AdminApplicationResultFilterProps {
   selected: ApplicationResultType[];
+  filterAreaRef: RefObject<HTMLElement | null>;
   onChange: (next: ApplicationResultType[]) => void;
   onClose: () => void;
 }
 
 export const AdminApplicationResultFilter = ({
   selected,
+  filterAreaRef,
   onChange,
   onClose,
 }: AdminApplicationResultFilterProps) => {
   const [draftSelected, setDraftSelected] =
     useState<ApplicationResultType[]>(selected);
-  const filterRef = useRef<HTMLDivElement | null>(null);
 
-  useClickOutside(filterRef, onClose);
+  useClickOutside(filterAreaRef, onClose);
 
   useEffect(() => {
     setDraftSelected(selected);
@@ -47,9 +48,7 @@ export const AdminApplicationResultFilter = ({
   };
 
   return (
-    <div
-      ref={filterRef}
-      className='flex flex-col gap-0.75 rounded-sm bg-neutral-700 p-1.25 text-body-s text-neutral-300'>
+    <div className='flex flex-col gap-0.75 rounded-sm bg-neutral-700 p-1.25 text-body-s text-neutral-300'>
       {RESULT_OPTIONS.map((option) => {
         const isAllSelected = draftSelected.length === 0;
         const isChecked = isAllSelected || draftSelected.includes(option);
@@ -74,8 +73,10 @@ export const AdminApplicationResultFilter = ({
       })}
 
       <div className='mt-1 flex flex-row justify-end gap-2 px-1.75 pb-1'>
-        <button onClick={handleCancel}>취소</button>
-        <button onClick={handleConfirm} className='text-white'>
+        <button type='button' onClick={handleCancel}>
+          취소
+        </button>
+        <button type='button' onClick={handleConfirm} className='text-white'>
           확인
         </button>
       </div>
