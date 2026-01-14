@@ -1,4 +1,4 @@
-import {createSuccessResponseSchema} from '@/services/schemas/common.schema';
+import {createSuccessResponseSchema} from '@/schemas/common/common-schema';
 import z from 'zod';
 
 /**

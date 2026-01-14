@@ -10,7 +10,7 @@ import {
   setAccessToken,
   setRefreshToken,
 } from '@/services/utils/tokenManager';
-import {OAuthLoginRequest} from '@/services/schemas/auth.schema';
+import {OAuthLoginRequest} from '@/schemas/auth/auth-schema';
 
 /**
  * OAuth 로그인 Mutation Hook

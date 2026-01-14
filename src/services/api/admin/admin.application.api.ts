@@ -5,7 +5,7 @@ import {
 } from '@/schemas/admin/admin-applications-schema';
 import {privateAxios} from '@/services/config/axios';
 import {ENDPOINT} from '@/services/constant/endpoint';
-import {ErrorResponseSchema} from '@/services/schemas/common.schema';
+import {ErrorResponseSchema} from '@/schemas/common/common-schema';
 import axios from 'axios';
 import qs from 'qs';
 
