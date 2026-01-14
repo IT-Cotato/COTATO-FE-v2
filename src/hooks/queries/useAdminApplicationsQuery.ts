@@ -1,3 +1,4 @@
+import {QUERY_KEYS} from '@/constants/query-keys';
 import {
   GetAdminApplicationsParamsType,
   GetAdminApplicationsResponse,
@@ -6,13 +7,11 @@ import {getAdminApplications} from '@/services/api/admin/admin.application.api';
 import {ErrorResponse} from '@/services/schemas/common.schema';
 import {useQuery} from '@tanstack/react-query';
 
-export const ADMIN_APPLICATIONS_QUERY_KEY = 'adminApplications';
-
 export const useAdminApplicationsQuery = (
   filter: GetAdminApplicationsParamsType
 ) => {
   return useQuery<GetAdminApplicationsResponse, ErrorResponse>({
-    queryKey: [ADMIN_APPLICATIONS_QUERY_KEY, filter],
+    queryKey: [QUERY_KEYS.ADMIN_APPLICATION, filter],
     queryFn: () => getAdminApplications(filter),
     placeholderData: (previousData) => previousData,
   });
