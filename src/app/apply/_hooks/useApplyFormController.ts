@@ -32,11 +32,10 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
   }, [urlStep]);
 
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
-
   const {isRecruiting} = useRecruitmentStore();
   const setHasSubmitted = useSubmissionStore((state) => state.setHasSubmitted);
-  const methods = useForm({mode: 'onChange'});
 
+  const methods = useForm({mode: 'onChange'});
   const {trigger, handleSubmit, getValues} = methods;
 
   const openConfirmModal = () => setIsConfirmModalOpen(true);
@@ -67,33 +66,28 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
     }
 
     const isValid = await trigger(fieldsToValidate);
-
     if (isValid) {
-      const nextStep = step + 1;
+      const params = new URLSearchParams(searchParams.toString());
+      params.set('step', String(step + 1));
 
       if (step === 1) {
         // step 1 → 2: part 포함
-        const part = getValues('part');
-        router.push(`/apply?part=${part}&step=${nextStep}`);
-      } else if (step === 2) {
-        // step 2 → 3: part 유지
-        const part = searchParams.get('part');
-        router.push(`/apply?part=${part}&step=${nextStep}`);
+        params.set('part', getValues('part'));
       }
+
+      router.push(`/apply?${params.toString()}`);
     }
   };
 
   const handlePrev = () => {
-    const prevStep = step - 1;
+    const params = new URLSearchParams(searchParams.toString());
+    params.set('step', String(step - 1));
 
     if (step === 2) {
-      // step 2 → 1: part 제거
-      router.push(`/apply?step=${prevStep}`);
-    } else if (step === 3) {
-      // step 3 → 2: part 유지
-      const part = searchParams.get('part');
-      router.push(`/apply?part=${part}&step=${prevStep}`);
+      params.delete('part');
     }
+
+    router.push(`/apply?${params.toString()}`);
   };
 
   const handleConfirmSubmit = async () => {
