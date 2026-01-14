@@ -1,11 +1,32 @@
 import {PartEtcType} from '@/schemas/admin/admin-application-type';
-
 export const scheduleSections = [
-  {key: 'recruitmentPeriod', label: '지원 기간', type: 'range'},
-  {key: 'documentResultDate', label: '서류 발표', type: 'single'},
-  {key: 'interviewPeriod', label: '면접 평가', type: 'range'},
-  {key: 'finalResultDate', label: '최종 발표', type: 'single'},
-  {key: 'orientationDate', label: 'OT 날짜', type: 'single'},
+  {
+    label: '지원 기간',
+    type: 'range',
+    start: 'recruitmentStart',
+    end: 'recruitmentEnd',
+  },
+  {
+    label: '서류 발표',
+    type: 'single',
+    start: 'documentAnnouncement',
+  },
+  {
+    label: '면접 평가',
+    type: 'range',
+    start: 'interviewStart',
+    end: 'interviewEnd',
+  },
+  {
+    label: '최종 발표',
+    type: 'single',
+    start: 'finalAnnouncement',
+  },
+  {
+    label: 'OT 날짜',
+    type: 'single',
+    start: 'ot',
+  },
 ] as const;
 
 export const PART_TABS: {label: string; value: PartEtcType}[] = [
