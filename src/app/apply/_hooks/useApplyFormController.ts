@@ -1,6 +1,9 @@
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import {useForm, UseFormReturn} from 'react-hook-form';
 import {BASIC_INFO_FIELDS} from '@/constants/form/formConfig';
+import {useRouter, useSearchParams} from 'next/navigation';
+import {useRecruitmentStore} from '@/store/useRecruitmentStore';
+import {useSubmissionStore} from '@/store/useSubmissionStore';
 
 interface UseApplyFormControllerReturn {
   step: number;
@@ -9,27 +12,44 @@ interface UseApplyFormControllerReturn {
   handlePrev: () => void;
   handleSave: () => void;
   handleFinalSubmit: (e?: React.BaseSyntheticEvent) => Promise<void>;
+  isConfirmModalOpen: boolean;
+  openConfirmModal: () => void;
+  closeConfirmModal: () => void;
+  handleConfirmSubmit: () => void;
 }
 
 export const useApplyFormController = (): UseApplyFormControllerReturn => {
-  const [step, setStep] = useState(1);
-  const methods = useForm({mode: 'onChange'});
+  const searchParams = useSearchParams();
+  const router = useRouter();
 
+  // URL의 step 읽기 (기본값: 1)
+  const urlStep = parseInt(searchParams.get('step') || '1');
+  const [step, setStep] = useState(urlStep);
+
+  // URL과 로컬 step 동기화
+  useEffect(() => {
+    setStep(urlStep);
+  }, [urlStep]);
+
+  const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
+  const {isRecruiting} = useRecruitmentStore();
+  const setHasSubmitted = useSubmissionStore((state) => state.setHasSubmitted);
+
+  const methods = useForm({mode: 'onChange'});
   const {trigger, handleSubmit, getValues} = methods;
 
-  // 저장하기: validation 체크 X, 그냥 현재 값만 저장
+  const openConfirmModal = () => setIsConfirmModalOpen(true);
+  const closeConfirmModal = () => setIsConfirmModalOpen(false);
+
   const handleSave = () => {
     const data = getValues();
     console.log('저장된 데이터:', data);
     // TODO: API 호출 - 임시저장
   };
 
-  // 다음 버튼: 저장 먼저 → validation 체크 → 통과하면 이동
   const handleNext = async () => {
-    // 1. 먼저 저장 (무조건 실행)
     handleSave();
 
-    // 2. validation 체크
     let fieldsToValidate: string[] = [];
 
     if (step === 1) {
@@ -46,20 +66,59 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
     }
 
     const isValid = await trigger(fieldsToValidate);
-
-    // 3. validation 통과하면 이동
     if (isValid) {
-      setStep((prev: number) => prev + 1);
+      const params = new URLSearchParams(searchParams.toString());
+      params.set('step', String(step + 1));
+
+      if (step === 1) {
+        // step 1 → 2: part 포함
+        params.set('part', getValues('part'));
+      }
+
+      router.push(`/apply?${params.toString()}`);
     }
   };
 
-  // 최종 제출: validation 체크 O
-  const handleFinalSubmit = handleSubmit((data) => {
-    console.log('최종 제출 데이터 (validation 통과):', data);
-    // TODO: API 호출 - 최종 제출
-  });
+  const handlePrev = () => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.set('step', String(step - 1));
 
-  const handlePrev = () => setStep((prev: number) => prev - 1);
+    if (step === 2) {
+      params.delete('part');
+    }
+
+    router.push(`/apply?${params.toString()}`);
+  };
+
+  const handleConfirmSubmit = async () => {
+    closeConfirmModal();
+
+    try {
+      // TODO: 실제 API 호출로 교체
+      const isSuccess = await new Promise<boolean>((resolve) => {
+        setTimeout(() => resolve(Math.random() > 0.5), 1000);
+      });
+
+      if (isSuccess) {
+        const data = getValues();
+        console.log('최종 제출 데이터:', data);
+        setHasSubmitted(true);
+        router.push('/?submitted=true');
+      } else {
+        throw new Error('Submission failed');
+      }
+    } catch (error) {
+      router.push('/?submitted=false');
+    }
+  };
+
+  const handleFinalSubmit = handleSubmit(() => {
+    if (isRecruiting) {
+      openConfirmModal();
+    } else {
+      router.push('/?submitted=false');
+    }
+  });
 
   return {
     step,
@@ -68,5 +127,9 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
     handlePrev,
     handleSave,
     handleFinalSubmit,
+    isConfirmModalOpen,
+    openConfirmModal,
+    closeConfirmModal,
+    handleConfirmSubmit,
   };
 };

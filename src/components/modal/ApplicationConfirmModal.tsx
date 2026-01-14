@@ -18,10 +18,10 @@ export const ApplicationConfirmModal = ({
       onClose={onClose}
       title='지원서를 제출하시겠습니까?'
       content={
-        <div>
+        <>
           <p>제출 후에는 수정이 불가능합니다.</p>
           <p>입력하신 내용이 모두 정확한지 다시 한번 확인해주세요.</p>
-        </div>
+        </>
       }
       actionsAlign='stretch'
       actions={
