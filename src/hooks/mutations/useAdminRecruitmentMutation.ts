@@ -10,10 +10,11 @@ import {
 } from '@/schemas/admin/recruitment-schema';
 import {ErrorResponse} from '@/services/schemas/common.schema';
 import {useRecruitmentStore} from '@/store/useRecruitmentStore';
+import {RECRUITMENT_STATUS_KEY} from '@/hooks/queries/useRecruitmentStatusQuery';
 
 export const useAdminRecruitmentMutation = () => {
   const setIsRecruiting = useRecruitmentStore((state) => state.setIsRecruiting);
-  //   const queryClient = useQueryClient();
+  const queryClient = useQueryClient();
 
   /**
    * 성공 시 공통 처리 함수
@@ -22,6 +23,9 @@ export const useAdminRecruitmentMutation = () => {
   const handleSuccess = (nextStatus: boolean) => {
     // ex) queryClient.invalidateQueries({ queryKey: ['adminApplications'] });
     setIsRecruiting(nextStatus);
+    setTimeout(() => {
+      queryClient.invalidateQueries({queryKey: [RECRUITMENT_STATUS_KEY]});
+    }, 500);
   };
 
   // 활성화 Mutation
