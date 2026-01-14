@@ -1,18 +1,6 @@
 import z from 'zod';
 
 /**
- * 파트 필터 (전체 포함)
- */
-export const PartSchema = z.enum([
-  'all',
-  'plan',
-  'design',
-  'frontend',
-  'backend',
-]);
-export type PartType = z.infer<typeof PartSchema>;
-
-/**
  * 파트 (etc 포함)
  */
 export const PartEtcSchema = z.enum([

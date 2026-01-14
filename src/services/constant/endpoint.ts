@@ -15,4 +15,7 @@ export const ENDPOINT = {
     LOGOUT: '/api/auth/logout',
     ME: '/api/auth/me',
   },
+  ADMIN: {
+    APPLICATIONS: '/api/admin/applications',
+  },
 };

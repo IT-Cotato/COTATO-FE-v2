@@ -23,3 +23,16 @@ export type SuccessResponse<T extends z.ZodTypeAny> = {
   message: string;
   data: z.infer<T>;
 };
+
+/**
+ * 공통 에러 응답 스키마
+ */
+export const ErrorResponseSchema = z.object({
+  code: z.string(),
+  message: z.string(),
+});
+
+/**
+ * 에러 응답 타입
+ */
+export type ErrorResponse = z.infer<typeof ErrorResponseSchema>;

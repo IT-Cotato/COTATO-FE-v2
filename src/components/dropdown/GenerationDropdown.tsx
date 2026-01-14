@@ -3,17 +3,20 @@
 import {useRef, useState} from 'react';
 import ChevronDown from '@/assets/chevrons/chevron-down.svg';
 import {useClickOutside} from '@/hooks/useClickOutside';
+import clsx from 'clsx';
 
 interface GenerationDropdownProps {
   generation: string;
   generations: string[];
   onSelect: (generation: string) => void;
+  disabled?: boolean;
 }
 
 export const GenerationDropdown = ({
   generation,
   generations,
   onSelect,
+  disabled,
 }: GenerationDropdownProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
@@ -35,7 +38,13 @@ export const GenerationDropdown = ({
         <button
           type='button'
           onClick={handleToggle}
-          className='shadow-default flex items-center gap-1.5 rounded-[30px] bg-white px-3.75 py-2 text-body-m text-neutral-800'
+          disabled={disabled}
+          className={clsx(
+            'shadow-default flex items-center gap-1.5 rounded-[30px] px-3.75 py-2 text-body-m',
+            disabled
+              ? 'cursor-not-allowed bg-neutral-100 text-neutral-400'
+              : 'bg-white text-neutral-800'
+          )}
           aria-expanded={isOpen}
           aria-haspopup='listbox'>
           <span>{generation}기</span>

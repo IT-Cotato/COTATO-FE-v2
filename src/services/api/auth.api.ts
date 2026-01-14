@@ -7,9 +7,9 @@ import {
   oAuthLoginRequestSchema,
   OAuthLoginResponse,
   oAuthLoginResponseSchema,
-} from '@/services/schemas/auth.schema';
+} from '@/schemas/auth/auth-schema';
 import {AxiosResponse} from 'axios';
-import {createSuccessResponseSchema} from '@/services/schemas/common.schema';
+import {createSuccessResponseSchema} from '@/schemas/common/common-schema';
 
 /**
  * OAuth 로그인

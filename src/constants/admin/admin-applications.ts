@@ -1,9 +1,10 @@
+import {ReviewerType} from '@/schemas/admin/admin-application-type';
 import {
-  ApplicationResultType,
-  PartType,
-  ReviewerType,
-} from '@/schemas/admin/admin-application-type';
+  ApplicationPartViewType,
+  ApplicationSummaryType,
+} from '@/schemas/admin/admin-applications-schema';
 
+/** 지원서 테이블 컬럼 상수 */
 export const APPLICATION_COLUMNS = [
   {key: 'name', label: '이름'},
   {key: 'part', label: '직군'},
@@ -13,13 +14,25 @@ export const APPLICATION_COLUMNS = [
   {key: 'result', label: '합격 여부'},
 ] as const;
 
-export const PART_TABS: {label: string; value: PartType}[] = [
-  {label: '전체 회원', value: 'all'},
-  {label: '기획', value: 'plan'},
-  {label: '디자인', value: 'design'},
-  {label: '프론트엔드', value: 'frontend'},
-  {label: '백엔드', value: 'backend'},
+/** 지원서 파트 탭 상수 */
+export const PART_TABS: {label: string; value: ApplicationPartViewType}[] = [
+  {label: '전체 회원', value: 'ALL'},
+  {label: '기획', value: 'PM'},
+  {label: '디자인', value: 'DE'},
+  {label: '프론트엔드', value: 'FE'},
+  {label: '백엔드', value: 'BE'},
 ];
+
+export const PART_COUNT_MAP: Record<
+  ApplicationPartViewType,
+  keyof ApplicationSummaryType
+> = {
+  ALL: 'totalCount',
+  PM: 'pmCount',
+  DE: 'designCount',
+  FE: 'frontendCount',
+  BE: 'backendCount',
+};
 
 export const REVIEWER_TABS: {label: string; value: ReviewerType}[] = [
   {label: '운영진1', value: 'staff1'},
@@ -28,13 +41,59 @@ export const REVIEWER_TABS: {label: string; value: ReviewerType}[] = [
   {label: '운영진4', value: 'staff4'},
 ];
 
-export const RESULT_OPTIONS: ApplicationResultType[] = [
-  '합격',
-  '불합격',
-  '예비합격',
-  '평가전',
-];
+/** 쿼리 영문 라벨 -> 한글 UI 표시용 */
+export const RESULT_LABEL_MAP = {
+  PASS: '합격',
+  FAIL: '불합격',
+  WAITLISTED: '예비합격',
+  PENDING: '평가전',
+} as const;
 
+/** 한글 UI -> 쿼리 영문 라벨 */
+export const RESULT_VALUE_MAP = {
+  합격: 'PASS',
+  불합격: 'FAIL',
+  예비합격: 'WAITLISTED',
+  평가전: 'PENDING',
+} as const;
+
+/** '합격'|'불합격'|'예비합격'|'평가전' */
+export type ApplicationResultLabel =
+  (typeof RESULT_LABEL_MAP)[keyof typeof RESULT_LABEL_MAP];
+
+/* ['합격', '불합격', '예비합격', '평가전']*/
+export const RESULT_OPTIONS = Object.values(RESULT_LABEL_MAP);
+
+/** 합격 드롭다운용 UI config  */
+export const APPLICATION_RESULT_CONFIG = {
+  PASS: {
+    label: '합격',
+    bg: 'bg-[#68CA3A]',
+  },
+  FAIL: {
+    label: '불합격',
+    bg: 'bg-alert',
+  },
+  WAITLISTED: {
+    label: '예비합격',
+    bg: 'bg-hover',
+  },
+  PENDING: {
+    label: '평가전',
+    bg: 'bg-text-disabled',
+  },
+} as const;
+
+export type ApplicationResultStatus = keyof typeof APPLICATION_RESULT_CONFIG;
+
+export const APPLICATION_RESULT_OPTIONS = Object.keys(
+  APPLICATION_RESULT_CONFIG
+) as ApplicationResultStatus[];
+
+/**
+ * 지원서 상세 페이지 관련 상수
+ * 스탭 별 질문 레이블
+ */
 export const BASIC_INFO_LABELS = {
   name: '이름',
   gender: '성별',
