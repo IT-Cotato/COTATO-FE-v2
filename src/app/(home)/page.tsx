@@ -1,10 +1,10 @@
 import HomeClient from '@/app/(home)/_components/HomeClient';
-import {Suspense} from 'react';
+import {SuspenseWrapper} from '@/components/wrappers/SuspenseWrapper';
 
 export default function HomePage() {
   return (
-    <Suspense fallback={null}>
+    <SuspenseWrapper>
       <HomeClient />
-    </Suspense>
+    </SuspenseWrapper>
   );
 }
