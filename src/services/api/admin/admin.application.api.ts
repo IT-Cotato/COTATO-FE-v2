@@ -10,10 +10,11 @@ import axios from 'axios';
 import qs from 'qs';
 
 /**
- *
- * @param params 지원서 목록 조회 get 함수
- * @returns
+ * 어드민 지원서 목록을 조회합니다.
+ * `@param` params - 필터링, 정렬, 페이지네이션 옵션 (generationId, keyword, part, sort, passViewStatuses, page)
+ * `@returns` 지원서 목록 응답 데이터
  */
+
 export const getAdminApplications = async (
   params: GetAdminApplicationsParamsType
 ): Promise<GetAdminApplicationsResponse> => {
