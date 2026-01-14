@@ -1,4 +1,5 @@
 import {AdditionalFormItem, BasicInfoFormItem} from '@/schemas/apply-type';
+import {PART_TABS} from '@/constants/admin/admin-application-form';
 
 export const SEMESTER_OPTIONS = [
   {value: '4', label: '4학기'},
@@ -95,6 +96,14 @@ export const BASIC_INFO_FIELDS: BasicInfoFormItem[] = [
         rules: {required: '활동 여부를 선택해주세요'},
       },
     ],
+  },
+  {
+    name: 'part',
+    label: '지원하실 파트를 선택해주세요',
+    type: 'dropdown',
+    placeholder: '파트를 선택해주세요',
+    options: PART_TABS,
+    rules: {required: '파트를 선택해주세요'},
   },
 ];
 
