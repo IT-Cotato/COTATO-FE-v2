@@ -17,5 +17,6 @@ export const ENDPOINT = {
   },
   ADMIN: {
     APPLICATIONS: '/api/admin/applications',
+    RECRUITMENT_INFORMATIONS: '/api/admin/recruitment-informations',
   },
 };
