@@ -7,6 +7,7 @@ import {useRecruitmentStore} from '@/store/useRecruitmentStore';
 import {GenerationField} from '@/app/admin/(with-sidebar)/recruitment/_components/active-recruitment/GenerationField';
 import {RecruitmentConfirmModal} from '@/components/modal/RecruitConfirmModal';
 import {formatDate} from '@/utils/formatDate';
+import {useAdminRecruitmentMutation} from '@/hooks/mutations/useAdminRecruitmentMutation';
 
 export const ActiveRecruitmentForm = () => {
   const {isRecruiting, setIsRecruiting, generation, setGeneration} =
@@ -14,24 +15,38 @@ export const ActiveRecruitmentForm = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [startDate, setStartDate] = useState<Date | null>(new Date());
   const [endDate, setEndDate] = useState<Date | null>(new Date());
+  const {activate, deactivate, isLoading} = useAdminRecruitmentMutation();
 
-  {
-    /* 추후 api에 맞춰 수정 예정입니다. 임의로 로그를 찍어둠 */
-  }
   const handleConfirm = () => {
     if (!generation) {
       alert('기수를 입력해주세요.');
       return;
     }
 
-    setIsRecruiting(!isRecruiting);
-    setIsModalOpen(false);
-
+    if (!startDate || !endDate) {
+      alert('모집 기간을 선택해주세요.');
+      return;
+    }
     const formattedStartDate = formatDate(startDate);
     const formattedEndDate = formatDate(endDate);
 
-    console.log(`${generation}기 모집 ${isRecruiting ? '종료' : '시작'}`);
-    console.log(formattedStartDate, formattedEndDate);
+    if (!formattedStartDate || !formattedEndDate) {
+      alert('날짜 형식이 올바르지 않습니다.');
+      return;
+    }
+
+    if (isRecruiting) {
+      deactivate({generationId: Number(generation)});
+    } else {
+      activate({
+        generationId: Number(generation),
+        isAdditionalRecruitmentActive: false,
+        startDate: formattedStartDate,
+        endDate: formattedEndDate,
+      });
+    }
+
+    setIsModalOpen(false);
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -57,6 +72,7 @@ export const ActiveRecruitmentForm = () => {
         </fieldset>
         <Button
           type='submit'
+          disabled={isLoading}
           label={isRecruiting ? '모집 종료하기' : '모집 시작하기'}
           width={156}
           height={36}

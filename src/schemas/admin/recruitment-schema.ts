@@ -1,5 +1,4 @@
 import z from 'zod';
-import {createSuccessResponseSchema} from '@/services/schemas/common.schema';
 
 /**
  * 모집 활성화 요청 스키마
@@ -21,11 +20,11 @@ export const PostRecruitmentDeactivationRequestSchema = z.object({
 /**
  * 응답 데이터 스키마
  */
-export const RecruitmentResponseDataSchema = z.object({});
-
-export const RecruitmentResponseSchema = createSuccessResponseSchema(
-  RecruitmentResponseDataSchema
-);
+export const RecruitmentResponseSchema = z.object({
+  code: z.string(),
+  message: z.string(),
+  data: z.any().optional(),
+});
 
 /**
  * 타입 추출
