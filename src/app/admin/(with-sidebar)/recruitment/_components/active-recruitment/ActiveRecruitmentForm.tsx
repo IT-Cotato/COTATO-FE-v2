@@ -29,10 +29,17 @@ export const ActiveRecruitmentForm = () => {
       return;
     }
 
+    if (isRecruiting) {
+      deactivate({generationId: Number(generation)});
+      setIsModalOpen(false);
+      return;
+    }
+
     if (!startDate || !endDate) {
       alert('모집 기간을 선택해주세요.');
       return;
     }
+
     const formattedStartDate = formatDate(startDate);
     const formattedEndDate = formatDate(endDate);
 
@@ -41,16 +48,12 @@ export const ActiveRecruitmentForm = () => {
       return;
     }
 
-    if (isRecruiting) {
-      deactivate({generationId: Number(generation)});
-    } else {
-      activate({
-        generationId: Number(generation),
-        isAdditionalRecruitmentActive: isAdditional,
-        startDate: formattedStartDate,
-        endDate: formattedEndDate,
-      });
-    }
+    activate({
+      generationId: Number(generation),
+      isAdditionalRecruitmentActive: isAdditional,
+      startDate: formattedStartDate,
+      endDate: formattedEndDate,
+    });
 
     setIsModalOpen(false);
   };
