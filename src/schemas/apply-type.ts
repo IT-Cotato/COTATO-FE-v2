@@ -11,6 +11,7 @@ export interface BasicInfoFormData {
   department: string;
   completedSemesters: string;
   isPrevActivity: string;
+  part: string;
 }
 
 export interface BasicInfoFieldConfig {

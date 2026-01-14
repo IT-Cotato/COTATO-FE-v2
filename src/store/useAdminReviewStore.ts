@@ -12,10 +12,10 @@ interface AdminReviewState {
 
 export const useAdminReviewStore = create<AdminReviewState>((set, get) => ({
   reviews: {
-    admin1: '',
-    admin2: '',
-    admin3: '',
-    admin4: '',
+    staff1: '',
+    staff2: '',
+    staff3: '',
+    staff4: '',
   },
   saveState: 'saved',
 

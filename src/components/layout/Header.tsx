@@ -14,6 +14,7 @@ import {useShallow} from 'zustand/shallow';
 import {LoginModal} from '@/components/modal/LoginModal';
 import {useState} from 'react';
 import {ROUTES} from '@/constants/routes';
+import {useSubmissionStore} from '@/store/useSubmissionStore';
 
 export const Header = () => {
   const router = useRouter();
@@ -35,6 +36,7 @@ export const Header = () => {
   };
 
   const menuItems = [...HEADER_ITEMS];
+  const hasSubmitted = useSubmissionStore((state) => state.hasSubmitted);
 
   if (user?.role === 'STAFF') {
     const applyIndex = menuItems.findIndex((item) => item.label === '지원하기');
@@ -63,11 +65,25 @@ export const Header = () => {
         <div className='flex items-center gap-5'>
           <nav className='flex gap-5'>
             {menuItems.map((item) => {
+              const shouldDisable = item.canBeDisabled && hasSubmitted;
               let isActive =
                 pathname === item.href || pathname.startsWith(`${item.href}/`);
 
               if (item.label === 'ADMIN' && pathname.startsWith(ROUTES.ADMIN)) {
                 isActive = true;
+              }
+
+              const linkClassName = clsx(
+                itemClass(isActive),
+                shouldDisable && 'cursor-not-allowed opacity-50'
+              );
+
+              if (shouldDisable) {
+                return (
+                  <span key={item.href} className={linkClassName}>
+                    {item.label}
+                  </span>
+                );
               }
 
               return (

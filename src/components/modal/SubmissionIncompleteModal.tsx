@@ -1,27 +1,27 @@
 import {FullButton} from '@/components/button/FullButton';
 import {Modal} from '@/components/modal/Modal';
 
-interface SubmissionCompleteModalProps {
+interface SubmissionIncompleteModalProps {
   isOpen: boolean;
   onClose: () => void;
   onConfirm: () => void;
 }
 
-export const SubmissionCompleteModal = ({
+export const SubmissionIncompleteModal = ({
   isOpen,
   onClose,
   onConfirm,
-}: SubmissionCompleteModalProps) => {
+}: SubmissionIncompleteModalProps) => {
   return (
     <Modal
       isOpen={isOpen}
       onClose={onClose}
-      title='제출이 완료되었습니다!'
+      title='지원 기간이 종료되었습니다.'
       content={
         <p>
-          합격 발표 여부는
-          <span className='text-primary'>2월 28일 (토) 오후 12시</span>에<br />
-          작성해주신 이메일로 개별적으로 전달드립니다. <br />
+          현재는 지원서 제출이 불가능합니다.
+          <br />
+          다음 모집을 기다려 주세요.
         </p>
       }
       actionsAlign='stretch'
@@ -34,7 +34,7 @@ export const SubmissionCompleteModal = ({
           labelTypo='body_l'
         />
       }
-      contentWrapperClassName='gap-[37px]'
+      contentWrapperClassName='gap-[57px]'
     />
   );
 };
