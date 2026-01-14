@@ -4,8 +4,9 @@ import {CustomDateTimePicker} from '@/app/admin/(with-sidebar)/application-form/
 import CalendarIcon from '@/assets/icons/calendar.svg';
 import 'react-datepicker/dist/react-datepicker.css';
 import '@/styles/datepicker-custom.css';
-import {useRef, useState} from 'react';
+import {useMemo, useRef, useState} from 'react';
 import {useClickOutside} from '@/hooks/useClickOutside';
+import {formatRecruitmentDate} from '@/utils/formatDate';
 
 interface AdminDatePickerProps {
   value?: string;
@@ -19,9 +20,7 @@ export const AdminApplicationFormCalendar = ({
   onChange,
 }: AdminDatePickerProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [selectedDate, setSelectedDate] = useState<Date>(
-    value ? new Date(value) : new Date()
-  );
+  const selectedDate = useMemo(() => (value ? new Date(value) : null), [value]);
 
   const calendarRef = useRef<HTMLDivElement>(null);
 
@@ -34,7 +33,7 @@ export const AdminApplicationFormCalendar = ({
         className='flex w-fit items-center justify-between gap-3 rounded-[10px] bg-neutral-100 px-4 py-3 2xl:min-w-50'
         onClick={() => setIsOpen((prev) => !prev)}>
         <span className='text-body-m font-normal text-neutral-600'>
-          {value ?? placeholder}
+          {formatRecruitmentDate(value) ?? placeholder}
         </span>
         <CalendarIcon />
       </button>
@@ -45,7 +44,6 @@ export const AdminApplicationFormCalendar = ({
             selected={selectedDate}
             onChange={(date: Date | null) => {
               if (!date) return;
-              setSelectedDate(date);
               onChange(toLocalISOString(date));
             }}
           />

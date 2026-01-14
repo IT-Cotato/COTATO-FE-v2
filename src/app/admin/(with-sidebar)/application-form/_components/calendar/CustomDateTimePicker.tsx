@@ -2,59 +2,69 @@ import {CustomHeader} from '@/app/admin/(with-sidebar)/application-form/_compone
 import {TimePanel} from '@/app/admin/(with-sidebar)/application-form/_components/calendar/TimePanel';
 import '@/app/admin/(with-sidebar)/application-form/_components/calendar/style/application-form-datepicker.css';
 import {CustomInput} from '@/app/admin/(with-sidebar)/recruitment/_components/calendar/CustomInput';
-import {useState} from 'react';
 import DatePicker, {CalendarContainer} from 'react-datepicker';
 
 interface CustomDateTimePickerProps {
   selected: Date | null;
   onChange: (date: Date) => void;
 }
-
 export const CustomDateTimePicker = ({
   selected,
   onChange,
 }: CustomDateTimePickerProps) => {
-  const [hour, setHour] = useState<number>(0);
-  const [minute, setMinute] = useState<number>(0);
-  const [period, setPeriod] = useState<'오전' | '오후'>('오전');
+  if (!selected) return null;
 
-  const handlePrevMonth = () => {
-    if (!selected) return;
-    const newDate = new Date(
-      selected.getFullYear(),
-      selected.getMonth() - 1,
-      selected.getDate()
-    );
-    onChange(newDate);
+  const getHour12 = () => {
+    const h = selected.getHours();
+    if (h === 0) return 12;
+    if (h > 12) return h - 12;
+    return h;
   };
 
-  const handleNextMonth = () => {
-    if (!selected) return;
-    const newDate = new Date(
-      selected.getFullYear(),
-      selected.getMonth() + 1,
-      selected.getDate()
-    );
-    onChange(newDate);
-  };
+  const getPeriod = () => (selected.getHours() < 12 ? '오전' : '오후');
 
-  const to24Hour = (hour: number, period: '오전' | '오후') => {
-    if (period === '오전') {
-      return hour === 12 ? 0 : hour;
+  const updateTime = (
+    baseDate: Date,
+    {
+      hour,
+      minute,
+      period,
+    }: {
+      hour?: number;
+      minute?: number;
+      period?: '오전' | '오후';
     }
-    return hour === 12 ? 12 : hour + 12;
-  };
+  ) => {
+    const next = new Date(baseDate);
 
-  const applyTimeToDate = (date: Date) => {
-    const h24 = to24Hour(hour, period);
+    const getHour12From = (d: Date) => {
+      const h = d.getHours();
+      if (h === 0) return 12;
+      if (h > 12) return h - 12;
+      return h;
+    };
 
-    const next = new Date(date);
+    const getPeriodFrom = (d: Date) => (d.getHours() < 12 ? '오전' : '오후');
+
+    const currentHour12 = hour ?? getHour12From(baseDate);
+    const currentMinute = minute ?? baseDate.getMinutes();
+    const currentPeriod = period ?? getPeriodFrom(baseDate);
+
+    const h24 =
+      currentPeriod === '오전'
+        ? currentHour12 === 12
+          ? 0
+          : currentHour12
+        : currentHour12 === 12
+          ? 12
+          : currentHour12 + 12;
+
     next.setHours(h24);
-    next.setMinutes(minute);
+    next.setMinutes(currentMinute);
     next.setSeconds(0);
     next.setMilliseconds(0);
 
-    return next;
+    onChange(next);
   };
 
   return (
@@ -62,44 +72,53 @@ export const CustomDateTimePicker = ({
       selected={selected}
       onChange={(date: Date | null) => {
         if (!date) return;
-        onChange(applyTimeToDate(date));
+        updateTime(date, {});
       }}
-      dateFormat='yyyy-MM-dd'
-      formatWeekDay={(nameOfDay) => nameOfDay.toLowerCase().slice(0, 3)}
+      inline
       customInput={<CustomInput />}
       calendarContainer={(props) => (
         <CalendarContainer>
           <div className='custom-datetime-picker shadow-card rounded-2xl bg-white p-6'>
             <CustomHeader
-              date={selected ?? new Date()}
-              onPrevMonth={handlePrevMonth}
-              onNextMonth={handleNextMonth}
+              date={selected}
+              onPrevMonth={() =>
+                onChange(
+                  new Date(
+                    selected.getFullYear(),
+                    selected.getMonth() - 1,
+                    selected.getDate(),
+                    selected.getHours(),
+                    selected.getMinutes()
+                  )
+                )
+              }
+              onNextMonth={() =>
+                onChange(
+                  new Date(
+                    selected.getFullYear(),
+                    selected.getMonth() + 1,
+                    selected.getDate(),
+                    selected.getHours(),
+                    selected.getMinutes()
+                  )
+                )
+              }
             />
 
             <div className='flex'>
               <div>{props.children}</div>
               <TimePanel
-                hour={hour}
-                minute={minute}
-                period={period}
-                onHourChange={(h) => {
-                  setHour(h);
-                  if (selected) onChange(applyTimeToDate(selected));
-                }}
-                onMinuteChange={(m) => {
-                  setMinute(m);
-                  if (selected) onChange(applyTimeToDate(selected));
-                }}
-                onPeriodChange={(p) => {
-                  setPeriod(p);
-                  if (selected) onChange(applyTimeToDate(selected));
-                }}
+                hour={getHour12()}
+                minute={selected.getMinutes()}
+                period={getPeriod()}
+                onHourChange={(h) => updateTime(selected, {hour: h})}
+                onMinuteChange={(m) => updateTime(selected, {minute: m})}
+                onPeriodChange={(p) => updateTime(selected, {period: p})}
               />
             </div>
           </div>
         </CalendarContainer>
       )}
-      inline
     />
   );
 };
