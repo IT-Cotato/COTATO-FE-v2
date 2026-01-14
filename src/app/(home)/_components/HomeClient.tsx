@@ -8,7 +8,7 @@ import {RecruitmentInactive} from '@/app/(home)/_components/RecruitmentInactive'
 import {SubmissionCompleteModal} from '@/components/modal/SubmissionCompleteModal';
 import {SubmissionIncompleteModal} from '@/components/modal/SubmissionIncompleteModal';
 
-export default function HomeClient() {
+export const HomeClient = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
 
@@ -48,4 +48,4 @@ export default function HomeClient() {
       />
     </>
   );
-}
+};
