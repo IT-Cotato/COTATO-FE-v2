@@ -3,7 +3,7 @@
 import {RecruitmentInfoEditRow} from '@/app/admin/(with-sidebar)/application-form/_components/recruitment/RecruitmentInfoEditRow';
 import {RecruitmentInfoViewRow} from '@/app/admin/(with-sidebar)/application-form/_components/recruitment/RecruitmentInfoViewRow';
 import {scheduleSections} from '@/constants/admin/admin-application-form';
-import {RecruitmentInformation} from '@/schemas/admin/admin-recruitment-infomation-schema';
+import {RecruitmentInformation} from '@/schemas/admin/admin-recruitment-information-schema';
 
 import {formatRecruitmentDate} from '@/utils/formatDate';
 import {clsx} from 'clsx';

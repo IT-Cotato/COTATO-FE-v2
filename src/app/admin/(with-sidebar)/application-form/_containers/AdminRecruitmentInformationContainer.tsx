@@ -7,7 +7,7 @@ import {useRouter, useSearchParams} from 'next/navigation';
 import {useEffect, useState} from 'react';
 import {useRecruitmentInformationsQuery} from '@/hooks/queries/useAdminRecruitmentInformationsQuery';
 import {Spinner} from '@/components/ui/Spinner';
-import {RecruitmentInformation} from '@/schemas/admin/admin-recruitment-infomation-schema';
+import {RecruitmentInformation} from '@/schemas/admin/admin-recruitment-information-schema';
 import {usePostRecruitmentInformationsMutation} from '@/hooks/mutations/useAdminRecruitmentInformationsMutation';
 
 export const AdminRecruitmentInformationContainer = () => {

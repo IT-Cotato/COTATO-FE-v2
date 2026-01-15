@@ -2,7 +2,7 @@ import {
   GetAdminRecruitmentInformationResponseSchema,
   PostAdminRecruitmentInformationRequest,
   RecruitmentInformation,
-} from '@/schemas/admin/admin-recruitment-infomation-schema';
+} from '@/schemas/admin/admin-recruitment-information-schema';
 import {privateAxios} from '@/services/config/axios';
 import {ENDPOINT} from '@/services/constant/endpoint';
 import {ErrorResponseSchema} from '@/schemas/common/common-schema';
