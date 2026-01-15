@@ -1,4 +1,4 @@
-import {AdditionalFormItem, BasicInfoFormItem} from '@/schemas/apply-type';
+import {EtcFormItem, BasicInfoFormItem} from '@/schemas/apply/apply-type';
 import {PART_TABS} from '@/constants/admin/admin-application-form';
 
 export const SEMESTER_OPTIONS = [
@@ -107,7 +107,7 @@ export const BASIC_INFO_FIELDS: BasicInfoFormItem[] = [
   },
 ];
 
-export const ADDITIONAL_FIELDS: AdditionalFormItem[] = [
+export const ETC_FIELDS: EtcFormItem[] = [
   {
     name: 'discovery',
     label: '동아리를 알게 된 경로를 선택해주세요.',
