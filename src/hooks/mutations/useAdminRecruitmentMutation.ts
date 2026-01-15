@@ -4,7 +4,7 @@ import {
   PostRecruitmentActivationRequest,
   PostRecruitmentDeactivationRequest,
   RecruitmentResponse,
-} from '@/schemas/admin/recruitment-schema';
+} from '@/schemas/admin/admin-recruitment-schema';
 
 import {useRecruitmentStore} from '@/store/useRecruitmentStore';
 import {RECRUITMENT_STATUS_KEY} from '@/hooks/queries/useRecruitmentStatusQuery';
