@@ -5,7 +5,7 @@ interface GenerationFieldProps {
 
 export const GenerationField = ({value, onChange}: GenerationFieldProps) => {
   return (
-    <div className='flex w-24.5 flex-col gap-4'>
+    <div className='flex w-24.5 flex-col gap-2'>
       <label>기수 정보</label>
       <div className='flex items-center gap-2'>
         <input

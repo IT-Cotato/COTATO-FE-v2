@@ -37,7 +37,7 @@ export const ManageMail = ({
     setIsSendModalOpen(false);
   };
 
-  const finalCanSend = alwaysAble ? canSendMail && !isSent : canSendMail;
+  const finalCanSend = alwaysAble || canSendMail;
 
   return (
     <div className='flex w-full flex-col items-start gap-5'>
@@ -55,6 +55,7 @@ export const ManageMail = ({
       />
       <MailSendFooter
         canSendMail={finalCanSend}
+        isSent={isSent}
         onSend={() => setIsSendModalOpen(true)}
         waitingCount={MAIL_NUM_MAP[mailType]}
       />

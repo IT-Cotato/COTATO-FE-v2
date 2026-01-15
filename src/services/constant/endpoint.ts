@@ -15,7 +15,12 @@ export const ENDPOINT = {
     LOGOUT: '/api/auth/logout',
     ME: '/api/auth/me',
   },
+  RECRUITMENT: {
+    STATUS: '/api/recruitment/status',
+  },
   ADMIN: {
     APPLICATIONS: '/api/admin/applications',
+    RECRUITMENT_ACTIVATION: '/api/admin/recruitment-activation',
+    RECRUITMENT_DEACTIVATION: '/api/admin/recruitment-deactivation',
   },
 };
