@@ -1,16 +1,18 @@
 import {useMutation, useQueryClient} from '@tanstack/react-query';
-import {
-  postRecruitmentActivation,
-  postRecruitmentDeactivation,
-} from '@/services/api/admin.recruitment.api';
+
 import {
   PostRecruitmentActivationRequest,
   PostRecruitmentDeactivationRequest,
   RecruitmentResponse,
 } from '@/schemas/admin/recruitment-schema';
-import {ErrorResponse} from '@/services/schemas/common.schema';
+
 import {useRecruitmentStore} from '@/store/useRecruitmentStore';
 import {RECRUITMENT_STATUS_KEY} from '@/hooks/queries/useRecruitmentStatusQuery';
+import {ErrorResponse} from '@/schemas/common/common-schema';
+import {
+  postRecruitmentActivation,
+  postRecruitmentDeactivation,
+} from '@/services/api/admin/admin.recruitment.api';
 
 export const useAdminRecruitmentMutation = () => {
   const setIsRecruiting = useRecruitmentStore((state) => state.setIsRecruiting);

@@ -1,5 +1,5 @@
 import z from 'zod';
-import {createSuccessResponseSchema} from '@/services/schemas/common.schema';
+import {createSuccessResponseSchema} from '@/schemas/common/common-schema';
 
 export const RecruitmentStatusDataSchema = z.object({
   isActive: z.boolean(),

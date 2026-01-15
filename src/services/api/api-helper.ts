@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {ErrorResponseSchema} from '@/services/schemas/common.schema';
+import {ErrorResponseSchema} from '@/schemas/common/common-schema';
 
 /**
  * 모든 API 서비스에서 공통으로 사용할 에러 핸들러
