@@ -20,13 +20,12 @@ export const Checkbox = ({checked, onChange, disabled}: CheckboxProps) => {
           'border-neutral-600 bg-neutral-600': !checked,
         }
       )}>
-      <div
+      <CheckIcon
         className={clsx(
           'h-[7.778px] w-[9.899px]',
           checked ? 'text-white' : 'text-text-muted'
-        )}>
-        <CheckIcon width='100%' height='100%' />
-      </div>
+        )}
+      />
     </div>
   );
 };
