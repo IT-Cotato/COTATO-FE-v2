@@ -1,7 +1,10 @@
 import {useState, useEffect} from 'react';
 import {useForm, UseFormReturn} from 'react-hook-form';
 import {zodResolver} from '@hookform/resolvers/zod';
-import {BasicInfoFormSchema, BasicInfoFormData} from '@/schemas/apply/apply-schema';
+import {
+  BasicInfoFormSchema,
+  BasicInfoFormData,
+} from '@/schemas/apply/apply-schema';
 import {BASIC_INFO_FIELDS} from '@/constants/form/formConfig';
 import {useRouter, useSearchParams} from 'next/navigation';
 import {useRecruitmentStore} from '@/store/useRecruitmentStore';
@@ -59,16 +62,16 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
         contact: basicInfo.phoneNumber,
         birthDate: basicInfo.birthDate,
         school: basicInfo.university,
-        isCollegeStudent: (
-          basicInfo.isEnrolled ? 'enrolled' : 'other'
-        ) as BasicInfoFormData['isCollegeStudent'],
+        isCollegeStudent: (basicInfo.isEnrolled
+          ? 'enrolled'
+          : 'other') as BasicInfoFormData['isCollegeStudent'],
         department: basicInfo.major,
         completedSemesters: String(
           basicInfo.completedSemesters
         ) as BasicInfoFormData['completedSemesters'],
-        isPrevActivity: (
-          basicInfo.isPrevActivity ? 'yes' : 'no'
-        ) as BasicInfoFormData['isPrevActivity'],
+        isPrevActivity: (basicInfo.isPrevActivity
+          ? 'yes'
+          : 'no') as BasicInfoFormData['isPrevActivity'],
         part: basicInfo.applicationPartType,
       };
       reset(transformedData);
