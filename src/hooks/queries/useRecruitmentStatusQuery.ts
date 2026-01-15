@@ -1,9 +1,9 @@
 import {useQuery} from '@tanstack/react-query';
 import {publicAxios} from '@/services/config/axios';
 import {ENDPOINT} from '@/services/constant/endpoint';
-import {GetRecruitmentStatusResponseSchema} from '@/schemas/recruitment-status-schema';
 import {useRecruitmentStore} from '@/store/useRecruitmentStore';
 import {useEffect} from 'react';
+import {GetRecruitmentStatusResponseSchema} from '@/schemas/status/recruitment-status-schema';
 
 export const RECRUITMENT_STATUS_KEY = 'recruitmentStatus';
 
