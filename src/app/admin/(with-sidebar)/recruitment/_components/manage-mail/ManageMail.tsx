@@ -1,15 +1,16 @@
 'use client';
 
 import {useState} from 'react';
+import {useRecruitmentStore} from '@/store/useRecruitmentStore';
 import {useManageMail} from '@/hooks/useManageMail';
 import {MailHeader} from './MailHeader';
 import {MailField} from './MailField';
 import {MailSendFooter} from './MailSendFooter';
 import {MailConfirmModal} from '@/components/modal/MailConfirmModal';
-import {MAIL_DATA_MAP, MAIL_NUM_MAP} from '@/constants/admin/admin-result';
+import {Spinner} from '@/components/ui/Spinner';
 
 interface ManageMailProps {
-  mailType?: keyof typeof MAIL_DATA_MAP;
+  mailType: string;
   alwaysAble?: boolean;
 }
 
@@ -17,27 +18,31 @@ export const ManageMail = ({
   mailType = '지원 알림 메일',
   alwaysAble = false,
 }: ManageMailProps) => {
+  const {generation} = useRecruitmentStore();
+
   const {
+    isLoading,
     isEditing,
     content,
     setContent,
+    isSent,
+    waitingCount,
     isChanged,
-    canSendMail,
     handleEditClick,
     handleCancelClick,
     handleSaveClick,
-  } = useManageMail(mailType, alwaysAble);
+    handleSendClick,
+  } = useManageMail(Number(generation), mailType);
 
   const [isSendModalOpen, setIsSendModalOpen] = useState(false);
-  const [isSent, setIsSent] = useState(false);
 
-  const handleConfirmSend = () => {
-    console.log(`${mailType} 전송 완료`);
-    setIsSent(true);
-    setIsSendModalOpen(false);
-  };
-
-  const finalCanSend = alwaysAble || canSendMail;
+  if (isLoading) {
+    return (
+      <div className='w-full items-center justify-center'>
+        <Spinner size='lg' />
+      </div>
+    );
+  }
 
   return (
     <div className='flex w-full flex-col items-start gap-5'>
@@ -54,16 +59,19 @@ export const ManageMail = ({
         setContent={setContent}
       />
       <MailSendFooter
-        canSendMail={finalCanSend}
+        canSendMail={alwaysAble || (!isSent && waitingCount > 0)}
         isSent={isSent}
         onSend={() => setIsSendModalOpen(true)}
-        waitingCount={MAIL_NUM_MAP[mailType]}
+        waitingCount={waitingCount}
       />
       <MailConfirmModal
         isOpen={isSendModalOpen}
         onClose={() => setIsSendModalOpen(false)}
-        onConfirm={handleConfirmSend}
-        title='메일을 전송하시겠습니까?'
+        onConfirm={() => {
+          handleSendClick();
+          setIsSendModalOpen(false);
+        }}
+        title={`${mailType}을 전송하시겠습니까?`}
       />
     </div>
   );

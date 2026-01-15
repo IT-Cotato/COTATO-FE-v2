@@ -22,5 +22,10 @@ export const ENDPOINT = {
     APPLICATIONS: '/api/admin/applications',
     RECRUITMENT_ACTIVATION: '/api/admin/recruitment-activation',
     RECRUITMENT_DEACTIVATION: '/api/admin/recruitment-deactivation',
+    RECRUITMENT_NOTIFICATION: '/api/admin/recruitment-notification-emails',
+    RECRUITMENT_NOTIFICATION_SEND:
+      '/api/admin/recruitment-notification-emails/send',
+    RECRUITMENT_RESULT: '/api/admin/recruitment-mails',
+    RECRUITMENT_RESULT_SEND: '/api/admin/recruitment-mails/send',
   },
 };

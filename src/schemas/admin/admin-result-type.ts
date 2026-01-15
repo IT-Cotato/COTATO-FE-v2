@@ -1,6 +1,4 @@
-import {MAIL_DATA_MAP, RESULT_PARTS} from '@/constants/admin/admin-result';
-
-export type MailType = keyof typeof MAIL_DATA_MAP;
+import {RESULT_PARTS} from '@/constants/admin/admin-result';
 
 export type ResultPartValue = (typeof RESULT_PARTS)[number]['value'];
 
