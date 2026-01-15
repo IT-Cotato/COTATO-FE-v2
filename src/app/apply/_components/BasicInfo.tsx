@@ -6,7 +6,8 @@ import {FormInput} from '@/components/form/FormInput';
 import {FormRadio} from '@/components/form/FormRadio';
 import {FullButton} from '@/components/button/FullButton';
 import {BASIC_INFO_FIELDS} from '@/constants/form/formConfig';
-import {BasicInfoFormData, BasicInfoFieldConfig} from '@/schemas/apply-type';
+import {BasicInfoFieldConfig} from '@/schemas/apply/apply-type';
+import {BasicInfoFormData} from '@/schemas/apply/apply-schema';
 
 interface BasicInfoProps {
   onSave: () => void;

@@ -7,8 +7,8 @@ import {FormDropdown} from '@/components/form/FormDropdown';
 import {FullButton} from '@/components/button/FullButton';
 import {FormRadio} from '@/components/form/FormRadio';
 import {FormInput} from '@/components/form/FormInput';
-import {ADDITIONAL_FIELDS} from '@/constants/form/formConfig';
-import {EtcFieldConfig} from '@/schemas/apply-type';
+import {ETC_FIELDS} from '@/constants/form/formConfig';
+import {EtcFieldConfig} from '@/schemas/apply/apply-type';
 
 export const EtcInfo = ({
   onPrev,
@@ -119,7 +119,7 @@ export const EtcInfo = ({
   return (
     <div className='flex w-full flex-col gap-[81px]'>
       <div className='flex flex-col gap-10'>
-        {ADDITIONAL_FIELDS.map((field, idx) => {
+        {ETC_FIELDS.map((field, idx) => {
           if (field.type === 'row' && 'row' in field) {
             return (
               <div

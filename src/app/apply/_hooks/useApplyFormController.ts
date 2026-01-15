@@ -1,5 +1,7 @@
 import {useState, useEffect} from 'react';
 import {useForm, UseFormReturn} from 'react-hook-form';
+import {zodResolver} from '@hookform/resolvers/zod';
+import {BasicInfoSchema, BasicInfoFormData} from '@/schemas/apply/apply-schema';
 import {BASIC_INFO_FIELDS} from '@/constants/form/formConfig';
 import {useRouter, useSearchParams} from 'next/navigation';
 import {useRecruitmentStore} from '@/store/useRecruitmentStore';
@@ -7,7 +9,7 @@ import {useSubmissionStore} from '@/store/useSubmissionStore';
 
 interface UseApplyFormControllerReturn {
   step: number;
-  methods: UseFormReturn;
+  methods: UseFormReturn<BasicInfoFormData>;
   handleNext: () => Promise<void>;
   handlePrev: () => void;
   handleSave: () => void;
@@ -35,7 +37,10 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
   const {isRecruiting} = useRecruitmentStore();
   const setHasSubmitted = useSubmissionStore((state) => state.setHasSubmitted);
 
-  const methods = useForm({mode: 'onChange'});
+  const methods = useForm<BasicInfoFormData>({
+    mode: 'onChange',
+    resolver: zodResolver(BasicInfoSchema),
+  });
   const {trigger, handleSubmit, getValues} = methods;
 
   const openConfirmModal = () => setIsConfirmModalOpen(true);
@@ -50,19 +55,19 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
   const handleNext = async () => {
     handleSave();
 
-    let fieldsToValidate: string[] = [];
+    let fieldsToValidate: (keyof BasicInfoFormData)[] = [];
 
     if (step === 1) {
       fieldsToValidate = BASIC_INFO_FIELDS.flatMap((field) =>
         'row' in field && field.row
           ? field.row.map((f) => f.name)
           : [field.name]
-      ).filter(Boolean) as string[];
+      ).filter(Boolean) as (keyof BasicInfoFormData)[];
     } else if (step === 2) {
       const values = getValues();
       fieldsToValidate = Object.keys(values).filter((key) =>
         key.startsWith('ans_')
-      );
+      ) as (keyof BasicInfoFormData)[];
     }
 
     const isValid = await trigger(fieldsToValidate);
@@ -107,7 +112,7 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
       } else {
         throw new Error('Submission failed');
       }
-    } catch (error) {
+    } catch {
       router.push('/?submitted=false');
     }
   };
