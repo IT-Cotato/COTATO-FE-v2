@@ -4,15 +4,14 @@ import {ENDPOINT} from '@/services/constant/endpoint';
 import {useRecruitmentStore} from '@/store/useRecruitmentStore';
 import {useEffect} from 'react';
 import {GetRecruitmentStatusResponseSchema} from '@/schemas/status/recruitment-status-schema';
-
-export const RECRUITMENT_STATUS_KEY = 'recruitmentStatus';
+import {QUERY_KEYS} from '@/constants/query-keys';
 
 export const useRecruitmentStatusQuery = () => {
   const {setIsRecruiting, setGeneration, setIsAdditional} =
     useRecruitmentStore();
 
   const query = useQuery({
-    queryKey: [RECRUITMENT_STATUS_KEY],
+    queryKey: [QUERY_KEYS.RECRUITMENT_STATUS],
     queryFn: async () => {
       const response = await publicAxios.get(ENDPOINT.RECRUITMENT.STATUS);
       return GetRecruitmentStatusResponseSchema.parse(response.data);

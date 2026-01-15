@@ -7,12 +7,12 @@ import {
 } from '@/schemas/admin/admin-recruitment-schema';
 
 import {useRecruitmentStore} from '@/store/useRecruitmentStore';
-import {RECRUITMENT_STATUS_KEY} from '@/hooks/queries/useRecruitmentStatusQuery';
 import {ErrorResponse} from '@/schemas/common/common-schema';
 import {
   postRecruitmentActivation,
   postRecruitmentDeactivation,
 } from '@/services/api/admin/admin.recruitment.api';
+import {QUERY_KEYS} from '@/constants/query-keys';
 
 export const useAdminRecruitmentMutation = () => {
   const setIsRecruiting = useRecruitmentStore((state) => state.setIsRecruiting);
@@ -26,7 +26,9 @@ export const useAdminRecruitmentMutation = () => {
     // ex) queryClient.invalidateQueries({ queryKey: ['adminApplications'] });
     setIsRecruiting(nextStatus);
     setTimeout(() => {
-      queryClient.invalidateQueries({queryKey: [RECRUITMENT_STATUS_KEY]});
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.RECRUITMENT_STATUS],
+      });
     }, 500);
   };
 
