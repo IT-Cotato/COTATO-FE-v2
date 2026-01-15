@@ -1,19 +1,7 @@
 import type {RegisterOptions} from 'react-hook-form';
+import {BasicInfoFormData} from '@/schemas/apply/apply-schema';
 
 // BasicInfo
-export interface BasicInfoFormData {
-  name: string;
-  gender: string;
-  contact: string;
-  birthDate: string;
-  school: string;
-  isCollegeStudent: string;
-  department: string;
-  completedSemesters: string;
-  isPrevActivity: string;
-  part: string;
-}
-
 export interface BasicInfoFieldConfig {
   name: keyof BasicInfoFormData;
   label: string;
@@ -41,6 +29,6 @@ export interface EtcFieldConfig {
   className?: string;
 }
 
-export type AdditionalFormItem =
+export type EtcFormItem =
   | EtcFieldConfig
   | {type: 'row'; row: EtcFieldConfig[]; name?: never};
