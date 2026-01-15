@@ -20,5 +20,7 @@ export const ENDPOINT = {
   },
   APPLY: {
     START: '/api/applications/start',
+    BASIC_INFO: (applicationId: number) =>
+      `/api/applications/${applicationId}/basic-info`,
   },
 };
