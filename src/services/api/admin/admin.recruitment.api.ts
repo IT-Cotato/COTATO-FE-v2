@@ -6,7 +6,7 @@ import {
   RecruitmentResponseSchema,
   RecruitmentResponse,
 } from '@/schemas/admin/admin-recruitment-schema';
-import {handleApiError} from '@/services/api/api-helper';
+import {handleApiError} from '@/services/utils/apiHelper';
 
 /**
  * 모집 활성화 API
