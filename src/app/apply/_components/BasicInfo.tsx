@@ -27,7 +27,7 @@ export const BasicInfo = ({
   } = useFormContext<BasicInfoFormData>();
 
   const renderField = (field: BasicInfoFieldConfig) => {
-    const {type, name, label, options, rules, placeholder} = field;
+    const {type, name, label, options, placeholder} = field;
     const error = errors[name];
 
     if (type === 'radio') {
@@ -41,7 +41,7 @@ export const BasicInfo = ({
                 label={opt.label}
                 value={opt.value}
                 readOnly={readOnly}
-                {...register(name, rules)}
+                {...register(name)}
               />
             ))}
           </div>
@@ -62,7 +62,6 @@ export const BasicInfo = ({
           <Controller
             name={name}
             control={control}
-            rules={rules}
             render={({field}) => (
               <FormDropdown
                 label={label}
@@ -92,7 +91,7 @@ export const BasicInfo = ({
           label={label}
           placeholder={placeholder}
           readOnly={readOnly}
-          {...register(name, rules)}
+          {...register(name)}
           error={error?.message ?? ''}
           className='w-full'
         />

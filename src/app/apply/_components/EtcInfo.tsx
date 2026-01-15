@@ -30,7 +30,6 @@ export const EtcInfo = ({
       name,
       label,
       options,
-      rules,
       placeholder,
       maxLength,
       readOnly,
@@ -56,7 +55,7 @@ export const EtcInfo = ({
             defaultValue={defaultValue}
             currentLength={name ? (watch(name) || '').length : 0}
             error={error?.message as string}
-            {...(name && register(name, rules))}
+            {...(name && register(name))}
           />
         );
       case 'dropdown':
@@ -65,7 +64,6 @@ export const EtcInfo = ({
             key={name}
             name={name ?? ''}
             control={control}
-            rules={rules}
             render={({field: controllerField}) => (
               <FormDropdown
                 label={label ?? ''}
@@ -85,7 +83,7 @@ export const EtcInfo = ({
             label={label ?? ''}
             placeholder={placeholder}
             error={error?.message as string}
-            {...(name && register(name, rules))}
+            {...(name && register(name))}
           />
         );
       case 'radio':
@@ -100,7 +98,7 @@ export const EtcInfo = ({
                   key={opt.value}
                   label={opt.label}
                   value={opt.value}
-                  {...(name && register(name, rules))}
+                  {...(name && register(name))}
                 />
               ))}
             </div>

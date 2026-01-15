@@ -1,4 +1,3 @@
-import type {RegisterOptions} from 'react-hook-form';
 import {BasicInfoFormData} from '@/schemas/apply/apply-schema';
 
 // BasicInfo
@@ -8,7 +7,6 @@ export interface BasicInfoFieldConfig {
   type: 'input' | 'dropdown' | 'radio';
   placeholder?: string;
   options?: {value: string; label: string}[];
-  rules?: RegisterOptions<BasicInfoFormData, keyof BasicInfoFormData>;
 }
 
 export type BasicInfoFormItem =
@@ -22,7 +20,6 @@ export interface EtcFieldConfig {
   type: string;
   placeholder?: string;
   options?: {value: string; label: string}[];
-  rules?: RegisterOptions;
   maxLength?: number;
   readOnly?: boolean;
   defaultValue?: string;
