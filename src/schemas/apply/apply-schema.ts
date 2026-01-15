@@ -27,6 +27,4 @@ export const startApplicationDataSchema = z.object({
 });
 
 export type BasicInfoFormData = z.infer<typeof BasicInfoSchema>;
-export type StartApplicationData = z.infer<
-  typeof startApplicationDataSchema
->;
+export type StartApplicationData = z.infer<typeof startApplicationDataSchema>;
