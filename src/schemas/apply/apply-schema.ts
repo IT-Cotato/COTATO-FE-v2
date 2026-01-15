@@ -1,6 +1,6 @@
 import {z} from 'zod';
 
-export const BasicInfoSchema = z.object({
+export const BasicInfoFormSchema = z.object({
   name: z.string().min(1, '이름을 입력해주세요'),
   gender: z.enum(['male', 'female'], {
     message: '성별을 선택해주세요',
@@ -21,10 +21,27 @@ export const BasicInfoSchema = z.object({
   part: z.string().min(1, '파트를 선택해주세요'),
 });
 
-export const startApplicationDataSchema = z.object({
+export const StartApplicationResponseSchema = z.object({
   applicationId: z.number(),
   isSubmitted: z.boolean(),
 });
 
-export type BasicInfoFormData = z.infer<typeof BasicInfoSchema>;
-export type StartApplicationData = z.infer<typeof startApplicationDataSchema>;
+export const BasicInfoResponseSchema = z.object({
+  applicationId: z.number(),
+  name: z.string(),
+  gender: z.enum(['male', 'female']),
+  birthDate: z.string(),
+  phoneNumber: z.string(),
+  university: z.string(),
+  major: z.string(),
+  completedSemesters: z.number(),
+  isPrevActivity: z.boolean(),
+  isEnrolled: z.boolean(),
+  applicationPartType: z.string(),
+});
+
+export type BasicInfoFormData = z.infer<typeof BasicInfoFormSchema>;
+export type StartApplicationResponse = z.infer<
+  typeof StartApplicationResponseSchema
+>;
+export type BasicInfoResponse = z.infer<typeof BasicInfoResponseSchema>;
