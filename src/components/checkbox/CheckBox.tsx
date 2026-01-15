@@ -1,6 +1,5 @@
-import CheckTrueIcon from '@/assets/check/check-true.svg';
-import CheckFalseIcon from '@/assets/check/check-false.svg';
 import clsx from 'clsx';
+import CheckIcon from '@/assets/check/check.svg';
 
 interface CheckboxProps {
   checked: boolean;
@@ -21,7 +20,13 @@ export const Checkbox = ({checked, onChange, disabled}: CheckboxProps) => {
           'border-neutral-600 bg-neutral-600': !checked,
         }
       )}>
-      {checked ? <CheckTrueIcon /> : <CheckFalseIcon />}
+      <div
+        className={clsx(
+          'h-[7.778px] w-[9.899px]',
+          checked ? 'text-white' : 'text-text-muted'
+        )}>
+        <CheckIcon width='100%' height='100%' />
+      </div>
     </div>
   );
 };
