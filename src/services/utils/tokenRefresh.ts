@@ -4,10 +4,10 @@ import {
   refreshTokenRequestSchema,
   RefreshTokenResponse,
   refreshTokenResponseSchema,
-} from '@/services/schemas/auth.schema';
+} from '@/schemas/auth/auth-schema';
 import {publicAxios} from '@/services/config/axios';
 import {ENDPOINT} from '@/services/constant/endpoint';
-import {createSuccessResponseSchema} from '@/services/schemas/common.schema';
+import {createSuccessResponseSchema} from '@/schemas/common/common-schema';
 
 /**
  * 토큰 갱신

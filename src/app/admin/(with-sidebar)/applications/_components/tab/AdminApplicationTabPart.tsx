@@ -1,18 +1,18 @@
 import clsx from 'clsx';
 
-interface AdminApplicationPartProps {
-  partName: string;
-  applyNumber: number;
+interface AdminApplicationTabPartProps {
+  partName?: string;
+  applyNumber?: number;
   isActive?: boolean;
   onClick?: () => void;
 }
 
-export const AdminApplicationPart = ({
+export const AdminApplicationTabPart = ({
   partName,
   applyNumber,
   isActive = false,
   onClick,
-}: AdminApplicationPartProps) => {
+}: AdminApplicationTabPartProps) => {
   return (
     <button
       type='button'

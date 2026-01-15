@@ -1,4 +1,4 @@
-import {GetMeResponse} from '@/services/schemas/auth.schema';
+import {GetMeResponse} from '@/schemas/auth/auth-schema';
 import {create} from 'zustand';
 
 interface AuthState {
