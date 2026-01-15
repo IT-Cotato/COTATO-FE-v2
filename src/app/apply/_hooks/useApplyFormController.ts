@@ -1,11 +1,14 @@
 import {useState, useEffect} from 'react';
 import {useForm, UseFormReturn} from 'react-hook-form';
 import {zodResolver} from '@hookform/resolvers/zod';
-import {BasicInfoSchema, BasicInfoFormData} from '@/schemas/apply/apply-schema';
+import {BasicInfoFormSchema, BasicInfoFormData} from '@/schemas/apply/apply-schema';
 import {BASIC_INFO_FIELDS} from '@/constants/form/formConfig';
 import {useRouter, useSearchParams} from 'next/navigation';
 import {useRecruitmentStore} from '@/store/useRecruitmentStore';
 import {useSubmissionStore} from '@/store/useSubmissionStore';
+import {useQuery} from '@tanstack/react-query';
+import {getBasicInfo} from '@/services/api/apply/apply.api';
+import {QUERY_KEYS} from '@/constants/query-keys';
 
 interface UseApplyFormControllerReturn {
   step: number;
@@ -24,11 +27,10 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
   const searchParams = useSearchParams();
   const router = useRouter();
 
-  // URL의 step 읽기 (기본값: 1)
+  const applicationId = searchParams.get('id');
   const urlStep = parseInt(searchParams.get('step') || '1');
   const [step, setStep] = useState(urlStep);
 
-  // URL과 로컬 step 동기화
   useEffect(() => {
     setStep(urlStep);
   }, [urlStep]);
@@ -39,9 +41,39 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
 
   const methods = useForm<BasicInfoFormData>({
     mode: 'onChange',
-    resolver: zodResolver(BasicInfoSchema),
+    resolver: zodResolver(BasicInfoFormSchema),
   });
-  const {trigger, handleSubmit, getValues} = methods;
+  const {trigger, handleSubmit, getValues, reset} = methods;
+
+  const {data: basicInfo} = useQuery({
+    queryKey: QUERY_KEYS.APPLY.BASIC_INFO(applicationId!),
+    queryFn: () => getBasicInfo(Number(applicationId)),
+    enabled: !!applicationId && urlStep === 1,
+  });
+
+  useEffect(() => {
+    if (basicInfo) {
+      const transformedData = {
+        name: basicInfo.name,
+        gender: basicInfo.gender,
+        contact: basicInfo.phoneNumber,
+        birthDate: basicInfo.birthDate,
+        school: basicInfo.university,
+        isCollegeStudent: (
+          basicInfo.isEnrolled ? 'enrolled' : 'other'
+        ) as BasicInfoFormData['isCollegeStudent'],
+        department: basicInfo.major,
+        completedSemesters: String(
+          basicInfo.completedSemesters
+        ) as BasicInfoFormData['completedSemesters'],
+        isPrevActivity: (
+          basicInfo.isPrevActivity ? 'yes' : 'no'
+        ) as BasicInfoFormData['isPrevActivity'],
+        part: basicInfo.applicationPartType,
+      };
+      reset(transformedData);
+    }
+  }, [basicInfo, reset]);
 
   const openConfirmModal = () => setIsConfirmModalOpen(true);
   const closeConfirmModal = () => setIsConfirmModalOpen(false);
