@@ -18,4 +18,7 @@ export const ENDPOINT = {
   ADMIN: {
     APPLICATIONS: '/api/admin/applications',
   },
+  APPLY: {
+    START: '/api/applications/start',
+  },
 };

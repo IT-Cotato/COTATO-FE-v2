@@ -21,4 +21,12 @@ export const BasicInfoSchema = z.object({
   part: z.string().min(1, '파트를 선택해주세요'),
 });
 
+export const startApplicationDataSchema = z.object({
+  applicationId: z.number(),
+  isSubmitted: z.boolean(),
+});
+
 export type BasicInfoFormData = z.infer<typeof BasicInfoSchema>;
+export type StartApplicationData = z.infer<
+  typeof startApplicationDataSchema
+>;
