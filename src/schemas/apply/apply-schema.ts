@@ -32,8 +32,7 @@ export const StartApplicationResponseSchema = z.object({
   isSubmitted: z.boolean(),
 });
 
-export const BasicInfoResponseSchema = z.object({
-  applicationId: z.number(),
+export const BasicInfoRequestSchema = z.object({
   name: z.string(),
   gender: z.enum(['male', 'female']),
   birthDate: z.string(),
@@ -46,17 +45,8 @@ export const BasicInfoResponseSchema = z.object({
   applicationPartType: z.string(),
 });
 
-export const BasicInfoRequestSchema = z.object({
-  name: z.string(),
-  gender: z.enum(['male', 'female']),
-  birthDate: z.string(),
-  phoneNumber: z.string(),
-  university: z.string(),
-  major: z.string(),
-  completedSemesters: z.number(),
-  isPrevActivity: z.boolean(),
-  isEnrolled: z.boolean(),
-  applicationPartType: z.string(),
+export const BasicInfoResponseSchema = BasicInfoRequestSchema.extend({
+  applicationId: z.number(),
 });
 
 export type BasicInfoFormData = z.infer<typeof BasicInfoFormSchema>;
