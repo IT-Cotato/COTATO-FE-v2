@@ -31,7 +31,7 @@ export const TimePanel = ({
         <div className='flex flex-col items-center gap-3'>
           <TimeButton value={minute} />
           <TimeList
-            values={Array.from({length: 60}, (_, i) => i + 1)}
+            values={Array.from({length: 60}, (_, i) => i)}
             onSelect={onMinuteChange}
           />
         </div>
