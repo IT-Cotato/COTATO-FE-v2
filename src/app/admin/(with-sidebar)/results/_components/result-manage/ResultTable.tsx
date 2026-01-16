@@ -40,7 +40,7 @@ export const ResultTable = ({data}: ResultTableProps) => {
                 <td
                   key={part.value}
                   className='text-left text-body-l text-neutral-600'>
-                  {row[part.value]}
+                  {row[part.value] ?? 0}
                 </td>
               ))}
             </tr>

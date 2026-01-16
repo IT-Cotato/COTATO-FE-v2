@@ -5,3 +5,9 @@ export const RESULT_PARTS = [
   {label: '프론트엔드', value: 'FE'},
   {label: '백엔드', value: 'BE'},
 ] as const;
+
+export const STATUS_LABEL_MAP = {
+  PASS: '합격',
+  WAITLISTED: '예비 합격',
+  FAIL: '불합격',
+} as const;
