@@ -8,6 +8,14 @@ import {
 } from '@/schemas/admin/admin-mail-schema';
 import {MAIL_TYPE_MAP} from '@/schemas/admin/admin-mail-type';
 
+const getTemplateType = (mailType: string) => {
+  const templateType = MAIL_TYPE_MAP[mailType as keyof typeof MAIL_TYPE_MAP];
+  if (!templateType) {
+    throw new Error(`Invalid mail type: ${mailType}`);
+  }
+  return templateType;
+};
+
 export const getMailData = async (generationId: number, mailType: string) => {
   try {
     const isNotification = mailType === '지원 알림 메일';
@@ -18,7 +26,7 @@ export const getMailData = async (generationId: number, mailType: string) => {
     const params = {
       generationId,
       ...(!isNotification && {
-        templateType: MAIL_TYPE_MAP[mailType as keyof typeof MAIL_TYPE_MAP],
+        templateType: getTemplateType(mailType),
       }),
     };
 
