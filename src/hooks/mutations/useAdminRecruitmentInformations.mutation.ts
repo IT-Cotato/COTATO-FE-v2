@@ -4,7 +4,7 @@ import {postRecruitmentInformations} from '@/services/api/admin/admin.recruitmen
 import {ErrorResponse} from '@/schemas/common/common-schema';
 import {useMutation, useQueryClient} from '@tanstack/react-query';
 
-export const usePostRecruitmentInformationsMutation = () => {
+export const useAdminRecruitmentInformationsMutation = () => {
   const queryClient = useQueryClient();
 
   return useMutation<

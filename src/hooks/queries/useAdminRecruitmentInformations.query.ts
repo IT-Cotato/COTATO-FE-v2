@@ -4,7 +4,7 @@ import {getRecruitmentInformations} from '@/services/api/admin/admin.recruitment
 import {ErrorResponse} from '@/schemas/common/common-schema';
 import {useQuery} from '@tanstack/react-query';
 
-export const useRecruitmentInformationsQuery = (generationId: number) =>
+export const useAdminRecruitmentInformationsQuery = (generationId: number) =>
   useQuery<RecruitmentInformation, ErrorResponse>({
     queryKey: [QUERY_KEYS.ADMIN_RECRUITMENT_INFORMATIONS, generationId],
     queryFn: () => getRecruitmentInformations(generationId),

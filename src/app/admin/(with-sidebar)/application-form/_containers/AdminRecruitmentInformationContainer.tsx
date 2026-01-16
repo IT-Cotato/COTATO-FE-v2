@@ -5,10 +5,12 @@ import {Button} from '@/components/button/Button';
 import {AdminRecruitmentInformation} from '@/app/admin/(with-sidebar)/application-form/_components/recruitment/AdminRecruitmentInformation';
 import {useRouter, useSearchParams} from 'next/navigation';
 import {useEffect, useState} from 'react';
-import {useRecruitmentInformationsQuery} from '@/hooks/queries/useAdminRecruitmentInformationsQuery';
+
 import {Spinner} from '@/components/ui/Spinner';
 import {RecruitmentInformation} from '@/schemas/admin/admin-recruitment-information-schema';
-import {usePostRecruitmentInformationsMutation} from '@/hooks/mutations/useAdminRecruitmentInformationsMutation';
+
+import {useAdminRecruitmentInformationsQuery} from '@/hooks/queries/useAdminRecruitmentInformations.query';
+import {useAdminRecruitmentInformationsMutation} from '@/hooks/mutations/useAdminRecruitmentInformations.mutation';
 
 export const AdminRecruitmentInformationContainer = () => {
   const router = useRouter();
@@ -18,11 +20,10 @@ export const AdminRecruitmentInformationContainer = () => {
   const [recruitmentDraft, setRecruitmentDraft] =
     useState<RecruitmentInformation | null>(null);
 
-  const {data, isLoading, isError, error} = useRecruitmentInformationsQuery(
-    Number(generation)
-  );
+  const {data, isLoading, isError, error} =
+    useAdminRecruitmentInformationsQuery(Number(generation));
   const {mutate: postRecruitmentInformations, isPending} =
-    usePostRecruitmentInformationsMutation();
+    useAdminRecruitmentInformationsMutation();
 
   useEffect(() => {
     if (isError) {
