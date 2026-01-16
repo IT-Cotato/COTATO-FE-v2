@@ -3,7 +3,7 @@ import {publicAxios} from '@/services/config/axios';
 import {ENDPOINT} from '@/services/constant/endpoint';
 import {useRecruitmentStore} from '@/store/useRecruitmentStore';
 import {useEffect} from 'react';
-import {GetRecruitmentStatusResponseSchema} from '@/schemas/status/recruitment-status-schema';
+import {GetRecruitmentStatusResponseSchema} from '@/schemas/status/recruitment-status.schema';
 import {QUERY_KEYS} from '@/constants/query-keys';
 
 export const useRecruitmentStatusQuery = () => {

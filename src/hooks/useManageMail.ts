@@ -1,6 +1,6 @@
 import {useState} from 'react';
-import {useAdminMailQuery} from './queries/useAdminMailQuery';
-import {useAdminMailMutation} from '@/hooks/mutations/useAdminMailMutation';
+import {useAdminMailQuery} from './queries/useAdminMail.query';
+import {useAdminMailMutation} from '@/hooks/mutations/useAdminMail.mutation';
 
 export const useManageMail = (generationId: number, mailType: string) => {
   const [isEditing, setIsEditing] = useState(false);

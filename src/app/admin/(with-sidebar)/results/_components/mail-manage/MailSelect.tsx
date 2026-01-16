@@ -2,7 +2,7 @@
 
 import clsx from 'clsx';
 import {FullButton} from '@/components/button/FullButton';
-import {mailTabs} from '@/schemas/admin/admin-mail-type';
+import {mailTabs} from '@/schemas/admin/admin-mail.type';
 
 interface MailSelectProps {
   activeTab: string;

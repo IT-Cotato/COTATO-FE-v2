@@ -4,14 +4,14 @@ import {
   PostRecruitmentActivationRequest,
   PostRecruitmentDeactivationRequest,
   RecruitmentResponse,
-} from '@/schemas/admin/admin-recruitment-schema';
+} from '@/schemas/admin/admin-recruitment.schema';
 
 import {useRecruitmentStore} from '@/store/useRecruitmentStore';
 import {ErrorResponse} from '@/schemas/common/common-schema';
 import {
   postRecruitmentActivation,
   postRecruitmentDeactivation,
-} from '@/services/api/admin/admin.recruitment.api';
+} from '@/services/api/admin/admin-recruitment.api';
 import {QUERY_KEYS} from '@/constants/query-keys';
 
 export const useAdminRecruitmentMutation = () => {

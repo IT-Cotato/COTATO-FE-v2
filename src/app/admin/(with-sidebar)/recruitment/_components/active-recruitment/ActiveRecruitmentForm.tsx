@@ -7,7 +7,7 @@ import {useRecruitmentStore} from '@/store/useRecruitmentStore';
 import {GenerationField} from '@/app/admin/(with-sidebar)/recruitment/_components/active-recruitment/GenerationField';
 import {RecruitmentConfirmModal} from '@/components/modal/RecruitConfirmModal';
 import {formatDate} from '@/utils/formatDate';
-import {useAdminRecruitmentMutation} from '@/hooks/mutations/useAdminRecruitmentMutation';
+import {useAdminRecruitmentMutation} from '@/hooks/mutations/useAdminRecruitment.mutation';
 import {Checkbox} from '@/components/checkbox/CheckBox';
 
 export const ActiveRecruitmentForm = () => {

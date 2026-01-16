@@ -1,5 +1,5 @@
 import {RESULT_PARTS} from '@/constants/admin/admin-result';
-import {ResultSummaryData} from '@/schemas/admin/admin-result-type';
+import {ResultSummaryData} from '@/schemas/admin/admin-result.type';
 
 interface ResultTableProps {
   data: ResultSummaryData[];

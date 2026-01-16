@@ -31,7 +31,7 @@ export const RecruitmentConfirmModal = ({
       actions={
         <>
           <Button
-            width={219}
+            width={206}
             height={47}
             onClick={onClose}
             label='취소'
@@ -40,13 +40,13 @@ export const RecruitmentConfirmModal = ({
             backgroundColor='neutral-300'
           />
           <Button
-            width={219}
+            width={206}
             height={47}
             onClick={onConfirm}
             label='확인'
             textColor='neutral-50'
             labelTypo='body_l'
-            backgroundColor='primary' //디자인 컨펌에 따라 색 변경 필요할 수도...
+            backgroundColor='neutral-600'
           />
         </>
       }

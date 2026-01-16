@@ -1,6 +1,6 @@
+import {AdminPassStatusResponseSchema} from '@/schemas/admin/admin-result.schema';
 import {privateAxios} from '@/services/config/axios';
 import {ENDPOINT} from '@/services/constant/endpoint';
-import {AdminPassStatusResponseSchema} from '@/schemas/admin/admin-result-schema';
 import {handleApiError} from '@/services/utils/apiHelper';
 
 /**

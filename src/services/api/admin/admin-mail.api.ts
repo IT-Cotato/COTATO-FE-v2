@@ -5,8 +5,8 @@ import {
   NotificationMailResponseSchema,
   ResultMailResponseSchema,
   MailSendResultSchema,
-} from '@/schemas/admin/admin-mail-schema';
-import {MAIL_TYPE_MAP} from '@/schemas/admin/admin-mail-type';
+} from '@/schemas/admin/admin-mail.schema';
+import {MAIL_TYPE_MAP} from '@/schemas/admin/admin-mail.type';
 
 const getTemplateType = (mailType: string) => {
   const templateType = MAIL_TYPE_MAP[mailType as keyof typeof MAIL_TYPE_MAP];

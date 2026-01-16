@@ -5,7 +5,7 @@ import {
   PostRecruitmentDeactivationRequest,
   RecruitmentResponseSchema,
   RecruitmentResponse,
-} from '@/schemas/admin/admin-recruitment-schema';
+} from '@/schemas/admin/admin-recruitment.schema';
 import {handleApiError} from '@/services/utils/apiHelper';
 
 /**

@@ -1,6 +1,6 @@
 import {useMutation, useQueryClient} from '@tanstack/react-query';
 import {QUERY_KEYS} from '@/constants/query-keys';
-import {saveMailContent, sendMail} from '@/services/api/admin/admin.mail.api';
+import {saveMailContent, sendMail} from '@/services/api/admin/admin-mail.api';
 import {ErrorResponse} from '@/schemas/common/common-schema';
 
 export const useAdminMailMutation = (
