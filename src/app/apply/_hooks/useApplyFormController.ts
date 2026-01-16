@@ -4,6 +4,7 @@ import {zodResolver} from '@hookform/resolvers/zod';
 import {
   BasicInfoFormSchema,
   BasicInfoFormData,
+  BasicInfoRequest,
 } from '@/schemas/apply/apply-schema';
 import {BASIC_INFO_FIELDS} from '@/constants/form/formConfig';
 import {useRouter, useSearchParams} from 'next/navigation';
@@ -12,6 +13,7 @@ import {useSubmissionStore} from '@/store/useSubmissionStore';
 import {useQuery} from '@tanstack/react-query';
 import {getBasicInfo} from '@/services/api/apply/apply.api';
 import {QUERY_KEYS} from '@/constants/query-keys';
+import {useSaveBasicInfo} from '@/hooks/mutations/useApply';
 
 interface UseApplyFormControllerReturn {
   step: number;
@@ -54,6 +56,8 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
     enabled: !!applicationId && urlStep === 1,
   });
 
+  const {mutate: saveBasicInfo} = useSaveBasicInfo(Number(applicationId));
+
   useEffect(() => {
     if (basicInfo) {
       const transformedData = {
@@ -83,13 +87,26 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
 
   const handleSave = () => {
     const data = getValues();
-    console.log('저장된 데이터:', data);
-    // TODO: API 호출 - 임시저장
+
+    const requestData: BasicInfoRequest = {
+      name: data.name,
+      gender: data.gender,
+      birthDate: data.birthDate,
+      phoneNumber: data.contact,
+      university: data.school,
+      major: data.department,
+      completedSemesters: Number(data.completedSemesters),
+      isPrevActivity: data.isPrevActivity === 'yes',
+      isEnrolled: data.isCollegeStudent === 'enrolled',
+      applicationPartType: data.part,
+    };
+
+    console.log('임시저장 데이터:', requestData);
+
+    saveBasicInfo(requestData);
   };
 
   const handleNext = async () => {
-    handleSave();
-
     let fieldsToValidate: (keyof BasicInfoFormData)[] = [];
 
     if (step === 1) {
@@ -107,6 +124,8 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
 
     const isValid = await trigger(fieldsToValidate);
     if (isValid) {
+      handleSave(); // 유효성 검사 통과 후 저장
+
       const params = new URLSearchParams(searchParams.toString());
       params.set('step', String(step + 1));
 
