@@ -7,7 +7,6 @@ import {FullButton} from '@/components/button/FullButton';
 import {mockPlanApplicationForm} from '@/mocks/mock-application-form';
 import {PART_TABS} from '@/constants/admin/admin-application-form';
 import {PartEtcType} from '@/schemas/admin/admin-application-type';
-import {keyof} from 'zod';
 
 interface PartQuestionProps {
   onPrev: () => void;
