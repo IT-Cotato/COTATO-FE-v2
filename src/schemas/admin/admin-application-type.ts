@@ -3,13 +3,7 @@ import z from 'zod';
 /**
  * 파트 (etc 포함)
  */
-export const PartEtcSchema = z.enum([
-  'etc',
-  'plan',
-  'design',
-  'frontend',
-  'backend',
-]);
+export const PartEtcSchema = z.enum(['etc', 'PM', 'DE', 'FE', 'BE']);
 export type PartEtcType = z.infer<typeof PartEtcSchema>;
 
 /**
