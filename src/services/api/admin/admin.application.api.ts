@@ -2,7 +2,7 @@ import {
   GetAdminApplicationsParamsType,
   GetAdminApplicationsResponse,
   GetAdminApplicationsResponseSchema,
-} from '@/schemas/admin/admin-applications-schema';
+} from '@/schemas/admin/admin-applications.schema';
 import {privateAxios} from '@/services/config/axios';
 import {ENDPOINT} from '@/services/constant/endpoint';
 import qs from 'qs';

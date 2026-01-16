@@ -5,7 +5,7 @@ import {PART_COUNT_MAP, PART_TABS} from '@/constants/admin/admin-applications';
 import {
   ApplicationPartViewType,
   ApplicationSummaryType,
-} from '@/schemas/admin/admin-applications-schema';
+} from '@/schemas/admin/admin-applications.schema';
 import {useRouter, useSearchParams} from 'next/navigation';
 
 interface AdminApplicationTabContainerProps {

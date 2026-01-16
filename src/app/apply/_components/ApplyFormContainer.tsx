@@ -10,7 +10,7 @@ import {ApplicationConfirmModal} from '@/components/modal/ApplicationConfirmModa
 import {useRecruitmentStore} from '@/store/useRecruitmentStore';
 import HeroMainBanner from '@/components/banner/HeroMainBanner';
 import {AdminRecruitmentInformation} from '@/app/admin/(with-sidebar)/application-form/_components/recruitment/AdminRecruitmentInformation';
-import {RecruitmentInformation} from '@/schemas/admin/admin-recruitment-information-schema';
+import {RecruitmentInformation} from '@/schemas/admin/admin-recruitment-information.schema';
 
 const STEP_TITLES = {
   1: '기본 인적사항',

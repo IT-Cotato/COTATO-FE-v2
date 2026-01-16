@@ -9,7 +9,7 @@ import {
   RESULT_OPTIONS,
   RESULT_VALUE_MAP,
 } from '@/constants/admin/admin-applications';
-import {ApplicantsPageType} from '@/schemas/admin/admin-applications-schema';
+import {ApplicantsPageType} from '@/schemas/admin/admin-applications.schema';
 import {Spinner} from '@/components/ui/Spinner';
 
 interface AdminApplicationTableContainerProps {

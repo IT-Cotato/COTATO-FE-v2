@@ -8,7 +8,7 @@ import FinishFilterIcon from '@/assets/icons/filter-finish.svg';
 import DownArrowIcon from '@/assets/arrow/down-arrow.svg';
 
 import clsx from 'clsx';
-import {ApplicantType} from '@/schemas/admin/admin-applications-schema';
+import {ApplicantType} from '@/schemas/admin/admin-applications.schema';
 import {AdminApplicationResultDropdown} from '@/app/admin/(with-sidebar)/applications/_components/table/AdminApplicationResultDropdown';
 import {formatKoreanDate} from '@/utils/formatDate';
 

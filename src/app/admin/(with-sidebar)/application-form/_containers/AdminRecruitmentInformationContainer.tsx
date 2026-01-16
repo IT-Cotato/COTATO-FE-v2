@@ -7,7 +7,7 @@ import {useRouter, useSearchParams} from 'next/navigation';
 import {useEffect, useState} from 'react';
 
 import {Spinner} from '@/components/ui/Spinner';
-import {RecruitmentInformation} from '@/schemas/admin/admin-recruitment-information-schema';
+import {RecruitmentInformation} from '@/schemas/admin/admin-recruitment-information.schema';
 
 import {useAdminRecruitmentInformationsQuery} from '@/hooks/queries/useAdminRecruitmentInformations.query';
 import {useAdminRecruitmentInformationsMutation} from '@/hooks/mutations/useAdminRecruitmentInformations.mutation';

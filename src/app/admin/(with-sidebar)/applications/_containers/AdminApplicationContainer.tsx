@@ -4,7 +4,7 @@ import {AdminApplicationInformation} from '@/app/admin/(with-sidebar)/applicatio
 import {AdminApplicationTableContainer} from '@/app/admin/(with-sidebar)/applications/_containers/AdminApplicationTableContainer';
 import {AdminApplicationTabContainer} from '@/app/admin/(with-sidebar)/applications/_containers/AdminApplicationTabContainer';
 
-import {GetAdminApplicationsParamsSchema} from '@/schemas/admin/admin-applications-schema';
+import {GetAdminApplicationsParamsSchema} from '@/schemas/admin/admin-applications.schema';
 import {useRouter, useSearchParams} from 'next/navigation';
 import {useAdminApplicationsQuery} from '@/hooks/queries/useAdminApplications.query';
 import {useEffect} from 'react';

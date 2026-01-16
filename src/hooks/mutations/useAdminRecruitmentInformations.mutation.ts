@@ -1,7 +1,7 @@
 import {QUERY_KEYS} from '@/constants/query-keys';
-import {PostAdminRecruitmentInformationRequest} from '@/schemas/admin/admin-recruitment-information-schema';
+import type {PostAdminRecruitmentInformationRequest} from '@/schemas/admin/admin-recruitment-information.schema';
 import {postRecruitmentInformations} from '@/services/api/admin/admin.recruitment.info.api';
-import {ErrorResponse} from '@/schemas/common/common-schema';
+import type {ErrorResponse} from '@/schemas/common/common-schema';
 import {useMutation, useQueryClient} from '@tanstack/react-query';
 
 export const useAdminRecruitmentInformationsMutation = () => {

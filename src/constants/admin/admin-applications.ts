@@ -2,7 +2,7 @@ import {ReviewerType} from '@/schemas/admin/admin-application-type';
 import {
   ApplicationPartViewType,
   ApplicationSummaryType,
-} from '@/schemas/admin/admin-applications-schema';
+} from '@/schemas/admin/admin-applications.schema';
 
 /** 지원서 테이블 컬럼 상수 */
 export const APPLICATION_COLUMNS = [
