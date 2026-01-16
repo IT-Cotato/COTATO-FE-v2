@@ -1,6 +1,7 @@
 import {privateAxios} from '@/services/config/axios';
 import {ENDPOINT} from '@/services/constant/endpoint';
 import {
+  BasicInfoRequest,
   BasicInfoResponse,
   BasicInfoResponseSchema,
   StartApplicationResponse,
@@ -37,4 +38,14 @@ export const getBasicInfo = async (
   const validatedResponse = responseSchema.parse(response.data);
 
   return validatedResponse.data;
+};
+
+/**
+ * 기본 인적사항 작성(임시저장)
+ */
+export const saveBasicInfo = async (
+  applicationId: number,
+  data: BasicInfoRequest
+): Promise<void> => {
+  await privateAxios.post(ENDPOINT.APPLY.BASIC_INFO(applicationId), data);
 };

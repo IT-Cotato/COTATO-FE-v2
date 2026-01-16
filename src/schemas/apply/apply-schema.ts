@@ -40,8 +40,22 @@ export const BasicInfoResponseSchema = z.object({
   applicationPartType: z.string(),
 });
 
+export const BasicInfoRequestSchema = z.object({
+  name: z.string(),
+  gender: z.enum(['male', 'female']),
+  birthDate: z.string(),
+  phoneNumber: z.string(),
+  university: z.string(),
+  major: z.string(),
+  completedSemesters: z.number(),
+  isPrevActivity: z.boolean(),
+  isEnrolled: z.boolean(),
+  applicationPartType: z.string(),
+});
+
 export type BasicInfoFormData = z.infer<typeof BasicInfoFormSchema>;
 export type StartApplicationResponse = z.infer<
   typeof StartApplicationResponseSchema
 >;
 export type BasicInfoResponse = z.infer<typeof BasicInfoResponseSchema>;
+export type BasicInfoRequest = z.infer<typeof BasicInfoRequestSchema>;
