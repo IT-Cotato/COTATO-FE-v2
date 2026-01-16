@@ -1,7 +1,7 @@
 export const RESULT_PARTS = [
-  {label: '전체', value: 'total'},
-  {label: '기획', value: 'plan'},
-  {label: '디자인', value: 'design'},
-  {label: '프론트엔드', value: 'frontend'},
-  {label: '백엔드', value: 'backend'},
+  {label: '전체', value: 'ALL'},
+  {label: '기획', value: 'PM'},
+  {label: '디자인', value: 'DE'},
+  {label: '프론트엔드', value: 'FE'},
+  {label: '백엔드', value: 'BE'},
 ] as const;
