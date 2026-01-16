@@ -29,16 +29,10 @@ export const PartQuestion = ({onPrev, onNext, onSave}: PartQuestionProps) => {
     formState: {errors},
   } = useFormContext();
 
-  const VALID_PARTS: PartEtcType[] = [
-    'plan',
-    'design',
-    'frontend',
-    'backend',
-    'etc',
-  ];
+  const VALID_PARTS: PartEtcType[] = ['PM', 'DE', 'FE', 'BE', 'etc'];
   const partParam = searchParams.get('part');
   const activePart: PartEtcType =
-    VALID_PARTS.find((p) => p === partParam) || 'plan';
+    VALID_PARTS.find((p) => p === partParam) || 'PM';
 
   const activePartLabel = PART_TABS.find(
     (tab) => tab.value === activePart
