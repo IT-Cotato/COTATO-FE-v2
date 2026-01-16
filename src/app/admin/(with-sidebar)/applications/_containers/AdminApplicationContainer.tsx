@@ -6,7 +6,7 @@ import {AdminApplicationTabContainer} from '@/app/admin/(with-sidebar)/applicati
 
 import {GetAdminApplicationsParamsSchema} from '@/schemas/admin/admin-applications-schema';
 import {useRouter, useSearchParams} from 'next/navigation';
-import {useAdminApplicationsQuery} from '@/hooks/queries/useAdminApplicationsQuery';
+import {useAdminApplicationsQuery} from '@/hooks/queries/useAdminApplications.query';
 import {useEffect} from 'react';
 
 export const AdminApplicationContainer = () => {
