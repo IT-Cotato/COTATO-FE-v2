@@ -16,7 +16,7 @@ export const useAdminMailMutation = (
     onSuccess: () => {
       queryClient.invalidateQueries({queryKey});
     },
-    onError: (error: ErrorResponse) => {
+    onError: (error: ErrorResponse | Error) => {
       alert(error.message || '저장 중 오류가 발생했습니다.');
     },
   });
@@ -26,8 +26,8 @@ export const useAdminMailMutation = (
     onSuccess: () => {
       queryClient.invalidateQueries({queryKey});
     },
-    onError: (error: ErrorResponse) => {
-      alert(error.message || '전송 중 오류가 발생했습니다.');
+    onError: (error: ErrorResponse | Error) => {
+      alert(error.message || '저장 중 오류가 발생했습니다.');
     },
   });
 
