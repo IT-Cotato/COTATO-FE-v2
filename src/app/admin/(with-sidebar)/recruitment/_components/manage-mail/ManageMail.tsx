@@ -10,7 +10,7 @@ import {MailConfirmModal} from '@/components/modal/MailConfirmModal';
 import {Spinner} from '@/components/ui/Spinner';
 
 interface ManageMailProps {
-  mailType: string;
+  mailType?: string;
   alwaysAble?: boolean;
 }
 
