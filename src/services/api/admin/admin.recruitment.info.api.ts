@@ -5,8 +5,7 @@ import {
 } from '@/schemas/admin/admin-recruitment-information-schema';
 import {privateAxios} from '@/services/config/axios';
 import {ENDPOINT} from '@/services/constant/endpoint';
-import {ErrorResponseSchema} from '@/schemas/common/common-schema';
-import axios from 'axios';
+import {handleApiError} from '@/services/utils/apiHelper';
 
 export const getRecruitmentInformations = async (
   generationId: number
@@ -22,16 +21,8 @@ export const getRecruitmentInformations = async (
     return GetAdminRecruitmentInformationResponseSchema.parse(response.data)
       .data;
   } catch (error: unknown) {
-    if (axios.isAxiosError(error)) {
-      const data = error.response?.data;
-
-      const parsed = ErrorResponseSchema.safeParse(data);
-      if (parsed.success) {
-        throw parsed.data;
-      }
-    }
+    return handleApiError(error);
   }
-  throw new Error('알 수 없는 에러가 발생했습니다.');
 };
 
 export const postRecruitmentInformations = async (
@@ -40,15 +31,6 @@ export const postRecruitmentInformations = async (
   try {
     await privateAxios.post(ENDPOINT.ADMIN.RECRUITMENT_INFORMATIONS, payload);
   } catch (error: unknown) {
-    if (axios.isAxiosError(error)) {
-      const data = error.response?.data;
-
-      const parsed = ErrorResponseSchema.safeParse(data);
-      if (parsed.success) {
-        throw parsed.data;
-      }
-    }
-
-    throw new Error('알 수 없는 에러가 발생했습니다.');
+    return handleApiError(error);
   }
 };

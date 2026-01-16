@@ -5,9 +5,8 @@ import {
 } from '@/schemas/admin/admin-applications-schema';
 import {privateAxios} from '@/services/config/axios';
 import {ENDPOINT} from '@/services/constant/endpoint';
-import {ErrorResponseSchema} from '@/schemas/common/common-schema';
-import axios from 'axios';
 import qs from 'qs';
+import {handleApiError} from '@/services/utils/apiHelper';
 
 /**
  * 어드민 지원서 목록을 조회합니다.
@@ -27,15 +26,6 @@ export const getAdminApplications = async (
 
     return GetAdminApplicationsResponseSchema.parse(response.data);
   } catch (error: unknown) {
-    if (axios.isAxiosError(error)) {
-      const data = error.response?.data;
-
-      const parsed = ErrorResponseSchema.safeParse(data);
-      if (parsed.success) {
-        throw parsed.data;
-      }
-    }
-
-    throw new Error('알 수 없는 에러가 발생했습니다.');
+    return handleApiError(error);
   }
 };
