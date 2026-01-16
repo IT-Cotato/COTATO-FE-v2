@@ -81,6 +81,7 @@ export const ActiveRecruitmentForm = () => {
             setStartDate={setStartDate}
             endDate={endDate}
             setEndDate={setEndDate}
+            disabled={isRecruiting}
           />
           <div className='flex shrink-0 cursor-pointer items-center gap-5 whitespace-nowrap select-none'>
             <span className='text-body-L text-neutral-600'>추가모집 여부</span>
