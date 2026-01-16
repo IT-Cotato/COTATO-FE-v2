@@ -27,5 +27,6 @@ export const ENDPOINT = {
       '/api/admin/recruitment-notification-emails/send',
     RECRUITMENT_RESULT: '/api/admin/recruitment-mails',
     RECRUITMENT_RESULT_SEND: '/api/admin/recruitment-mails/send',
+    PASS_STATUS: '/api/admin/pass-status',
   },
 };
