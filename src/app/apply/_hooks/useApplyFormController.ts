@@ -13,7 +13,7 @@ import {useSubmissionStore} from '@/store/useSubmissionStore';
 import {useQuery} from '@tanstack/react-query';
 import {getBasicInfo} from '@/services/api/apply/apply.api';
 import {QUERY_KEYS} from '@/constants/query-keys';
-import {useSaveBasicInfo} from '@/hooks/mutations/useApply';
+import {useSaveBasicInfo} from '@/hooks/mutations/useApply.mutation';
 
 interface UseApplyFormControllerReturn {
   step: number;
@@ -86,6 +86,7 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
   const closeConfirmModal = () => setIsConfirmModalOpen(false);
 
   const handleSave = () => {
+    if (!applicationId) return;
     const data = getValues();
 
     const requestData: BasicInfoRequest = {
