@@ -5,8 +5,14 @@ export const BasicInfoFormSchema = z.object({
   gender: z.enum(['male', 'female'], {
     message: '성별을 선택해주세요',
   }),
-  contact: z.string().min(1, '연락처를 입력해주세요'),
-  birthDate: z.string().min(1, '생년월일을 입력해주세요'),
+  contact: z
+    .string()
+    .min(1, '연락처를 입력해주세요')
+    .regex(/^010-\d{4}-\d{4}$/, '010-0000-0000 형식으로 입력해주세요'),
+  birthDate: z
+    .string()
+    .min(1, '생년월일을 입력해주세요')
+    .regex(/^\d{4}-\d{2}-\d{2}$/, 'YYYY-MM-DD 형식으로 입력해주세요'),
   school: z.string().min(1, '학교를 입력해주세요'),
   isCollegeStudent: z.enum(['enrolled', 'other'], {
     message: '재학 여부를 선택해주세요',
