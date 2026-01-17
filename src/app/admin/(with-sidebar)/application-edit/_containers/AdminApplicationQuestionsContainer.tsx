@@ -11,7 +11,7 @@ import {useAdminApplicationQuestionsQuery} from '@/hooks/queries/useAdminApplica
 import {
   ApplicationQuestionsType,
   PartType,
-} from '@/schemas/admin/admin-appication-questions.schema';
+} from '@/schemas/admin/admin-application-questions.schema';
 import {useSearchParams} from 'next/navigation';
 import {useState} from 'react';
 

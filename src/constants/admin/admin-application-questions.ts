@@ -1,4 +1,4 @@
-import {PartType} from '@/schemas/admin/admin-appication-questions.schema';
+import {PartType} from '@/schemas/admin/admin-application-questions.schema';
 
 export const scheduleSections = [
   {

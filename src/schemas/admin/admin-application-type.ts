@@ -1,4 +1,4 @@
-import {PartSchema} from '@/schemas/admin/admin-appication-questions.schema';
+import {PartSchema} from '@/schemas/admin/admin-application-questions.schema';
 import z from 'zod';
 
 /**

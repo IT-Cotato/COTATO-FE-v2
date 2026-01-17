@@ -2,7 +2,7 @@
 
 import {Button} from '@/components/button/Button';
 import {FullButton} from '@/components/button/FullButton';
-import {ApplicationQuestionsType} from '@/schemas/admin/admin-appication-questions.schema';
+import {ApplicationQuestionsType} from '@/schemas/admin/admin-application-questions.schema';
 import {useEffect} from 'react';
 
 interface ApplicationQuestionsEditProps {

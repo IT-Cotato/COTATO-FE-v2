@@ -2,7 +2,7 @@ import {
   GetApplicationQuestionsResponseSchema,
   PartType,
   PostApplicationQuestionsRequest,
-} from '@/schemas/admin/admin-appication-questions.schema';
+} from '@/schemas/admin/admin-application-questions.schema';
 import {privateAxios} from '@/services/config/axios';
 import {ENDPOINT} from '@/services/constant/endpoint';
 

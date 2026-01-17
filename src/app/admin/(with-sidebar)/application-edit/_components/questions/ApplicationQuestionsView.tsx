@@ -1,4 +1,4 @@
-import {ApplicationQuestionsType} from '@/schemas/admin/admin-appication-questions.schema';
+import {ApplicationQuestionsType} from '@/schemas/admin/admin-application-questions.schema';
 
 interface ApplicationQuestionsViewProps {
   data?: ApplicationQuestionsType[];

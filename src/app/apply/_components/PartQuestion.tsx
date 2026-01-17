@@ -6,7 +6,7 @@ import {FormTextarea} from '@/components/form/FormTextarea';
 import {FullButton} from '@/components/button/FullButton';
 import {mockPlanApplicationForm} from '@/mocks/mock-application-form';
 import {PART_TABS} from '@/constants/admin/admin-application-questions';
-import {PartType} from '@/schemas/admin/admin-appication-questions.schema';
+import {PartType} from '@/schemas/admin/admin-application-questions.schema';
 
 interface PartQuestionProps {
   onPrev: () => void;
