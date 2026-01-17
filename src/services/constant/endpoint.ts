@@ -20,6 +20,7 @@ export const ENDPOINT = {
   },
   ADMIN: {
     APPLICATIONS: '/api/admin/applications',
+    RECRUITMENT_INFORMATIONS: '/api/admin/recruitment-informations',
     RECRUITMENT_ACTIVATION: '/api/admin/recruitment-activation',
     RECRUITMENT_DEACTIVATION: '/api/admin/recruitment-deactivation',
   },

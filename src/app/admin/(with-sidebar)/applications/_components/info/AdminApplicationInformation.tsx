@@ -3,7 +3,7 @@
 import SearchIcon from '@/assets/icons/search.svg';
 import {GenerationDropdown} from '@/components/dropdown/GenerationDropdown';
 import {Spinner} from '@/components/ui/Spinner';
-import {RecruitmentPeriodSchemaType} from '@/schemas/admin/admin-applications-schema';
+import {RecruitmentPeriodSchemaType} from '@/schemas/admin/admin-applications.schema';
 import {useRouter, useSearchParams} from 'next/navigation';
 import {useState} from 'react';
 

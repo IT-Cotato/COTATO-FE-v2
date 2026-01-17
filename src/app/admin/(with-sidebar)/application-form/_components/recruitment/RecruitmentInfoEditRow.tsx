@@ -4,16 +4,15 @@ import RightArrowIcon from '@/assets/icons/arrow-right.svg';
 interface RecruitmentInfoEditRowProps {
   label: string;
   type: 'single' | 'range';
-  value: {
-    start?: string;
-    end?: string;
-  };
+  start?: string;
+  end?: string;
   onChange: (value: {start?: string; end?: string}) => void;
 }
 
 export const RecruitmentInfoEditRow = ({
   label,
-  value,
+  start,
+  end,
   onChange,
   type,
 }: RecruitmentInfoEditRowProps) => {
@@ -24,12 +23,12 @@ export const RecruitmentInfoEditRow = ({
       </div>
 
       <AdminApplicationFormCalendar
-        value={value.start}
+        value={start}
         placeholder={type === 'range' ? '시작 일자' : '날짜 선택'}
-        onChange={(start) =>
+        onChange={(nextStart) =>
           onChange({
-            ...value,
-            start,
+            start: nextStart,
+            end,
           })
         }
       />
@@ -38,12 +37,12 @@ export const RecruitmentInfoEditRow = ({
         <>
           <RightArrowIcon className='text-neutral-400' />
           <AdminApplicationFormCalendar
-            value={value.end}
+            value={end}
             placeholder='종료 일자'
-            onChange={(end) =>
+            onChange={(nextEnd) =>
               onChange({
-                ...value,
-                end,
+                start,
+                end: nextEnd,
               })
             }
           />
