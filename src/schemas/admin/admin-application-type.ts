@@ -1,10 +1,5 @@
+import {PartSchema} from '@/schemas/admin/admin-appication-questions.schema';
 import z from 'zod';
-
-/**
- * 파트 (etc 포함)
- */
-export const PartEtcSchema = z.enum(['etc', 'PM', 'DE', 'FE', 'BE']);
-export type PartEtcType = z.infer<typeof PartEtcSchema>;
 
 /**
  * 리뷰어
@@ -31,7 +26,7 @@ export const ApplicationSchema = z.object({
   id: z.number(),
   name: z.string(),
   phone: z.string(),
-  part: PartEtcSchema,
+  part: PartSchema,
   school: z.string(),
   submitDate: z.string(),
   result: ApplicationResultSchema,
