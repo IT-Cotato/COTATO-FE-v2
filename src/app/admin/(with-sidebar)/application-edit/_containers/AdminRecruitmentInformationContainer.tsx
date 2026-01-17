@@ -2,7 +2,7 @@
 
 import {GenerationDropdown} from '@/components/dropdown/GenerationDropdown';
 import {Button} from '@/components/button/Button';
-import {AdminRecruitmentInformation} from '@/app/admin/(with-sidebar)/application-form/_components/recruitment/AdminRecruitmentInformation';
+import {AdminRecruitmentInformation} from '@/app/admin/(with-sidebar)/application-edit/_components/recruitment/AdminRecruitmentInformation';
 import {useRouter, useSearchParams} from 'next/navigation';
 import {useEffect, useState} from 'react';
 
@@ -24,6 +24,12 @@ export const AdminRecruitmentInformationContainer = () => {
     useAdminRecruitmentInformationsQuery(Number(generation));
   const {mutate: postRecruitmentInformations, isPending} =
     useAdminRecruitmentInformationsMutation();
+
+  useEffect(() => {
+    if (!searchParams.get('generationId')) {
+      router.replace('?generationId=13');
+    }
+  }, [searchParams, router]);
 
   useEffect(() => {
     if (isError) {

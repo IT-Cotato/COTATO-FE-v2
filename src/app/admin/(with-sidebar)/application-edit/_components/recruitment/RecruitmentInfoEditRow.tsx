@@ -1,4 +1,4 @@
-import {AdminApplicationFormCalendar} from '@/app/admin/(with-sidebar)/application-form/_components/calendar/AdminApplicationFormCalendar';
+import {AdminDatePicker} from '@/app/admin/(with-sidebar)/application-edit/_components/calendar/AdminDatePicker';
 import RightArrowIcon from '@/assets/icons/arrow-right.svg';
 
 interface RecruitmentInfoEditRowProps {
@@ -22,7 +22,7 @@ export const RecruitmentInfoEditRow = ({
         {label}
       </div>
 
-      <AdminApplicationFormCalendar
+      <AdminDatePicker
         value={start}
         placeholder={type === 'range' ? '시작 일자' : '날짜 선택'}
         onChange={(nextStart) =>
@@ -36,7 +36,7 @@ export const RecruitmentInfoEditRow = ({
       {type === 'range' && (
         <>
           <RightArrowIcon className='text-neutral-400' />
-          <AdminApplicationFormCalendar
+          <AdminDatePicker
             value={end}
             placeholder='종료 일자'
             onChange={(nextEnd) =>
