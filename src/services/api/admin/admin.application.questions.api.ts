@@ -5,6 +5,7 @@ import {
 } from '@/schemas/admin/admin-application-questions.schema';
 import {privateAxios} from '@/services/config/axios';
 import {ENDPOINT} from '@/services/constant/endpoint';
+import {handleApiError} from '@/services/utils/apiHelper';
 
 /**
  * 어드민 지원서 조회 get
@@ -18,14 +19,21 @@ export const getApplicationQuestions = async ({
   generationId: number;
   questionType: PartType;
 }) => {
-  const {data} = await privateAxios.get(ENDPOINT.ADMIN.APPLICATION_QUESTIONS, {
-    params: {
-      generationId,
-      questionType,
-    },
-  });
+  try {
+    const {data} = await privateAxios.get(
+      ENDPOINT.ADMIN.APPLICATION_QUESTIONS,
+      {
+        params: {
+          generationId,
+          questionType,
+        },
+      }
+    );
 
-  return GetApplicationQuestionsResponseSchema.parse(data);
+    return GetApplicationQuestionsResponseSchema.parse(data);
+  } catch (error: unknown) {
+    return handleApiError(error);
+  }
 };
 
 /**
@@ -36,7 +44,11 @@ export const getApplicationQuestions = async ({
 export const postAdminApplicationQuestions = async (
   body: PostApplicationQuestionsRequest
 ) => {
-  await privateAxios.post(ENDPOINT.ADMIN.APPLICATION_QUESTIONS, body);
+  try {
+    await privateAxios.post(ENDPOINT.ADMIN.APPLICATION_QUESTIONS, body);
 
-  return null;
+    return null;
+  } catch (error: unknown) {
+    return handleApiError(error);
+  }
 };
