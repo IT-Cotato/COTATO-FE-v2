@@ -12,14 +12,17 @@ import {
   ApplicationQuestionsType,
   PartType,
 } from '@/schemas/admin/admin-application-questions.schema';
-import {useSearchParams} from 'next/navigation';
 import {useState} from 'react';
 
-export const AdminApplicationQuestionsContainer = () => {
-  const searchParams = useSearchParams();
-  const generationId = Number(searchParams.get('generationId'));
-  const questionType = searchParams.get('part') as PartType;
+interface AdminApplicationQuestionsContainerProps {
+  generationId: number;
+  questionType: PartType;
+}
 
+export const AdminApplicationQuestionsContainer = ({
+  generationId,
+  questionType,
+}: AdminApplicationQuestionsContainerProps) => {
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [draftQuestions, setDraftQuestions] = useState<
     ApplicationQuestionsType[]

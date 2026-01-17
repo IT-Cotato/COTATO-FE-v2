@@ -5,26 +5,16 @@ import {PART_TABS} from '@/constants/admin/admin-application-questions';
 import {PartType} from '@/schemas/admin/admin-application-questions.schema';
 
 import {useRouter, useSearchParams} from 'next/navigation';
-import {useEffect} from 'react';
 
 export const AdminApplicationQuestionsTabContainer = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const partParam = searchParams.get('part') as PartType | null;
-
-  useEffect(() => {
-    if (!partParam) {
-      const params = new URLSearchParams(searchParams.toString());
-      params.set('part', 'PM');
-
-      router.replace(`?${params.toString()}`, {scroll: false});
-    }
-  }, [partParam, router, searchParams]);
+  const partParam = searchParams.get('questionType') as PartType | null;
 
   const handleTabClick = (part: PartType) => {
     const params = new URLSearchParams(searchParams.toString());
-    params.set('part', part);
+    params.set('questionType', part);
 
     router.push(`?${params.toString()}`, {scroll: false});
   };
