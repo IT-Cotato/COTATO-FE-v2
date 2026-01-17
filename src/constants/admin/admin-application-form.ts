@@ -30,9 +30,9 @@ export const scheduleSections = [
 ] as const;
 
 export const PART_TABS: {label: string; value: PartEtcType}[] = [
-  {label: '기획', value: 'plan'},
-  {label: '디자인', value: 'design'},
-  {label: '프론트엔드', value: 'frontend'},
-  {label: '백엔드', value: 'backend'},
+  {label: '기획', value: 'PM'},
+  {label: '디자인', value: 'DE'},
+  {label: '프론트엔드', value: 'FE'},
+  {label: '백엔드', value: 'BE'},
   {label: '기타', value: 'etc'},
 ];

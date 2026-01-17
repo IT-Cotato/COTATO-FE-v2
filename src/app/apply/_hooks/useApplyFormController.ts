@@ -1,13 +1,23 @@
 import {useState, useEffect} from 'react';
 import {useForm, UseFormReturn} from 'react-hook-form';
+import {zodResolver} from '@hookform/resolvers/zod';
+import {
+  BasicInfoFormSchema,
+  BasicInfoFormData,
+  BasicInfoRequest,
+} from '@/schemas/apply/apply-schema';
 import {BASIC_INFO_FIELDS} from '@/constants/form/formConfig';
 import {useRouter, useSearchParams} from 'next/navigation';
 import {useRecruitmentStore} from '@/store/useRecruitmentStore';
 import {useSubmissionStore} from '@/store/useSubmissionStore';
+import {useQuery} from '@tanstack/react-query';
+import {getBasicInfo} from '@/services/api/apply/apply.api';
+import {QUERY_KEYS} from '@/constants/query-keys';
+import {useSaveBasicInfo} from '@/hooks/mutations/useApply.mutation';
 
 interface UseApplyFormControllerReturn {
   step: number;
-  methods: UseFormReturn;
+  methods: UseFormReturn<BasicInfoFormData>;
   handleNext: () => Promise<void>;
   handlePrev: () => void;
   handleSave: () => void;
@@ -22,11 +32,10 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
   const searchParams = useSearchParams();
   const router = useRouter();
 
-  // URL의 step 읽기 (기본값: 1)
+  const applicationId = searchParams.get('id');
   const urlStep = parseInt(searchParams.get('step') || '1');
   const [step, setStep] = useState(urlStep);
 
-  // URL과 로컬 step 동기화
   useEffect(() => {
     setStep(urlStep);
   }, [urlStep]);
@@ -35,38 +44,89 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
   const {isRecruiting} = useRecruitmentStore();
   const setHasSubmitted = useSubmissionStore((state) => state.setHasSubmitted);
 
-  const methods = useForm({mode: 'onChange'});
-  const {trigger, handleSubmit, getValues} = methods;
+  const methods = useForm<BasicInfoFormData>({
+    mode: 'onChange',
+    resolver: zodResolver(BasicInfoFormSchema),
+  });
+  const {trigger, handleSubmit, getValues, reset} = methods;
+
+  const {data: basicInfo} = useQuery({
+    queryKey: QUERY_KEYS.APPLY.BASIC_INFO(applicationId!),
+    queryFn: () => getBasicInfo(Number(applicationId)),
+    enabled: !!applicationId && urlStep === 1,
+  });
+
+  const {mutate: saveBasicInfo} = useSaveBasicInfo(Number(applicationId));
+
+  useEffect(() => {
+    if (basicInfo) {
+      const transformedData = {
+        name: basicInfo.name,
+        gender: basicInfo.gender,
+        contact: basicInfo.phoneNumber,
+        birthDate: basicInfo.birthDate,
+        school: basicInfo.university,
+        isCollegeStudent: (basicInfo.isEnrolled
+          ? 'enrolled'
+          : 'other') as BasicInfoFormData['isCollegeStudent'],
+        department: basicInfo.major,
+        completedSemesters: String(
+          basicInfo.completedSemesters
+        ) as BasicInfoFormData['completedSemesters'],
+        isPrevActivity: (basicInfo.isPrevActivity
+          ? 'yes'
+          : 'no') as BasicInfoFormData['isPrevActivity'],
+        part: basicInfo.applicationPartType,
+      };
+      reset(transformedData);
+    }
+  }, [basicInfo, reset]);
 
   const openConfirmModal = () => setIsConfirmModalOpen(true);
   const closeConfirmModal = () => setIsConfirmModalOpen(false);
 
   const handleSave = () => {
+    if (!applicationId) return;
     const data = getValues();
-    console.log('저장된 데이터:', data);
-    // TODO: API 호출 - 임시저장
+
+    const requestData: BasicInfoRequest = {
+      name: data.name,
+      gender: data.gender,
+      birthDate: data.birthDate,
+      phoneNumber: data.contact,
+      university: data.school,
+      major: data.department,
+      completedSemesters: Number(data.completedSemesters),
+      isPrevActivity: data.isPrevActivity === 'yes',
+      isEnrolled: data.isCollegeStudent === 'enrolled',
+      applicationPartType: data.part,
+    };
+
+    console.log('임시저장 데이터:', requestData);
+
+    saveBasicInfo(requestData);
   };
 
   const handleNext = async () => {
-    handleSave();
-
-    let fieldsToValidate: string[] = [];
+    let fieldsToValidate: (keyof BasicInfoFormData)[] = [];
 
     if (step === 1) {
       fieldsToValidate = BASIC_INFO_FIELDS.flatMap((field) =>
         'row' in field && field.row
           ? field.row.map((f) => f.name)
           : [field.name]
-      ).filter(Boolean) as string[];
+      ).filter(Boolean) as (keyof BasicInfoFormData)[];
     } else if (step === 2) {
       const values = getValues();
       fieldsToValidate = Object.keys(values).filter((key) =>
         key.startsWith('ans_')
-      );
+      ) as (keyof BasicInfoFormData)[];
     }
 
     const isValid = await trigger(fieldsToValidate);
     if (isValid) {
+      handleSave(); // 유효성 검사 통과 후 저장
+
       const params = new URLSearchParams(searchParams.toString());
       params.set('step', String(step + 1));
 
@@ -107,7 +167,7 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
       } else {
         throw new Error('Submission failed');
       }
-    } catch (error) {
+    } catch {
       router.push('/?submitted=false');
     }
   };

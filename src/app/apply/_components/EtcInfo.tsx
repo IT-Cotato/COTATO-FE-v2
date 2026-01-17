@@ -7,8 +7,8 @@ import {FormDropdown} from '@/components/form/FormDropdown';
 import {FullButton} from '@/components/button/FullButton';
 import {FormRadio} from '@/components/form/FormRadio';
 import {FormInput} from '@/components/form/FormInput';
-import {ADDITIONAL_FIELDS} from '@/constants/form/formConfig';
-import {EtcFieldConfig} from '@/schemas/apply-type';
+import {ETC_FIELDS} from '@/constants/form/formConfig';
+import {EtcFieldConfig} from '@/schemas/apply/apply-type';
 
 export const EtcInfo = ({
   onPrev,
@@ -30,7 +30,6 @@ export const EtcInfo = ({
       name,
       label,
       options,
-      rules,
       placeholder,
       maxLength,
       readOnly,
@@ -56,7 +55,7 @@ export const EtcInfo = ({
             defaultValue={defaultValue}
             currentLength={name ? (watch(name) || '').length : 0}
             error={error?.message as string}
-            {...(name && register(name, rules))}
+            {...(name && register(name))}
           />
         );
       case 'dropdown':
@@ -65,7 +64,6 @@ export const EtcInfo = ({
             key={name}
             name={name ?? ''}
             control={control}
-            rules={rules}
             render={({field: controllerField}) => (
               <FormDropdown
                 label={label ?? ''}
@@ -85,7 +83,7 @@ export const EtcInfo = ({
             label={label ?? ''}
             placeholder={placeholder}
             error={error?.message as string}
-            {...(name && register(name, rules))}
+            {...(name && register(name))}
           />
         );
       case 'radio':
@@ -100,7 +98,7 @@ export const EtcInfo = ({
                   key={opt.value}
                   label={opt.label}
                   value={opt.value}
-                  {...(name && register(name, rules))}
+                  {...(name && register(name))}
                 />
               ))}
             </div>
@@ -119,7 +117,7 @@ export const EtcInfo = ({
   return (
     <div className='flex w-full flex-col gap-[81px]'>
       <div className='flex flex-col gap-10'>
-        {ADDITIONAL_FIELDS.map((field, idx) => {
+        {ETC_FIELDS.map((field, idx) => {
           if (field.type === 'row' && 'row' in field) {
             return (
               <div

@@ -1,26 +1,12 @@
-import type {RegisterOptions} from 'react-hook-form';
+import {BasicInfoFormData} from '@/schemas/apply/apply-schema';
 
 // BasicInfo
-export interface BasicInfoFormData {
-  name: string;
-  gender: string;
-  contact: string;
-  birthDate: string;
-  school: string;
-  isCollegeStudent: string;
-  department: string;
-  completedSemesters: string;
-  isPrevActivity: string;
-  part: string;
-}
-
 export interface BasicInfoFieldConfig {
   name: keyof BasicInfoFormData;
   label: string;
   type: 'input' | 'dropdown' | 'radio';
   placeholder?: string;
   options?: {value: string; label: string}[];
-  rules?: RegisterOptions<BasicInfoFormData, keyof BasicInfoFormData>;
 }
 
 export type BasicInfoFormItem =
@@ -34,13 +20,12 @@ export interface EtcFieldConfig {
   type: string;
   placeholder?: string;
   options?: {value: string; label: string}[];
-  rules?: RegisterOptions;
   maxLength?: number;
   readOnly?: boolean;
   defaultValue?: string;
   className?: string;
 }
 
-export type AdditionalFormItem =
+export type EtcFormItem =
   | EtcFieldConfig
   | {type: 'row'; row: EtcFieldConfig[]; name?: never};
