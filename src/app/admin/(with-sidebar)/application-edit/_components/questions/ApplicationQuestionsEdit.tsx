@@ -7,7 +7,7 @@ import {useEffect} from 'react';
 
 interface ApplicationQuestionsEditProps {
   questions: ApplicationQuestionsType[];
-  onChange: (qusetions: ApplicationQuestionsType[]) => void;
+  onChange: (questions: ApplicationQuestionsType[]) => void;
   onValidChange: (isValid: boolean) => void;
 }
 
