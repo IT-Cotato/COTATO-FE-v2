@@ -12,7 +12,7 @@ import {handleApiError} from '@/services/utils/apiHelper';
  * @param param0
  * @returns 어드민 지원서 파트별 리스트
  */
-export const getApplicationQuestions = async ({
+export const getAdminApplicationQuestions = async ({
   generationId,
   questionType,
 }: {

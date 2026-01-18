@@ -1,6 +1,7 @@
 import {QUERY_KEYS} from '@/constants/query-keys';
 import {PartType} from '@/schemas/admin/admin-application-questions.schema';
-import {getApplicationQuestions} from '@/services/api/admin/admin.application.questions.api';
+import {getAdminApplicationQuestions} from '@/services/api/admin/admin.application.questions.api';
+
 import {useQuery} from '@tanstack/react-query';
 
 export const useAdminApplicationQuestionsQuery = ({
@@ -17,7 +18,7 @@ export const useAdminApplicationQuestionsQuery = ({
       questionType,
     ],
     queryFn: () =>
-      getApplicationQuestions({
+      getAdminApplicationQuestions({
         generationId,
         questionType,
       }),
