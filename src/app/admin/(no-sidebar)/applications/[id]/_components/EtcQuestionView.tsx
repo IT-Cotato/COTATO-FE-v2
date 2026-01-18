@@ -3,76 +3,78 @@ import {FormInput} from '@/components/form/FormInput';
 import {FormRadio} from '@/components/form/FormRadio';
 import {FormTextarea} from '@/components/form/FormTextarea';
 import {ETC_QUESTION_LABELS} from '@/constants/admin/admin-applications';
-
-import {EtcQuestionType} from '@/schemas/admin/admin-application-type';
+import {AdminApplicationEtcQuestionsType} from '@/schemas/admin/admin-application.schema';
 
 interface EtcQuestionViewProps {
   onPrev: () => void;
-  data: EtcQuestionType;
+  etcQuestions: AdminApplicationEtcQuestionsType;
 }
 
-export const EtcQuestionView = ({onPrev, data}: EtcQuestionViewProps) => {
+export const EtcQuestionView = ({
+  onPrev,
+  etcQuestions,
+}: EtcQuestionViewProps) => {
   return (
     <div className='flex flex-col gap-10'>
       <FormInput
         label={ETC_QUESTION_LABELS.discoveryPath}
-        value={data.discoveryPath}
+        value={etcQuestions.discoveryPath.selectedAnswer ?? ''}
         readOnly
       />
 
       <FormTextarea
-        label={ETC_QUESTION_LABELS.parallelActivity}
+        label={ETC_QUESTION_LABELS.parallelActivities}
         readOnly
-        value={data.parallelActivity}
+        value={etcQuestions.parallelActivities ?? ''}
       />
 
       <div>
         <label className='text-h5 text-neutral-600'>
-          {ETC_QUESTION_LABELS.interviewUnavailable}
+          {etcQuestions.interviewStartDate}부터 {etcQuestions.interviewEndDate}
+          까지 면접이 진행됩니다. 참여가 불가능한 시간이 있다면 모두 작성해
+          주세요.
         </label>
         <div className='flex flex-row gap-17.5'>
           <FormInput
-            label={ETC_QUESTION_LABELS.interviewUnavailableTimeFirst}
+            label={etcQuestions.interviewStartDate}
             readOnly
-            value={data.interviewUnavailableTime.march3}
+            value={etcQuestions.unavailableInterviewTimes ?? ''}
           />
-          <FormInput
-            label={ETC_QUESTION_LABELS.interviewUnavailableTimeSecond}
-            readOnly
-            value={data.interviewUnavailableTime.march4}
-          />
+          <FormInput label={etcQuestions.interviewEndDate} readOnly />
         </div>
       </div>
 
       <div>
         <label className='text-h5 text-neutral-600'>
-          {ETC_QUESTION_LABELS.sessionDate}
+          {ETC_QUESTION_LABELS.sessionAttendance}
         </label>
         <FormRadio
-          label={ETC_QUESTION_LABELS.sessionDate_answer}
+          label={ETC_QUESTION_LABELS.sessionAttendance_answer}
           readOnly
-          checked={data.agreeSessionTime}
+          checked={etcQuestions.sessionAttendance ?? true}
         />
       </div>
       <div>
         <label className='text-h5 text-neutral-600'>
-          {ETC_QUESTION_LABELS.notice}
+          최종 합격 시 대면 OT({etcQuestions.otDate}), 코커톤(0월 0일),
+          데모데이(0월 0일)는 필수 참여입니다.
+          {/** TODO: 추후 코커톤, 데모데이 서버 응답으로 변경 */}
         </label>
         <FormRadio
-          label={ETC_QUESTION_LABELS.notice_answer}
+          label={ETC_QUESTION_LABELS.mandatoryEvents_answer}
           readOnly
-          checked={data.agreeMandatorySchedule}
+          checked={etcQuestions.mandatoryEvents ?? true}
         />
       </div>
 
       <div>
         <label className='text-h5 text-neutral-600'>
-          {ETC_QUESTION_LABELS.termsAgree}
+          {ETC_QUESTION_LABELS.privacyPolicy}
         </label>
         <FormRadio
-          label={ETC_QUESTION_LABELS.termsAgree_answer}
+          label={ETC_QUESTION_LABELS.privacyPolicy_answer}
           readOnly
-          checked={data.agreePrivacyPolicy}
+          checked={etcQuestions.privacyPolicy ?? true}
         />
       </div>
 
