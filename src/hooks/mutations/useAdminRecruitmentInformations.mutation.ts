@@ -1,7 +1,8 @@
 import {QUERY_KEYS} from '@/constants/query-keys';
 import type {PostAdminRecruitmentInformationRequest} from '@/schemas/admin/admin-recruitment-information.schema';
-import {postRecruitmentInformations} from '@/services/api/admin/admin.recruitment.info.api';
+
 import type {ErrorResponse} from '@/schemas/common/common-schema';
+import {postAdminRecruitmentInformations} from '@/services/api/admin/admin.recruitment.info.api';
 import {useMutation, useQueryClient} from '@tanstack/react-query';
 
 export const useAdminRecruitmentInformationsMutation = () => {
@@ -12,7 +13,7 @@ export const useAdminRecruitmentInformationsMutation = () => {
     ErrorResponse,
     PostAdminRecruitmentInformationRequest
   >({
-    mutationFn: postRecruitmentInformations,
+    mutationFn: postAdminRecruitmentInformations,
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: [QUERY_KEYS.ADMIN_RECRUITMENT_INFORMATIONS],

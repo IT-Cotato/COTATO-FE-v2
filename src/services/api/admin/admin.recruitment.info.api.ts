@@ -7,7 +7,7 @@ import {privateAxios} from '@/services/config/axios';
 import {ENDPOINT} from '@/services/constant/endpoint';
 import {handleApiError} from '@/services/utils/apiHelper';
 
-export const getRecruitmentInformations = async (
+export const getAdminRecruitmentInformations = async (
   generationId: number
 ): Promise<RecruitmentInformation> => {
   try {
@@ -25,7 +25,7 @@ export const getRecruitmentInformations = async (
   }
 };
 
-export const postRecruitmentInformations = async (
+export const postAdminRecruitmentInformations = async (
   payload: PostAdminRecruitmentInformationRequest
 ): Promise<void> => {
   try {
