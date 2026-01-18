@@ -9,7 +9,7 @@ import {useRouter, useSearchParams} from 'next/navigation';
 import {useAdminApplicationsQuery} from '@/hooks/queries/useAdminApplications.query';
 import {useEffect} from 'react';
 
-export const AdminApplicationContainer = () => {
+export const AdminApplicationsContainer = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
 
