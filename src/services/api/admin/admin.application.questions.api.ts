@@ -8,9 +8,13 @@ import {ENDPOINT} from '@/services/constant/endpoint';
 import {handleApiError} from '@/services/utils/apiHelper';
 
 /**
- * 어드민 지원서 조회 get
- * @param param0
- * @returns 어드민 지원서 파트별 리스트
+ * 특정 기수의 지원서 질문 목록을 조회하는 API 요청 함수
+ * - 파트별(FE/BE/PM 등) 지원서 질문 리스트를 조회합니다.
+ * - 어드민 지원서 수정 페이지의 지원서 관리 폼에서 사용됩니다.
+ * @param params 조회 파라미터
+ * @param params.generationId 기수 ID
+ * @param params.questionType 파트 타입 (FE | BE | PM | DESIGN)
+ * @returns 지원서 질문 목록 API 응답 데이터
  */
 export const getAdminApplicationQuestions = async ({
   generationId,
@@ -37,10 +41,16 @@ export const getAdminApplicationQuestions = async ({
 };
 
 /**
- * 어드민 지원서 수정 post
- * @param body
+ * 지원서 질문을 생성 또는 수정하는 API 요청 함수
  *
+ * - 특정 기수/파트의 지원서 질문을 등록하거나 수정합니다.
+ * - 어드민 지원서 수정 페이지의 지원서 관리 폼에서 사용됩니다.
+ * - 요청 바디는 서버에서 정의한 질문 등록/수정 스펙을 따릅니다.
+ *
+ * @param body 지원서 질문 등록/수정 요청 바디
+ * @returns 성공 시 null을 반환합니다.
  */
+
 export const postAdminApplicationQuestions = async (
   body: PostApplicationQuestionsRequest
 ) => {
