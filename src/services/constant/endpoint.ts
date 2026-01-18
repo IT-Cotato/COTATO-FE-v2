@@ -21,6 +21,12 @@ export const ENDPOINT = {
   ADMIN: {
     APPLICATIONS: '/api/admin/applications',
     APPLICATION_QUESTIONS: '/api/admin/application-questions',
+    APPLICATION_BASIC_INFO: (applicationId: number) =>
+      `/api/admin/application/${applicationId}/basic-info`,
+    APPLICATION_ETC_QUESTIONS: (applicationId: number) =>
+      `/api/admin/application/${applicationId}/etc-questions`,
+    APPLICATION_PART_QUESTIONS: (applicationId: number) =>
+      `/api/admin/application/${applicationId}/part-questions`,
     RECRUITMENT_INFORMATIONS: '/api/admin/recruitment-informations',
     RECRUITMENT_ACTIVATION: '/api/admin/recruitment-activation',
     RECRUITMENT_DEACTIVATION: '/api/admin/recruitment-deactivation',
