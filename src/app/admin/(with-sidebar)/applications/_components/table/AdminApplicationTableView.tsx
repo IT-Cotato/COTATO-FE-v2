@@ -86,7 +86,7 @@ export const AdminApplicationTableView = ({
             className='bg-white text-body-l text-neutral-600'>
             <td className='px-3 py-4'>
               <a
-                href={`${ROUTES.ADMIN_APPLICATION}/${app.applicationId}`}
+                href={`${ROUTES.ADMIN_APPLICATIONS}/${app.applicationId}`}
                 target='_blank'
                 rel='noopener noreferrer'
                 className='cursor-pointer hover:border-b'>

@@ -1,4 +1,4 @@
-import {AdminApplicationContainer} from '@/app/admin/(no-sidebar)/applications/[id]/_containers/AdminApplicationContainer';
+import {AdminApplicationContainer} from '@/app/admin/(with-sidebar)/applications/[id]/_containers/AdminApplicationContainer';
 import {SuspenseWrapper} from '@/components/wrappers/SuspenseWrapper';
 
 export default function ApplicationDetailPage() {

@@ -1,10 +1,10 @@
 'use client';
 
-import {AdminReviewTabs} from '@/app/admin/(no-sidebar)/applications/[id]/_components/AdminReviewTabs';
-import {AdminApplicationHeader} from '@/app/admin/(no-sidebar)/applications/[id]/_components/AdminApplicationHeader';
-import {BasicInfoView} from '@/app/admin/(no-sidebar)/applications/[id]/_components/BasicInfoView';
-import {EtcQuestionView} from '@/app/admin/(no-sidebar)/applications/[id]/_components/EtcQuestionView';
-import {PartQuestionView} from '@/app/admin/(no-sidebar)/applications/[id]/_components/PartQuestionView';
+import {AdminReviewTabs} from '@/app/admin/(with-sidebar)/applications/[id]/_components/AdminReviewTabs';
+import {AdminApplicationHeader} from '@/app/admin/(with-sidebar)/applications/[id]/_components/AdminApplicationHeader';
+import {BasicInfoView} from '@/app/admin/(with-sidebar)/applications/[id]/_components/BasicInfoView';
+import {EtcQuestionView} from '@/app/admin/(with-sidebar)/applications/[id]/_components/EtcQuestionView';
+import {PartQuestionView} from '@/app/admin/(with-sidebar)/applications/[id]/_components/PartQuestionView';
 import {StepIndicator} from '@/components/navigation/StepIndicator';
 import {
   useAdminApplicationBasicInfo,
