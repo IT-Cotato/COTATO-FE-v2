@@ -28,11 +28,21 @@ export const AdminApplicationContainer = () => {
 
   const rawStep = Number(searchParams.get('step') ?? 1);
   const step = Math.min(Math.max(rawStep, 1), 3);
+
   const handleNext = () => {
-    if (step < 3) router.push(`?step=${step + 1}`);
+    if (step < 3) {
+      const params = new URLSearchParams(searchParams.toString());
+      params.set('step', String(step + 1));
+      router.push(`?${params.toString()}`);
+    }
   };
+
   const handlePrev = () => {
-    if (step > 1) router.push(`?step=${step - 1}`);
+    if (step > 1) {
+      const params = new URLSearchParams(searchParams.toString());
+      params.set('step', String(step - 1));
+      router.push(`?${params.toString()}`);
+    }
   };
 
   if (!basicInfo || !partQuestions || !etcQuestions) return null;
