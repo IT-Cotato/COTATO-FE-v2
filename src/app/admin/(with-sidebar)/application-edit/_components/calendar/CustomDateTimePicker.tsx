@@ -1,6 +1,6 @@
-import {CustomHeader} from '@/app/admin/(with-sidebar)/application-form/_components/calendar/CustomHeader';
-import {TimePanel} from '@/app/admin/(with-sidebar)/application-form/_components/calendar/TimePanel';
-import '@/app/admin/(with-sidebar)/application-form/_components/calendar/style/application-form-datepicker.css';
+import {CustomHeader} from '@/app/admin/(with-sidebar)/application-edit/_components/calendar/CustomHeader';
+import {TimePanel} from '@/app/admin/(with-sidebar)/application-edit/_components/calendar/TimePanel';
+import '@/app/admin/(with-sidebar)/application-edit/_components/calendar/style/application-form-datepicker.css';
 import {CustomInput} from '@/app/admin/(with-sidebar)/recruitment/_components/calendar/CustomInput';
 import DatePicker, {CalendarContainer} from 'react-datepicker';
 

@@ -1,6 +1,6 @@
 'use client';
 
-import {CustomDateTimePicker} from '@/app/admin/(with-sidebar)/application-form/_components/calendar/CustomDateTimePicker';
+import {CustomDateTimePicker} from '@/app/admin/(with-sidebar)/application-edit/_components/calendar/CustomDateTimePicker';
 import CalendarIcon from '@/assets/icons/calendar.svg';
 import 'react-datepicker/dist/react-datepicker.css';
 import '@/styles/datepicker-custom.css';
@@ -14,7 +14,7 @@ interface AdminDatePickerProps {
   onChange: (value: string) => void;
 }
 
-export const AdminApplicationFormCalendar = ({
+export const AdminDatePicker = ({
   value,
   placeholder = '날짜 선택',
   onChange,

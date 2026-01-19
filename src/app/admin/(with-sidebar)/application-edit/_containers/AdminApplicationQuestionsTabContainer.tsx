@@ -1,20 +1,20 @@
 'use client';
 
 import {Button} from '@/components/button/Button';
-import {PART_TABS} from '@/constants/admin/admin-application-form';
-import {PartEtcType} from '@/schemas/admin/admin-application-type';
+import {PART_TABS} from '@/constants/admin/admin-application-questions';
+import {PartType} from '@/schemas/admin/admin-application-questions.schema';
 
 import {useRouter, useSearchParams} from 'next/navigation';
 
-export const AdminApplicationFormTabs = () => {
+export const AdminApplicationQuestionsTabContainer = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const activePart = (searchParams.get('part') as PartEtcType) ?? 'plan';
+  const partParam = searchParams.get('questionType') as PartType | null;
 
-  const handleTabClick = (part: PartEtcType) => {
+  const handleTabClick = (part: PartType) => {
     const params = new URLSearchParams(searchParams.toString());
-    params.set('part', part);
+    params.set('questionType', part);
 
     router.push(`?${params.toString()}`, {scroll: false});
   };
@@ -22,7 +22,7 @@ export const AdminApplicationFormTabs = () => {
   return (
     <div className='flex gap-17.5'>
       {PART_TABS.map(({label, value}) => {
-        const isActive = activePart === value;
+        const isActive = partParam === value;
 
         return (
           <Button
