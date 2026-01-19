@@ -1,8 +1,8 @@
 import {useRouter, useSearchParams} from 'next/navigation';
 import {useRef, useState} from 'react';
-import {AdminApplicationPagination} from '@/app/admin/(with-sidebar)/applications/_components/table/AdminApplicationPagination';
-import {AdminApplicationResultFilter} from '@/app/admin/(with-sidebar)/applications/_components/table/AdminApplicationResultFilter';
-import {AdminApplicationTableView} from '@/app/admin/(with-sidebar)/applications/_components/table/AdminApplicationTableView';
+import {AdminApplicationsPagination} from '@/app/admin/(with-sidebar)/applications/_components/table/AdminApplicationsPagination';
+import {AdminApplicationsResultFilter} from '@/app/admin/(with-sidebar)/applications/_components/table/AdminApplicationsResultFilter';
+import {AdminApplicationsTableView} from '@/app/admin/(with-sidebar)/applications/_components/table/AdminApplicationsTableView';
 import {
   ApplicationResultLabel,
   RESULT_LABEL_MAP,
@@ -12,15 +12,15 @@ import {
 import {ApplicantsPageType} from '@/schemas/admin/admin-applications.schema';
 import {Spinner} from '@/components/ui/Spinner';
 
-interface AdminApplicationTableContainerProps {
+interface AdminApplicationsTableContainerProps {
   applicants?: ApplicantsPageType;
   isLoading: boolean;
 }
 
-export const AdminApplicationTableContainer = ({
+export const AdminApplicationsTableContainer = ({
   applicants,
   isLoading,
-}: AdminApplicationTableContainerProps) => {
+}: AdminApplicationsTableContainerProps) => {
   const searchParams = useSearchParams();
   const router = useRouter();
   const passViewStatuses = searchParams.getAll('passViewStatuses');
@@ -92,7 +92,7 @@ export const AdminApplicationTableContainer = ({
               </div>
             )}
 
-            <AdminApplicationTableView
+            <AdminApplicationsTableView
               items={applicants.content}
               submitDateSortOrder={submitDateSortOrder}
               isFilterActive={isFilterActive}
@@ -102,7 +102,7 @@ export const AdminApplicationTableContainer = ({
 
             {isFilterOpen && !isLoading && (
               <aside className='absolute top-0 left-full mt-5.5 ml-2 w-33.25'>
-                <AdminApplicationResultFilter
+                <AdminApplicationsResultFilter
                   filterAreaRef={filterAreaRef}
                   selected={selectedResults}
                   onChange={handleResultFilterChange}
@@ -114,7 +114,7 @@ export const AdminApplicationTableContainer = ({
 
           <div className='flex w-full justify-center'>
             <div className='-ml-86'>
-              <AdminApplicationPagination
+              <AdminApplicationsPagination
                 currentPage={applicants.pageInfo.currentPage}
                 totalPages={applicants.pageInfo.totalPages}
                 onPageChange={handleUpdatePage}

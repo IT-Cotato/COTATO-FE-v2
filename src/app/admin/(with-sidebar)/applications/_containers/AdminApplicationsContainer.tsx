@@ -1,13 +1,13 @@
 'use client';
 
-import {AdminApplicationInformation} from '@/app/admin/(with-sidebar)/applications/_components/info/AdminApplicationInformation';
-import {AdminApplicationTableContainer} from '@/app/admin/(with-sidebar)/applications/_containers/AdminApplicationTableContainer';
-import {AdminApplicationTabContainer} from '@/app/admin/(with-sidebar)/applications/_containers/AdminApplicationTabContainer';
+import {AdminApplicationsTableContainer} from '@/app/admin/(with-sidebar)/applications/_containers/AdminApplicationsTableContainer';
+import {AdminApplicationsTabContainer} from '@/app/admin/(with-sidebar)/applications/_containers/AdminApplicationsTabContainer';
 
 import {GetAdminApplicationsParamsSchema} from '@/schemas/admin/admin-applications.schema';
 import {useRouter, useSearchParams} from 'next/navigation';
 import {useAdminApplicationsQuery} from '@/hooks/queries/useAdminApplications.query';
 import {useEffect} from 'react';
+import {AdminApplicationsInformation} from '@/app/admin/(with-sidebar)/applications/_components/info/AdminApplicationsInformation';
 
 export const AdminApplicationsContainer = () => {
   const searchParams = useSearchParams();
@@ -42,15 +42,15 @@ export const AdminApplicationsContainer = () => {
 
   return (
     <>
-      <AdminApplicationInformation
+      <AdminApplicationsInformation
         recruitmentPeriod={data?.data.recruitmentPeriodResponse}
         isLoading={isInitialLoading}
       />
-      <AdminApplicationTabContainer
+      <AdminApplicationsTabContainer
         summary={data?.data.summary}
         isLoading={isInitialLoading}
       />
-      <AdminApplicationTableContainer
+      <AdminApplicationsTableContainer
         applicants={data?.data.applicants}
         isLoading={isRefreshing}
       />

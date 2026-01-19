@@ -7,15 +7,15 @@ import {RecruitmentPeriodSchemaType} from '@/schemas/admin/admin-applications.sc
 import {useRouter, useSearchParams} from 'next/navigation';
 import {useState} from 'react';
 
-interface AdminApplicationInformationProps {
+interface AdminApplicationsInformationProps {
   recruitmentPeriod?: RecruitmentPeriodSchemaType;
   isLoading: boolean;
 }
 
-export const AdminApplicationInformation = ({
+export const AdminApplicationsInformation = ({
   recruitmentPeriod,
   isLoading,
-}: AdminApplicationInformationProps) => {
+}: AdminApplicationsInformationProps) => {
   const router = useRouter();
   const searchParams = useSearchParams();
 

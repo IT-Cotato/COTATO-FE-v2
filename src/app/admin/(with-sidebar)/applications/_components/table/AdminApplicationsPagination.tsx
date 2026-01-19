@@ -4,19 +4,19 @@ import clsx from 'clsx';
 
 const MAX_VISIBLE_PAGES = 5;
 
-interface AdminApplicationPaginationProps {
+interface AdminApplicationsPaginationProps {
   currentPage: number;
   totalPages: number;
   onPageChange: (page: number) => void;
   disabled?: boolean;
 }
 
-export const AdminApplicationPagination = ({
+export const AdminApplicationsPagination = ({
   currentPage,
   totalPages,
   onPageChange,
   disabled,
-}: AdminApplicationPaginationProps) => {
+}: AdminApplicationsPaginationProps) => {
   const isPrevDisabled = currentPage <= 1;
   const isNextDisabled = currentPage >= totalPages;
 

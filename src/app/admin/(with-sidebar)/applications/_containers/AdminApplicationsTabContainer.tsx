@@ -1,6 +1,6 @@
 'use client';
 
-import {AdminApplicationTabPart} from '@/app/admin/(with-sidebar)/applications/_components/tab/AdminApplicationTabPart';
+import {AdminApplicationsTabPart} from '@/app/admin/(with-sidebar)/applications/_components/tab/AdminApplicationsTabPart';
 import {PART_COUNT_MAP, PART_TABS} from '@/constants/admin/admin-applications';
 import {
   ApplicationPartViewType,
@@ -8,15 +8,15 @@ import {
 } from '@/schemas/admin/admin-applications.schema';
 import {useRouter, useSearchParams} from 'next/navigation';
 
-interface AdminApplicationTabContainerProps {
+interface AdminApplicationsTabContainerProps {
   summary?: ApplicationSummaryType;
   isLoading: boolean;
 }
 
-export const AdminApplicationTabContainer = ({
+export const AdminApplicationsTabContainer = ({
   summary,
   isLoading,
-}: AdminApplicationTabContainerProps) => {
+}: AdminApplicationsTabContainerProps) => {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -38,7 +38,7 @@ export const AdminApplicationTabContainer = ({
         const applyNumber = summary?.[countKey];
 
         return (
-          <AdminApplicationTabPart
+          <AdminApplicationsTabPart
             key={value}
             partName={label}
             applyNumber={isLoading ? undefined : applyNumber}

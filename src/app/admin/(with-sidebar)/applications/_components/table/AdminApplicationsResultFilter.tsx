@@ -5,19 +5,19 @@ import clsx from 'clsx';
 import {RefObject, useEffect, useState} from 'react';
 import {useClickOutside} from '@/hooks/useClickOutside';
 
-interface AdminApplicationResultFilterProps {
+interface AdminApplicationsResultFilterProps {
   selected: ApplicationResultType[];
   filterAreaRef: RefObject<HTMLElement | null>;
   onChange: (next: ApplicationResultType[]) => void;
   onClose: () => void;
 }
 
-export const AdminApplicationResultFilter = ({
+export const AdminApplicationsResultFilter = ({
   selected,
   filterAreaRef,
   onChange,
   onClose,
-}: AdminApplicationResultFilterProps) => {
+}: AdminApplicationsResultFilterProps) => {
   const [draftSelected, setDraftSelected] =
     useState<ApplicationResultType[]>(selected);
 

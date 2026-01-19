@@ -9,15 +9,15 @@ import {
   ApplicationResultStatus,
 } from '@/constants/admin/admin-applications';
 
-interface AdminApplicationResultDropdownProps {
+interface AdminApplicationsResultDropdownProps {
   result?: ApplicationResultStatus;
   onChange?: (value: ApplicationResultStatus) => void;
 }
 
-export const AdminApplicationResultDropdown = ({
+export const AdminApplicationsResultDropdown = ({
   result = 'PENDING',
   onChange,
-}: AdminApplicationResultDropdownProps) => {
+}: AdminApplicationsResultDropdownProps) => {
   const [selectedResult, setSelectedResult] =
     useState<ApplicationResultStatus>(result);
   const [isOpen, setIsOpen] = useState(false);
