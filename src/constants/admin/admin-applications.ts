@@ -120,6 +120,6 @@ export const ETC_QUESTION_LABELS = {
   sessionAttendance: '코테이토의 세션은 매주 금요일 19시에 진행됩니다.',
   sessionAttendance_answer: '성실히 참여하겠습니다!',
   mandatoryEvents_answer: '네, 가능합니다.',
-  privacyPolicy: ' 개인정보 활용 동의',
+  privacyPolicy: '개인정보 활용 동의',
   privacyPolicy_answer: '확인',
 };
