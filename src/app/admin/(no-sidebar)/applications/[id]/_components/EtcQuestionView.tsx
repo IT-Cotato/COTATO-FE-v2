@@ -51,7 +51,7 @@ export const EtcQuestionView = ({
         <FormRadio
           label={ETC_QUESTION_LABELS.sessionAttendance_answer}
           readOnly
-          checked={etcQuestions.sessionAttendance ?? true}
+          checked={etcQuestions.sessionAttendance === true}
         />
       </div>
       <div>
@@ -63,7 +63,7 @@ export const EtcQuestionView = ({
         <FormRadio
           label={ETC_QUESTION_LABELS.mandatoryEvents_answer}
           readOnly
-          checked={etcQuestions.mandatoryEvents ?? true}
+          checked={etcQuestions.mandatoryEvents === true}
         />
       </div>
 
@@ -74,7 +74,7 @@ export const EtcQuestionView = ({
         <FormRadio
           label={ETC_QUESTION_LABELS.privacyPolicy_answer}
           readOnly
-          checked={etcQuestions.privacyPolicy ?? true}
+          checked={etcQuestions.privacyPolicy === true}
         />
       </div>
 
