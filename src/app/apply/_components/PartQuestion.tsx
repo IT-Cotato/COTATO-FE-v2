@@ -4,21 +4,15 @@ import {useSearchParams} from 'next/navigation';
 import {useFormContext} from 'react-hook-form';
 import {FormTextarea} from '@/components/form/FormTextarea';
 import {FullButton} from '@/components/button/FullButton';
-import {mockPlanApplicationForm} from '@/mocks/mock-application-form';
 import {PART_TABS} from '@/constants/admin/admin-application-form';
 import {PartEtcType} from '@/schemas/admin/admin-application-type';
+import {useApplicationStore} from '@/store/useApplicationStore';
+import {useGetPartQuestionsQuery} from '@/hooks/queries/useApplyQuery';
 
 interface PartQuestionProps {
   onPrev: () => void;
   onNext: () => void;
   onSave: () => void;
-}
-
-interface QuestionItem {
-  questionId: number;
-  sequence: number;
-  content: string;
-  maxLength: number;
 }
 
 export const PartQuestion = ({onPrev, onNext, onSave}: PartQuestionProps) => {
@@ -37,9 +31,9 @@ export const PartQuestion = ({onPrev, onNext, onSave}: PartQuestionProps) => {
     (tab) => tab.value === activePart
   )?.label;
 
-  const questions = (mockPlanApplicationForm[
-    activePart as keyof typeof mockPlanApplicationForm
-  ] || []) as QuestionItem[];
+  const applicationId = useApplicationStore((state) => state.applicationId);
+
+  const {data: questionsData} = useGetPartQuestionsQuery(applicationId);
 
   return (
     <div className='flex w-full flex-col gap-[30px]'>
@@ -48,17 +42,17 @@ export const PartQuestion = ({onPrev, onNext, onSave}: PartQuestionProps) => {
           {activePartLabel} 파트에 관한 질문입니다.
         </h3>
 
-        {questions.map((q) => (
+        {questionsData?.questionsWithAnswers?.map((q) => (
           <FormTextarea
             key={q.questionId}
             label={`${q.sequence}. ${q.content}`}
-            maxLength={q.maxLength}
+            maxLength={q.maxByte}
             currentLength={(watch(`ans_${q.questionId}`) || '').length}
             placeholder='내용을 입력해주세요'
             error={errors[`ans_${q.questionId}`]?.message as string}
             {...register(`ans_${q.questionId}`, {
               required: '답변을 작성해주세요',
-              maxLength: {value: q.maxLength, message: '글자수를 초과했습니다'},
+              maxLength: {value: q.maxByte, message: '글자수를 초과했습니다'},
             })}
           />
         ))}
