@@ -15,13 +15,13 @@ export const AdminApplicationHeader = ({
   return (
     <header>
       <h1 className='flex gap-5 text-h1 font-bold'>
-        <p className='text-neutral-600'>🥔 {generation}기 </p>
-        <p className='text-neutral-800'>
+        <span className='text-neutral-600'>🥔 {generation}기 </span>
+        <span className='text-neutral-800'>
           {PART_TABS.find((tab) => tab.value === basicInfo.applicationPartType)
             ?.label ?? '-'}
-        </p>
-        <p className='text-neutral-800'> {basicInfo.name}</p>
-        <p className='text-neutral-600'>지원서 🥔</p>
+        </span>
+        <span className='text-neutral-800'> {basicInfo.name}</span>
+        <span className='text-neutral-600'>지원서 🥔</span>
       </h1>
     </header>
   );
