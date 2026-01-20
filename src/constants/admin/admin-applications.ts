@@ -2,7 +2,7 @@ import {ReviewerType} from '@/schemas/admin/admin-application-type';
 import {
   ApplicationPartViewType,
   ApplicationSummaryType,
-} from '@/schemas/admin/admin-applications-schema';
+} from '@/schemas/admin/admin-applications.schema';
 
 /** 지원서 테이블 컬럼 상수 */
 export const APPLICATION_COLUMNS = [
@@ -115,17 +115,11 @@ export const PART_QUESTION_LABELS = {
 
 export const ETC_QUESTION_LABELS = {
   discoveryPath: '동아리를 알게 된 경로를 선택해주세요.',
-  parallelActivity:
+  parallelActivities:
     '코테이토 활동 외에 병행하는 활동(알바, 인턴, 타 동아리 등등)이 있다면 요일과 시간을 모두 작성해주세요.',
-  interviewUnavailable:
-    '3월 3일부터 4일까지 면접이 진행됩니다. 참여가 불가능한 시간이 있다면 모두 작성해주세요.',
-  interviewUnavailableTimeFirst: '3월 3일',
-  interviewUnavailableTimeSecond: '3월 4일',
-  sessionDate: '코테이토의 세션은 매주 금요일 19시에 진행됩니다.',
-  sessionDate_answer: '성실히 참여하겠습니다!',
-  notice:
-    '최종 합격 시 대면 OT(3월 6일), 코커톤(0월 0일), 데모데이(0월 0일)는 필수 참여입니다.',
-  notice_answer: '네, 가능합니다.',
-  termsAgree: ' 개인정보 활용 동의',
-  termsAgree_answer: '확인',
+  sessionAttendance: '코테이토의 세션은 매주 금요일 19시에 진행됩니다.',
+  sessionAttendance_answer: '성실히 참여하겠습니다!',
+  mandatoryEvents_answer: '네, 가능합니다.',
+  privacyPolicy: '개인정보 활용 동의',
+  privacyPolicy_answer: '확인',
 };

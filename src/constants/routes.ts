@@ -11,8 +11,8 @@ export const ROUTES = {
 
   //admin routes
   ADMIN: '/admin',
-  ADMIN_APPLICATION: '/admin/applications',
-  ADMIN_APPLICATION_FORM: '/admin/application-form',
+  ADMIN_APPLICATIONS: '/admin/applications',
+  ADMIN_APPLICATION_EDIT: '/admin/application-edit',
   ADMIN_RECRUITMENT: '/admin/recruitment',
   ADMIN_RESULTS: '/admin/results',
 };

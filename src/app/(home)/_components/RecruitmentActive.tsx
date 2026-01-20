@@ -10,6 +10,7 @@ import {useState} from 'react';
 import {LoginModal} from '@/components/modal/LoginModal';
 import {useAuthStore} from '@/store/useAuthStore';
 import {useSubmissionStore} from '@/store/useSubmissionStore';
+import {startApplication} from '@/services/api/apply/apply.api';
 
 export const RecruitmentActive = () => {
   const router = useRouter();
@@ -18,16 +19,24 @@ export const RecruitmentActive = () => {
 
   const generation = useRecruitmentStore((state) => state.generation);
   const {isAuthenticated} = useAuthStore();
+  const hasSubmitted = useSubmissionStore((state) => state.hasSubmitted);
+  const setHasSubmitted = useSubmissionStore((state) => state.setHasSubmitted);
 
-  const handleApplyClick = () => {
+  const handleApplyClick = async () => {
     if (!isAuthenticated) {
       setIsModalOpen(true);
     } else {
-      router.push(ROUTES.APPLY);
+      try {
+        const {applicationId, isSubmitted} = await startApplication();
+        setHasSubmitted(isSubmitted);
+        if (!isSubmitted) {
+          router.push(`${ROUTES.APPLY}?id=${applicationId}`);
+        }
+      } catch (error) {
+        console.error(error);
+      }
     }
   };
-
-  const hasSubmitted = useSubmissionStore((state) => state.hasSubmitted);
 
   return (
     <>

@@ -1,5 +1,5 @@
-import {AdditionalFormItem, BasicInfoFormItem} from '@/schemas/apply-type';
-import {PART_TABS} from '@/constants/admin/admin-application-form';
+import {EtcFormItem, BasicInfoFormItem} from '@/schemas/apply/apply-type';
+import {PART_TABS} from '@/constants/admin/admin-application-questions';
 
 export const SEMESTER_OPTIONS = [
   {value: '4', label: '4학기'},
@@ -15,7 +15,6 @@ export const BASIC_INFO_FIELDS: BasicInfoFormItem[] = [
     label: '이름',
     type: 'input',
     placeholder: '이름을 작성해주세요',
-    rules: {required: '이름을 입력해주세요'},
   },
   {
     row: [
@@ -28,14 +27,12 @@ export const BASIC_INFO_FIELDS: BasicInfoFormItem[] = [
           {value: 'male', label: '남'},
           {value: 'female', label: '여'},
         ],
-        rules: {required: '성별을 선택해주세요'},
       },
       {
         name: 'birthDate',
         label: '생년월일',
         type: 'input',
         placeholder: 'ex) 2000-01-01',
-        rules: {required: '생년월일을 입력해주세요'},
       },
     ],
   },
@@ -44,7 +41,6 @@ export const BASIC_INFO_FIELDS: BasicInfoFormItem[] = [
     label: '연락처',
     type: 'input',
     placeholder: 'ex) 010-1234-5678',
-    rules: {required: '연락처를 입력해주세요'},
   },
   {
     row: [
@@ -53,7 +49,6 @@ export const BASIC_INFO_FIELDS: BasicInfoFormItem[] = [
         label: '학교',
         type: 'input',
         placeholder: '학교를 작성해주세요',
-        rules: {required: '학교를 입력해주세요'},
       },
       {
         name: 'isCollegeStudent',
@@ -63,7 +58,6 @@ export const BASIC_INFO_FIELDS: BasicInfoFormItem[] = [
           {label: '재학', value: 'enrolled'},
           {label: '휴학 · 졸업 · 유예', value: 'other'},
         ],
-        rules: {required: '재학 여부를 선택해주세요'},
       },
     ],
   },
@@ -72,7 +66,6 @@ export const BASIC_INFO_FIELDS: BasicInfoFormItem[] = [
     label: '학과',
     type: 'input',
     placeholder: '학과를 작성해주세요',
-    rules: {required: '학과를 입력해주세요'},
   },
   {
     row: [
@@ -82,7 +75,6 @@ export const BASIC_INFO_FIELDS: BasicInfoFormItem[] = [
         type: 'dropdown',
         placeholder: '3학년 1학기일 경우 4학기 수료입니다.',
         options: SEMESTER_OPTIONS,
-        rules: {required: '수료 학기를 선택해주세요'},
       },
       {
         name: 'isPrevActivity',
@@ -93,7 +85,6 @@ export const BASIC_INFO_FIELDS: BasicInfoFormItem[] = [
           {value: 'yes', label: '예'},
           {value: 'no', label: '아니오'},
         ],
-        rules: {required: '활동 여부를 선택해주세요'},
       },
     ],
   },
@@ -103,11 +94,10 @@ export const BASIC_INFO_FIELDS: BasicInfoFormItem[] = [
     type: 'dropdown',
     placeholder: '파트를 선택해주세요',
     options: PART_TABS,
-    rules: {required: '파트를 선택해주세요'},
   },
 ];
 
-export const ADDITIONAL_FIELDS: AdditionalFormItem[] = [
+export const ETC_FIELDS: EtcFormItem[] = [
   {
     name: 'discovery',
     label: '동아리를 알게 된 경로를 선택해주세요.',
@@ -118,7 +108,6 @@ export const ADDITIONAL_FIELDS: AdditionalFormItem[] = [
       {value: 'everytime', label: '에브리타임'},
       {value: 'friend', label: '지인/선배 추천'},
     ],
-    rules: {required: '필수 선택 항목입니다.'},
   },
   {
     name: 'otherActivity',
@@ -156,7 +145,6 @@ export const ADDITIONAL_FIELDS: AdditionalFormItem[] = [
     label: '코테이토의 세션은 매주 금요일 19시에 진행됩니다. ',
     type: 'radio',
     options: [{label: '성실히 참여하겠습니다!', value: 'agree'}],
-    rules: {required: '필수 동의 항목입니다.'},
   },
   {
     name: 'otAgree',
@@ -164,7 +152,6 @@ export const ADDITIONAL_FIELDS: AdditionalFormItem[] = [
       '최종 합격 시 대면 OT(3월 6일), 코커톤(0월 0일), 데모데이(0월 0일)는 필수 참여입니다. ',
     type: 'radio',
     options: [{label: '네, 참석 가능합니다.', value: 'agree'}],
-    rules: {required: '필수 동의 항목입니다.'},
   },
   {
     name: 'privacyPolicy',
@@ -177,7 +164,6 @@ export const ADDITIONAL_FIELDS: AdditionalFormItem[] = [
     name: 'privacyAgree',
     type: 'radio',
     options: [{label: '개인정보의 수집 및 이용에 동의합니다.', value: 'agree'}],
-    rules: {required: '필수 동의 항목입니다.'},
     className: 'justify-end',
   },
 ];

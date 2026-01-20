@@ -5,8 +5,8 @@ import {useFormContext} from 'react-hook-form';
 import {FormTextarea} from '@/components/form/FormTextarea';
 import {FullButton} from '@/components/button/FullButton';
 import {mockPlanApplicationForm} from '@/mocks/mock-application-form';
-import {PART_TABS} from '@/constants/admin/admin-application-form';
-import {PartEtcType} from '@/schemas/admin/admin-application-type';
+import {PART_TABS} from '@/constants/admin/admin-application-questions';
+import {PartType} from '@/schemas/admin/admin-application-questions.schema';
 
 interface PartQuestionProps {
   onPrev: () => void;
@@ -29,16 +29,9 @@ export const PartQuestion = ({onPrev, onNext, onSave}: PartQuestionProps) => {
     formState: {errors},
   } = useFormContext();
 
-  const VALID_PARTS: PartEtcType[] = [
-    'plan',
-    'design',
-    'frontend',
-    'backend',
-    'etc',
-  ];
   const partParam = searchParams.get('part');
-  const activePart: PartEtcType =
-    VALID_PARTS.find((p) => p === partParam) || 'plan';
+  const activePart: PartType =
+    PART_TABS.find((tab) => tab.value === partParam)?.value || 'PM';
 
   const activePartLabel = PART_TABS.find(
     (tab) => tab.value === activePart

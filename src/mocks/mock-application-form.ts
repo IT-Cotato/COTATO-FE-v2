@@ -1,28 +1,3 @@
-/**
- * TODO: 날짜 string 형태 어떻게 오는지 백엔드 명세 확인
- * */
-export const mockRecruitmentInfo = [
-  {
-    recruitmentPeriod: {
-      start: '2025-02-20',
-      end: '2025-02-27',
-    },
-    documentResultDate: {
-      start: '2025-02-28',
-    },
-    interviewPeriod: {
-      start: '2025-03-03',
-      end: '2025-03-04',
-    },
-    finalResultDate: {
-      start: '2025-03-05',
-    },
-    orientationDate: {
-      start: '2025-03-05',
-    },
-  },
-];
-
 export const mockPlanApplicationForm = {
   plan: [
     {
