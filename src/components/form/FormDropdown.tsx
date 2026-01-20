@@ -42,8 +42,6 @@ export const FormDropdown = forwardRef<HTMLInputElement, FormDropdownProps>(
   ) {
     const [isOpen, setIsOpen] = useState(false);
     const dropdownRef = useRef<HTMLDivElement>(null);
-    const generatedId = useId();
-    const inputId = id ?? generatedId;
 
     useClickOutside(dropdownRef, () => setIsOpen(false));
 
@@ -52,7 +50,12 @@ export const FormDropdown = forwardRef<HTMLInputElement, FormDropdownProps>(
       setIsOpen((prev) => !prev);
     };
 
-    const handleSelect = (optionValue: string) => {
+    const handleSelect = (
+      e: React.MouseEvent<HTMLLIElement>,
+      optionValue: string
+    ) => {
+      e.preventDefault();
+      e.stopPropagation();
       onChange?.(optionValue);
       setIsOpen(false);
     };
@@ -60,10 +63,8 @@ export const FormDropdown = forwardRef<HTMLInputElement, FormDropdownProps>(
     const selectedOption = options.find((opt) => opt.value === value);
 
     return (
-      <div className={formFieldStyles.wrapper}>
-        <label htmlFor={inputId} className={formFieldStyles.label}>
-          {label}
-        </label>
+      <label className={formFieldStyles.wrapper}>
+        <span className={formFieldStyles.label}>{label}</span>
 
         <div ref={dropdownRef} className='relative'>
           <button
@@ -96,7 +97,7 @@ export const FormDropdown = forwardRef<HTMLInputElement, FormDropdownProps>(
               {options.map((option) => (
                 <li
                   key={option.value}
-                  onClick={() => handleSelect(option.value)}
+                  onClick={(e) => handleSelect(e, option.value)}
                   className='cursor-pointer px-4 py-3 text-body-l text-neutral-800 transition-colors hover:bg-neutral-200'>
                   {option.label}
                 </li>
@@ -108,13 +109,13 @@ export const FormDropdown = forwardRef<HTMLInputElement, FormDropdownProps>(
         <input
           ref={ref}
           type='hidden'
-          id={inputId}
+          id={id}
           value={value || ''}
           {...props}
         />
 
         {error && <span className={formFieldStyles.errorMessage}>{error}</span>}
-      </div>
+      </label>
     );
   }
 );
