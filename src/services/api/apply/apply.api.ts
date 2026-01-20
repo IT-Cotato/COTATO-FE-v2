@@ -4,6 +4,9 @@ import {
   BasicInfoRequest,
   BasicInfoResponse,
   BasicInfoResponseSchema,
+  PartQuestionRequest,
+  PartQuestionResponse,
+  PartQuestionResponseSchema,
   StartApplicationResponse,
   StartApplicationResponseSchema,
 } from '@/schemas/apply/apply-schema';
@@ -48,4 +51,32 @@ export const saveBasicInfo = async (
   data: BasicInfoRequest
 ): Promise<void> => {
   await privateAxios.post(ENDPOINT.APPLY.BASIC_INFO(applicationId), data);
+};
+
+/** 파트별
+ * 질문 조회
+ */
+export const getPartQuestions = async (
+  applicationId: number
+): Promise<PartQuestionResponse> => {
+  const response: AxiosResponse = await privateAxios.get(
+    ENDPOINT.APPLY.PART_QUESTIONS(applicationId)
+  );
+
+  const responseSchema = createSuccessResponseSchema(
+    PartQuestionResponseSchema
+  );
+  const validatedResponse = responseSchema.parse(response.data);
+
+  return validatedResponse.data;
+};
+
+/** 파트별
+ * 질문 작성(임시저장)
+ */
+export const savePartQuestions = async (
+  applicationId: number,
+  data: PartQuestionRequest
+): Promise<void> => {
+  await privateAxios.post(ENDPOINT.APPLY.ANSWERS(applicationId), data);
 };

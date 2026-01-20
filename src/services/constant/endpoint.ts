@@ -28,5 +28,9 @@ export const ENDPOINT = {
     START: '/api/applications/start',
     BASIC_INFO: (applicationId: number) =>
       `/api/applications/${applicationId}/basic-info`,
+    PART_QUESTIONS: (applicationId: number) =>
+      `/api/applications/${applicationId}/part-questions`,
+    ANSWERS: (applicationId: number) =>
+      `/api/applications/${applicationId}/answers`,
   },
 };
