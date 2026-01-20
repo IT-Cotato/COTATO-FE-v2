@@ -9,17 +9,8 @@ import {MailSendFooter} from './MailSendFooter';
 import {MailConfirmModal} from '@/components/modal/MailConfirmModal';
 import {Spinner} from '@/components/ui/Spinner';
 
-interface ManageMailProps {
-  mailType?: string;
-  alwaysAble?: boolean;
-}
-
-export const ManageMail = ({
-  mailType = '지원 알림 메일',
-  alwaysAble = false,
-}: ManageMailProps) => {
+export const ManageMail = ({mailType = '지원 알림 메일'}) => {
   const {generation} = useRecruitmentStore();
-
   const {
     isLoading,
     isEditing,
@@ -27,25 +18,27 @@ export const ManageMail = ({
     setContent,
     isSent,
     waitingCount,
+    jobStatus,
+    isRefreshing,
     isChanged,
     handleEditClick,
     handleCancelClick,
     handleSaveClick,
     handleSendClick,
+    refreshStatus,
   } = useManageMail(Number(generation), mailType);
 
   const [isSendModalOpen, setIsSendModalOpen] = useState(false);
 
-  if (isLoading) {
+  if (isLoading)
     return (
-      <div className='flex w-full items-center justify-center'>
+      <div className='flex w-full justify-center'>
         <Spinner size='lg' />
       </div>
     );
-  }
 
   return (
-    <div className='flex w-full flex-col items-start gap-5'>
+    <div className='flex w-full flex-col gap-5'>
       <MailHeader
         isEditing={isEditing}
         isChanged={isChanged}
@@ -63,6 +56,9 @@ export const ManageMail = ({
         isSent={isSent}
         onSend={() => setIsSendModalOpen(true)}
         waitingCount={waitingCount}
+        jobStatus={jobStatus}
+        isRefreshing={isRefreshing}
+        onRefresh={refreshStatus}
       />
       <MailConfirmModal
         isOpen={isSendModalOpen}

@@ -35,8 +35,12 @@ export const ENDPOINT = {
     RECRUITMENT_NOTIFICATION: '/api/admin/recruitment-notification-emails',
     RECRUITMENT_NOTIFICATION_SEND:
       '/api/admin/recruitment-notification-emails/send',
+    RECRUITMENT_NOTIFICATION_JOB: (jobId: number) =>
+      `/api/admin/recruitment-notification-emails/jobs/${jobId}`,
     RECRUITMENT_RESULT: '/api/admin/recruitment-mails',
     RECRUITMENT_RESULT_SEND: '/api/admin/recruitment-mails/send',
+    RECRUITMENT_RESULT_JOB: (jobId: number) =>
+      `/api/admin/recruitment-mails/jobs/${jobId}`,
     PASS_STATUS: '/api/admin/pass-status',
   },
   APPLY: {

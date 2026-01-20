@@ -4,7 +4,8 @@ import {handleApiError} from '@/services/utils/apiHelper';
 import {
   NotificationMailResponseSchema,
   ResultMailResponseSchema,
-  MailSendResultSchema,
+  MailSendStartSchema,
+  MailJobStatusResponseSchema,
 } from '@/schemas/admin/admin-mail.schema';
 import {MAIL_TYPE_MAP} from '@/schemas/admin/admin-mail.type';
 
@@ -65,22 +66,30 @@ export const saveMailContent = async (
 };
 
 export const sendMail = async (generationId: number, mailType: string) => {
-  try {
-    const isNotification = mailType === '지원 알림 메일';
-    const url = isNotification
-      ? ENDPOINT.ADMIN.RECRUITMENT_NOTIFICATION_SEND
-      : ENDPOINT.ADMIN.RECRUITMENT_RESULT_SEND;
+  const isNotification = mailType === '지원 알림 메일';
+  const url = isNotification
+    ? ENDPOINT.ADMIN.RECRUITMENT_NOTIFICATION_SEND
+    : ENDPOINT.ADMIN.RECRUITMENT_RESULT_SEND;
 
-    const body = {
-      generationId,
-      ...(!isNotification && {
-        templateType: MAIL_TYPE_MAP[mailType as keyof typeof MAIL_TYPE_MAP],
-      }),
-    };
+  const body = {
+    generationId,
+    ...(!isNotification && {
+      templateType: MAIL_TYPE_MAP[mailType as keyof typeof MAIL_TYPE_MAP],
+    }),
+  };
 
-    const response = await privateAxios.post(url, body);
-    return MailSendResultSchema.parse(response.data).data;
-  } catch (error) {
-    return handleApiError(error);
-  }
+  const response = await privateAxios.post(url, body);
+  return MailSendStartSchema.parse(response.data).data;
+};
+
+export const getMailJobStatus = async (
+  jobId: number,
+  isNotification: boolean
+) => {
+  const url = isNotification
+    ? ENDPOINT.ADMIN.RECRUITMENT_NOTIFICATION_JOB(jobId)
+    : ENDPOINT.ADMIN.RECRUITMENT_RESULT_JOB(jobId);
+
+  const response = await privateAxios.get(url);
+  return MailJobStatusResponseSchema.parse(response.data).data;
 };

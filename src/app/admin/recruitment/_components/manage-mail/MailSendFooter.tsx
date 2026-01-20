@@ -1,10 +1,14 @@
 import {Button} from '@/components/button/Button';
+import {MailJobStatus} from '@/schemas/admin/admin-mail.type';
 
 interface MailSendFooterProps {
   waitingCount: number;
   canSendMail: boolean;
   isSent: boolean;
   onSend: () => void;
+  jobStatus: MailJobStatus | null;
+  isRefreshing: boolean;
+  onRefresh: () => void;
 }
 
 export const MailSendFooter = ({
@@ -12,22 +16,49 @@ export const MailSendFooter = ({
   canSendMail,
   isSent,
   onSend,
+  jobStatus,
+  isRefreshing,
+  onRefresh,
 }: MailSendFooterProps) => {
+  const isInProgress = jobStatus !== null && !jobStatus.isCompleted;
+
   const getButtonColor = () => {
-    if (isSent) return 'neutral-500'; // 이미 보냈으면 neutral-500
-    return canSendMail ? 'primary' : 'text-disabled'; // 가능하면 primary, 아니면 disabled
+    if (isSent || isInProgress) return 'neutral-500';
+    return canSendMail ? 'primary' : 'text-disabled';
   };
-  const isDisabled = isSent || !canSendMail;
 
   return (
-    <div className='flex w-full flex-col items-end justify-end'>
+    <div className='flex w-full flex-col items-end gap-3'>
+      {isInProgress && (
+        <div className='flex items-center gap-4 rounded-lg border border-neutral-200 bg-neutral-50 px-4 py-2 shadow-sm'>
+          <div className='flex gap-3 text-body-m font-bold'>
+            <span className='text-primary'>성공: {jobStatus.successCount}</span>
+            <span className='text-alert'>실패: {jobStatus.failCount}</span>
+          </div>
+          <button
+            onClick={onRefresh}
+            disabled={isRefreshing}
+            className={`flex items-center gap-1 text-neutral-500 transition-colors hover:text-neutral-800 ${isRefreshing ? 'animate-spin' : ''}`}>
+            <span className='text-[18px]'>↻</span>
+          </button>
+        </div>
+      )}
       <div className='flex items-center gap-[21px] text-body-l text-neutral-500'>
-        <p>(대기자 수 : {waitingCount}명)</p>
-        <div className={isDisabled ? 'pointer-events-none' : ''}>
+        <p>(대상자 수 : {waitingCount}명)</p>
+        <div
+          className={
+            isSent || isInProgress || !canSendMail ? 'pointer-events-none' : ''
+          }>
           <Button
             width={156}
             height={36}
-            label={isSent ? '메일 전송완료' : '메일 전송하기'}
+            label={
+              isInProgress
+                ? '전송 중'
+                : isSent
+                  ? '메일 전송완료'
+                  : '메일 전송하기'
+            }
             borderRadius={5}
             labelTypo='body_l'
             backgroundColor={getButtonColor()}

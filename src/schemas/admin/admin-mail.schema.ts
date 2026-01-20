@@ -31,6 +31,29 @@ export const MailSendResultSchema = createSuccessResponseSchema(
   })
 );
 
+// 작업 상태 조회 응답 스키마
+export const MailJobStatusSchema = z.object({
+  jobId: z.number(),
+  isCompleted: z.boolean(),
+  totalCount: z.number(),
+  successCount: z.number(),
+  failCount: z.number(),
+  createdAt: z.string(),
+  completedAt: z.string().nullable(),
+  generationId: z.number(),
+});
+
+export const MailSendStartSchema = createSuccessResponseSchema(
+  z.object({
+    jobId: z.number(),
+    totalCount: z.number(),
+    generationId: z.number(),
+  })
+);
+
+export const MailJobStatusResponseSchema =
+  createSuccessResponseSchema(MailJobStatusSchema);
+
 export const NotificationMailResponseSchema = createSuccessResponseSchema(
   NotificationMailDataSchema
 );
