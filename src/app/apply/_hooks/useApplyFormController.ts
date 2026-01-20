@@ -112,7 +112,6 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
         isEnrolled: data.isCollegeStudent === 'enrolled',
         applicationPartType: data.part,
       };
-      console.log('임시저장 데이터 (기본 정보):', requestData);
       saveBasicInfo(requestData);
     } else if (step === 2) {
       const answersToSave = Object.entries(data)
@@ -132,7 +131,6 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
         pdfFileKey: formData.pdfFileKey || undefined,
       };
 
-      console.log('임시저장 데이터 (파트별 질문):', requestData);
       savePartQuestions(requestData);
     }
   };
