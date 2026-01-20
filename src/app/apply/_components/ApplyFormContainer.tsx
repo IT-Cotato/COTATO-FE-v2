@@ -9,7 +9,7 @@ import {useApplyFormController} from '@/app/apply/_hooks/useApplyFormController'
 import {ApplicationConfirmModal} from '@/components/modal/ApplicationConfirmModal';
 import {useRecruitmentStore} from '@/store/useRecruitmentStore';
 import HeroMainBanner from '@/components/banner/HeroMainBanner';
-import {AdminRecruitmentInformation} from '@/app/admin/(with-sidebar)/application-edit/_components/recruitment/AdminRecruitmentInformation';
+import {AdminRecruitmentInformation} from '@/app/admin/application-edit/_components/recruitment/AdminRecruitmentInformation';
 import {RecruitmentInformation} from '@/schemas/admin/admin-recruitment-information.schema';
 
 const STEP_TITLES = {
