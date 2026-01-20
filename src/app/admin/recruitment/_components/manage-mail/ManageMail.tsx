@@ -9,8 +9,17 @@ import {MailSendFooter} from './MailSendFooter';
 import {MailConfirmModal} from '@/components/modal/MailConfirmModal';
 import {Spinner} from '@/components/ui/Spinner';
 
-export const ManageMail = ({mailType = '지원 알림 메일'}) => {
-  const {generation} = useRecruitmentStore();
+interface ManageMailProps {
+  mailType?: string;
+  alwaysAble?: boolean;
+}
+
+export const ManageMail = ({
+  mailType = '지원 알림 메일',
+  alwaysAble = false,
+}: ManageMailProps) => {
+  const {generation, isRecruiting} = useRecruitmentStore();
+
   const {
     isLoading,
     isEditing,
@@ -36,6 +45,8 @@ export const ManageMail = ({mailType = '지원 알림 메일'}) => {
         <Spinner size='lg' />
       </div>
     );
+  const hasPermission = isRecruiting || alwaysAble;
+  const finalCanSend = hasPermission && !isSent && waitingCount > 0;
 
   return (
     <div className='flex w-full flex-col gap-5'>
@@ -52,7 +63,7 @@ export const ManageMail = ({mailType = '지원 알림 메일'}) => {
         setContent={setContent}
       />
       <MailSendFooter
-        canSendMail={!isSent && waitingCount > 0}
+        canSendMail={finalCanSend}
         isSent={isSent}
         onSend={() => setIsSendModalOpen(true)}
         waitingCount={waitingCount}
