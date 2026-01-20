@@ -49,7 +49,7 @@ export const MailHeader = ({
             labelTypo='body_l'
             borderRadius={5}
             backgroundColor='secondary'
-            width={112}
+            width={145}
             height={36}
             onClick={onEdit}
           />

@@ -50,7 +50,7 @@ export const MailSendFooter = ({
             isSent || isInProgress || !canSendMail ? 'pointer-events-none' : ''
           }>
           <Button
-            width={156}
+            width={145}
             height={36}
             label={
               isInProgress

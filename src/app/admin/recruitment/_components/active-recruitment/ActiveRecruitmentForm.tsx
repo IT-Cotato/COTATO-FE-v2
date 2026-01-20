@@ -102,6 +102,7 @@ export const ActiveRecruitmentForm = () => {
       <RecruitmentConfirmModal
         isOpen={isModalOpen}
         isRecruiting={isRecruiting}
+        isAdditional={isAdditional}
         generation={generation}
         onClose={() => setIsModalOpen(false)}
         onConfirm={handleConfirm}
