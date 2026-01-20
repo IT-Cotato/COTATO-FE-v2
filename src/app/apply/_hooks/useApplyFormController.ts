@@ -85,7 +85,7 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
         isPrevActivity: (basicInfo.isPrevActivity
           ? 'yes'
           : 'no') as BasicInfoFormData['isPrevActivity'],
-        part: basicInfo.applicationPartType,
+        part: basicInfo.applicationPartType as BasicInfoFormData['part'],
       };
       reset(transformedData);
       hasInitializedRef.current = true;

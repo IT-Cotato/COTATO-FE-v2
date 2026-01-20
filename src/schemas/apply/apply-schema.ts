@@ -24,7 +24,9 @@ export const BasicInfoFormSchema = z.object({
   isPrevActivity: z.enum(['yes', 'no'], {
     message: '활동 여부를 선택해주세요',
   }),
-  part: z.string().min(1, '파트를 선택해주세요'),
+  part: z.enum(['PM', 'DE', 'FE', 'BE'], {
+    message: '파트를 선택해주세요',
+  }),
 });
 
 export const StartApplicationResponseSchema = z.object({
