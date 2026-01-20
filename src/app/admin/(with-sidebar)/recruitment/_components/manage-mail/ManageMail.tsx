@@ -59,7 +59,7 @@ export const ManageMail = ({
         setContent={setContent}
       />
       <MailSendFooter
-        canSendMail={alwaysAble || (!isSent && waitingCount > 0)}
+        canSendMail={!isSent && waitingCount > 0}
         isSent={isSent}
         onSend={() => setIsSendModalOpen(true)}
         waitingCount={waitingCount}
