@@ -15,6 +15,7 @@ export const BASIC_INFO_FIELDS: BasicInfoFormItem[] = [
     label: '이름',
     type: 'input',
     placeholder: '이름을 작성해주세요',
+    autocomplete: 'name',
   },
   {
     row: [
@@ -52,7 +53,7 @@ export const BASIC_INFO_FIELDS: BasicInfoFormItem[] = [
       },
       {
         name: 'isCollegeStudent',
-        label: '',
+        label: '재학 여부',
         type: 'radio',
         options: [
           {label: '재학', value: 'enrolled'},
