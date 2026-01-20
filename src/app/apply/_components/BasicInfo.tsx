@@ -27,14 +27,15 @@ export const BasicInfo = ({
   } = useFormContext<BasicInfoFormData>();
 
   const renderField = (field: BasicInfoFieldConfig) => {
-    const {type, name, label, options, placeholder} = field;
+    const {type, name, label, options, placeholder, autocomplete} =
+      field as BasicInfoFieldConfig & {autocomplete?: string};
     const error = errors[name];
 
     if (type === 'radio') {
       return (
-        <div key={name} className='flex flex-1 flex-col gap-2'>
-          <label className='mb-3.5 text-h5 text-neutral-600'>{label}</label>
-          <div className='flex gap-[58px] pt-19'>
+        <fieldset key={name} className='flex flex-1 flex-col gap-2'>
+          <legend className='mb-3.5 text-h5 text-neutral-600'>{label}</legend>
+          <div className='flex gap-[58px] pt-13.5'>
             {options?.map((opt) => (
               <FormRadio
                 key={opt.value}
@@ -52,7 +53,7 @@ export const BasicInfo = ({
               </span>
             )}
           </div>
-        </div>
+        </fieldset>
       );
     }
 
@@ -64,6 +65,7 @@ export const BasicInfo = ({
             control={control}
             render={({field}) => (
               <FormDropdown
+                id={name}
                 label={label}
                 placeholder={placeholder}
                 options={options || []}
@@ -88,9 +90,11 @@ export const BasicInfo = ({
     return (
       <div key={name} className='flex flex-1 flex-col gap-2'>
         <FormInput
+          id={name}
           label={label}
           placeholder={placeholder}
           readOnly={readOnly}
+          autoComplete={autocomplete}
           {...register(name)}
           error={error?.message ?? ''}
           className='w-full'
