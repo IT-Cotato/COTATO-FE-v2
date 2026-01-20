@@ -23,7 +23,7 @@ export const FormRadio = forwardRef<HTMLInputElement, FormRadioProps>(
             type='radio'
             disabled={readOnly}
             className={clsx(
-              // 1. 기본 스타일 초기화 및 테두리 설정 (시안 반영)
+              // 1. 기본 스타일 초기화 및 테두리 설정
               'peer size-[31px] appearance-none rounded-full border-[3px] border-neutral-300 transition-all',
 
               // 2. Admin 조회용 대응

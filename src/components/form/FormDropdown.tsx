@@ -106,13 +106,7 @@ export const FormDropdown = forwardRef<HTMLInputElement, FormDropdownProps>(
           )}
         </div>
 
-        <input
-          ref={ref}
-          type='hidden'
-          id={id}
-          value={value || ''}
-          {...props}
-        />
+        <input ref={ref} type='hidden' id={id} value={value || ''} {...props} />
 
         {error && <span className={formFieldStyles.errorMessage}>{error}</span>}
       </label>
