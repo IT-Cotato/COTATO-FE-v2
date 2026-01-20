@@ -1,7 +1,9 @@
 import {QUERY_KEYS} from '@/constants/query-keys';
+import {EvaluatorType} from '@/schemas/admin/admin-application.schema';
 import {
   getAdminApplicationBasicInfo,
   getAdminApplicationEtcQuestions,
+  getAdminApplicationEvaluation,
   getAdminApplicationPartQuestions,
 } from '@/services/api/admin/admin.application.api';
 import {useQuery} from '@tanstack/react-query';
@@ -45,5 +47,30 @@ export const useAdminApplicationEtcQuestions = (applicationId: number) => {
     queryKey: [QUERY_KEYS.ADMIN_APPLICATION_ETC_QUESTIONS, applicationId],
     queryFn: () => getAdminApplicationEtcQuestions(applicationId),
     enabled: !!applicationId,
+  });
+};
+
+/**
+ * 어드민 - 지원서 열람 탭에서 해당 지원자의 운영진 평가 데이터를 조회하는 쿼리 훅
+ * @param applicationId 지원서 id
+ * @param evaluatorType 운영진 타입
+ * @returns react query
+ */
+export const useAdminApplicationEvaluation = ({
+  applicationId,
+  evaluatorType,
+}: {
+  applicationId: number;
+  evaluatorType: EvaluatorType;
+}) => {
+  return useQuery({
+    queryKey: [
+      QUERY_KEYS.ADMIN_APPLICATION_EVALUATION,
+      applicationId,
+      evaluatorType,
+    ],
+    queryFn: () =>
+      getAdminApplicationEvaluation({applicationId, evaluatorType}),
+    enabled: !!applicationId && !!evaluatorType,
   });
 };
