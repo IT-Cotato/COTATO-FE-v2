@@ -23,7 +23,6 @@ export const useAdminRecruitmentMutation = () => {
    * 추후 invalidateQueries 추가 예정
    */
   const handleSuccess = (nextStatus: boolean) => {
-    // ex) queryClient.invalidateQueries({ queryKey: ['adminApplications'] });
     setIsRecruiting(nextStatus);
     setTimeout(() => {
       queryClient.invalidateQueries({
