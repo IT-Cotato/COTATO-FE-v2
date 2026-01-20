@@ -7,6 +7,7 @@ export const QUERY_KEYS = {
     ],
   },
   ADMIN_APPLICATION: 'admin-applications',
+  ADMIN_APPLICATION_QUESTIONS: 'application-questions',
   ADMIN_RECRUITMENT_INFORMATIONS: 'admin-recruitment-informations',
   RECRUITMENT_STATUS: 'recruitment-status',
 } as const;

@@ -2,26 +2,29 @@
 
 import {GenerationDropdown} from '@/components/dropdown/GenerationDropdown';
 import {Button} from '@/components/button/Button';
-import {AdminRecruitmentInformation} from '@/app/admin/(with-sidebar)/application-form/_components/recruitment/AdminRecruitmentInformation';
-import {useRouter, useSearchParams} from 'next/navigation';
+import {AdminRecruitmentInformation} from '@/app/admin/(with-sidebar)/application-edit/_components/recruitment/AdminRecruitmentInformation';
+import {useRouter} from 'next/navigation';
 import {useEffect, useState} from 'react';
-
 import {Spinner} from '@/components/ui/Spinner';
 import {RecruitmentInformation} from '@/schemas/admin/admin-recruitment-information.schema';
-
 import {useAdminRecruitmentInformationsQuery} from '@/hooks/queries/useAdminRecruitmentInformations.query';
 import {useAdminRecruitmentInformationsMutation} from '@/hooks/mutations/useAdminRecruitmentInformations.mutation';
 
-export const AdminRecruitmentInformationContainer = () => {
+interface AdminRecruitmentInformationContainerProps {
+  generationId: number;
+}
+
+export const AdminRecruitmentInformationContainer = ({
+  generationId,
+}: AdminRecruitmentInformationContainerProps) => {
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const generation = searchParams.get('generationId') ?? '13';
+
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [recruitmentDraft, setRecruitmentDraft] =
     useState<RecruitmentInformation | null>(null);
 
   const {data, isLoading, isError, error} =
-    useAdminRecruitmentInformationsQuery(Number(generation));
+    useAdminRecruitmentInformationsQuery(generationId);
   const {mutate: postRecruitmentInformations, isPending} =
     useAdminRecruitmentInformationsMutation();
 
@@ -47,7 +50,7 @@ export const AdminRecruitmentInformationContainer = () => {
 
     postRecruitmentInformations(
       {
-        generationId: Number(generation),
+        generationId,
         ...recruitmentDraft,
       },
       {
@@ -76,7 +79,7 @@ export const AdminRecruitmentInformationContainer = () => {
     <>
       <div className='flex flex-row justify-between'>
         <GenerationDropdown
-          generation={generation}
+          generation={String(generationId)}
           generations={['13', '12', '11']}
           onSelect={handleGenerationChange}
         />

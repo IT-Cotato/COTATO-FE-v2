@@ -1,5 +1,5 @@
-import {TimeButton} from '@/app/admin/(with-sidebar)/application-form/_components/calendar/TimeButton';
-import {TimeList} from '@/app/admin/(with-sidebar)/application-form/_components/calendar/TimeList';
+import {TimeButton} from '@/app/admin/(with-sidebar)/application-edit/_components/calendar/TimeButton';
+import {TimeList} from '@/app/admin/(with-sidebar)/application-edit/_components/calendar/TimeList';
 
 interface TimePanelProps {
   hour: number;

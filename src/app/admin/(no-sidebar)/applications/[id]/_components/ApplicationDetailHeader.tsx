@@ -1,6 +1,6 @@
 'use client';
 
-import {PART_TABS} from '@/constants/admin/admin-application-form';
+import {PART_TABS} from '@/constants/admin/admin-application-questions';
 import {mockApplicationDetail} from '@/mocks/mock-application-detail';
 
 import {useParams} from 'next/navigation';

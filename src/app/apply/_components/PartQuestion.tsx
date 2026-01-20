@@ -4,10 +4,11 @@ import {useSearchParams} from 'next/navigation';
 import {useFormContext} from 'react-hook-form';
 import {FormTextarea} from '@/components/form/FormTextarea';
 import {FullButton} from '@/components/button/FullButton';
-import {PART_TABS} from '@/constants/admin/admin-application-form';
-import {PartEtcType} from '@/schemas/admin/admin-application-type';
+
 import {useApplicationStore} from '@/store/useApplicationStore';
 import {useGetPartQuestionsQuery} from '@/hooks/queries/useApplyQuery';
+import {PART_TABS} from '@/constants/admin/admin-application-questions';
+import {PartType} from '@/schemas/admin/admin-application-questions.schema';
 
 interface PartQuestionProps {
   onPrev: () => void;
@@ -24,7 +25,7 @@ export const PartQuestion = ({onPrev, onNext, onSave}: PartQuestionProps) => {
   } = useFormContext();
 
   const partParam = searchParams.get('part');
-  const activePart: PartEtcType =
+  const activePart: PartType =
     PART_TABS.find((tab) => tab.value === partParam)?.value || 'PM';
 
   const activePartLabel = PART_TABS.find(
