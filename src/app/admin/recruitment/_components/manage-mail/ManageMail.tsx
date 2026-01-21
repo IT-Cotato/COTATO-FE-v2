@@ -12,22 +12,15 @@ import {Spinner} from '@/components/ui/Spinner';
 interface ManageMailProps {
   mailType?: string;
   alwaysAble?: boolean;
+  generationId: number;
 }
 
 export const ManageMail = ({
   mailType = '지원 알림 메일',
   alwaysAble = false,
+  generationId,
 }: ManageMailProps) => {
-  const {generation, isRecruiting} = useRecruitmentStore(); //기수목록 불러오고 수정
-
-  const labelMap: Record<string, string> = {
-    '지원 알림 메일': '대기자',
-    '합격자 메일': '합격자',
-    '불합격자 메일': '불합격자',
-    '예비합격자 메일': '예비합격자',
-  };
-
-  const currentLabel = labelMap[mailType] || '대상자';
+  const {isRecruiting} = useRecruitmentStore();
 
   const {
     isLoading,
@@ -44,9 +37,20 @@ export const ManageMail = ({
     handleSaveClick,
     handleSendClick,
     refreshStatus,
-  } = useManageMail(Number(generation), mailType);
+  } = useManageMail(generationId, mailType);
 
   const [isSendModalOpen, setIsSendModalOpen] = useState(false);
+
+  const labelMap: Record<string, string> = {
+    '지원 알림 메일': '대기자',
+    '합격자 메일': '합격자',
+    '불합격자 메일': '불합격자',
+    '예비합격자 메일': '예비합격자',
+  };
+
+  const currentLabel = labelMap[mailType] || '대상자';
+  const hasPermission = isRecruiting || alwaysAble;
+  const finalCanSend = hasPermission && !isSent && waitingCount > 0;
 
   if (isLoading)
     return (
@@ -54,8 +58,6 @@ export const ManageMail = ({
         <Spinner size='lg' />
       </div>
     );
-  const hasPermission = isRecruiting || alwaysAble;
-  const finalCanSend = hasPermission && !isSent && waitingCount > 0;
 
   return (
     <div className='flex w-full flex-col gap-5'>

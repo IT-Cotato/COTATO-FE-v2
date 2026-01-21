@@ -15,9 +15,11 @@ export const PostGenerationRequestSchema = z.object({
   generationId: z.number(),
 });
 
-export const PostGenerationResponseSchema = createSuccessResponseSchema(
-  z.object({})
-);
+export const PostGenerationResponseSchema = z.object({
+  code: z.string(),
+  message: z.string(),
+  data: z.any().optional(),
+});
 
 /** 타입 추출 */
 export type Generation = z.infer<typeof GenerationSchema>;

@@ -5,6 +5,7 @@ import Close from '@/assets/modal/close.svg';
 import {useGenerationStore} from '@/store/useGenerationStore';
 import {postGeneration} from '@/services/api/admin/admin-generation.api';
 import {FullButton} from '@/components/button/FullButton';
+import {useRecruitmentStore} from '@/store/useRecruitmentStore';
 
 interface AddGenerationModalProps {
   isOpen: boolean;
@@ -17,6 +18,7 @@ export const AddGenerationModal = ({
 }: AddGenerationModalProps) => {
   const [inputValue, setInputValue] = useState<string>('');
   const {addGeneration, setSelectedGenerationId} = useGenerationStore();
+  const {isRecruiting, setGeneration} = useRecruitmentStore();
 
   if (!isOpen) return null;
 
@@ -29,12 +31,22 @@ export const AddGenerationModal = ({
       return;
     }
 
-    const response = await postGeneration({generationId: genId});
-    if (response.code === 'COMMON200') {
-      addGeneration({generationId: genId});
-      setSelectedGenerationId(genId);
-      setInputValue('');
-      onClose();
+    try {
+      const response = await postGeneration({generationId: genId});
+
+      if (response.code === 'SUCCESS') {
+        addGeneration({generationId: genId});
+        setSelectedGenerationId(genId);
+
+        if (!isRecruiting) {
+          setGeneration(String(genId));
+        }
+
+        setInputValue('');
+        onClose();
+      }
+    } catch (error) {
+      console.error('기수 생성 중 에러 발생:', error);
     }
   };
 

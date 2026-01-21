@@ -1,7 +1,7 @@
 'use client';
 
 import {useState, useEffect, useCallback} from 'react';
-import {useAdminMailQuery} from './queries/useAdminMail.query';
+import {useAdminMailQuery} from '@/hooks/queries/useAdminMail.query';
 import {useAdminMailMutation} from '@/hooks/mutations/useAdminMail.mutation';
 import {getMailJobStatus} from '@/services/api/admin/admin-mail.api';
 import {MailJobStatus} from '@/schemas/admin/admin-mail.type';
@@ -20,6 +20,14 @@ export const useManageMail = (generationId: number, mailType: string) => {
   } = useAdminMailQuery(generationId, mailType);
   const {save, send, isSaving} = useAdminMailMutation(generationId, mailType);
 
+  // 기수나 메일 타입이 바뀌면 모든 로컬 상태 초기화
+  useEffect(() => {
+    setIsEditing(false);
+    setEditingContent(null);
+    setActiveJobId(null);
+    setJobStatus(null);
+  }, [generationId, mailType]);
+
   const checkCurrentStatus = useCallback(
     async (jobId: number) => {
       setIsRefreshing(true);
@@ -27,11 +35,10 @@ export const useManageMail = (generationId: number, mailType: string) => {
         const isNotification = mailType === '지원 알림 메일';
         const status = await getMailJobStatus(jobId, isNotification);
         setJobStatus(status);
-
         if (status.isCompleted) {
           setActiveJobId(null);
           localStorage.removeItem(`last_job_${mailType}_${generationId}`);
-          refetchMailData(); // 메일 전송 완료 여부 동기화
+          refetchMailData();
         }
       } catch (error) {
         console.error('상태 조회 실패', error);
@@ -42,7 +49,6 @@ export const useManageMail = (generationId: number, mailType: string) => {
     [mailType, generationId, refetchMailData]
   );
 
-  // 페이지 진입 시 로컬스토리지에 진행 중인 작업이 있는지 확인
   useEffect(() => {
     const savedJobId = localStorage.getItem(
       `last_job_${mailType}_${generationId}`

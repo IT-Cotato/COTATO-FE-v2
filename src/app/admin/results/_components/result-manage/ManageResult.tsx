@@ -5,11 +5,20 @@ import {ResultTable} from '@/app/admin/results/_components/result-manage/ResultT
 import {GenerationDropdown} from '@/components/dropdown/GenerationDropdown';
 import {Spinner} from '@/components/ui/Spinner';
 import {STATUS_LABEL_MAP} from '@/constants/admin/admin-result';
-import {useState} from 'react';
+import {useGenerationStore} from '@/store/useGenerationStore';
 
-export const ManageResult = () => {
-  const [generation, setGeneration] = useState('13');
+interface ManageResultProps {
+  generation: string;
+  onGenerationChange: (gen: string) => void;
+}
+
+export const ManageResult = ({
+  generation,
+  onGenerationChange,
+}: ManageResultProps) => {
   const {data, isLoading} = useAdminPassStatusQuery(generation);
+  const {generations} = useGenerationStore();
+  const generationList = generations.map((g) => String(g.generationId));
 
   const tableData =
     data?.map((item) => ({
@@ -19,7 +28,7 @@ export const ManageResult = () => {
 
   if (isLoading)
     return (
-      <div className='flex justify-center'>
+      <div className='flex justify-center py-10'>
         <Spinner />
       </div>
     );
@@ -29,8 +38,8 @@ export const ManageResult = () => {
       <h2 className='text-h4 text-neutral-800'>합격자 관리</h2>
       <GenerationDropdown
         generation={generation}
-        generations={['13', '12']}
-        onSelect={setGeneration}
+        generations={generationList.length > 0 ? generationList : ['13', '12']}
+        onSelect={onGenerationChange}
       />
       <ResultTable data={tableData} />
     </div>

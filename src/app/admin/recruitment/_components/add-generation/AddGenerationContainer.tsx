@@ -1,35 +1,40 @@
 'use client';
 
-import {useEffect, useState} from 'react';
+import {useCallback, useEffect, useState} from 'react';
 import {PlusButton} from '@/app/admin/recruitment/_components/add-generation/PlusButton';
 import {AddGenerationModal} from './AddGenerationModal';
 import {useGenerationStore} from '@/store/useGenerationStore';
 import {getGenerations} from '@/services/api/admin/admin-generation.api';
+import {useRecruitmentStore} from '@/store/useRecruitmentStore';
 
 export const AddGenerationContainer = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-
   const {
     generations,
     selectedGenerationId,
     setGenerations,
     setSelectedGenerationId,
   } = useGenerationStore();
+  const {isRecruiting, setGeneration} = useRecruitmentStore();
+
+  const fetchGenerations = useCallback(async () => {
+    const res = await getGenerations();
+    if (res?.data) {
+      setGenerations(res.data);
+      if (res.data.length > 0 && !selectedGenerationId && !isRecruiting) {
+        setGeneration(String(res.data[0].generationId));
+      }
+    }
+  }, [setGenerations, setGeneration, selectedGenerationId, isRecruiting]);
 
   useEffect(() => {
-    const fetchGenerations = async () => {
-      const response = await getGenerations();
-      if (response && response.data) {
-        setGenerations(response.data);
-
-        if (response.data.length > 0 && !selectedGenerationId) {
-          setSelectedGenerationId(response.data[0].generationId);
-        }
-      }
-    };
-
     fetchGenerations();
-  }, [setGenerations, setSelectedGenerationId, selectedGenerationId]);
+  }, [fetchGenerations]);
+
+  const handleSelect = (genId: number) => {
+    setSelectedGenerationId(genId);
+    if (!isRecruiting) setGeneration(String(genId)); // 모집 중 아닐 때만 동기화
+  };
 
   return (
     <div className='flex w-full flex-col items-start gap-[10px] rounded-[10px] bg-neutral-100 px-8 py-3'>
@@ -39,21 +44,21 @@ export const AddGenerationContainer = () => {
         </p>
         <div className='scrollbar-hide flex items-center gap-2.5 overflow-x-auto pb-1'>
           <div
-            onClick={() => setIsModalOpen(true)}
-            className='shrink-0 cursor-pointer'>
-            <PlusButton />
+            onClick={() => !isRecruiting && setIsModalOpen(true)}
+            className='shrink-0'>
+            <PlusButton disabled={isRecruiting} />
           </div>
           {generations.map((gen) => {
-            const isSelected = selectedGenerationId === gen.generationId;
             return (
               <button
                 key={gen.generationId}
-                onClick={() => setSelectedGenerationId(gen.generationId)}
-                className={`flex h-[38px] w-[63px] shrink-0 items-center justify-center rounded-[5px] text-body-l font-semibold ${
-                  isSelected
-                    ? 'bg-neutral-600 text-white' // 선택된 상태
-                    : 'bg-white text-neutral-600' // 기본 상태
-                }`}>
+                onClick={() => !isRecruiting && handleSelect(gen.generationId)}
+                disabled={isRecruiting}
+                className={`flex h-[38px] w-[63px] shrink-0 items-center justify-center rounded-[5px] bg-white text-body-l font-semibold text-neutral-600 transition-all ${
+                  isRecruiting
+                    ? 'cursor-default opacity-50'
+                    : 'cursor-pointer hover:bg-neutral-200'
+                } `}>
                 {gen.generationId}기
               </button>
             );
