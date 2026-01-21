@@ -1,18 +1,27 @@
 import Image from 'next/image';
-import Bg from '@/assets/backgrounds/session-schedule/ot-bg.webp';
+import clsx from 'clsx';
+import {ActivityCardType} from '@/schemas/recruit/recruit-components.schema';
+import {ACTIVITY_CARD_STYLES} from '@/constants/recruit/recruit-components';
 
-export const ActivityCard = () => {
+interface ActivityCardProps {
+  item: ActivityCardType;
+}
+
+export const ActivityCard = ({item}: ActivityCardProps) => {
   return (
     <div className='group relative h-68.5 w-96.5 overflow-hidden rounded-[10px] bg-neutral-800 px-10 py-6 select-none'>
       <Image
-        src={Bg}
+        src={ACTIVITY_CARD_STYLES[item.short].coverImageUrl}
         alt='SessionSchedule Cover'
         fill={true}
         draggable={false}
-        className='object-cover object-center opacity-100 transition-opacity duration-300 group-hover:opacity-0'
+        className={clsx(
+          'object-cover object-center transition-opacity duration-300 group-hover:opacity-0',
+          ACTIVITY_CARD_STYLES[item.short].style
+        )}
       />
       <Image
-        src='https://picsum.photos/id/60/300/200'
+        src={item.imageUrl}
         alt='SessionSchedule Content'
         fill={true}
         draggable={false}
@@ -24,10 +33,10 @@ export const ActivityCard = () => {
 
       <div className='relative z-20 flex justify-between'>
         <p className='text-h4 text-neutral-50 transition-colors duration-300 group-hover:text-neutral-800'>
-          OT
+          {item.name}
         </p>
         <p className='text-h5 text-neutral-200 transition-colors duration-300 group-hover:text-neutral-600'>
-          2025.9.36
+          {item.date}
         </p>
       </div>
     </div>
