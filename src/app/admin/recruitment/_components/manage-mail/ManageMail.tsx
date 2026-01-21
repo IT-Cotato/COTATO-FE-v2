@@ -20,6 +20,15 @@ export const ManageMail = ({
 }: ManageMailProps) => {
   const {generation, isRecruiting} = useRecruitmentStore();
 
+  const labelMap: Record<string, string> = {
+    '지원 알림 메일': '대기자',
+    '합격자 메일': '합격자',
+    '불합격자 메일': '불합격자',
+    '예비합격자 메일': '예비합격자',
+  };
+
+  const currentLabel = labelMap[mailType] || '대상자';
+
   const {
     isLoading,
     isEditing,
@@ -67,6 +76,7 @@ export const ManageMail = ({
         isSent={isSent}
         onSend={() => setIsSendModalOpen(true)}
         waitingCount={waitingCount}
+        waitingLabel={currentLabel}
         jobStatus={jobStatus}
         isRefreshing={isRefreshing}
         onRefresh={refreshStatus}

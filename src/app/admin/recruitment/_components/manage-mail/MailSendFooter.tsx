@@ -4,6 +4,7 @@ import {clsx} from 'clsx';
 
 interface MailSendFooterProps {
   waitingCount: number;
+  waitingLabel: string;
   canSendMail: boolean;
   isSent: boolean;
   onSend: () => void;
@@ -14,6 +15,7 @@ interface MailSendFooterProps {
 
 export const MailSendFooter = ({
   waitingCount,
+  waitingLabel,
   canSendMail,
   isSent,
   onSend,
@@ -32,7 +34,9 @@ export const MailSendFooter = ({
   return (
     <div className='flex w-full flex-col items-end gap-3'>
       <div className='flex items-center gap-[21px] text-body-l text-neutral-500'>
-        <p>(대상자 수 : {waitingCount}명)</p>
+        <p>
+          ({waitingLabel} 수: {waitingCount}명)
+        </p>
         {shouldShowStatus && (
           <div className='flex items-center gap-4 rounded-lg border border-neutral-200 bg-neutral-50 px-4 py-2'>
             <div className='flex gap-3 text-body-m font-bold'>
