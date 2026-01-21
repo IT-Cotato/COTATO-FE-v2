@@ -1,7 +1,7 @@
 'use client';
 
 import {useQuery} from '@tanstack/react-query';
-import {getPartQuestions} from '@/services/api/apply/apply.api';
+import {getEtcQuestions, getPartQuestions} from '@/services/api/apply/apply.api';
 import {QUERY_KEYS} from '@/constants/query-keys';
 
 /**
@@ -9,8 +9,19 @@ import {QUERY_KEYS} from '@/constants/query-keys';
  */
 export const useGetPartQuestionsQuery = (applicationId: number | null) => {
   return useQuery({
-    queryKey: QUERY_KEYS.APPLY.PART_QUESTIONS(String(applicationId)),
+    queryKey: QUERY_KEYS.APPLY.PART_QUESTIONS(applicationId!),
     queryFn: () => getPartQuestions(applicationId!),
+    enabled: !!applicationId,
+  });
+};
+
+/**
+ * 기타 질문 조회
+ */
+export const useGetEtcQuestionsQuery = (applicationId: number | null) => {
+  return useQuery({
+    queryKey: QUERY_KEYS.APPLY.ETC_QUESTIONS(applicationId!),
+    queryFn: () => getEtcQuestions(applicationId!),
     enabled: !!applicationId,
   });
 };
