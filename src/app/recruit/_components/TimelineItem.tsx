@@ -4,9 +4,10 @@ import {TimelineType} from '@/schemas/recruit/recruit-components.schema';
 
 interface TimelineItemProps {
   item: TimelineType;
+  isLast: boolean;
 }
 
-export const TimelineItem = ({item}: TimelineItemProps) => {
+export const TimelineItem = ({item, isLast}: TimelineItemProps) => {
   return (
     <div className='flex'>
       <div className='flex w-41.5 flex-col items-center gap-3.5'>
@@ -20,7 +21,7 @@ export const TimelineItem = ({item}: TimelineItemProps) => {
           {item.date}
         </p>
       </div>
-      <ConnectionLine className='mt-4.5 w-11.25 fill-primary' />
+      {!isLast && <ConnectionLine className='mt-4.5 w-11.25 fill-primary' />}
     </div>
   );
 };
