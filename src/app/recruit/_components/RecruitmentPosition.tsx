@@ -1,10 +1,16 @@
 import Image from 'next/image';
 import DefaultBg from '@/assets/backgrounds/recruitment-position/default-bg.webp';
 import BrandLogo from '@/assets/brand-logo/brand-logo.svg';
+import clsx from 'clsx';
+import {RECRUITMENT_POSITION_STYLES} from '@/constants/recruit/recruit-components';
 
 export const RecruitmentPosition = () => {
   return (
-    <div className='group relative flex h-100 w-71.25 flex-col justify-between rounded-[10px] bg-linear-to-b from-neutral-800 to-neutral-700 p-7.5 transition-colors duration-300 select-none hover:bg-[conic-gradient(from_0deg_at_50%_50%,#D9D9D9_0%,var(--color-neutral-300)_2%,var(--color-neutral-50)_98%,#D9D9D9_100%)]'>
+    <div
+      className={clsx(
+        'group relative flex h-100 w-71.25 flex-col justify-between rounded-[10px] bg-linear-to-b from-neutral-800 to-neutral-700 p-7.5 transition-colors duration-300 select-none',
+        RECRUITMENT_POSITION_STYLES['PM']
+      )}>
       <Image
         src={DefaultBg}
         alt='RecruitmentPosition Background'
