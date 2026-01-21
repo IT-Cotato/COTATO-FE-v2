@@ -19,11 +19,9 @@ export const RecruitmentPosition = ({item}: RecruitmentPositionProps) => {
       <Image
         src={DefaultBg}
         alt='RecruitmentPosition Background'
-        layout='fill'
-        objectFit='cover'
-        objectPosition='center'
+        fill={true}
         draggable={false}
-        className='opacity-100 transition-opacity duration-300 group-hover:opacity-0'
+        className='object-cover object-center opacity-100 transition-opacity duration-300 group-hover:opacity-0'
       />
 
       <div className='flex flex-col gap-2.5'>
