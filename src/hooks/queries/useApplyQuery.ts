@@ -1,7 +1,10 @@
 'use client';
 
 import {useQuery} from '@tanstack/react-query';
-import {getEtcQuestions, getPartQuestions} from '@/services/api/apply/apply.api';
+import {
+  getEtcQuestions,
+  getPartQuestions,
+} from '@/services/api/apply/apply.api';
 import {QUERY_KEYS} from '@/constants/query-keys';
 
 /**
