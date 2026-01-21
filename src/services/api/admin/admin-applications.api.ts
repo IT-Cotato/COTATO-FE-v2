@@ -1,4 +1,5 @@
 import {
+  ApplicationPassStatus,
   GetAdminApplicationsParamsType,
   GetAdminApplicationsResponse,
   GetAdminApplicationsResponseSchema,
@@ -13,7 +14,6 @@ import {handleApiError} from '@/services/utils/apiHelper';
  * @param params - 필터링, 정렬, 페이지네이션 옵션 (generationId, keyword, part, sort, passViewStatuses, page)
  * @returns 지원서 목록 응답 데이터
  */
-
 export const getAdminApplications = async (
   params: GetAdminApplicationsParamsType
 ): Promise<GetAdminApplicationsResponse> => {
@@ -27,5 +27,27 @@ export const getAdminApplications = async (
     return GetAdminApplicationsResponseSchema.parse(response.data);
   } catch (error: unknown) {
     return handleApiError(error);
+  }
+};
+
+/**
+ * 지원서 합격 여부를 변경합니다.
+ * @param applicationId - 지원서 id
+ * @param body - 합/불 상태
+ * @returns null
+ */
+export const postApplicationPassStatus = async (
+  applicationId: number,
+  body: {passStatus: ApplicationPassStatus}
+) => {
+  try {
+    await privateAxios.post(
+      ENDPOINT.ADMIN.APPLICATION_PASS_STATUS(applicationId),
+      body
+    );
+
+    return null;
+  } catch (error: unknown) {
+    handleApiError(error);
   }
 };
