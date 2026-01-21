@@ -33,7 +33,7 @@ export const RecruitmentPosition = ({item}: RecruitmentPositionProps) => {
         </p>
       </div>
 
-      <p className='z-1 mb-7.5 text-body-l text-neutral-800 opacity-0 transition-opacity duration-300 group-hover:opacity-100'>
+      <p className='z-1 mb-7.5 text-body-l wrap-anywhere whitespace-pre-line text-neutral-800 opacity-0 transition-opacity duration-300 group-hover:opacity-100'>
         {item.detail}
       </p>
     </div>
