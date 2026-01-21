@@ -6,7 +6,7 @@ import {FormTextarea} from '@/components/form/FormTextarea';
 import {FullButton} from '@/components/button/FullButton';
 
 import {useApplicationStore} from '@/store/useApplicationStore';
-import {useGetPartQuestionsQuery} from '@/hooks/queries/useApplyQuery';
+import {useGetPartQuestionsQuery} from '@/hooks/queries/useApply.query';
 import {PART_TABS} from '@/constants/admin/admin-application-questions';
 import {PartType} from '@/schemas/admin/admin-application-questions.schema';
 
