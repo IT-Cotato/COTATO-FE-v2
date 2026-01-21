@@ -15,7 +15,7 @@ import {useSubmissionStore} from '@/store/useSubmissionStore';
 import {useQuery} from '@tanstack/react-query';
 import {getBasicInfo} from '@/services/api/apply/apply.api';
 import {QUERY_KEYS} from '@/constants/query-keys';
-import {useGetEtcQuestionsQuery} from '@/hooks/queries/useApplyQuery';
+import {useGetEtcQuestionsQuery} from '@/hooks/queries/useApply.query';
 import {
   useSaveBasicInfo,
   useSavePartQuestions,
