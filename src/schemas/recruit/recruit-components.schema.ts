@@ -33,3 +33,14 @@ export const ActivityCategorySchema = z.enum([
 ]);
 
 export type ActivityCategoryType = z.infer<typeof ActivityCategorySchema>;
+
+/** 세션 활동 */
+export const ActivityCardSchema = z.object({
+  id: z.number(),
+  short: ActivityCategorySchema,
+  name: z.string(),
+  date: z.string(),
+  imageUrl: z.url(),
+});
+
+export type ActivityCardType = z.infer<typeof ActivityCardSchema>;
