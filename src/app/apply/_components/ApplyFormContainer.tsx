@@ -29,6 +29,7 @@ export const ApplyFormContainer = () => {
     isConfirmModalOpen,
     closeConfirmModal,
     handleConfirmSubmit,
+    etcDates,
   } = useApplyFormController();
 
   const generation = useRecruitmentStore((state) => state.generation);
@@ -79,7 +80,7 @@ export const ApplyFormContainer = () => {
                   />
                 )}
                 {step === 3 && (
-                  <EtcInfo onPrev={handlePrev} onSave={handleSave} />
+                  <EtcInfo onPrev={handlePrev} onSave={handleSave} dates={etcDates} />
                 )}
               </form>
             </FormProvider>

@@ -8,13 +8,14 @@ import {
   PartQuestionRequest,
   EtcQuestionRequest,
 } from '@/schemas/apply/apply-schema';
-import {BASIC_INFO_FIELDS} from '@/constants/form/formConfig';
+import {BASIC_INFO_FIELDS, EtcFieldDates} from '@/constants/form/formConfig';
 import {useRouter, useSearchParams} from 'next/navigation';
 import {useRecruitmentStore} from '@/store/useRecruitmentStore';
 import {useSubmissionStore} from '@/store/useSubmissionStore';
 import {useQuery} from '@tanstack/react-query';
 import {getBasicInfo} from '@/services/api/apply/apply.api';
 import {QUERY_KEYS} from '@/constants/query-keys';
+import {useGetEtcQuestionsQuery} from '@/hooks/queries/useApplyQuery';
 import {
   useSaveBasicInfo,
   useSavePartQuestions,
@@ -33,6 +34,7 @@ interface UseApplyFormControllerReturn {
   openConfirmModal: () => void;
   closeConfirmModal: () => void;
   handleConfirmSubmit: () => void;
+  etcDates?: EtcFieldDates;
 }
 
 export const useApplyFormController = (): UseApplyFormControllerReturn => {
@@ -64,6 +66,10 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
     queryFn: () => getBasicInfo(Number(applicationId)),
     enabled: !!applicationId && urlStep === 1,
   });
+
+  const {data: etcQuestions} = useGetEtcQuestionsQuery(
+    applicationId ? Number(applicationId) : null
+  );
 
   const {mutate: saveBasicInfo} = useSaveBasicInfo(Number(applicationId));
   const {mutate: savePartQuestions} = useSavePartQuestions(
@@ -143,39 +149,29 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
       const formData = data as BasicInfoFormData & {
         discovery?: string;
         otherActivity?: string;
-        interview3?: string;
-        interview4?: string;
+        interviewStartDate?: string;
+        interviewEndDate?: string;
         sessionAgree?: string;
         otAgree?: string;
         privacyAgree?: string;
       };
 
       const unavailableInterviewTimes = [
-        formData.interview3 ? `3월 3일 ${formData.interview3}` : null,
-        formData.interview4 ? `3월 4일 ${formData.interview4}` : null,
+        formData.interviewStartDate
+          ? `${etcQuestions?.interviewStartDate ?? ''} ${formData.interviewStartDate}`
+          : null,
+        formData.interviewEndDate
+          ? `${etcQuestions?.interviewEndDate ?? ''} ${formData.interviewEndDate}`
+          : null,
       ]
         .filter(Boolean)
         .join(', ');
 
-      const DISCOVERY_PATHS = [
-        'SNS',
-        '학교 홍보',
-        '지인 추천',
-        '기타',
-      ] as const;
-      type DiscoveryPath = (typeof DISCOVERY_PATHS)[number];
-
-      const isValidDiscoveryPath = (
-        path: string | undefined
-      ): path is DiscoveryPath =>
-        (DISCOVERY_PATHS as readonly string[]).includes(path || '');
-
-      const validatedDiscoveryPath = isValidDiscoveryPath(formData.discovery)
-        ? formData.discovery
-        : '기타';
+      const discoveryPath =
+        (formData.discovery as EtcQuestionRequest['discoveryPath']) ?? '기타';
 
       const requestData: EtcQuestionRequest = {
-        discoveryPath: validatedDiscoveryPath,
+        discoveryPath,
         parallelActivities: formData.otherActivity || '',
         unavailableInterviewTimes,
         sessionAttendanceAgreed: formData.sessionAgree === 'agree',
@@ -251,6 +247,14 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
     }
   });
 
+  const etcDates: EtcFieldDates | undefined = etcQuestions
+    ? {
+        interviewStartDate: etcQuestions.interviewStartDate,
+        interviewEndDate: etcQuestions.interviewEndDate,
+        otDate: etcQuestions.otDate,
+      }
+    : undefined;
+
   return {
     step,
     methods,
@@ -262,5 +266,6 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
     openConfirmModal,
     closeConfirmModal,
     handleConfirmSubmit,
+    etcDates,
   };
 };
