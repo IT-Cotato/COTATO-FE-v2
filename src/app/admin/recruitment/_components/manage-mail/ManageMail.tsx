@@ -18,7 +18,7 @@ export const ManageMail = ({
   mailType = '지원 알림 메일',
   alwaysAble = false,
 }: ManageMailProps) => {
-  const {generation, isRecruiting} = useRecruitmentStore();
+  const {generation, isRecruiting} = useRecruitmentStore(); //기수목록 불러오고 수정
 
   const labelMap: Record<string, string> = {
     '지원 알림 메일': '대기자',

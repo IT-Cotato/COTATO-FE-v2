@@ -2,15 +2,13 @@
 
 import {useAdminPassStatusQuery} from '@/hooks/queries/useAdminResult.query';
 import {ResultTable} from '@/app/admin/results/_components/result-manage/ResultTable';
-import {useRecruitmentStore} from '@/store/useRecruitmentStore';
 import {GenerationDropdown} from '@/components/dropdown/GenerationDropdown';
 import {Spinner} from '@/components/ui/Spinner';
 import {STATUS_LABEL_MAP} from '@/constants/admin/admin-result';
+import {useState} from 'react';
 
 export const ManageResult = () => {
-  const generation = useRecruitmentStore((s) => s.generation);
-  const setGeneration = useRecruitmentStore((s) => s.setGeneration);
-
+  const [generation, setGeneration] = useState('13');
   const {data, isLoading} = useAdminPassStatusQuery(generation);
 
   const tableData =
