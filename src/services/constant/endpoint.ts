@@ -41,5 +41,11 @@ export const ENDPOINT = {
       `/api/applications/${applicationId}/part-questions`,
     ANSWERS: (applicationId: number) =>
       `/api/applications/${applicationId}/answers`,
+    ETC_QUESTIONS: (applicationId: number) =>
+      `/api/applications/${applicationId}/etc-questions`,
+    ETC_ANSWERS: (applicationId: number) =>
+      `/api/applications/${applicationId}/etc-answers`,
+    SUBMIT: (applicationId: number) =>
+      `/api/applications/${applicationId}/submit`,
   },
 };

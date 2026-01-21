@@ -105,9 +105,14 @@ export const ETC_FIELDS: EtcFormItem[] = [
     type: 'dropdown',
     placeholder: '알게 된 경로를 선택해주세요',
     options: [
-      {value: 'instagram', label: '인스타그램'},
-      {value: 'everytime', label: '에브리타임'},
-      {value: 'friend', label: '지인/선배 추천'},
+      {value: 'SNS', label: '인스타그램'},
+      {value: '학교 홍보', label: '에브리타임'},
+      {value: '학교 홍보', label: '캠퍼스픽'},
+      {value: '기타', label: '직행'},
+      {value: 'SNS', label: '네이버 카페'},
+      {value: 'SNS', label: '그 외 SNS'},
+      {value: '지인 추천', label: '지인 소개'},
+      {value: '기타', label: '해당 없음'},
     ],
   },
   {
