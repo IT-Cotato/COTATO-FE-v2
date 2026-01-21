@@ -11,6 +11,7 @@ import {
 } from '@/constants/admin/admin-applications';
 import {ApplicantsPageType} from '@/schemas/admin/admin-applications.schema';
 import {Spinner} from '@/components/ui/Spinner';
+import {useUpdateApplicationPassStatus} from '@/hooks/mutations/useAdminApplications.mutation';
 
 interface AdminApplicationsTableContainerProps {
   applicants?: ApplicantsPageType;
@@ -26,6 +27,8 @@ export const AdminApplicationsTableContainer = ({
   const passViewStatuses = searchParams.getAll('passViewStatuses');
   const submitDateSortOrder =
     searchParams.get('sort') === 'asc' ? 'asc' : 'desc';
+  const {mutate: updatePassStatus, isPending: isUpdatingPassStatus} =
+    useUpdateApplicationPassStatus();
 
   const selectedResults: ApplicationResultLabel[] =
     passViewStatuses.length === 0 || passViewStatuses.includes('ALL')
@@ -98,6 +101,13 @@ export const AdminApplicationsTableContainer = ({
               isFilterActive={isFilterActive}
               onSubmitDateSortToggle={handleSubmitDateSortToggle}
               onFilterToggle={() => setIsFilterOpen((prev) => !prev)}
+              onChangePassStatus={(applicationId, passStatus) =>
+                updatePassStatus({
+                  applicationId,
+                  body: {passStatus},
+                })
+              }
+              isUpdating={isUpdatingPassStatus}
             />
 
             {isFilterOpen && !isLoading && (
