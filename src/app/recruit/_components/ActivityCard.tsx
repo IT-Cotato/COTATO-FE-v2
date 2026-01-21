@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Bg from '@/assets/backgrounds/session-schedule/ot-bg.webp';
 
-export const SessionSchedule = () => {
+export const ActivityCard = () => {
   return (
     <div className='group relative h-68.5 w-96.5 overflow-hidden rounded-[10px] bg-neutral-800 px-10 py-6 select-none'>
       <Image
