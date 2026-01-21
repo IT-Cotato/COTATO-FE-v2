@@ -1,6 +1,6 @@
 'use client';
 
-import {AdminReviewTabs} from '@/app/admin/applications/[id]/_components/AdminReviewTabs';
+import {AdminApplicationEvaluationContainer} from '@/app/admin/applications/[id]/_containers/AdminApplicationEvaluationContainer';
 import {AdminApplicationHeader} from '@/app/admin/applications/[id]/_components/AdminApplicationHeader';
 import {BasicInfoView} from '@/app/admin/applications/[id]/_components/BasicInfoView';
 import {EtcQuestionView} from '@/app/admin/applications/[id]/_components/EtcQuestionView';
@@ -54,7 +54,7 @@ export const AdminApplicationContainer = () => {
         basicInfo={basicInfo.data}
       />
 
-      <AdminReviewTabs />
+      <AdminApplicationEvaluationContainer applicationId={applicationId} />
 
       <div className='flex w-full flex-col gap-31.25'>
         <div className='flex justify-center'>
