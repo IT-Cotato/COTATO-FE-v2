@@ -96,7 +96,7 @@ export const FormDropdown = forwardRef<HTMLInputElement, FormDropdownProps>(
             <ul className='absolute z-10 mt-2 w-full rounded-[10px] border border-neutral-200 bg-neutral-100 shadow-lg'>
               {options.map((option) => (
                 <li
-                  key={option.value}
+                  key={option.label}
                   onClick={(e) => handleSelect(e, option.value)}
                   className='cursor-pointer px-4 py-3 text-body-l text-neutral-800 transition-colors hover:bg-neutral-200'>
                   {option.label}
