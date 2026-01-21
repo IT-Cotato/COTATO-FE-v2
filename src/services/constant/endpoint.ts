@@ -42,6 +42,7 @@ export const ENDPOINT = {
     RECRUITMENT_RESULT_JOB: (jobId: number) =>
       `/api/admin/recruitment-mails/jobs/${jobId}`,
     PASS_STATUS: '/api/admin/pass-status',
+    GENERATIONS: '/api/admin/generations',
   },
   APPLY: {
     START: '/api/applications/start',
