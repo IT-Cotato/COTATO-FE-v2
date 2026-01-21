@@ -6,6 +6,7 @@ import {
   BasicInfoFormData,
   BasicInfoRequest,
   PartQuestionRequest,
+  EtcQuestionRequest,
 } from '@/schemas/apply/apply-schema';
 import {BASIC_INFO_FIELDS} from '@/constants/form/formConfig';
 import {useRouter, useSearchParams} from 'next/navigation';
@@ -17,6 +18,8 @@ import {QUERY_KEYS} from '@/constants/query-keys';
 import {
   useSaveBasicInfo,
   useSavePartQuestions,
+  useSaveEtcQuestions,
+  useSubmitApplication,
 } from '@/hooks/mutations/useApply.mutation';
 
 interface UseApplyFormControllerReturn {
@@ -57,13 +60,17 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
   const hasInitializedRef = useRef(false);
 
   const {data: basicInfo} = useQuery({
-    queryKey: QUERY_KEYS.APPLY.BASIC_INFO(applicationId!),
+    queryKey: QUERY_KEYS.APPLY.BASIC_INFO(Number(applicationId)),
     queryFn: () => getBasicInfo(Number(applicationId)),
     enabled: !!applicationId && urlStep === 1,
   });
 
   const {mutate: saveBasicInfo} = useSaveBasicInfo(Number(applicationId));
   const {mutate: savePartQuestions} = useSavePartQuestions(
+    Number(applicationId)
+  );
+  const {mutate: saveEtcQuestions} = useSaveEtcQuestions(Number(applicationId));
+  const {mutateAsync: submitApplication} = useSubmitApplication(
     Number(applicationId)
   );
 
@@ -112,7 +119,6 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
         isEnrolled: data.isCollegeStudent === 'enrolled',
         applicationPartType: data.part,
       };
-      console.log('임시저장 데이터 (기본 정보):', requestData);
       saveBasicInfo(requestData);
     } else if (step === 2) {
       const answersToSave = Object.entries(data)
@@ -132,8 +138,52 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
         pdfFileKey: formData.pdfFileKey || undefined,
       };
 
-      console.log('임시저장 데이터 (파트별 질문):', requestData);
       savePartQuestions(requestData);
+    } else if (step === 3) {
+      const formData = data as BasicInfoFormData & {
+        discovery?: string;
+        otherActivity?: string;
+        interview3?: string;
+        interview4?: string;
+        sessionAgree?: string;
+        otAgree?: string;
+        privacyAgree?: string;
+      };
+
+      const unavailableInterviewTimes = [
+        formData.interview3 ? `3월 3일 ${formData.interview3}` : null,
+        formData.interview4 ? `3월 4일 ${formData.interview4}` : null,
+      ]
+        .filter(Boolean)
+        .join(', ');
+
+      const DISCOVERY_PATHS = [
+        'SNS',
+        '학교 홍보',
+        '지인 추천',
+        '기타',
+      ] as const;
+      type DiscoveryPath = (typeof DISCOVERY_PATHS)[number];
+
+      const isValidDiscoveryPath = (
+        path: string | undefined
+      ): path is DiscoveryPath =>
+        (DISCOVERY_PATHS as readonly string[]).includes(path || '');
+
+      const validatedDiscoveryPath = isValidDiscoveryPath(formData.discovery)
+        ? formData.discovery
+        : '기타';
+
+      const requestData: EtcQuestionRequest = {
+        discoveryPath: validatedDiscoveryPath,
+        parallelActivities: formData.otherActivity || '',
+        unavailableInterviewTimes,
+        sessionAttendanceAgreed: formData.sessionAgree === 'agree',
+        mandatoryEventsAgreed: formData.otAgree === 'agree',
+        privacyPolicyAgreed: formData.privacyAgree === 'agree',
+      };
+
+      saveEtcQuestions(requestData);
     }
   };
 
@@ -184,19 +234,10 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
     closeConfirmModal();
 
     try {
-      // TODO: 실제 API 호출로 교체
-      const isSuccess = await new Promise<boolean>((resolve) => {
-        setTimeout(() => resolve(Math.random() > 0.5), 1000);
-      });
-
-      if (isSuccess) {
-        const data = getValues();
-        console.log('최종 제출 데이터:', data);
-        setHasSubmitted(true);
-        router.push('/?submitted=true');
-      } else {
-        throw new Error('Submission failed');
-      }
+      handleSave();
+      await submitApplication();
+      setHasSubmitted(true);
+      router.push('/?submitted=true');
     } catch {
       router.push('/?submitted=false');
     }
