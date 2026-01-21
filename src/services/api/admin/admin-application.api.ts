@@ -1,10 +1,14 @@
 import {
+  EvaluatorType,
   GetAdminApplicationBasicInfoResponse,
   GetAdminApplicationBasicInfoResponseSchema,
   GetAdminApplicationEtcQuestionsResponse,
   GetAdminApplicationEtcQuestionsResponseSchema,
+  GetAdminApplicationEvaluationResponse,
+  GetAdminApplicationEvaluationResponseSchema,
   GetAdminApplicationPartQuestionsResponse,
   GetAdminApplicationPartQuestionsResponseSchema,
+  PostAdminApplicationEvaluationRequest,
 } from '@/schemas/admin/admin-application.schema';
 import {privateAxios} from '@/services/config/axios';
 import {ENDPOINT} from '@/services/constant/endpoint';
@@ -66,6 +70,58 @@ export const getAdminApplicationEtcQuestions = async (
     );
 
     return GetAdminApplicationEtcQuestionsResponseSchema.parse(response.data);
+  } catch (error: unknown) {
+    return handleApiError(error);
+  }
+};
+
+/**
+ * 지원서별 운영진 평가를 조회하는 API 요청 함수
+ * @param applicationId 지원서 id
+ * @param evaluatorType 운영진 타입
+ * @returns 지원서별 운영진 평가 데이터
+ */
+export const getAdminApplicationEvaluation = async ({
+  applicationId,
+  evaluatorType,
+}: {
+  applicationId: number;
+  evaluatorType: EvaluatorType;
+}): Promise<GetAdminApplicationEvaluationResponse> => {
+  try {
+    const response = await privateAxios.get(
+      ENDPOINT.ADMIN.APPLICATION_EVALUATION(applicationId),
+      {
+        params: {evaluatorType},
+      }
+    );
+
+    return GetAdminApplicationEvaluationResponseSchema.parse(response.data);
+  } catch (error: unknown) {
+    return handleApiError(error);
+  }
+};
+
+/**
+ * 지원서별 운영진 평가를 생성하는 API 요청 함수
+ * @param applicationId 지원서 id
+ * @param body 운영진 평가 데이터
+ * @returns null
+ */
+export const postAdminApplicationEvaluation = async ({
+  applicationId,
+  body,
+}: {
+  applicationId: number;
+  body: PostAdminApplicationEvaluationRequest;
+}) => {
+  try {
+    await privateAxios.post(
+      ENDPOINT.ADMIN.APPLICATION_EVALUATION(applicationId),
+      body
+    );
+
+    return null;
   } catch (error: unknown) {
     return handleApiError(error);
   }

@@ -64,8 +64,25 @@ export const AdminApplicationEtcQuestionsSchema = z.object({
   otDate: z.string(),
 });
 
+/**
+ * 어드민 지원서 조회 - 운영진 평가 스키마
+ */
 export const GetAdminApplicationEtcQuestionsResponseSchema =
   createSuccessResponseSchema(AdminApplicationEtcQuestionsSchema);
+
+export const EvaluatorSchema = z.enum(['STAFF1', 'STAFF2', 'STAFF3', 'STAFF4']);
+
+export const GetAdminApplicationEvaluationResponseSchema =
+  createSuccessResponseSchema(
+    z.object({
+      comment: z.string().nullable(),
+    })
+  );
+
+export const PostAdminApplicationEvaluationRequestSchema = z.object({
+  evaluatorType: EvaluatorSchema,
+  comment: z.string(),
+});
 
 /**
  * 타입 추출
@@ -87,4 +104,11 @@ export type GetAdminApplicationEtcQuestionsResponse = z.infer<
 >;
 export type AdminApplicationEtcQuestionsType = z.infer<
   typeof AdminApplicationEtcQuestionsSchema
+>;
+export type EvaluatorType = z.infer<typeof EvaluatorSchema>;
+export type GetAdminApplicationEvaluationResponse = z.infer<
+  typeof GetAdminApplicationEvaluationResponseSchema
+>;
+export type PostAdminApplicationEvaluationRequest = z.infer<
+  typeof PostAdminApplicationEvaluationRequestSchema
 >;

@@ -28,9 +28,6 @@ export const useSaveBasicInfo = (applicationId: number) => {
         queryKey: QUERY_KEYS.APPLY.BASIC_INFO(applicationId),
       });
     },
-    onError: (error: AxiosError) => {
-      console.error('기본 인적사항 저장에 실패했습니다.', error);
-    },
   });
 };
 
@@ -47,9 +44,6 @@ export const useSavePartQuestions = (applicationId: number) => {
       queryClient.invalidateQueries({
         queryKey: QUERY_KEYS.APPLY.PART_QUESTIONS(applicationId),
       });
-    },
-    onError: (error: AxiosError) => {
-      console.error('파트별 질문 저장에 실패했습니다.', error);
     },
   });
 };
