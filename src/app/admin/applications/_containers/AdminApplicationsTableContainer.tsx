@@ -25,8 +25,8 @@ export const AdminApplicationsTableContainer = ({
   const searchParams = useSearchParams();
   const router = useRouter();
   const passViewStatuses = searchParams.getAll('passViewStatuses');
-  const submitDateSortOrder =
-    searchParams.get('sort') === 'asc' ? 'asc' : 'desc';
+  const sortParam = searchParams.get('sort');
+  const submitDateSortOrder = sortParam?.endsWith(',asc') ? 'asc' : 'desc';
   const {mutate: updatePassStatus, isPending: isUpdatingPassStatus} =
     useUpdateApplicationPassStatus();
 
@@ -53,9 +53,14 @@ export const AdminApplicationsTableContainer = ({
   const handleSubmitDateSortToggle = () => {
     const params = new URLSearchParams(searchParams.toString());
 
-    const next = searchParams.get('sort') === 'desc' ? 'asc' : 'desc';
+    const currentSort = searchParams.get('sort');
 
-    params.set('sort', next);
+    const currentOrder: 'asc' | 'desc' =
+      currentSort === 'asc' || currentSort?.endsWith(',asc') ? 'asc' : 'desc';
+
+    const next: 'asc' | 'desc' = currentOrder === 'desc' ? 'asc' : 'desc';
+
+    params.set('sort', `submittedAt,${next}`);
     params.set('page', '1');
 
     router.push(`?${params.toString()}`, {scroll: false});

@@ -74,10 +74,7 @@ export const AdminApplicationsTableView = ({
                       <DownArrowIcon
                         className={clsx(
                           'transition-transform duration-200 ease-in-out',
-                          {
-                            'rotate-180': submitDateSortOrder === 'asc',
-                            'rotate-0': submitDateSortOrder === 'desc',
-                          }
+                          submitDateSortOrder === 'asc' && 'rotate-180'
                         )}
                       />
                     </button>
