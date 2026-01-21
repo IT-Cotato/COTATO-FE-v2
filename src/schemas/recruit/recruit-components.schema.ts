@@ -12,3 +12,12 @@ export type TimelineType = z.infer<typeof TimelineSchema>;
 export const PositionSchema = z.enum(['PM', 'DE', 'FE', 'BE']);
 
 export type PositionType = z.infer<typeof PositionSchema>;
+
+/** 모집 포지션 */
+export const RecruitmentPositionSchema = z.object({
+  short: PositionSchema,
+  name: z.string(),
+  detail: z.string(),
+});
+
+export type RecruitmentPositionType = z.infer<typeof RecruitmentPositionSchema>;
