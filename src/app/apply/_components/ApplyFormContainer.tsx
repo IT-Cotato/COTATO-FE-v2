@@ -80,7 +80,11 @@ export const ApplyFormContainer = () => {
                   />
                 )}
                 {step === 3 && (
-                  <EtcInfo onPrev={handlePrev} onSave={handleSave} dates={etcDates} />
+                  <EtcInfo
+                    onPrev={handlePrev}
+                    onSave={handleSave}
+                    dates={etcDates}
+                  />
                 )}
               </form>
             </FormProvider>

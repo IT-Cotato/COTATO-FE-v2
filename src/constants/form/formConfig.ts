@@ -143,13 +143,13 @@ export const getEtcFields = (dates?: EtcFieldDates): EtcFormItem[] => {
       type: 'row',
       row: [
         {
-          name: 'interview1',
+          name: 'interviewStartDate',
           label: interviewStart,
           type: 'input',
           placeholder: 'ex) 14:00~16:00, 18:00~19:30',
         },
         {
-          name: 'interview2',
+          name: 'interviewEndDate',
           label: interviewEnd,
           type: 'input',
           placeholder: 'ex) 14:00~16:00, 18:00~19:30',
@@ -178,7 +178,9 @@ export const getEtcFields = (dates?: EtcFieldDates): EtcFormItem[] => {
     {
       name: 'privacyAgree',
       type: 'radio',
-      options: [{label: '개인정보의 수집 및 이용에 동의합니다.', value: 'agree'}],
+      options: [
+        {label: '개인정보의 수집 및 이용에 동의합니다.', value: 'agree'},
+      ],
       className: 'justify-end',
     },
   ];
