@@ -1,5 +1,5 @@
 import {QUERY_KEYS} from '@/constants/query-keys';
-import {postAdminApplicationEvaluation} from '@/services/api/admin/admin.application.api';
+import {postAdminApplicationEvaluation} from '@/services/api/admin/admin-application.api';
 import {useMutation, useQueryClient} from '@tanstack/react-query';
 
 /**

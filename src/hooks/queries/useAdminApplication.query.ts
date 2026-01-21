@@ -5,7 +5,7 @@ import {
   getAdminApplicationEtcQuestions,
   getAdminApplicationEvaluation,
   getAdminApplicationPartQuestions,
-} from '@/services/api/admin/admin.application.api';
+} from '@/services/api/admin/admin-application.api';
 import {useQuery} from '@tanstack/react-query';
 
 /**
