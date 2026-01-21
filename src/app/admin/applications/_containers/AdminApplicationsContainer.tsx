@@ -14,7 +14,8 @@ export const AdminApplicationsContainer = () => {
   const router = useRouter();
 
   const statusParams = searchParams.getAll('passViewStatuses');
-  const sortDirection = searchParams.get('sort') ?? 'desc';
+  const sortParam = searchParams.get('sort');
+  const sortDirection = sortParam?.split(',')[1] ?? 'desc';
 
   const rawParams = {
     generationId: Number(searchParams.get('generationId') ?? 13),

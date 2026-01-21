@@ -26,7 +26,8 @@ export const AdminApplicationsTableContainer = ({
   const router = useRouter();
   const passViewStatuses = searchParams.getAll('passViewStatuses');
   const sortParam = searchParams.get('sort');
-  const submitDateSortOrder = sortParam?.endsWith(',asc') ? 'asc' : 'desc';
+  const submitDateSortOrder =
+    sortParam === 'asc' || sortParam?.endsWith(',asc') ? 'asc' : 'desc';
   const {mutate: updatePassStatus, isPending: isUpdatingPassStatus} =
     useUpdateApplicationPassStatus();
 
