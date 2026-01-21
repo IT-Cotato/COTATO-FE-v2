@@ -2,8 +2,11 @@
 
 import {useMutation, useQueryClient} from '@tanstack/react-query';
 import {AxiosError} from 'axios';
-import {saveBasicInfo} from '@/services/api/apply/apply.api';
-import {BasicInfoRequest} from '@/schemas/apply/apply-schema';
+import {saveBasicInfo, savePartQuestions} from '@/services/api/apply/apply.api';
+import {
+  BasicInfoRequest,
+  PartQuestionRequest,
+} from '@/schemas/apply/apply-schema';
 import {QUERY_KEYS} from '@/constants/query-keys';
 
 /**
@@ -19,8 +22,22 @@ export const useSaveBasicInfo = (applicationId: number) => {
         queryKey: QUERY_KEYS.APPLY.BASIC_INFO(String(applicationId)),
       });
     },
-    onError: (error: AxiosError) => {
-      console.error('Failed to save BasicInfo', error);
+  });
+};
+
+/**
+ * 파트별 질문 저장
+ */
+export const useSavePartQuestions = (applicationId: number) => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (data: PartQuestionRequest) =>
+      savePartQuestions(applicationId, data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: QUERY_KEYS.APPLY.PART_QUESTIONS(String(applicationId)),
+      });
     },
   });
 };

@@ -7,6 +7,7 @@ export interface BasicInfoFieldConfig {
   type: 'input' | 'dropdown' | 'radio';
   placeholder?: string;
   options?: {value: string; label: string}[];
+  autocomplete?: string;
 }
 
 export type BasicInfoFormItem =
