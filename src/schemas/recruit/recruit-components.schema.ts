@@ -21,3 +21,15 @@ export const RecruitmentPositionSchema = z.object({
 });
 
 export type RecruitmentPositionType = z.infer<typeof RecruitmentPositionSchema>;
+
+/** 세션 활동 - 종류 */
+export const ActivityCategorySchema = z.enum([
+  'OT',
+  'SESSION',
+  'MT',
+  'DEVTALK',
+  'COKERTHON',
+  'DEMODAY',
+]);
+
+export type ActivityCategoryType = z.infer<typeof ActivityCategorySchema>;
