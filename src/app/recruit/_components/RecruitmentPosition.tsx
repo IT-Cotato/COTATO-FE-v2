@@ -13,7 +13,7 @@ export const RecruitmentPosition = ({item}: RecruitmentPositionProps) => {
   return (
     <div
       className={clsx(
-        'group relative flex h-100 w-71.25 flex-col justify-between overflow-hidden rounded-[10px] bg-linear-to-b from-neutral-800 to-neutral-700 p-7.5 transition-colors duration-300 select-none',
+        'group relative flex h-100 w-71.25 shrink-0 flex-col justify-between overflow-hidden rounded-[10px] bg-linear-to-b from-neutral-800 to-neutral-700 p-7.5 transition-colors duration-300 select-none',
         RECRUITMENT_POSITION_STYLES[item.short]
       )}>
       <Image
