@@ -9,9 +9,9 @@ import {useClickOutside} from '@/hooks/useClickOutside';
 import {formatRecruitmentDate} from '@/utils/formatDate';
 
 interface AdminDatePickerProps {
-  value?: string;
+  value?: string | null;
   placeholder?: string;
-  onChange: (value: string) => void;
+  onChange: (value: string | null) => void;
 }
 
 export const AdminDatePicker = ({
