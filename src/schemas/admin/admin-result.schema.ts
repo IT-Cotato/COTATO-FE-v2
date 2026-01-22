@@ -1,3 +1,4 @@
+import {createSuccessResponseSchema} from '@/schemas/common/common-schema';
 import {z} from 'zod';
 
 export const PassStatusSchema = z.object({
@@ -11,10 +12,8 @@ export const PassStatusSchema = z.object({
   }),
 });
 
-export const AdminPassStatusResponseSchema = z.object({
-  code: z.string(),
-  message: z.string(),
-  data: z.array(PassStatusSchema),
-});
+export const AdminPassStatusResponseSchema = createSuccessResponseSchema(
+  z.array(PassStatusSchema)
+);
 
 export type PassStatusData = z.infer<typeof PassStatusSchema>;

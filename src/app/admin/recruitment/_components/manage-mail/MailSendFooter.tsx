@@ -53,7 +53,7 @@ export const MailSendFooter = ({
                 disabled={isRefreshing}
                 className={clsx(
                   'flex items-center gap-1 text-neutral-500 transition-colors hover:text-neutral-800',
-                  {'animate-spin': isRefreshing} //
+                  {'animate-spin': isRefreshing}
                 )}>
                 <span className='text-[18px]'>↻</span>
               </button>
@@ -77,7 +77,7 @@ export const MailSendFooter = ({
             borderRadius={5}
             labelTypo='body_l'
             backgroundColor={getButtonColor()}
-            disabled={false}
+            disabled={!canSendMail && !isSent && !isInProgress}
             textColor='neutral-50'
             onClick={onSend}
           />

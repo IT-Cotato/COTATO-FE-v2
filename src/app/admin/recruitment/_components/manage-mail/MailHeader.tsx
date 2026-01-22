@@ -1,6 +1,7 @@
 import {Button} from '@/components/button/Button';
 
 interface MailHeaderProps {
+  canEdit: boolean;
   isEditing: boolean;
   isChanged: boolean;
   onEdit: () => void;
@@ -9,6 +10,7 @@ interface MailHeaderProps {
 }
 
 export const MailHeader = ({
+  canEdit,
   isEditing,
   isChanged,
   onEdit,
@@ -48,10 +50,11 @@ export const MailHeader = ({
             label='수정'
             labelTypo='body_l'
             borderRadius={5}
-            backgroundColor='secondary'
+            backgroundColor={canEdit ? 'secondary' : 'neutral-400'}
             width={145}
             height={36}
             onClick={onEdit}
+            disabled={!canEdit}
           />
         )}
       </div>

@@ -4,6 +4,7 @@ import {useState} from 'react';
 import {Button} from '@/components/button/Button';
 import {PeriodField} from '@/app/admin/recruitment/_components/active-recruitment/PeriodField';
 import {useRecruitmentStore} from '@/store/useRecruitmentStore';
+import {useGenerationStore} from '@/store/useGenerationStore';
 import {GenerationField} from '@/app/admin/recruitment/_components/active-recruitment/GenerationField';
 import {RecruitmentConfirmModal} from '@/components/modal/RecruitConfirmModal';
 import {formatDate} from '@/utils/formatDate';
@@ -18,6 +19,8 @@ export const ActiveRecruitmentForm = () => {
     isAdditional,
     setIsAdditional,
   } = useRecruitmentStore();
+
+  const {generations} = useGenerationStore();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [startDate, setStartDate] = useState<Date | null>(new Date());
   const [endDate, setEndDate] = useState<Date | null>(new Date());
@@ -26,6 +29,18 @@ export const ActiveRecruitmentForm = () => {
   const handleConfirm = () => {
     if (!generation) {
       alert('기수를 입력해주세요.');
+      return;
+    }
+
+    const isExist = generations.some(
+      (g) => g.generationId === Number(generation)
+    );
+
+    if (!isRecruiting && !isExist) {
+      alert(
+        `${generation}기는 아직 생성되지 않았습니다.\n기수 추가하기를 통해 먼저 기수를 생성해주세요.`
+      );
+      setIsModalOpen(false);
       return;
     }
 
@@ -60,7 +75,10 @@ export const ActiveRecruitmentForm = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!generation) return console.log('실패. 기수를 입력해주세요.');
+    if (!generation) {
+      alert('기수를 입력해주세요.');
+      return;
+    }
     setIsModalOpen(true);
   };
 
@@ -83,9 +101,13 @@ export const ActiveRecruitmentForm = () => {
             setEndDate={setEndDate}
             disabled={isRecruiting}
           />
-          <div className='flex shrink-0 cursor-pointer items-center gap-5 whitespace-nowrap select-none'>
+          <div className='flex shrink-0 items-center gap-5 whitespace-nowrap select-none'>
             <span className='text-body-L text-neutral-600'>추가모집 여부</span>
-            <Checkbox checked={isAdditional} onChange={setIsAdditional} />
+            <Checkbox
+              checked={isAdditional}
+              onChange={setIsAdditional}
+              disabled={isRecruiting}
+            />
           </div>
         </fieldset>
         <Button

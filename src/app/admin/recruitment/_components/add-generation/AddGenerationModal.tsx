@@ -20,6 +20,11 @@ export const AddGenerationModal = ({
   const {addGeneration, setSelectedGenerationId} = useGenerationStore();
   const {isRecruiting, setGeneration} = useRecruitmentStore();
 
+  const handleClose = () => {
+    setInputValue('');
+    onClose();
+  };
+
   if (!isOpen) return null;
 
   const handleCreate = async (e?: FormEvent) => {
@@ -45,16 +50,29 @@ export const AddGenerationModal = ({
         setInputValue('');
         onClose();
       }
-    } catch (error) {
+    } catch (error: unknown) {
+      const isApiError = (err: unknown): err is {message: string} => {
+        return (
+          typeof err === 'object' &&
+          err !== null &&
+          'message' in err &&
+          typeof (err as {message: string}).message === 'string'
+        );
+      };
+
+      if (isApiError(error)) {
+        alert(error.message);
+      } else {
+        alert('기수 생성 중 오류가 발생했습니다.');
+      }
       console.error('기수 생성 중 에러 발생:', error);
-      alert('기수 생성에 실패했습니다.');
     }
   };
 
   return (
     <div
       className='fixed inset-0 z-modal flex items-center justify-center bg-black/50 backdrop-blur-sm'
-      onClick={onClose}
+      onClick={handleClose}
       role='presentation'>
       <section
         className='relative w-full max-w-[566px] rounded-[20px] bg-white px-[23px] py-5'
@@ -64,7 +82,7 @@ export const AddGenerationModal = ({
         aria-labelledby='modal-title'>
         <div className='flex w-full flex-col items-end gap-2.5'>
           <button
-            onClick={onClose}
+            onClick={handleClose}
             className='absolute top-4 right-5'
             aria-label='닫기'>
             <Close className='h-5.25 w-5.25 cursor-pointer text-neutral-400' />

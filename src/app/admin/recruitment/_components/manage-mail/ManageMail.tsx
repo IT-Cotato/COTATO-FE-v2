@@ -8,6 +8,7 @@ import {MailField} from './MailField';
 import {MailSendFooter} from './MailSendFooter';
 import {MailConfirmModal} from '@/components/modal/MailConfirmModal';
 import {Spinner} from '@/components/ui/Spinner';
+import {useGenerationStore} from '@/store/useGenerationStore';
 
 interface ManageMailProps {
   mailType?: string;
@@ -21,6 +22,11 @@ export const ManageMail = ({
   generationId,
 }: ManageMailProps) => {
   const {isRecruiting} = useRecruitmentStore();
+  const {generations} = useGenerationStore();
+
+  const isGenerationExist = generations.some(
+    (g) => g.generationId === generationId
+  );
 
   const {
     isLoading,
@@ -49,8 +55,13 @@ export const ManageMail = ({
   };
 
   const currentLabel = labelMap[mailType] || '대상자';
+
+  const canAccess = isGenerationExist || alwaysAble;
   const hasPermission = isRecruiting || alwaysAble;
-  const finalCanSend = hasPermission && !isSent && waitingCount > 0;
+
+  const finalCanEdit = canAccess;
+  const finalCanSend =
+    canAccess && hasPermission && !isSent && waitingCount > 0;
 
   if (isLoading)
     return (
@@ -67,6 +78,7 @@ export const ManageMail = ({
         onEdit={handleEditClick}
         onCancel={handleCancelClick}
         onSave={handleSaveClick}
+        canEdit={finalCanEdit}
       />
       <MailField
         isEditing={isEditing}

@@ -40,6 +40,7 @@ export const useAdminRecruitmentMutation = () => {
     mutationFn: postRecruitmentActivation,
     onSuccess: () => handleSuccess(true),
     onError: (error) => {
+      alert(error.message);
       console.error(error.message);
     },
   });
@@ -53,6 +54,7 @@ export const useAdminRecruitmentMutation = () => {
     mutationFn: postRecruitmentDeactivation,
     onSuccess: () => handleSuccess(false),
     onError: (error) => {
+      alert(error.message);
       console.error(error.message);
     },
   });
