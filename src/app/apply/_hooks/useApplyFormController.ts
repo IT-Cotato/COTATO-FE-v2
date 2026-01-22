@@ -6,17 +6,21 @@ import {
   BasicInfoFormData,
   BasicInfoRequest,
   PartQuestionRequest,
+  EtcQuestionRequest,
 } from '@/schemas/apply/apply-schema';
-import {BASIC_INFO_FIELDS} from '@/constants/form/formConfig';
+import {BASIC_INFO_FIELDS, EtcFieldDates} from '@/constants/form/formConfig';
 import {useRouter, useSearchParams} from 'next/navigation';
 import {useRecruitmentStore} from '@/store/useRecruitmentStore';
 import {useSubmissionStore} from '@/store/useSubmissionStore';
 import {useQuery} from '@tanstack/react-query';
 import {getBasicInfo} from '@/services/api/apply/apply.api';
 import {QUERY_KEYS} from '@/constants/query-keys';
+import {useGetEtcQuestionsQuery} from '@/hooks/queries/useApply.query';
 import {
   useSaveBasicInfo,
   useSavePartQuestions,
+  useSaveEtcQuestions,
+  useSubmitApplication,
 } from '@/hooks/mutations/useApply.mutation';
 
 interface UseApplyFormControllerReturn {
@@ -30,6 +34,7 @@ interface UseApplyFormControllerReturn {
   openConfirmModal: () => void;
   closeConfirmModal: () => void;
   handleConfirmSubmit: () => void;
+  etcDates?: EtcFieldDates;
 }
 
 export const useApplyFormController = (): UseApplyFormControllerReturn => {
@@ -57,13 +62,21 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
   const hasInitializedRef = useRef(false);
 
   const {data: basicInfo} = useQuery({
-    queryKey: QUERY_KEYS.APPLY.BASIC_INFO(applicationId!),
+    queryKey: QUERY_KEYS.APPLY.BASIC_INFO(Number(applicationId)),
     queryFn: () => getBasicInfo(Number(applicationId)),
     enabled: !!applicationId && urlStep === 1,
   });
 
+  const {data: etcQuestions} = useGetEtcQuestionsQuery(
+    applicationId ? Number(applicationId) : null
+  );
+
   const {mutate: saveBasicInfo} = useSaveBasicInfo(Number(applicationId));
   const {mutate: savePartQuestions} = useSavePartQuestions(
+    Number(applicationId)
+  );
+  const {mutate: saveEtcQuestions} = useSaveEtcQuestions(Number(applicationId));
+  const {mutateAsync: submitApplication} = useSubmitApplication(
     Number(applicationId)
   );
 
@@ -132,6 +145,41 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
       };
 
       savePartQuestions(requestData);
+    } else if (step === 3) {
+      const formData = data as BasicInfoFormData & {
+        discovery?: string;
+        otherActivity?: string;
+        interviewStartDate?: string;
+        interviewEndDate?: string;
+        sessionAgree?: string;
+        otAgree?: string;
+        privacyAgree?: string;
+      };
+
+      const unavailableInterviewTimes = [
+        formData.interviewStartDate
+          ? `${etcQuestions?.interviewStartDate ?? ''} ${formData.interviewStartDate}`
+          : null,
+        formData.interviewEndDate
+          ? `${etcQuestions?.interviewEndDate ?? ''} ${formData.interviewEndDate}`
+          : null,
+      ]
+        .filter(Boolean)
+        .join(', ');
+
+      const discoveryPath =
+        (formData.discovery as EtcQuestionRequest['discoveryPath']) ?? '기타';
+
+      const requestData: EtcQuestionRequest = {
+        discoveryPath,
+        parallelActivities: formData.otherActivity || '',
+        unavailableInterviewTimes,
+        sessionAttendanceAgreed: formData.sessionAgree === 'agree',
+        mandatoryEventsAgreed: formData.otAgree === 'agree',
+        privacyPolicyAgreed: formData.privacyAgree === 'agree',
+      };
+
+      saveEtcQuestions(requestData);
     }
   };
 
@@ -182,19 +230,10 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
     closeConfirmModal();
 
     try {
-      // TODO: 실제 API 호출로 교체
-      const isSuccess = await new Promise<boolean>((resolve) => {
-        setTimeout(() => resolve(Math.random() > 0.5), 1000);
-      });
-
-      if (isSuccess) {
-        const data = getValues();
-        console.log('최종 제출 데이터:', data);
-        setHasSubmitted(true);
-        router.push('/?submitted=true');
-      } else {
-        throw new Error('Submission failed');
-      }
+      handleSave();
+      await submitApplication();
+      setHasSubmitted(true);
+      router.push('/?submitted=true');
     } catch {
       router.push('/?submitted=false');
     }
@@ -208,6 +247,14 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
     }
   });
 
+  const etcDates: EtcFieldDates | undefined = etcQuestions
+    ? {
+        interviewStartDate: etcQuestions.interviewStartDate,
+        interviewEndDate: etcQuestions.interviewEndDate,
+        otDate: etcQuestions.otDate,
+      }
+    : undefined;
+
   return {
     step,
     methods,
@@ -219,5 +266,6 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
     openConfirmModal,
     closeConfirmModal,
     handleConfirmSubmit,
+    etcDates,
   };
 };

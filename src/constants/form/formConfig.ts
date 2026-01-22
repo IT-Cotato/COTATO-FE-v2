@@ -98,73 +98,90 @@ export const BASIC_INFO_FIELDS: BasicInfoFormItem[] = [
   },
 ];
 
-export const ETC_FIELDS: EtcFormItem[] = [
-  {
-    name: 'discovery',
-    label: '동아리를 알게 된 경로를 선택해주세요.',
-    type: 'dropdown',
-    placeholder: '알게 된 경로를 선택해주세요',
-    options: [
-      {value: 'instagram', label: '인스타그램'},
-      {value: 'everytime', label: '에브리타임'},
-      {value: 'friend', label: '지인/선배 추천'},
-    ],
-  },
-  {
-    name: 'otherActivity',
-    label:
-      '코테이토 활동 외에 병행하는 활동이 있다면 요일과 시간을 모두 작성해주세요.',
-    type: 'textarea',
-    placeholder:
-      '코테이토 활동 외에 병행하는 활동(알바, 인턴, 타 동아리 등등)이 있다면 요일과 시간을 모두 작성해주세요.',
-    maxLength: 500,
-  },
-  {
-    type: 'group_label',
-    label:
-      '3월 3일부터 4일까지 면접이 진행됩니다. 참여가 불가능한 시간이 있다면 모두 작성해주세요.',
-  },
-  {
-    type: 'row',
-    row: [
-      {
-        name: 'interview3',
-        label: '3월 3일',
-        type: 'input',
-        placeholder: 'ex) 14:00~16:00, 18:00~19:30',
-      },
-      {
-        name: 'interview4',
-        label: '3월 4일',
-        type: 'input',
-        placeholder: 'ex) 14:00~16:00, 18:00~19:30',
-      },
-    ],
-  },
-  {
-    name: 'sessionAgree',
-    label: '코테이토의 세션은 매주 금요일 19시에 진행됩니다. ',
-    type: 'radio',
-    options: [{label: '성실히 참여하겠습니다!', value: 'agree'}],
-  },
-  {
-    name: 'otAgree',
-    label:
-      '최종 합격 시 대면 OT(3월 6일), 코커톤(0월 0일), 데모데이(0월 0일)는 필수 참여입니다. ',
-    type: 'radio',
-    options: [{label: '네, 참석 가능합니다.', value: 'agree'}],
-  },
-  {
-    name: 'privacyPolicy',
-    label: '개인정보 수집 및 이용 동의',
-    type: 'textarea',
-    readOnly: true,
-    defaultValue: '개인정보 약관 내용',
-  },
-  {
-    name: 'privacyAgree',
-    type: 'radio',
-    options: [{label: '개인정보의 수집 및 이용에 동의합니다.', value: 'agree'}],
-    className: 'justify-end',
-  },
-];
+export interface EtcFieldDates {
+  interviewStartDate: string;
+  interviewEndDate: string;
+  otDate: string;
+}
+
+export const getEtcFields = (dates?: EtcFieldDates): EtcFormItem[] => {
+  const interviewStart = dates?.interviewStartDate ?? '';
+  const interviewEnd = dates?.interviewEndDate ?? '';
+  const otDateLabel = dates?.otDate ?? '';
+
+  return [
+    {
+      name: 'discovery',
+      label: '동아리를 알게 된 경로를 선택해주세요.',
+      type: 'dropdown',
+      placeholder: '알게 된 경로를 선택해주세요',
+      options: [
+        {value: 'SNS', label: '인스타그램'},
+        {value: '학교 홍보', label: '에브리타임'},
+        {value: '학교 홍보', label: '캠퍼스픽'},
+        {value: '기타', label: '직행'},
+        {value: 'SNS', label: '네이버 카페'},
+        {value: 'SNS', label: '그 외 SNS'},
+        {value: '지인 추천', label: '지인 소개'},
+        {value: '기타', label: '해당 없음'},
+      ],
+    },
+    {
+      name: 'otherActivity',
+      label:
+        '코테이토 활동 외에 병행하는 활동이 있다면 요일과 시간을 모두 작성해주세요.',
+      type: 'textarea',
+      placeholder:
+        '코테이토 활동 외에 병행하는 활동(알바, 인턴, 타 동아리 등등)이 있다면 요일과 시간을 모두 작성해주세요.',
+      maxLength: 500,
+    },
+    {
+      type: 'group_label',
+      label: `${interviewStart}부터 ${interviewEnd}까지 면접이 진행됩니다. 참여가 불가능한 시간이 있다면 모두 작성해주세요.`,
+    },
+    {
+      type: 'row',
+      row: [
+        {
+          name: 'interviewStartDate',
+          label: interviewStart,
+          type: 'input',
+          placeholder: 'ex) 14:00~16:00, 18:00~19:30',
+        },
+        {
+          name: 'interviewEndDate',
+          label: interviewEnd,
+          type: 'input',
+          placeholder: 'ex) 14:00~16:00, 18:00~19:30',
+        },
+      ],
+    },
+    {
+      name: 'sessionAgree',
+      label: '코테이토의 세션은 매주 금요일 19시에 진행됩니다. ',
+      type: 'radio',
+      options: [{label: '성실히 참여하겠습니다!', value: 'agree'}],
+    },
+    {
+      name: 'otAgree',
+      label: `최종 합격 시 대면 OT(${otDateLabel})는 필수 참여입니다. `,
+      type: 'radio',
+      options: [{label: '네, 참석 가능합니다.', value: 'agree'}],
+    },
+    {
+      name: 'privacyPolicy',
+      label: '개인정보 수집 및 이용 동의',
+      type: 'textarea',
+      readOnly: true,
+      defaultValue: '개인정보 약관 내용',
+    },
+    {
+      name: 'privacyAgree',
+      type: 'radio',
+      options: [
+        {label: '개인정보의 수집 및 이용에 동의합니다.', value: 'agree'},
+      ],
+      className: 'justify-end',
+    },
+  ];
+};

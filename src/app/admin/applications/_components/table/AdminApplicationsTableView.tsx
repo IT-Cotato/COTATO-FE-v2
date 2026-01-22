@@ -8,7 +8,10 @@ import FinishFilterIcon from '@/assets/icons/filter-finish.svg';
 import DownArrowIcon from '@/assets/arrow/down-arrow.svg';
 
 import clsx from 'clsx';
-import {ApplicantType} from '@/schemas/admin/admin-applications.schema';
+import {
+  ApplicantType,
+  ApplicationPassStatus,
+} from '@/schemas/admin/admin-applications.schema';
 import {AdminApplicationsResultDropdown} from '@/app/admin/applications/_components/table/AdminApplicationsResultDropdown';
 import {formatKoreanDate} from '@/utils/formatDate';
 
@@ -18,6 +21,11 @@ interface AdminApplicationsTableViewProps {
   isFilterActive: boolean;
   onSubmitDateSortToggle: () => void;
   onFilterToggle: () => void;
+  onChangePassStatus: (
+    applicationId: number,
+    passStatus: ApplicationPassStatus
+  ) => void;
+  isUpdating?: boolean;
 }
 
 export const AdminApplicationsTableView = ({
@@ -26,6 +34,8 @@ export const AdminApplicationsTableView = ({
   isFilterActive,
   onSubmitDateSortToggle,
   onFilterToggle,
+  onChangePassStatus,
+  isUpdating,
 }: AdminApplicationsTableViewProps) => {
   return (
     <table className='w-full table-fixed border-collapse'>
@@ -64,10 +74,7 @@ export const AdminApplicationsTableView = ({
                       <DownArrowIcon
                         className={clsx(
                           'transition-transform duration-200 ease-in-out',
-                          {
-                            'rotate-180': submitDateSortOrder === 'asc',
-                            'rotate-0': submitDateSortOrder === 'desc',
-                          }
+                          submitDateSortOrder === 'asc' && 'rotate-180'
                         )}
                       />
                     </button>
@@ -103,7 +110,13 @@ export const AdminApplicationsTableView = ({
               {formatKoreanDate(app.submittedAt)}
             </td>
             <td className='px-3 py-4'>
-              <AdminApplicationsResultDropdown result={app.passStatus} />
+              <AdminApplicationsResultDropdown
+                result={app.passStatus}
+                disabled={isUpdating}
+                onChange={(nextStatus) =>
+                  onChangePassStatus(app.applicationId, nextStatus)
+                }
+              />
             </td>
           </tr>
         ))}

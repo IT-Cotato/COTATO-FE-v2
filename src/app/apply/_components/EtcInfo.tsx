@@ -7,16 +7,19 @@ import {FormDropdown} from '@/components/form/FormDropdown';
 import {FullButton} from '@/components/button/FullButton';
 import {FormRadio} from '@/components/form/FormRadio';
 import {FormInput} from '@/components/form/FormInput';
-import {ETC_FIELDS} from '@/constants/form/formConfig';
+import {getEtcFields, EtcFieldDates} from '@/constants/form/formConfig';
 import {EtcFieldConfig} from '@/schemas/apply/apply-type';
 
 export const EtcInfo = ({
   onPrev,
   onSave,
+  dates,
 }: {
   onPrev: () => void;
   onSave: () => void;
+  dates?: EtcFieldDates;
 }) => {
+  const etcFields = getEtcFields(dates);
   const {
     register,
     control,
@@ -117,7 +120,7 @@ export const EtcInfo = ({
   return (
     <div className='flex w-full flex-col gap-[81px]'>
       <div className='flex flex-col gap-10'>
-        {ETC_FIELDS.map((field, idx) => {
+        {etcFields.map((field, idx) => {
           if (field.type === 'row' && 'row' in field) {
             return (
               <div

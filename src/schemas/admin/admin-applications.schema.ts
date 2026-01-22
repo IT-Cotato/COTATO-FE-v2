@@ -113,7 +113,7 @@ export const GetAdminApplicationsParamsSchema = z.object({
   searchKeyword: z.string().optional(),
   page: z.number().optional(),
   size: z.number().optional(),
-  sort: z.array(z.string()).optional(),
+  sort: z.string().optional(),
 });
 
 /**
