@@ -77,7 +77,7 @@ export const MailSendFooter = ({
             borderRadius={5}
             labelTypo='body_l'
             backgroundColor={getButtonColor()}
-            disabled={!canSendMail && !isSent && !isInProgress}
+            disabled={!canSendMail || isSent || isInProgress}
             textColor='neutral-50'
             onClick={onSend}
           />

@@ -17,6 +17,7 @@ export const AddGenerationModal = ({
   onClose,
 }: AddGenerationModalProps) => {
   const [inputValue, setInputValue] = useState<string>('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const {addGeneration, setSelectedGenerationId} = useGenerationStore();
   const {isRecruiting, setGeneration} = useRecruitmentStore();
 
@@ -35,7 +36,7 @@ export const AddGenerationModal = ({
       alert('올바른 기수 번호를 입력해주세요.');
       return;
     }
-
+    setIsSubmitting(true);
     try {
       const response = await postGeneration({generationId: genId});
 
@@ -66,6 +67,8 @@ export const AddGenerationModal = ({
         alert('기수 생성 중 오류가 발생했습니다.');
       }
       console.error('기수 생성 중 에러 발생:', error);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -115,6 +118,7 @@ export const AddGenerationModal = ({
               label='추가하기'
               labelTypo='h4'
               backgroundColor='neutral-600'
+              disabled={isSubmitting}
             />
           </form>
         </div>
