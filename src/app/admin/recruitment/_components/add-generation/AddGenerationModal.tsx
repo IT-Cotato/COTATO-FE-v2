@@ -47,6 +47,7 @@ export const AddGenerationModal = ({
       }
     } catch (error) {
       console.error('기수 생성 중 에러 발생:', error);
+      alert('기수 생성에 실패했습니다.');
     }
   };
 
@@ -92,7 +93,7 @@ export const AddGenerationModal = ({
               />
             </div>
             <FullButton
-              onClick={handleCreate}
+              type='submit'
               label='추가하기'
               labelTypo='h4'
               backgroundColor='neutral-600'

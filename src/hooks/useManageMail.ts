@@ -18,7 +18,13 @@ export const useManageMail = (generationId: number, mailType: string) => {
     isLoading,
     refetch: refetchMailData,
   } = useAdminMailQuery(generationId, mailType);
-  const {save, send, isSaving} = useAdminMailMutation(generationId, mailType);
+
+  const {
+    save,
+    send,
+    isSaving,
+    isSending: isSendPending,
+  } = useAdminMailMutation(generationId, mailType);
 
   // 기수나 메일 타입이 바뀌면 모든 로컬 상태 초기화
   useEffect(() => {
@@ -74,7 +80,6 @@ export const useManageMail = (generationId: number, mailType: string) => {
           `last_job_${mailType}_${generationId}`,
           newJobId.toString()
         );
-        checkCurrentStatus(newJobId);
       },
     });
   };
@@ -91,7 +96,7 @@ export const useManageMail = (generationId: number, mailType: string) => {
     isLoading,
     isSaving,
     isRefreshing,
-    isSending: activeJobId !== null,
+    isSending: isSendPending || activeJobId !== null,
     isEditing,
     content: currentContent,
     setContent: (val: string) => setEditingContent(val),
