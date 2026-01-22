@@ -2,19 +2,19 @@ import Image from 'next/image';
 import DefaultBg from '@/assets/backgrounds/recruitment-position/default-bg.webp';
 import BrandLogo from '@/assets/brand-logo/brand-logo.svg';
 import clsx from 'clsx';
-import {RECRUITMENT_POSITION_STYLES} from '@/constants/recruit/recruit-components';
-import {RecruitmentPositionType} from '@/schemas/recruit/recruit-components.schema';
+import {POSITION_CARD_STYLES} from '@/constants/recruit/recruit-components';
+import {PositionCardType} from '@/schemas/recruit/recruit-components.schema';
 
-interface RecruitmentPositionProps {
-  item: RecruitmentPositionType;
+interface PositionCardProps {
+  item: PositionCardType;
 }
 
-export const RecruitmentPosition = ({item}: RecruitmentPositionProps) => {
+export const PositionCard = ({item}: PositionCardProps) => {
   return (
     <div
       className={clsx(
         'group relative flex h-100 w-71.25 shrink-0 flex-col justify-between overflow-hidden rounded-[10px] bg-linear-to-b from-neutral-800 to-neutral-700 p-7.5 transition-colors duration-300 select-none',
-        RECRUITMENT_POSITION_STYLES[item.short]
+        POSITION_CARD_STYLES[item.short]
       )}>
       <Image
         src={DefaultBg}

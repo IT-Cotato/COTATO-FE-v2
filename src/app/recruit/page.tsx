@@ -1,7 +1,7 @@
 import {TimelineItem} from '@/app/recruit/_components/TimelineItem';
 import {QualificationsCard} from '@/app/recruit/_components/QualificationsCard';
 import {QUALIFICATIONS_CARD_ITEMS} from '@/constants/recruit/recruit-components';
-import {RecruitmentPosition} from '@/app/recruit/_components/RecruitmentPosition';
+import {PositionCard} from '@/app/recruit/_components/PositionCard';
 import {ActivityCard} from '@/app/recruit/_components/ActivityCard';
 import {
   MOCK_ACTIVITY_CARD,
@@ -33,7 +33,7 @@ export default function RecruitmentNoticePage() {
 
         <div className='flex gap-4.5'>
           {MOCK_RECRUITMENT_POSITION.map((item) => (
-            <RecruitmentPosition key={item.short} item={item} />
+            <PositionCard key={item.short} item={item} />
           ))}
         </div>
 

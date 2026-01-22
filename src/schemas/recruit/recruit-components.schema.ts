@@ -14,13 +14,13 @@ export const PositionSchema = z.enum(['PM', 'DE', 'FE', 'BE']);
 export type PositionType = z.infer<typeof PositionSchema>;
 
 /** 모집 포지션 */
-export const RecruitmentPositionSchema = z.object({
+export const PositionCardSchema = z.object({
   short: PositionSchema,
   name: z.string(),
   detail: z.string(),
 });
 
-export type RecruitmentPositionType = z.infer<typeof RecruitmentPositionSchema>;
+export type PositionCardType = z.infer<typeof PositionCardSchema>;
 
 /** 세션 활동 - 종류 */
 export const ActivityCategorySchema = z.enum([
