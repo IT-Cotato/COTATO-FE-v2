@@ -5,7 +5,6 @@ import {useFormContext} from 'react-hook-form';
 import {FormTextarea} from '@/components/form/FormTextarea';
 import {FullButton} from '@/components/button/FullButton';
 
-import {useApplicationStore} from '@/store/useApplicationStore';
 import {useGetPartQuestionsQuery} from '@/hooks/queries/useApply.query';
 import {PART_TABS} from '@/constants/admin/admin-application-questions';
 import {PartType} from '@/schemas/admin/admin-application-questions.schema';
@@ -33,7 +32,9 @@ export const PartQuestion = ({onPrev, onNext, onSave}: PartQuestionProps) => {
     (tab) => tab.value === activePart
   )?.label;
 
-  const applicationId = useApplicationStore((state) => state.applicationId);
+  const applicationId = searchParams.get('id')
+    ? Number(searchParams.get('id'))
+    : null;
 
   const {data: questionsData, isLoading} =
     useGetPartQuestionsQuery(applicationId);
