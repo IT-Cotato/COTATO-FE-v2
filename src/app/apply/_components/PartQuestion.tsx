@@ -1,5 +1,6 @@
 'use client';
 
+import {useEffect, useRef} from 'react';
 import {useSearchParams} from 'next/navigation';
 import {useFormContext} from 'react-hook-form';
 import {FormTextarea} from '@/components/form/FormTextarea';
@@ -43,6 +44,25 @@ export const PartQuestion = ({onPrev, onNext, onSave}: PartQuestionProps) => {
     useGetPartQuestionsQuery(applicationId);
 
   const {mutate: uploadFile} = useUploadFile();
+
+  const hasInitializedRef = useRef(false);
+
+  useEffect(() => {
+    if (questionsData && !hasInitializedRef.current) {
+      questionsData.questionsWithAnswers.forEach((q) => {
+        if (q.savedAnswer?.content) {
+          setValue(`ans_${q.questionId}`, q.savedAnswer.content);
+        }
+      });
+      if (questionsData.pdfFileKey) {
+        setValue('pdfFileKey', questionsData.pdfFileKey);
+      }
+      if (questionsData.pdfFileUrl) {
+        setValue('pdfFileUrl', questionsData.pdfFileUrl);
+      }
+      hasInitializedRef.current = true;
+    }
+  }, [questionsData, setValue]);
 
   const handleFileChange = (files: File[]) => {
     if (files.length === 0) {
