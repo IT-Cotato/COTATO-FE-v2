@@ -193,7 +193,9 @@ export const getFileUrl = async (
       }
     );
 
-    const responseSchema = createSuccessResponseSchema(GetFileUrlResponseSchema);
+    const responseSchema = createSuccessResponseSchema(
+      GetFileUrlResponseSchema
+    );
     const validatedResponse = responseSchema.parse(response.data);
 
     return validatedResponse.data;
