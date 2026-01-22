@@ -18,7 +18,7 @@ export default function RecruitmentNoticePage() {
         <div className='flex'>
           {MOCK_TIMELINE_ITEM.map((item, index) => (
             <TimelineItem
-              key={item.date}
+              key={item.title}
               item={item}
               isLast={index === MOCK_TIMELINE_ITEM.length - 1}
             />
@@ -39,7 +39,7 @@ export default function RecruitmentNoticePage() {
 
         <div className='flex flex-wrap justify-center gap-x-5 gap-y-6'>
           {MOCK_ACTIVITY_CARD.map((item) => (
-            <ActivityCard key={item.short} item={item} />
+            <ActivityCard key={item.id} item={item} />
           ))}
         </div>
       </div>

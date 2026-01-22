@@ -12,7 +12,7 @@ export const ActivityCard = ({item}: ActivityCardProps) => {
     <div className='group relative h-68.5 w-96.5 shrink-0 overflow-hidden rounded-[10px] bg-neutral-800 px-10 py-6 shadow-[0_6px_15px_0_rgba(0,0,0,0.1)] select-none'>
       <Image
         src={ACTIVITY_CARD_STYLES[item.short].coverImageUrl}
-        alt='SessionSchedule Cover'
+        alt='ActivityCard'
         fill={true}
         draggable={false}
         className={clsx(
@@ -22,14 +22,18 @@ export const ActivityCard = ({item}: ActivityCardProps) => {
       />
       <Image
         src={item.imageUrl}
-        alt='SessionSchedule Content'
+        aria-hidden={true}
+        alt=''
         fill={true}
         draggable={false}
         unoptimized={true}
         className='object-cover object-center opacity-0 transition-opacity duration-300 group-hover:opacity-100'
       />
 
-      <div className='absolute inset-0 z-10 bg-linear-to-b from-[#000000]/90 from-0% to-transparent to-48% transition-transform duration-300 group-hover:from-white group-hover:to-58%' />
+      <div
+        aria-hidden={true}
+        className='absolute inset-0 z-10 bg-linear-to-b from-[#000000]/90 from-0% to-transparent to-48% transition-all duration-300 group-hover:from-white group-hover:to-58%'
+      />
 
       <div className='relative z-20 flex justify-between'>
         <p className='text-h4 text-neutral-50 transition-colors duration-300 group-hover:text-neutral-800'>
