@@ -112,6 +112,10 @@ export const useManageMail = (generationId: number, mailType: string) => {
     handleSaveClick: () =>
       save(currentContent, {onSuccess: () => setIsEditing(false)}),
     handleSendClick,
-    refreshStatus: () => activeJobId && checkCurrentStatus(activeJobId),
+    refreshStatus: () => {
+      if (activeJobId !== null) {
+        checkCurrentStatus(activeJobId);
+      }
+    },
   };
 };
