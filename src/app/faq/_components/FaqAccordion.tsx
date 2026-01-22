@@ -28,11 +28,23 @@ export const FaqAccordion = ({question, answer}: FaqAccordionProps) => {
           )}>
           {question}
         </p>
-        {isOpen ? (
-          <MinusIcon className='h-6 w-6 fill-neutral-600' />
-        ) : (
-          <PlusIcon className='h-6 w-6 fill-neutral-600' />
-        )}
+
+        <div className='relative h-6 w-6'>
+          <PlusIcon
+            aria-hidden={isOpen}
+            className={clsx(
+              'absolute inset-0 h-6 w-6 transition-all duration-300',
+              isOpen ? 'opacity-0' : 'opacity-100'
+            )}
+          />
+          <MinusIcon
+            aria-hidden={!isOpen}
+            className={clsx(
+              'absolute inset-0 h-6 w-6 transition-all duration-300',
+              isOpen ? 'rotate-0 opacity-100' : 'opacity-0'
+            )}
+          />
+        </div>
       </div>
 
       <div
