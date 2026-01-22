@@ -11,6 +11,7 @@ interface PeriodFieldProps {
   setStartDate: (date: Date | null) => void;
   endDate: Date | null;
   setEndDate: (date: Date | null) => void;
+  disabled?: boolean;
 }
 
 export const PeriodField = ({
@@ -18,6 +19,7 @@ export const PeriodField = ({
   setStartDate,
   endDate,
   setEndDate,
+  disabled,
 }: PeriodFieldProps) => {
   return (
     <fieldset className='flex w-full flex-col gap-4'>
@@ -26,9 +28,10 @@ export const PeriodField = ({
         <div className='relative'>
           <DatePicker
             selected={startDate}
+            disabled={disabled}
             onChange={(date: Date | null) => setStartDate(date)}
             dateFormat='yyyy-MM-dd'
-            customInput={<CustomInput />}
+            customInput={<CustomInput disabled={disabled} />}
             popperPlacement='bottom-start'
             formatWeekDay={(nameOfDay) => nameOfDay.toLowerCase().slice(0, 3)}
             renderCustomHeader={(props) => <CustomHeader {...props} />}
@@ -38,10 +41,11 @@ export const PeriodField = ({
         <div className='relative'>
           <DatePicker
             selected={endDate}
+            disabled={disabled}
             onChange={(date: Date | null) => setEndDate(date)}
             minDate={startDate ?? undefined}
             dateFormat='yyyy-MM-dd'
-            customInput={<CustomInput />}
+            customInput={<CustomInput disabled={disabled} />}
             popperPlacement='bottom-start'
             formatWeekDay={(nameOfDay) => nameOfDay.toLowerCase().slice(0, 3)}
             renderCustomHeader={(props) => <CustomHeader {...props} />}

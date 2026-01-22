@@ -1,46 +1,121 @@
 'use client';
 
-import {useState} from 'react';
-import {useRecruitmentStore} from '@/store/useRecruitmentStore';
-import {MAIL_DATA_MAP} from '@/constants/admin/admin-result';
-import type {MailType} from '@/schemas/admin/admin-result-type';
+import {useState, useEffect, useCallback} from 'react';
+import {useAdminMailQuery} from '@/hooks/queries/useAdminMail.query';
+import {useAdminMailMutation} from '@/hooks/mutations/useAdminMail.mutation';
+import {getMailJobStatus} from '@/services/api/admin/admin-mail.api';
+import {MailJobStatus} from '@/schemas/admin/admin-mail.type';
 
-export const useManageMail = (
-  mailType: MailType,
-  alwaysAble: boolean = false
-) => {
-  const initialData =
-    MAIL_DATA_MAP[mailType] || MAIL_DATA_MAP['지원 알림 메일'];
-
+export const useManageMail = (generationId: number, mailType: string) => {
   const [isEditing, setIsEditing] = useState(false);
-  const [content, setContent] = useState(initialData);
-  const [originalContent, setOriginalContent] = useState(initialData);
+  const [editingContent, setEditingContent] = useState<string | null>(null);
+  const [activeJobId, setActiveJobId] = useState<number | null>(null);
+  const [jobStatus, setJobStatus] = useState<MailJobStatus | null>(null);
+  const [isRefreshing, setIsRefreshing] = useState(false);
 
-  const isRecruiting = useRecruitmentStore((state) => state.isRecruiting);
-  const isChanged = content !== originalContent;
-  const canSendMail = !isEditing && (alwaysAble || isRecruiting);
+  const {
+    data,
+    isLoading,
+    refetch: refetchMailData,
+  } = useAdminMailQuery(generationId, mailType);
 
-  const handleEditClick = () => setIsEditing(true);
+  const {
+    save,
+    send,
+    isSaving,
+    isSending: isSendPending,
+  } = useAdminMailMutation(generationId, mailType);
 
-  const handleCancelClick = () => {
-    setContent(originalContent);
+  // 기수나 메일 타입이 바뀌면 모든 로컬 상태 초기화
+  useEffect(() => {
     setIsEditing(false);
+    setEditingContent(null);
+    setActiveJobId(null);
+    setJobStatus(null);
+  }, [generationId, mailType]);
+
+  const checkCurrentStatus = useCallback(
+    async (jobId: number) => {
+      setIsRefreshing(true);
+      try {
+        const isNotification = mailType === '지원 알림 메일';
+        const status = await getMailJobStatus(jobId, isNotification);
+        setJobStatus(status);
+
+        if (status.isCompleted) {
+          setActiveJobId(null);
+          localStorage.removeItem(`last_job_${mailType}_${generationId}`);
+          refetchMailData();
+        }
+      } catch (error) {
+        console.error('상태 조회 실패', error);
+      } finally {
+        setIsRefreshing(false);
+      }
+    },
+    [mailType, generationId, refetchMailData]
+  );
+
+  useEffect(() => {
+    const savedJobId = localStorage.getItem(
+      `last_job_${mailType}_${generationId}`
+    );
+    if (savedJobId) {
+      setActiveJobId(Number(savedJobId));
+    }
+  }, [mailType, generationId]);
+
+  useEffect(() => {
+    if (activeJobId !== null) {
+      checkCurrentStatus(activeJobId);
+    }
+  }, [activeJobId, checkCurrentStatus]);
+
+  const handleSendClick = () => {
+    send(undefined, {
+      onSuccess: (res) => {
+        const newJobId = res.jobId;
+        setActiveJobId(newJobId);
+        localStorage.setItem(
+          `last_job_${mailType}_${generationId}`,
+          newJobId.toString()
+        );
+      },
+    });
   };
 
-  const handleSaveClick = () => {
-    if (!isChanged) return;
-    setOriginalContent(content);
-    setIsEditing(false);
-  };
+  const currentContent =
+    editingContent !== null ? editingContent : (data?.content ?? '');
+  const waitingCount = data
+    ? 'subscriberCount' in data
+      ? data.subscriberCount
+      : data.recipientCount
+    : 0;
 
   return {
+    isLoading,
+    isSaving,
+    isRefreshing,
+    isSending: isSendPending || activeJobId !== null,
     isEditing,
-    content,
-    setContent,
-    isChanged,
-    canSendMail,
-    handleEditClick,
-    handleCancelClick,
-    handleSaveClick,
+    content: currentContent,
+    setContent: (val: string) => setEditingContent(val),
+    isSent: data?.isSent ?? false,
+    waitingCount,
+    jobStatus,
+    isChanged: editingContent !== null && data?.content !== editingContent,
+    handleEditClick: () => setIsEditing(true),
+    handleCancelClick: () => {
+      setEditingContent(null);
+      setIsEditing(false);
+    },
+    handleSaveClick: () =>
+      save(currentContent, {onSuccess: () => setIsEditing(false)}),
+    handleSendClick,
+    refreshStatus: () => {
+      if (activeJobId !== null) {
+        checkCurrentStatus(activeJobId);
+      }
+    },
   };
 };
