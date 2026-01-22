@@ -24,10 +24,12 @@ export const GenerationDropdown = ({
   useClickOutside(dropdownRef, () => setIsOpen(false));
 
   const handleToggle = () => {
+    if (disabled) return;
     setIsOpen((prev) => !prev);
   };
 
   const handleSelect = (value: string) => {
+    if (disabled) return;
     onSelect(value);
     setIsOpen(false);
   };
