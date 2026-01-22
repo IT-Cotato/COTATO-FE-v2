@@ -26,7 +26,6 @@ export const ActivityCard = ({item}: ActivityCardProps) => {
         alt=''
         fill={true}
         draggable={false}
-        unoptimized={true}
         className='object-cover object-center opacity-0 transition-opacity duration-300 group-hover:opacity-100'
       />
 
