@@ -12,6 +12,7 @@ export const QualificationsCard = ({item}: QualificationsCardProps) => {
         src={item.illustrationSrc}
         alt='FAQ 페이지 상단 배너'
         priority={true}
+        draggable={false}
       />
       <p className='text-center text-h5 wrap-anywhere whitespace-pre-line text-neutral-800'>
         {item.description}

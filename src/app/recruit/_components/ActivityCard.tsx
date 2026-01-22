@@ -9,7 +9,7 @@ interface ActivityCardProps {
 
 export const ActivityCard = ({item}: ActivityCardProps) => {
   return (
-    <div className='group relative h-68.5 w-96.5 overflow-hidden rounded-[10px] bg-neutral-800 px-10 py-6 select-none'>
+    <div className='group relative h-68.5 w-96.5 overflow-hidden rounded-[10px] bg-neutral-800 px-10 py-6 shadow-[0_6px_15px_0_rgba(0,0,0,0.1)] select-none'>
       <Image
         src={ACTIVITY_CARD_STYLES[item.short].coverImageUrl}
         alt='SessionSchedule Cover'
