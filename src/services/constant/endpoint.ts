@@ -50,4 +50,8 @@ export const ENDPOINT = {
     SUBMIT: (applicationId: number) =>
       `/api/applications/${applicationId}/submit`,
   },
+  FILES: {
+    GET_URL: '/api/files/geturl',
+    POST_URL: '/api/files/posturl',
+  },
 };
