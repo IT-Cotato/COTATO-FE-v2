@@ -6,7 +6,7 @@ interface GenerationState {
   selectedGenerationId: number | null;
   setGenerations: (generations: Generation[]) => void;
   addGeneration: (newGen: Generation) => void;
-  setSelectedGenerationId: (id: number) => void;
+  setSelectedGenerationId: (id: number | null) => void;
 }
 
 export const useGenerationStore = create<GenerationState>((set) => ({

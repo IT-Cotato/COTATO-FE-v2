@@ -7,12 +7,13 @@ import {ManageMail} from './manage-mail/ManageMail';
 
 export const RecruitmentContainer = () => {
   const {generation} = useRecruitmentStore();
-
+  const generationId = Number(generation);
+  const isValidGeneration = Number.isFinite(generationId) && generationId > 0;
   return (
     <div className='flex flex-col gap-6'>
       <AddGeneration />
       <ActiveRecruitment />
-      <ManageMail generationId={Number(generation)} />
+      {isValidGeneration && <ManageMail generationId={generationId} />}
     </div>
   );
 };

@@ -22,10 +22,17 @@ export const AddGenerationContainer = () => {
     if (res?.data) {
       setGenerations(res.data);
       if (res.data.length > 0 && !selectedGenerationId && !isRecruiting) {
+        setSelectedGenerationId(res.data[0].generationId);
         setGeneration(String(res.data[0].generationId));
       }
     }
-  }, [setGenerations, setGeneration, selectedGenerationId, isRecruiting]);
+  }, [
+    setGenerations,
+    setGeneration,
+    setSelectedGenerationId,
+    selectedGenerationId,
+    isRecruiting,
+  ]);
 
   useEffect(() => {
     fetchGenerations();

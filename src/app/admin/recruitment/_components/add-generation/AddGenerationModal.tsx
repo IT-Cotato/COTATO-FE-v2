@@ -25,8 +25,8 @@ export const AddGenerationModal = ({
   const handleCreate = async (e?: FormEvent) => {
     e?.preventDefault();
 
-    const genId = Number(inputValue);
-    if (isNaN(genId) || genId <= 0) {
+    const genId = Number(inputValue.trim());
+    if (!Number.isInteger(genId) || genId <= 0) {
       alert('올바른 기수 번호를 입력해주세요.');
       return;
     }

@@ -54,7 +54,7 @@ export const saveMailContent = async (
       generationId,
       content,
       ...(!isNotification && {
-        templateType: MAIL_TYPE_MAP[mailType as keyof typeof MAIL_TYPE_MAP],
+        templateType: getTemplateType(mailType),
       }),
     };
 
@@ -74,7 +74,7 @@ export const sendMail = async (generationId: number, mailType: string) => {
   const body = {
     generationId,
     ...(!isNotification && {
-      templateType: MAIL_TYPE_MAP[mailType as keyof typeof MAIL_TYPE_MAP],
+      templateType: getTemplateType(mailType),
     }),
   };
 

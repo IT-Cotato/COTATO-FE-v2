@@ -35,6 +35,7 @@ export const useManageMail = (generationId: number, mailType: string) => {
         const isNotification = mailType === '지원 알림 메일';
         const status = await getMailJobStatus(jobId, isNotification);
         setJobStatus(status);
+
         if (status.isCompleted) {
           setActiveJobId(null);
           localStorage.removeItem(`last_job_${mailType}_${generationId}`);
@@ -54,11 +55,15 @@ export const useManageMail = (generationId: number, mailType: string) => {
       `last_job_${mailType}_${generationId}`
     );
     if (savedJobId) {
-      const jobId = Number(savedJobId);
-      setActiveJobId(jobId);
-      checkCurrentStatus(jobId);
+      setActiveJobId(Number(savedJobId));
     }
-  }, [mailType, generationId, checkCurrentStatus]);
+  }, [mailType, generationId]);
+
+  useEffect(() => {
+    if (activeJobId !== null) {
+      checkCurrentStatus(activeJobId);
+    }
+  }, [activeJobId, checkCurrentStatus]);
 
   const handleSendClick = () => {
     send(undefined, {
