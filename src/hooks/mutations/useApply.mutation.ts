@@ -7,6 +7,8 @@ import {
   saveEtcQuestions,
   savePartQuestions,
   submitApplication,
+  getUploadUrl,
+  uploadFileToS3,
 } from '@/services/api/apply/apply.api';
 import {
   BasicInfoRequest,
@@ -76,6 +78,25 @@ export const useSubmitApplication = (applicationId: number) => {
     mutationFn: () => submitApplication(applicationId),
     onError: (error: AxiosError) => {
       console.error('지원서 제출에 실패했습니다.', error);
+    },
+  });
+};
+
+/**
+ * 파일 업로드
+ */
+export const useUploadFile = () => {
+  return useMutation({
+    mutationFn: async (file: File) => {
+      const {preSignedUrl, key} = await getUploadUrl(file.name);
+      await uploadFileToS3(preSignedUrl, file);
+      return {
+        pdfFileKey: key,
+        pdfFileUrl: preSignedUrl.split('?')[0],
+      };
+    },
+    onError: (error: AxiosError) => {
+      console.error('파일 업로드에 실패했습니다.', error);
     },
   });
 };
