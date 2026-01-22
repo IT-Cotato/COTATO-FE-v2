@@ -83,6 +83,36 @@ export const PartQuestionResponseSchema = z.object({
   pdfFileKey: z.string().nullable(),
 });
 
+export const EtcQuestionRequestSchema = z.object({
+  discoveryPath: z.enum(['SNS', '학교 홍보', '지인 추천', '기타']),
+  parallelActivities: z.string(),
+  unavailableInterviewTimes: z.string(),
+  sessionAttendanceAgreed: z.boolean(),
+  mandatoryEventsAgreed: z.boolean(),
+  privacyPolicyAgreed: z.boolean(),
+});
+
+export const EtcQuestionResponseSchema = z.object({
+  discoveryPath: z.object({
+    options: z.array(
+      z.object({
+        value: z.string(),
+      })
+    ),
+    selectedAnswer: z
+      .enum(['SNS', '학교 홍보', '지인 추천', '기타'])
+      .nullable(),
+  }),
+  parallelActivities: z.string().nullable(),
+  unavailableInterviewTimes: z.string().nullable(),
+  sessionAttendance: z.boolean().nullable(),
+  mandatoryEvents: z.boolean().nullable(),
+  privacyPolicy: z.boolean().nullable(),
+  interviewStartDate: z.string(),
+  interviewEndDate: z.string(),
+  otDate: z.string(),
+});
+
 export type BasicInfoFormData = z.infer<typeof BasicInfoFormSchema>;
 export type StartApplicationResponse = z.infer<
   typeof StartApplicationResponseSchema
@@ -91,3 +121,5 @@ export type BasicInfoResponse = z.infer<typeof BasicInfoResponseSchema>;
 export type BasicInfoRequest = z.infer<typeof BasicInfoRequestSchema>;
 export type PartQuestionRequest = z.infer<typeof PartQuestionRequestSchema>;
 export type PartQuestionResponse = z.infer<typeof PartQuestionResponseSchema>;
+export type EtcQuestionRequest = z.infer<typeof EtcQuestionRequestSchema>;
+export type EtcQuestionResponse = z.infer<typeof EtcQuestionResponseSchema>;

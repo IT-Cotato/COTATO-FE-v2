@@ -1,8 +1,12 @@
 export const QUERY_KEYS = {
   APPLY: {
-    BASIC_INFO: (applicationId: string) => ['apply-basic-info', applicationId],
-    PART_QUESTIONS: (applicationId: string) => [
+    BASIC_INFO: (applicationId: number) => ['apply-basic-info', applicationId],
+    PART_QUESTIONS: (applicationId: number) => [
       'apply-part-questions',
+      applicationId,
+    ],
+    ETC_QUESTIONS: (applicationId: number) => [
+      'apply-etc-questions',
       applicationId,
     ],
   },

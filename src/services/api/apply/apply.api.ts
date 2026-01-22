@@ -4,6 +4,9 @@ import {
   BasicInfoRequest,
   BasicInfoResponse,
   BasicInfoResponseSchema,
+  EtcQuestionRequest,
+  EtcQuestionResponse,
+  EtcQuestionResponseSchema,
   PartQuestionRequest,
   PartQuestionResponse,
   PartQuestionResponseSchema,
@@ -99,6 +102,49 @@ export const savePartQuestions = async (
 ): Promise<void> => {
   try {
     await privateAxios.post(ENDPOINT.APPLY.ANSWERS(applicationId), data);
+  } catch (error) {
+    return handleApiError(error);
+  }
+};
+
+/** 기타 질문 조회 */
+export const getEtcQuestions = async (
+  applicationId: number
+): Promise<EtcQuestionResponse> => {
+  try {
+    const response: AxiosResponse = await privateAxios.get(
+      ENDPOINT.APPLY.ETC_QUESTIONS(applicationId)
+    );
+
+    const responseSchema = createSuccessResponseSchema(
+      EtcQuestionResponseSchema
+    );
+    const validatedResponse = responseSchema.parse(response.data);
+
+    return validatedResponse.data;
+  } catch (error) {
+    return handleApiError(error);
+  }
+};
+
+/** 기타 질문 작성(임시저장)  */
+export const saveEtcQuestions = async (
+  applicationId: number,
+  data: EtcQuestionRequest
+): Promise<void> => {
+  try {
+    await privateAxios.post(ENDPOINT.APPLY.ETC_ANSWERS(applicationId), data);
+  } catch (error) {
+    return handleApiError(error);
+  }
+};
+
+/** 지원서 최종 제출 */
+export const submitApplication = async (
+  applicationId: number
+): Promise<void> => {
+  try {
+    await privateAxios.post(ENDPOINT.APPLY.SUBMIT(applicationId));
   } catch (error) {
     return handleApiError(error);
   }
