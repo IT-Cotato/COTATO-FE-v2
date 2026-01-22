@@ -20,6 +20,8 @@ export const ENDPOINT = {
   },
   ADMIN: {
     APPLICATIONS: '/api/admin/applications',
+    APPLICATION_PASS_STATUS: (applicationId: number) =>
+      `/api/admin/application/${applicationId}/pass-status`,
     APPLICATION_QUESTIONS: '/api/admin/application-questions',
     APPLICATION_BASIC_INFO: (applicationId: number) =>
       `/api/admin/application/${applicationId}/basic-info`,

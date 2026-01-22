@@ -1,9 +1,8 @@
 import {RESULT_OPTIONS} from '@/constants/admin/admin-applications';
 import {ApplicationResultType} from '@/schemas/admin/admin-application-type';
-import CheckIcon from '@/assets/icons/check.svg';
-import clsx from 'clsx';
 import {RefObject, useEffect, useState} from 'react';
 import {useClickOutside} from '@/hooks/useClickOutside';
+import {Checkbox} from '@/components/checkbox/CheckBox';
 
 interface AdminApplicationsResultFilterProps {
   selected: ApplicationResultType[];
@@ -55,21 +54,20 @@ export const AdminApplicationsResultFilter = ({
         const isChecked = isAllSelected || draftSelected.includes(option);
 
         return (
-          <button
+          <div
             key={option}
-            type='button'
-            onClick={() => handleClick(option)}
             className='flex w-full items-center justify-between rounded-sm border-b border-b-neutral-600 px-2 py-1.5'>
-            <span>{option}</span>
+            <span
+              className='cursor-pointer'
+              onClick={() => handleClick(option)}>
+              {option}
+            </span>
 
-            <div
-              className={clsx(
-                'flex h-4 w-4 items-center justify-center',
-                isChecked ? 'bg-primary' : 'bg-neutral-600'
-              )}>
-              <CheckIcon />
-            </div>
-          </button>
+            <Checkbox
+              checked={isChecked}
+              onChange={() => handleClick(option)}
+            />
+          </div>
         );
       })}
 
