@@ -7,6 +7,7 @@ import {useRecruitmentStore} from '@/store/useRecruitmentStore';
 import {useRecruitmentStatusQuery} from '@/hooks/queries/useRecruitmentStatus.query';
 import {PlusButton} from '@/app/admin/recruitment/_components/add-generation/PlusButton';
 import {AddGenerationModal} from './AddGenerationModal';
+import clsx from 'clsx';
 
 export const AddGenerationContainer = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -80,7 +81,15 @@ export const AddGenerationContainer = () => {
                   setGeneration(String(gen.generationId)))
                 }
                 disabled={isRecruiting}
-                className={`flex h-[38px] w-[63px] shrink-0 items-center justify-center rounded-[5px] text-body-l font-semibold transition-all ${isSelected ? 'bg-neutral-200 text-neutral-800' : 'bg-white text-neutral-600'} ${isRecruiting ? 'cursor-default opacity-50' : 'cursor-pointer hover:bg-neutral-200'} `}>
+                className={clsx(
+                  'flex h-[38px] w-[63px] shrink-0 items-center justify-center rounded-[5px] text-body-l font-semibold transition-all',
+                  isSelected
+                    ? 'bg-neutral-200 text-neutral-800'
+                    : 'bg-white text-neutral-600',
+                  isRecruiting
+                    ? 'cursor-default opacity-50'
+                    : 'cursor-pointer hover:bg-neutral-200'
+                )}>
                 {gen.generationId}기
               </button>
             );
