@@ -3,9 +3,11 @@
 import {useSearchParams} from 'next/navigation';
 import {useFormContext} from 'react-hook-form';
 import {FormTextarea} from '@/components/form/FormTextarea';
+import {FormFile} from '@/components/form/FormFile';
 import {FullButton} from '@/components/button/FullButton';
 
 import {useGetPartQuestionsQuery} from '@/hooks/queries/useApply.query';
+import {useUploadFile} from '@/hooks/mutations/useApply.mutation';
 import {PART_TABS} from '@/constants/admin/admin-application-questions';
 import {PartType} from '@/schemas/admin/admin-application-questions.schema';
 import {Spinner} from '@/components/ui/Spinner';
@@ -21,6 +23,7 @@ export const PartQuestion = ({onPrev, onNext, onSave}: PartQuestionProps) => {
   const {
     register,
     watch,
+    setValue,
     formState: {errors},
   } = useFormContext();
 
@@ -39,6 +42,24 @@ export const PartQuestion = ({onPrev, onNext, onSave}: PartQuestionProps) => {
   const {data: questionsData, isLoading} =
     useGetPartQuestionsQuery(applicationId);
 
+  const {mutate: uploadFile} = useUploadFile();
+
+  const handleFileChange = (files: File[]) => {
+    if (files.length === 0) {
+      setValue('pdfFileKey', undefined);
+      setValue('pdfFileUrl', undefined);
+      return;
+    }
+
+    const file = files[files.length - 1];
+    uploadFile(file, {
+      onSuccess: ({pdfFileKey, pdfFileUrl}) => {
+        setValue('pdfFileKey', pdfFileKey);
+        setValue('pdfFileUrl', pdfFileUrl);
+      },
+    });
+  };
+
   return (
     <div className='flex w-full flex-col gap-[30px]'>
       <div className='flex flex-col gap-7.5'>
@@ -54,23 +75,43 @@ export const PartQuestion = ({onPrev, onNext, onSave}: PartQuestionProps) => {
           <>
             {questionsData?.questionsWithAnswers &&
             questionsData.questionsWithAnswers.length > 0 ? (
-              questionsData.questionsWithAnswers.map((q) => (
-                <FormTextarea
-                  key={q.questionId}
-                  label={`${q.sequence}. ${q.content}`}
-                  maxLength={q.maxByte}
-                  currentLength={(watch(`ans_${q.questionId}`) || '').length}
-                  placeholder='내용을 입력해주세요'
-                  error={errors[`ans_${q.questionId}`]?.message as string}
-                  {...register(`ans_${q.questionId}`, {
-                    required: '답변을 작성해주세요',
-                    maxLength: {
-                      value: q.maxByte,
-                      message: '글자수를 초과했습니다',
-                    },
-                  })}
-                />
-              ))
+              <>
+                {questionsData.questionsWithAnswers.slice(0, -1).map((q) => (
+                  <FormTextarea
+                    key={q.questionId}
+                    label={`${q.sequence}. ${q.content}`}
+                    maxLength={q.maxByte}
+                    currentLength={(watch(`ans_${q.questionId}`) || '').length}
+                    placeholder='내용을 입력해주세요'
+                    error={errors[`ans_${q.questionId}`]?.message as string}
+                    {...register(`ans_${q.questionId}`, {
+                      required: '답변을 작성해주세요',
+                      maxLength: {
+                        value: q.maxByte,
+                        message: '글자수를 초과했습니다',
+                      },
+                    })}
+                  />
+                ))}
+
+                {(() => {
+                  const lastQuestion =
+                    questionsData.questionsWithAnswers.at(-1);
+                  if (!lastQuestion) return null;
+                  return (
+                    <FormFile
+                      label={`${lastQuestion.sequence}. ${lastQuestion.content}`}
+                      placeholder={'파일 업로드하기'}
+                      onFilesChange={handleFileChange}
+                      value={
+                        questionsData?.pdfFileUrl
+                          ? [questionsData.pdfFileUrl]
+                          : undefined
+                      }
+                    />
+                  );
+                })()}
+              </>
             ) : (
               <div className='flex h-full w-full items-center justify-center'>
                 <p className='text-b1 text-neutral-400'>
