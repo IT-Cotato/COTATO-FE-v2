@@ -12,8 +12,12 @@ import {
   PartQuestionResponseSchema,
   StartApplicationResponse,
   StartApplicationResponseSchema,
+  GetUploadUrlResponse,
+  GetUploadUrlResponseSchema,
+  GetFileUrlResponse,
+  GetFileUrlResponseSchema,
 } from '@/schemas/apply/apply-schema';
-import {AxiosResponse} from 'axios';
+import axios, {AxiosResponse} from 'axios';
 import {createSuccessResponseSchema} from '@/schemas/common/common-schema';
 import {handleApiError} from '@/services/utils/apiHelper';
 
@@ -148,4 +152,66 @@ export const submitApplication = async (
   } catch (error) {
     return handleApiError(error);
   }
+};
+
+/**
+ * 파일 업로드용 Pre-signed URL 조회
+ */
+export const getUploadUrl = async (
+  fileName: string
+): Promise<GetUploadUrlResponse> => {
+  try {
+    const response: AxiosResponse = await privateAxios.get(
+      ENDPOINT.FILES.POST_URL,
+      {
+        params: {fileName},
+      }
+    );
+
+    const responseSchema = createSuccessResponseSchema(
+      GetUploadUrlResponseSchema
+    );
+    const validatedResponse = responseSchema.parse(response.data);
+
+    return validatedResponse.data;
+  } catch (error) {
+    return handleApiError(error);
+  }
+};
+
+/**
+ * 파일 조회용 URL 조회
+ */
+export const getFileUrl = async (
+  fileKey: string
+): Promise<GetFileUrlResponse> => {
+  try {
+    const response: AxiosResponse = await privateAxios.get(
+      ENDPOINT.FILES.GET_URL,
+      {
+        params: {fileKey},
+      }
+    );
+
+    const responseSchema = createSuccessResponseSchema(GetFileUrlResponseSchema);
+    const validatedResponse = responseSchema.parse(response.data);
+
+    return validatedResponse.data;
+  } catch (error) {
+    return handleApiError(error);
+  }
+};
+
+/**
+ * Pre-signed URL로 S3에 파일 업로드
+ */
+export const uploadFileToS3 = async (
+  preSignedUrl: string,
+  file: File
+): Promise<void> => {
+  await axios.put(preSignedUrl, file, {
+    headers: {
+      'Content-Type': file.type,
+    },
+  });
 };
