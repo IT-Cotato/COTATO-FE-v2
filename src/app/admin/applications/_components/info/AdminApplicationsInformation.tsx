@@ -8,18 +8,20 @@ import {useRouter, useSearchParams} from 'next/navigation';
 import {useState} from 'react';
 
 interface AdminApplicationsInformationProps {
+  generation: string;
+  generations: string[];
   recruitmentPeriod?: RecruitmentPeriodSchemaType;
   isLoading: boolean;
 }
 
 export const AdminApplicationsInformation = ({
+  generation,
+  generations,
   recruitmentPeriod,
   isLoading,
 }: AdminApplicationsInformationProps) => {
   const router = useRouter();
   const searchParams = useSearchParams();
-
-  const generation = searchParams.get('generationId') ?? '13';
 
   const [keyword, setKeyword] = useState<string>(
     searchParams.get('keyword') ?? ''
@@ -39,6 +41,7 @@ export const AdminApplicationsInformation = ({
   };
 
   const handleGenerationSelect = (generation: string) => {
+    if (isLoading) return;
     const params = new URLSearchParams(searchParams.toString());
 
     params.set('generationId', generation);
@@ -54,7 +57,7 @@ export const AdminApplicationsInformation = ({
           <p className='text-body-m font-bold text-neutral-600'>기수 정보</p>
           <GenerationDropdown
             generation={generation}
-            generations={['13', '12', '11', '10']}
+            generations={generations}
             onSelect={handleGenerationSelect}
             disabled={isLoading}
           />
