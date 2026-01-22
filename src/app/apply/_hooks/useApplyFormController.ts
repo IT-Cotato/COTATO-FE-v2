@@ -1,10 +1,11 @@
-import {useState, useEffect} from 'react';
+import {useState, useEffect, useRef} from 'react';
 import {useForm, UseFormReturn} from 'react-hook-form';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {
   BasicInfoFormSchema,
   BasicInfoFormData,
   BasicInfoRequest,
+  PartQuestionRequest,
 } from '@/schemas/apply/apply-schema';
 import {BASIC_INFO_FIELDS} from '@/constants/form/formConfig';
 import {useRouter, useSearchParams} from 'next/navigation';
@@ -13,7 +14,10 @@ import {useSubmissionStore} from '@/store/useSubmissionStore';
 import {useQuery} from '@tanstack/react-query';
 import {getBasicInfo} from '@/services/api/apply/apply.api';
 import {QUERY_KEYS} from '@/constants/query-keys';
-import {useSaveBasicInfo} from '@/hooks/mutations/useApply.mutation';
+import {
+  useSaveBasicInfo,
+  useSavePartQuestions,
+} from '@/hooks/mutations/useApply.mutation';
 
 interface UseApplyFormControllerReturn {
   step: number;
@@ -50,6 +54,8 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
   });
   const {trigger, handleSubmit, getValues, reset} = methods;
 
+  const hasInitializedRef = useRef(false);
+
   const {data: basicInfo} = useQuery({
     queryKey: QUERY_KEYS.APPLY.BASIC_INFO(applicationId!),
     queryFn: () => getBasicInfo(Number(applicationId)),
@@ -57,9 +63,12 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
   });
 
   const {mutate: saveBasicInfo} = useSaveBasicInfo(Number(applicationId));
+  const {mutate: savePartQuestions} = useSavePartQuestions(
+    Number(applicationId)
+  );
 
   useEffect(() => {
-    if (basicInfo) {
+    if (basicInfo && !hasInitializedRef.current) {
       const transformedData = {
         name: basicInfo.name,
         gender: basicInfo.gender,
@@ -76,9 +85,10 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
         isPrevActivity: (basicInfo.isPrevActivity
           ? 'yes'
           : 'no') as BasicInfoFormData['isPrevActivity'],
-        part: basicInfo.applicationPartType,
+        part: basicInfo.applicationPartType as BasicInfoFormData['part'],
       };
       reset(transformedData);
+      hasInitializedRef.current = true;
     }
   }, [basicInfo, reset]);
 
@@ -89,22 +99,40 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
     if (!applicationId) return;
     const data = getValues();
 
-    const requestData: BasicInfoRequest = {
-      name: data.name,
-      gender: data.gender,
-      birthDate: data.birthDate,
-      phoneNumber: data.contact,
-      university: data.school,
-      major: data.department,
-      completedSemesters: Number(data.completedSemesters),
-      isPrevActivity: data.isPrevActivity === 'yes',
-      isEnrolled: data.isCollegeStudent === 'enrolled',
-      applicationPartType: data.part,
-    };
+    if (step === 1) {
+      const requestData: BasicInfoRequest = {
+        name: data.name,
+        gender: data.gender,
+        birthDate: data.birthDate,
+        phoneNumber: data.contact,
+        university: data.school,
+        major: data.department,
+        completedSemesters: Number(data.completedSemesters),
+        isPrevActivity: data.isPrevActivity === 'yes',
+        isEnrolled: data.isCollegeStudent === 'enrolled',
+        applicationPartType: data.part,
+      };
+      saveBasicInfo(requestData);
+    } else if (step === 2) {
+      const answersToSave = Object.entries(data)
+        .filter(([key]) => key.startsWith('ans_'))
+        .map(([key, value]) => ({
+          questionId: Number(key.split('_')[1]),
+          content: value as string,
+        }));
 
-    console.log('임시저장 데이터:', requestData);
+      const formData = data as BasicInfoFormData & {
+        pdfFileUrl?: string;
+        pdfFileKey?: string;
+      };
+      const requestData: PartQuestionRequest = {
+        answers: answersToSave,
+        pdfFileUrl: formData.pdfFileUrl || undefined,
+        pdfFileKey: formData.pdfFileKey || undefined,
+      };
 
-    saveBasicInfo(requestData);
+      savePartQuestions(requestData);
+    }
   };
 
   const handleNext = async () => {
@@ -125,7 +153,7 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
 
     const isValid = await trigger(fieldsToValidate);
     if (isValid) {
-      handleSave(); // 유효성 검사 통과 후 저장
+      handleSave();
 
       const params = new URLSearchParams(searchParams.toString());
       params.set('step', String(step + 1));

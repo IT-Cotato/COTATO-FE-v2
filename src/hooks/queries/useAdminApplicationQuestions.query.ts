@@ -1,6 +1,6 @@
 import {QUERY_KEYS} from '@/constants/query-keys';
 import {PartType} from '@/schemas/admin/admin-application-questions.schema';
-import {getAdminApplicationQuestions} from '@/services/api/admin/admin.application.questions.api';
+import {getAdminApplicationQuestions} from '@/services/api/admin/admin-application-questions.api';
 
 import {useQuery} from '@tanstack/react-query';
 

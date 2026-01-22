@@ -2,12 +2,6 @@ import {PartSchema} from '@/schemas/admin/admin-application-questions.schema';
 import z from 'zod';
 
 /**
- * 리뷰어
- */
-export const ReviewerSchema = z.enum(['staff1', 'staff2', 'staff3', 'staff4']);
-export type ReviewerType = z.infer<typeof ReviewerSchema>;
-
-/**
  * 지원 결과
  */
 export const ApplicationResultSchema = z.enum([

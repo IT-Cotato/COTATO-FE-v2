@@ -3,7 +3,7 @@ import type {
   GetAdminApplicationsParamsType,
   GetAdminApplicationsResponse,
 } from '@/schemas/admin/admin-applications.schema';
-import {getAdminApplications} from '@/services/api/admin/admin.applications.api';
+import {getAdminApplications} from '@/services/api/admin/admin-applications.api';
 import type {ErrorResponse} from '@/schemas/common/common-schema';
 import {useQuery} from '@tanstack/react-query';
 

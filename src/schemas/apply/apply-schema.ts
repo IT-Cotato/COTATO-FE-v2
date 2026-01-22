@@ -24,7 +24,9 @@ export const BasicInfoFormSchema = z.object({
   isPrevActivity: z.enum(['yes', 'no'], {
     message: '활동 여부를 선택해주세요',
   }),
-  part: z.string().min(1, '파트를 선택해주세요'),
+  part: z.enum(['PM', 'DE', 'FE', 'BE'], {
+    message: '파트를 선택해주세요',
+  }),
 });
 
 export const StartApplicationResponseSchema = z.object({
@@ -49,9 +51,43 @@ export const BasicInfoResponseSchema = BasicInfoRequestSchema.extend({
   applicationId: z.number(),
 });
 
+export const PartQuestionRequestSchema = z.object({
+  answers: z.array(
+    z.object({
+      questionId: z.number(),
+      content: z.string(),
+    })
+  ),
+  pdfFileUrl: z.string().nullable().optional(),
+  pdfFileKey: z.string().nullable().optional(),
+});
+
+export const PartQuestionResponseSchema = z.object({
+  questionsWithAnswers: z.array(
+    z.object({
+      questionId: z.number(),
+      sequence: z.number(),
+      content: z.string(),
+      partType: z.enum(['COMMON', 'PM', 'DE', 'FE', 'BE']),
+      maxByte: z.number(),
+      savedAnswer: z
+        .object({
+          answerId: z.number(),
+          questionId: z.number(),
+          content: z.string(),
+        })
+        .nullable(),
+    })
+  ),
+  pdfFileUrl: z.string().nullable(),
+  pdfFileKey: z.string().nullable(),
+});
+
 export type BasicInfoFormData = z.infer<typeof BasicInfoFormSchema>;
 export type StartApplicationResponse = z.infer<
   typeof StartApplicationResponseSchema
 >;
 export type BasicInfoResponse = z.infer<typeof BasicInfoResponseSchema>;
 export type BasicInfoRequest = z.infer<typeof BasicInfoRequestSchema>;
+export type PartQuestionRequest = z.infer<typeof PartQuestionRequestSchema>;
+export type PartQuestionResponse = z.infer<typeof PartQuestionResponseSchema>;

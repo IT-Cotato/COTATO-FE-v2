@@ -1,4 +1,4 @@
-import {ReviewerType} from '@/schemas/admin/admin-application-type';
+import {EvaluatorType} from '@/schemas/admin/admin-application.schema';
 import {
   ApplicationPartViewType,
   ApplicationSummaryType,
@@ -34,11 +34,11 @@ export const PART_COUNT_MAP: Record<
   BE: 'backendCount',
 };
 
-export const REVIEWER_TABS: {label: string; value: ReviewerType}[] = [
-  {label: '운영진1', value: 'staff1'},
-  {label: '운영진2', value: 'staff2'},
-  {label: '운영진3', value: 'staff3'},
-  {label: '운영진4', value: 'staff4'},
+export const EVALUATOR_TABS: {label: string; value: EvaluatorType}[] = [
+  {label: '운영진1', value: 'STAFF1'},
+  {label: '운영진2', value: 'STAFF2'},
+  {label: '운영진3', value: 'STAFF3'},
+  {label: '운영진4', value: 'STAFF4'},
 ];
 
 /** 쿼리 영문 라벨 -> 한글 UI 표시용 */
