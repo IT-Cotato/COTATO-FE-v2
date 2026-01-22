@@ -80,6 +80,7 @@ export const AdminApplicationsContainer = () => {
         isLoading={isInitialLoading}
       />
       <AdminApplicationsTableContainer
+        generationId={currentGeneration}
         applicants={data?.data.applicants}
         isLoading={isRefreshing}
       />

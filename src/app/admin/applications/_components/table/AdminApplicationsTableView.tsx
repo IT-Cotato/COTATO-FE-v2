@@ -17,6 +17,7 @@ import {formatKoreanDate} from '@/utils/formatDate';
 
 interface AdminApplicationsTableViewProps {
   items?: ApplicantType[];
+  generationId: string;
   submitDateSortOrder: 'asc' | 'desc';
   isFilterActive: boolean;
   onSubmitDateSortToggle: () => void;
@@ -30,6 +31,7 @@ interface AdminApplicationsTableViewProps {
 
 export const AdminApplicationsTableView = ({
   items,
+  generationId,
   submitDateSortOrder,
   isFilterActive,
   onSubmitDateSortToggle,
@@ -93,7 +95,7 @@ export const AdminApplicationsTableView = ({
             className='bg-white text-body-l text-neutral-600'>
             <td className='px-3 py-4'>
               <a
-                href={`${ROUTES.ADMIN_APPLICATIONS}/${app.applicationId}`}
+                href={`${ROUTES.ADMIN_APPLICATIONS}/${app.applicationId}?generationId=${generationId}`}
                 target='_blank'
                 rel='noopener noreferrer'
                 className='cursor-pointer hover:border-b'>
