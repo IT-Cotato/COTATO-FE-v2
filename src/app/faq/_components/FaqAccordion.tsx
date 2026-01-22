@@ -17,13 +17,13 @@ export const FaqAccordion = ({question, answer}: FaqAccordionProps) => {
     <button
       onClick={() => setIsOpen(!isOpen)}
       className={clsx(
-        'flex w-full cursor-pointer flex-col gap-5 self-stretch rounded-[10px] px-5.5 py-2.5 shadow-[0_6px_15px_0_rgba(0,0,0,0.10)] transition-all duration-300',
-        isOpen ? 'h-min bg-white' : 'h-min bg-neutral-200'
+        'flex w-full cursor-pointer flex-col self-stretch rounded-[10px] px-5.5 py-2.5 shadow-[0_6px_15px_0_rgba(0,0,0,0.10)] transition-colors duration-300',
+        isOpen ? 'bg-white' : 'bg-neutral-200'
       )}>
       <div className='flex w-full items-center justify-between self-stretch'>
         <p
           className={clsx(
-            'text-body-l-sb',
+            'text-body-l-sb transition-colors duration-300',
             isOpen ? 'text-neutral-800' : 'text-neutral-600'
           )}>
           {question}
@@ -35,11 +35,17 @@ export const FaqAccordion = ({question, answer}: FaqAccordionProps) => {
         )}
       </div>
 
-      {isOpen && (
-        <p className='self-stretch text-start text-body-m font-normal text-neutral-600'>
+      <div
+        className={clsx(
+          'grid transition-all duration-300',
+          isOpen
+            ? 'grid-rows-[1fr] pt-5 opacity-100'
+            : 'grid-rows-[0fr] pt-0 opacity-0'
+        )}>
+        <p className='overflow-hidden text-start text-body-m font-normal text-neutral-600'>
           {answer}
         </p>
-      )}
+      </div>
     </button>
   );
 };
