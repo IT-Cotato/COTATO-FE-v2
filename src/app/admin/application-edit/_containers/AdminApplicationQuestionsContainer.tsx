@@ -33,13 +33,14 @@ export const AdminApplicationQuestionsContainer = ({
     generationId,
     questionType,
   });
+  const questions = data?.data;
 
   const {mutateAsync: saveQuestions, isPending} =
     useAdminApplicationQuestionsMutation();
 
   const handleEditStart = () => {
-    if (!data?.data) return;
-    setDraftQuestions(data.data);
+    if (!questions) return;
+    setDraftQuestions(questions);
     setIsEditing(true);
   };
 
@@ -55,11 +56,13 @@ export const AdminApplicationQuestionsContainer = ({
   };
 
   const handleCancel = () => {
-    if (data?.data) {
-      setDraftQuestions(data.data);
+    if (questions) {
+      setDraftQuestions(questions);
     }
     setIsEditing(false);
   };
+
+  const isEmpty = !questions || questions.length === 0;
 
   return (
     <>
@@ -127,8 +130,14 @@ export const AdminApplicationQuestionsContainer = ({
               onChange={setDraftQuestions}
               onValidChange={setIsFormValid}
             />
+          ) : isEmpty ? (
+            <div className='flex flex-col items-center justify-center gap-4 py-20'>
+              <p className='text-body-m text-neutral-500'>
+                아직 등록된 지원서 질문이 없습니다.
+              </p>
+            </div>
           ) : (
-            <ApplicationQuestionsView data={data?.data} />
+            <ApplicationQuestionsView data={questions} />
           )}
         </div>
       </div>
