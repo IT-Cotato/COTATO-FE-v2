@@ -2,7 +2,7 @@
 
 import {useState} from 'react';
 import {useSearchParams, useRouter} from 'next/navigation';
-import {useRecruitmentStore} from '@/store/useRecruitmentStore';
+import {useRecruitmentStatusQuery} from '@/hooks/queries/useRecruitmentStatus.query';
 import {RecruitmentActive} from '@/app/(home)/_components/RecruitmentActive';
 import {RecruitmentInactive} from '@/app/(home)/_components/RecruitmentInactive';
 import {SubmissionCompleteModal} from '@/components/modal/SubmissionCompleteModal';
@@ -12,7 +12,8 @@ export const HomeClient = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
 
-  const isRecruiting = useRecruitmentStore((state) => state.isRecruiting);
+  const {data: recruitmentStatus} = useRecruitmentStatusQuery();
+  const isRecruiting = recruitmentStatus?.data?.isActive ?? false;
 
   const submittedParam = searchParams.get('submitted');
 

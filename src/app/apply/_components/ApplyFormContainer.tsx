@@ -7,10 +7,10 @@ import {PartQuestion} from '@/app/apply/_components/PartQuestion';
 import {EtcInfo} from '@/app/apply/_components/EtcInfo';
 import {useApplyFormController} from '@/app/apply/_hooks/useApplyFormController';
 import {ApplicationConfirmModal} from '@/components/modal/ApplicationConfirmModal';
-import {useRecruitmentStore} from '@/store/useRecruitmentStore';
 import HeroMainBanner from '@/components/banner/HeroMainBanner';
 import {AdminRecruitmentInformation} from '@/app/admin/application-edit/_components/recruitment/AdminRecruitmentInformation';
 import {RecruitmentInformation} from '@/schemas/admin/admin-recruitment-information.schema';
+import {useRecruitmentStatusQuery} from '@/hooks/queries/useRecruitmentStatus.query';
 
 const STEP_TITLES = {
   1: '기본 인적사항',
@@ -31,7 +31,8 @@ export const ApplyFormContainer = () => {
     handleConfirmSubmit,
   } = useApplyFormController();
 
-  const generation = useRecruitmentStore((state) => state.generation);
+  const {data: recruitmentStatus} = useRecruitmentStatusQuery();
+  const generation = recruitmentStatus?.data?.generationId;
 
   return (
     <>
