@@ -32,6 +32,7 @@ export const RecruitmentConfirmModal = ({
       isOpen={isOpen}
       onClose={onClose}
       title={getTitle()}
+      titleStyle='text-h5'
       noContent
       actions={
         <>

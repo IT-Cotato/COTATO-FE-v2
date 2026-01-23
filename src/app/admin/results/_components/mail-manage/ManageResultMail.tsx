@@ -12,7 +12,7 @@ export const ManageResultMail = ({generationId}: ManageResultMailProps) => {
   const [activeTab, setActiveTab] = useState('합격자 메일');
 
   return (
-    <div className='flex flex-col gap-6'>
+    <div className='flex flex-col gap-3.5'>
       <MailSelect activeTab={activeTab} onTabChange={setActiveTab} />
       <ManageMail
         key={activeTab}

@@ -57,7 +57,7 @@ export const Modal = ({
           </button>
           <div
             className={clsx(
-              'flex min-h-58.25 flex-col items-center justify-center text-center',
+              'flex flex-col items-center justify-center text-center',
               noContent ? 'gap-26.75' : 'gap-7.5',
               contentWrapperClassName
             )}>

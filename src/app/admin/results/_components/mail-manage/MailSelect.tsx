@@ -12,7 +12,7 @@ interface MailSelectProps {
 export const MailSelect = ({activeTab, onTabChange}: MailSelectProps) => {
   return (
     <nav aria-label='합격자 관리 - 메일 전송 탭'>
-      <ul className='flex gap-17.5'>
+      <ul className='flex gap-12.5'>
         {mailTabs.map((tab) => {
           const isActive = activeTab === tab;
           return (

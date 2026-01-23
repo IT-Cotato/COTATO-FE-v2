@@ -44,7 +44,7 @@ export const ResultsContainer = () => {
   }
 
   return (
-    <div className='flex flex-col gap-13.5'>
+    <div className='flex flex-col gap-3.5'>
       <ManageResult
         generation={currentGeneration}
         onGenerationChange={setSelectedGen}

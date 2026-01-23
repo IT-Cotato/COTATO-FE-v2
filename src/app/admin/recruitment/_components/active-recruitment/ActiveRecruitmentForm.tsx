@@ -2,7 +2,6 @@
 
 import {useState} from 'react';
 import {Button} from '@/components/button/Button';
-import {PeriodField} from '@/app/admin/recruitment/_components/active-recruitment/PeriodField';
 import {useRecruitmentStore} from '@/store/useRecruitmentStore';
 import {useGenerationStore} from '@/store/useGenerationStore';
 import {GenerationField} from '@/app/admin/recruitment/_components/active-recruitment/GenerationField';
@@ -22,8 +21,8 @@ export const ActiveRecruitmentForm = () => {
 
   const {generations} = useGenerationStore();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [startDate, setStartDate] = useState<Date | null>(new Date());
-  const [endDate, setEndDate] = useState<Date | null>(new Date());
+  const [startDate] = useState<Date | null>(new Date());
+  const [endDate] = useState<Date | null>(new Date());
   const {activate, deactivate, isLoading} = useAdminRecruitmentMutation();
 
   const handleConfirm = () => {
@@ -86,19 +85,12 @@ export const ActiveRecruitmentForm = () => {
     <>
       <form
         onSubmit={handleSubmit}
-        className='flex h-25 items-end justify-between rounded-[10px] bg-neutral-100 pt-3 pr-5 pb-3 pl-3.5'>
-        <fieldset className='flex h-19 items-end justify-end gap-11.75 pb-1 text-body-m font-semibold'>
+        className='flex items-end justify-between rounded-[10px] bg-neutral-100 px-8 py-4'>
+        <fieldset className='flex items-end justify-end gap-11.75'>
           <legend className='sr-only'>모집 설정</legend>
           <GenerationField
             value={generation}
             onChange={setGeneration}
-            disabled={isRecruiting}
-          />
-          <PeriodField
-            startDate={startDate}
-            setStartDate={setStartDate}
-            endDate={endDate}
-            setEndDate={setEndDate}
             disabled={isRecruiting}
           />
           <div className='flex shrink-0 items-center gap-5 whitespace-nowrap select-none'>
