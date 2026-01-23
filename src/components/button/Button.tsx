@@ -1,5 +1,4 @@
 import clsx from 'clsx';
-
 import {toColorVar} from '@/utils/color';
 import {ButtonProps, ColorKey} from '@/components/button/button.types';
 import {
@@ -94,7 +93,7 @@ export const Button = ({
   subLabelSpacing = BUTTON_DEFAULT_SUBLABEL_SPACING,
   borderRadius = BUTTON_DEFAULT_BORDER_RADIUS,
   backgroundColor,
-  disabledBackgroundColor,
+  disabledBackgroundColor = 'neutral-500',
   textColor,
   wrapperClassName,
   ...props
@@ -109,7 +108,7 @@ export const Button = ({
         className={clsx(
           'flex flex-col items-center justify-center transition-colors',
           buttonVariantStyles[variant],
-          disabled ? 'cursor-not-allowed opacity-50' : 'cursor-pointer',
+          disabled ? 'cursor-not-allowed' : 'cursor-pointer',
           enableHover &&
             !disabled &&
             !(variant === 'outline') &&

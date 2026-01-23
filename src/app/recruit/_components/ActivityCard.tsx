@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import clsx from 'clsx';
-import {ActivityCardType} from '@/schemas/recruit/recruit-components.schema';
+import {ActivityCardType} from '@/schemas/recruit/recruit.schema';
 import {ACTIVITY_CARD_STYLES} from '@/constants/recruit/recruit-components';
 
 interface ActivityCardProps {
@@ -21,7 +21,7 @@ export const ActivityCard = ({item}: ActivityCardProps) => {
         )}
       />
       <Image
-        src={item.imageUrl}
+        src={ACTIVITY_CARD_STYLES[item.short].photoImageUrl}
         aria-hidden={true}
         alt=''
         fill={true}

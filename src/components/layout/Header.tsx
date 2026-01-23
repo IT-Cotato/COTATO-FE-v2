@@ -14,6 +14,7 @@ import {useShallow} from 'zustand/shallow';
 import {LoginModal} from '@/components/modal/LoginModal';
 import {useState} from 'react';
 import {ROUTES} from '@/constants/routes';
+import {HEADER_HEIGHT} from '@/constants/ui';
 import {useApplicationStatus} from '@/hooks/queries/useApply.query';
 
 export const Header = () => {
@@ -59,7 +60,9 @@ export const Header = () => {
 
   return (
     <>
-      <header className='sticky top-0 z-header flex h-22 w-full items-center justify-between bg-black px-[105px]'>
+      <header
+        style={{height: `${HEADER_HEIGHT}px`}}
+        className='sticky top-0 z-header flex w-full items-center justify-between bg-black px-[105px]'>
         <div>
           <Link href='/'>
             <MainLogo />
