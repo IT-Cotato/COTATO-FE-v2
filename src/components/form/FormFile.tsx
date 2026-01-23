@@ -64,7 +64,11 @@ export const FormFile = forwardRef<HTMLInputElement, FormFileProps>(
     const filesToRender =
       props.readOnly && value
         ? value.map((name) => ({name, url: name}))
-        : files.map((f, i) => ({name: f.name, url: fileUrls[i]}));
+        : files.length > 0
+          ? files.map((f, i) => ({name: f.name, url: fileUrls[i]}))
+          : value
+            ? value.map((name) => ({name, url: ''}))
+            : [];
 
     return (
       <div className={clsx(formFieldStyles.wrapper, className)}>

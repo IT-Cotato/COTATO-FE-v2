@@ -56,6 +56,9 @@ export const PartQuestion = ({onPrev, onNext, onSave}: PartQuestionProps) => {
       });
       if (questionsData.pdfFileKey) {
         setValue('pdfFileKey', questionsData.pdfFileKey);
+        const fileName =
+          questionsData.pdfFileKey.split('/').pop() || questionsData.pdfFileKey;
+        setValue('pdfFileName', fileName);
       }
       if (questionsData.pdfFileUrl) {
         setValue('pdfFileUrl', questionsData.pdfFileUrl);
@@ -68,6 +71,7 @@ export const PartQuestion = ({onPrev, onNext, onSave}: PartQuestionProps) => {
     if (files.length === 0) {
       setValue('pdfFileKey', undefined);
       setValue('pdfFileUrl', undefined);
+      setValue('pdfFileName', undefined);
       return;
     }
 
@@ -76,6 +80,7 @@ export const PartQuestion = ({onPrev, onNext, onSave}: PartQuestionProps) => {
       onSuccess: ({pdfFileKey, pdfFileUrl}) => {
         setValue('pdfFileKey', pdfFileKey);
         setValue('pdfFileUrl', pdfFileUrl);
+        setValue('pdfFileName', file.name);
       },
     });
   };
@@ -118,15 +123,16 @@ export const PartQuestion = ({onPrev, onNext, onSave}: PartQuestionProps) => {
                   const lastQuestion =
                     questionsData.questionsWithAnswers.at(-1);
                   if (!lastQuestion) return null;
+                  const currentPdfFileName = watch('pdfFileName') as
+                    | string
+                    | undefined;
                   return (
                     <FormFile
                       label={`${lastQuestion.sequence}. ${lastQuestion.content}`}
                       placeholder={'파일 업로드하기'}
                       onFilesChange={handleFileChange}
                       value={
-                        questionsData?.pdfFileUrl
-                          ? [questionsData.pdfFileUrl]
-                          : undefined
+                        currentPdfFileName ? [currentPdfFileName] : undefined
                       }
                     />
                   );
