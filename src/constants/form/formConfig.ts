@@ -66,7 +66,7 @@ export const BASIC_INFO_FIELDS: BasicInfoFormItem[] = [
     name: 'department',
     label: '학과',
     type: 'input',
-    placeholder: '학과를 작성해주세요',
+    placeholder: 'ex) 주전공: 컴퓨터공학과, 복수전공: 경영학과',
   },
   {
     row: [
