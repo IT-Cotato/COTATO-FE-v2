@@ -24,8 +24,8 @@ export const AdminRecruitmentInformation = ({
   return (
     <div
       className={clsx(
-        'flex flex-col gap-3 rounded-[10px]',
-        variant === 'bordered' && 'border border-neutral-300 px-4 py-5.25'
+        'flex flex-col gap-5 rounded-[10px]',
+        variant === 'bordered' && 'border border-neutral-300 px-6.25 py-7.5'
       )}>
       {scheduleSections.map((section) =>
         isEditing ? (
