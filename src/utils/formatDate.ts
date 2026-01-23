@@ -20,7 +20,7 @@ export const formatKoreanDate = (submittedAt: string) => {
 };
 
 /** 모집 공고 전용 날짜 한글 포맷 함수  */
-export const formatRecruitmentDate = (value?: string) => {
+export const formatRecruitmentDate = (value?: string | null) => {
   if (!value) return '';
 
   const DAYS = ['일', '월', '화', '수', '목', '금', '토'];

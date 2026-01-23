@@ -10,6 +10,7 @@ export const QUERY_KEYS = {
       applicationId,
     ],
   },
+  ADMIN_GENERATIONS: 'admin-generations',
   ADMIN_APPLICATIONS: 'admin-applications',
   ADMIN_APPLICATION_BASIC_INFO: 'admin-application-basic-info',
   ADMIN_APPLICATION_PART_QUESTIONS: 'admin-application-part-questions',
