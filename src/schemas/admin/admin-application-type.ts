@@ -69,7 +69,16 @@ export const ApplicationDetailSchema = z.object({
   }),
 
   EtcQuestionInfo: z.object({
-    discoveryPath: z.enum(['인스타그램', '에브리타임', '지인/선배 추천']),
+    discoveryPath: z.enum([
+      'INSTAGRAM',
+      'NAVER_CAFE',
+      'EVERYTIME',
+      'CAMPUSPICK',
+      'JIKHANG',
+      'OTHER_SNS',
+      'FRIEND_REFERRAL',
+      'NONE',
+    ]),
 
     parallelActivity: z.string(),
 

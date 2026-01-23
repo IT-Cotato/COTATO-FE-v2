@@ -83,8 +83,19 @@ export const PartQuestionResponseSchema = z.object({
   pdfFileKey: z.string().nullable(),
 });
 
+export const DiscoveryPathEnum = z.enum([
+  'INSTAGRAM',
+  'EVERYTIME',
+  'CAMPUSPICK',
+  'JIKHANG',
+  'NAVER_CAFE',
+  'OTHER_SNS',
+  'FRIEND_REFERRAL',
+  'NONE',
+]);
+
 export const EtcQuestionRequestSchema = z.object({
-  discoveryPath: z.enum(['SNS', '학교 홍보', '지인 추천', '기타']),
+  discoveryPath: DiscoveryPathEnum,
   parallelActivities: z.string(),
   unavailableInterviewTimes: z.string(),
   sessionAttendanceAgreed: z.boolean(),
@@ -99,9 +110,7 @@ export const EtcQuestionResponseSchema = z.object({
         value: z.string(),
       })
     ),
-    selectedAnswer: z
-      .enum(['SNS', '학교 홍보', '지인 추천', '기타'])
-      .nullable(),
+    selectedAnswer: z.string().nullable(),
   }),
   parallelActivities: z.string().nullable(),
   unavailableInterviewTimes: z.string().nullable(),
