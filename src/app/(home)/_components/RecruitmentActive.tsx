@@ -19,7 +19,8 @@ export const RecruitmentActive = () => {
   const generation = useRecruitmentStore((state) => state.generation);
   const {isAuthenticated} = useAuthStore();
 
-  const {data: applicationStatus} = useGetApplicationStatusQuery(isAuthenticated);
+  const {data: applicationStatus} =
+    useGetApplicationStatusQuery(isAuthenticated);
   const hasSubmitted = applicationStatus?.isSubmitted ?? false;
 
   const handleApplyClick = () => {
