@@ -25,7 +25,7 @@ const HeroMainBanner = ({
       }}>
       <Image
         src={HeroBanner}
-        alt='FAQ 페이지 상단 배너'
+        alt='HeroMainBanner'
         fill={true}
         priority={true}
         className='object-cover object-center'
