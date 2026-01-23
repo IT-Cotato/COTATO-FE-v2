@@ -51,6 +51,15 @@ export const PartQuestion = ({
 
   const {mutate: uploadFile} = useUploadFile();
 
+  const isAllAnswersFilled = (() => {
+    if (!questionsData?.questionsWithAnswers) return false;
+    const textQuestions = questionsData.questionsWithAnswers.slice(0, -1);
+    return textQuestions.every((q) => {
+      const answer = watch(`ans_${q.questionId}`);
+      return answer && answer.trim().length > 0;
+    });
+  })();
+
   const hasInitializedRef = useRef(false);
 
   useEffect(() => {
@@ -171,6 +180,7 @@ export const PartQuestion = ({
             labelTypo='h4'
             type='button'
             onClick={onNext}
+            disabled={!isAllAnswersFilled}
           />
         </div>
 
