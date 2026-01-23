@@ -50,7 +50,7 @@ export const AdminApplicationsPagination = ({
             : 'text-neutral-500'
         }`}>
         <ChevronLeft />
-        Previous
+        이전
       </button>
 
       <div className='flex gap-2'>
@@ -107,7 +107,7 @@ export const AdminApplicationsPagination = ({
             ? 'cursor-not-allowed text-neutral-300'
             : 'text-neutral-500'
         }`}>
-        Next
+        다음
         <ChevronRight />
       </button>
     </div>

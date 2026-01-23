@@ -1,7 +1,6 @@
 import {useRouter, useSearchParams} from 'next/navigation';
 import {useRef, useState} from 'react';
 import {AdminApplicationsPagination} from '@/app/admin/applications/_components/table/AdminApplicationsPagination';
-import {AdminApplicationsResultFilter} from '@/app/admin/applications/_components/table/AdminApplicationsResultFilter';
 import {AdminApplicationsTableView} from '@/app/admin/applications/_components/table/AdminApplicationsTableView';
 import {
   ApplicationResultLabel,
@@ -108,8 +107,12 @@ export const AdminApplicationsTableContainer = ({
               generationId={generationId}
               submitDateSortOrder={submitDateSortOrder}
               isFilterActive={isFilterActive}
+              isFilterOpen={isFilterOpen}
+              selectedResults={selectedResults}
               onSubmitDateSortToggle={handleSubmitDateSortToggle}
               onFilterToggle={() => setIsFilterOpen((prev) => !prev)}
+              onFilterChange={handleResultFilterChange}
+              onFilterClose={() => setIsFilterOpen(false)}
               onChangePassStatus={(applicationId, passStatus) =>
                 updatePassStatus({
                   applicationId,
@@ -118,28 +121,15 @@ export const AdminApplicationsTableContainer = ({
               }
               isUpdating={isUpdatingPassStatus}
             />
-
-            {isFilterOpen && !isLoading && (
-              <aside className='absolute top-0 left-full mt-5.5 ml-2 w-33.25'>
-                <AdminApplicationsResultFilter
-                  filterAreaRef={filterAreaRef}
-                  selected={selectedResults}
-                  onChange={handleResultFilterChange}
-                  onClose={() => setIsFilterOpen(false)}
-                />
-              </aside>
-            )}
           </div>
 
           <div className='flex w-full justify-center'>
-            <div className='-ml-86'>
-              <AdminApplicationsPagination
-                currentPage={applicants.pageInfo.currentPage}
-                totalPages={applicants.pageInfo.totalPages}
-                onPageChange={handleUpdatePage}
-                disabled={isLoading}
-              />
-            </div>
+            <AdminApplicationsPagination
+              currentPage={applicants.pageInfo.currentPage}
+              totalPages={applicants.pageInfo.totalPages}
+              onPageChange={handleUpdatePage}
+              disabled={isLoading}
+            />
           </div>
         </>
       )}
