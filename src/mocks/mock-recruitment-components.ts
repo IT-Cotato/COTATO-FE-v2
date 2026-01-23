@@ -1,7 +1,7 @@
 import {
   ActivityCategoryType,
   PositionType,
-} from '@/schemas/recruit/recruit-components.schema';
+} from '@/schemas/recruit/recruit.schema';
 
 export const MOCK_TIMELINE_ITEM = [
   {

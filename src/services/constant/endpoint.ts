@@ -17,6 +17,7 @@ export const ENDPOINT = {
   },
   FAQ: 'api/faq',
   RECRUITMENT: {
+    NOTICE: '/api/recruitment',
     STATUS: '/api/recruitment/status',
     SCHEDULE: '/api/recruitment/schedule',
   },

@@ -1,13 +1,10 @@
 'use client';
+
 import {Button} from '@/components/button/Button';
 import {useState} from 'react';
 import {RecruitmentNotificationModal} from '@/components/modal/RecruitmentNotificationModal';
 
-interface NotifyInputProps {
-  className?: string;
-}
-
-export const NotifyInput = ({className}: NotifyInputProps) => {
+export const NotifyInput = () => {
   const [email, setEmail] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -34,15 +31,13 @@ export const NotifyInput = ({className}: NotifyInputProps) => {
     <>
       <form
         onSubmit={handleSubmit}
-        className={`flex max-w-152.75 items-center justify-between gap-3 rounded-[10px] bg-neutral-100 px-3 py-2.75 ${
-          className ?? ''
-        }`}>
+        className='flex w-152.75 gap-3 rounded-[10px] bg-neutral-100 px-3 py-2.75'>
         <input
           type='email'
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder='메일을 입력해주세요!'
-          className='flex-1 bg-transparent text-base outline-none placeholder:text-neutral-800'
+          className='flex-1 text-body-m text-neutral-800 outline-none placeholder:text-neutral-400'
         />
         <Button
           type='submit'
@@ -50,7 +45,7 @@ export const NotifyInput = ({className}: NotifyInputProps) => {
           labelTypo='body_m'
           width={126}
           height={34}
-          className='px-[19px] py-[5px]'
+          className='px-4.75 py-1.25'
           backgroundColor='primary'
           disabledBackgroundColor='neutral-500'
           disabled={!isValidEmail}

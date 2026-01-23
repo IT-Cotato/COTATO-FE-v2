@@ -68,22 +68,24 @@ export const AdminApplicationsContainer = () => {
   }
 
   return (
-    <>
+    <div className='flex flex-col gap-7.25'>
       <AdminApplicationsInformation
         generation={currentGeneration}
         generations={generationList}
         recruitmentPeriod={data?.data.recruitmentPeriodResponse}
         isLoading={isInitialLoading}
       />
-      <AdminApplicationsTabContainer
-        summary={data?.data.summary}
-        isLoading={isInitialLoading}
-      />
-      <AdminApplicationsTableContainer
-        generationId={currentGeneration}
-        applicants={data?.data.applicants}
-        isLoading={isRefreshing}
-      />
-    </>
+      <div className='flex flex-col gap-4'>
+        <AdminApplicationsTabContainer
+          summary={data?.data.summary}
+          isLoading={isInitialLoading}
+        />
+        <AdminApplicationsTableContainer
+          generationId={currentGeneration}
+          applicants={data?.data.applicants}
+          isLoading={isRefreshing}
+        />
+      </div>
+    </div>
   );
 };

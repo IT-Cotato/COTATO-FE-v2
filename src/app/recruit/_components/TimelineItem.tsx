@@ -1,6 +1,6 @@
 import BrandLogo from '@/assets/brand-logo/brand-logo.svg';
 import ConnectionLine from '@/assets/line/connection-line.svg';
-import {TimelineType} from '@/schemas/recruit/recruit-components.schema';
+import {TimelineType} from '@/schemas/recruit/recruit.schema';
 
 interface TimelineItemProps {
   item: TimelineType;

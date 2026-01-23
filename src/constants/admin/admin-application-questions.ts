@@ -2,7 +2,7 @@ import {PartType} from '@/schemas/admin/admin-application-questions.schema';
 
 export const scheduleSections = [
   {
-    label: '지원 기간',
+    label: '모집 기간',
     type: 'range',
     start: 'recruitmentStart',
     end: 'recruitmentEnd',

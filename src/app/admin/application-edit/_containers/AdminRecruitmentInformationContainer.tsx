@@ -94,7 +94,7 @@ export const AdminRecruitmentInformationContainer = ({
               disabled={isPending}
               backgroundColor='alert'
               textColor='neutral-50'
-              width={112}
+              width={64}
               height={36}
               onClick={handleSave}></Button>
             <Button
@@ -105,7 +105,7 @@ export const AdminRecruitmentInformationContainer = ({
               borderRadius={5}
               backgroundColor='white'
               textColor='neutral-400'
-              width={112}
+              width={64}
               height={36}></Button>
           </div>
         ) : (
@@ -115,7 +115,7 @@ export const AdminRecruitmentInformationContainer = ({
             borderRadius={5}
             backgroundColor='secondary'
             textColor='neutral-50'
-            width={112}
+            width={145}
             height={36}
             onClick={handleEditStart}
           />

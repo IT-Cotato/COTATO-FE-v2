@@ -1,5 +1,6 @@
 import {
   APPLICATION_COLUMNS,
+  ApplicationResultLabel,
   PART_TABS,
 } from '@/constants/admin/admin-applications';
 import {ROUTES} from '@/constants/routes';
@@ -14,14 +15,21 @@ import {
 } from '@/schemas/admin/admin-applications.schema';
 import {AdminApplicationsResultDropdown} from '@/app/admin/applications/_components/table/AdminApplicationsResultDropdown';
 import {formatKoreanDate} from '@/utils/formatDate';
+import {AdminApplicationsResultFilter} from '@/app/admin/applications/_components/table/AdminApplicationsResultFilter';
+import {useRef} from 'react';
+import {useClickOutside} from '@/hooks/useClickOutside';
 
 interface AdminApplicationsTableViewProps {
   items?: ApplicantType[];
   generationId: string;
   submitDateSortOrder: 'asc' | 'desc';
   isFilterActive: boolean;
+  isFilterOpen: boolean;
+  selectedResults: ApplicationResultLabel[];
   onSubmitDateSortToggle: () => void;
   onFilterToggle: () => void;
+  onFilterChange: (labels: ApplicationResultLabel[]) => void;
+  onFilterClose: () => void;
   onChangePassStatus: (
     applicationId: number,
     passStatus: ApplicationPassStatus
@@ -34,11 +42,21 @@ export const AdminApplicationsTableView = ({
   generationId,
   submitDateSortOrder,
   isFilterActive,
+  isFilterOpen,
+  selectedResults,
   onSubmitDateSortToggle,
   onFilterToggle,
+  onFilterChange,
+  onFilterClose,
   onChangePassStatus,
   isUpdating,
 }: AdminApplicationsTableViewProps) => {
+  const filterRef = useRef<HTMLDivElement>(null);
+
+  useClickOutside(filterRef, () => {
+    if (isFilterOpen) onFilterClose();
+  });
+
   return (
     <table className='w-full table-fixed border-collapse'>
       <thead className='bg-neutral-200'>
@@ -51,21 +69,33 @@ export const AdminApplicationsTableView = ({
             return (
               <th
                 key={col.key}
-                className='px-3 py-4 text-left text-body-l font-semibold text-neutral-600'>
-                <div className='flex items-center gap-2.5'>
+                className='px-3 py-4 text-center align-middle text-body-l font-semibold text-neutral-600'>
+                <div className='flex items-center justify-center gap-2.5'>
                   <span>{col.label}</span>
 
                   {isResultColumn && (
-                    <button
-                      type='button'
-                      onClick={onFilterToggle}
-                      className='cursor-pointer'>
-                      {isFilterActive ? (
-                        <FinishFilterIcon />
-                      ) : (
-                        <DefaultFilterIcon />
+                    <div ref={filterRef} className='relative'>
+                      <button
+                        type='button'
+                        onClick={onFilterToggle}
+                        className='cursor-pointer'>
+                        {isFilterActive ? (
+                          <FinishFilterIcon />
+                        ) : (
+                          <DefaultFilterIcon />
+                        )}
+                      </button>
+
+                      {isFilterOpen && (
+                        <div className='absolute top-full left-0 z-50 mt-2 w-27 -translate-x-3/4'>
+                          <AdminApplicationsResultFilter
+                            selected={selectedResults}
+                            onChange={onFilterChange}
+                            onClose={onFilterClose}
+                          />
+                        </div>
                       )}
-                    </button>
+                    </div>
                   )}
 
                   {isSubmitDateColumn && (
@@ -92,8 +122,8 @@ export const AdminApplicationsTableView = ({
         {items?.map((app) => (
           <tr
             key={app.applicationId}
-            className='bg-white text-body-l text-neutral-600'>
-            <td className='px-3 py-4'>
+            className='text-body-l font-semibold text-neutral-600'>
+            <td className='flex items-center justify-center px-3 py-4'>
               <a
                 href={`${ROUTES.ADMIN_APPLICATIONS}/${app.applicationId}?generationId=${generationId}`}
                 target='_blank'
@@ -103,22 +133,30 @@ export const AdminApplicationsTableView = ({
               </a>
             </td>
             <td className='truncate px-3 py-4'>
-              {PART_TABS.find((tab) => tab.value === app.applicationPartType)
-                ?.label ?? '-'}
+              <p className='text-center'>
+                {PART_TABS.find((tab) => tab.value === app.applicationPartType)
+                  ?.label ?? '-'}
+              </p>
             </td>
-            <td className='truncate px-3 py-4'>{app.university}</td>
-            <td className='truncate px-3 py-4'>{app.phoneNumber}</td>
             <td className='truncate px-3 py-4'>
-              {formatKoreanDate(app.submittedAt)}
+              <p className='text-center'>{app.university}</p>
+            </td>
+            <td className='truncate px-3 py-4'>
+              <p className='text-center'>{app.phoneNumber}</p>
+            </td>
+            <td className='flex items-center justify-center truncate px-3 py-4'>
+              <p className='text-center'>{formatKoreanDate(app.submittedAt)}</p>
             </td>
             <td className='px-3 py-4'>
-              <AdminApplicationsResultDropdown
-                result={app.passStatus}
-                disabled={isUpdating}
-                onChange={(nextStatus) =>
-                  onChangePassStatus(app.applicationId, nextStatus)
-                }
-              />
+              <div className='flex items-center justify-center'>
+                <AdminApplicationsResultDropdown
+                  result={app.passStatus}
+                  disabled={isUpdating}
+                  onChange={(nextStatus) =>
+                    onChangePassStatus(app.applicationId, nextStatus)
+                  }
+                />
+              </div>
             </td>
           </tr>
         ))}

@@ -17,15 +17,10 @@ export const Checkbox = ({checked, onChange, disabled}: CheckboxProps) => {
           'cursor-pointer': !disabled,
           'cursor-default opacity-50': disabled,
           'border-primary bg-primary': checked,
-          'border-neutral-600 bg-neutral-600': !checked,
+          'border-white bg-white': !checked,
         }
       )}>
-      <CheckIcon
-        className={clsx(
-          'h-[7.778px] w-[9.899px]',
-          checked ? 'text-white' : 'text-text-muted'
-        )}
-      />
+      <CheckIcon className='h-[7.778px] w-[9.899px] text-white' />
     </div>
   );
 };
