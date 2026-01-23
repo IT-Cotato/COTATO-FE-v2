@@ -4,13 +4,13 @@ import PlusIcon from '@/assets/icons/plus.svg';
 import MinusIcon from '@/assets/icons/minus.svg';
 import {useState} from 'react';
 import clsx from 'clsx';
+import {faqType} from '@/schemas/faq/faq.schema';
 
 interface FaqAccordionProps {
-  question: string;
-  answer: string;
+  item: faqType;
 }
 
-export const FaqAccordion = ({question, answer}: FaqAccordionProps) => {
+export const FaqAccordion = ({item}: FaqAccordionProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -26,7 +26,7 @@ export const FaqAccordion = ({question, answer}: FaqAccordionProps) => {
             'text-body-l-sb transition-colors duration-300',
             isOpen ? 'text-neutral-800' : 'text-neutral-600'
           )}>
-          {question}
+          {item.question}
         </p>
 
         <div className='relative h-6 w-6'>
@@ -55,7 +55,7 @@ export const FaqAccordion = ({question, answer}: FaqAccordionProps) => {
             : 'grid-rows-[0fr] pt-0 opacity-0'
         )}>
         <p className='overflow-hidden text-start text-body-m font-normal text-neutral-600'>
-          {answer}
+          {item.answer}
         </p>
       </div>
     </button>
