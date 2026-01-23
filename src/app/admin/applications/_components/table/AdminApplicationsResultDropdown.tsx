@@ -12,11 +12,13 @@ import {
 interface AdminApplicationsResultDropdownProps {
   result?: ApplicationResultStatus;
   onChange?: (value: ApplicationResultStatus) => void;
+  disabled?: boolean;
 }
 
 export const AdminApplicationsResultDropdown = ({
   result = 'PENDING',
   onChange,
+  disabled,
 }: AdminApplicationsResultDropdownProps) => {
   const [selectedResult, setSelectedResult] =
     useState<ApplicationResultStatus>(result);
@@ -26,17 +28,22 @@ export const AdminApplicationsResultDropdown = ({
   const {bg, label} = APPLICATION_RESULT_CONFIG[selectedResult];
 
   const handleSelect = (value: ApplicationResultStatus) => {
+    if (value === selectedResult) {
+      setIsOpen(false);
+      return;
+    }
+
     setSelectedResult(value);
     setIsOpen(false);
     onChange?.(value);
   };
-
   useClickOutside(wrapperRef, () => setIsOpen(false));
 
   return (
     <div className='relative w-18.75' ref={wrapperRef}>
       <button
         type='button'
+        disabled={disabled}
         className={clsx(
           'inline-flex w-full items-center justify-center gap-1 rounded-[10px] py-1.5 text-body-s text-white',
           bg
@@ -61,7 +68,8 @@ export const AdminApplicationsResultDropdown = ({
                 key={option}
                 className={clsx(
                   'cursor-pointer px-3 py-1.5 text-center',
-                  isSelected ? 'text-primary' : 'hover:text-primary'
+                  isSelected ? 'text-primary' : 'hover:text-primary',
+                  disabled && 'pointer-events-none opacity-60'
                 )}
                 onClick={() => handleSelect(option)}>
                 {APPLICATION_RESULT_CONFIG[option].label}

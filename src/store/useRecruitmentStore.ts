@@ -11,7 +11,7 @@ interface RecruitmentState {
 
 export const useRecruitmentStore = create<RecruitmentState>((set) => ({
   isRecruiting: false,
-  generation: '13', //초기값 - 13기
+  generation: '',
   isAdditional: false,
   setIsRecruiting: (status) => set({isRecruiting: status}),
   setGeneration: (gen) => set({generation: gen}),

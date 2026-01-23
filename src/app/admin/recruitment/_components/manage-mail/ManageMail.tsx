@@ -1,52 +1,84 @@
 'use client';
 
 import {useState} from 'react';
+import {useRecruitmentStore} from '@/store/useRecruitmentStore';
 import {useManageMail} from '@/hooks/useManageMail';
 import {MailHeader} from './MailHeader';
 import {MailField} from './MailField';
 import {MailSendFooter} from './MailSendFooter';
 import {MailConfirmModal} from '@/components/modal/MailConfirmModal';
-import {MAIL_DATA_MAP, MAIL_NUM_MAP} from '@/constants/admin/admin-result';
+import {Spinner} from '@/components/ui/Spinner';
+import {useGenerationStore} from '@/store/useGenerationStore';
 
 interface ManageMailProps {
-  mailType?: keyof typeof MAIL_DATA_MAP;
+  mailType?: string;
   alwaysAble?: boolean;
+  generationId: number;
 }
 
 export const ManageMail = ({
   mailType = '지원 알림 메일',
   alwaysAble = false,
+  generationId,
 }: ManageMailProps) => {
+  const {isRecruiting} = useRecruitmentStore();
+  const {generations} = useGenerationStore();
+
+  const isGenerationExist = generations.some(
+    (g) => g.generationId === generationId
+  );
+
   const {
+    isLoading,
     isEditing,
     content,
     setContent,
+    isSent,
+    waitingCount,
+    jobStatus,
+    isRefreshing,
     isChanged,
-    canSendMail,
     handleEditClick,
     handleCancelClick,
     handleSaveClick,
-  } = useManageMail(mailType, alwaysAble);
+    handleSendClick,
+    refreshStatus,
+  } = useManageMail(generationId, mailType);
 
   const [isSendModalOpen, setIsSendModalOpen] = useState(false);
-  const [isSent, setIsSent] = useState(false);
 
-  const handleConfirmSend = () => {
-    console.log(`${mailType} 전송 완료`);
-    setIsSent(true);
-    setIsSendModalOpen(false);
+  const labelMap: Record<string, string> = {
+    '지원 알림 메일': '대기자',
+    '합격자 메일': '합격자',
+    '불합격자 메일': '불합격자',
+    '예비합격자 메일': '예비합격자',
   };
 
-  const finalCanSend = alwaysAble || canSendMail;
+  const currentLabel = labelMap[mailType] || '대상자';
+
+  const canAccess = isGenerationExist || alwaysAble;
+  const hasPermission = isRecruiting || alwaysAble;
+
+  const finalCanEdit = canAccess;
+  const finalCanSend =
+    canAccess && hasPermission && !isSent && waitingCount > 0;
+
+  if (isLoading)
+    return (
+      <div className='flex w-full justify-center'>
+        <Spinner size='lg' />
+      </div>
+    );
 
   return (
-    <div className='flex w-full flex-col items-start gap-5'>
+    <div className='flex w-full flex-col gap-5'>
       <MailHeader
         isEditing={isEditing}
         isChanged={isChanged}
         onEdit={handleEditClick}
         onCancel={handleCancelClick}
         onSave={handleSaveClick}
+        canEdit={finalCanEdit}
       />
       <MailField
         isEditing={isEditing}
@@ -57,13 +89,20 @@ export const ManageMail = ({
         canSendMail={finalCanSend}
         isSent={isSent}
         onSend={() => setIsSendModalOpen(true)}
-        waitingCount={MAIL_NUM_MAP[mailType]}
+        waitingCount={waitingCount}
+        waitingLabel={currentLabel}
+        jobStatus={jobStatus}
+        isRefreshing={isRefreshing}
+        onRefresh={refreshStatus}
       />
       <MailConfirmModal
         isOpen={isSendModalOpen}
         onClose={() => setIsSendModalOpen(false)}
-        onConfirm={handleConfirmSend}
-        title='메일을 전송하시겠습니까?'
+        onConfirm={() => {
+          handleSendClick();
+          setIsSendModalOpen(false);
+        }}
+        title={`${mailType}을 전송하시겠습니까?`}
       />
     </div>
   );

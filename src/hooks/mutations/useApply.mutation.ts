@@ -2,9 +2,15 @@
 
 import {useMutation, useQueryClient} from '@tanstack/react-query';
 import {AxiosError} from 'axios';
-import {saveBasicInfo, savePartQuestions} from '@/services/api/apply/apply.api';
+import {
+  saveBasicInfo,
+  saveEtcQuestions,
+  savePartQuestions,
+  submitApplication,
+} from '@/services/api/apply/apply.api';
 import {
   BasicInfoRequest,
+  EtcQuestionRequest,
   PartQuestionRequest,
 } from '@/schemas/apply/apply-schema';
 import {QUERY_KEYS} from '@/constants/query-keys';
@@ -19,7 +25,7 @@ export const useSaveBasicInfo = (applicationId: number) => {
     mutationFn: (data: BasicInfoRequest) => saveBasicInfo(applicationId, data),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: QUERY_KEYS.APPLY.BASIC_INFO(String(applicationId)),
+        queryKey: QUERY_KEYS.APPLY.BASIC_INFO(applicationId),
       });
     },
   });
@@ -36,8 +42,40 @@ export const useSavePartQuestions = (applicationId: number) => {
       savePartQuestions(applicationId, data),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: QUERY_KEYS.APPLY.PART_QUESTIONS(String(applicationId)),
+        queryKey: QUERY_KEYS.APPLY.PART_QUESTIONS(applicationId),
       });
+    },
+  });
+};
+
+/**
+ * 기타 질문 저장
+ */
+export const useSaveEtcQuestions = (applicationId: number) => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (data: EtcQuestionRequest) =>
+      saveEtcQuestions(applicationId, data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: QUERY_KEYS.APPLY.ETC_QUESTIONS(applicationId),
+      });
+    },
+    onError: (error: AxiosError) => {
+      console.error('기타 질문 저장에 실패했습니다.', error);
+    },
+  });
+};
+
+/**
+ * 지원서 최종 제출
+ */
+export const useSubmitApplication = (applicationId: number) => {
+  return useMutation({
+    mutationFn: () => submitApplication(applicationId),
+    onError: (error: AxiosError) => {
+      console.error('지원서 제출에 실패했습니다.', error);
     },
   });
 };

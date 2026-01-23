@@ -1,27 +1,47 @@
 'use client';
 
-import {RESULT_DATA} from '@/mocks/mock-result';
+import {useAdminPassStatusQuery} from '@/hooks/queries/useAdminResult.query';
 import {ResultTable} from '@/app/admin/results/_components/result-manage/ResultTable';
-import {useRecruitmentStore} from '@/store/useRecruitmentStore';
-import {ResultSummaryData} from '@/schemas/admin/admin-result-type';
 import {GenerationDropdown} from '@/components/dropdown/GenerationDropdown';
+import {Spinner} from '@/components/ui/Spinner';
+import {STATUS_LABEL_MAP} from '@/constants/admin/admin-result';
+import {useGenerationStore} from '@/store/useGenerationStore';
 
-export const ManageResult = () => {
-  const generation = useRecruitmentStore((s) => s.generation);
-  const setGeneration = useRecruitmentStore((s) => s.setGeneration);
+interface ManageResultProps {
+  generation: string;
+  onGenerationChange: (gen: string) => void;
+}
 
-  const currentData = (RESULT_DATA[generation as keyof typeof RESULT_DATA] ||
-    []) as ResultSummaryData[];
+export const ManageResult = ({
+  generation,
+  onGenerationChange,
+}: ManageResultProps) => {
+  const {data, isLoading} = useAdminPassStatusQuery(generation);
+  const {generations} = useGenerationStore();
+  const generationList = generations.map((g) => String(g.generationId));
+
+  const tableData =
+    data?.map((item) => ({
+      status: STATUS_LABEL_MAP[item.passStatus],
+      ...item.counts,
+    })) || [];
+
+  if (isLoading)
+    return (
+      <div className='flex justify-center py-10'>
+        <Spinner />
+      </div>
+    );
 
   return (
     <div className='flex w-full flex-col gap-6'>
       <h2 className='text-h4 text-neutral-800'>합격자 관리</h2>
       <GenerationDropdown
         generation={generation}
-        generations={['12', '13']}
-        onSelect={setGeneration}
+        generations={generationList.length > 0 ? generationList : ['13', '12']}
+        onSelect={onGenerationChange}
       />
-      <ResultTable data={currentData} />
+      <ResultTable data={tableData} />
     </div>
   );
 };

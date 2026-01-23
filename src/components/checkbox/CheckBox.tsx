@@ -15,7 +15,7 @@ export const Checkbox = ({checked, onChange, disabled}: CheckboxProps) => {
         'flex h-4 w-4 shrink-0 items-center justify-center border transition-colors select-none',
         {
           'cursor-pointer': !disabled,
-          'cursor-not-allowed opacity-50': disabled,
+          'cursor-default opacity-50': disabled,
           'border-primary bg-primary': checked,
           'border-neutral-600 bg-neutral-600': !checked,
         }

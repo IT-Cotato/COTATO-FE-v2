@@ -1,5 +1,5 @@
 import {RESULT_PARTS} from '@/constants/admin/admin-result';
-import {ResultSummaryData} from '@/schemas/admin/admin-result-type';
+import {ResultSummaryData} from '@/schemas/admin/admin-result.type';
 
 interface ResultTableProps {
   data: ResultSummaryData[];
@@ -40,7 +40,7 @@ export const ResultTable = ({data}: ResultTableProps) => {
                 <td
                   key={part.value}
                   className='text-left text-body-l text-neutral-600'>
-                  {row[part.value]}
+                  {row[part.value] ?? 0}
                 </td>
               ))}
             </tr>

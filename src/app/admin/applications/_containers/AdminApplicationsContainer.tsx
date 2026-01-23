@@ -14,6 +14,8 @@ export const AdminApplicationsContainer = () => {
   const router = useRouter();
 
   const statusParams = searchParams.getAll('passViewStatuses');
+  const sortParam = searchParams.get('sort');
+  const sortDirection = sortParam?.split(',')[1] ?? 'desc';
 
   const rawParams = {
     generationId: Number(searchParams.get('generationId') ?? 13),
@@ -21,7 +23,7 @@ export const AdminApplicationsContainer = () => {
     passViewStatuses: statusParams.length > 0 ? statusParams : ['ALL'],
     searchKeyword: searchParams.get('keyword') ?? undefined,
     page: Number(searchParams.get('page') ?? 1) - 1,
-    sort: searchParams.getAll('sort') ?? 'asc',
+    sort: `submittedAt,${sortDirection}`,
     size: 9,
   };
 

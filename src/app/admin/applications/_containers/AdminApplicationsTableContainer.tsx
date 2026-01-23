@@ -11,6 +11,7 @@ import {
 } from '@/constants/admin/admin-applications';
 import {ApplicantsPageType} from '@/schemas/admin/admin-applications.schema';
 import {Spinner} from '@/components/ui/Spinner';
+import {useUpdateApplicationPassStatus} from '@/hooks/mutations/useAdminApplications.mutation';
 
 interface AdminApplicationsTableContainerProps {
   applicants?: ApplicantsPageType;
@@ -24,8 +25,11 @@ export const AdminApplicationsTableContainer = ({
   const searchParams = useSearchParams();
   const router = useRouter();
   const passViewStatuses = searchParams.getAll('passViewStatuses');
+  const sortParam = searchParams.get('sort');
   const submitDateSortOrder =
-    searchParams.get('sort') === 'asc' ? 'asc' : 'desc';
+    sortParam === 'asc' || sortParam?.endsWith(',asc') ? 'asc' : 'desc';
+  const {mutate: updatePassStatus, isPending: isUpdatingPassStatus} =
+    useUpdateApplicationPassStatus();
 
   const selectedResults: ApplicationResultLabel[] =
     passViewStatuses.length === 0 || passViewStatuses.includes('ALL')
@@ -50,9 +54,14 @@ export const AdminApplicationsTableContainer = ({
   const handleSubmitDateSortToggle = () => {
     const params = new URLSearchParams(searchParams.toString());
 
-    const next = searchParams.get('sort') === 'desc' ? 'asc' : 'desc';
+    const currentSort = searchParams.get('sort');
 
-    params.set('sort', next);
+    const currentOrder: 'asc' | 'desc' =
+      currentSort === 'asc' || currentSort?.endsWith(',asc') ? 'asc' : 'desc';
+
+    const next: 'asc' | 'desc' = currentOrder === 'desc' ? 'asc' : 'desc';
+
+    params.set('sort', `submittedAt,${next}`);
     params.set('page', '1');
 
     router.push(`?${params.toString()}`, {scroll: false});
@@ -98,6 +107,13 @@ export const AdminApplicationsTableContainer = ({
               isFilterActive={isFilterActive}
               onSubmitDateSortToggle={handleSubmitDateSortToggle}
               onFilterToggle={() => setIsFilterOpen((prev) => !prev)}
+              onChangePassStatus={(applicationId, passStatus) =>
+                updatePassStatus({
+                  applicationId,
+                  body: {passStatus},
+                })
+              }
+              isUpdating={isUpdatingPassStatus}
             />
 
             {isFilterOpen && !isLoading && (

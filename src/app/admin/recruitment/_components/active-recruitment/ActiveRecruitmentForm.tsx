@@ -4,10 +4,11 @@ import {useState} from 'react';
 import {Button} from '@/components/button/Button';
 import {PeriodField} from '@/app/admin/recruitment/_components/active-recruitment/PeriodField';
 import {useRecruitmentStore} from '@/store/useRecruitmentStore';
+import {useGenerationStore} from '@/store/useGenerationStore';
 import {GenerationField} from '@/app/admin/recruitment/_components/active-recruitment/GenerationField';
 import {RecruitmentConfirmModal} from '@/components/modal/RecruitConfirmModal';
 import {formatDate} from '@/utils/formatDate';
-import {useAdminRecruitmentMutation} from '@/hooks/mutations/useAdminRecruitmentMutation';
+import {useAdminRecruitmentMutation} from '@/hooks/mutations/useAdminRecruitment.mutation';
 import {Checkbox} from '@/components/checkbox/CheckBox';
 
 export const ActiveRecruitmentForm = () => {
@@ -18,6 +19,8 @@ export const ActiveRecruitmentForm = () => {
     isAdditional,
     setIsAdditional,
   } = useRecruitmentStore();
+
+  const {generations} = useGenerationStore();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [startDate, setStartDate] = useState<Date | null>(new Date());
   const [endDate, setEndDate] = useState<Date | null>(new Date());
@@ -26,6 +29,18 @@ export const ActiveRecruitmentForm = () => {
   const handleConfirm = () => {
     if (!generation) {
       alert('기수를 입력해주세요.');
+      return;
+    }
+
+    const isExist = generations.some(
+      (g) => g.generationId === Number(generation)
+    );
+
+    if (!isRecruiting && !isExist) {
+      alert(
+        `${generation}기는 아직 생성되지 않았습니다.\n기수 추가하기를 통해 먼저 기수를 생성해주세요.`
+      );
+      setIsModalOpen(false);
       return;
     }
 
@@ -60,7 +75,10 @@ export const ActiveRecruitmentForm = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!generation) return console.log('실패. 기수를 입력해주세요.');
+    if (!generation) {
+      alert('기수를 입력해주세요.');
+      return;
+    }
     setIsModalOpen(true);
   };
 
@@ -71,16 +89,25 @@ export const ActiveRecruitmentForm = () => {
         className='flex h-25 items-end justify-between rounded-[10px] bg-neutral-100 pt-3 pr-5 pb-3 pl-3.5'>
         <fieldset className='flex h-19 items-end justify-end gap-11.75 pb-1 text-body-m font-semibold'>
           <legend className='sr-only'>모집 설정</legend>
-          <GenerationField value={generation} onChange={setGeneration} />
+          <GenerationField
+            value={generation}
+            onChange={setGeneration}
+            disabled={isRecruiting}
+          />
           <PeriodField
             startDate={startDate}
             setStartDate={setStartDate}
             endDate={endDate}
             setEndDate={setEndDate}
+            disabled={isRecruiting}
           />
-          <div className='flex shrink-0 cursor-pointer items-center gap-5 whitespace-nowrap select-none'>
+          <div className='flex shrink-0 items-center gap-5 whitespace-nowrap select-none'>
             <span className='text-body-L text-neutral-600'>추가모집 여부</span>
-            <Checkbox checked={isAdditional} onChange={setIsAdditional} />
+            <Checkbox
+              checked={isAdditional}
+              onChange={setIsAdditional}
+              disabled={isRecruiting}
+            />
           </div>
         </fieldset>
         <Button
@@ -97,6 +124,7 @@ export const ActiveRecruitmentForm = () => {
       <RecruitmentConfirmModal
         isOpen={isModalOpen}
         isRecruiting={isRecruiting}
+        isAdditional={isAdditional}
         generation={generation}
         onClose={() => setIsModalOpen(false)}
         onConfirm={handleConfirm}

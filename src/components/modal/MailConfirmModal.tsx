@@ -33,7 +33,7 @@ export const MailConfirmModal = ({
       actions={
         <>
           <Button
-            width={219}
+            width={206}
             height={47}
             onClick={onClose}
             label={cancelLabel}
@@ -42,13 +42,13 @@ export const MailConfirmModal = ({
             backgroundColor='neutral-300'
           />
           <Button
-            width={219}
+            width={206}
             height={47}
             onClick={onConfirm}
             label={confirmLabel}
             textColor='neutral-50'
             labelTypo='body_l'
-            backgroundColor='primary'
+            backgroundColor='neutral-600'
           />
         </>
       }

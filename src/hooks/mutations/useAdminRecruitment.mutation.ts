@@ -4,14 +4,14 @@ import {
   PostRecruitmentActivationRequest,
   PostRecruitmentDeactivationRequest,
   RecruitmentResponse,
-} from '@/schemas/admin/admin-recruitment-schema';
+} from '@/schemas/admin/admin-recruitment.schema';
 
 import {useRecruitmentStore} from '@/store/useRecruitmentStore';
 import {ErrorResponse} from '@/schemas/common/common-schema';
 import {
   postRecruitmentActivation,
   postRecruitmentDeactivation,
-} from '@/services/api/admin/admin.recruitment.api';
+} from '@/services/api/admin/admin-recruitment.api';
 import {QUERY_KEYS} from '@/constants/query-keys';
 
 export const useAdminRecruitmentMutation = () => {
@@ -23,7 +23,6 @@ export const useAdminRecruitmentMutation = () => {
    * 추후 invalidateQueries 추가 예정
    */
   const handleSuccess = (nextStatus: boolean) => {
-    // ex) queryClient.invalidateQueries({ queryKey: ['adminApplications'] });
     setIsRecruiting(nextStatus);
     setTimeout(() => {
       queryClient.invalidateQueries({
@@ -41,6 +40,7 @@ export const useAdminRecruitmentMutation = () => {
     mutationFn: postRecruitmentActivation,
     onSuccess: () => handleSuccess(true),
     onError: (error) => {
+      alert(error.message);
       console.error(error.message);
     },
   });
@@ -54,6 +54,7 @@ export const useAdminRecruitmentMutation = () => {
     mutationFn: postRecruitmentDeactivation,
     onSuccess: () => handleSuccess(false),
     onError: (error) => {
+      alert(error.message);
       console.error(error.message);
     },
   });

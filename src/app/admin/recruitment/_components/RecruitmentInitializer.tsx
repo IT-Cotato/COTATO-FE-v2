@@ -1,6 +1,6 @@
 'use client';
 
-import {useRecruitmentStatusQuery} from '@/hooks/queries/useRecruitmentStatusQuery';
+import {useRecruitmentStatusQuery} from '@/hooks/queries/useRecruitmentStatus.query';
 
 export const RecruitmentInitializer = ({
   children,

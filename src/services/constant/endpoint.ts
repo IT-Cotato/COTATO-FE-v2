@@ -21,6 +21,8 @@ export const ENDPOINT = {
   },
   ADMIN: {
     APPLICATIONS: '/api/admin/applications',
+    APPLICATION_PASS_STATUS: (applicationId: number) =>
+      `/api/admin/application/${applicationId}/pass-status`,
     APPLICATION_QUESTIONS: '/api/admin/application-questions',
     APPLICATION_BASIC_INFO: (applicationId: number) =>
       `/api/admin/application/${applicationId}/basic-info`,
@@ -33,6 +35,17 @@ export const ENDPOINT = {
     RECRUITMENT_INFORMATIONS: '/api/admin/recruitment-informations',
     RECRUITMENT_ACTIVATION: '/api/admin/recruitment-activation',
     RECRUITMENT_DEACTIVATION: '/api/admin/recruitment-deactivation',
+    RECRUITMENT_NOTIFICATION: '/api/admin/recruitment-notification-emails',
+    RECRUITMENT_NOTIFICATION_SEND:
+      '/api/admin/recruitment-notification-emails/send',
+    RECRUITMENT_NOTIFICATION_JOB: (jobId: number) =>
+      `/api/admin/recruitment-notification-emails/jobs/${jobId}`,
+    RECRUITMENT_RESULT: '/api/admin/recruitment-mails',
+    RECRUITMENT_RESULT_SEND: '/api/admin/recruitment-mails/send',
+    RECRUITMENT_RESULT_JOB: (jobId: number) =>
+      `/api/admin/recruitment-mails/jobs/${jobId}`,
+    PASS_STATUS: '/api/admin/pass-status',
+    GENERATIONS: '/api/admin/generations',
   },
   APPLY: {
     START: '/api/applications/start',
@@ -42,5 +55,11 @@ export const ENDPOINT = {
       `/api/applications/${applicationId}/part-questions`,
     ANSWERS: (applicationId: number) =>
       `/api/applications/${applicationId}/answers`,
+    ETC_QUESTIONS: (applicationId: number) =>
+      `/api/applications/${applicationId}/etc-questions`,
+    ETC_ANSWERS: (applicationId: number) =>
+      `/api/applications/${applicationId}/etc-answers`,
+    SUBMIT: (applicationId: number) =>
+      `/api/applications/${applicationId}/submit`,
   },
 };
