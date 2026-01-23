@@ -66,7 +66,7 @@ export const BASIC_INFO_FIELDS: BasicInfoFormItem[] = [
     name: 'department',
     label: '학과',
     type: 'input',
-    placeholder: '학과를 작성해주세요',
+    placeholder: 'ex) 주전공: 컴퓨터공학과, 복수전공: 경영학과',
   },
   {
     row: [
@@ -116,14 +116,14 @@ export const getEtcFields = (dates?: EtcFieldDates): EtcFormItem[] => {
       type: 'dropdown',
       placeholder: '알게 된 경로를 선택해주세요',
       options: [
-        {value: 'SNS', label: '인스타그램'},
-        {value: '학교 홍보', label: '에브리타임'},
-        {value: '학교 홍보', label: '캠퍼스픽'},
-        {value: '기타', label: '직행'},
-        {value: 'SNS', label: '네이버 카페'},
-        {value: 'SNS', label: '그 외 SNS'},
-        {value: '지인 추천', label: '지인 소개'},
-        {value: '기타', label: '해당 없음'},
+        {value: 'INSTAGRAM', label: '인스타그램'},
+        {value: 'EVERYTIME', label: '에브리타임'},
+        {value: 'CAMPUSPICK', label: '캠퍼스픽'},
+        {value: 'JIKHAENG', label: '직행'},
+        {value: 'NAVER_CAFE', label: '네이버 카페'},
+        {value: 'OTHER_SNS', label: '그 외 SNS'},
+        {value: 'FRIEND_REFERRAL', label: '지인 소개'},
+        {value: 'NONE', label: '해당 없음'},
       ],
     },
     {

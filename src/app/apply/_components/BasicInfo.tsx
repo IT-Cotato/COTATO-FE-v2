@@ -18,12 +18,14 @@ interface BasicInfoProps {
   onSave: () => void;
   onNext: () => void;
   readOnly?: boolean;
+  showSaveSuccess: boolean;
 }
 
 export const BasicInfo = ({
   onNext,
   onSave,
   readOnly = false,
+  showSaveSuccess,
 }: BasicInfoProps) => {
   const searchParams = useSearchParams();
   const applicationId = searchParams.get('id');
@@ -32,8 +34,13 @@ export const BasicInfo = ({
     register,
     control,
     reset,
-    formState: {errors},
+    trigger,
+    formState: {errors, isValid},
   } = useFormContext<BasicInfoFormData>();
+
+  useEffect(() => {
+    trigger();
+  }, [trigger]);
 
   const hasInitializedRef = useRef(false);
 
@@ -77,17 +84,24 @@ export const BasicInfo = ({
       return (
         <fieldset key={name} className='flex flex-1 flex-col gap-2'>
           <legend className='mb-3.5 text-h5 text-neutral-600'>{label}</legend>
-          <div className='flex gap-[58px] pt-13.5'>
-            {options?.map((opt) => (
-              <FormRadio
-                key={opt.value}
-                label={opt.label}
-                value={opt.value}
-                readOnly={readOnly}
-                {...register(name)}
-              />
-            ))}
-          </div>
+          <Controller
+            name={name}
+            control={control}
+            render={({field}) => (
+              <div className='flex gap-[58px] pt-13.5'>
+                {options?.map((opt) => (
+                  <FormRadio
+                    key={opt.value}
+                    label={opt.label}
+                    value={opt.value}
+                    checked={field.value === opt.value}
+                    onChange={() => field.onChange(opt.value)}
+                    readOnly={readOnly}
+                  />
+                ))}
+              </div>
+            )}
+          />
           <div className='min-h-[24px]'>
             {error && (
               <span className='text-body-l text-alert'>
@@ -137,6 +151,7 @@ export const BasicInfo = ({
           placeholder={placeholder}
           readOnly={readOnly}
           autoComplete={autocomplete}
+          maxLength={200}
           {...register(name)}
           error={error?.message ?? ''}
           className='w-full'
@@ -168,6 +183,7 @@ export const BasicInfo = ({
           labelTypo='h4'
           onClick={onNext}
           type='button'
+          disabled={!isValid}
         />
         <FullButton
           label='저장하기'
@@ -177,6 +193,9 @@ export const BasicInfo = ({
           onClick={onSave}
           type='button'
         />
+        {showSaveSuccess && (
+          <p className='text-center text-primary'>저장이 완료되었습니다</p>
+        )}
       </div>
     </div>
   );

@@ -8,8 +8,8 @@ export default function AdminWithSideBarLayout({
 }>) {
   return (
     <ProtectedRoute requireRole='STAFF'>
-      <section className='flex min-h-screen w-full flex-row gap-23.5 bg-neutral-50 px-60 py-16.75'>
-        <aside>
+      <section className='flex min-h-screen w-full min-w-360 flex-row bg-white'>
+        <aside className='sticky left-0 z-sidebar'>
           <AdminSideBar />
         </aside>
         <main className='min-w-0 flex-1'>{children}</main>
