@@ -14,4 +14,5 @@ export const QUERY_KEYS = {
   ADMIN_APPLICATION_EVALUATION: 'application-evaluation',
   ADMIN_RECRUITMENT_INFORMATIONS: 'admin-recruitment-informations',
   RECRUITMENT_STATUS: 'recruitment-status',
+  FAQ: (type: string) => ['faq', type],
 } as const;
