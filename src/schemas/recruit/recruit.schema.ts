@@ -34,9 +34,20 @@ export const ActivityCardSchema = z.object({
   date: z.string(),
 });
 
+/** 모집공고 조회 response */
+export const RecruitmentNoticeSchema = z.object({
+  generationId: z.number(),
+  startDate: z.string(),
+  endDate: z.string(),
+  schedule: z.array(TimelineSchema),
+  parts: z.array(PositionCardSchema),
+  activities: z.array(ActivityCardSchema),
+});
+
 /** 타입 추출 */
 export type TimelineType = z.infer<typeof TimelineSchema>;
 export type PositionType = z.infer<typeof PositionSchema>;
 export type PositionCardType = z.infer<typeof PositionCardSchema>;
 export type ActivityCategoryType = z.infer<typeof ActivityCategorySchema>;
 export type ActivityCardType = z.infer<typeof ActivityCardSchema>;
+export type RecruitmentNoticeType = z.infer<typeof RecruitmentNoticeSchema>;
