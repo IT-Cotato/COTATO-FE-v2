@@ -87,7 +87,7 @@ export const ActiveRecruitmentForm = () => {
       <form
         onSubmit={handleSubmit}
         className='flex items-end justify-between rounded-[10px] bg-neutral-100 px-8 py-4'>
-        <fieldset className='flex items-end justify-end gap-[47px]'>
+        <fieldset className='flex items-end justify-end gap-11.75'>
           <legend className='sr-only'>모집 설정</legend>
           <GenerationField
             value={generation}

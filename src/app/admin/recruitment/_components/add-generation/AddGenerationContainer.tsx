@@ -67,8 +67,8 @@ export const AddGenerationContainer = () => {
     );
 
   return (
-    <div className='flex w-full flex-col items-start gap-[10px] rounded-[10px] bg-neutral-100 px-8 py-3'>
-      <div className='flex items-center gap-[23px] self-stretch'>
+    <div className='flex w-full flex-col items-start gap-2.5 rounded-[10px] bg-neutral-100 px-8 py-3'>
+      <div className='flex items-center gap-5.75 self-stretch'>
         <p className='shrink-0 text-body-l font-medium text-neutral-600'>
           기수 추가하기
         </p>
@@ -98,7 +98,7 @@ export const AddGenerationContainer = () => {
                 }}
                 disabled={isRecruiting}
                 className={clsx(
-                  'flex h-[38px] w-[63px] shrink-0 items-center justify-center rounded-[5px] text-body-l font-semibold transition-all',
+                  'flex h-9.5 w-15.75 shrink-0 items-center justify-center rounded-[5px] text-body-l font-semibold transition-all',
                   isSelected
                     ? 'bg-neutral-200 text-neutral-800'
                     : 'bg-white text-neutral-600',
