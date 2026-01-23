@@ -146,7 +146,7 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
           .join(', ');
 
         const discoveryPath =
-          (formData.discovery as EtcQuestionRequest['discoveryPath']) || '';
+          (formData.discovery as EtcQuestionRequest['discoveryPath']) || 'NONE';
 
         const requestData: EtcQuestionRequest = {
           discoveryPath,
