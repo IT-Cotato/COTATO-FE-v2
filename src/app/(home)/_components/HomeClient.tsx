@@ -2,17 +2,19 @@
 
 import {useState} from 'react';
 import {useSearchParams, useRouter} from 'next/navigation';
-import {useRecruitmentStore} from '@/store/useRecruitmentStore';
+import {useRecruitmentStatusQuery} from '@/hooks/queries/useRecruitmentStatus.query';
 import {RecruitmentActive} from '@/app/(home)/_components/RecruitmentActive';
 import {RecruitmentInactive} from '@/app/(home)/_components/RecruitmentInactive';
 import {SubmissionCompleteModal} from '@/components/modal/SubmissionCompleteModal';
 import {SubmissionIncompleteModal} from '@/components/modal/SubmissionIncompleteModal';
+import {Spinner} from '@/components/ui/Spinner';
 
 export const HomeClient = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
 
-  const isRecruiting = useRecruitmentStore((state) => state.isRecruiting);
+  const {data: recruitmentStatus, isLoading} = useRecruitmentStatusQuery();
+  const isRecruiting = recruitmentStatus?.data?.isActive ?? false;
 
   const submittedParam = searchParams.get('submitted');
 
@@ -30,6 +32,14 @@ export const HomeClient = () => {
     setIsSubmissionIncompleteModalOpen(false);
     router.replace('/');
   };
+
+  if (isLoading) {
+    return (
+      <div className='flex h-screen items-center justify-center'>
+        <Spinner />
+      </div>
+    );
+  }
 
   return (
     <>
