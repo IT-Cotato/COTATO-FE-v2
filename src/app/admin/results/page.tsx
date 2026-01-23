@@ -1,10 +1,13 @@
-import {SuspenseWrapper} from '@/components/wrappers/SuspenseWrapper';
+import {RecruitmentInitializer} from '@/app/admin/recruitment/_components/RecruitmentInitializer';
 import {ResultsContainer} from '@/app/admin/results/_components/ResultsContainer';
+import {SuspenseWrapper} from '@/components/wrappers/SuspenseWrapper';
 
 export default function AdminResultsPage() {
   return (
-    <SuspenseWrapper>
-      <ResultsContainer />
-    </SuspenseWrapper>
+    <RecruitmentInitializer>
+      <SuspenseWrapper>
+        <ResultsContainer />
+      </SuspenseWrapper>
+    </RecruitmentInitializer>
   );
 }
