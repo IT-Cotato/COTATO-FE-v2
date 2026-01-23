@@ -65,7 +65,7 @@ export const Header = () => {
         className='sticky top-0 z-header flex w-full min-w-360 items-center justify-between bg-black pr-26.25 pl-6.25'>
         <div>
           <Link href='/'>
-            <MainLogo />
+            <MainLogo className='w-36.5' />
           </Link>
         </div>
         <div className='flex items-center gap-5'>
