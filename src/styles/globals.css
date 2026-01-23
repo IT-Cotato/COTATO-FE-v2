@@ -43,9 +43,10 @@
   --color-white: #ffffff;
 
   /* z-index */
-  --z-index-header: 100;
+  --z-index-header: 103;
   --z-index-dropdown: 101;
   --z-index-modal: 99;
+  --z-index-sidebar: 102;
 }
 
 @layer base {
