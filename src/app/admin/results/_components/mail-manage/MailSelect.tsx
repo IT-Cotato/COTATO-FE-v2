@@ -21,7 +21,7 @@ export const MailSelect = ({activeTab, onTabChange}: MailSelectProps) => {
                 label={tab}
                 height={40}
                 borderRadius={0}
-                backgroundColor='neutral-50'
+                backgroundColor='white'
                 textColor={isActive ? 'neutral-800' : 'neutral-500'}
                 className={clsx('px-0', 'border-none')}
                 onClick={() => onTabChange(tab)}
