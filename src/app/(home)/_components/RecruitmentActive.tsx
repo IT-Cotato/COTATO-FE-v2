@@ -6,34 +6,20 @@ import {RECRUITMENT_NOTICES} from '@/constants/home/recruitment';
 import {useRecruitmentStore} from '@/store/useRecruitmentStore';
 import {useRouter} from 'next/navigation';
 import {ROUTES} from '@/constants/routes';
-import {useState, useEffect} from 'react';
+import {useState} from 'react';
 import {LoginModal} from '@/components/modal/LoginModal';
 import {useAuthStore} from '@/store/useAuthStore';
-import {useStartApplicationMutation} from '@/hooks/mutations/useApply.mutation';
-import {StartApplicationResponse} from '@/schemas/apply/apply-schema';
+import {useApplicationStatus} from '@/hooks/queries/useApply.query';
 
 export const RecruitmentActive = () => {
   const router = useRouter();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [applicationStatus, setApplicationStatus] =
-    useState<StartApplicationResponse | null>(null);
 
   const generation = useRecruitmentStore((state) => state.generation);
   const {isAuthenticated} = useAuthStore();
 
-  const {mutate: startApplication} = useStartApplicationMutation();
-
-  useEffect(() => {
-    if (isAuthenticated) {
-      startApplication(undefined, {
-        onSuccess: (data) => {
-          setApplicationStatus(data);
-        },
-      });
-    }
-  }, [isAuthenticated, startApplication]);
-
+  const {data: applicationStatus} = useApplicationStatus(isAuthenticated);
   const hasSubmitted = applicationStatus?.isSubmitted ?? false;
 
   const handleApplyClick = () => {
