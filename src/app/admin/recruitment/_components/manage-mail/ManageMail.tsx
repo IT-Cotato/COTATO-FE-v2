@@ -35,7 +35,8 @@ export const ManageMail = ({
     setContent,
     isSent,
     waitingCount,
-    jobStatus,
+    status,
+    isSending,
     isRefreshing,
     isChanged,
     handleEditClick,
@@ -88,10 +89,12 @@ export const ManageMail = ({
       <MailSendFooter
         canSendMail={finalCanSend}
         isSent={isSent}
+        isInProgress={isSending}
         onSend={() => setIsSendModalOpen(true)}
         waitingCount={waitingCount}
         waitingLabel={currentLabel}
-        jobStatus={jobStatus}
+        successCount={status.successCount}
+        failCount={status.failCount}
         isRefreshing={isRefreshing}
         onRefresh={refreshStatus}
       />

@@ -1,108 +1,87 @@
 'use client';
 
-import {useState, useEffect, useCallback} from 'react';
+import {useCallback, useState} from 'react';
 import {useAdminMailQuery} from '@/hooks/queries/useAdminMail.query';
 import {useAdminMailMutation} from '@/hooks/mutations/useAdminMail.mutation';
-import {getMailJobStatus} from '@/services/api/admin/admin-mail.api';
-import {MailJobStatus} from '@/schemas/admin/admin-mail.type';
 
 export const useManageMail = (generationId: number, mailType: string) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editingContent, setEditingContent] = useState<string | null>(null);
-  const [activeJobId, setActiveJobId] = useState<number | null>(null);
-  const [jobStatus, setJobStatus] = useState<MailJobStatus | null>(null);
-  const [isRefreshing, setIsRefreshing] = useState(false);
+  const [prevParams, setPrevParams] = useState({generationId, mailType});
+  const [isManualRefreshing, setIsManualRefreshing] = useState(false);
 
-  const {
-    data,
-    isLoading,
-    refetch: refetchMailData,
-  } = useAdminMailQuery(generationId, mailType);
+  const {data, isLoading, refetch, isFetching} = useAdminMailQuery(
+    generationId,
+    mailType
+  );
 
   const {
     save,
     send,
     isSaving,
-    isSending: isSendPending,
+    isSending: isMutationSending,
   } = useAdminMailMutation(generationId, mailType);
 
-  // 기수나 메일 타입이 바뀌면 모든 로컬 상태 초기화
-  useEffect(() => {
+  if (
+    prevParams.generationId !== generationId ||
+    prevParams.mailType !== mailType
+  ) {
+    setPrevParams({generationId, mailType});
     setIsEditing(false);
     setEditingContent(null);
-    setActiveJobId(null);
-    setJobStatus(null);
-  }, [generationId, mailType]);
+  }
 
-  const checkCurrentStatus = useCallback(
-    async (jobId: number) => {
-      setIsRefreshing(true);
-      try {
-        const isNotification = mailType === '지원 알림 메일';
-        const status = await getMailJobStatus(jobId, isNotification);
-        setJobStatus(status);
+  // 대상자 수
+  const totalTargetCount = data
+    ? 'subscriberCount' in data
+      ? data.subscriberCount
+      : data.recipientCount
+    : 0;
 
-        if (status.isCompleted) {
-          setActiveJobId(null);
-          localStorage.removeItem(`last_job_${mailType}_${generationId}`);
-          refetchMailData();
-        }
-      } catch (error) {
-        console.error('상태 조회 실패', error);
-      } finally {
-        setIsRefreshing(false);
-      }
-    },
-    [mailType, generationId, refetchMailData]
-  );
+  // 수동 새로고침
+  const handleRefreshStatus = useCallback(async () => {
+    setIsManualRefreshing(true);
 
-  useEffect(() => {
-    const savedJobId = localStorage.getItem(
-      `last_job_${mailType}_${generationId}`
-    );
-    if (savedJobId) {
-      setActiveJobId(Number(savedJobId));
-    }
-  }, [mailType, generationId]);
+    // refetch와의 최소 대기 시간 (600ms)
+    await Promise.all([
+      refetch(),
+      new Promise((resolve) => setTimeout(resolve, 600)),
+    ]);
+    setIsManualRefreshing(false);
+  }, [refetch]);
 
-  useEffect(() => {
-    if (activeJobId !== null) {
-      checkCurrentStatus(activeJobId);
-    }
-  }, [activeJobId, checkCurrentStatus]);
+  // 전송 중 (성공 + 실패 합이 전체 대상자 수보다 적을 때)
+  const isCurrentlyProcessing =
+    isMutationSending ||
+    isManualRefreshing ||
+    (data?.isSent && data.successCount + data.failCount < totalTargetCount) ||
+    (isFetching && !data?.isSent);
 
   const handleSendClick = () => {
     send(undefined, {
-      onSuccess: (res) => {
-        const newJobId = res.jobId;
-        setActiveJobId(newJobId);
-        localStorage.setItem(
-          `last_job_${mailType}_${generationId}`,
-          newJobId.toString()
-        );
+      onSuccess: () => {
+        handleRefreshStatus();
       },
     });
   };
 
   const currentContent =
     editingContent !== null ? editingContent : (data?.content ?? '');
-  const waitingCount = data
-    ? 'subscriberCount' in data
-      ? data.subscriberCount
-      : data.recipientCount
-    : 0;
 
   return {
     isLoading,
     isSaving,
-    isRefreshing,
-    isSending: isSendPending || activeJobId !== null,
+    isSending: isCurrentlyProcessing,
+    isRefreshing: isFetching || isManualRefreshing,
     isEditing,
     content: currentContent,
     setContent: (val: string) => setEditingContent(val),
     isSent: data?.isSent ?? false,
-    waitingCount,
-    jobStatus,
+    waitingCount: totalTargetCount,
+    status: {
+      successCount: data?.successCount ?? 0,
+      failCount: data?.failCount ?? 0,
+    },
     isChanged: editingContent !== null && data?.content !== editingContent,
     handleEditClick: () => setIsEditing(true),
     handleCancelClick: () => {
@@ -112,10 +91,6 @@ export const useManageMail = (generationId: number, mailType: string) => {
     handleSaveClick: () =>
       save(currentContent, {onSuccess: () => setIsEditing(false)}),
     handleSendClick,
-    refreshStatus: () => {
-      if (activeJobId !== null) {
-        checkCurrentStatus(activeJobId);
-      }
-    },
+    refreshStatus: handleRefreshStatus,
   };
 };
