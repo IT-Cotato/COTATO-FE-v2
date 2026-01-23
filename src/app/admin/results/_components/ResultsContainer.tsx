@@ -1,39 +1,28 @@
 'use client';
 
-import {useState, useEffect, useCallback} from 'react';
+import {useState, useEffect} from 'react';
 import {ManageResult} from './result-manage/ManageResult';
 import {ManageResultMail} from './mail-manage/ManageResultMail';
 import {useGenerationStore} from '@/store/useGenerationStore';
 import {useRecruitmentStatusQuery} from '@/hooks/queries/useRecruitmentStatus.query';
-import {getGenerations} from '@/services/api/admin/admin-generation.api';
 import {Spinner} from '@/components/ui/Spinner';
+import {useAdminGenerationsQuery} from '@/hooks/queries/useAdminGeneration.query';
 
 export const ResultsContainer = () => {
   const {isLoading: isStatusLoading} = useRecruitmentStatusQuery();
-  const {generations, setGenerations} = useGenerationStore();
+  const {data: generationsData, isLoading: isGenerationsLoading} =
+    useAdminGenerationsQuery();
 
+  const {setGenerations} = useGenerationStore();
   const [selectedGen, setSelectedGen] = useState<string | null>(null);
-  const [isGenLoading, setIsGenLoading] = useState(true);
-
-  const fetchInitialData = useCallback(async () => {
-    try {
-      const res = await getGenerations();
-      if (res?.data) {
-        setGenerations(res.data);
-      }
-    } catch (error) {
-      console.error('기수 정보 불러오기 실패:', error);
-    } finally {
-      setIsGenLoading(false);
-    }
-  }, [setGenerations]);
 
   useEffect(() => {
-    fetchInitialData();
-  }, [fetchInitialData]);
+    if (generationsData?.data) {
+      setGenerations(generationsData.data);
+    }
+  }, [generationsData, setGenerations]);
 
-  // 상태 조회 중이거나 기수 목록 조회 중일 때
-  if (isStatusLoading || isGenLoading) {
+  if (isStatusLoading || isGenerationsLoading) {
     return (
       <div className='flex h-100 w-full items-center justify-center'>
         <Spinner size='lg' />
@@ -41,11 +30,11 @@ export const ResultsContainer = () => {
     );
   }
 
+  const generations = generationsData?.data || [];
   const currentGeneration =
     selectedGen ||
     (generations.length > 0 ? String(generations[0].generationId) : '');
 
-  // 기수 정보가 아예 없는 경우
   if (!currentGeneration) {
     return (
       <div className='flex h-100 w-full items-center justify-center'>
