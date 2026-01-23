@@ -6,12 +6,8 @@ export const TimelineSchema = z.object({
   date: z.string(),
 });
 
-export type TimelineType = z.infer<typeof TimelineSchema>;
-
 /** 모집 포지션 - 직무 */
 export const PositionSchema = z.enum(['PM', 'DE', 'FE', 'BE']);
-
-export type PositionType = z.infer<typeof PositionSchema>;
 
 /** 모집 포지션 */
 export const PositionCardSchema = z.object({
@@ -19,8 +15,6 @@ export const PositionCardSchema = z.object({
   name: z.string(),
   detail: z.string(),
 });
-
-export type PositionCardType = z.infer<typeof PositionCardSchema>;
 
 /** 세션 활동 - 종류 */
 export const ActivityCategorySchema = z.enum([
@@ -32,8 +26,6 @@ export const ActivityCategorySchema = z.enum([
   'DEMODAY',
 ]);
 
-export type ActivityCategoryType = z.infer<typeof ActivityCategorySchema>;
-
 /** 세션 활동 */
 export const ActivityCardSchema = z.object({
   id: z.number(),
@@ -42,4 +34,9 @@ export const ActivityCardSchema = z.object({
   date: z.string(),
 });
 
+/** 타입 추출 */
+export type TimelineType = z.infer<typeof TimelineSchema>;
+export type PositionType = z.infer<typeof PositionSchema>;
+export type PositionCardType = z.infer<typeof PositionCardSchema>;
+export type ActivityCategoryType = z.infer<typeof ActivityCategorySchema>;
 export type ActivityCardType = z.infer<typeof ActivityCardSchema>;
