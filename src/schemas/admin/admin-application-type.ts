@@ -74,7 +74,7 @@ export const ApplicationDetailSchema = z.object({
       'NAVER_CAFE',
       'EVERYTIME',
       'CAMPUSPICK',
-      'JIKHANG',
+      'JIKHAENG',
       'OTHER_SNS',
       'FRIEND_REFERRAL',
       'NONE',

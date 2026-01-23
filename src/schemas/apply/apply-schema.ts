@@ -87,7 +87,7 @@ export const DiscoveryPathEnum = z.enum([
   'INSTAGRAM',
   'EVERYTIME',
   'CAMPUSPICK',
-  'JIKHANG',
+  'JIKHAENG',
   'NAVER_CAFE',
   'OTHER_SNS',
   'FRIEND_REFERRAL',
