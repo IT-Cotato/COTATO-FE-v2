@@ -74,7 +74,7 @@ export default function RecruitmentLayout({
         )}
 
         <div className='mb-11.5'>
-          <CountdownTimer hightlightUnits={isRecruiting} />
+          <CountdownTimer highlightUnits={isRecruiting} />
         </div>
 
         {activateApplyButton && (

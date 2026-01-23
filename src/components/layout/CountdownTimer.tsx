@@ -4,7 +4,7 @@ import clsx from 'clsx';
 import {useState, useEffect, useMemo} from 'react';
 
 interface CountdownTimerProps {
-  hightlightUnits?: boolean;
+  highlightUnits?: boolean;
 }
 
 const calculateTimeLeft = (targetTimestamp: number) => {
@@ -27,7 +27,7 @@ const calculateTimeLeft = (targetTimestamp: number) => {
 };
 
 export default function CountdownTimer({
-  hightlightUnits = false,
+  highlightUnits = false,
 }: CountdownTimerProps) {
   // 서버/첫 렌더에서도 항상 동일한 값
   const [timeLeft, setTimeLeft] = useState<{h: string; m: string; s: string}>(
@@ -55,7 +55,7 @@ export default function CountdownTimer({
     };
   }, [targetDate]);
 
-  const textColor = hightlightUnits ? 'text-primary' : 'text-neutral-400';
+  const textColor = highlightUnits ? 'text-primary' : 'text-neutral-400';
 
   return (
     <div className='flex items-end gap-10'>
