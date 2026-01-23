@@ -11,19 +11,25 @@ export const FooterContact = () => {
       <div className='flex items-center gap-5.25'>
         <h3 className='text-h5 text-white'>Contact Us</h3>
         <div className='flex items-center gap-3'>
-          <SocialLink href='mailto:itcotato@gmail.com'>
+          <SocialLink href='mailto:itcotato@gmail.com' ariaLabel='이메일'>
             <Email />
           </SocialLink>
-          <SocialLink href='https://github.com/IT-Cotato'>
+          <SocialLink href='https://github.com/IT-Cotato' ariaLabel='GitHub'>
             <Github />
           </SocialLink>
-          <SocialLink href='https://www.instagram.com/cotato_official/'>
+          <SocialLink
+            href='https://www.instagram.com/cotato_official/'
+            ariaLabel='Instagram'>
             <Insta />
           </SocialLink>
-          <SocialLink href='https://pf.kakao.com/_LQLyG'>
+          <SocialLink
+            href='https://pf.kakao.com/_LQLyG'
+            ariaLabel='KakaoTalk 채널'>
             <Kakao />
           </SocialLink>
-          <SocialLink href='https://cafe.naver.com/cotato'>
+          <SocialLink
+            href='https://cafe.naver.com/cotato'
+            ariaLabel='네이버 카페'>
             <NaverCafe />
           </SocialLink>
         </div>

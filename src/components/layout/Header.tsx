@@ -106,9 +106,11 @@ export const Header = () => {
             (user ? (
               <Dropdown
                 trigger={
-                  <div className='flex cursor-pointer items-center justify-center gap-2.5 px-4.25 py-6 text-body-l-sb text-white'>
+                  <button
+                    type='button'
+                    className='flex cursor-pointer items-center justify-center gap-2.5 px-4.25 py-6 text-body-l-sb text-white'>
                     <SmallLogo /> {user.name}
-                  </div>
+                  </button>
                 }
                 className='absolute rounded-sm border border-primary bg-black px-2 py-1'>
                 <button
