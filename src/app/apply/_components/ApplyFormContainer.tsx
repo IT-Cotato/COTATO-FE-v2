@@ -9,8 +9,8 @@ import {useApplyFormController} from '@/app/apply/_hooks/useApplyFormController'
 import {ApplicationConfirmModal} from '@/components/modal/ApplicationConfirmModal';
 import HeroMainBanner from '@/components/banner/HeroMainBanner';
 import {AdminRecruitmentInformation} from '@/app/admin/application-edit/_components/recruitment/AdminRecruitmentInformation';
-import {RecruitmentInformation} from '@/schemas/admin/admin-recruitment-information.schema';
 import {useRecruitmentStatusQuery} from '@/hooks/queries/useRecruitmentStatus.query';
+import {useRecruitmentScheduleQuery} from '@/hooks/queries/useRecruitmentSchedule.query';
 
 const STEP_TITLES = {
   1: '기본 인적사항',
@@ -34,6 +34,8 @@ export const ApplyFormContainer = () => {
   const {data: recruitmentStatus} = useRecruitmentStatusQuery();
   const generation = recruitmentStatus?.data?.generationId;
 
+  const {data: scheduleData} = useRecruitmentScheduleQuery();
+
   return (
     <>
       <div className='flex w-full flex-col items-center bg-neutral-50'>
@@ -51,16 +53,14 @@ export const ApplyFormContainer = () => {
               &nbsp;코테이토 {generation}기 지원서&nbsp;
               <span aria-hidden='true'>🥔</span>
             </h1>
-            {/**
-             * 해당 페이지에서 어드민 모집공고 인포 컴포넌트 재사용
-             * 추후 `api/recruitment/schedule` 로 API 연동 필요함. (현재는 빌드 오류 방지를 위한 임시 props 전달)
-             */}
-            <AdminRecruitmentInformation
-              variant='plain'
-              data={{} as RecruitmentInformation}
-              isEditing={false}
-              onChange={() => console.log('')}
-            />
+            {scheduleData && (
+              <AdminRecruitmentInformation
+                variant='plain'
+                data={scheduleData}
+                isEditing={false}
+                onChange={() => {}}
+              />
+            )}
           </div>
 
           <h2 className='text-h2 text-neutral-800'>
