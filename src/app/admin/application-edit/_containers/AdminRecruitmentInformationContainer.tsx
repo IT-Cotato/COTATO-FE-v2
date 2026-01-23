@@ -11,10 +11,12 @@ import {useAdminRecruitmentInformationsQuery} from '@/hooks/queries/useAdminRecr
 import {useAdminRecruitmentInformationsMutation} from '@/hooks/mutations/useAdminRecruitmentInformations.mutation';
 
 interface AdminRecruitmentInformationContainerProps {
+  generations: string[];
   generationId: number;
 }
 
 export const AdminRecruitmentInformationContainer = ({
+  generations,
   generationId,
 }: AdminRecruitmentInformationContainerProps) => {
   const router = useRouter();
@@ -80,7 +82,7 @@ export const AdminRecruitmentInformationContainer = ({
       <div className='flex flex-row justify-between'>
         <GenerationDropdown
           generation={String(generationId)}
-          generations={['13', '12', '11']}
+          generations={generations}
           onSelect={handleGenerationChange}
         />
         {isEditing ? (

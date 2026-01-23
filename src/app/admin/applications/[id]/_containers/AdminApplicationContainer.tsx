@@ -14,17 +14,16 @@ import {
 import {useParams, useRouter, useSearchParams} from 'next/navigation';
 
 export const AdminApplicationContainer = () => {
+  const searchParams = useSearchParams();
+  const router = useRouter();
   const {id} = useParams<{id: string}>();
   const applicationId = Number(id);
 
-  const generation = '13'; // TODO: 전역 상태 로직으로 변경
+  const generationId = searchParams.get('generationId');
 
   const {data: basicInfo} = useAdminApplicationBasicInfo(applicationId);
   const {data: partQuestions} = useAdminApplicationPartQuestions(applicationId);
   const {data: etcQuestions} = useAdminApplicationEtcQuestions(applicationId);
-
-  const searchParams = useSearchParams();
-  const router = useRouter();
 
   const rawStep = Number(searchParams.get('step') ?? 1);
   const step = Math.min(Math.max(rawStep, 1), 3);
@@ -50,7 +49,7 @@ export const AdminApplicationContainer = () => {
   return (
     <>
       <AdminApplicationHeader
-        generation={generation}
+        generation={generationId}
         basicInfo={basicInfo.data}
       />
 

@@ -4,7 +4,7 @@ import {PART_TABS} from '@/constants/admin/admin-application-questions';
 import {AdminApplicationBasicInfoType} from '@/schemas/admin/admin-application.schema';
 
 interface AdminApplicationHeaderProps {
-  generation: string;
+  generation: string | null;
   basicInfo: AdminApplicationBasicInfoType;
 }
 

@@ -14,11 +14,13 @@ import {Spinner} from '@/components/ui/Spinner';
 import {useUpdateApplicationPassStatus} from '@/hooks/mutations/useAdminApplications.mutation';
 
 interface AdminApplicationsTableContainerProps {
+  generationId: string;
   applicants?: ApplicantsPageType;
   isLoading: boolean;
 }
 
 export const AdminApplicationsTableContainer = ({
+  generationId,
   applicants,
   isLoading,
 }: AdminApplicationsTableContainerProps) => {
@@ -103,6 +105,7 @@ export const AdminApplicationsTableContainer = ({
 
             <AdminApplicationsTableView
               items={applicants.content}
+              generationId={generationId}
               submitDateSortOrder={submitDateSortOrder}
               isFilterActive={isFilterActive}
               onSubmitDateSortToggle={handleSubmitDateSortToggle}

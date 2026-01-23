@@ -5,11 +5,11 @@ import z from 'zod';
 export const RecruitmentInformationSchema = z.object({
   recruitmentStart: z.string(),
   recruitmentEnd: z.string(),
-  documentAnnouncement: z.string(),
-  interviewStart: z.string(),
-  interviewEnd: z.string(),
-  finalAnnouncement: z.string(),
-  ot: z.string(),
+  documentAnnouncement: z.string().nullable(),
+  interviewStart: z.string().nullable(),
+  interviewEnd: z.string().nullable(),
+  finalAnnouncement: z.string().nullable(),
+  ot: z.string().nullable(),
 });
 
 export const GetAdminRecruitmentInformationResponseSchema =
@@ -19,11 +19,11 @@ export const PostAdminRecruitmentInformationRequestSchema = z.object({
   generationId: z.number(),
   recruitmentStart: z.string(),
   recruitmentEnd: z.string(),
-  documentAnnouncement: z.string(),
-  interviewStart: z.string(),
-  interviewEnd: z.string(),
-  finalAnnouncement: z.string(),
-  ot: z.string(),
+  documentAnnouncement: z.string().nullable(),
+  interviewStart: z.string().nullable(),
+  interviewEnd: z.string().nullable(),
+  finalAnnouncement: z.string().nullable(),
+  ot: z.string().nullable(),
 });
 
 /** 타입 추출 */

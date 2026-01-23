@@ -4,9 +4,9 @@ import RightArrowIcon from '@/assets/icons/arrow-right.svg';
 interface RecruitmentInfoEditRowProps {
   label: string;
   type: 'single' | 'range';
-  start?: string;
-  end?: string;
-  onChange: (value: {start?: string; end?: string}) => void;
+  start?: string | null;
+  end?: string | null;
+  onChange: (value: {start?: string | null; end?: string | null}) => void;
 }
 
 export const RecruitmentInfoEditRow = ({
