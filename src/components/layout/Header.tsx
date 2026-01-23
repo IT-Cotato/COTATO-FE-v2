@@ -62,7 +62,7 @@ export const Header = () => {
     <>
       <header
         style={{height: `${HEADER_HEIGHT}px`}}
-        className='sticky top-0 z-header flex w-full items-center justify-between bg-black px-[105px]'>
+        className='sticky top-0 z-header flex w-full min-w-360 items-center justify-between bg-black px-[105px]'>
         <div>
           <Link href='/'>
             <MainLogo />
