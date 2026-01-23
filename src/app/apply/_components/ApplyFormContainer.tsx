@@ -54,7 +54,7 @@ export const ApplyFormContainer = () => {
           />
         )}
 
-        <div className='flex w-full max-w-[1100px] flex-col gap-[42.5px] py-[42.5px]'>
+        <div className='flex w-full max-w-[1100px] flex-col py-[42.5px]'>
           <div className='flex flex-col gap-3.5'>
             <h1 className='text-h1 text-neutral-800'>
               <span aria-hidden='true'>🥔</span>

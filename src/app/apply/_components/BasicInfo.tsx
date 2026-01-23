@@ -91,7 +91,7 @@ export const BasicInfo = ({
             name={name}
             control={control}
             render={({field}) => (
-              <div className='flex gap-[58px] pt-13.5'>
+              <div className='flex gap-[58px] pt-11'>
                 {options?.map((opt) => (
                   <FormRadio
                     key={opt.value}
@@ -105,7 +105,7 @@ export const BasicInfo = ({
               </div>
             )}
           />
-          <div className='min-h-[24px]'>
+          <div>
             {error && (
               <span className='text-body-l text-alert'>
                 {error.message ?? ''}
@@ -118,7 +118,7 @@ export const BasicInfo = ({
 
     if (type === 'dropdown') {
       return (
-        <div key={name} className='flex flex-1 flex-col gap-2'>
+        <div key={name} className='flex flex-1 flex-col'>
           <Controller
             name={name}
             control={control}
@@ -135,9 +135,9 @@ export const BasicInfo = ({
               />
             )}
           />
-          <div className='min-h-[24px]'>
+          <div>
             {error && (
-              <span className='text-body-l text-alert'>
+              <span className='pt-6 text-body-l text-alert'>
                 {error.message ?? ''}
               </span>
             )}
@@ -165,7 +165,7 @@ export const BasicInfo = ({
 
   return (
     <div className='flex w-full flex-col gap-5'>
-      <div className='flex justify-center py-4'>
+      <div className='flex justify-center pt-5'>
         <StepIndicator currentStep={step} totalSteps={3} />
       </div>
       <div className='flex flex-col gap-3.5'>
@@ -182,7 +182,7 @@ export const BasicInfo = ({
         })}
       </div>
 
-      <div className='flex flex-col gap-[26px]'>
+      <div className='flex flex-col gap-3.5'>
         <FullButton
           label='다음'
           variant='primary'
