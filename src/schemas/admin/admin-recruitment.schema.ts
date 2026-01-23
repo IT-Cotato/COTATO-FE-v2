@@ -6,8 +6,6 @@ import z from 'zod';
 export const PostRecruitmentActivationRequestSchema = z.object({
   generationId: z.number(),
   isAdditionalRecruitmentActive: z.boolean(),
-  startDate: z.string(), // yyyy-MM-dd
-  endDate: z.string(), // yyyy-MM-dd
 });
 
 /**
