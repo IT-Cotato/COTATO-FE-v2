@@ -14,8 +14,8 @@ import {useShallow} from 'zustand/shallow';
 import {LoginModal} from '@/components/modal/LoginModal';
 import {useState} from 'react';
 import {ROUTES} from '@/constants/routes';
+import {useApplicationStatusQuery} from '@/hooks/queries/useApply.query';
 import {HEADER_HEIGHT} from '@/constants/ui';
-import {useApplicationStatus} from '@/hooks/queries/useApply.query';
 
 export const Header = () => {
   const router = useRouter();
@@ -32,7 +32,7 @@ export const Header = () => {
     }))
   );
 
-  const {data: applicationStatus} = useApplicationStatus(isAuthenticated);
+  const {data: applicationStatus} = useApplicationStatusQuery(isAuthenticated);
   const hasSubmitted = applicationStatus?.isSubmitted ?? false;
 
   const handleLogoutClick = () => {

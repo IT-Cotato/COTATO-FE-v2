@@ -12,8 +12,10 @@ import {useUploadFile} from '@/hooks/mutations/useApply.mutation';
 import {PART_TABS} from '@/constants/admin/admin-application-questions';
 import {PartType} from '@/schemas/admin/admin-application-questions.schema';
 import {Spinner} from '@/components/ui/Spinner';
+import {StepIndicator} from '@/components/navigation/StepIndicator';
 
 interface PartQuestionProps {
+  step: number;
   onPrev: () => void;
   onNext: () => void;
   onSave: () => void;
@@ -21,6 +23,7 @@ interface PartQuestionProps {
 }
 
 export const PartQuestion = ({
+  step,
   onPrev,
   onNext,
   onSave,
@@ -103,9 +106,13 @@ export const PartQuestion = ({
   return (
     <div className='flex w-full flex-col gap-[30px]'>
       <div className='flex flex-col gap-7.5'>
-        <h3 className='text-h3 text-neutral-600'>
+        <h3 className='text-h3 text-primary'>
           {activePartLabel} 파트에 관한 질문입니다.
         </h3>
+
+        <div className='flex justify-center py-4'>
+          <StepIndicator currentStep={step} totalSteps={3} />
+        </div>
 
         {isLoading ? (
           <div className='flex h-full w-full items-center justify-center'>
@@ -169,7 +176,7 @@ export const PartQuestion = ({
           <FullButton
             label='이전'
             variant='primary'
-            backgroundColor='neutral-300'
+            backgroundColor='neutral-600'
             labelTypo='h4'
             onClick={onPrev}
             type='button'

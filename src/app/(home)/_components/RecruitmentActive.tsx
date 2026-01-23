@@ -9,7 +9,7 @@ import {ROUTES} from '@/constants/routes';
 import {useState} from 'react';
 import {LoginModal} from '@/components/modal/LoginModal';
 import {useAuthStore} from '@/store/useAuthStore';
-import {useApplicationStatus} from '@/hooks/queries/useApply.query';
+import {useApplicationStatusQuery} from '@/hooks/queries/useApply.query';
 
 export const RecruitmentActive = () => {
   const router = useRouter();
@@ -19,7 +19,7 @@ export const RecruitmentActive = () => {
   const generation = useRecruitmentStore((state) => state.generation);
   const {isAuthenticated} = useAuthStore();
 
-  const {data: applicationStatus} = useApplicationStatus(isAuthenticated);
+  const {data: applicationStatus} = useApplicationStatusQuery(isAuthenticated);
   const hasSubmitted = applicationStatus?.isSubmitted ?? false;
 
   const handleApplyClick = () => {

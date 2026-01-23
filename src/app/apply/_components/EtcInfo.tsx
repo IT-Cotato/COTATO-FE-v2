@@ -12,12 +12,15 @@ import {FormInput} from '@/components/form/FormInput';
 import {getEtcFields} from '@/constants/form/formConfig';
 import {EtcFieldConfig} from '@/schemas/apply/apply-type';
 import {useGetEtcQuestionsQuery} from '@/hooks/queries/useApply.query';
+import {StepIndicator} from '@/components/navigation/StepIndicator';
 
 export const EtcInfo = ({
+  step,
   onPrev,
   onSave,
   showSaveSuccess,
 }: {
+  step: number;
   onPrev: () => void;
   onSave: () => void;
   showSaveSuccess: boolean;
@@ -199,6 +202,9 @@ export const EtcInfo = ({
 
   return (
     <div className='flex w-full flex-col gap-[81px]'>
+      <div className='flex justify-center py-4'>
+        <StepIndicator currentStep={step} totalSteps={3} />
+      </div>
       <div className='flex flex-col gap-10'>
         {etcFields.map((field, idx) => {
           if (field.type === 'row' && 'row' in field) {

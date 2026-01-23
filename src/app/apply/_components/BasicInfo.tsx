@@ -13,15 +13,18 @@ import {BasicInfoFieldConfig} from '@/schemas/apply/apply-type';
 import {BasicInfoFormData} from '@/schemas/apply/apply-schema';
 import {getBasicInfo} from '@/services/api/apply/apply.api';
 import {QUERY_KEYS} from '@/constants/query-keys';
+import {StepIndicator} from '@/components/navigation/StepIndicator';
 
 interface BasicInfoProps {
   onSave: () => void;
   onNext: () => void;
   readOnly?: boolean;
   showSaveSuccess: boolean;
+  step: number;
 }
 
 export const BasicInfo = ({
+  step,
   onNext,
   onSave,
   readOnly = false,
@@ -88,7 +91,7 @@ export const BasicInfo = ({
             name={name}
             control={control}
             render={({field}) => (
-              <div className='flex gap-[58px] pt-13.5'>
+              <div className='flex gap-[58px] pt-11'>
                 {options?.map((opt) => (
                   <FormRadio
                     key={opt.value}
@@ -102,7 +105,7 @@ export const BasicInfo = ({
               </div>
             )}
           />
-          <div className='min-h-[24px]'>
+          <div>
             {error && (
               <span className='text-body-l text-alert'>
                 {error.message ?? ''}
@@ -115,7 +118,7 @@ export const BasicInfo = ({
 
     if (type === 'dropdown') {
       return (
-        <div key={name} className='flex flex-1 flex-col gap-2'>
+        <div key={name} className='flex flex-1 flex-col'>
           <Controller
             name={name}
             control={control}
@@ -132,9 +135,9 @@ export const BasicInfo = ({
               />
             )}
           />
-          <div className='min-h-[24px]'>
+          <div>
             {error && (
-              <span className='text-body-l text-alert'>
+              <span className='pt-6 text-body-l text-alert'>
                 {error.message ?? ''}
               </span>
             )}
@@ -161,8 +164,11 @@ export const BasicInfo = ({
   };
 
   return (
-    <div className='flex w-full flex-col gap-[81px]'>
-      <div className='flex flex-col gap-[81px]'>
+    <div className='flex w-full flex-col gap-5'>
+      <div className='flex justify-center pt-5'>
+        <StepIndicator currentStep={step} totalSteps={3} />
+      </div>
+      <div className='flex flex-col gap-3.5'>
         {BASIC_INFO_FIELDS.map((item) => {
           const key =
             'row' in item ? item.row.map((f) => f.name).join('-') : item.name;
@@ -176,7 +182,7 @@ export const BasicInfo = ({
         })}
       </div>
 
-      <div className='flex flex-col gap-[26px]'>
+      <div className='flex flex-col gap-3.5'>
         <FullButton
           label='다음'
           variant='primary'
