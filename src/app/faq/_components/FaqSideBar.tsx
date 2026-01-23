@@ -1,7 +1,7 @@
 'use client';
 
 import type {Metadata} from 'next';
-import {FAQ_NAV_ITEMS} from '@/constants/faq/faq-sidebar';
+import {FAQ_NAV_ITEMS} from '@/constants/faq/faq';
 import clsx from 'clsx';
 import Link from 'next/link';
 import {useSearchParams} from 'next/navigation';
