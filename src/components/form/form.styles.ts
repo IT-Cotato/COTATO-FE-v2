@@ -1,6 +1,6 @@
 export const formFieldStyles = {
   wrapper: 'flex w-full flex-col gap-2.5',
-  label: 'text-h5 text-neutral-600 mb-3.5',
+  label: 'text-h5 text-neutral-600',
   field:
     'placeholder-body-l rounded-[10px] border-[1.5px] border-neutral-300 px-4 py-6 placeholder:text-neutral-300 focus:outline-none focus:ring-2 focus:ring-primary bg-white',
   error: 'border-alert',

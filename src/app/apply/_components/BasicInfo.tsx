@@ -161,8 +161,8 @@ export const BasicInfo = ({
   };
 
   return (
-    <div className='flex w-full flex-col gap-[81px]'>
-      <div className='flex flex-col gap-[81px]'>
+    <div className='flex w-full flex-col gap-5'>
+      <div className='flex flex-col gap-3.5'>
         {BASIC_INFO_FIELDS.map((item) => {
           const key =
             'row' in item ? item.row.map((f) => f.name).join('-') : item.name;

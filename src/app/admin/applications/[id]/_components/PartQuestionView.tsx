@@ -23,7 +23,7 @@ export const PartQuestionView = ({
 }: PartQuestionViewProps) => {
   return (
     <div className='flex flex-col gap-10'>
-      <label className='text-h3 text-neutral-600'>
+      <label className='text-h3 text-neutral-800'>
         {PART_TABS.find((tab) => tab.value === selectedPart)?.label ?? '-'}{' '}
         파트에 관한 질문입니다.
       </label>
@@ -42,7 +42,7 @@ export const PartQuestionView = ({
       <div className='flex flex-col gap-5'>
         {pdfFileUrl && (
           <div className='flex flex-col gap-5'>
-            <label className='text-h5 text-neutral-600'>포트폴리오</label>
+            <label className='text-h5 text-neutral-800'>포트폴리오</label>
             <FormLink readOnly value={pdfFileUrl} />
           </div>
         )}
@@ -54,7 +54,7 @@ export const PartQuestionView = ({
         <FullButton
           label='이전'
           labelTypo='h4'
-          backgroundColor='neutral-300'
+          backgroundColor='neutral-600'
           onClick={onPrev}
         />
 

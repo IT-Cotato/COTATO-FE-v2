@@ -103,7 +103,7 @@ export const PartQuestion = ({
   return (
     <div className='flex w-full flex-col gap-[30px]'>
       <div className='flex flex-col gap-7.5'>
-        <h3 className='text-h3 text-neutral-600'>
+        <h3 className='text-h3 text-primary'>
           {activePartLabel} 파트에 관한 질문입니다.
         </h3>
 
@@ -169,7 +169,7 @@ export const PartQuestion = ({
           <FullButton
             label='이전'
             variant='primary'
-            backgroundColor='neutral-300'
+            backgroundColor='neutral-600'
             labelTypo='h4'
             onClick={onPrev}
             type='button'

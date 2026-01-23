@@ -14,7 +14,6 @@ import {useRecruitmentScheduleQuery} from '@/hooks/queries/useRecruitmentSchedul
 import {Spinner} from '@/components/ui/Spinner';
 
 const STEP_TITLES = {
-  1: '기본 인적사항',
   2: '파트별 질문',
   3: '기타 질문',
 } as const;
@@ -56,8 +55,8 @@ export const ApplyFormContainer = () => {
           />
         )}
 
-        <div className='flex w-full min-w-[1100px] flex-col gap-[125px] py-20'>
-          <div className='flex flex-col gap-15'>
+        <div className='flex w-full max-w-[1100px] flex-col gap-[42.5px] py-[42.5px]'>
+          <div className='flex flex-col gap-3.5'>
             <h1 className='text-h1 text-neutral-800'>
               <span aria-hidden='true'>🥔</span>
               &nbsp;코테이토 {generation}기 지원서&nbsp;
