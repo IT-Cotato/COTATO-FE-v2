@@ -5,7 +5,7 @@ import {useQuery} from '@tanstack/react-query';
 
 export const useFaqQuery = (type: faqParametersType) => {
   return useQuery({
-    queryKey: [QUERY_KEYS.FAQ(type)],
+    queryKey: QUERY_KEYS.FAQ(type),
     queryFn: () => getFaq(type),
   });
 };
