@@ -17,10 +17,14 @@ interface FormFileProps extends InputHTMLAttributes<HTMLInputElement> {
   error?: string;
   placeholder?: string;
   value?: string[];
+  onFilesChange?: (files: File[]) => void;
 }
 
 export const FormFile = forwardRef<HTMLInputElement, FormFileProps>(
-  function FormFile({label, className, placeholder, value, ...props}, ref) {
+  function FormFile(
+    {label, className, placeholder, value, onFilesChange, ...props},
+    ref
+  ) {
     const [files, setFiles] = useState<File[]>([]);
 
     const fileUrls = useMemo(() => {
@@ -38,13 +42,17 @@ export const FormFile = forwardRef<HTMLInputElement, FormFileProps>(
       if (!e.target.files || e.target.files.length === 0) return;
 
       const newFiles = Array.from(e.target.files);
-      setFiles((prev) => [...prev, ...newFiles]);
+      const updatedFiles = [...files, ...newFiles];
+      setFiles(updatedFiles);
+      onFilesChange?.(updatedFiles);
       e.target.value = '';
     };
 
     const handleDelete = (index: number) => {
       if (props.readOnly) return;
-      setFiles((prev) => prev.filter((_, i) => i !== index));
+      const updatedFiles = files.filter((_, i) => i !== index);
+      setFiles(updatedFiles);
+      onFilesChange?.(updatedFiles);
     };
 
     /**
@@ -56,7 +64,11 @@ export const FormFile = forwardRef<HTMLInputElement, FormFileProps>(
     const filesToRender =
       props.readOnly && value
         ? value.map((name) => ({name, url: name}))
-        : files.map((f, i) => ({name: f.name, url: fileUrls[i]}));
+        : files.length > 0
+          ? files.map((f, i) => ({name: f.name, url: fileUrls[i]}))
+          : value
+            ? value.map((name) => ({name, url: ''}))
+            : [];
 
     return (
       <div className={clsx(formFieldStyles.wrapper, className)}>

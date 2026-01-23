@@ -1,5 +1,7 @@
 'use client';
 
+import {useEffect, useRef} from 'react';
+import {useSearchParams} from 'next/navigation';
 import {useFormContext, Controller} from 'react-hook-form';
 import clsx from 'clsx';
 import {FormTextarea} from '@/components/form/FormTextarea';
@@ -7,25 +9,84 @@ import {FormDropdown} from '@/components/form/FormDropdown';
 import {FullButton} from '@/components/button/FullButton';
 import {FormRadio} from '@/components/form/FormRadio';
 import {FormInput} from '@/components/form/FormInput';
-import {getEtcFields, EtcFieldDates} from '@/constants/form/formConfig';
+import {getEtcFields} from '@/constants/form/formConfig';
 import {EtcFieldConfig} from '@/schemas/apply/apply-type';
+import {useGetEtcQuestionsQuery} from '@/hooks/queries/useApply.query';
 
 export const EtcInfo = ({
   onPrev,
   onSave,
-  dates,
 }: {
   onPrev: () => void;
   onSave: () => void;
-  dates?: EtcFieldDates;
 }) => {
-  const etcFields = getEtcFields(dates);
+  const searchParams = useSearchParams();
+  const applicationId = searchParams.get('id')
+    ? Number(searchParams.get('id'))
+    : null;
+
   const {
     register,
     control,
     watch,
+    setValue,
     formState: {errors},
   } = useFormContext();
+
+  const hasInitializedRef = useRef(false);
+
+  const {data: etcQuestions} = useGetEtcQuestionsQuery(applicationId);
+
+  const etcDates = etcQuestions
+    ? {
+        interviewStartDate: etcQuestions.interviewStartDate,
+        interviewEndDate: etcQuestions.interviewEndDate,
+        otDate: etcQuestions.otDate,
+      }
+    : undefined;
+
+  const etcFields = getEtcFields(etcDates);
+
+  useEffect(() => {
+    if (etcQuestions && !hasInitializedRef.current) {
+      if (etcQuestions.discoveryPath.selectedAnswer) {
+        setValue('discovery', etcQuestions.discoveryPath.selectedAnswer);
+      }
+
+      if (etcQuestions.parallelActivities) {
+        setValue('otherActivity', etcQuestions.parallelActivities);
+      }
+
+      if (etcQuestions.unavailableInterviewTimes) {
+        const times = etcQuestions.unavailableInterviewTimes.split(', ');
+        times.forEach((time) => {
+          if (time.startsWith(etcQuestions.interviewStartDate)) {
+            const timeOnly = time
+              .replace(etcQuestions.interviewStartDate, '')
+              .trim();
+            setValue('interviewStartDate', timeOnly);
+          } else if (time.startsWith(etcQuestions.interviewEndDate)) {
+            const timeOnly = time
+              .replace(etcQuestions.interviewEndDate, '')
+              .trim();
+            setValue('interviewEndDate', timeOnly);
+          }
+        });
+      }
+
+      if (etcQuestions.sessionAttendance) {
+        setValue('sessionAgree', 'agree');
+      }
+      if (etcQuestions.mandatoryEvents) {
+        setValue('otAgree', 'agree');
+      }
+      if (etcQuestions.privacyPolicy) {
+        setValue('privacyAgree', 'agree');
+      }
+
+      hasInitializedRef.current = true;
+    }
+  }, [etcQuestions, setValue]);
 
   const renderField = (field: EtcFieldConfig) => {
     const {
