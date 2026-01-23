@@ -42,10 +42,10 @@ export const GenerationDropdown = ({
           onClick={handleToggle}
           disabled={disabled}
           className={clsx(
-            'shadow-default flex items-center gap-1.5 rounded-[30px] px-3.75 py-2 text-body-m',
+            'shadow-default flex items-center gap-2 rounded-[30px] px-5 py-2 text-body-l',
             disabled
               ? 'cursor-not-allowed bg-neutral-100 text-neutral-400'
-              : 'bg-white text-neutral-800'
+              : 'bg-white text-neutral-700'
           )}
           aria-expanded={isOpen}
           aria-haspopup='listbox'>
