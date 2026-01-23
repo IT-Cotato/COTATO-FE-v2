@@ -1,44 +1,27 @@
 'use client';
 
-import {useQuery, useQueryClient} from '@tanstack/react-query';
+import {useQuery} from '@tanstack/react-query';
 import {
   getEtcQuestions,
   getPartQuestions,
   startApplication,
 } from '@/services/api/apply/apply.api';
 import {QUERY_KEYS} from '@/constants/query-keys';
-import {StartApplicationResponse} from '@/schemas/apply/apply-schema';
-import {useEffect} from 'react';
 
 /**
  * 지원서 상태 조회
- * - 캐시에 데이터가 있으면 재사용
- * - 없으면 API 호출 후 캐시에 저장
+ * - `useQuery`를 사용하여 지원서 상태를 조회하고 캐싱합니다.
+ * - 로그인한 사용자(`enabled: true`)에 대해서만 실행됩니다.
+ * - POST 요청이므로 실패 시 재시도는 비활성화합니다.
  */
-export const useApplicationStatus = (enabled: boolean = true) => {
-  const queryClient = useQueryClient();
-
-  // 캐시에서 데이터 읽기
-  const cachedData = queryClient.getQueryData<StartApplicationResponse>(
-    QUERY_KEYS.APPLY.STATUS
-  );
-
-  useEffect(() => {
-    if (!enabled || cachedData) return;
-
-    startApplication()
-      .then((data) => {
-        queryClient.setQueryData(QUERY_KEYS.APPLY.STATUS, data);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }, [enabled, cachedData, queryClient]);
-
-  return {
-    data: cachedData,
-    isLoading: enabled && !cachedData,
-  };
+export const useApplicationStatusQuery = (enabled: boolean = true) => {
+  return useQuery({
+    queryKey: QUERY_KEYS.APPLY.STATUS,
+    queryFn: startApplication,
+    enabled,
+    retry: false, // POST 요청이므로 실패 시 재시도 방지
+    staleTime: 1000 * 60 * 5, // 5분간 fresh 상태 유지
+  });
 };
 
 /**
