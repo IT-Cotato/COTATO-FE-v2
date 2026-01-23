@@ -15,6 +15,7 @@ export const FaqAccordion = ({item}: FaqAccordionProps) => {
 
   return (
     <button
+      type='button'
       onClick={() => setIsOpen(!isOpen)}
       className={clsx(
         'flex w-full cursor-pointer flex-col self-stretch rounded-[10px] px-5.5 py-2.5 shadow-[0_6px_15px_0_rgba(0,0,0,0.10)] transition-colors duration-300',
