@@ -119,7 +119,7 @@ export const getEtcFields = (dates?: EtcFieldDates): EtcFormItem[] => {
         {value: 'INSTAGRAM', label: '인스타그램'},
         {value: 'EVERYTIME', label: '에브리타임'},
         {value: 'CAMPUSPICK', label: '캠퍼스픽'},
-        {value: 'JIKHANG', label: '직행'},
+        {value: 'JIKHAENG', label: '직행'},
         {value: 'NAVER_CAFE', label: '네이버 카페'},
         {value: 'OTHER_SNS', label: '그 외 SNS'},
         {value: 'FRIEND_REFERRAL', label: '지인 소개'},
