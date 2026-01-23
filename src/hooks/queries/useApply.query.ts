@@ -26,9 +26,13 @@ export const useApplicationStatus = (enabled: boolean = true) => {
   useEffect(() => {
     if (!enabled || cachedData) return;
 
-    startApplication().then((data) => {
-      queryClient.setQueryData(QUERY_KEYS.APPLY.STATUS, data);
-    });
+    startApplication()
+      .then((data) => {
+        queryClient.setQueryData(QUERY_KEYS.APPLY.STATUS, data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }, [enabled, cachedData, queryClient]);
 
   return {
