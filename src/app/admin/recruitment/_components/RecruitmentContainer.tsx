@@ -22,7 +22,7 @@ export const RecruitmentContainer = () => {
   const isValidGeneration = Number.isFinite(generationId) && generationId > 0;
 
   return (
-    <div className='flex min-w-275 flex-col items-center justify-center gap-6 px-11.25 pt-[69px]'>
+    <div className='flex min-w-275 flex-col items-center justify-center gap-[14px] px-11.25 pt-[69px]'>
       <AddGeneration />
       <ActiveRecruitment />
       {isValidGeneration && <ManageMail generationId={generationId} />}

@@ -72,7 +72,7 @@ export const AddGenerationContainer = () => {
         <p className='shrink-0 text-body-l font-medium text-neutral-600'>
           기수 추가하기
         </p>
-        <div className='scrollbar-hide flex items-center gap-2.5 overflow-x-auto pb-1'>
+        <div className='scrollbar-hide flex items-center gap-2.5 overflow-x-auto'>
           <div
             onClick={() => !isRecruiting && setIsModalOpen(true)}
             className={clsx(
