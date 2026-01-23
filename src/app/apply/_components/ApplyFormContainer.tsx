@@ -1,7 +1,6 @@
 'use client';
 
 import {FormProvider} from 'react-hook-form';
-import {StepIndicator} from '@/components/navigation/StepIndicator';
 import {BasicInfo} from '@/app/apply/_components/BasicInfo';
 import {PartQuestion} from '@/app/apply/_components/PartQuestion';
 import {EtcInfo} from '@/app/apply/_components/EtcInfo';
@@ -77,14 +76,11 @@ export const ApplyFormContainer = () => {
           </h2>
 
           <div className='flex w-full flex-col gap-[20px]'>
-            <div className='flex justify-center'>
-              <StepIndicator currentStep={step} totalSteps={3} />
-            </div>
-
             <FormProvider {...methods}>
               <form onSubmit={handleFinalSubmit} key={step}>
                 {step === 1 && (
                   <BasicInfo
+                    step={step}
                     onNext={handleNext}
                     onSave={handleSave}
                     showSaveSuccess={showSaveSuccess}
@@ -92,6 +88,7 @@ export const ApplyFormContainer = () => {
                 )}
                 {step === 2 && (
                   <PartQuestion
+                    step={step}
                     onPrev={handlePrev}
                     onNext={handleNext}
                     onSave={handleSave}
@@ -100,6 +97,7 @@ export const ApplyFormContainer = () => {
                 )}
                 {step === 3 && (
                   <EtcInfo
+                    step={step}
                     onPrev={handlePrev}
                     onSave={handleSave}
                     showSaveSuccess={showSaveSuccess}

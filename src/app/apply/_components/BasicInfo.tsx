@@ -13,15 +13,18 @@ import {BasicInfoFieldConfig} from '@/schemas/apply/apply-type';
 import {BasicInfoFormData} from '@/schemas/apply/apply-schema';
 import {getBasicInfo} from '@/services/api/apply/apply.api';
 import {QUERY_KEYS} from '@/constants/query-keys';
+import {StepIndicator} from '@/components/navigation/StepIndicator';
 
 interface BasicInfoProps {
   onSave: () => void;
   onNext: () => void;
   readOnly?: boolean;
   showSaveSuccess: boolean;
+  step: number;
 }
 
 export const BasicInfo = ({
+  step,
   onNext,
   onSave,
   readOnly = false,
@@ -162,6 +165,9 @@ export const BasicInfo = ({
 
   return (
     <div className='flex w-full flex-col gap-5'>
+      <div className='flex justify-center py-4'>
+        <StepIndicator currentStep={step} totalSteps={3} />
+      </div>
       <div className='flex flex-col gap-3.5'>
         {BASIC_INFO_FIELDS.map((item) => {
           const key =
