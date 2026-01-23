@@ -17,9 +17,15 @@ interface PartQuestionProps {
   onPrev: () => void;
   onNext: () => void;
   onSave: () => void;
+  showSaveSuccess: boolean;
 }
 
-export const PartQuestion = ({onPrev, onNext, onSave}: PartQuestionProps) => {
+export const PartQuestion = ({
+  onPrev,
+  onNext,
+  onSave,
+  showSaveSuccess,
+}: PartQuestionProps) => {
   const searchParams = useSearchParams();
   const {
     register,
@@ -44,6 +50,15 @@ export const PartQuestion = ({onPrev, onNext, onSave}: PartQuestionProps) => {
     useGetPartQuestionsQuery(applicationId);
 
   const {mutate: uploadFile} = useUploadFile();
+
+  const isAllAnswersFilled = (() => {
+    if (!questionsData?.questionsWithAnswers) return false;
+    const textQuestions = questionsData.questionsWithAnswers.slice(0, -1);
+    return textQuestions.every((q) => {
+      const answer = watch(`ans_${q.questionId}`);
+      return answer && answer.trim().length > 0;
+    });
+  })();
 
   const hasInitializedRef = useRef(false);
 
@@ -165,6 +180,7 @@ export const PartQuestion = ({onPrev, onNext, onSave}: PartQuestionProps) => {
             labelTypo='h4'
             type='button'
             onClick={onNext}
+            disabled={!isAllAnswersFilled}
           />
         </div>
 
@@ -176,6 +192,9 @@ export const PartQuestion = ({onPrev, onNext, onSave}: PartQuestionProps) => {
           labelTypo='h4'
           onClick={onSave}
         />
+        {showSaveSuccess && (
+          <p className='text-center text-primary'>저장이 완료되었습니다</p>
+        )}
       </div>
     </div>
   );
