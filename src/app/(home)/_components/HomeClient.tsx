@@ -35,7 +35,7 @@ export const HomeClient = () => {
 
   if (isLoading) {
     return (
-      <div className="flex h-screen items-center justify-center">
+      <div className='flex h-screen items-center justify-center'>
         <Spinner />
       </div>
     );
