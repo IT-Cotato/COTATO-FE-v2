@@ -12,9 +12,9 @@ import {useLogout} from '@/hooks/mutations/useAuth';
 import {useAuthStore} from '@/store/useAuthStore';
 import {useShallow} from 'zustand/shallow';
 import {LoginModal} from '@/components/modal/LoginModal';
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import {ROUTES} from '@/constants/routes';
-import {useGetApplicationStatusQuery} from '@/hooks/queries/useApply.query';
+import {useStartApplicationMutation} from '@/hooks/mutations/useApply.mutation';
 
 export const Header = () => {
   const router = useRouter();
@@ -22,6 +22,7 @@ export const Header = () => {
   const {mutate} = useLogout();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [hasSubmitted, setHasSubmitted] = useState(false);
 
   const {user, isInitialized, isAuthenticated} = useAuthStore(
     useShallow((state) => ({
@@ -31,9 +32,17 @@ export const Header = () => {
     }))
   );
 
-  const {data: applicationStatus} =
-    useGetApplicationStatusQuery(isAuthenticated);
-  const hasSubmitted = applicationStatus?.isSubmitted ?? false;
+  const {mutate: checkApplicationStatus} = useStartApplicationMutation();
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      checkApplicationStatus(undefined, {
+        onSuccess: (data) => {
+          setHasSubmitted(data.isSubmitted);
+        },
+      });
+    }
+  }, [isAuthenticated, checkApplicationStatus]);
 
   const handleLogoutClick = () => {
     mutate();

@@ -6,6 +6,7 @@ import {
   saveBasicInfo,
   saveEtcQuestions,
   savePartQuestions,
+  startApplication,
   submitApplication,
   getUploadUrl,
   uploadFileToS3,
@@ -16,6 +17,22 @@ import {
   PartQuestionRequest,
 } from '@/schemas/apply/apply-schema';
 import {QUERY_KEYS} from '@/constants/query-keys';
+
+/**
+ * 지원서 시작 (새 지원서 생성)
+ */
+export const useStartApplicationMutation = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: () => startApplication(),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: QUERY_KEYS.APPLY.STATUS,
+      });
+    },
+  });
+};
 
 /**
  * 기본 인적사항 저장
