@@ -30,6 +30,7 @@ export const ApplyFormContainer = () => {
     isConfirmModalOpen,
     closeConfirmModal,
     handleConfirmSubmit,
+    showSaveSuccess,
   } = useApplyFormController();
 
   const {data: recruitmentStatus, isLoading} = useRecruitmentStatusQuery();
@@ -55,7 +56,7 @@ export const ApplyFormContainer = () => {
           />
         )}
 
-        <div className='flex w-full max-w-[1196px] flex-col gap-[125px] py-20'>
+        <div className='flex w-full min-w-[1100px] flex-col gap-[125px] py-20'>
           <div className='flex flex-col gap-15'>
             <h1 className='text-h1 text-neutral-800'>
               <span aria-hidden='true'>🥔</span>
@@ -76,7 +77,7 @@ export const ApplyFormContainer = () => {
             {STEP_TITLES[step as keyof typeof STEP_TITLES]}
           </h2>
 
-          <div className='flex w-full flex-col gap-[81px]'>
+          <div className='flex w-full flex-col gap-[20px]'>
             <div className='flex justify-center'>
               <StepIndicator currentStep={step} totalSteps={3} />
             </div>
@@ -84,17 +85,26 @@ export const ApplyFormContainer = () => {
             <FormProvider {...methods}>
               <form onSubmit={handleFinalSubmit} key={step}>
                 {step === 1 && (
-                  <BasicInfo onNext={handleNext} onSave={handleSave} />
+                  <BasicInfo
+                    onNext={handleNext}
+                    onSave={handleSave}
+                    showSaveSuccess={showSaveSuccess}
+                  />
                 )}
                 {step === 2 && (
                   <PartQuestion
                     onPrev={handlePrev}
                     onNext={handleNext}
                     onSave={handleSave}
+                    showSaveSuccess={showSaveSuccess}
                   />
                 )}
                 {step === 3 && (
-                  <EtcInfo onPrev={handlePrev} onSave={handleSave} />
+                  <EtcInfo
+                    onPrev={handlePrev}
+                    onSave={handleSave}
+                    showSaveSuccess={showSaveSuccess}
+                  />
                 )}
               </form>
             </FormProvider>

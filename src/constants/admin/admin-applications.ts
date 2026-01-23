@@ -110,7 +110,6 @@ export const BASIC_INFO_LABELS = {
 export const PART_QUESTION_LABELS = {
   fileAccept:
     ' 추가로 제출할 포트폴리오(깃허브, 블로그, 노션, 비핸스 등) 링크를 첨부해주세요. 업로드하실 포트폴리오 양식은 꼭 PDF로 변경 후 제출해주세요!',
-  // TODO: 파트 질문
 };
 
 export const ETC_QUESTION_LABELS = {

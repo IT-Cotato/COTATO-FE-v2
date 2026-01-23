@@ -14,7 +14,7 @@ import {useShallow} from 'zustand/shallow';
 import {LoginModal} from '@/components/modal/LoginModal';
 import {useState} from 'react';
 import {ROUTES} from '@/constants/routes';
-import {useSubmissionStore} from '@/store/useSubmissionStore';
+import {useApplicationStatus} from '@/hooks/queries/useApply.query';
 
 export const Header = () => {
   const router = useRouter();
@@ -23,12 +23,16 @@ export const Header = () => {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const {user, isInitialized} = useAuthStore(
+  const {user, isInitialized, isAuthenticated} = useAuthStore(
     useShallow((state) => ({
       user: state.user,
       isInitialized: state.isInitialized,
+      isAuthenticated: state.isAuthenticated,
     }))
   );
+
+  const {data: applicationStatus} = useApplicationStatus(isAuthenticated);
+  const hasSubmitted = applicationStatus?.isSubmitted ?? false;
 
   const handleLogoutClick = () => {
     mutate();
@@ -36,7 +40,6 @@ export const Header = () => {
   };
 
   const menuItems = [...HEADER_ITEMS];
-  const hasSubmitted = useSubmissionStore((state) => state.hasSubmitted);
 
   if (user?.role === 'STAFF') {
     const applyIndex = menuItems.findIndex((item) => item.label === '지원하기');

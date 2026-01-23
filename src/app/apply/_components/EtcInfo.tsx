@@ -16,9 +16,11 @@ import {useGetEtcQuestionsQuery} from '@/hooks/queries/useApply.query';
 export const EtcInfo = ({
   onPrev,
   onSave,
+  showSaveSuccess,
 }: {
   onPrev: () => void;
   onSave: () => void;
+  showSaveSuccess: boolean;
 }) => {
   const searchParams = useSearchParams();
   const applicationId = searchParams.get('id')
@@ -32,6 +34,14 @@ export const EtcInfo = ({
     setValue,
     formState: {errors},
   } = useFormContext();
+
+  const discovery = watch('discovery');
+  const sessionAgree = watch('sessionAgree');
+  const otAgree = watch('otAgree');
+  const privacyAgree = watch('privacyAgree');
+
+  const isAllRequiredFilled =
+    !!discovery && !!sessionAgree && !!otAgree && !!privacyAgree;
 
   const hasInitializedRef = useRef(false);
 
@@ -156,16 +166,25 @@ export const EtcInfo = ({
             {label && (
               <label className='text-h5 text-neutral-600'>{label}</label>
             )}
-            <div className={clsx('flex w-full gap-[58px]', className)}>
-              {options?.map((opt) => (
-                <FormRadio
-                  key={opt.value}
-                  label={opt.label}
-                  value={opt.value}
-                  {...(name && register(name))}
-                />
-              ))}
-            </div>
+            {name && (
+              <Controller
+                name={name}
+                control={control}
+                render={({field: controllerField}) => (
+                  <div className={clsx('flex w-full gap-[58px]', className)}>
+                    {options?.map((opt) => (
+                      <FormRadio
+                        key={opt.value}
+                        label={opt.label}
+                        value={opt.value}
+                        checked={controllerField.value === opt.value}
+                        onChange={() => controllerField.onChange(opt.value)}
+                      />
+                    ))}
+                  </div>
+                )}
+              />
+            )}
             {error && (
               <span className='text-body-l text-alert'>
                 {error.message as string}
@@ -211,6 +230,7 @@ export const EtcInfo = ({
             variant='primary'
             labelTypo='h4'
             type='submit'
+            disabled={!isAllRequiredFilled}
           />
         </div>
         <FullButton
@@ -221,6 +241,9 @@ export const EtcInfo = ({
           type='button'
           onClick={onSave}
         />
+        {showSaveSuccess && (
+          <p className='text-center text-primary'>저장이 완료되었습니다</p>
+        )}
       </div>
     </div>
   );
