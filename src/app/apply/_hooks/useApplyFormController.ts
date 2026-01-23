@@ -1,4 +1,4 @@
-import {useState, useEffect, useRef} from 'react';
+import {useState, useEffect} from 'react';
 import {useForm, UseFormReturn} from 'react-hook-form';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {
@@ -8,13 +8,10 @@ import {
   PartQuestionRequest,
   EtcQuestionRequest,
 } from '@/schemas/apply/apply-schema';
-import {BASIC_INFO_FIELDS, EtcFieldDates} from '@/constants/form/formConfig';
+import {BASIC_INFO_FIELDS} from '@/constants/form/formConfig';
 import {useRouter, useSearchParams} from 'next/navigation';
 import {useRecruitmentStore} from '@/store/useRecruitmentStore';
 import {useSubmissionStore} from '@/store/useSubmissionStore';
-import {useQuery} from '@tanstack/react-query';
-import {getBasicInfo} from '@/services/api/apply/apply.api';
-import {QUERY_KEYS} from '@/constants/query-keys';
 import {useGetEtcQuestionsQuery} from '@/hooks/queries/useApply.query';
 import {
   useSaveBasicInfo,
@@ -34,7 +31,6 @@ interface UseApplyFormControllerReturn {
   openConfirmModal: () => void;
   closeConfirmModal: () => void;
   handleConfirmSubmit: () => void;
-  etcDates?: EtcFieldDates;
 }
 
 export const useApplyFormController = (): UseApplyFormControllerReturn => {
@@ -57,15 +53,7 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
     mode: 'onChange',
     resolver: zodResolver(BasicInfoFormSchema),
   });
-  const {trigger, handleSubmit, getValues, reset} = methods;
-
-  const hasInitializedRef = useRef(false);
-
-  const {data: basicInfo} = useQuery({
-    queryKey: QUERY_KEYS.APPLY.BASIC_INFO(Number(applicationId)),
-    queryFn: () => getBasicInfo(Number(applicationId)),
-    enabled: !!applicationId && urlStep === 1,
-  });
+  const {trigger, handleSubmit, getValues} = methods;
 
   const {data: etcQuestions} = useGetEtcQuestionsQuery(
     applicationId ? Number(applicationId) : null
@@ -79,31 +67,6 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
   const {mutateAsync: submitApplication} = useSubmitApplication(
     Number(applicationId)
   );
-
-  useEffect(() => {
-    if (basicInfo && !hasInitializedRef.current) {
-      const transformedData = {
-        name: basicInfo.name,
-        gender: basicInfo.gender,
-        contact: basicInfo.phoneNumber,
-        birthDate: basicInfo.birthDate,
-        school: basicInfo.university,
-        isCollegeStudent: (basicInfo.isEnrolled
-          ? 'enrolled'
-          : 'other') as BasicInfoFormData['isCollegeStudent'],
-        department: basicInfo.major,
-        completedSemesters: String(
-          basicInfo.completedSemesters
-        ) as BasicInfoFormData['completedSemesters'],
-        isPrevActivity: (basicInfo.isPrevActivity
-          ? 'yes'
-          : 'no') as BasicInfoFormData['isPrevActivity'],
-        part: basicInfo.applicationPartType as BasicInfoFormData['part'],
-      };
-      reset(transformedData);
-      hasInitializedRef.current = true;
-    }
-  }, [basicInfo, reset]);
 
   const openConfirmModal = () => setIsConfirmModalOpen(true);
   const closeConfirmModal = () => setIsConfirmModalOpen(false);
@@ -247,14 +210,6 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
     }
   });
 
-  const etcDates: EtcFieldDates | undefined = etcQuestions
-    ? {
-        interviewStartDate: etcQuestions.interviewStartDate,
-        interviewEndDate: etcQuestions.interviewEndDate,
-        otDate: etcQuestions.otDate,
-      }
-    : undefined;
-
   return {
     step,
     methods,
@@ -266,6 +221,5 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
     openConfirmModal,
     closeConfirmModal,
     handleConfirmSubmit,
-    etcDates,
   };
 };
