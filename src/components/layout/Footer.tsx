@@ -1,9 +1,12 @@
 import {FooterContact} from '@/components/layout/FooterContact';
 import {FooterInfo} from '@/components/layout/FooterInfo';
+import {FOOTER_HEIGHT} from '@/constants/ui';
 
 export const Footer = () => {
   return (
-    <footer className='flex h-[223px] flex-none items-center justify-center bg-black px-[62px] py-[47px] text-white'>
+    <footer
+      style={{height: `${FOOTER_HEIGHT}px`}}
+      className='flex flex-none items-center justify-center bg-black px-[62px] py-[47px] text-white'>
       <div className='flex w-full items-end justify-between'>
         <FooterInfo />
         <FooterContact />
