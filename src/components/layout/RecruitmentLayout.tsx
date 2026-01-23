@@ -1,59 +1,107 @@
-import Image from 'next/image';
-import CountdownTimer from '@/app/(home)/_components/CountdownTimer';
+'use client';
+
+import Image, {StaticImageData} from 'next/image';
+import CountdownTimer from '@/components/layout/CountdownTimer';
+import clsx from 'clsx';
+import {HEADER_HEIGHT} from '@/constants/ui';
+import {NotifyInput} from '@/components/layout/NotifyInput';
+import {Button} from '@/components/button/Button';
+import {useRecruitmentStatusQuery} from '@/hooks/queries/useRecruitmentStatus.query';
+
+type bgColorKey = 'bg-transparent' | 'bg-neutral-50' | 'bg-black';
 
 interface RecruitmentLayoutProps {
   statusText: string;
   descriptionText: string;
-  topAction?: React.ReactNode;
-  bottomAction?: React.ReactNode;
-  isDark?: boolean;
-  bgImage: string;
+  activateNotifyInput?: boolean;
+  activateApplyButton?: boolean;
+  bgColor?: bgColorKey;
+  bgImage?: StaticImageData;
+  bottomBannerBgImage?: StaticImageData;
 }
 
 export default function RecruitmentLayout({
   statusText,
   descriptionText,
-  topAction,
-  bottomAction,
-  isDark = false,
+  activateNotifyInput = false,
+  activateApplyButton = false,
+  bgColor = 'bg-transparent',
   bgImage,
+  bottomBannerBgImage,
 }: RecruitmentLayoutProps) {
+  const {data: recruitmentStatus} = useRecruitmentStatusQuery();
+  const isRecruiting = recruitmentStatus?.data?.isActive ?? false;
+
   return (
     <div
-      className={`relative flex min-h-[calc(100vh-80px)] flex-col items-center ${
-        isDark ? 'bg-black text-white' : 'bg-neutral-50 text-black'
-      } overflow-hidden`}>
-      <div className='z-10 flex w-full flex-1 flex-col items-center justify-center gap-[4vh] pt-10 pb-[260px] lg:gap-7.5'>
-        {/* 타이틀 영역 */}
+      className={clsx('relative flex w-full min-w-360 justify-center', bgColor)}
+      style={{height: `calc(100vh - ${HEADER_HEIGHT}px)`}}>
+      {bgImage && (
+        <Image
+          src={bgImage}
+          alt='RecruitmentLayout Background Image'
+          fill={true}
+          aria-hidden={true}
+          draggable={false}
+          className='object-cover object-center'
+        />
+      )}
+
+      <div
+        className={clsx(
+          'relative flex w-360 flex-col items-center justify-center',
+          bottomBannerBgImage && 'mb-59.75'
+        )}>
         <h1
-          className='bg-clip-text text-center text-h1 text-transparent'
+          className='mb-7.5 bg-clip-text text-center text-h1 text-transparent'
           style={{backgroundImage: 'var(--branding-gradient)'}}>
           COde Together, Arrive TOgether
         </h1>
-        {/* 상태 설명 텍스트 */}
-        <div className='flex flex-col gap-[5px] text-center'>
-          <p
-            className={`text-body-l font-semibold ${!isDark ? 'text-primary' : 'text-white'}`}>
-            {statusText}
-          </p>
-          <p className='text-center text-body-l whitespace-pre-line'>
-            {descriptionText}
-          </p>
+
+        <p
+          className={`mb-1.25 text-center text-body-l font-semibold text-primary`}>
+          {statusText}
+        </p>
+
+        <p className='mb-9 text-center text-body-l whitespace-pre-line text-neutral-300'>
+          {descriptionText}
+        </p>
+
+        {activateNotifyInput && (
+          <div className='mb-15.25'>
+            <NotifyInput />
+          </div>
+        )}
+
+        <div className='mb-11.5'>
+          <CountdownTimer hightlightUnits={isRecruiting} />
         </div>
-        {topAction && <div className='w-full max-w-[611px]'>{topAction}</div>}
-        <CountdownTimer isDark={isDark} />
-        {bottomAction && <div className='self-stretch'>{bottomAction}</div>}
+
+        {activateApplyButton && (
+          <div className='mb-6.75'>
+            <Button
+              label='지원하러 가기'
+              width={240}
+              height={48}
+              onClick={() => (window.location.href = '/apply')}
+            />
+          </div>
+        )}
       </div>
-      {/* 하단 배경 이미지 (props로 받은 bgImage 사용) */}
-      <div className='absolute bottom-0 left-0 h-[239px] w-full'>
-        <Image
-          src={bgImage}
-          alt=''
-          fill
-          priority
-          className='object-cover object-bottom'
-        />
-      </div>
+
+      {/* 하단 배경 이미지 (props로 받은 bottomBannerBgImage 사용) */}
+      {bottomBannerBgImage && (
+        <div className='absolute bottom-0 h-59.75 w-full'>
+          <Image
+            src={bottomBannerBgImage}
+            alt='RecruitmentLayout Bottom Banner Image'
+            aria-hidden={true}
+            draggable={false}
+            fill
+            className='object-cover object-bottom'
+          />
+        </div>
+      )}
     </div>
   );
 }
