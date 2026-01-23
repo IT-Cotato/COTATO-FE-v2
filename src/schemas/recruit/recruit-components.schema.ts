@@ -40,7 +40,6 @@ export const ActivityCardSchema = z.object({
   short: ActivityCategorySchema,
   name: z.string(),
   date: z.string(),
-  imageUrl: z.url(),
 });
 
 export type ActivityCardType = z.infer<typeof ActivityCardSchema>;
