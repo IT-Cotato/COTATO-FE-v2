@@ -2,7 +2,6 @@
 
 import {useState} from 'react';
 import {Button} from '@/components/button/Button';
-import {PeriodField} from '@/app/admin/recruitment/_components/active-recruitment/PeriodField';
 import {useRecruitmentStore} from '@/store/useRecruitmentStore';
 import {useGenerationStore} from '@/store/useGenerationStore';
 import {GenerationField} from '@/app/admin/recruitment/_components/active-recruitment/GenerationField';
@@ -22,8 +21,8 @@ export const ActiveRecruitmentForm = () => {
 
   const {generations} = useGenerationStore();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [startDate, setStartDate] = useState<Date | null>(new Date());
-  const [endDate, setEndDate] = useState<Date | null>(new Date());
+  const [startDate] = useState<Date | null>(new Date());
+  const [endDate] = useState<Date | null>(new Date());
   const {activate, deactivate, isLoading} = useAdminRecruitmentMutation();
 
   const handleConfirm = () => {
@@ -92,13 +91,6 @@ export const ActiveRecruitmentForm = () => {
           <GenerationField
             value={generation}
             onChange={setGeneration}
-            disabled={isRecruiting}
-          />
-          <PeriodField
-            startDate={startDate}
-            setStartDate={setStartDate}
-            endDate={endDate}
-            setEndDate={setEndDate}
             disabled={isRecruiting}
           />
           <div className='flex shrink-0 items-center gap-5 whitespace-nowrap select-none'>
