@@ -41,7 +41,7 @@ export default function RecruitmentLayout({
       {bgImage && (
         <Image
           src={bgImage}
-          alt='RecruitmentLayout Background Image'
+          alt=''
           fill={true}
           aria-hidden={true}
           draggable={false}
@@ -96,7 +96,7 @@ export default function RecruitmentLayout({
         <div className='absolute bottom-0 h-59.75 w-full'>
           <Image
             src={bottomBannerBgImage}
-            alt='RecruitmentLayout Bottom Banner Image'
+            alt=''
             aria-hidden={true}
             draggable={false}
             fill
