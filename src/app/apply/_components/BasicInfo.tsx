@@ -1,6 +1,9 @@
 'use client';
 
+import {useEffect, useRef} from 'react';
+import {useSearchParams} from 'next/navigation';
 import {useFormContext, Controller} from 'react-hook-form';
+import {useQuery} from '@tanstack/react-query';
 import {FormDropdown} from '@/components/form/FormDropdown';
 import {FormInput} from '@/components/form/FormInput';
 import {FormRadio} from '@/components/form/FormRadio';
@@ -8,6 +11,8 @@ import {FullButton} from '@/components/button/FullButton';
 import {BASIC_INFO_FIELDS} from '@/constants/form/formConfig';
 import {BasicInfoFieldConfig} from '@/schemas/apply/apply-type';
 import {BasicInfoFormData} from '@/schemas/apply/apply-schema';
+import {getBasicInfo} from '@/services/api/apply/apply.api';
+import {QUERY_KEYS} from '@/constants/query-keys';
 
 interface BasicInfoProps {
   onSave: () => void;
@@ -20,11 +25,48 @@ export const BasicInfo = ({
   onSave,
   readOnly = false,
 }: BasicInfoProps) => {
+  const searchParams = useSearchParams();
+  const applicationId = searchParams.get('id');
+
   const {
     register,
     control,
+    reset,
     formState: {errors},
   } = useFormContext<BasicInfoFormData>();
+
+  const hasInitializedRef = useRef(false);
+
+  const {data: basicInfo} = useQuery({
+    queryKey: QUERY_KEYS.APPLY.BASIC_INFO(Number(applicationId)),
+    queryFn: () => getBasicInfo(Number(applicationId)),
+    enabled: !!applicationId,
+  });
+
+  useEffect(() => {
+    if (basicInfo && !hasInitializedRef.current) {
+      const transformedData = {
+        name: basicInfo.name,
+        gender: basicInfo.gender,
+        contact: basicInfo.phoneNumber,
+        birthDate: basicInfo.birthDate,
+        school: basicInfo.university,
+        isCollegeStudent: (basicInfo.isEnrolled
+          ? 'enrolled'
+          : 'other') as BasicInfoFormData['isCollegeStudent'],
+        department: basicInfo.major,
+        completedSemesters: String(
+          basicInfo.completedSemesters
+        ) as BasicInfoFormData['completedSemesters'],
+        isPrevActivity: (basicInfo.isPrevActivity
+          ? 'yes'
+          : 'no') as BasicInfoFormData['isPrevActivity'],
+        part: basicInfo.applicationPartType as BasicInfoFormData['part'],
+      };
+      reset(transformedData);
+      hasInitializedRef.current = true;
+    }
+  }, [basicInfo, reset]);
 
   const renderField = (field: BasicInfoFieldConfig) => {
     const {type, name, label, options, placeholder, autocomplete} =

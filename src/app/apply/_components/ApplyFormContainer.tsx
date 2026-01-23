@@ -29,7 +29,6 @@ export const ApplyFormContainer = () => {
     isConfirmModalOpen,
     closeConfirmModal,
     handleConfirmSubmit,
-    etcDates,
   } = useApplyFormController();
 
   const generation = useRecruitmentStore((state) => state.generation);
@@ -37,7 +36,12 @@ export const ApplyFormContainer = () => {
   return (
     <>
       <div className='flex w-full flex-col items-center bg-neutral-50'>
-        {step === 1 && <HeroMainBanner />}
+        {step === 1 && (
+          <HeroMainBanner
+            heading='COde Together, Arrive TOgether'
+            headingStyle='bg-linear-to-r from-[#F89202] from-0% via-[#F89202] via-10% to-[#9E9E9E] to-100% bg-clip-text text-transparent'
+          />
+        )}
 
         <div className='flex w-full max-w-[1196px] flex-col gap-[125px] py-20'>
           <div className='flex flex-col gap-15'>
@@ -80,11 +84,7 @@ export const ApplyFormContainer = () => {
                   />
                 )}
                 {step === 3 && (
-                  <EtcInfo
-                    onPrev={handlePrev}
-                    onSave={handleSave}
-                    dates={etcDates}
-                  />
+                  <EtcInfo onPrev={handlePrev} onSave={handleSave} />
                 )}
               </form>
             </FormProvider>

@@ -1,40 +1,54 @@
 import Image from 'next/image';
-import HeroBanner from '@/assets/banners/hero-main.webp';
+import HeroBanner from '@/assets/backgrounds/banners/hero-main.webp';
+import clsx from 'clsx';
 
 interface HeroMainBannerProps {
-  heading?: string;
   subheading?: string;
+  heading: string;
+  headingStyle?: string;
+  paddingVertical?: number;
 }
 
-const HeroMainBanner = ({heading, subheading}: HeroMainBannerProps) => {
+const HeroMainBanner = ({
+  subheading,
+  heading,
+  headingStyle,
+  paddingVertical = 104,
+}: HeroMainBannerProps) => {
   return (
-    <aside role='banner' className='relative flex h-106.5 w-full'>
-      <div
-        className='absolute top-0 right-0 left-0 h-full w-full bg-linear-to-b from-[#000000] from-0% to-[#00000000] to-58% opacity-70'
-        aria-hidden='true'
-      />
+    <aside
+      role='banner'
+      className='relative h-61 w-full px-60'
+      style={{
+        paddingTop: paddingVertical,
+        paddingBottom: paddingVertical,
+      }}>
       <Image
         src={HeroBanner}
-        alt='FAQ 페이지 상단 배너'
-        width={1920}
-        height={426.67}
+        alt='HeroMainBanner'
+        fill={true}
         priority={true}
-        className='h-full w-full object-cover'
+        className='object-cover object-center'
       />
-      {heading && (
-        <div className='absolute top-0 right-0 left-0 flex justify-center py-21.75'>
-          <div className='w-292.75'>
-            <h1 className='text-4xl leading-12.5 whitespace-nowrap text-white'>
-              {heading}
-            </h1>
-            {subheading && (
-              <p className='text-xl leading-12.5 whitespace-nowrap text-white'>
-                {subheading}
-              </p>
-            )}
-          </div>
-        </div>
-      )}
+      <div
+        className='absolute inset-0 h-full w-full bg-[#000000]/60'
+        aria-hidden='true'
+      />
+
+      <div className='relative z-10 flex flex-col gap-6'>
+        {subheading && (
+          <p className='text-h4 whitespace-nowrap text-neutral-400'>
+            {subheading}
+          </p>
+        )}
+        <h1
+          className={clsx(
+            'w-min text-h3 whitespace-nowrap text-neutral-100',
+            headingStyle
+          )}>
+          {heading}
+        </h1>
+      </div>
     </aside>
   );
 };

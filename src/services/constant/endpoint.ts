@@ -15,6 +15,7 @@ export const ENDPOINT = {
     LOGOUT: '/api/auth/logout',
     ME: '/api/auth/me',
   },
+  FAQ: 'api/faq',
   RECRUITMENT: {
     STATUS: '/api/recruitment/status',
   },
@@ -56,5 +57,9 @@ export const ENDPOINT = {
       `/api/applications/${applicationId}/etc-answers`,
     SUBMIT: (applicationId: number) =>
       `/api/applications/${applicationId}/submit`,
+  },
+  FILES: {
+    GET_URL: '/api/files/geturl',
+    POST_URL: '/api/files/posturl',
   },
 };

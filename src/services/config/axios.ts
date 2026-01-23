@@ -40,7 +40,7 @@ publicAxios.interceptors.request.use(
     // 개발 환경에서 요청 로깅
     if (process.env.NODE_ENV === 'development') {
       console.log(
-        `[API Request] ${config.method?.toUpperCase()} ${config.url} ${JSON.stringify(config.data)} ${config.params}`
+        `[API Request] ${config.method?.toUpperCase()} ${config.url} ${JSON.stringify(config.data)} ${JSON.stringify(config.params)}`
       );
     }
     return config;
@@ -84,7 +84,7 @@ privateAxios.interceptors.request.use(
     // 개발 환경에서 요청 로깅
     if (process.env.NODE_ENV === 'development') {
       console.log(
-        `[API Request] ${config.method?.toUpperCase()} ${config.url} ${JSON.stringify(config.data)} ${config.params}`
+        `[API Request] ${config.method?.toUpperCase()} ${config.url} ${JSON.stringify(config.data)} ${JSON.stringify(config.params)}`
       );
     }
 

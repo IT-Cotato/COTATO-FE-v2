@@ -113,6 +113,15 @@ export const EtcQuestionResponseSchema = z.object({
   otDate: z.string(),
 });
 
+export const GetUploadUrlResponseSchema = z.object({
+  preSignedUrl: z.string(),
+  key: z.string(),
+});
+
+export const GetFileUrlResponseSchema = z.object({
+  pdfUrl: z.string(),
+});
+
 export type BasicInfoFormData = z.infer<typeof BasicInfoFormSchema>;
 export type StartApplicationResponse = z.infer<
   typeof StartApplicationResponseSchema
@@ -123,3 +132,5 @@ export type PartQuestionRequest = z.infer<typeof PartQuestionRequestSchema>;
 export type PartQuestionResponse = z.infer<typeof PartQuestionResponseSchema>;
 export type EtcQuestionRequest = z.infer<typeof EtcQuestionRequestSchema>;
 export type EtcQuestionResponse = z.infer<typeof EtcQuestionResponseSchema>;
+export type GetUploadUrlResponse = z.infer<typeof GetUploadUrlResponseSchema>;
+export type GetFileUrlResponse = z.infer<typeof GetFileUrlResponseSchema>;
