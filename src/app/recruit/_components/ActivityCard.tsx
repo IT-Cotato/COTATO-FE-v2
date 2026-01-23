@@ -21,7 +21,7 @@ export const ActivityCard = ({item}: ActivityCardProps) => {
         )}
       />
       <Image
-        src={item.imageUrl}
+        src={ACTIVITY_CARD_STYLES[item.short].photoImageUrl}
         aria-hidden={true}
         alt=''
         fill={true}

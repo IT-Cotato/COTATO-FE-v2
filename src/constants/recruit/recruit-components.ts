@@ -7,6 +7,12 @@ import MTBg from '@/assets/backgrounds/activity-card/mt-bg.webp';
 import DevTalkBg from '@/assets/backgrounds/activity-card/dev-talk-bg.webp';
 import CokerthonBg from '@/assets/backgrounds/activity-card/cokerthon-bg.webp';
 import DemodayBg from '@/assets/backgrounds/activity-card/demoday-bg.webp';
+import OTPic from '@/assets/backgrounds/activity-card/ot-photo.webp';
+import SessionPic from '@/assets/backgrounds/activity-card/session-photo.webp';
+import MTPic from '@/assets/backgrounds/activity-card/mt-photo.webp';
+import DevTalkPic from '@/assets/backgrounds/activity-card/dev-talk-photo.webp';
+import CokerthonPic from '@/assets/backgrounds/activity-card/cokerthon-photo.webp';
+import DemodayPic from '@/assets/backgrounds/activity-card/demoday-photo.webp';
 import {
   ActivityCategoryType,
   PositionType,
@@ -40,30 +46,40 @@ export const POSITION_CARD_STYLES: Record<PositionType, string> = {
 
 export const ACTIVITY_CARD_STYLES: Record<
   ActivityCategoryType,
-  {style: string; coverImageUrl: StaticImageData}
+  {
+    style: string;
+    coverImageUrl: StaticImageData;
+    photoImageUrl: StaticImageData;
+  }
 > = {
   OT: {
     style: 'opacity-100',
     coverImageUrl: OTBg,
+    photoImageUrl: OTPic,
   },
   SESSION: {
     style: 'opacity-40',
     coverImageUrl: SessionBg,
+    photoImageUrl: SessionPic,
   },
   MT: {
     style: 'opacity-40',
     coverImageUrl: MTBg,
+    photoImageUrl: MTPic,
   },
   DEVTALK: {
     style: 'opacity-80',
     coverImageUrl: DevTalkBg,
+    photoImageUrl: DevTalkPic,
   },
   COKERTHON: {
     style: 'opacity-70',
     coverImageUrl: CokerthonBg,
+    photoImageUrl: CokerthonPic,
   },
   DEMODAY: {
     style: 'opacity-40',
     coverImageUrl: DemodayBg,
+    photoImageUrl: DemodayPic,
   },
 };
