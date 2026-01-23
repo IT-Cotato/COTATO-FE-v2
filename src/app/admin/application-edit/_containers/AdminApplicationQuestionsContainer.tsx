@@ -12,7 +12,6 @@ import {
   ApplicationQuestionsType,
   PartType,
 } from '@/schemas/admin/admin-application-questions.schema';
-import {useRouter} from 'next/navigation';
 import {useEffect, useState} from 'react';
 
 interface AdminApplicationQuestionsContainerProps {
@@ -24,8 +23,6 @@ export const AdminApplicationQuestionsContainer = ({
   generationId,
   questionType,
 }: AdminApplicationQuestionsContainerProps) => {
-  const router = useRouter();
-
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [draftQuestions, setDraftQuestions] = useState<
     ApplicationQuestionsType[]
@@ -49,7 +46,7 @@ export const AdminApplicationQuestionsContainer = ({
     if (isError) {
       alert(error.message);
     }
-  }, [isError, error, router]);
+  }, [isError, error]);
 
   const handleEditStart = () => {
     if (!questions) return;
