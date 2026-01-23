@@ -160,8 +160,8 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
         await saveEtcQuestions(requestData);
       }
       showSuccessMessage();
-    } catch {
-      Error('지원서 저장에 실패했습니다. 잠시 후 다시 시도해주세요.');
+    } catch (e) {
+      console.error('지원서 저장에 실패했습니다. 잠시 후 다시 시도해주세요.', e);
     }
   };
 
