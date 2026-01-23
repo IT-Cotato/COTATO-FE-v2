@@ -6,7 +6,6 @@ import {useRecruitmentStore} from '@/store/useRecruitmentStore';
 import {useGenerationStore} from '@/store/useGenerationStore';
 import {GenerationField} from '@/app/admin/recruitment/_components/active-recruitment/GenerationField';
 import {RecruitmentConfirmModal} from '@/components/modal/RecruitConfirmModal';
-import {formatDate} from '@/utils/formatDate';
 import {useAdminRecruitmentMutation} from '@/hooks/mutations/useAdminRecruitment.mutation';
 import {Checkbox} from '@/components/checkbox/CheckBox';
 
@@ -21,8 +20,6 @@ export const ActiveRecruitmentForm = () => {
 
   const {generations} = useGenerationStore();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [startDate] = useState<Date | null>(new Date());
-  const [endDate] = useState<Date | null>(new Date());
   const {activate, deactivate, isLoading} = useAdminRecruitmentMutation();
 
   const handleConfirm = () => {
@@ -49,24 +46,9 @@ export const ActiveRecruitmentForm = () => {
       return;
     }
 
-    if (!startDate || !endDate) {
-      alert('모집 기간을 선택해주세요.');
-      return;
-    }
-
-    const formattedStartDate = formatDate(startDate);
-    const formattedEndDate = formatDate(endDate);
-
-    if (!formattedStartDate || !formattedEndDate) {
-      alert('날짜 형식이 올바르지 않습니다.');
-      return;
-    }
-
     activate({
       generationId: Number(generation),
       isAdditionalRecruitmentActive: isAdditional,
-      startDate: formattedStartDate,
-      endDate: formattedEndDate,
     });
 
     setIsModalOpen(false);
