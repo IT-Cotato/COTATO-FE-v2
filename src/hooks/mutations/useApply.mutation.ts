@@ -20,16 +20,16 @@ import {QUERY_KEYS} from '@/constants/query-keys';
 
 /**
  * 지원서 시작 (새 지원서 생성)
+ * - 성공 시 결과를 React Query 캐시에 저장하여 여러 컴포넌트에서 공유
  */
 export const useStartApplicationMutation = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: () => startApplication(),
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: QUERY_KEYS.APPLY.STATUS,
-      });
+    onSuccess: (data) => {
+      // 결과를 캐시에 저장하여 다른 컴포넌트에서 재사용
+      queryClient.setQueryData(QUERY_KEYS.APPLY.STATUS, data);
     },
   });
 };
