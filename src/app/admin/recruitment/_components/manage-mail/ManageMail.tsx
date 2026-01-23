@@ -72,7 +72,7 @@ export const ManageMail = ({
     );
 
   return (
-    <div className='flex w-full flex-col gap-5'>
+    <div className='flex w-full flex-col gap-3.5'>
       <MailHeader
         isEditing={isEditing}
         isChanged={isChanged}

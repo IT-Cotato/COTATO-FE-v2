@@ -18,7 +18,7 @@ export const MailHeader = ({
   onSave,
 }: MailHeaderProps) => {
   return (
-    <div className='flex h-12 w-full items-center justify-between'>
+    <div className='flex w-full items-center justify-between'>
       <div className='text-h4 text-neutral-800'>메일 관리</div>
       <div className='flex gap-4'>
         {isEditing ? (
