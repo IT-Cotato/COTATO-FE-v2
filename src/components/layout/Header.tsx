@@ -15,6 +15,7 @@ import {LoginModal} from '@/components/modal/LoginModal';
 import {useState} from 'react';
 import {ROUTES} from '@/constants/routes';
 import {useSubmissionStore} from '@/store/useSubmissionStore';
+import {HEADER_HEIGHT} from '@/constants/ui';
 
 export const Header = () => {
   const router = useRouter();
@@ -56,7 +57,8 @@ export const Header = () => {
 
   return (
     <>
-      <header className='sticky top-0 z-header flex h-22 w-full items-center justify-between bg-black px-[105px]'>
+      <header
+        className={`sticky top-0 z-header flex h-${HEADER_HEIGHT} w-full items-center justify-between bg-black px-[105px]`}>
         <div>
           <Link href='/'>
             <MainLogo />
