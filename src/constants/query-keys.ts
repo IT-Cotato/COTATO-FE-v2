@@ -1,6 +1,5 @@
 export const QUERY_KEYS = {
   APPLY: {
-    STATUS: ['apply-status'],
     BASIC_INFO: (applicationId: number) => ['apply-basic-info', applicationId],
     PART_QUESTIONS: (applicationId: number) => [
       'apply-part-questions',
