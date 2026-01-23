@@ -7,8 +7,11 @@ import {FAQ_TYPE_MAP} from '@/constants/faq/faq';
 
 export const FaqAccordionList = () => {
   const searchParams = useSearchParams();
-  const activatedType = (searchParams.get('faq') ||
-    'common') as keyof typeof FAQ_TYPE_MAP;
+  const rawType = searchParams.get('faq');
+  const activatedType =
+    rawType && rawType in FAQ_TYPE_MAP
+      ? (rawType as keyof typeof FAQ_TYPE_MAP)
+      : 'common';
   const {data} = useFaqQuery(FAQ_TYPE_MAP[activatedType]);
 
   return (
