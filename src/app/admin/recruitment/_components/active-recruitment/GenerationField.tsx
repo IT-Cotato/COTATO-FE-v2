@@ -15,6 +15,7 @@ export const GenerationField = ({
       <div className='flex items-center gap-2'>
         <input
           value={value}
+          readOnly
           disabled={disabled}
           onChange={(e) => onChange(e.target.value)}
           className='w-19 rounded-[10px] bg-neutral-50 pt-1.5 pb-2.5 text-center text-body-m'

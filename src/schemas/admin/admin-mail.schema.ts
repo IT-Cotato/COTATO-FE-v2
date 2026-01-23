@@ -7,9 +7,11 @@ const BaseMailDataSchema = z.object({
   isSent: z.boolean(),
   sentAt: z.string().nullable(),
   generationId: z.number(),
+  successCount: z.number(),
+  failCount: z.number(),
 });
 
-// 지원 알림 메일 데이터
+// 지원 알림 메일
 export const NotificationMailDataSchema = BaseMailDataSchema.extend({
   subscriberCount: z.number(),
 });
@@ -21,41 +23,20 @@ export const ResultMailDataSchema = BaseMailDataSchema.extend({
   recipientCount: z.number(),
 });
 
-// 메일 전송 응답 데이터
-export const MailSendResultSchema = createSuccessResponseSchema(
-  z.object({
-    successCount: z.number(),
-    failCount: z.number(),
-    sentAt: z.string(),
-    generationId: z.number(),
-  })
-);
-
-// 작업 상태 조회 응답 스키마
-export const MailJobStatusSchema = z.object({
+// 메일 전송 시작 응답
+export const MailSendStartDataSchema = z.object({
   jobId: z.number(),
-  isCompleted: z.boolean(),
   totalCount: z.number(),
-  successCount: z.number(),
-  failCount: z.number(),
-  createdAt: z.string(),
-  completedAt: z.string().nullable(),
+  sentAt: z.string(),
   generationId: z.number(),
+  templateType: z.string().optional(),
 });
-
-export const MailSendStartSchema = createSuccessResponseSchema(
-  z.object({
-    jobId: z.number(),
-    totalCount: z.number(),
-    generationId: z.number(),
-  })
-);
-
-export const MailJobStatusResponseSchema =
-  createSuccessResponseSchema(MailJobStatusSchema);
 
 export const NotificationMailResponseSchema = createSuccessResponseSchema(
   NotificationMailDataSchema
 );
 export const ResultMailResponseSchema =
   createSuccessResponseSchema(ResultMailDataSchema);
+export const MailSendStartSchema = createSuccessResponseSchema(
+  MailSendStartDataSchema
+);

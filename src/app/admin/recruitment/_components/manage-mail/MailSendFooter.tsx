@@ -1,5 +1,4 @@
 import {Button} from '@/components/button/Button';
-import {MailJobStatus} from '@/schemas/admin/admin-mail.type';
 import {clsx} from 'clsx';
 
 interface MailSendFooterProps {
@@ -7,8 +6,10 @@ interface MailSendFooterProps {
   waitingLabel: string;
   canSendMail: boolean;
   isSent: boolean;
+  isInProgress: boolean;
   onSend: () => void;
-  jobStatus: MailJobStatus | null;
+  successCount: number;
+  failCount: number;
   isRefreshing: boolean;
   onRefresh: () => void;
 }
@@ -18,13 +19,14 @@ export const MailSendFooter = ({
   waitingLabel,
   canSendMail,
   isSent,
+  isInProgress,
   onSend,
-  jobStatus,
+  successCount,
+  failCount,
   isRefreshing,
   onRefresh,
 }: MailSendFooterProps) => {
-  const isInProgress = jobStatus !== null && !jobStatus.isCompleted;
-  const shouldShowStatus = jobStatus !== null || isSent;
+  const shouldShowStatus = true;
 
   const getButtonColor = () => {
     if (isSent || isInProgress) return 'neutral-500';
@@ -40,15 +42,12 @@ export const MailSendFooter = ({
         {shouldShowStatus && (
           <div className='flex items-center gap-4 rounded-lg border border-neutral-200 bg-neutral-50 px-4 py-2'>
             <div className='flex gap-3 text-body-m font-bold'>
-              <span className='text-primary'>
-                성공: {jobStatus?.successCount ?? 0}
-              </span>
-              <span className='text-alert'>
-                실패: {jobStatus?.failCount ?? 0}
-              </span>
+              <span className='text-primary'>성공: {successCount}</span>
+              <span className='text-alert'>실패: {failCount}</span>
             </div>
             {isInProgress && (
               <button
+                type='button'
                 onClick={onRefresh}
                 disabled={isRefreshing}
                 className={clsx(

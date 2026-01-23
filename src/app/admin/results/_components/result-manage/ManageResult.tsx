@@ -38,7 +38,7 @@ export const ManageResult = ({
       <h2 className='text-h4 text-neutral-800'>합격자 관리</h2>
       <GenerationDropdown
         generation={generation}
-        generations={generationList.length > 0 ? generationList : ['13', '12']}
+        generations={generationList}
         onSelect={onGenerationChange}
       />
       <ResultTable data={tableData} />
