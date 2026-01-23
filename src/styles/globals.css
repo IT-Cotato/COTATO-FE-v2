@@ -44,7 +44,7 @@
 
   /* z-index */
   --z-index-header: 101;
-  --z-index-dropdown: 99;
+  --z-index-sidebar: 99;
   --z-index-modal: 102;
   --z-index-sidebar: 100;
 }

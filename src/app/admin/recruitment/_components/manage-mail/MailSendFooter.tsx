@@ -35,7 +35,7 @@ export const MailSendFooter = ({
 
   return (
     <div className='flex w-full flex-col items-end gap-3'>
-      <div className='flex items-center gap-5.25 text-body-l text-neutral-500'>
+      <div className='flex items-center gap-2.5 text-body-l text-neutral-500'>
         <p>
           ({waitingLabel} 수: {waitingCount}명)
         </p>
