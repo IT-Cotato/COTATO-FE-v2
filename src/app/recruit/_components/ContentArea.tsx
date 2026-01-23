@@ -16,7 +16,7 @@ export const ContentArea = () => {
   const dataActivity = data?.activities;
 
   return (
-    <div className='pt-10 pb-30'>
+    <div className='w-360 pt-10 pb-30'>
       <div className='mb-30'>
         <p className='mb-7.5 text-center text-h2 text-neutral-800'>모집 일정</p>
         <div className='flex justify-center'>
