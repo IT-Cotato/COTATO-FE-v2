@@ -22,11 +22,11 @@ export const AdminApplicationsTabPart = ({
         'border-b-2 transition-colors',
         isActive ? 'border-primary' : 'border-transparent'
       )}>
-      <p className='text-body-m text-neutral-800'>{partName}</p>
+      <p className='text-body-m font-bold text-neutral-800'>{partName}</p>
 
       <div
         className={clsx(
-          'rounded-xl bg-[#697077] px-2 text-xs font-normal text-white'
+          'rounded-xl bg-neutral-500 px-2 text-xs font-normal text-white'
         )}>
         {applyNumber}
       </div>

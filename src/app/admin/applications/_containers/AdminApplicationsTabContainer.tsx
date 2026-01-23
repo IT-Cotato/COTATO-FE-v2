@@ -32,7 +32,7 @@ export const AdminApplicationsTabContainer = ({
   };
 
   return (
-    <div className='flex gap-7.75'>
+    <div className='flex gap-7.5'>
       {PART_TABS.map(({label, value}) => {
         const countKey = PART_COUNT_MAP[value];
         const applyNumber = summary?.[countKey];

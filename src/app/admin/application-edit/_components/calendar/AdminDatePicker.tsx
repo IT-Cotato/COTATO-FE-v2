@@ -7,6 +7,7 @@ import '@/styles/datepicker-custom.css';
 import {useMemo, useRef, useState} from 'react';
 import {useClickOutside} from '@/hooks/useClickOutside';
 import {formatRecruitmentDate} from '@/utils/formatDate';
+import clsx from 'clsx';
 
 interface AdminDatePickerProps {
   value?: string | null;
@@ -27,15 +28,20 @@ export const AdminDatePicker = ({
   useClickOutside(calendarRef, () => setIsOpen(false));
 
   return (
-    <div className='relative w-fit' ref={calendarRef}>
+    <div className='relative max-w-[556.5px] flex-1' ref={calendarRef}>
       <button
         type='button'
-        className='flex w-fit items-center justify-between gap-3 rounded-[10px] bg-neutral-100 px-4 py-3 2xl:min-w-50'
+        className='flex w-full items-center justify-between gap-3 rounded-[10px] bg-neutral-100 px-4 py-3'
         onClick={() => setIsOpen((prev) => !prev)}>
-        <span className='text-body-m font-normal text-neutral-600'>
+        <span className='text-body-l font-normal text-neutral-600'>
           {formatRecruitmentDate(value) ?? placeholder}
         </span>
-        <CalendarIcon />
+        <CalendarIcon
+          className={clsx(
+            isOpen ? 'text-primary' : 'text-neutral-600',
+            'h-6 w-6'
+          )}
+        />
       </button>
 
       {isOpen && (

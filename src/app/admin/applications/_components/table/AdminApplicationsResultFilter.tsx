@@ -1,26 +1,22 @@
 import {RESULT_OPTIONS} from '@/constants/admin/admin-applications';
 import {ApplicationResultType} from '@/schemas/admin/admin-application-type';
-import {RefObject, useEffect, useState} from 'react';
-import {useClickOutside} from '@/hooks/useClickOutside';
+import {useEffect, useState} from 'react';
 import {Checkbox} from '@/components/checkbox/CheckBox';
 
 interface AdminApplicationsResultFilterProps {
   selected: ApplicationResultType[];
-  filterAreaRef: RefObject<HTMLElement | null>;
   onChange: (next: ApplicationResultType[]) => void;
   onClose: () => void;
 }
 
 export const AdminApplicationsResultFilter = ({
   selected,
-  filterAreaRef,
+
   onChange,
   onClose,
 }: AdminApplicationsResultFilterProps) => {
   const [draftSelected, setDraftSelected] =
     useState<ApplicationResultType[]>(selected);
-
-  useClickOutside(filterAreaRef, onClose);
 
   useEffect(() => {
     setDraftSelected(selected);

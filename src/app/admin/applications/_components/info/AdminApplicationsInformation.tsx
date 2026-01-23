@@ -51,10 +51,10 @@ export const AdminApplicationsInformation = ({
   };
 
   return (
-    <div className='flex w-full justify-between gap-y-4 rounded-[10px] bg-neutral-100 p-4'>
+    <div className='flex w-full justify-between gap-50 gap-y-4 rounded-[10px] bg-neutral-100 p-4'>
       <div className='flex flex-row gap-7.25'>
         <div className='flex flex-col gap-4'>
-          <p className='text-body-m font-bold text-neutral-600'>기수 정보</p>
+          <p className='text-body-l text-neutral-600'>기수 정보</p>
           <GenerationDropdown
             generation={generation}
             generations={generations}
@@ -63,16 +63,16 @@ export const AdminApplicationsInformation = ({
           />
         </div>
         <div className='flex flex-col gap-4'>
-          <p className='text-body-m font-bold text-neutral-600'>지원기간</p>
-          <div className='flex flex-row gap-2.5 text-body-m font-normal'>
+          <p className='text-body-l text-neutral-600'>지원기간</p>
+          <div className='flex flex-row gap-2.5 text-body-l font-normal'>
             {isLoading ? (
               <Spinner size='sm' />
             ) : (
               <>
-                <p className='rounded-[10px] bg-neutral-50 px-7 py-1.5 text-neutral-800'>
+                <p className='rounded-[10px] bg-neutral-50 px-8 py-1.75 text-neutral-800'>
                   {recruitmentPeriod?.recruitmentStart.slice(0, 10)}
                 </p>
-                <p className='rounded-[10px] bg-neutral-50 px-7 py-1.5 text-neutral-800'>
+                <p className='rounded-[10px] bg-neutral-50 px-8 py-1.75 text-neutral-800'>
                   {recruitmentPeriod?.recruitmentEnd.slice(0, 10)}
                 </p>
               </>
@@ -80,9 +80,9 @@ export const AdminApplicationsInformation = ({
           </div>
         </div>
       </div>
-      <div className='flex flex-1 items-end justify-end lg:pl-10'>
-        <div className='flex h-12.5 max-w-108.25 flex-row items-center gap-2.5 rounded-[10px] bg-white px-4 py-2.75'>
-          <SearchIcon />
+      <div className='flex flex-1 items-end justify-end'>
+        <div className='flex h-12.5 w-full flex-row items-center gap-2.5 rounded-[10px] bg-white px-4 py-2.75'>
+          <SearchIcon className='h-4 w-4 text-neutral-600' />
           <input
             type='text'
             placeholder='이름 혹은 학교 검색'
@@ -91,7 +91,7 @@ export const AdminApplicationsInformation = ({
             onChange={(e) => setKeyword(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
             disabled={isLoading}
-            className='w-full text-body-l font-normal outline-none'
+            className='w-full text-body-l font-normal outline-none placeholder:text-neutral-600'
           />
         </div>
       </div>

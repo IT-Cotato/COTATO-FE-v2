@@ -12,7 +12,7 @@ import {
   ApplicationQuestionsType,
   PartType,
 } from '@/schemas/admin/admin-application-questions.schema';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 
 interface AdminApplicationQuestionsContainerProps {
   generationId: number;
@@ -35,8 +35,18 @@ export const AdminApplicationQuestionsContainer = ({
   });
   const questions = data?.data;
 
-  const {mutateAsync: saveQuestions, isPending} =
-    useAdminApplicationQuestionsMutation();
+  const {
+    mutateAsync: saveQuestions,
+    isPending,
+    isError,
+    error,
+  } = useAdminApplicationQuestionsMutation();
+
+  useEffect(() => {
+    if (isError) {
+      alert(error.message);
+    }
+  }, [isError, error]);
 
   const handleEditStart = () => {
     if (!questions) return;
@@ -82,7 +92,7 @@ export const AdminApplicationQuestionsContainer = ({
               borderRadius={5}
               backgroundColor='alert'
               textColor='neutral-50'
-              width={112}
+              width={64}
               height={36}
               disabled={!isFormValid || isPending}
               onClick={handleSave}
@@ -97,7 +107,7 @@ export const AdminApplicationQuestionsContainer = ({
               borderRadius={5}
               backgroundColor='white'
               textColor='neutral-400'
-              width={112}
+              width={64}
               height={36}
             />
           </div>
@@ -109,7 +119,7 @@ export const AdminApplicationQuestionsContainer = ({
             borderRadius={5}
             backgroundColor='secondary'
             textColor='neutral-50'
-            width={112}
+            width={145}
             height={36}
             onClick={handleEditStart}
           />

@@ -14,7 +14,7 @@ export const ApplicationQuestionsView = ({
           <div className='rounded-[10px] border border-neutral-300 bg-white px-5.25 py-4.5 text-h5 text-neutral-800'>
             {sequence}. {content}
           </div>
-          <div className='text-h5 text-neutral-500'>
+          <div className='ml-6.25 text-h5 text-neutral-400'>
             글자 제한: {maxByte} 자
           </div>
         </div>

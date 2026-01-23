@@ -72,14 +72,13 @@ export const ApplicationQuestionsEdit = ({
 
           <div className='flex flex-row items-center justify-between'>
             <div className='flex items-center gap-3'>
-              <span className='pl-16 text-h5 text-neutral-500'>글자 제한</span>
+              <span className='pl-13 text-h5 text-neutral-500'>글자 제한</span>
               <input
-                type='number'
                 value={maxByte}
                 onChange={(e) =>
                   updateItem(sequence, 'maxByte', Number(e.target.value))
                 }
-                className='w-22.25 rounded-[10px] border border-neutral-300 bg-white py-3.75 text-center text-body-l text-neutral-500'
+                className='flex w-17.5 items-center justify-center rounded-[10px] border border-neutral-300 bg-white py-2.75 text-center text-body-l font-semibold text-neutral-600'
               />
               <span className='text-h5 text-neutral-500'>자</span>
             </div>
