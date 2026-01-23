@@ -64,7 +64,7 @@ export const Header = () => {
         style={{height: `${HEADER_HEIGHT}px`}}
         className='sticky top-0 z-header flex w-full min-w-360 items-center justify-between bg-black pr-26.25 pl-6.25'>
         <div>
-          <Link href='/'>
+          <Link href='https://www.cotato.kr/' target='_blank'>
             <MainLogo className='w-36.5' />
           </Link>
         </div>
