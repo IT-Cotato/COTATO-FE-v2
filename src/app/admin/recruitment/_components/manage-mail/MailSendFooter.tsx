@@ -29,7 +29,7 @@ export const MailSendFooter = ({
   const shouldShowStatus = true;
 
   const getButtonColor = () => {
-    if (isSent || isInProgress) return 'neutral-500';
+    if (isSent || isInProgress) return 'text-disabled';
     return canSendMail ? 'primary' : 'text-disabled';
   };
 
@@ -76,7 +76,6 @@ export const MailSendFooter = ({
             borderRadius={5}
             labelTypo='body_l'
             backgroundColor={getButtonColor()}
-            disabled={!canSendMail || isSent || isInProgress}
             textColor='neutral-50'
             onClick={onSend}
           />

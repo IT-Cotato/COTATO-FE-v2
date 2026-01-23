@@ -10,7 +10,7 @@ export const MailField = ({isEditing, content, setContent}: MailFieldProps) => {
   const scrollRef = useRef<HTMLDivElement>(null);
 
   return (
-    <div className='h-[357px] w-full rounded-[10px] bg-white px-5 py-4.25'>
+    <div className='h-89 w-full rounded-[10px] bg-neutral-50 px-7.75 py-4.5'>
       <div
         ref={scrollRef}
         className='custom-scrollbar h-full w-full overflow-y-auto'>

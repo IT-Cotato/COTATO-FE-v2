@@ -123,10 +123,17 @@ export const Button = ({
               ? `${height}px`
               : (height ?? `${BUTTON_DEFAULT_HEIGHT}px`),
           backgroundColor:
-            disabled && disabledBackgroundColor
-              ? toColorVar(disabledBackgroundColor)
-              : toColorVar(backgroundColor),
-          borderColor: isOutline ? resolvedTextColor : undefined,
+            disabled && backgroundColor === 'alert'
+              ? 'rgba(229, 72, 77, 1.0)'
+              : disabled && disabledBackgroundColor
+                ? toColorVar(disabledBackgroundColor)
+                : toColorVar(backgroundColor),
+          border:
+            disabled && backgroundColor === 'alert'
+              ? '1px solid var(--alert, #E5484D)'
+              : isOutline
+                ? `1px solid ${resolvedTextColor}`
+                : undefined,
           borderRadius: `${borderRadius}px`,
         }}
         {...props}>
