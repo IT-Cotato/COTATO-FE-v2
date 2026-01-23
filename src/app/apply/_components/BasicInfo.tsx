@@ -18,12 +18,14 @@ interface BasicInfoProps {
   onSave: () => void;
   onNext: () => void;
   readOnly?: boolean;
+  showSaveSuccess: boolean;
 }
 
 export const BasicInfo = ({
   onNext,
   onSave,
   readOnly = false,
+  showSaveSuccess,
 }: BasicInfoProps) => {
   const searchParams = useSearchParams();
   const applicationId = searchParams.get('id');
@@ -177,6 +179,9 @@ export const BasicInfo = ({
           onClick={onSave}
           type='button'
         />
+        {showSaveSuccess && (
+          <p className='text-center text-primary'>저장이 완료되었습니다</p>
+        )}
       </div>
     </div>
   );

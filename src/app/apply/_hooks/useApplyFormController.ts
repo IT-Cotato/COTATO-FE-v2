@@ -26,12 +26,13 @@ interface UseApplyFormControllerReturn {
   methods: UseFormReturn<BasicInfoFormData>;
   handleNext: () => Promise<void>;
   handlePrev: () => void;
-  handleSave: () => void;
+  handleSave: () => Promise<void>;
   handleFinalSubmit: (e?: React.BaseSyntheticEvent) => Promise<void>;
   isConfirmModalOpen: boolean;
   openConfirmModal: () => void;
   closeConfirmModal: () => void;
-  handleConfirmSubmit: () => void;
+  handleConfirmSubmit: () => Promise<void>;
+  showSaveSuccess: boolean;
 }
 
 export const useApplyFormController = (): UseApplyFormControllerReturn => {
@@ -41,6 +42,7 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
   const applicationId = searchParams.get('id');
   const urlStep = parseInt(searchParams.get('step') || '1');
   const [step, setStep] = useState(urlStep);
+  const [showSaveSuccess, setShowSaveSuccess] = useState(false);
 
   useEffect(() => {
     setStep(urlStep);
@@ -60,11 +62,13 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
     applicationId ? Number(applicationId) : null
   );
 
-  const {mutate: saveBasicInfo} = useSaveBasicInfo(Number(applicationId));
-  const {mutate: savePartQuestions} = useSavePartQuestions(
+  const {mutateAsync: saveBasicInfo} = useSaveBasicInfo(Number(applicationId));
+  const {mutateAsync: savePartQuestions} = useSavePartQuestions(
     Number(applicationId)
   );
-  const {mutate: saveEtcQuestions} = useSaveEtcQuestions(Number(applicationId));
+  const {mutateAsync: saveEtcQuestions} = useSaveEtcQuestions(
+    Number(applicationId)
+  );
   const {mutateAsync: submitApplication} = useSubmitApplication(
     Number(applicationId)
   );
@@ -72,78 +76,92 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
   const openConfirmModal = () => setIsConfirmModalOpen(true);
   const closeConfirmModal = () => setIsConfirmModalOpen(false);
 
-  const handleSave = () => {
+  const handleSave = async () => {
     if (!applicationId) return;
     const data = getValues();
 
-    if (step === 1) {
-      const requestData: BasicInfoRequest = {
-        name: data.name,
-        gender: data.gender,
-        birthDate: data.birthDate,
-        phoneNumber: data.contact,
-        university: data.school,
-        major: data.department,
-        completedSemesters: Number(data.completedSemesters),
-        isPrevActivity: data.isPrevActivity === 'yes',
-        isEnrolled: data.isCollegeStudent === 'enrolled',
-        applicationPartType: data.part,
-      };
-      saveBasicInfo(requestData);
-    } else if (step === 2) {
-      const answersToSave = Object.entries(data)
-        .filter(([key]) => key.startsWith('ans_'))
-        .map(([key, value]) => ({
-          questionId: Number(key.split('_')[1]),
-          content: value as string,
-        }));
+    const showSuccessMessage = () => {
+      setShowSaveSuccess(true);
+      setTimeout(() => {
+        setShowSaveSuccess(false);
+      }, 3000);
+    };
 
-      const formData = data as BasicInfoFormData & {
-        pdfFileUrl?: string;
-        pdfFileKey?: string;
-      };
-      const requestData: PartQuestionRequest = {
-        answers: answersToSave,
-        pdfFileUrl: formData.pdfFileUrl || undefined,
-        pdfFileKey: formData.pdfFileKey || undefined,
-      };
+    try {
+      if (step === 1) {
+        const requestData: BasicInfoRequest = {
+          name: data.name,
+          gender: data.gender,
+          birthDate: data.birthDate,
+          phoneNumber: data.contact,
+          university: data.school,
+          major: data.department,
+          completedSemesters: Number(data.completedSemesters),
+          isPrevActivity: data.isPrevActivity === 'yes',
+          isEnrolled: data.isCollegeStudent === 'enrolled',
+          applicationPartType: data.part,
+        };
+        await saveBasicInfo(requestData);
+      } else if (step === 2) {
+        const answersToSave = Object.entries(data)
+          .filter(([key]) => key.startsWith('ans_'))
+          .map(([key, value]) => ({
+            questionId: Number(key.split('_')[1]),
+            content: value as string,
+          }));
 
-      savePartQuestions(requestData);
-    } else if (step === 3) {
-      const formData = data as BasicInfoFormData & {
-        discovery?: string;
-        otherActivity?: string;
-        interviewStartDate?: string;
-        interviewEndDate?: string;
-        sessionAgree?: string;
-        otAgree?: string;
-        privacyAgree?: string;
-      };
+        const formData = data as BasicInfoFormData & {
+          pdfFileUrl?: string;
+          pdfFileKey?: string;
+        };
+        const requestData: PartQuestionRequest = {
+          answers: answersToSave,
+          pdfFileUrl: formData.pdfFileUrl || undefined,
+          pdfFileKey: formData.pdfFileKey || undefined,
+        };
 
-      const unavailableInterviewTimes = [
-        formData.interviewStartDate
-          ? `${etcQuestions?.interviewStartDate ?? ''} ${formData.interviewStartDate}`
-          : null,
-        formData.interviewEndDate
-          ? `${etcQuestions?.interviewEndDate ?? ''} ${formData.interviewEndDate}`
-          : null,
-      ]
-        .filter(Boolean)
-        .join(', ');
+        await savePartQuestions(requestData);
+      } else if (step === 3) {
+        const formData = data as BasicInfoFormData & {
+          discovery?: string;
+          otherActivity?: string;
+          interviewStartDate?: string;
+          interviewEndDate?: string;
+          sessionAgree?: string;
+          otAgree?: string;
+          privacyAgree?: string;
+        };
 
-      const discoveryPath =
-        (formData.discovery as EtcQuestionRequest['discoveryPath']) || '';
+        const unavailableInterviewTimes = [
+          formData.interviewStartDate
+            ? `${etcQuestions?.interviewStartDate ?? ''} ${
+                formData.interviewStartDate
+              }`
+            : null,
+          formData.interviewEndDate
+            ? `${etcQuestions?.interviewEndDate ?? ''} ${formData.interviewEndDate}`
+            : null,
+        ]
+          .filter(Boolean)
+          .join(', ');
 
-      const requestData: EtcQuestionRequest = {
-        discoveryPath,
-        parallelActivities: formData.otherActivity || '',
-        unavailableInterviewTimes,
-        sessionAttendanceAgreed: formData.sessionAgree === 'agree',
-        mandatoryEventsAgreed: formData.otAgree === 'agree',
-        privacyPolicyAgreed: formData.privacyAgree === 'agree',
-      };
+        const discoveryPath =
+          (formData.discovery as EtcQuestionRequest['discoveryPath']) || '';
 
-      saveEtcQuestions(requestData);
+        const requestData: EtcQuestionRequest = {
+          discoveryPath,
+          parallelActivities: formData.otherActivity || '',
+          unavailableInterviewTimes,
+          sessionAttendanceAgreed: formData.sessionAgree === 'agree',
+          mandatoryEventsAgreed: formData.otAgree === 'agree',
+          privacyPolicyAgreed: formData.privacyAgree === 'agree',
+        };
+
+        await saveEtcQuestions(requestData);
+      }
+      showSuccessMessage();
+    } catch {
+      Error('지원서 저장에 실패했습니다. 잠시 후 다시 시도해주세요.');
     }
   };
 
@@ -165,7 +183,7 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
 
     const isValid = await trigger(fieldsToValidate);
     if (isValid) {
-      handleSave();
+      await handleSave();
 
       const params = new URLSearchParams(searchParams.toString());
       params.set('step', String(step + 1));
@@ -194,7 +212,7 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
     closeConfirmModal();
 
     try {
-      handleSave();
+      await handleSave();
       await submitApplication();
       await queryClient.invalidateQueries({queryKey: QUERY_KEYS.APPLY.STATUS});
       router.push('/?submitted=true');
@@ -222,5 +240,6 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
     openConfirmModal,
     closeConfirmModal,
     handleConfirmSubmit,
+    showSaveSuccess,
   };
 };

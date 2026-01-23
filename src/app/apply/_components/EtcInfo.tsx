@@ -16,9 +16,11 @@ import {useGetEtcQuestionsQuery} from '@/hooks/queries/useApply.query';
 export const EtcInfo = ({
   onPrev,
   onSave,
+  showSaveSuccess,
 }: {
   onPrev: () => void;
   onSave: () => void;
+  showSaveSuccess: boolean;
 }) => {
   const searchParams = useSearchParams();
   const applicationId = searchParams.get('id')
@@ -221,6 +223,9 @@ export const EtcInfo = ({
           type='button'
           onClick={onSave}
         />
+        {showSaveSuccess && (
+          <p className='text-center text-primary'>저장이 완료되었습니다</p>
+        )}
       </div>
     </div>
   );

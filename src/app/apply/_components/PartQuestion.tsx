@@ -17,9 +17,15 @@ interface PartQuestionProps {
   onPrev: () => void;
   onNext: () => void;
   onSave: () => void;
+  showSaveSuccess: boolean;
 }
 
-export const PartQuestion = ({onPrev, onNext, onSave}: PartQuestionProps) => {
+export const PartQuestion = ({
+  onPrev,
+  onNext,
+  onSave,
+  showSaveSuccess,
+}: PartQuestionProps) => {
   const searchParams = useSearchParams();
   const {
     register,
@@ -176,6 +182,9 @@ export const PartQuestion = ({onPrev, onNext, onSave}: PartQuestionProps) => {
           labelTypo='h4'
           onClick={onSave}
         />
+        {showSaveSuccess && (
+          <p className='text-center text-primary'>저장이 완료되었습니다</p>
+        )}
       </div>
     </div>
   );
