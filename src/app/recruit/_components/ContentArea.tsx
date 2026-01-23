@@ -7,9 +7,11 @@ import {QUALIFICATIONS_CARD_ITEMS} from '@/constants/recruit/recruit-components'
 import {PositionCard} from '@/app/recruit/_components/PositionCard';
 import {ActivityCard} from '@/app/recruit/_components/ActivityCard';
 import {Button} from '@/components/button/Button';
+import {useRouter} from 'next/navigation';
 
 export const ContentArea = () => {
   const {data} = useRecruitmentNoticeQuery();
+  const router = useRouter();
 
   const dataTimeline = data?.schedule;
   const dataPosition = data?.parts;
@@ -72,10 +74,7 @@ export const ContentArea = () => {
         </div>
       </div>
 
-      <Button
-        label='지원하러 가기'
-        onClick={() => (window.location.href = '/apply')}
-      />
+      <Button label='지원하러 가기' onClick={() => router.push('/apply')} />
     </div>
   );
 };

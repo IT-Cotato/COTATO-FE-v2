@@ -7,6 +7,7 @@ import {HEADER_HEIGHT} from '@/constants/ui';
 import {NotifyInput} from '@/components/layout/NotifyInput';
 import {Button} from '@/components/button/Button';
 import {useRecruitmentStatusQuery} from '@/hooks/queries/useRecruitmentStatus.query';
+import {useRouter} from 'next/navigation';
 
 type bgColorKey = 'bg-transparent' | 'bg-neutral-50' | 'bg-black';
 
@@ -29,6 +30,7 @@ export default function RecruitmentLayout({
   bgImage,
   bottomBannerBgImage,
 }: RecruitmentLayoutProps) {
+  const router = useRouter();
   const {data: recruitmentStatus} = useRecruitmentStatusQuery();
   const isRecruiting = recruitmentStatus?.data?.isActive ?? false;
 
@@ -83,7 +85,7 @@ export default function RecruitmentLayout({
               label='지원하러 가기'
               width={240}
               height={48}
-              onClick={() => (window.location.href = '/apply')}
+              onClick={() => router.push('/apply')}
             />
           </div>
         )}
