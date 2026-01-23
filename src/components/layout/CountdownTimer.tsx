@@ -1,9 +1,10 @@
 'use client';
 
+import clsx from 'clsx';
 import {useState, useEffect, useMemo} from 'react';
 
 interface CountdownTimerProps {
-  isDark?: boolean;
+  hightlightUnits?: boolean;
 }
 
 const calculateTimeLeft = (targetTimestamp: number) => {
@@ -25,7 +26,9 @@ const calculateTimeLeft = (targetTimestamp: number) => {
   };
 };
 
-export default function CountdownTimer({isDark = false}: CountdownTimerProps) {
+export default function CountdownTimer({
+  hightlightUnits = false,
+}: CountdownTimerProps) {
   // 서버/첫 렌더에서도 항상 동일한 값
   const [timeLeft, setTimeLeft] = useState<{h: string; m: string; s: string}>(
     () => ({h: '00', m: '00', s: '00'})
@@ -52,15 +55,34 @@ export default function CountdownTimer({isDark = false}: CountdownTimerProps) {
     };
   }, [targetDate]);
 
-  const textColor = isDark ? 'text-white' : 'text-neutral-600';
+  const textColor = hightlightUnits ? 'text-primary' : 'text-neutral-400';
 
   return (
-    <div className='flex items-center justify-center gap-12 text-h1'>
-      <span className={textColor}>{timeLeft.h}</span>
-      <span className={textColor}>:</span>
-      <span className={textColor}>{timeLeft.m}</span>
-      <span className={textColor}>:</span>
-      <span className={textColor}>{timeLeft.s}</span>
+    <div className='flex items-end gap-10'>
+      <div className='flex flex-col'>
+        <p className={clsx(textColor, 'text-center text-body-l-sb')}>HOUR</p>
+        <span className='text-center text-h1 text-neutral-400'>
+          {timeLeft.h}시간
+        </span>
+      </div>
+
+      <span className='text-center text-h1 text-neutral-400'>:</span>
+
+      <div className='flex flex-col'>
+        <p className={clsx(textColor, 'text-center text-body-l-sb')}>MINUTE</p>
+        <span className='text-center text-h1 text-neutral-400'>
+          {timeLeft.m}분
+        </span>
+      </div>
+
+      <span className='text-center text-h1 text-neutral-400'>:</span>
+
+      <div className='flex flex-col'>
+        <p className={clsx(textColor, 'text-center text-body-l-sb')}>SECOND</p>
+        <span className='text-center text-h1 text-neutral-400'>
+          {timeLeft.s}초
+        </span>
+      </div>
     </div>
   );
 }
