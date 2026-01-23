@@ -11,7 +11,6 @@ import {
 import {BASIC_INFO_FIELDS} from '@/constants/form/formConfig';
 import {useRouter, useSearchParams} from 'next/navigation';
 import {useRecruitmentStore} from '@/store/useRecruitmentStore';
-import {useSubmissionStore} from '@/store/useSubmissionStore';
 import {useGetEtcQuestionsQuery} from '@/hooks/queries/useApply.query';
 import {
   useSaveBasicInfo,
@@ -19,6 +18,8 @@ import {
   useSaveEtcQuestions,
   useSubmitApplication,
 } from '@/hooks/mutations/useApply.mutation';
+import {useQueryClient} from '@tanstack/react-query';
+import {QUERY_KEYS} from '@/constants/query-keys';
 
 interface UseApplyFormControllerReturn {
   step: number;
@@ -47,7 +48,7 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
 
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
   const {isRecruiting} = useRecruitmentStore();
-  const setHasSubmitted = useSubmissionStore((state) => state.setHasSubmitted);
+  const queryClient = useQueryClient();
 
   const methods = useForm<BasicInfoFormData>({
     mode: 'onChange',
@@ -131,7 +132,7 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
         .join(', ');
 
       const discoveryPath =
-        (formData.discovery as EtcQuestionRequest['discoveryPath']) ?? '기타';
+        (formData.discovery as EtcQuestionRequest['discoveryPath']) || '';
 
       const requestData: EtcQuestionRequest = {
         discoveryPath,
@@ -195,7 +196,7 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
     try {
       handleSave();
       await submitApplication();
-      setHasSubmitted(true);
+      await queryClient.invalidateQueries({queryKey: QUERY_KEYS.APPLY.STATUS});
       router.push('/?submitted=true');
     } catch {
       router.push('/?submitted=false');
