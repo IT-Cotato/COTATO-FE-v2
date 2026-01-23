@@ -9,7 +9,7 @@ export const AdminSideBar = () => {
   const pathname = usePathname();
 
   return (
-    <nav className='z-sidebar flex h-full flex-col gap-7.5 bg-neutral-50 px-6.25 py-12.5'>
+    <nav className='sticky top-25 z-sidebar flex flex-col gap-7.5 px-6.25 py-12.5'>
       <h2 className='text-h4 text-neutral-400'>관리자 페이지</h2>
       <ul className='flex w-50 flex-col gap-2.5'>
         {ADMIN_NAV_ITEMS.map(({label, href}) => {
