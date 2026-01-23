@@ -16,7 +16,7 @@ import DemodayPic from '@/assets/backgrounds/activity-card/demoday-photo.webp';
 import {
   ActivityCategoryType,
   PositionType,
-} from '@/schemas/recruit/recruit-components.schema';
+} from '@/schemas/recruit/recruit.schema';
 import {StaticImageData} from 'next/image';
 
 export const QUALIFICATIONS_CARD_ITEMS = [

@@ -3,7 +3,7 @@ import DefaultBg from '@/assets/backgrounds/recruitment-position/default-bg.webp
 import BrandLogo from '@/assets/brand-logo/brand-logo.svg';
 import clsx from 'clsx';
 import {POSITION_CARD_STYLES} from '@/constants/recruit/recruit-components';
-import {PositionCardType} from '@/schemas/recruit/recruit-components.schema';
+import {PositionCardType} from '@/schemas/recruit/recruit.schema';
 
 interface PositionCardProps {
   item: PositionCardType;
