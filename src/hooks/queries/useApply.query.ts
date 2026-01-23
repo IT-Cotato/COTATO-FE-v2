@@ -8,7 +8,7 @@ import {
 } from '@/services/api/apply/apply.api';
 import {QUERY_KEYS} from '@/constants/query-keys';
 import {StartApplicationResponse} from '@/schemas/apply/apply-schema';
-import {useEffect, useState} from 'react';
+import {useEffect} from 'react';
 
 /**
  * 지원서 상태 조회
@@ -17,7 +17,6 @@ import {useEffect, useState} from 'react';
  */
 export const useApplicationStatus = (enabled: boolean = true) => {
   const queryClient = useQueryClient();
-  const [isLoading, setIsLoading] = useState(false);
 
   // 캐시에서 데이터 읽기
   const cachedData = queryClient.getQueryData<StartApplicationResponse>(
@@ -34,7 +33,7 @@ export const useApplicationStatus = (enabled: boolean = true) => {
 
   return {
     data: cachedData,
-    isLoading: isLoading && !cachedData,
+    isLoading: enabled && !cachedData,
   };
 };
 
