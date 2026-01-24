@@ -196,7 +196,7 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
         params.set('part', getValues('part'));
       }
 
-      router.push(`/apply?${params.toString()}`);
+      window.location.href = `/apply?${params.toString()}`;
     }
   };
 
