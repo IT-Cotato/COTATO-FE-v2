@@ -1,5 +1,6 @@
 'use client';
 
+import {useRef, useEffect} from 'react';
 import {FormProvider} from 'react-hook-form';
 import {BasicInfo} from '@/app/apply/_components/BasicInfo';
 import {PartQuestion} from '@/app/apply/_components/PartQuestion';
@@ -11,6 +12,7 @@ import {AdminRecruitmentInformation} from '@/app/admin/application-edit/_compone
 import {useRecruitmentStatusQuery} from '@/hooks/queries/useRecruitmentStatus.query';
 import {useRecruitmentScheduleQuery} from '@/hooks/queries/useRecruitmentSchedule.query';
 import {Spinner} from '@/components/ui/Spinner';
+import {HEADER_HEIGHT} from '@/constants/ui';
 
 const STEP_TITLES = {
   2: '파트별 질문',
@@ -18,6 +20,8 @@ const STEP_TITLES = {
 } as const;
 
 export const ApplyFormContainer = () => {
+  const pageTopRef = useRef<HTMLDivElement>(null);
+  const formContainerRef = useRef<HTMLDivElement>(null);
   const {
     step,
     methods,
@@ -30,6 +34,14 @@ export const ApplyFormContainer = () => {
     handleConfirmSubmit,
     showSaveSuccess,
   } = useApplyFormController();
+
+  useEffect(() => {
+    if (step === 1) {
+      pageTopRef.current?.scrollIntoView({behavior: 'smooth'});
+    } else {
+      formContainerRef.current?.scrollIntoView({behavior: 'smooth'});
+    }
+  }, [step]);
 
   const {data: recruitmentStatus, isLoading} = useRecruitmentStatusQuery();
   const generation = recruitmentStatus?.data?.generationId;
@@ -46,7 +58,10 @@ export const ApplyFormContainer = () => {
 
   return (
     <>
-      <div className='flex w-full flex-col items-center bg-neutral-50'>
+      <div
+        ref={pageTopRef}
+        style={{scrollMarginTop: HEADER_HEIGHT}}
+        className='flex w-full flex-col items-center bg-neutral-50'>
         {step === 1 && (
           <HeroMainBanner
             heading='COde Together, Arrive TOgether'
@@ -54,7 +69,10 @@ export const ApplyFormContainer = () => {
           />
         )}
 
-        <div className='flex w-full max-w-[1100px] flex-col py-[42.5px]'>
+        <div
+          ref={formContainerRef}
+          style={{scrollMarginTop: HEADER_HEIGHT}}
+          className='flex w-full max-w-[1100px] flex-col py-[42.5px]'>
           <div className='flex flex-col gap-3.5'>
             <h1 className='text-h1 text-neutral-800'>
               <span aria-hidden='true'>🥔</span>
