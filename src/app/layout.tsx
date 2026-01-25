@@ -1,4 +1,3 @@
-import {Footer} from '@/components/layout/Footer';
 import {Header} from '@/components/layout/Header';
 import {Metadata} from 'next';
 import '@/styles/globals.css';
@@ -52,7 +51,6 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
           <ConditionalAuthProvider>
             <Header />
             <main className='flex-1'>{children}</main>
-            <Footer />
           </ConditionalAuthProvider>
         </Providers>
       </body>

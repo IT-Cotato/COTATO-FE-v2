@@ -1,11 +1,11 @@
 'use client';
 
 import {useRecruitmentNoticeQuery} from '@/hooks/queries/useRecruitmentNotice.query';
-import {TimelineItem} from '@/app/recruit/_components/TimelineItem';
-import {QualificationsCard} from '@/app/recruit/_components/QualificationsCard';
+import {TimelineItem} from '@/app/(with-footer)/recruit/_components/TimelineItem';
+import {QualificationsCard} from '@/app/(with-footer)/recruit/_components/QualificationsCard';
 import {QUALIFICATIONS_CARD_ITEMS} from '@/constants/recruit/recruit-components';
-import {PositionCard} from '@/app/recruit/_components/PositionCard';
-import {ActivityCard} from '@/app/recruit/_components/ActivityCard';
+import {PositionCard} from '@/app/(with-footer)/recruit/_components/PositionCard';
+import {ActivityCard} from '@/app/(with-footer)/recruit/_components/ActivityCard';
 import {Button} from '@/components/button/Button';
 import {useRouter} from 'next/navigation';
 

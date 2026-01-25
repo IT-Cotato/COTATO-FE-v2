@@ -1,5 +1,5 @@
-import {ContentArea} from '@/app/recruit/_components/ContentArea';
-import {RecruitmentActionSection} from '@/app/recruit/_components/RecruitmentActionSection';
+import {ContentArea} from '@/app/(with-footer)/recruit/_components/ContentArea';
+import {RecruitmentActionSection} from '@/app/(with-footer)/recruit/_components/RecruitmentActionSection';
 
 export default function RecruitmentNoticePage() {
   return (

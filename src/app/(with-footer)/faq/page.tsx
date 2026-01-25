@@ -1,7 +1,7 @@
 import HeroMainBanner from '@/components/banner/HeroMainBanner';
-import {FaqSideBar} from '@/app/faq/_components/FaqSideBar';
-import {FaqAccordionList} from '@/app/faq/_components/FaqAccordionList';
-import {FaqContact} from '@/app/faq/_components/FaqContact';
+import {FaqSideBar} from '@/app/(with-footer)/faq/_components/FaqSideBar';
+import {FaqAccordionList} from '@/app/(with-footer)/faq/_components/FaqAccordionList';
+import {FaqContact} from '@/app/(with-footer)/faq/_components/FaqContact';
 import {SuspenseWrapper} from '@/components/wrappers/SuspenseWrapper';
 
 export default function FaqPage() {

@@ -1,5 +1,4 @@
 import {FullButton} from '@/components/button/FullButton';
-import {FormFile} from '@/components/form/FormFile';
 import {FormLink} from '@/components/form/FormLink';
 import {FormTextarea} from '@/components/form/FormTextarea';
 import {PartQuestionWithAnswerType} from '@/schemas/admin/admin-application.schema';
@@ -20,27 +19,29 @@ export const PartQuestionView = ({
   return (
     <div className='flex flex-col gap-10'>
       {questionsWithAnswers.map((data) => (
-        <FormTextarea
-          key={data.sequence}
-          label={`${data.sequence}. ${data.questionContent}`}
-          readOnly
-          value={data.content ?? ''}
-          maxLength={500}
-          currentLength={data.byteSize}
-        />
+        <div key={data.sequence} className='flex flex-col gap-5'>
+          {/* 6번 질문  (포트폴리오) */}
+          {data.sequence === 6 ? (
+            pdfFileUrl ? (
+              <FormLink
+                label={`${data.sequence}. ${data.questionContent}`}
+                readOnly
+                value={pdfFileUrl}
+              />
+            ) : (
+              <p className='text-neutral-400'>첨부된 포트폴리오가 없습니다.</p>
+            )
+          ) : (
+            <FormTextarea
+              label={`${data.sequence}.${data.questionContent}`}
+              readOnly
+              value={data.content ?? ''}
+              maxLength={500}
+              currentLength={data.byteSize}
+            />
+          )}
+        </div>
       ))}
-
-      <div className='flex flex-col gap-5'>
-        {pdfFileUrl && (
-          <div className='flex flex-col gap-5'>
-            <label className='text-h5 text-neutral-800'>포트폴리오</label>
-            <FormLink readOnly value={pdfFileUrl} />
-          </div>
-        )}
-
-        {/* <FormFile readOnly value={data.files?.map((f) => f.name)} /> */}
-      </div>
-
       <div className='flex flex-row gap-7.5'>
         <FullButton
           label='이전'

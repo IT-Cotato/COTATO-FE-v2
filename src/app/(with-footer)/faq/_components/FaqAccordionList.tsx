@@ -1,6 +1,6 @@
 'use client';
 
-import {FaqAccordion} from '@/app/faq/_components/FaqAccordion';
+import {FaqAccordion} from '@/app/(with-footer)/faq/_components/FaqAccordion';
 import {useFaqQuery} from '@/hooks/queries/useFaq.query';
 import {useSearchParams} from 'next/navigation';
 import {FAQ_TYPE_MAP} from '@/constants/faq/faq';
