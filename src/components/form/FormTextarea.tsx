@@ -30,9 +30,9 @@ export const FormTextarea = forwardRef<HTMLTextAreaElement, FormTextareaProps>(
             ref={ref}
             id={inputId}
             className={clsx(
-              'min-h-[305px] w-full',
+              'min-h-54.5 w-full',
               formFieldStyles.field,
-              'py-4 pr-28 pb-10',
+              'px-4.75 py-3.5',
               'read-only:cursor-default read-only:focus:ring-0',
               error && formFieldStyles.error,
               props.readOnly && formFieldStyles.readOnlyTextarea,
@@ -43,7 +43,7 @@ export const FormTextarea = forwardRef<HTMLTextAreaElement, FormTextareaProps>(
           />
 
           {maxLength && (
-            <div className='absolute right-4 bottom-4 text-sm text-neutral-400'>
+            <div className='absolute right-4 bottom-4 text-h5 text-neutral-400'>
               <span
                 className={clsx(currentLength > maxLength && 'text-red-500')}>
                 {currentLength}
