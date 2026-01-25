@@ -49,8 +49,8 @@ export const AdminApplicationEvaluationContainer = ({
   };
 
   return (
-    <div className='flex w-full flex-col gap-7.75'>
-      <div className='flex gap-17.5'>
+    <div className='flex w-full flex-col gap-2.5'>
+      <div className='flex gap-10'>
         {EVALUATOR_TABS.map(({label, value}) => {
           const isActive = evaluator === value;
           return (
@@ -59,8 +59,8 @@ export const AdminApplicationEvaluationContainer = ({
               label={label}
               labelTypo='h5'
               onClick={() => handleEvaluatorClick(value)}
-              textColor={isActive ? 'neutral-800' : 'neutral-500'}
-              backgroundColor='neutral-50'
+              textColor={isActive ? 'neutral-800' : 'neutral-400'}
+              backgroundColor='white'
               width='min-w-[50px]'
               height={40}
             />

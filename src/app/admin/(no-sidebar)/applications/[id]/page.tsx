@@ -3,7 +3,7 @@ import {SuspenseWrapper} from '@/components/wrappers/SuspenseWrapper';
 
 export default function ApplicationDetailPage() {
   return (
-    <section className='flex w-full flex-col gap-17.5'>
+    <section className='flex w-full flex-col gap-5'>
       <SuspenseWrapper>
         <AdminApplicationContainer />
       </SuspenseWrapper>

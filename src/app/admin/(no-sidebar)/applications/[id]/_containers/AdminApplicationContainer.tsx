@@ -12,6 +12,7 @@ import {
   useAdminApplicationPartQuestions,
 } from '@/hooks/queries/useAdminApplication.query';
 import {useParams, useRouter, useSearchParams} from 'next/navigation';
+import {PART_TABS} from '@/constants/admin/admin-application-questions';
 
 export const AdminApplicationContainer = () => {
   const searchParams = useSearchParams();
@@ -55,29 +56,49 @@ export const AdminApplicationContainer = () => {
 
       <AdminApplicationEvaluationContainer applicationId={applicationId} />
 
-      <div className='flex w-full flex-col gap-31.25'>
-        <div className='flex justify-center'>
-          <StepIndicator currentStep={step} totalSteps={3} />
-        </div>
-
+      <div className='flex w-full flex-col gap-5'>
         {step === 1 && (
-          <BasicInfoView onNext={handleNext} basicInfo={basicInfo.data} />
+          <div className='flex flex-col'>
+            <div className='flex justify-center'>
+              <StepIndicator currentStep={step} totalSteps={3} />
+            </div>
+            <BasicInfoView onNext={handleNext} basicInfo={basicInfo.data} />
+          </div>
         )}
 
         {step === 2 && (
-          <PartQuestionView
-            onPrev={handlePrev}
-            onNext={handleNext}
-            selectedPart={basicInfo.data.applicationPartType}
-            questionsWithAnswers={partQuestions.data.questionsWithAnswers}
-            pdfFileUrl={partQuestions.data.pdfFileUrl}
-          />
+          <div className='flex flex-col gap-4'>
+            <label className='text-h3 font-bold text-primary'>
+              {PART_TABS.find(
+                (tab) => tab.value === basicInfo.data.applicationPartType
+              )?.label ?? '-'}{' '}
+              파트에 관한 질문입니다.
+            </label>
+            <div className='flex justify-center'>
+              <StepIndicator currentStep={step} totalSteps={3} />
+            </div>
+            <PartQuestionView
+              onPrev={handlePrev}
+              onNext={handleNext}
+              questionsWithAnswers={partQuestions.data.questionsWithAnswers}
+              pdfFileUrl={partQuestions.data.pdfFileUrl}
+            />
+          </div>
         )}
+
         {step === 3 && (
-          <EtcQuestionView
-            onPrev={handlePrev}
-            etcQuestions={etcQuestions.data}
-          />
+          <div className='flex flex-col gap-4'>
+            <label className='text-h3 font-bold text-neutral-800'>
+              기타 질문
+            </label>
+            <div className='flex justify-center'>
+              <StepIndicator currentStep={step} totalSteps={3} />
+            </div>
+            <EtcQuestionView
+              onPrev={handlePrev}
+              etcQuestions={etcQuestions.data}
+            />
+          </div>
         )}
       </div>
     </>

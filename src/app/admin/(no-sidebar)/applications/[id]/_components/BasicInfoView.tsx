@@ -11,14 +11,14 @@ interface BasicInfoViewProps {
 
 export const BasicInfoView = ({onNext, basicInfo}: BasicInfoViewProps) => {
   return (
-    <div className='flex flex-col gap-7.5'>
+    <div className='flex flex-col gap-4'>
       <FormInput
         label={BASIC_INFO_LABELS.name}
         readOnly
         value={basicInfo.name}
       />
 
-      <div className='flex flex-row gap-17.5'>
+      <div className='flex flex-row gap-10'>
         <FormInput
           label={BASIC_INFO_LABELS.gender}
           readOnly
@@ -76,12 +76,7 @@ export const BasicInfoView = ({onNext, basicInfo}: BasicInfoViewProps) => {
         />
       </div>
 
-      <FullButton
-        label='다음'
-        labelTypo='h4'
-        onClick={onNext}
-        className='mt-10'
-      />
+      <FullButton label='다음' labelTypo='h4' onClick={onNext} height={54} />
     </div>
   );
 };
