@@ -7,7 +7,7 @@ import {EtcInfo} from '@/app/apply/_components/EtcInfo';
 import {useApplyFormController} from '@/app/apply/_hooks/useApplyFormController';
 import {ApplicationConfirmModal} from '@/components/modal/ApplicationConfirmModal';
 import HeroMainBanner from '@/components/banner/HeroMainBanner';
-import {AdminRecruitmentInformation} from '@/app/admin/application-edit/_components/recruitment/AdminRecruitmentInformation';
+import {AdminRecruitmentInformation} from '@/app/admin/(with-sidebar)/application-edit/_components/recruitment/AdminRecruitmentInformation';
 import {useRecruitmentStatusQuery} from '@/hooks/queries/useRecruitmentStatus.query';
 import {useRecruitmentScheduleQuery} from '@/hooks/queries/useRecruitmentSchedule.query';
 import {Spinner} from '@/components/ui/Spinner';
