@@ -22,7 +22,7 @@ export const BasicInfoView = ({onNext, basicInfo}: BasicInfoViewProps) => {
         <FormInput
           label={BASIC_INFO_LABELS.gender}
           readOnly
-          value={basicInfo.gender}
+          value={genderLabelMap[basicInfo.gender] ?? ''}
         />
         <FormInput
           label={BASIC_INFO_LABELS.birthDate}
@@ -72,11 +72,16 @@ export const BasicInfoView = ({onNext, basicInfo}: BasicInfoViewProps) => {
         <FormInput
           label={BASIC_INFO_LABELS.isPrevActivity}
           readOnly
-          value={String(basicInfo.isPrevActivity)}
+          value={basicInfo.isPrevActivity ? 'O' : 'X'}
         />
       </div>
 
       <FullButton label='다음' labelTypo='h4' onClick={onNext} height={54} />
     </div>
   );
+};
+
+const genderLabelMap: Record<string, string> = {
+  male: '남',
+  female: '여',
 };
