@@ -45,6 +45,12 @@ export const AdminApplicationContainer = () => {
     }
   };
 
+  if (Number.isNaN(applicationId)) {
+    return (
+      <p className='text-center text-h3 text-alert'>잘못된 지원서 ID입니다.</p>
+    );
+  }
+
   if (!basicInfo || !partQuestions || !etcQuestions) return null;
 
   return (
