@@ -6,13 +6,12 @@ import {useFormContext} from 'react-hook-form';
 import {FormTextarea} from '@/components/form/FormTextarea';
 import {FormFile} from '@/components/form/FormFile';
 import {FullButton} from '@/components/button/FullButton';
-
 import {useGetPartQuestionsQuery} from '@/hooks/queries/useApply.query';
 import {useUploadFile} from '@/hooks/mutations/useApply.mutation';
-import {PART_TABS} from '@/constants/admin/admin-application-questions';
 import {PartType} from '@/schemas/admin/admin-application-questions.schema';
 import {Spinner} from '@/components/ui/Spinner';
 import {StepIndicator} from '@/components/navigation/StepIndicator';
+import {PART_TABS} from '@/constants/common/part';
 
 interface PartQuestionProps {
   step: number;

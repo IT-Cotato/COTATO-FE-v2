@@ -1,7 +1,7 @@
 import {
   APPLICATION_COLUMNS,
   ApplicationResultLabel,
-  PART_TABS,
+  APPLICATIONS_PART_TABS,
 } from '@/constants/admin/admin-applications';
 import {ROUTES} from '@/constants/routes';
 import DefaultFilterIcon from '@/assets/icons/filter-default.svg';
@@ -134,8 +134,9 @@ export const AdminApplicationsTableView = ({
             </td>
             <td className='truncate px-3 py-4'>
               <p className='text-center'>
-                {PART_TABS.find((tab) => tab.value === app.applicationPartType)
-                  ?.label ?? '-'}
+                {APPLICATIONS_PART_TABS.find(
+                  (tab) => tab.value === app.applicationPartType
+                )?.label ?? '-'}
               </p>
             </td>
             <td className='truncate px-3 py-4'>

@@ -15,7 +15,10 @@ export const APPLICATION_COLUMNS = [
 ] as const;
 
 /** 지원서 파트 탭 상수 */
-export const PART_TABS: {label: string; value: ApplicationPartViewType}[] = [
+export const APPLICATIONS_PART_TABS: {
+  label: string;
+  value: ApplicationPartViewType;
+}[] = [
   {label: '전체 회원', value: 'ALL'},
   {label: '기획', value: 'PM'},
   {label: '디자인', value: 'DE'},

@@ -1,7 +1,10 @@
 'use client';
 
 import {AdminApplicationsTabPart} from '@/app/admin/(with-sidebar)/applications/_components/tab/AdminApplicationsTabPart';
-import {PART_COUNT_MAP, PART_TABS} from '@/constants/admin/admin-applications';
+import {
+  APPLICATIONS_PART_TABS,
+  PART_COUNT_MAP,
+} from '@/constants/admin/admin-applications';
 import {
   ApplicationPartViewType,
   ApplicationSummaryType,
@@ -33,7 +36,7 @@ export const AdminApplicationsTabContainer = ({
 
   return (
     <div className='flex gap-7.5'>
-      {PART_TABS.map(({label, value}) => {
+      {APPLICATIONS_PART_TABS.map(({label, value}) => {
         const countKey = PART_COUNT_MAP[value];
         const applyNumber = summary?.[countKey];
 

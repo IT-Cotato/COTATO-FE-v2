@@ -1,5 +1,5 @@
+import {PART_TABS} from '@/constants/common/part';
 import {EtcFormItem, BasicInfoFormItem} from '@/schemas/apply/apply-type';
-import {PART_TABS} from '@/constants/admin/admin-application-questions';
 
 export const SEMESTER_OPTIONS = [
   {value: '4', label: '4학기'},

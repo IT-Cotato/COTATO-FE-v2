@@ -1,7 +1,7 @@
 'use client';
 
 import {Button} from '@/components/button/Button';
-import {PART_TABS} from '@/constants/admin/admin-application-questions';
+import {PART_TABS} from '@/constants/common/part';
 import {PartType} from '@/schemas/admin/admin-application-questions.schema';
 
 import {useRouter, useSearchParams} from 'next/navigation';

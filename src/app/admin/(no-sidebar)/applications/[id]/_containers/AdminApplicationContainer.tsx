@@ -12,7 +12,7 @@ import {
   useAdminApplicationPartQuestions,
 } from '@/hooks/queries/useAdminApplication.query';
 import {useParams, useRouter, useSearchParams} from 'next/navigation';
-import {PART_TABS} from '@/constants/admin/admin-applications';
+import {APPLICATIONS_PART_TABS} from '@/constants/admin/admin-applications';
 
 export const AdminApplicationContainer = () => {
   const searchParams = useSearchParams();
@@ -69,7 +69,7 @@ export const AdminApplicationContainer = () => {
         {step === 2 && (
           <div className='flex flex-col gap-4'>
             <label className='text-h3 font-bold text-primary'>
-              {PART_TABS.find(
+              {APPLICATIONS_PART_TABS.find(
                 (tab) => tab.value === basicInfo.data.applicationPartType
               )?.label ?? '-'}{' '}
               파트에 관한 질문입니다.

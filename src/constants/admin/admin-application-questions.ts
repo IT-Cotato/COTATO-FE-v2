@@ -1,5 +1,3 @@
-import {PartType} from '@/schemas/admin/admin-application-questions.schema';
-
 export const scheduleSections = [
   {
     label: '모집 기간',
