@@ -5,6 +5,7 @@ import {FormTextarea} from '@/components/form/FormTextarea';
 import {
   DISCOVERY_PATH_LABEL_MAP,
   ETC_QUESTION_LABELS,
+  PRIVACY_POLICY,
 } from '@/constants/admin/admin-applications';
 import {AdminApplicationEtcQuestionsType} from '@/schemas/admin/admin-application.schema';
 
@@ -70,14 +71,18 @@ export const EtcQuestionView = ({
       </div>
 
       <div className='flex flex-col gap-4'>
-        <label className='text-h5 text-neutral-800'>
-          {ETC_QUESTION_LABELS.privacyPolicy}
-        </label>
-        <FormRadio
-          label={ETC_QUESTION_LABELS.privacyPolicy_answer}
+        <FormTextarea
+          label={ETC_QUESTION_LABELS.privacyPolicy}
+          value={PRIVACY_POLICY}
           readOnly
-          checked={etcQuestions.privacyPolicy === true}
         />
+        <div className='flex justify-end'>
+          <FormRadio
+            label={ETC_QUESTION_LABELS.privacyPolicy_answer}
+            readOnly
+            checked={etcQuestions.privacyPolicy === true}
+          />
+        </div>
       </div>
 
       <FullButton
