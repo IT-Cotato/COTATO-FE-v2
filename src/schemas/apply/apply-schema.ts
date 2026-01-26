@@ -18,24 +18,56 @@ export const BasicInfoFormSchema = z.object({
   gender: z.enum(['MALE', 'FEMALE'], {
     message: '성별을 선택해주세요',
   }),
-  contact: z.string().superRefine((val, ctx) => {
-    const isDigits = /^\d{10,11}$/.test(val);
-    const isHyphenated = /^010-\d{4}-\d{4}$/.test(val);
-    if (!val) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        message: '연락처를 입력해주세요',
-      });
-      return;
-    }
-    if (!isDigits && !isHyphenated) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        message: '연락처 형식이 올바르지 않습니다.',
-      });
-    }
-  }),
-  birthDate: z.union([eightDigitDate, hyphenatedDate]).catch(''),
+  contact: z
+    .string()
+    .min(1, '연락처를 입력해주세요')
+    .superRefine((val, ctx) => {
+      const isDigits = /^010\d{8}$/.test(val);
+      const isHyphenated = /^010-\d{4}-\d{4}$/.test(val);
+
+      if (!isDigits && !isHyphenated) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message:
+            '연락처 형식이 올바르지 않습니다. 010으로 시작하는 11자리 숫자 형식이어야 합니다.)',
+        });
+      }
+    }),
+  birthDate: z
+    .string()
+    .min(1, '생년월일을 입력해주세요')
+    .superRefine((val, ctx) => {
+      const is8Digit = /^\d{8}$/.test(val);
+      const isHyphenated = /^\d{4}-\d{2}-\d{2}$/.test(val);
+
+      if (!is8Digit && !isHyphenated) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: '생년월일은 8자리 형식이어야 합니다.',
+        });
+        return;
+      }
+
+      if (isHyphenated) {
+        const [_, month, day] = val.split('-');
+        if (month === '00' || day === '00') {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            message: '유효하지 않은 날짜입니다.',
+          });
+        }
+      }
+      if (is8Digit) {
+        const month = val.slice(4, 6);
+        const day = val.slice(6, 8);
+        if (month === '00' || day === '00') {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            message: '유효하지 않은 날짜입니다.',
+          });
+        }
+      }
+    }),
   school: z.string().min(1, '학교를 입력해주세요'),
   isCollegeStudent: z.enum(['enrolled', 'other'], {
     message: '재학 여부를 선택해주세요',
