@@ -4,7 +4,7 @@ import {forwardRef, useId, type InputHTMLAttributes} from 'react';
 import clsx from 'clsx';
 import {formFieldStyles} from './form.styles';
 
-interface FormInputProps extends InputHTMLAttributes<HTMLInputElement> {
+export interface FormInputProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string;
   error?: string;
 }
@@ -16,9 +16,7 @@ export const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
 
     return (
       <div className={formFieldStyles.wrapper}>
-        <label
-          htmlFor={inputId}
-          className={clsx(formFieldStyles.label, className)}>
+        <label htmlFor={inputId} className={formFieldStyles.label}>
           {label}
         </label>
         <input
@@ -27,7 +25,7 @@ export const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
           className={clsx(
             formFieldStyles.field,
             props.readOnly && formFieldStyles.readOnlyForm,
-            error && formFieldStyles.error,
+            error ? formFieldStyles.error : 'border-neutral-300',
             className
           )}
           {...props}

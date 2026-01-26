@@ -28,8 +28,6 @@ interface BasicInfoProps {
   step: number;
 }
 
-
-
 export const BasicInfo = ({
   step,
   onNext,
