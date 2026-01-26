@@ -71,7 +71,7 @@ export const RecruitmentActive = () => {
           </div>
           <div className='flex justify-end'>
             <Button
-              label='지원하기'
+              label={hasSubmitted ? '제출 완료' : '지원하기'}
               onClick={handleApplyClick}
               disabled={hasSubmitted}
             />
