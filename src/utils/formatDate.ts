@@ -20,28 +20,30 @@ export const formatKoreanDate = (submittedAt: string) => {
 };
 
 /** 모집 공고 전용 날짜 한글 포맷 함수  */
-export const formatRecruitmentDate = (value?: string | null) => {
+export const formatRecruitmentDate = (
+  value?: string | null,
+  includeDay = true
+) => {
   if (!value) return '';
 
+  const date = new Date(value);
+  const month = date.getMonth() + 1;
+  const day = date.getDate();
+
+  if (!includeDay) {
+    return `${month}월 ${day}일`;
+  }
+
   const DAYS = ['일', '월', '화', '수', '목', '금', '토'];
+  const weekday = DAYS[date.getDay()];
 
   // datetime: 2026-01-14T00:00:00
   if (value.includes('T')) {
-    const date = new Date(value);
-    const month = date.getMonth() + 1;
-    const day = date.getDate();
-    const weekday = DAYS[date.getDay()];
     const hour = String(date.getHours()).padStart(2, '0');
     const minute = String(date.getMinutes()).padStart(2, '0');
-
     return ` ${month}월 ${day}일 (${weekday}) ${hour}:${minute}`;
   }
 
   // date only: 2026-03-06 → 월/일만
-  const date = new Date(value);
-  const month = date.getMonth() + 1;
-  const day = date.getDate();
-  const weekday = DAYS[date.getDay()];
-
   return `${month}월 ${day}일 (${weekday})`;
 };

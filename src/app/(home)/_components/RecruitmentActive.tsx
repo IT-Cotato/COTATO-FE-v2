@@ -10,6 +10,8 @@ import {useState} from 'react';
 import {LoginModal} from '@/components/modal/LoginModal';
 import {useAuthStore} from '@/store/useAuthStore';
 import {useApplicationStatusQuery} from '@/hooks/queries/useApply.query';
+import {useRecruitmentScheduleQuery} from '@/hooks/queries/useRecruitmentSchedule.query';
+import {formatRecruitmentDate} from '@/utils/formatDate';
 
 export const RecruitmentActive = () => {
   const router = useRouter();
@@ -20,6 +22,7 @@ export const RecruitmentActive = () => {
   const {isAuthenticated} = useAuthStore();
 
   const {data: applicationStatus} = useApplicationStatusQuery(isAuthenticated);
+  const {data: schedule} = useRecruitmentScheduleQuery();
   const hasSubmitted = applicationStatus?.isSubmitted ?? false;
 
   const handleApplyClick = () => {
@@ -29,6 +32,17 @@ export const RecruitmentActive = () => {
       router.push(`${ROUTES.APPLY}?id=${applicationStatus.applicationId}`);
     }
   };
+
+  const oldOtNotice = RECRUITMENT_NOTICES[2];
+  const notices = RECRUITMENT_NOTICES.map((notice) => {
+    if (notice === oldOtNotice && schedule?.ot) {
+      return `OT(${formatRecruitmentDate(
+        schedule.ot,
+        false
+      )}), 코커톤, 데모데이는 필수 참석 일정입니다. 불참 시 지원이 제한될 수 있습니다.`;
+    }
+    return notice;
+  });
 
   return (
     <>
@@ -48,7 +62,7 @@ export const RecruitmentActive = () => {
             <h4 className='text-h4 text-black'>⚠️ 지원 전 유의 사항 ⚠️</h4>
 
             <ul className='list-disc space-y-3 pl-6 text-neutral-800'>
-              {RECRUITMENT_NOTICES.map((notice, index) => (
+              {notices.map((notice, index) => (
                 <li key={index} className='text-body-l leading-relaxed'>
                   {notice}
                 </li>
