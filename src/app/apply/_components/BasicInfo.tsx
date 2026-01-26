@@ -23,6 +23,20 @@ interface BasicInfoProps {
   step: number;
 }
 
+const formatDigitsToYYYYMMDD = (digits: string): string => {
+  if (digits && digits.length === 8) {
+    return `${digits.slice(0, 4)}-${digits.slice(4, 6)}-${digits.slice(6, 8)}`;
+  }
+  return digits;
+};
+
+const formatDigitsToPhoneNumber = (digits: string): string => {
+  if (digits && digits.length === 11) {
+    return `${digits.slice(0, 3)}-${digits.slice(3, 7)}-${digits.slice(7, 11)}`;
+  }
+  return digits;
+};
+
 export const BasicInfo = ({
   step,
   onNext,
@@ -81,7 +95,6 @@ export const BasicInfo = ({
   const renderField = (field: BasicInfoFieldConfig) => {
     const {type, name, label, options, placeholder, autocomplete} =
       field as BasicInfoFieldConfig & {autocomplete?: string};
-    const error = errors[name];
 
     if (type === 'radio') {
       return (
@@ -90,28 +103,30 @@ export const BasicInfo = ({
           <Controller
             name={name}
             control={control}
-            render={({field}) => (
-              <div className='flex gap-[58px] pt-11'>
-                {options?.map((opt) => (
-                  <FormRadio
-                    key={opt.value}
-                    label={opt.label}
-                    value={opt.value}
-                    checked={field.value === opt.value}
-                    onChange={() => field.onChange(opt.value)}
-                    readOnly={readOnly}
-                  />
-                ))}
-              </div>
+            render={({field, fieldState: {error}}) => (
+              <>
+                <div className='flex gap-[58px] pt-11'>
+                  {options?.map((opt) => (
+                    <FormRadio
+                      key={opt.value}
+                      label={opt.label}
+                      value={opt.value}
+                      checked={field.value === opt.value}
+                      onChange={() => field.onChange(opt.value)}
+                      readOnly={readOnly}
+                    />
+                  ))}
+                </div>
+                <div>
+                  {error && (
+                    <span className='text-body-l text-alert'>
+                      {error.message ?? ''}
+                    </span>
+                  )}
+                </div>
+              </>
             )}
           />
-          <div>
-            {error && (
-              <span className='text-body-l text-alert'>
-                {error.message ?? ''}
-              </span>
-            )}
-          </div>
         </fieldset>
       );
     }
@@ -122,27 +137,113 @@ export const BasicInfo = ({
           <Controller
             name={name}
             control={control}
-            render={({field}) => (
-              <FormDropdown
-                id={name}
-                label={label}
-                placeholder={placeholder}
-                options={options || []}
-                value={field.value}
-                onChange={field.onChange}
-                readOnly={readOnly}
-                className='w-full'
-              />
+            render={({field, fieldState: {error}}) => (
+              <>
+                <FormDropdown
+                  id={name}
+                  label={label}
+                  placeholder={placeholder}
+                  options={options || []}
+                  value={field.value}
+                  onChange={field.onChange}
+                  readOnly={readOnly}
+                  className='w-full'
+                />
+                <div>
+                  {error && (
+                    <span className='pt-6 text-body-l text-alert'>
+                      {error.message ?? ''}
+                    </span>
+                  )}
+                </div>
+              </>
             )}
           />
-          <div>
-            {error && (
-              <span className='pt-6 text-body-l text-alert'>
-                {error.message ?? ''}
-              </span>
-            )}
-          </div>
         </div>
+      );
+    }
+
+    if (name === 'birthDate') {
+      return (
+        <Controller
+          key={name}
+          name={name}
+          control={control}
+          render={({field: controllerField, fieldState: {error}}) => {
+            const handleBlur = () => {
+              const formatted = formatDigitsToYYYYMMDD(controllerField.value);
+              controllerField.onChange(formatted);
+            };
+
+            const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+              const digits = e.target.value.replace(/\D/g, '');
+              controllerField.onChange(digits);
+            };
+
+            return (
+              <div className='flex flex-1 flex-col gap-2'>
+                <FormInput
+                  id={name}
+                  label={label}
+                  placeholder={placeholder}
+                  readOnly={readOnly}
+                  autoComplete={autocomplete}
+                  error={error?.message ?? ''}
+                  className='w-full'
+                  value={controllerField.value || ''}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  maxLength={8}
+                  type='tel'
+                  inputMode='numeric'
+                />
+              </div>
+            );
+          }}
+        />
+      );
+    }
+
+    if (name === 'contact') {
+      return (
+        <Controller
+          key={name}
+          name={name}
+          control={control}
+          render={({field: controllerField, fieldState: {error}}) => {
+            const handleBlur = () => {
+              const formatted = formatDigitsToPhoneNumber(
+                controllerField.value
+              );
+              controllerField.onChange(formatted);
+            };
+
+            const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+              const digits = e.target.value.replace(/\D/g, '');
+              controllerField.onChange(digits);
+            };
+
+            return (
+              <div className='flex flex-1 flex-col gap-2'>
+                <FormInput
+                  id={name}
+                  label={label}
+                  placeholder={placeholder}
+                  readOnly={readOnly}
+                  autoComplete={autocomplete}
+                  error={error?.message ?? ''}
+                  className='w-full'
+                  value={controllerField.value || ''}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  maxLength={11}
+                  type='tel'
+                  inputMode='numeric'
+                />
+              </div>
+            );
+          }}
+        />
       );
     }
 
@@ -156,7 +257,7 @@ export const BasicInfo = ({
           autoComplete={autocomplete}
           maxLength={200}
           {...register(name)}
-          error={error?.message ?? ''}
+          error={errors[name]?.message ?? ''}
           className='w-full'
         />
       </div>

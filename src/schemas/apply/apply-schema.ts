@@ -1,18 +1,41 @@
 import {z} from 'zod';
 
+const eightDigitDate = z.string().regex(/^\d{8}$/);
+
+const hyphenatedDate = z
+  .string()
+  .regex(/^\d{4}-\d{2}-\d{2}$/)
+  .refine(
+    (date) => {
+      const [_, month, day] = date.split('-');
+      return month !== '00' && day !== '00';
+    },
+    {message: '유효하지 않은 날짜입니다.'}
+  );
+
 export const BasicInfoFormSchema = z.object({
   name: z.string().min(1, '이름을 입력해주세요'),
-  gender: z.enum(['male', 'female'], {
+  gender: z.enum(['MALE', 'FEMALE'], {
     message: '성별을 선택해주세요',
   }),
-  contact: z
-    .string()
-    .min(1, '연락처를 입력해주세요')
-    .regex(/^010-\d{4}-\d{4}$/, '010-0000-0000 형식으로 입력해주세요'),
-  birthDate: z
-    .string()
-    .min(1, '생년월일을 입력해주세요')
-    .regex(/^\d{4}-\d{2}-\d{2}$/, 'YYYY-MM-DD 형식으로 입력해주세요'),
+  contact: z.string().superRefine((val, ctx) => {
+    const isDigits = /^\d{10,11}$/.test(val);
+    const isHyphenated = /^010-\d{4}-\d{4}$/.test(val);
+    if (!val) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: '연락처를 입력해주세요',
+      });
+      return;
+    }
+    if (!isDigits && !isHyphenated) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: '연락처 형식이 올바르지 않습니다.',
+      });
+    }
+  }),
+  birthDate: z.union([eightDigitDate, hyphenatedDate]).catch(''),
   school: z.string().min(1, '학교를 입력해주세요'),
   isCollegeStudent: z.enum(['enrolled', 'other'], {
     message: '재학 여부를 선택해주세요',
@@ -36,7 +59,7 @@ export const StartApplicationResponseSchema = z.object({
 
 export const BasicInfoRequestSchema = z.object({
   name: z.string(),
-  gender: z.enum(['male', 'female']),
+  gender: z.enum(['MALE', 'FEMALE']),
   birthDate: z.string(),
   phoneNumber: z.string(),
   university: z.string(),

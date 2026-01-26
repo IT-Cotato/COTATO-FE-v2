@@ -25,15 +25,15 @@ export const BASIC_INFO_FIELDS: BasicInfoFormItem[] = [
         type: 'dropdown',
         placeholder: '성별을 선택해주세요',
         options: [
-          {value: 'male', label: '남'},
-          {value: 'female', label: '여'},
+          {value: 'MALE', label: '남'},
+          {value: 'FEMALE', label: '여'},
         ],
       },
       {
         name: 'birthDate',
         label: '생년월일',
         type: 'input',
-        placeholder: 'ex) 2000-01-01',
+        placeholder: 'ex) 20000101',
       },
     ],
   },
@@ -41,7 +41,7 @@ export const BASIC_INFO_FIELDS: BasicInfoFormItem[] = [
     name: 'contact',
     label: '연락처',
     type: 'input',
-    placeholder: 'ex) 010-1234-5678',
+    placeholder: 'ex) 01012345678',
   },
   {
     row: [
@@ -49,11 +49,11 @@ export const BASIC_INFO_FIELDS: BasicInfoFormItem[] = [
         name: 'school',
         label: '학교',
         type: 'input',
-        placeholder: '학교를 작성해주세요',
+        placeholder: 'ex) 감자대학교',
       },
       {
         name: 'isCollegeStudent',
-        label: '재학 여부',
+        label: '',
         type: 'radio',
         options: [
           {label: '재학', value: 'enrolled'},
