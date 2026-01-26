@@ -7,7 +7,7 @@ import {FocusTrap} from 'focus-trap-react';
 
 interface ModalProps {
   isOpen: boolean; /** 모달의 열림/닫힘 상태를 제어합니다. */
-  onClose: () => void; /** 모달을 닫는 함수입니다. 배경 클릭 또는 닫기 버튼 클릭 시 호출됩니다. */
+  onClose?: () => void; /** 모달을 닫는 함수입니다. 배경 클릭 또는 닫기 버튼 클릭 시 호출됩니다. */
   title: string; /** 모달의 제목입니다. (필수) */
   titleStyle?: string; /** 제목의 스타일이 다를 때 적용할 수 있도록 합니다. 값이 없는 경우 기본 스타일이 적용됩니다. (예: LoginModal에 사용됩니다.) */
   content?: ReactNode; /** 모달의 주 내용(body)입니다. 제목 아래에 표시됩니다. */
