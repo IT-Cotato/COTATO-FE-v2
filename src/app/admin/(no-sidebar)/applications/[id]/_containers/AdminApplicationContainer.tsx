@@ -12,7 +12,7 @@ import {
   useAdminApplicationPartQuestions,
 } from '@/hooks/queries/useAdminApplication.query';
 import {useParams, useRouter, useSearchParams} from 'next/navigation';
-import {PART_TABS} from '@/constants/admin/admin-application-questions';
+import {PART_TABS} from '@/constants/admin/admin-applications';
 
 export const AdminApplicationContainer = () => {
   const searchParams = useSearchParams();
