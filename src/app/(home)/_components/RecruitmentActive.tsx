@@ -3,7 +3,6 @@
 import Image from 'next/image';
 import {Button} from '@/components/button/Button';
 import {RECRUITMENT_NOTICES} from '@/constants/home/recruitment';
-import {useRecruitmentStore} from '@/store/useRecruitmentStore';
 import {useRouter} from 'next/navigation';
 import {ROUTES} from '@/constants/routes';
 import {useState} from 'react';
@@ -11,14 +10,16 @@ import {LoginModal} from '@/components/modal/LoginModal';
 import {useAuthStore} from '@/store/useAuthStore';
 import {useApplicationStatusQuery} from '@/hooks/queries/useApply.query';
 import {useRecruitmentScheduleQuery} from '@/hooks/queries/useRecruitmentSchedule.query';
+import {useRecruitmentStatusQuery} from '@/hooks/queries/useRecruitmentStatus.query';
 import {formatRecruitmentDate} from '@/utils/formatDate';
 
 export const RecruitmentActive = () => {
   const router = useRouter();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const {data: recruitmentStatus} = useRecruitmentStatusQuery();
+  const generation = recruitmentStatus?.data?.generationId ?? '';
 
-  const generation = useRecruitmentStore((state) => state.generation);
   const {isAuthenticated} = useAuthStore();
 
   const {data: applicationStatus} = useApplicationStatusQuery(isAuthenticated);
