@@ -1,18 +1,29 @@
 'use client';
 
 import {useRef, useEffect} from 'react';
+import {useRouter} from 'next/navigation';
 import {FormProvider} from 'react-hook-form';
 import {BasicInfo} from '@/app/apply/_components/BasicInfo';
 import {PartQuestion} from '@/app/apply/_components/PartQuestion';
 import {EtcInfo} from '@/app/apply/_components/EtcInfo';
 import {useApplyFormController} from '@/app/apply/_hooks/useApplyFormController';
 import {ApplicationConfirmModal} from '@/components/modal/ApplicationConfirmModal';
+import {AlreadySubmittedModal} from '@/components/modal/AlreadySubmittedModal';
+import {useApplicationStatusQuery} from '@/hooks/queries/useApply.query';
+import {useAuthStore} from '@/store/useAuthStore';
+import {ROUTES} from '@/constants/routes';
 import HeroMainBanner from '@/components/banner/HeroMainBanner';
 import {AdminRecruitmentInformation} from '@/app/admin/application-edit/_components/recruitment/AdminRecruitmentInformation';
 import {useRecruitmentStatusQuery} from '@/hooks/queries/useRecruitmentStatus.query';
 import {useRecruitmentScheduleQuery} from '@/hooks/queries/useRecruitmentSchedule.query';
 import {Spinner} from '@/components/ui/Spinner';
 import {HEADER_HEIGHT} from '@/constants/ui';
+import axios, {AxiosError} from 'axios';
+
+interface ApiErrorData {
+  code: string;
+  message: string;
+}
 
 const STEP_TITLES = {
   2: '파트별 질문',
@@ -20,8 +31,18 @@ const STEP_TITLES = {
 } as const;
 
 export const ApplyFormContainer = () => {
+  const router = useRouter();
   const pageTopRef = useRef<HTMLDivElement>(null);
   const formContainerRef = useRef<HTMLDivElement>(null);
+
+  const {isAuthenticated} = useAuthStore();
+
+  const {
+    data: applicationStatus,
+    isError,
+    error,
+  } = useApplicationStatusQuery(isAuthenticated);
+
   const {
     step,
     methods,
@@ -45,14 +66,32 @@ export const ApplyFormContainer = () => {
 
   const {data: recruitmentStatus, isLoading} = useRecruitmentStatusQuery();
   const generation = recruitmentStatus?.data?.generationId;
-
   const {data: scheduleData} = useRecruitmentScheduleQuery();
+
+  // 렌더링 중 제출 완료 여부 직접 계산
+  let isConfirmedSubmitted = false;
+  if (isError && axios.isAxiosError(error)) {
+    const apiError = error as AxiosError<ApiErrorData>;
+    if (apiError.response?.data?.code === 'AP002') {
+      isConfirmedSubmitted = true;
+    }
+  }
 
   if (isLoading) {
     return (
       <div className='flex h-screen items-center justify-center'>
         <Spinner />
       </div>
+    );
+  }
+
+  // 제출 완료된 경우
+  if (applicationStatus?.isSubmitted || isConfirmedSubmitted) {
+    return (
+      <AlreadySubmittedModal
+        isOpen={true}
+        onConfirm={() => router.push(ROUTES.HOME)}
+      />
     );
   }
 
@@ -72,7 +111,7 @@ export const ApplyFormContainer = () => {
         <div
           ref={formContainerRef}
           style={{scrollMarginTop: HEADER_HEIGHT}}
-          className='flex w-full max-w-[1100px] flex-col py-[42.5px]'>
+          className='flex w-full max-w-275 flex-col py-[42.5px]'>
           <div className='flex flex-col gap-3.5'>
             <h1 className='text-h1 text-neutral-800'>
               <span aria-hidden='true'>🥔</span>
@@ -93,7 +132,7 @@ export const ApplyFormContainer = () => {
             {STEP_TITLES[step as keyof typeof STEP_TITLES]}
           </h2>
 
-          <div className='flex w-full flex-col gap-[20px]'>
+          <div className='flex w-full flex-col gap-5'>
             <FormProvider {...methods}>
               <form onSubmit={handleFinalSubmit} key={step}>
                 {step === 1 && (
