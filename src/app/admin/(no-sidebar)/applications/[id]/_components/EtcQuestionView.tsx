@@ -2,7 +2,10 @@ import {FullButton} from '@/components/button/FullButton';
 import {FormInput} from '@/components/form/FormInput';
 import {FormRadio} from '@/components/form/FormRadio';
 import {FormTextarea} from '@/components/form/FormTextarea';
-import {ETC_QUESTION_LABELS} from '@/constants/admin/admin-applications';
+import {
+  DISCOVERY_PATH_LABEL_MAP,
+  ETC_QUESTION_LABELS,
+} from '@/constants/admin/admin-applications';
 import {AdminApplicationEtcQuestionsType} from '@/schemas/admin/admin-application.schema';
 
 interface EtcQuestionViewProps {
@@ -18,14 +21,20 @@ export const EtcQuestionView = ({
     <div className='flex flex-col gap-4'>
       <FormInput
         label={ETC_QUESTION_LABELS.discoveryPath}
-        value={etcQuestions.discoveryPath.selectedAnswer ?? ''}
+        value={
+          etcQuestions.discoveryPath.selectedAnswer
+            ? DISCOVERY_PATH_LABEL_MAP[
+                etcQuestions.discoveryPath.selectedAnswer
+              ]
+            : '-'
+        }
         readOnly
       />
 
       <FormTextarea
         label={ETC_QUESTION_LABELS.parallelActivities}
         readOnly
-        value={etcQuestions.parallelActivities ?? ''}
+        value={etcQuestions.parallelActivities ?? '-'}
       />
 
       <div>
@@ -33,7 +42,7 @@ export const EtcQuestionView = ({
           readOnly
           label={`${etcQuestions.interviewStartDate}부터 ${etcQuestions.interviewEndDate}까지 면접이 진행됩니다. 참여가 불가능한 시간이 있다면 모두 작성해
           주세요.`}
-          value={etcQuestions.unavailableInterviewTimes ?? ''}
+          value={etcQuestions.unavailableInterviewTimes ?? '-'}
         />
       </div>
 

@@ -122,3 +122,18 @@ export const ETC_QUESTION_LABELS = {
   privacyPolicy: '개인정보 활용 동의',
   privacyPolicy_answer: '확인',
 };
+
+export const DISCOVERY_PATH_OPTIONS = [
+  {value: 'INSTAGRAM', label: '인스타그램'},
+  {value: 'EVERYTIME', label: '에브리타임'},
+  {value: 'CAMPUSPICK', label: '캠퍼스픽'},
+  {value: 'JIKHAENG', label: '직행'},
+  {value: 'NAVER_CAFE', label: '네이버 카페'},
+  {value: 'OTHER_SNS', label: '그 외 SNS'},
+  {value: 'FRIEND_REFERRAL', label: '지인 소개'},
+  {value: 'NONE', label: '해당 없음'},
+] as const;
+
+export const DISCOVERY_PATH_LABEL_MAP = Object.fromEntries(
+  DISCOVERY_PATH_OPTIONS.map(({value, label}) => [value, label])
+) as Record<string, string>;
