@@ -14,6 +14,11 @@ import {BasicInfoFormData} from '@/schemas/apply/apply-schema';
 import {getBasicInfo} from '@/services/api/apply/apply.api';
 import {QUERY_KEYS} from '@/constants/query-keys';
 import {StepIndicator} from '@/components/navigation/StepIndicator';
+import {FormattedInput} from '@/components/form/FormattedInput';
+import {
+  formatDigitsToPhoneNumber,
+  formatDigitsToYYYYMMDD,
+} from '@/utils/formatter';
 
 interface BasicInfoProps {
   onSave: () => void;
@@ -23,19 +28,7 @@ interface BasicInfoProps {
   step: number;
 }
 
-const formatDigitsToYYYYMMDD = (digits: string): string => {
-  if (digits && digits.length === 8) {
-    return `${digits.slice(0, 4)}-${digits.slice(4, 6)}-${digits.slice(6, 8)}`;
-  }
-  return digits;
-};
 
-const formatDigitsToPhoneNumber = (digits: string): string => {
-  if (digits && digits.length === 11) {
-    return `${digits.slice(0, 3)}-${digits.slice(3, 7)}-${digits.slice(7, 11)}`;
-  }
-  return digits;
-};
 
 export const BasicInfo = ({
   step,
@@ -165,85 +158,33 @@ export const BasicInfo = ({
 
     if (name === 'birthDate') {
       return (
-        <Controller
-          key={name}
-          name={name}
-          control={control}
-          render={({field: controllerField, fieldState: {error}}) => {
-            const handleBlur = () => {
-              const formatted = formatDigitsToYYYYMMDD(controllerField.value);
-              controllerField.onChange(formatted);
-            };
-
-            const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-              const digits = e.target.value.replace(/\D/g, '');
-              controllerField.onChange(digits);
-            };
-
-            return (
-              <div className='flex flex-1 flex-col gap-2'>
-                <FormInput
-                  id={name}
-                  label={label}
-                  placeholder={placeholder}
-                  readOnly={readOnly}
-                  autoComplete={autocomplete}
-                  error={error?.message ?? ''}
-                  className='w-full'
-                  value={controllerField.value || ''}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  maxLength={8}
-                  type='tel'
-                  inputMode='numeric'
-                />
-              </div>
-            );
-          }}
-        />
+        <div key={name} className='flex flex-1 flex-col gap-2'>
+          <FormattedInput
+            name={name}
+            label={label}
+            placeholder={placeholder}
+            readOnly={readOnly}
+            autoComplete={autocomplete}
+            formatter={formatDigitsToYYYYMMDD}
+            maxLength={8}
+          />
+        </div>
       );
     }
 
     if (name === 'contact') {
       return (
-        <Controller
-          key={name}
-          name={name}
-          control={control}
-          render={({field: controllerField, fieldState: {error}}) => {
-            const handleBlur = () => {
-              const formatted = formatDigitsToPhoneNumber(
-                controllerField.value
-              );
-              controllerField.onChange(formatted);
-            };
-
-            const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-              const digits = e.target.value.replace(/\D/g, '');
-              controllerField.onChange(digits);
-            };
-
-            return (
-              <div className='flex flex-1 flex-col gap-2'>
-                <FormInput
-                  id={name}
-                  label={label}
-                  placeholder={placeholder}
-                  readOnly={readOnly}
-                  autoComplete={autocomplete}
-                  error={error?.message ?? ''}
-                  className='w-full'
-                  value={controllerField.value || ''}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  maxLength={11}
-                  type='tel'
-                  inputMode='numeric'
-                />
-              </div>
-            );
-          }}
-        />
+        <div key={name} className='flex flex-1 flex-col gap-2'>
+          <FormattedInput
+            name={name}
+            label={label}
+            placeholder={placeholder}
+            readOnly={readOnly}
+            autoComplete={autocomplete}
+            formatter={formatDigitsToPhoneNumber}
+            maxLength={11}
+          />
+        </div>
       );
     }
 
@@ -290,7 +231,6 @@ export const BasicInfo = ({
           labelTypo='h4'
           onClick={onNext}
           type='button'
-          disabled={!isValid}
         />
         <FullButton
           label='저장하기'
