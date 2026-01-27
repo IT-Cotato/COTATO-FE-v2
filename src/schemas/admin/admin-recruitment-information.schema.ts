@@ -17,8 +17,8 @@ export const GetAdminRecruitmentInformationResponseSchema =
 
 export const PostAdminRecruitmentInformationRequestSchema = z.object({
   generationId: z.number(),
-  recruitmentStart: z.string(),
-  recruitmentEnd: z.string(),
+  recruitmentStart: z.string().nullable(),
+  recruitmentEnd: z.string().nullable(),
   documentAnnouncement: z.string().nullable(),
   interviewStart: z.string().nullable(),
   interviewEnd: z.string().nullable(),

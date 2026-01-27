@@ -18,7 +18,7 @@ export const ApplicationQuestionsEdit = ({
 }: ApplicationQuestionsEditProps) => {
   const updateItem = (
     sequence: number,
-    field: 'content' | 'maxByte',
+    field: 'content' | 'maxLength',
     value: string | number
   ) => {
     onChange(
@@ -51,14 +51,14 @@ export const ApplicationQuestionsEdit = ({
       {
         sequence: questions.length + 1,
         content: '',
-        maxByte: 600,
+        maxLength: 600,
       },
     ]);
   };
 
   return (
     <div className='flex flex-col gap-7.5'>
-      {questions.map(({sequence, content, maxByte}) => (
+      {questions.map(({sequence, content, maxLength}) => (
         <div key={sequence} className='flex flex-col gap-3.5'>
           <div className='flex flex-row gap-7.5'>
             <p className='text-h1 font-bold text-neutral-500'>{sequence}</p>
@@ -74,9 +74,9 @@ export const ApplicationQuestionsEdit = ({
             <div className='flex items-center gap-3'>
               <span className='pl-13 text-h5 text-neutral-500'>글자 제한</span>
               <input
-                value={maxByte}
+                value={maxLength}
                 onChange={(e) =>
-                  updateItem(sequence, 'maxByte', Number(e.target.value))
+                  updateItem(sequence, 'maxLength', Number(e.target.value))
                 }
                 className='flex w-17.5 items-center justify-center rounded-[10px] border border-neutral-300 bg-white py-2.75 text-center text-body-l font-semibold text-neutral-600'
               />

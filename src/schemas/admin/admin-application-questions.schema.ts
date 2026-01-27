@@ -8,7 +8,7 @@ import z from 'zod';
 export const ApplicationQuestionsSchema = z.object({
   sequence: z.number(),
   content: z.string(),
-  maxByte: z.number(),
+  maxLength: z.number(),
 });
 
 export const ApplicationQuestionsListSchema = z.array(
