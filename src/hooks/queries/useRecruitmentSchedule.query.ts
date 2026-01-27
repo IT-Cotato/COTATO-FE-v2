@@ -2,7 +2,7 @@ import {useQuery} from '@tanstack/react-query';
 import {publicAxios} from '@/services/config/axios';
 import {ENDPOINT} from '@/services/constant/endpoint';
 import {GetRecruitmentScheduleResponseSchema} from '@/schemas/recruit/recruitment-schedule.schema';
-import {RecruitmentInformation} from '@/schemas/admin/admin-recruitment-information.schema';
+import {RecruitmentInformationType} from '@/schemas/admin/admin-recruitment-information.schema';
 
 const QUERY_KEY = 'recruitment-schedule';
 
@@ -15,7 +15,7 @@ export const useRecruitmentScheduleQuery = () => {
     },
     staleTime: 0,
     refetchOnMount: 'always',
-    select: (data): RecruitmentInformation | null => {
+    select: (data): RecruitmentInformationType | null => {
       if (!data?.data) return null;
 
       const schedule = data.data;
