@@ -44,13 +44,15 @@ export const AdminApplicationsPagination = ({
       <button
         onClick={() => onPageChange(currentPage - 1)}
         disabled={isPrevDisabled || disabled}
-        className={`flex items-center gap-2 text-body-m font-medium ${
+        className={`flex items-center gap-3 text-body-m font-semibold ${
           isPrevDisabled
             ? 'cursor-not-allowed text-neutral-300'
             : 'text-neutral-500'
         }`}>
-        <ChevronLeft />
-        이전
+        <ChevronLeft
+          className={`h-6 w-6 ${isPrevDisabled ? 'cursor-not-allowed text-neutral-300' : 'text-neutral-600'}`}
+        />
+        <p>이전</p>
       </button>
 
       <div className='flex gap-2'>
@@ -69,8 +71,10 @@ export const AdminApplicationsPagination = ({
               onClick={() => onPageChange(page)}
               disabled={disabled}
               className={clsx(
-                'flex h-9 w-9 items-center justify-center rounded-lg text-body-m',
-                isActive ? 'bg-neutral-100 font-semibold' : 'text-neutral-600'
+                'flex h-9 w-9 items-center justify-center text-body-m',
+                isActive
+                  ? 'rounded-lg border-2 border-neutral-50 bg-neutral-100 font-semibold text-neutral-600'
+                  : 'text-neutral-500'
               )}>
               {page}
             </button>
@@ -102,13 +106,15 @@ export const AdminApplicationsPagination = ({
       <button
         onClick={() => onPageChange(currentPage + 1)}
         disabled={isNextDisabled || disabled}
-        className={`flex items-center gap-3 text-body-m font-medium ${
+        className={`flex flex-row items-center gap-3 text-body-m font-semibold ${
           isNextDisabled
             ? 'cursor-not-allowed text-neutral-300'
             : 'text-neutral-500'
         }`}>
-        다음
-        <ChevronRight />
+        <p>다음</p>
+        <ChevronRight
+          className={`h-6 w-6 ${isNextDisabled ? 'text-neutral-300' : 'text-neutral-500'}`}
+        />
       </button>
     </div>
   );
