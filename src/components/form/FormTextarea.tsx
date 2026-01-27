@@ -30,7 +30,7 @@ export const FormTextarea = forwardRef<HTMLTextAreaElement, FormTextareaProps>(
             ref={ref}
             id={inputId}
             className={clsx(
-              'min-h-54.5 w-full',
+              'min-h-54.5 w-full resize-none',
               formFieldStyles.field,
               'px-4.75 py-3.5',
               'read-only:cursor-default read-only:focus:ring-0',
