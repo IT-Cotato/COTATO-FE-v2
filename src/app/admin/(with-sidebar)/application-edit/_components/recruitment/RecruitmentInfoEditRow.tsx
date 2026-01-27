@@ -27,7 +27,6 @@ export const RecruitmentInfoEditRow = ({
       <div className='flex flex-1 items-center gap-3'>
         <AdminDatePicker
           value={start}
-          placeholder={isRange ? '시작 일자' : '날짜 선택'}
           onChange={(nextStart) =>
             onChange({
               start: nextStart,
@@ -50,7 +49,6 @@ export const RecruitmentInfoEditRow = ({
           )}>
           <AdminDatePicker
             value={end}
-            placeholder='종료 일자'
             onChange={(nextEnd) =>
               onChange({
                 start,

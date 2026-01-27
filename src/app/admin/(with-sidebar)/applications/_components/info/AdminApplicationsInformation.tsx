@@ -70,10 +70,10 @@ export const AdminApplicationsInformation = ({
             ) : (
               <>
                 <p className='rounded-[10px] bg-neutral-50 px-8 py-1.75 text-neutral-800'>
-                  {recruitmentPeriod?.recruitmentStart.slice(0, 10)}
+                  {recruitmentPeriod?.recruitmentStart?.slice(0, 10)}
                 </p>
                 <p className='rounded-[10px] bg-neutral-50 px-8 py-1.75 text-neutral-800'>
-                  {recruitmentPeriod?.recruitmentEnd.slice(0, 10)}
+                  {recruitmentPeriod?.recruitmentEnd?.slice(0, 10)}
                 </p>
               </>
             )}
