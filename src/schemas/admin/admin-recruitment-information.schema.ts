@@ -27,7 +27,7 @@ export const PostAdminRecruitmentInformationRequestSchema = z.object({
 });
 
 /** 타입 추출 */
-export type RecruitmentInformation = z.infer<
+export type RecruitmentInformationType = z.infer<
   typeof RecruitmentInformationSchema
 >;
 export type GetAdminRecruitmentInformationResponse = z.infer<

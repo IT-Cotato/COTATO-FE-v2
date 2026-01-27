@@ -2,13 +2,13 @@
 
 import {GenerationDropdown} from '@/components/dropdown/GenerationDropdown';
 import {Button} from '@/components/button/Button';
-import {AdminRecruitmentInformation} from '@/app/admin/(with-sidebar)/application-edit/_components/recruitment/AdminRecruitmentInformation';
 import {useRouter} from 'next/navigation';
 import {useEffect, useState} from 'react';
 import {Spinner} from '@/components/ui/Spinner';
-import {RecruitmentInformation} from '@/schemas/admin/admin-recruitment-information.schema';
 import {useAdminRecruitmentInformationsQuery} from '@/hooks/queries/useAdminRecruitmentInformations.query';
 import {useAdminRecruitmentInformationsMutation} from '@/hooks/mutations/useAdminRecruitmentInformations.mutation';
+import {RecruitmentInformationType} from '@/schemas/admin/admin-recruitment-information.schema';
+import {RecruitmentInformation} from '@/components/recruitment/RecruitmentInformation';
 
 interface AdminRecruitmentInformationContainerProps {
   generations: string[];
@@ -23,7 +23,7 @@ export const AdminRecruitmentInformationContainer = ({
 
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [recruitmentDraft, setRecruitmentDraft] =
-    useState<RecruitmentInformation | null>(null);
+    useState<RecruitmentInformationType | null>(null);
 
   const {data, isLoading, isError, error} =
     useAdminRecruitmentInformationsQuery(generationId);
@@ -121,7 +121,7 @@ export const AdminRecruitmentInformationContainer = ({
           />
         )}
       </div>
-      <AdminRecruitmentInformation
+      <RecruitmentInformation
         data={isEditing ? recruitmentDraft! : data}
         isEditing={isEditing}
         onChange={setRecruitmentDraft}

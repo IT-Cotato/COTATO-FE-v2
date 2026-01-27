@@ -1,26 +1,25 @@
 'use client';
 
 import {RecruitmentInfoEditRow} from '@/app/admin/(with-sidebar)/application-edit/_components/recruitment/RecruitmentInfoEditRow';
-import {RecruitmentInfoViewRow} from '@/app/admin/(with-sidebar)/application-edit/_components/recruitment/RecruitmentInfoViewRow';
+import {RecruitmentInfoViewRow} from '@/components/recruitment/RecruitmentInfoViewRow';
 import {scheduleSections} from '@/constants/admin/admin-application-questions';
-import {RecruitmentInformation} from '@/schemas/admin/admin-recruitment-information.schema';
-
+import {RecruitmentInformationType} from '@/schemas/admin/admin-recruitment-information.schema';
 import {formatRecruitmentDate} from '@/utils/formatDate';
 import {clsx} from 'clsx';
 
-interface AdminRecruitmentInformationProps {
+interface RecruitmentInformationProps {
   variant?: 'bordered' | 'plain';
-  data: RecruitmentInformation;
+  data: RecruitmentInformationType;
   isEditing: boolean;
-  onChange: (next: RecruitmentInformation) => void;
+  onChange: (next: RecruitmentInformationType) => void;
 }
 
-export const AdminRecruitmentInformation = ({
+export const RecruitmentInformation = ({
   variant = 'bordered',
   data,
   isEditing,
   onChange,
-}: AdminRecruitmentInformationProps) => {
+}: RecruitmentInformationProps) => {
   return (
     <div
       className={clsx(
