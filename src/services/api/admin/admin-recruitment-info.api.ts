@@ -1,7 +1,7 @@
 import {
   GetAdminRecruitmentInformationResponseSchema,
   PostAdminRecruitmentInformationRequest,
-  RecruitmentInformation,
+  RecruitmentInformationType,
 } from '@/schemas/admin/admin-recruitment-information.schema';
 import {privateAxios} from '@/services/config/axios';
 import {ENDPOINT} from '@/services/constant/endpoint';
@@ -18,7 +18,7 @@ import {handleApiError} from '@/services/utils/apiHelper';
  */
 export const getAdminRecruitmentInformations = async (
   generationId: number
-): Promise<RecruitmentInformation> => {
+): Promise<RecruitmentInformationType> => {
   try {
     const response = await privateAxios.get(
       ENDPOINT.ADMIN.RECRUITMENT_INFORMATIONS,
