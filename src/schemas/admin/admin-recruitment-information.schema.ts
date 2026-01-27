@@ -3,8 +3,8 @@ import z from 'zod';
 
 /** 어드민 모집 일정 스키마 */
 export const RecruitmentInformationSchema = z.object({
-  recruitmentStart: z.string(),
-  recruitmentEnd: z.string(),
+  recruitmentStart: z.string().nullable(),
+  recruitmentEnd: z.string().nullable(),
   documentAnnouncement: z.string().nullable(),
   interviewStart: z.string().nullable(),
   interviewEnd: z.string().nullable(),

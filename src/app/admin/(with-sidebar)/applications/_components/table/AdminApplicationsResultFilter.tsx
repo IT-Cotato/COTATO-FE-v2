@@ -1,7 +1,8 @@
 import {RESULT_OPTIONS} from '@/constants/admin/admin-applications';
-import {ApplicationResultType} from '@/schemas/admin/admin-application-type';
+
 import {useEffect, useState} from 'react';
 import {Checkbox} from '@/components/checkbox/CheckBox';
+import {ApplicationResultType} from '@/schemas/admin/admin-applications.schema';
 
 interface AdminApplicationsResultFilterProps {
   selected: ApplicationResultType[];

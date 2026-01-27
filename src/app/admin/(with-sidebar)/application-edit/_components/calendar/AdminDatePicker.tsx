@@ -11,17 +11,16 @@ import clsx from 'clsx';
 
 interface AdminDatePickerProps {
   value?: string | null;
-  placeholder?: string;
+
   onChange: (value: string | null) => void;
 }
 
-export const AdminDatePicker = ({
-  value,
-  placeholder = '날짜 선택',
-  onChange,
-}: AdminDatePickerProps) => {
+export const AdminDatePicker = ({value, onChange}: AdminDatePickerProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const selectedDate = useMemo(() => (value ? new Date(value) : null), [value]);
+  const selectedDate = useMemo(
+    () => (value ? new Date(value) : new Date()),
+    [value]
+  );
 
   const calendarRef = useRef<HTMLDivElement>(null);
 
@@ -34,7 +33,7 @@ export const AdminDatePicker = ({
         className='flex w-full items-center justify-between gap-3 rounded-[10px] bg-neutral-100 px-4 py-3'
         onClick={() => setIsOpen((prev) => !prev)}>
         <span className='text-body-l font-normal text-neutral-600'>
-          {formatRecruitmentDate(value) ?? placeholder}
+          {formatRecruitmentDate(value ?? toLocalISOString(new Date()))}
         </span>
         <CalendarIcon
           className={clsx(

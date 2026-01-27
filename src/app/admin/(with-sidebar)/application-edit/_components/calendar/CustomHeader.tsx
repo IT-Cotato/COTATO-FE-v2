@@ -14,7 +14,7 @@ export const CustomHeader = ({
 }: CustomHeaderProps) => (
   <div className='flex items-center justify-between border-b border-neutral-200 pb-3'>
     <button onClick={onPrevMonth}>
-      <ChevronLeftIcon />
+      <ChevronLeftIcon className='h-4 w-4 text-[#848A95]' />
     </button>
     <span className='text-body-s text-neutral-800'>
       {date.toLocaleString('en-US', {
@@ -23,7 +23,7 @@ export const CustomHeader = ({
       })}
     </span>
     <button onClick={onNextMonth}>
-      <ChevronRightIcon />
+      <ChevronRightIcon className='h-4 w-4 text-[#848A95]' />
     </button>
   </div>
 );

@@ -68,8 +68,8 @@ export const PartQuestionView = ({
                 label={`${data.sequence}. ${data.questionContent}`}
                 readOnly
                 value={data.content ?? ''}
-                maxLength={500}
-                currentLength={data.byteSize}
+                maxLength={data.maxLength}
+                currentLength={data.length}
               />
             )}
           </div>
