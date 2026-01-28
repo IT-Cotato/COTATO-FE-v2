@@ -55,6 +55,18 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
   const methods = useForm<BasicInfoFormData>({
     mode: 'onChange',
     resolver: zodResolver(BasicInfoFormSchema),
+    defaultValues: {
+      name: '',
+      gender: undefined,
+      contact: '',
+      birthDate: '',
+      school: '',
+      isCollegeStudent: undefined,
+      department: '',
+      completedSemesters: undefined,
+      isPrevActivity: undefined,
+      part: undefined,
+    },
   });
   const {trigger, handleSubmit, getValues} = methods;
 
