@@ -42,13 +42,8 @@ export const BasicInfo = ({
     register,
     control,
     reset,
-    trigger,
     formState: {errors, isValid},
   } = useFormContext<BasicInfoFormData>();
-
-  useEffect(() => {
-    trigger();
-  }, [trigger]);
 
   const hasInitializedRef = useRef(false);
 
