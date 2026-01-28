@@ -1,18 +1,5 @@
 import {z} from 'zod';
 
-const eightDigitDate = z.string().regex(/^\d{8}$/);
-
-const hyphenatedDate = z
-  .string()
-  .regex(/^\d{4}-\d{2}-\d{2}$/)
-  .refine(
-    (date) => {
-      const [_, month, day] = date.split('-');
-      return month !== '00' && day !== '00';
-    },
-    {message: '유효하지 않은 날짜입니다.'}
-  );
-
 export const BasicInfoFormSchema = z.object({
   name: z.string().min(1, '이름을 입력해주세요'),
   gender: z.enum(['MALE', 'FEMALE'], {
@@ -28,8 +15,7 @@ export const BasicInfoFormSchema = z.object({
       if (!isDigits && !isHyphenated) {
         ctx.addIssue({
           code: z.ZodIssueCode.custom,
-          message:
-            '연락처 형식이 올바르지 않습니다. 010으로 시작하는 11자리 숫자 형식이어야 합니다.)',
+          message: '연락처 형식이 올바르지 않습니다.',
         });
       }
     }),

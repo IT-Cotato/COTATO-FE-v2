@@ -33,7 +33,7 @@ export const BASIC_INFO_FIELDS: BasicInfoFormItem[] = [
         name: 'birthDate',
         label: '생년월일',
         type: 'input',
-        placeholder: 'ex) 20000101',
+        placeholder: 'ex) 2000-01-01',
       },
     ],
   },
@@ -41,7 +41,7 @@ export const BASIC_INFO_FIELDS: BasicInfoFormItem[] = [
     name: 'contact',
     label: '연락처',
     type: 'input',
-    placeholder: 'ex) 01012345678',
+    placeholder: 'ex) 010-1234-5678',
   },
   {
     row: [
