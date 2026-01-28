@@ -5,8 +5,8 @@ import z from 'zod';
  * 모집 기간 조회 스키마
  */
 export const RecruitmentPeriodSchema = z.object({
-  recruitmentStart: z.string(),
-  recruitmentEnd: z.string(),
+  recruitmentStart: z.string().nullable(),
+  recruitmentEnd: z.string().nullable(),
 });
 
 /**
@@ -29,6 +29,16 @@ export const ApplicationPassViewStatusSchema = z.enum([
   'WAITLISTED',
   'PENDING',
   'ALL',
+]);
+
+/**
+ * 합불 결과 필터(라벨)
+ */
+export const ApplicationResultSchema = z.enum([
+  '합격',
+  '불합격',
+  '예비합격',
+  '평가전',
 ]);
 
 /**
@@ -138,3 +148,4 @@ export type GetAdminApplicationsParamsType = z.infer<
 export type ApplicationSummaryType = z.infer<typeof ApplicationSummarySchema>;
 export type ApplicantsPageType = z.infer<typeof ApplicantsPageSchema>;
 export type ApplicantType = z.infer<typeof ApplicantSchema>;
+export type ApplicationResultType = z.infer<typeof ApplicationResultSchema>;

@@ -30,7 +30,8 @@ export const PartQuestionWithAnswerSchema = z.object({
   sequence: z.number().int(),
   questionContent: z.string(),
   content: z.string().nullable(),
-  byteSize: z.number().int(),
+  length: z.number().int(),
+  maxLength: z.number().int(),
 });
 
 export const AdminApplicationPartQuestionsSchema = z.object({

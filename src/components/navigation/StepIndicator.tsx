@@ -1,5 +1,4 @@
-import SmallLogoOrange from '@/assets/small-logo/small-logo-orange.svg';
-import SmallLogoGray from '@/assets/small-logo/small-logo-gray.svg';
+import LogoIcon from '@/assets/small-logo/small-logo.svg';
 
 interface StepIndicatorProps {
   currentStep: number;
@@ -11,16 +10,21 @@ export const StepIndicator = ({
   totalSteps = 3,
 }: StepIndicatorProps) => {
   return (
-    <div className='flex items-center gap-[25px]'>
+    <div className='flex items-center gap-6.25'>
       {Array.from({length: totalSteps}, (_, index) => {
         const step = index + 1;
-        const Icon = step === currentStep ? SmallLogoOrange : SmallLogoGray;
+        const isCurrent = step === currentStep;
 
         return (
-          <div key={index} className='flex items-center gap-[25px]'>
-            <Icon key={index} className='h-[71px] w-[69px]' />
+          <div key={step} className='flex items-center gap-6.25'>
+            <LogoIcon
+              className={`h-10 w-10 ${
+                isCurrent ? 'text-hover' : 'text-neutral-300'
+              }`}
+            />
+
             {index < totalSteps - 1 && (
-              <div className='h-0 w-80 border-t-2 border-dotted border-[#E0E0E0]' />
+              <div className='h-0 w-50 border-t-2 border-dotted border-[#E0E0E0]' />
             )}
           </div>
         );
