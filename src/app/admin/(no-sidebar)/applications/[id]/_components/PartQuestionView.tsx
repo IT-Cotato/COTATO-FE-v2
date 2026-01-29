@@ -7,7 +7,7 @@ interface PartQuestionViewProps {
   onNext: () => void;
   onPrev: () => void;
   questionsWithAnswers: PartQuestionWithAnswerType[];
-  pdfFileUrl: string | null;
+  pdfFileUrl: string | null | undefined;
 }
 
 export const PartQuestionView = ({
