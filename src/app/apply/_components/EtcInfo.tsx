@@ -13,6 +13,7 @@ import {getEtcFields} from '@/constants/form/formConfig';
 import {EtcFieldConfig} from '@/schemas/apply/apply-type';
 import {useGetEtcQuestionsQuery} from '@/hooks/queries/useApply.query';
 import {StepIndicator} from '@/components/navigation/StepIndicator';
+import {Spinner} from '@/components/ui/Spinner';
 
 export const EtcInfo = ({
   step,
@@ -207,7 +208,7 @@ export const EtcInfo = ({
         <div className='flex justify-center py-4'>
           <StepIndicator currentStep={step} totalSteps={3} />
         </div>
-        <p>질문지를 불러오는 중입니다...</p>
+        <Spinner />
       </div>
     );
   }
