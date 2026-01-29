@@ -4,9 +4,9 @@ import {useEffect} from 'react';
 import {QUERY_KEYS} from '@/constants/query-keys';
 import {getRecruitmentStatus} from '@/services/api/recruitment/recruitment-status.api';
 
-export const useRecruitmentStatusQuery = (
-  options?: {refetchInterval?: number}
-) => {
+export const useRecruitmentStatusQuery = (options?: {
+  refetchInterval?: number;
+}) => {
   const {setIsRecruiting, setGeneration, setIsAdditional} =
     useRecruitmentStore();
 
