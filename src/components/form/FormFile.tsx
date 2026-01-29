@@ -31,11 +31,13 @@ export const FormFile = forwardRef<HTMLInputElement, FormFileProps>(
       return files.map((f) => URL.createObjectURL(f));
     }, [files]);
 
+    // cleanup은 files가 변경될 때만 실행 (fileUrls 참조 변경으로 인한 무한 루프 방지)
     useEffect(() => {
+      const urls = files.map((f) => URL.createObjectURL(f));
       return () => {
-        fileUrls.forEach((url) => URL.revokeObjectURL(url));
+        urls.forEach((url) => URL.revokeObjectURL(url));
       };
-    }, [fileUrls]);
+    }, [files]);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       if (props.readOnly) return;
@@ -59,16 +61,18 @@ export const FormFile = forwardRef<HTMLInputElement, FormFileProps>(
      * 파일 렌더링
      * readOnly: value가 url로 전달됨.
      * edit: value가 파일명으로 전달됨.
+     *
+     * value가 없으면 (undefined 또는 빈 배열) files도 무시하고 빈 배열 반환
+     * → 외부에서 value 초기화 시 UI도 빈 상태로 표시
      */
-
     const filesToRender =
-      props.readOnly && value
-        ? value.map((name) => ({name, url: name}))
-        : files.length > 0
-          ? files.map((f, i) => ({name: f.name, url: fileUrls[i]}))
-          : value
-            ? value.map((name) => ({name, url: ''}))
-            : [];
+      !value || value.length === 0
+        ? [] // value가 없으면 무조건 빈 배열 (files 무시)
+        : props.readOnly
+          ? value.map((name) => ({name, url: name}))
+          : files.length > 0
+            ? files.map((f, i) => ({name: f.name, url: fileUrls[i]}))
+            : value.map((name) => ({name, url: ''}));
 
     return (
       <div className={clsx(formFieldStyles.wrapper, className)}>

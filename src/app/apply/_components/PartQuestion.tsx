@@ -66,23 +66,27 @@ export const PartQuestion = ({
 
   useEffect(() => {
     if (questionsData && !hasInitializedRef.current) {
+      const responsePart = questionsData.questionsWithAnswers[0]?.partType;
+      const isMatchingPart = responsePart === activePart;
+
       questionsData.questionsWithAnswers.forEach((q) => {
         if (q.savedAnswer?.content) {
           setValue(`ans_${q.questionId}`, q.savedAnswer.content);
         }
       });
-      if (questionsData.pdfFileKey) {
+
+      if (isMatchingPart && questionsData.pdfFileKey) {
         setValue('pdfFileKey', questionsData.pdfFileKey);
         const fileName =
           questionsData.pdfFileKey.split('/').pop() || questionsData.pdfFileKey;
         setValue('pdfFileName', fileName);
       }
-      if (questionsData.pdfFileUrl) {
+      if (isMatchingPart && questionsData.pdfFileUrl) {
         setValue('pdfFileUrl', questionsData.pdfFileUrl);
       }
       hasInitializedRef.current = true;
     }
-  }, [questionsData, setValue]);
+  }, [questionsData, setValue, activePart]);
 
   const handleFileChange = (files: File[]) => {
     if (files.length === 0) {
