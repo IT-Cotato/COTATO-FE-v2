@@ -22,7 +22,7 @@ export const BasicInfoView = ({onNext, basicInfo}: BasicInfoViewProps) => {
         <FormInput
           label={BASIC_INFO_LABELS.gender}
           readOnly
-          value={genderLabelMap[basicInfo.gender] ?? ''}
+          value={getGenderLabel(basicInfo.gender)}
         />
         <FormInput
           label={BASIC_INFO_LABELS.birthDate}
@@ -82,6 +82,12 @@ export const BasicInfoView = ({onNext, basicInfo}: BasicInfoViewProps) => {
 };
 
 const genderLabelMap: Record<string, string> = {
+  MALE: '남',
+  FEMALE: '여',
   male: '남',
   female: '여',
+};
+
+const getGenderLabel = (gender: string) => {
+  return genderLabelMap[gender] ?? genderLabelMap[gender.toLowerCase()] ?? '';
 };
