@@ -2,7 +2,7 @@
 
 import {useEffect, useRef} from 'react';
 import {useSearchParams} from 'next/navigation';
-import {useFormContext} from 'react-hook-form';
+import {useFormContext, Controller} from 'react-hook-form';
 import {FormTextarea} from '@/components/form/FormTextarea';
 import {FormFile} from '@/components/form/FormFile';
 import {FormLink} from '@/components/form/FormLink';
@@ -38,6 +38,7 @@ export const PartQuestion = ({
     register,
     watch,
     setValue,
+    control,
     formState: {errors},
   } = useFormContext();
 
@@ -168,7 +169,21 @@ export const PartQuestion = ({
                       <label className='text-h5 text-neutral-800'>
                         {lastQuestion.sequence}. {lastQuestion.content}
                       </label>
-                      <FormLink />
+                      <Controller
+                        control={control}
+                        name={`ans_${lastQuestion.questionId}`}
+                        render={({
+                          field: {onChange, value},
+                          fieldState: {error},
+                        }) => (
+                          <FormLink
+                            value={value ? [value] : ['']}
+                            onChange={(links) => onChange(links[0])}
+                            error={error?.message}
+                            placeholder={`링크를 입력해주세요`}
+                          />
+                        )}
+                      />
                       <FormFile
                         placeholder={'파일 업로드하기'}
                         onFilesChange={handleFileChange}
