@@ -4,6 +4,7 @@ import {
   DISCOVERY_PATH_LABEL_MAP,
   DISCOVERY_PATH_OPTIONS,
 } from '@/constants/admin/admin-applications';
+import {PRIVACY_POLICY} from '@/constants/admin/admin-applications';
 
 export const SEMESTER_OPTIONS = [
   {value: '4', label: '4학기'},
@@ -172,7 +173,7 @@ export const getEtcFields = (
       label: '개인정보 수집 및 이용 동의',
       type: 'textarea',
       readOnly: true,
-      defaultValue: '개인정보 약관 내용',
+      defaultValue: PRIVACY_POLICY,
     },
     {
       name: 'privacyAgree',
