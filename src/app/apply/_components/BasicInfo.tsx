@@ -124,25 +124,17 @@ export const BasicInfo = ({
             name={name}
             control={control}
             render={({field, fieldState: {error}}) => (
-              <>
-                <FormDropdown
-                  id={name}
-                  label={label}
-                  placeholder={placeholder}
-                  options={options || []}
-                  value={field.value}
-                  onChange={field.onChange}
-                  readOnly={readOnly}
-                  className='w-full'
-                />
-                <div>
-                  {error && (
-                    <span className='pt-6 text-body-l text-alert'>
-                      {error.message ?? ''}
-                    </span>
-                  )}
-                </div>
-              </>
+              <FormDropdown
+                id={name}
+                label={label}
+                placeholder={placeholder}
+                options={options || []}
+                value={field.value}
+                onChange={field.onChange}
+                readOnly={readOnly}
+                className='w-full'
+                error={error?.message}
+              />
             )}
           />
         </div>

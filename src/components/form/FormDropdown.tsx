@@ -1,12 +1,6 @@
 'use client';
 
-import {
-  forwardRef,
-  useId,
-  useRef,
-  useState,
-  type InputHTMLAttributes,
-} from 'react';
+import {forwardRef, useRef, useState, type InputHTMLAttributes} from 'react';
 import clsx from 'clsx';
 import {formFieldStyles} from './form.styles';
 import {useClickOutside} from '@/hooks/useClickOutside';
@@ -75,7 +69,7 @@ export const FormDropdown = forwardRef<HTMLInputElement, FormDropdownProps>(
               formFieldStyles.field,
               'flex w-full items-center justify-between',
               'disabled:cursor-default disabled:focus:ring-0',
-              error && formFieldStyles.error,
+              error ? formFieldStyles.error : 'border-neutral-200',
               className
             )}>
             <span
@@ -98,7 +92,7 @@ export const FormDropdown = forwardRef<HTMLInputElement, FormDropdownProps>(
                 <li
                   key={option.label}
                   onClick={(e) => handleSelect(e, option.value)}
-                  className='cursor-pointer px-4 py-3 text-body-l text-neutral-800 transition-colors hover:bg-neutral-200'>
+                  className='hover:rounded-2.5 cursor-pointer px-4 py-3 text-body-l text-neutral-800 transition-colors hover:bg-neutral-200'>
                   {option.label}
                 </li>
               ))}
