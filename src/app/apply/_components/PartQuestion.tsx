@@ -6,7 +6,10 @@ import {useFormContext} from 'react-hook-form';
 import {FormTextarea} from '@/components/form/FormTextarea';
 import {FormFile} from '@/components/form/FormFile';
 import {FullButton} from '@/components/button/FullButton';
-import {useGetPartQuestionsQuery, useGetBasicInfoQuery} from '@/hooks/queries/useApply.query';
+import {
+  useGetPartQuestionsQuery,
+  useGetBasicInfoQuery,
+} from '@/hooks/queries/useApply.query';
 import {useUploadFile} from '@/hooks/mutations/useApply.mutation';
 import {PartType} from '@/schemas/admin/admin-application-questions.schema';
 import {Spinner} from '@/components/ui/Spinner';
@@ -40,7 +43,8 @@ export const PartQuestion = ({
     ? Number(searchParams.get('id'))
     : null;
 
-  const {data: basicInfo, isLoading: isBasicInfoLoading} = useGetBasicInfoQuery(applicationId);
+  const {data: basicInfo, isLoading: isBasicInfoLoading} =
+    useGetBasicInfoQuery(applicationId);
   const activePart = basicInfo?.applicationPartType as PartType | undefined;
 
   const activePartLabel = PART_TABS.find(
@@ -109,14 +113,16 @@ export const PartQuestion = ({
     <div className='flex w-full flex-col gap-7.5'>
       <div className='flex flex-col gap-7.5'>
         <h3 className='text-h3 text-primary'>
-          {activePartLabel ? `${activePartLabel} 파트에 관한 질문입니다.` : '파트별 질문을 불러오는 중...'}
+          {activePartLabel
+            ? `${activePartLabel} 파트에 관한 질문입니다.`
+            : '파트별 질문을 불러오는 중...'}
         </h3>
 
         <div className='flex justify-center py-4'>
           <StepIndicator currentStep={step} totalSteps={3} />
         </div>
 
-        {(isQuestionsLoading || isBasicInfoLoading || !activePart) ? (
+        {isQuestionsLoading || isBasicInfoLoading || !activePart ? (
           <div className='flex h-full w-full items-center justify-center'>
             <Spinner />
           </div>

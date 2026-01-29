@@ -15,7 +15,10 @@ import {
 import {BASIC_INFO_FIELDS} from '@/constants/form/formConfig';
 import {useRouter, useSearchParams} from 'next/navigation';
 import {useRecruitmentStore} from '@/store/useRecruitmentStore';
-import {useGetEtcQuestionsQuery, useGetBasicInfoQuery} from '@/hooks/queries/useApply.query';
+import {
+  useGetEtcQuestionsQuery,
+  useGetBasicInfoQuery,
+} from '@/hooks/queries/useApply.query';
 import {
   useSaveBasicInfo,
   useSavePartQuestions,
