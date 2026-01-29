@@ -42,7 +42,7 @@ export const BasicInfo = ({
     register,
     control,
     reset,
-    formState: {errors, isValid},
+    formState: {errors},
   } = useFormContext<BasicInfoFormData>();
 
   const hasInitializedRef = useRef(false);
@@ -91,7 +91,7 @@ export const BasicInfo = ({
             control={control}
             render={({field, fieldState: {error}}) => (
               <>
-                <div className='flex gap-[58px] pt-11'>
+                <div className='flex gap-14.5 pt-11'>
                   {options?.map((opt) => (
                     <FormRadio
                       key={opt.value}

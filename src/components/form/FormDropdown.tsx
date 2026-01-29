@@ -92,7 +92,7 @@ export const FormDropdown = forwardRef<HTMLInputElement, FormDropdownProps>(
                 <li
                   key={option.label}
                   onClick={(e) => handleSelect(e, option.value)}
-                  className='hover:rounded-2.5 cursor-pointer px-4 py-3 text-body-l text-neutral-800 transition-colors hover:bg-neutral-200'>
+                  className='cursor-pointer px-4 py-3 text-body-l text-neutral-800 transition-colors hover:rounded-lg hover:bg-neutral-200'>
                   {option.label}
                 </li>
               ))}
