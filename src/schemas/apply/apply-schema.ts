@@ -35,7 +35,7 @@ export const BasicInfoFormSchema = z.object({
       }
 
       if (isHyphenated) {
-        const [_, month, day] = val.split('-');
+        const [, month, day] = val.split('-');
         if (month === '00' || day === '00') {
           ctx.addIssue({
             code: z.ZodIssueCode.custom,
