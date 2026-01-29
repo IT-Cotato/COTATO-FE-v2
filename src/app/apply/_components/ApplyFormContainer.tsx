@@ -56,9 +56,7 @@ export const ApplyFormContainer = () => {
     showSaveSuccess,
   } = useApplyFormController();
 
-  const {data: recruitmentStatus, isLoading} = useRecruitmentStatusQuery({
-    refetchInterval: 5000,
-  });
+  const {data: recruitmentStatus, isLoading} = useRecruitmentStatusQuery();
 
   useEffect(() => {
     if (step === 1) {
