@@ -15,7 +15,7 @@ import {
 import {BASIC_INFO_FIELDS} from '@/constants/form/formConfig';
 import {useRouter, useSearchParams} from 'next/navigation';
 import {useRecruitmentStore} from '@/store/useRecruitmentStore';
-import {useGetEtcQuestionsQuery} from '@/hooks/queries/useApply.query';
+import {useGetEtcQuestionsQuery, useGetBasicInfoQuery} from '@/hooks/queries/useApply.query';
 import {
   useSaveBasicInfo,
   useSavePartQuestions,
@@ -73,6 +73,31 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
     },
   });
   const {trigger, handleSubmit, getValues} = methods;
+
+  // 서버에 저장된 파트 정보 조회
+  const {data: basicInfo} = useGetBasicInfoQuery(
+    applicationId ? Number(applicationId) : null
+  );
+
+  useEffect(() => {
+    const urlPart = searchParams.get('part');
+    const savedPart = basicInfo?.applicationPartType;
+
+    // step 1: part 파라미터가 있으면 제거
+    if (step === 1 && urlPart) {
+      const newParams = new URLSearchParams(searchParams.toString());
+      newParams.delete('part');
+      router.replace(`/apply?${newParams.toString()}`);
+      return;
+    }
+
+    // step 2, 3: 서버 저장 파트와 URL이 다르면 동기화
+    if ((step === 2 || step === 3) && savedPart && urlPart !== savedPart) {
+      const newParams = new URLSearchParams(searchParams.toString());
+      newParams.set('part', savedPart);
+      router.replace(`/apply?${newParams.toString()}`);
+    }
+  }, [step, searchParams, basicInfo?.applicationPartType, router]);
 
   const {data: etcQuestions} = useGetEtcQuestionsQuery(
     applicationId ? Number(applicationId) : null

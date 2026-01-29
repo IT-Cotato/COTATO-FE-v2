@@ -2,6 +2,7 @@
 
 import {useQuery} from '@tanstack/react-query';
 import {
+  getBasicInfo,
   getEtcQuestions,
   getPartQuestions,
   startApplication,
@@ -42,6 +43,17 @@ export const useGetEtcQuestionsQuery = (applicationId: number | null) => {
   return useQuery({
     queryKey: QUERY_KEYS.APPLY.ETC_QUESTIONS(applicationId!),
     queryFn: () => getEtcQuestions(applicationId!),
+    enabled: !!applicationId,
+  });
+};
+
+/**
+ * 기본 정보 조회
+ */
+export const useGetBasicInfoQuery = (applicationId: number | null) => {
+  return useQuery({
+    queryKey: QUERY_KEYS.APPLY.BASIC_INFO(applicationId!),
+    queryFn: () => getBasicInfo(applicationId!),
     enabled: !!applicationId,
   });
 };
