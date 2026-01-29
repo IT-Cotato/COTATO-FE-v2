@@ -73,7 +73,10 @@ export const EtcInfo = ({
       }
 
       if (etcQuestions.unavailableInterviewTimes) {
-        setValue('unavailableInterviewTimes', etcQuestions.unavailableInterviewTimes);
+        setValue(
+          'unavailableInterviewTimes',
+          etcQuestions.unavailableInterviewTimes
+        );
       }
 
       if (etcQuestions.sessionAttendance) {
