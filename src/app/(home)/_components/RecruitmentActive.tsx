@@ -40,7 +40,13 @@ export const RecruitmentActive = () => {
       return `OT(${formatRecruitmentDate(
         schedule.ot,
         false
-      )}), 코커톤, 데모데이는 필수 참석 일정입니다. 불참 시 지원이 제한될 수 있습니다.`;
+      )}), 코커톤(${formatRecruitmentDate(
+        schedule.cokerthon,
+        false
+      )}), 데모데이(${formatRecruitmentDate(
+        schedule.demoDay,
+        false
+      )}) 필수 참석 일정입니다. 불참 시 지원이 제한될 수 있습니다.`;
     }
     return notice;
   });

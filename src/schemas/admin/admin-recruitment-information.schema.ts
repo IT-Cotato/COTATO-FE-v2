@@ -10,6 +10,8 @@ export const RecruitmentInformationSchema = z.object({
   interviewEnd: z.string().nullable(),
   finalAnnouncement: z.string().nullable(),
   ot: z.string().nullable(),
+  cokerthon: z.string().nullable(),
+  demoDay: z.string().nullable(),
 });
 
 export const GetAdminRecruitmentInformationResponseSchema =
@@ -24,6 +26,8 @@ export const PostAdminRecruitmentInformationRequestSchema = z.object({
   interviewEnd: z.string().nullable(),
   finalAnnouncement: z.string().nullable(),
   ot: z.string().nullable(),
+  cokerthon: z.string().nullable(),
+  demoDay: z.string().nullable(),
 });
 
 /** 타입 추출 */
