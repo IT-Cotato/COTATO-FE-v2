@@ -103,7 +103,7 @@ export const PartQuestion = ({
   };
 
   return (
-    <div className='flex w-full flex-col gap-[30px]'>
+    <div className='flex w-full flex-col gap-7.5'>
       <div className='flex flex-col gap-7.5'>
         <h3 className='text-h3 text-primary'>
           {activePartLabel} 파트에 관한 질문입니다.
@@ -126,14 +126,14 @@ export const PartQuestion = ({
                   <FormTextarea
                     key={q.questionId}
                     label={`${q.sequence}. ${q.content}`}
-                    maxLength={q.maxByte}
+                    maxLength={q.maxLength}
                     currentLength={(watch(`ans_${q.questionId}`) || '').length}
                     placeholder='내용을 입력해주세요'
                     error={errors[`ans_${q.questionId}`]?.message as string}
                     {...register(`ans_${q.questionId}`, {
                       required: '답변을 작성해주세요',
                       maxLength: {
-                        value: q.maxByte,
+                        value: q.maxLength,
                         message: '글자수를 초과했습니다',
                       },
                     })}

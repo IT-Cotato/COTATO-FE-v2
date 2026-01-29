@@ -110,7 +110,8 @@ export const PartQuestionResponseSchema = z.object({
       sequence: z.number(),
       content: z.string(),
       partType: z.enum(['PM', 'DE', 'FE', 'BE']),
-      maxByte: z.number(),
+      length: z.number(),
+      maxLength: z.number(),
       savedAnswer: z
         .object({
           answerId: z.number(),
