@@ -8,6 +8,10 @@ import {
   PartQuestionRequest,
   EtcQuestionRequest,
 } from '@/schemas/apply/apply-schema';
+import {
+  formatDigitsToYYYYMMDD,
+  formatDigitsToPhoneNumber,
+} from '@/utils/formatter';
 import {BASIC_INFO_FIELDS} from '@/constants/form/formConfig';
 import {useRouter, useSearchParams} from 'next/navigation';
 import {useRecruitmentStore} from '@/store/useRecruitmentStore';
@@ -104,8 +108,8 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
         const requestData: BasicInfoRequest = {
           name: data.name,
           gender: data.gender,
-          birthDate: data.birthDate,
-          phoneNumber: data.contact,
+          birthDate: formatDigitsToYYYYMMDD(data.birthDate),
+          phoneNumber: formatDigitsToPhoneNumber(data.contact),
           university: data.school,
           major: data.department,
           completedSemesters: Number(data.completedSemesters),
