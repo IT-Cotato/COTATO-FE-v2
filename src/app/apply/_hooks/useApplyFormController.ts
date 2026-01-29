@@ -196,25 +196,11 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
         const formData = data as BasicInfoFormData & {
           discovery?: string;
           otherActivity?: string;
-          interviewStartDate?: string;
-          interviewEndDate?: string;
+          unavailableInterviewTimes?: string;
           sessionAgree?: string;
           otAgree?: string;
           privacyAgree?: string;
         };
-
-        const unavailableInterviewTimes = [
-          formData.interviewStartDate
-            ? `${etcQuestions?.interviewStartDate ?? ''} ${
-                formData.interviewStartDate
-              }`
-            : null,
-          formData.interviewEndDate
-            ? `${etcQuestions?.interviewEndDate ?? ''} ${formData.interviewEndDate}`
-            : null,
-        ]
-          .filter(Boolean)
-          .join(', ');
 
         const discoveryPath =
           (formData.discovery as EtcQuestionRequest['discoveryPath']) || 'NONE';
@@ -222,7 +208,7 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
         const requestData: EtcQuestionRequest = {
           discoveryPath,
           parallelActivities: formData.otherActivity || '',
-          unavailableInterviewTimes,
+          unavailableInterviewTimes: formData.unavailableInterviewTimes || '',
           sessionAttendanceAgreed: formData.sessionAgree === 'agree',
           mandatoryEventsAgreed: formData.otAgree === 'agree',
           privacyPolicyAgreed: formData.privacyAgree === 'agree',

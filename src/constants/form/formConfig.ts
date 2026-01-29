@@ -1,5 +1,9 @@
 import {PART_TABS} from '@/constants/common/part';
 import {EtcFormItem, BasicInfoFormItem} from '@/schemas/apply/apply-type';
+import {
+  DISCOVERY_PATH_LABEL_MAP,
+  DISCOVERY_PATH_OPTIONS,
+} from '@/constants/admin/admin-applications';
 
 export const SEMESTER_OPTIONS = [
   {value: '4', label: '4학기'},
@@ -106,11 +110,20 @@ export interface EtcFieldDates {
 
 export const getEtcFields = (
   dates?: EtcFieldDates,
-  discoveryOptions?: {value: string; label: string}[]
+  discoveryOptions?: {value: string; label?: string | null}[]
 ): EtcFormItem[] => {
   const interviewStart = dates?.interviewStartDate ?? '';
   const interviewEnd = dates?.interviewEndDate ?? '';
   const otDateLabel = dates?.otDate ?? '';
+
+  const normalizedDiscoveryOptions = (
+    discoveryOptions && discoveryOptions.length > 0
+      ? discoveryOptions
+      : DISCOVERY_PATH_OPTIONS
+  ).map(({value, label}) => ({
+    value,
+    label: label ?? DISCOVERY_PATH_LABEL_MAP[value] ?? value,
+  }));
 
   return [
     {
@@ -118,7 +131,7 @@ export const getEtcFields = (
       label: '동아리를 알게 된 경로를 선택해주세요.',
       type: 'dropdown',
       placeholder: '알게 된 경로를 선택해주세요',
-      options: discoveryOptions || [],
+      options: normalizedDiscoveryOptions,
     },
     {
       name: 'otherActivity',
@@ -131,24 +144,16 @@ export const getEtcFields = (
     },
     {
       type: 'group_label',
-      label: `${interviewStart}부터 ${interviewEnd}까지 면접이 진행됩니다. 참여가 불가능한 시간이 있다면 모두 작성해주세요.`,
+      label:
+        interviewStart && interviewEnd
+          ? `${interviewStart}부터 ${interviewEnd}까지 면접이 진행됩니다. 참여가 불가능한 시간이 있다면 모두 작성해주세요.`
+          : '면접이 진행됩니다. 참여가 불가능한 시간이 있다면 모두 작성해주세요.',
     },
     {
-      type: 'row',
-      row: [
-        {
-          name: 'interviewStartDate',
-          label: interviewStart,
-          type: 'input',
-          placeholder: 'ex) 14:00~16:00, 18:00~19:30',
-        },
-        {
-          name: 'interviewEndDate',
-          label: interviewEnd,
-          type: 'input',
-          placeholder: 'ex) 14:00~16:00, 18:00~19:30',
-        },
-      ],
+      name: 'unavailableInterviewTimes',
+      type: 'textarea',
+      placeholder: 'ex) 3월 3일 14:00~16:00, 3월 4일 18:00~19:30',
+      className: 'min-h-[165px]',
     },
     {
       name: 'sessionAgree',

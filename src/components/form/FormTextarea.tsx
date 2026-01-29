@@ -5,7 +5,7 @@ import clsx from 'clsx';
 import {formFieldStyles} from './form.styles';
 
 interface FormTextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
-  label: string;
+  label?: string;
   error?: string;
   currentLength?: number;
   maxLength?: number;
@@ -21,9 +21,11 @@ export const FormTextarea = forwardRef<HTMLTextAreaElement, FormTextareaProps>(
 
     return (
       <div className={formFieldStyles.wrapper}>
-        <label htmlFor={inputId} className={formFieldStyles.label}>
-          {label}
-        </label>
+        {label ? (
+          <label htmlFor={inputId} className={formFieldStyles.label}>
+            {label}
+          </label>
+        ) : null}
 
         <div className='relative w-full'>
           <textarea

@@ -73,20 +73,7 @@ export const EtcInfo = ({
       }
 
       if (etcQuestions.unavailableInterviewTimes) {
-        const times = etcQuestions.unavailableInterviewTimes.split(', ');
-        times.forEach((time) => {
-          if (time.startsWith(etcQuestions.interviewStartDate)) {
-            const timeOnly = time
-              .replace(etcQuestions.interviewStartDate, '')
-              .trim();
-            setValue('interviewStartDate', timeOnly);
-          } else if (time.startsWith(etcQuestions.interviewEndDate)) {
-            const timeOnly = time
-              .replace(etcQuestions.interviewEndDate, '')
-              .trim();
-            setValue('interviewEndDate', timeOnly);
-          }
-        });
+        setValue('unavailableInterviewTimes', etcQuestions.unavailableInterviewTimes);
       }
 
       if (etcQuestions.sessionAttendance) {
@@ -134,6 +121,7 @@ export const EtcInfo = ({
             defaultValue={defaultValue}
             currentLength={name ? (watch(name) || '').length : 0}
             error={error?.message as string}
+            className={className}
             {...(name && register(name))}
           />
         );
