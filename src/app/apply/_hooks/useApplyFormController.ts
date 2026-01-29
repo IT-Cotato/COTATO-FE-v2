@@ -120,6 +120,19 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
   const openConfirmModal = () => setIsConfirmModalOpen(true);
   const closeConfirmModal = () => setIsConfirmModalOpen(false);
 
+  const clearPartQuestionFields = () => {
+    const currentValues = getValues();
+    Object.keys(currentValues).forEach((key) => {
+      if (
+        key.startsWith('ans_') ||
+        ['pdfFileKey', 'pdfFileUrl', 'pdfFileName'].includes(key)
+      ) {
+        // @ts-expect-error - Dynamic fields
+        methods.unregister(key);
+      }
+    });
+  };
+
   const handleSave = async () => {
     if (!applicationId) return;
     const data = getValues();
@@ -147,30 +160,18 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
         };
         await saveBasicInfo(requestData);
 
-        // 이전에 저장된 파트와 현재 선택한 파트 비교
-        const cachedBasicInfo = queryClient.getQueryData<{
-          applicationPartType?: string;
-        }>(QUERY_KEYS.APPLY.BASIC_INFO(Number(applicationId)));
-        const previousPart = cachedBasicInfo?.applicationPartType;
+        await queryClient.invalidateQueries({
+          queryKey: QUERY_KEYS.APPLY.BASIC_INFO(Number(applicationId)),
+        });
+
+        const previousPart = basicInfo?.applicationPartType;
         const currentPart = data.part;
 
-        // 파트가 변경된 경우에만 캐시 invalidate 및 폼 초기화
         if (previousPart && previousPart !== currentPart) {
           await queryClient.invalidateQueries({
             queryKey: QUERY_KEYS.APPLY.PART_QUESTIONS(Number(applicationId)),
           });
-          // 파트 변경 시 이전 답안 초기화 (ans_* 필드들 제거)
-          const currentValues = getValues();
-          Object.keys(currentValues).forEach((key) => {
-            if (
-              key.startsWith('ans_') ||
-              key === 'pdfFileKey' ||
-              key === 'pdfFileUrl' ||
-              key === 'pdfFileName'
-            ) {
-              methods.unregister(key as keyof BasicInfoFormData);
-            }
-          });
+          clearPartQuestionFields();
         }
       } else if (step === 2) {
         const answersToSave = Object.entries(data)
