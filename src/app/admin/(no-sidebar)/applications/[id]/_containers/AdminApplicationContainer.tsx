@@ -10,6 +10,7 @@ import {
   useAdminApplicationBasicInfo,
   useAdminApplicationEtcQuestions,
   useAdminApplicationPartQuestions,
+  useAdminApplicationPdfUrl,
 } from '@/hooks/queries/useAdminApplication.query';
 import {useParams, useRouter, useSearchParams} from 'next/navigation';
 import {APPLICATIONS_PART_TABS} from '@/constants/admin/admin-applications';
@@ -25,6 +26,9 @@ export const AdminApplicationContainer = () => {
   const {data: basicInfo} = useAdminApplicationBasicInfo(applicationId);
   const {data: partQuestions} = useAdminApplicationPartQuestions(applicationId);
   const {data: etcQuestions} = useAdminApplicationEtcQuestions(applicationId);
+  const {data: pdfFileUrl} = useAdminApplicationPdfUrl(
+    partQuestions?.data.pdfFileKey
+  );
 
   const rawStep = Number(searchParams.get('step') ?? 1);
   const step = Math.min(Math.max(rawStep, 1), 3);
@@ -87,7 +91,7 @@ export const AdminApplicationContainer = () => {
               onPrev={handlePrev}
               onNext={handleNext}
               questionsWithAnswers={partQuestions.data.questionsWithAnswers}
-              pdfFileUrl={partQuestions.data.pdfFileUrl}
+              pdfFileUrl={pdfFileUrl}
             />
           </div>
         )}
