@@ -5,6 +5,7 @@ import {useSearchParams} from 'next/navigation';
 import {useFormContext} from 'react-hook-form';
 import {FormTextarea} from '@/components/form/FormTextarea';
 import {FormFile} from '@/components/form/FormFile';
+import { FormLink } from '@/components/form/FormLink';
 import {FullButton} from '@/components/button/FullButton';
 import {
   useGetPartQuestionsQuery,
@@ -157,14 +158,19 @@ export const PartQuestion = ({
                     | string
                     | undefined;
                   return (
-                    <FormFile
-                      label={`${lastQuestion.sequence}. ${lastQuestion.content}`}
-                      placeholder={'파일 업로드하기'}
-                      onFilesChange={handleFileChange}
-                      value={
-                        currentPdfFileName ? [currentPdfFileName] : undefined
-                      }
-                    />
+                    <div className='flex flex-col gap-2.5'>
+                      <label className='text-h5 text-neutral-800'>
+                        {lastQuestion.sequence}. {lastQuestion.content}
+                      </label>
+                      <FormLink />
+                      <FormFile
+                        placeholder={'파일 업로드하기'}
+                        onFilesChange={handleFileChange}
+                        value={
+                          currentPdfFileName ? [currentPdfFileName] : undefined
+                        }
+                      />
+                    </div>
                   );
                 })()}
               </>
