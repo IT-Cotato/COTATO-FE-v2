@@ -48,7 +48,8 @@ export const EtcInfo = ({
 
   const hasInitializedRef = useRef(false);
 
-  const {data: etcQuestions} = useGetEtcQuestionsQuery(applicationId);
+  const {data: etcQuestions, isLoading} =
+    useGetEtcQuestionsQuery(applicationId);
 
   const etcDates = etcQuestions
     ? {
@@ -58,7 +59,7 @@ export const EtcInfo = ({
       }
     : undefined;
 
-  const etcFields = getEtcFields(etcDates);
+  const etcFields = getEtcFields(etcDates, etcQuestions?.discoveryPath.options);
 
   useEffect(() => {
     if (etcQuestions && !hasInitializedRef.current) {
@@ -200,6 +201,16 @@ export const EtcInfo = ({
     }
   };
 
+  if (isLoading) {
+    return (
+      <div className='flex w-full flex-col items-center gap-[81px]'>
+        <div className='flex justify-center py-4'>
+          <StepIndicator currentStep={step} totalSteps={3} />
+        </div>
+        <p>질문지를 불러오는 중입니다...</p>
+      </div>
+    );
+  }
   return (
     <div className='flex w-full flex-col gap-[81px]'>
       <div className='flex justify-center py-4'>

@@ -109,7 +109,7 @@ export const PartQuestionResponseSchema = z.object({
       questionId: z.number(),
       sequence: z.number(),
       content: z.string(),
-      partType: z.enum(['COMMON', 'PM', 'DE', 'FE', 'BE']),
+      partType: z.enum(['PM', 'DE', 'FE', 'BE']),
       maxByte: z.number(),
       savedAnswer: z
         .object({
@@ -149,6 +149,7 @@ export const EtcQuestionResponseSchema = z.object({
     options: z.array(
       z.object({
         value: z.string(),
+        label: z.string(),
       })
     ),
     selectedAnswer: z.string().nullable(),

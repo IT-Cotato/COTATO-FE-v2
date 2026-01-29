@@ -104,7 +104,10 @@ export interface EtcFieldDates {
   otDate: string;
 }
 
-export const getEtcFields = (dates?: EtcFieldDates): EtcFormItem[] => {
+export const getEtcFields = (
+  dates?: EtcFieldDates,
+  discoveryOptions?: {value: string; label: string}[],
+): EtcFormItem[] => {
   const interviewStart = dates?.interviewStartDate ?? '';
   const interviewEnd = dates?.interviewEndDate ?? '';
   const otDateLabel = dates?.otDate ?? '';
@@ -115,16 +118,7 @@ export const getEtcFields = (dates?: EtcFieldDates): EtcFormItem[] => {
       label: '동아리를 알게 된 경로를 선택해주세요.',
       type: 'dropdown',
       placeholder: '알게 된 경로를 선택해주세요',
-      options: [
-        {value: 'INSTAGRAM', label: '인스타그램'},
-        {value: 'EVERYTIME', label: '에브리타임'},
-        {value: 'CAMPUSPICK', label: '캠퍼스픽'},
-        {value: 'JIKHAENG', label: '직행'},
-        {value: 'NAVER_CAFE', label: '네이버 카페'},
-        {value: 'OTHER_SNS', label: '그 외 SNS'},
-        {value: 'FRIEND_REFERRAL', label: '지인 소개'},
-        {value: 'NONE', label: '해당 없음'},
-      ],
+      options: discoveryOptions || [],
     },
     {
       name: 'otherActivity',
