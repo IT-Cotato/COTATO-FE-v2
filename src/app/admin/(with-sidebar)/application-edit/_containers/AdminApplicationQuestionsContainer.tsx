@@ -75,12 +75,18 @@ export const AdminApplicationQuestionsContainer = ({
   const isEmpty = !questions || questions.length === 0;
 
   return (
-    <>
+    <form
+      aria-labelledby='questions-form-title'
+      aria-busy={isPending}
+      className='flex flex-col gap-6'>
+      <h2 id='questions-form-title' className='sr-only'>
+        지원서 질문 관리
+      </h2>
       <div className='flex items-center justify-end'>
         {isEditing ? (
           <div className='flex flex-row items-end gap-2.25'>
             {!isFormValid && (
-              <span className='mr-1.5 text-body-m text-alert'>
+              <span role='alert' className='mr-1.5 text-body-m text-alert'>
                 모든 필드를 작성해 주세요.
               </span>
             )}
@@ -114,7 +120,7 @@ export const AdminApplicationQuestionsContainer = ({
         ) : (
           <Button
             type='button'
-            label='수정'
+            label={isEditing ? '편집 중' : '수정'}
             labelTypo='body_l'
             borderRadius={5}
             backgroundColor='secondary'
@@ -151,6 +157,6 @@ export const AdminApplicationQuestionsContainer = ({
           )}
         </div>
       </div>
-    </>
+    </form>
   );
 };
