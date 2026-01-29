@@ -10,6 +10,7 @@ import {FullButton} from '@/components/button/FullButton';
 import {
   useGetPartQuestionsQuery,
   useGetBasicInfoQuery,
+  useGetFileUrlQuery,
 } from '@/hooks/queries/useApply.query';
 import {useUploadFile} from '@/hooks/mutations/useApply.mutation';
 import {PartType} from '@/schemas/admin/admin-application-questions.schema';
@@ -55,6 +56,7 @@ export const PartQuestion = ({
   const {data: questionsData, isLoading: isQuestionsLoading} =
     useGetPartQuestionsQuery(applicationId);
 
+  const {data: pdfFileUrlData} = useGetFileUrlQuery(questionsData?.pdfFileKey);
   const {mutate: uploadFile} = useUploadFile();
 
   const isAllAnswersFilled = (() => {
@@ -85,12 +87,15 @@ export const PartQuestion = ({
           questionsData.pdfFileKey.split('/').pop() || questionsData.pdfFileKey;
         setValue('pdfFileName', fileName);
       }
-      if (isMatchingPart && questionsData.pdfFileUrl) {
-        setValue('pdfFileUrl', questionsData.pdfFileUrl);
-      }
       hasInitializedRef.current = true;
     }
   }, [questionsData, setValue, activePart]);
+
+  useEffect(() => {
+    if (pdfFileUrlData?.pdfUrl) {
+      setValue('pdfFileUrl', pdfFileUrlData.pdfUrl);
+    }
+  }, [pdfFileUrlData, setValue]);
 
   const handleFileChange = (files: File[]) => {
     if (files.length === 0) {
@@ -100,7 +105,8 @@ export const PartQuestion = ({
       return;
     }
 
-    const file = files[files.length - 1];
+    const file = files[0];
+
     uploadFile(file, {
       onSuccess: ({pdfFileKey, pdfFileUrl}) => {
         setValue('pdfFileKey', pdfFileKey);
@@ -169,6 +175,8 @@ export const PartQuestion = ({
                         value={
                           currentPdfFileName ? [currentPdfFileName] : undefined
                         }
+                        maxCount={1}
+                        maxSize={50 * 1024 * 1024}
                       />
                     </div>
                   );

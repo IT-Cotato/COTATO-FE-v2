@@ -17,12 +17,23 @@ interface FormFileProps extends InputHTMLAttributes<HTMLInputElement> {
   error?: string;
   placeholder?: string;
   value?: string[];
+  maxCount?: number;
+  maxSize?: number;
   onFilesChange?: (files: File[]) => void;
 }
 
 export const FormFile = forwardRef<HTMLInputElement, FormFileProps>(
   function FormFile(
-    {label, className, placeholder, value, onFilesChange, ...props},
+    {
+      label,
+      className,
+      placeholder,
+      value,
+      onFilesChange,
+      maxCount,
+      maxSize,
+      ...props
+    },
     ref
   ) {
     const [files, setFiles] = useState<File[]>([]);
@@ -31,7 +42,6 @@ export const FormFile = forwardRef<HTMLInputElement, FormFileProps>(
       return files.map((f) => URL.createObjectURL(f));
     }, [files]);
 
-    // cleanup은 files가 변경될 때만 실행 (fileUrls 참조 변경으로 인한 무한 루프 방지)
     useEffect(() => {
       const urls = files.map((f) => URL.createObjectURL(f));
       return () => {
@@ -44,6 +54,23 @@ export const FormFile = forwardRef<HTMLInputElement, FormFileProps>(
       if (!e.target.files || e.target.files.length === 0) return;
 
       const newFiles = Array.from(e.target.files);
+
+      if (maxCount && files.length + newFiles.length > maxCount) {
+        alert(`파일은 최대 ${maxCount}개까지 업로드할 수 있습니다.`);
+        e.target.value = '';
+        return;
+      }
+
+      if (maxSize) {
+        const oversizedFiles = newFiles.filter((file) => file.size > maxSize);
+        if (oversizedFiles.length > 0) {
+          const maxSizeMB = Math.floor(maxSize / (1024 * 1024));
+          alert(`파일 크기는 ${maxSizeMB}MB 이하여야 합니다.`);
+          e.target.value = '';
+          return;
+        }
+      }
+
       const updatedFiles = [...files, ...newFiles];
       setFiles(updatedFiles);
       onFilesChange?.(updatedFiles);
@@ -67,7 +94,7 @@ export const FormFile = forwardRef<HTMLInputElement, FormFileProps>(
      */
     const filesToRender =
       !value || value.length === 0
-        ? [] // value가 없으면 무조건 빈 배열 (files 무시)
+        ? []
         : props.readOnly
           ? value.map((name) => ({name, url: name}))
           : files.length > 0

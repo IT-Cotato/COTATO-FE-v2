@@ -6,6 +6,7 @@ import {
   getEtcQuestions,
   getPartQuestions,
   startApplication,
+  getFileUrl,
 } from '@/services/api/apply/apply.api';
 import {QUERY_KEYS} from '@/constants/query-keys';
 
@@ -55,5 +56,17 @@ export const useGetBasicInfoQuery = (applicationId: number | null) => {
     queryKey: QUERY_KEYS.APPLY.BASIC_INFO(applicationId!),
     queryFn: () => getBasicInfo(applicationId!),
     enabled: !!applicationId,
+  });
+};
+
+/**
+ * 파일 URL 조회 (Pre-signed URL)
+ */
+export const useGetFileUrlQuery = (fileKey: string | undefined | null) => {
+  return useQuery({
+    queryKey: QUERY_KEYS.APPLY.FILE_URL(fileKey!),
+    queryFn: () => getFileUrl(fileKey!),
+    enabled: !!fileKey,
+    staleTime: 1000 * 60 * 55,
   });
 };
