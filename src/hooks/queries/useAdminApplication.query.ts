@@ -85,7 +85,7 @@ export const useAdminApplicationPdfUrl = (
   pdfFileKey: string | null | undefined
 ) => {
   return useQuery({
-    queryKey: ['admin-application-pdf-url', pdfFileKey],
+    queryKey: [QUERY_KEYS.ADMIN_APPLICATION_PDF_URL, pdfFileKey],
     queryFn: () => {
       if (!pdfFileKey) {
         throw new Error('pdfFileKey is required');
