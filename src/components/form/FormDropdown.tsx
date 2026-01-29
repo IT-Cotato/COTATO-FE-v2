@@ -87,10 +87,10 @@ export const FormDropdown = forwardRef<HTMLInputElement, FormDropdownProps>(
           </button>
 
           {isOpen && !readOnly && (
-            <ul className='absolute z-10 mt-2 w-full rounded-[10px] border border-neutral-200 bg-neutral-100 shadow-lg'>
+            <ul className='absolute z-dropdown mt-2 w-full rounded-[10px] border border-neutral-200 bg-neutral-100 shadow-lg'>
               {options.map((option) => (
                 <li
-                  key={option.label}
+                  key={option.value}
                   onClick={(e) => handleSelect(e, option.value)}
                   className='cursor-pointer px-4 py-3 text-body-l text-neutral-800 transition-colors hover:rounded-lg hover:bg-neutral-200'>
                   {option.label}
