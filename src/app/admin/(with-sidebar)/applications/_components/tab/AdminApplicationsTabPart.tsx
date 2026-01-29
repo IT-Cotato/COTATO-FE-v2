@@ -17,6 +17,11 @@ export const AdminApplicationsTabPart = ({
   onKeyDown,
   tabIndex,
 }: AdminApplicationsTabPartProps) => {
+  const ariaLabel =
+    partName && applyNumber !== undefined
+      ? `${partName} (${applyNumber}명)`
+      : (partName ?? '파트 탭');
+
   return (
     <button
       type='button'
@@ -25,7 +30,7 @@ export const AdminApplicationsTabPart = ({
       aria-selected={isActive}
       tabIndex={tabIndex}
       onKeyDown={onKeyDown}
-      aria-label={`${partName} (${applyNumber}명)`}
+      aria-label={ariaLabel}
       className={clsx(
         'flex flex-row items-center gap-2 pb-1',
         'border-b-2 transition-colors',

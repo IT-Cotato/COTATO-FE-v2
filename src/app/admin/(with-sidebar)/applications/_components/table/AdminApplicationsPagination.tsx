@@ -94,6 +94,7 @@ export const AdminApplicationsPagination = ({
                 <button
                   onClick={() => onPageChange(totalPages)}
                   disabled={disabled}
+                  aria-current={currentPage === totalPages ? 'page' : undefined}
                   className={clsx(
                     'flex h-9 w-9 items-center justify-center rounded-lg text-body-m',
                     currentPage === totalPages

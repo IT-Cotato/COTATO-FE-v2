@@ -28,6 +28,7 @@ export const AdminApplicationsResultDropdown = ({
   const {bg, label} = APPLICATION_RESULT_CONFIG[selectedResult];
 
   const handleSelect = (value: ApplicationResultStatus) => {
+    if (disabled) return;
     if (value === selectedResult) {
       setIsOpen(false);
       return;
@@ -73,7 +74,7 @@ export const AdminApplicationsResultDropdown = ({
                 key={option}
                 role='option'
                 aria-selected={isSelected}
-                tabIndex={0}
+                tabIndex={isSelected ? 0 : -1}
                 className={clsx(
                   'cursor-pointer px-3 py-1.5 text-center',
                   isSelected ? 'text-primary' : 'hover:text-primary',

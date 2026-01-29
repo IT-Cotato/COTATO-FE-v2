@@ -93,7 +93,7 @@ export const AdminRecruitmentInformationContainer = ({
           <div
             role='group'
             className='flex flex-row gap-2.25'
-            aria-label={isEditing ? '모집 정보 편집 중' : '모집 정보 조회'}>
+            aria-label='모집 정보 편집 중'>
             <Button
               label='저장'
               labelTypo='body_l'

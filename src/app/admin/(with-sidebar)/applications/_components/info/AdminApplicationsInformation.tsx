@@ -55,7 +55,10 @@ export const AdminApplicationsInformation = ({
       className='flex w-full justify-between gap-50 gap-y-4 rounded-[10px] bg-neutral-100 p-4'
       aria-busy={isLoading}>
       <div className='flex flex-row gap-7.25'>
-        <div className='flex flex-col gap-4'>
+        <div
+          className='flex flex-col gap-4'
+          role='group'
+          aria-labelledby='generation-label'>
           <label id='generation-label' className='text-body-l text-neutral-600'>
             기수 정보
           </label>
@@ -78,7 +81,7 @@ export const AdminApplicationsInformation = ({
 
           <div className='flex flex-row gap-2.5 text-body-l font-normal'>
             {isLoading ? (
-              <Spinner size='sm' aria-label='지원 기간 불러오는 중' />
+              <Spinner size='sm' />
             ) : (
               <>
                 <p className='rounded-[10px] bg-neutral-50 px-8 py-1.75 text-neutral-800'>
