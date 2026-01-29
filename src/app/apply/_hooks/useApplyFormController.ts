@@ -27,6 +27,8 @@ import {
 } from '@/hooks/mutations/useApply.mutation';
 import {useQueryClient} from '@tanstack/react-query';
 import {QUERY_KEYS} from '@/constants/query-keys';
+import {getRecruitmentStatus} from '@/services/api/recruitment/recruitment-status.api';
+import {ROUTES} from '@/constants/routes';
 
 interface UseApplyFormControllerReturn {
   step: number;
@@ -117,6 +119,29 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
 
   const openConfirmModal = () => setIsConfirmModalOpen(true);
   const closeConfirmModal = () => setIsConfirmModalOpen(false);
+
+  const ensureRecruitmentIsActive = async () => {
+    try {
+      const latest = await queryClient.fetchQuery({
+        queryKey: [QUERY_KEYS.RECRUITMENT_STATUS],
+        queryFn: getRecruitmentStatus,
+      });
+
+      if (!latest.data.isActive) {
+        alert('모집 기간이 종료되었습니다.');
+        router.push(ROUTES.HOME);
+        return false;
+      }
+      return true;
+    } catch {
+      if (!isRecruiting) {
+        alert('모집 기간이 종료되었습니다.');
+        router.push(ROUTES.HOME);
+        return false;
+      }
+      return true;
+    }
+  };
 
   const clearPartQuestionFields = () => {
     const currentValues = getValues();
@@ -270,6 +295,9 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
     closeConfirmModal();
 
     try {
+      const ok = await ensureRecruitmentIsActive();
+      if (!ok) return;
+
       await handleSave();
       await submitApplication();
       await queryClient.invalidateQueries({queryKey: QUERY_KEYS.APPLY.STATUS});
@@ -286,11 +314,9 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
    */
   const handleFinalSubmit = async (e?: React.BaseSyntheticEvent) => {
     e?.preventDefault();
-    if (isRecruiting) {
-      openConfirmModal();
-      return;
-    }
-    router.push('/?submitted=false');
+    const ok = await ensureRecruitmentIsActive();
+    if (!ok) return;
+    openConfirmModal();
   };
 
   return {

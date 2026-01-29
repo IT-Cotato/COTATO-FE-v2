@@ -5,7 +5,7 @@ import {useRouter} from 'next/navigation';
 import {FormProvider} from 'react-hook-form';
 import {BasicInfo} from '@/app/apply/_components/BasicInfo';
 import {PartQuestion} from '@/app/apply/_components/PartQuestion';
-import {EtcInfo} from '@/app/apply/_components/EtcInfo';
+import {EtcInfo} from '@/app/apply/_components/EtcQuestion';
 import {useApplyFormController} from '@/app/apply/_hooks/useApplyFormController';
 import {ApplicationConfirmModal} from '@/components/modal/ApplicationConfirmModal';
 import {AlreadySubmittedModal} from '@/components/modal/AlreadySubmittedModal';
@@ -56,7 +56,9 @@ export const ApplyFormContainer = () => {
     showSaveSuccess,
   } = useApplyFormController();
 
-  const {data: recruitmentStatus, isLoading} = useRecruitmentStatusQuery();
+  const {data: recruitmentStatus, isLoading} = useRecruitmentStatusQuery({
+    refetchInterval: 5000,
+  });
 
   useEffect(() => {
     if (step === 1) {
