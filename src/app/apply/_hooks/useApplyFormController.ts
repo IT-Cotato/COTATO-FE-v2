@@ -75,7 +75,7 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
       part: undefined,
     },
   });
-  const {trigger, handleSubmit, getValues} = methods;
+  const {trigger, getValues} = methods;
 
   // 서버에 저장된 파트 정보 조회
   const {data: basicInfo} = useGetBasicInfoQuery(
@@ -102,9 +102,7 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
     }
   }, [step, searchParams, basicInfo?.applicationPartType, router]);
 
-  const {data: etcQuestions} = useGetEtcQuestionsQuery(
-    applicationId ? Number(applicationId) : null
-  );
+  useGetEtcQuestionsQuery(applicationId ? Number(applicationId) : null);
 
   const {mutateAsync: saveBasicInfo} = useSaveBasicInfo(Number(applicationId));
   const {mutateAsync: savePartQuestions} = useSavePartQuestions(
@@ -281,13 +279,19 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
     }
   };
 
-  const handleFinalSubmit = handleSubmit(() => {
+  /**
+   * 최종 제출은 step 이동 과정에서 이미 각 step별 validation을 거치므로
+   * 여기서는 zodResolver(BasicInfoFormSchema) 검증을 타지 않게 처리합니다.
+   * (검증 실패 시 아무 반응 없이 submit이 막혀 "버튼이 안 눌리는" UX가 발생할 수 있음)
+   */
+  const handleFinalSubmit = async (e?: React.BaseSyntheticEvent) => {
+    e?.preventDefault();
     if (isRecruiting) {
       openConfirmModal();
-    } else {
-      router.push('/?submitted=false');
+      return;
     }
-  });
+    router.push('/?submitted=false');
+  };
 
   return {
     step,
