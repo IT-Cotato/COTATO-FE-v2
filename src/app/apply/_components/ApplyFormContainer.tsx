@@ -13,7 +13,6 @@ import {useApplicationStatusQuery} from '@/hooks/queries/useApply.query';
 import {useAuthStore} from '@/store/useAuthStore';
 import {ROUTES} from '@/constants/routes';
 import HeroMainBanner from '@/components/banner/HeroMainBanner';
-import {AdminRecruitmentInformation} from '@/app/admin/application-edit/_components/recruitment/AdminRecruitmentInformation';
 import {useRecruitmentStatusQuery} from '@/hooks/queries/useRecruitmentStatus.query';
 import {useRecruitmentScheduleQuery} from '@/hooks/queries/useRecruitmentSchedule.query';
 import {Spinner} from '@/components/ui/Spinner';
@@ -24,6 +23,7 @@ interface ApiErrorData {
   code: string;
   message: string;
 }
+import {RecruitmentInformation} from '@/components/recruitment/RecruitmentInformation';
 
 const STEP_TITLES = {
   2: '파트별 질문',
@@ -119,7 +119,7 @@ export const ApplyFormContainer = () => {
               <span aria-hidden='true'>🥔</span>
             </h1>
             {scheduleData && (
-              <AdminRecruitmentInformation
+              <RecruitmentInformation
                 variant='plain'
                 data={scheduleData}
                 isEditing={false}

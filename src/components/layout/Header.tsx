@@ -109,7 +109,7 @@ export const Header = () => {
                   <button
                     type='button'
                     className='flex cursor-pointer items-center justify-center gap-2.5 px-4.25 py-6 text-body-l-sb text-white'>
-                    <SmallLogo /> {user.name}
+                    <SmallLogo className='h-4 w-4 text-white' /> {user.name}
                   </button>
                 }
                 className='absolute rounded-sm border border-primary bg-black px-2 py-1'>

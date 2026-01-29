@@ -15,7 +15,10 @@ export const APPLICATION_COLUMNS = [
 ] as const;
 
 /** 지원서 파트 탭 상수 */
-export const PART_TABS: {label: string; value: ApplicationPartViewType}[] = [
+export const APPLICATIONS_PART_TABS: {
+  label: string;
+  value: ApplicationPartViewType;
+}[] = [
   {label: '전체 회원', value: 'ALL'},
   {label: '기획', value: 'PM'},
   {label: '디자인', value: 'DE'},
@@ -118,7 +121,30 @@ export const ETC_QUESTION_LABELS = {
     '코테이토 활동 외에 병행하는 활동(알바, 인턴, 타 동아리 등등)이 있다면 요일과 시간을 모두 작성해주세요.',
   sessionAttendance: '코테이토의 세션은 매주 금요일 19시에 진행됩니다.',
   sessionAttendance_answer: '성실히 참여하겠습니다!',
-  mandatoryEvents_answer: '네, 가능합니다.',
-  privacyPolicy: '개인정보 활용 동의',
-  privacyPolicy_answer: '확인',
+  mandatoryEvents_answer: '네, 참석 가능합니다.',
+  privacyPolicy: '개인정보 수집 및 이용 동의',
+  privacyPolicy_answer: '개인정보의 수집 및 이용동의·이용에 동의합니다.',
 };
+
+export const DISCOVERY_PATH_OPTIONS = [
+  {value: 'INSTAGRAM', label: '인스타그램'},
+  {value: 'EVERYTIME', label: '에브리타임'},
+  {value: 'CAMPUSPICK', label: '캠퍼스픽'},
+  {value: 'JIKHAENG', label: '직행'},
+  {value: 'NAVER_CAFE', label: '네이버 카페'},
+  {value: 'OTHER_SNS', label: '그 외 SNS'},
+  {value: 'FRIEND_REFERRAL', label: '지인 소개'},
+  {value: 'NONE', label: '해당 없음'},
+] as const;
+
+export const DISCOVERY_PATH_LABEL_MAP = Object.fromEntries(
+  DISCOVERY_PATH_OPTIONS.map(({value, label}) => [value, label])
+) as Record<string, string>;
+
+export const PRIVACY_POLICY = `개인정보보호법에 따라 코테이토에 회원가입을 신청하시는 분께 수집하는 개인정보의 항목, 개인정보의 수집 및 이용 목적, 개인정보의 보유 및 이용 기간, 동의 거부권 및 동의 거부 시 불이익에 관한 사항을 안내해 드리니 확인 후 동의하여 주시기를 바랍니다. 회원 가입을 위해서는 아래와 같이 개인정보를 수집·이용합니다
+
+1. 개인정보 수집 항목: 이름, 아이디(이메일), 비밀번호, 전화번호
+2. 개인정보 수집 목적: 회원 관리
+3. 보유 및 이용 기간: 회원 탈퇴 시까지
+
+이용자는 개인정보의 수집 및 이용 동의를 거부할 권리가 있으나 동의 거부 시 서비스 이용이 제한됩니다.`;
