@@ -5,7 +5,7 @@ import {useSearchParams} from 'next/navigation';
 import {useFormContext} from 'react-hook-form';
 import {FormTextarea} from '@/components/form/FormTextarea';
 import {FormFile} from '@/components/form/FormFile';
-import { FormLink } from '@/components/form/FormLink';
+import {FormLink} from '@/components/form/FormLink';
 import {FullButton} from '@/components/button/FullButton';
 import {
   useGetPartQuestionsQuery,
