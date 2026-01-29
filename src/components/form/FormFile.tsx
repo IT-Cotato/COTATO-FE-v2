@@ -20,6 +20,7 @@ interface FormFileProps extends InputHTMLAttributes<HTMLInputElement> {
   maxCount?: number;
   maxSize?: number;
   onFilesChange?: (files: File[]) => void;
+  isUploading?: boolean;
 }
 
 export const FormFile = forwardRef<HTMLInputElement, FormFileProps>(
@@ -32,6 +33,7 @@ export const FormFile = forwardRef<HTMLInputElement, FormFileProps>(
       onFilesChange,
       maxCount,
       maxSize,
+      isUploading,
       ...props
     },
     ref
@@ -50,7 +52,7 @@ export const FormFile = forwardRef<HTMLInputElement, FormFileProps>(
     }, [files]);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      if (props.readOnly) return;
+      if (props.readOnly || isUploading) return;
       if (!e.target.files || e.target.files.length === 0) return;
 
       const newFiles = Array.from(e.target.files);
@@ -78,7 +80,7 @@ export const FormFile = forwardRef<HTMLInputElement, FormFileProps>(
     };
 
     const handleDelete = (index: number) => {
-      if (props.readOnly) return;
+      if (props.readOnly || isUploading) return;
       const updatedFiles = files.filter((_, i) => i !== index);
       setFiles(updatedFiles);
       onFilesChange?.(updatedFiles);
@@ -140,14 +142,19 @@ export const FormFile = forwardRef<HTMLInputElement, FormFileProps>(
         ))}
 
         {!props.readOnly && (
-          <label className='flex h-19 cursor-pointer items-center justify-center rounded-[10px] bg-neutral-100 px-10 py-4 text-center text-h5 text-neutral-400'>
-            <span>{placeholder}</span>
+          <label
+            className={clsx(
+              'flex h-19 items-center justify-center rounded-[10px] bg-neutral-100 px-10 py-4 text-center text-h5 text-neutral-400',
+              isUploading ? 'cursor-not-allowed opacity-60' : 'cursor-pointer'
+            )}>
+            <span>{isUploading ? '파일 업로드 중입니다' : placeholder}</span>
             <input
               ref={ref}
               type='file'
               accept='.pdf'
               multiple
               className='hidden'
+              disabled={isUploading}
               onChange={handleChange}
               {...props}
             />

@@ -58,7 +58,7 @@ export const PartQuestion = ({
     useGetPartQuestionsQuery(applicationId);
 
   const {data: pdfFileUrlData} = useGetFileUrlQuery(questionsData?.pdfFileKey);
-  const {mutate: uploadFile} = useUploadFile();
+  const {mutate: uploadFile, isPending: isUploadingFile} = useUploadFile();
 
   const isAllAnswersFilled = (() => {
     if (!questionsData?.questionsWithAnswers) return false;
@@ -186,6 +186,7 @@ export const PartQuestion = ({
                       />
                       <FormFile
                         placeholder={'파일 업로드하기'}
+                        isUploading={isUploadingFile}
                         onFilesChange={handleFileChange}
                         value={
                           currentPdfFileName ? [currentPdfFileName] : undefined

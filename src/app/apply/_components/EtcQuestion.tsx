@@ -14,6 +14,7 @@ import {EtcFieldConfig} from '@/schemas/apply/apply-type';
 import {useGetEtcQuestionsQuery} from '@/hooks/queries/useApply.query';
 import {StepIndicator} from '@/components/navigation/StepIndicator';
 import {Spinner} from '@/components/ui/Spinner';
+import {PRIVACY_POLICY} from '@/constants/admin/admin-applications';
 
 export const EtcInfo = ({
   step,
@@ -167,7 +168,7 @@ export const EtcInfo = ({
                 name={name}
                 control={control}
                 render={({field: controllerField}) => (
-                  <div className={clsx('flex w-full gap-[58px]', className)}>
+                  <div className={clsx('flex w-full gap-14.5', className)}>
                     {options?.map((opt) => (
                       <FormRadio
                         key={opt.value}
@@ -195,7 +196,7 @@ export const EtcInfo = ({
 
   if (isLoading) {
     return (
-      <div className='flex w-full flex-col items-center gap-[81px]'>
+      <div className='flex w-full flex-col items-center gap-20.25'>
         <div className='flex justify-center py-4'>
           <StepIndicator currentStep={step} totalSteps={3} />
         </div>
@@ -204,7 +205,7 @@ export const EtcInfo = ({
     );
   }
   return (
-    <div className='flex w-full flex-col gap-[81px]'>
+    <div className='flex w-full flex-col gap-20.25'>
       <div className='flex justify-center py-4'>
         <StepIndicator currentStep={step} totalSteps={3} />
       </div>
@@ -224,8 +225,8 @@ export const EtcInfo = ({
         })}
       </div>
 
-      <div className='flex flex-col gap-[26px]'>
-        <div className='flex gap-[26px]'>
+      <div className='flex flex-col gap-6.5'>
+        <div className='flex gap-6.5'>
           <FullButton
             label='이전'
             variant='primary'
