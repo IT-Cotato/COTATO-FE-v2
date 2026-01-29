@@ -106,7 +106,7 @@ export interface EtcFieldDates {
 
 export const getEtcFields = (
   dates?: EtcFieldDates,
-  discoveryOptions?: {value: string; label: string}[],
+  discoveryOptions?: {value: string; label: string}[]
 ): EtcFormItem[] => {
   const interviewStart = dates?.interviewStartDate ?? '';
   const interviewEnd = dates?.interviewEndDate ?? '';
