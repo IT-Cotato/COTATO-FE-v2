@@ -78,6 +78,8 @@ export const AdminApplicationsTableView = ({
                       <button
                         type='button'
                         onClick={onFilterToggle}
+                        aria-label='합격 여부 필터 열기'
+                        aria-expanded={isFilterOpen}
                         className='cursor-pointer'>
                         {isFilterActive ? (
                           <FinishFilterIcon />
@@ -102,7 +104,9 @@ export const AdminApplicationsTableView = ({
                     <button
                       type='button'
                       onClick={onSubmitDateSortToggle}
-                      className='cursor-pointer'>
+                      className='cursor-pointer'
+                      aria-label='제출일자 정렬 변경'
+                      aria-pressed={submitDateSortOrder === 'asc'}>
                       <DownArrowIcon
                         className={clsx(
                           'transition-transform duration-200 ease-in-out',
@@ -128,6 +132,7 @@ export const AdminApplicationsTableView = ({
                 href={`${ROUTES.ADMIN_APPLICATIONS}/${app.applicationId}?generationId=${generationId}`}
                 target='_blank'
                 rel='noopener noreferrer'
+                aria-label={`${app.name} 지원서 상세 보기`}
                 className='cursor-pointer hover:border-b'>
                 {app.name}
               </a>
