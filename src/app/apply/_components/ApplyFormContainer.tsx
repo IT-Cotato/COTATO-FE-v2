@@ -56,6 +56,8 @@ export const ApplyFormContainer = () => {
     showSaveSuccess,
   } = useApplyFormController();
 
+  const {data: recruitmentStatus, isLoading} = useRecruitmentStatusQuery();
+
   useEffect(() => {
     if (step === 1) {
       pageTopRef.current?.scrollIntoView({behavior: 'smooth'});
@@ -64,7 +66,13 @@ export const ApplyFormContainer = () => {
     }
   }, [step]);
 
-  const {data: recruitmentStatus, isLoading} = useRecruitmentStatusQuery();
+  // 모집 기간 종료된 경우 홈으로 리다이렉트
+  useEffect(() => {
+    if (recruitmentStatus && !recruitmentStatus.data?.isActive) {
+      alert('모집 기간이 종료되었습니다.');
+      router.push(ROUTES.HOME);
+    }
+  }, [recruitmentStatus, router]);
   const generation = recruitmentStatus?.data?.generationId;
   const {data: scheduleData} = useRecruitmentScheduleQuery();
 
