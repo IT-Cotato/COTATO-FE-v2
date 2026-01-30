@@ -258,9 +258,7 @@ export const EtcInfo = ({
             variant='primary'
             labelTypo='h4'
             type='submit'
-            backgroundColor={
-              isAllRequiredFilled ? 'primary' : 'text-disabled'
-            }
+            backgroundColor={isAllRequiredFilled ? 'primary' : 'text-disabled'}
           />
         </div>
         <FullButton
