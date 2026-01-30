@@ -1,10 +1,12 @@
 'use client';
 
-import {useEffect} from 'react';
+import {Suspense, useEffect} from 'react';
 import {useRouter, useSearchParams} from 'next/navigation';
 import {ProtectedRoute} from '@/components/auth/ProtectedRoute';
 import {ApplyFormContainer} from '@/app/apply/_components/ApplyFormContainer';
 import {ROUTES} from '@/constants/routes';
+import {Spinner} from '@/components/ui/Spinner';
+import {SuspenseWrapper} from '@/components/wrappers/SuspenseWrapper';
 
 /**
  * 지원서 작성 페이지
@@ -27,7 +29,9 @@ export default function ApplyPage() {
 
   return (
     <ProtectedRoute>
-      <ApplyFormContainer />
+      <SuspenseWrapper>
+        <ApplyFormContainer />
+      </SuspenseWrapper>
     </ProtectedRoute>
   );
 }
