@@ -18,6 +18,7 @@ import {useRecruitmentStore} from '@/store/useRecruitmentStore';
 import {
   useGetEtcQuestionsQuery,
   useGetBasicInfoQuery,
+  useGetPartQuestionsQuery,
 } from '@/hooks/queries/useApply.query';
 import {
   useSaveBasicInfo,
@@ -77,7 +78,7 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
       part: undefined,
     },
   });
-  const {trigger, getValues} = methods;
+  const {trigger, getValues, setValue} = methods;
 
   // 서버에 저장된 파트 정보 조회
   const {data: basicInfo} = useGetBasicInfoQuery(
@@ -106,6 +107,10 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
 
   useGetEtcQuestionsQuery(applicationId ? Number(applicationId) : null);
 
+  const {data: partQuestionsData} = useGetPartQuestionsQuery(
+    applicationId ? Number(applicationId) : null
+  );
+
   const {mutateAsync: saveBasicInfo} = useSaveBasicInfo(Number(applicationId));
   const {mutateAsync: savePartQuestions} = useSavePartQuestions(
     Number(applicationId)
@@ -125,6 +130,7 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
       const latest = await queryClient.fetchQuery({
         queryKey: [QUERY_KEYS.RECRUITMENT_STATUS],
         queryFn: getRecruitmentStatus,
+        staleTime: 0, // 항상 서버에서 최신 데이터 가져오기
       });
 
       if (!latest.data.isActive) {
@@ -146,14 +152,18 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
   const clearPartQuestionFields = () => {
     const currentValues = getValues();
     Object.keys(currentValues).forEach((key) => {
-      if (
-        key.startsWith('ans_') ||
-        ['pdfFileKey', 'pdfFileUrl', 'pdfFileName'].includes(key)
-      ) {
+      if (key.startsWith('ans_')) {
         // @ts-expect-error - Dynamic fields
         methods.unregister(key);
       }
     });
+    // PDF 파일 필드는 명시적으로 undefined로 설정
+    // @ts-expect-error - Dynamic fields
+    setValue('pdfFileKey', undefined);
+    // @ts-expect-error - Dynamic fields
+    setValue('pdfFileUrl', undefined);
+    // @ts-expect-error - Dynamic fields
+    setValue('pdfFileName', undefined);
   };
 
   const handleSave = async () => {
@@ -249,22 +259,52 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
   };
 
   const handleNext = async () => {
-    let fieldsToValidate: (keyof BasicInfoFormData)[] = [];
+    let isValid = false;
 
     if (step === 1) {
-      fieldsToValidate = BASIC_INFO_FIELDS.flatMap((field) =>
+      const fieldsToValidate = BASIC_INFO_FIELDS.flatMap((field) =>
         'row' in field && field.row
           ? field.row.map((f) => f.name)
           : [field.name]
-      ).filter(Boolean) as (keyof BasicInfoFormData)[];
+      ).filter(Boolean) as string[];
+
+      // @ts-expect-error - Dynamic fields
+      isValid = await trigger(fieldsToValidate);
     } else if (step === 2) {
-      const values = getValues();
-      fieldsToValidate = Object.keys(values).filter((key) =>
-        key.startsWith('ans_')
-      ) as (keyof BasicInfoFormData)[];
+      // Step 2: ans_ 필드 수동 검증
+      if (partQuestionsData?.questionsWithAnswers) {
+        const textQuestions = partQuestionsData.questionsWithAnswers.slice(
+          0,
+          -1
+        );
+        const allValues = getValues();
+
+        // 수동으로 각 필드 검증
+        const invalidFields: string[] = [];
+        textQuestions.forEach((q) => {
+          const fieldName = `ans_${q.questionId}`;
+          const value = allValues[fieldName as keyof typeof allValues] as
+            | string
+            | undefined;
+
+          if (!value || value.trim().length === 0) {
+            invalidFields.push(fieldName);
+            // @ts-expect-error - Dynamic field names
+            methods.setError(fieldName, {
+              type: 'manual',
+              message: '답변을 작성해주세요',
+            });
+          }
+        });
+
+        isValid = invalidFields.length === 0;
+      } else {
+        isValid = true;
+      }
+    } else {
+      isValid = true;
     }
 
-    const isValid = await trigger(fieldsToValidate);
     if (isValid) {
       await handleSave();
 
@@ -314,6 +354,33 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
    */
   const handleFinalSubmit = async (e?: React.BaseSyntheticEvent) => {
     e?.preventDefault();
+
+    // Step 3 필수 필드 검증
+    const allValues = getValues();
+    const invalidFields: string[] = [];
+
+    const requiredFields = [
+      'discovery',
+      'sessionAgree',
+      'otAgree',
+      'privacyAgree',
+    ];
+    requiredFields.forEach((fieldName) => {
+      const value = allValues[fieldName as keyof typeof allValues];
+      if (!value) {
+        invalidFields.push(fieldName);
+        // @ts-expect-error - Dynamic field names
+        methods.setError(fieldName, {
+          type: 'manual',
+          message: '필수 항목입니다',
+        });
+      }
+    });
+
+    if (invalidFields.length > 0) {
+      return;
+    }
+
     const ok = await ensureRecruitmentIsActive();
     if (!ok) return;
     openConfirmModal();
