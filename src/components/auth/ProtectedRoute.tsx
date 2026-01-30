@@ -12,13 +12,16 @@ interface ProtectedRouteProps {
 }
 
 /**
- * 인증이 필요한 페이지를 보호하는 컴포넌트
+ * url 직접 접근 관리가 필요한 페이지를 보호하는 컴포넌트
+ * - 인증
+ * - 모집 활성화 여부
  *
  * 기능:
  * - 로그인하지 않은 사용자가 접근 시 alert 표시 후 메인 페이지로 리다이렉트
  * - URL 직접 입력, 북마크, 링크 공유 등 모든 접근 방식 차단
  * - React Strict Mode에서도 alert가 1번만 표시됨
  * - requireRole 지정 시 해당 role이 아니면 접근 차단
+ * - requireRecruiting 지정 시 모집 활성화 상태가 아니라면 접근 차단
  *
  * 사용법:
  * // 로그인만 필요
@@ -28,6 +31,11 @@ interface ProtectedRouteProps {
  *
  * // STAFF role 필요
  * <ProtectedRoute requireRole="STAFF">
+ *   {children}
+ * </ProtectedRoute>
+ *
+ * // 모집 활성화 상태가 true일 때만 접근 가능
+ * <ProtectedRoute requireRecruiting={true}>
  *   {children}
  * </ProtectedRoute>
  */
