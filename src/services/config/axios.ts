@@ -37,6 +37,12 @@ export const publicAxios = createAxiosInstance();
  */
 publicAxios.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
+    // 개발 환경에서 요청 로깅
+    if (process.env.NODE_ENV === 'development') {
+      console.log(
+        `[API Request] ${config.method?.toUpperCase()} ${config.url} ${JSON.stringify(config.data)} ${JSON.stringify(config.params)}`
+      );
+    }
     return config;
   },
   (error) => {
@@ -75,6 +81,12 @@ const processQueue = (error: AxiosError | null = null) => {
  */
 privateAxios.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
+    // 개발 환경에서 요청 로깅
+    if (process.env.NODE_ENV === 'development') {
+      console.log(
+        `[API Request] ${config.method?.toUpperCase()} ${config.url} ${JSON.stringify(config.data)} ${JSON.stringify(config.params)}`
+      );
+    }
     const token = getAccessToken();
 
     if (token) {
