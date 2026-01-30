@@ -42,6 +42,7 @@ export const BasicInfo = ({
     register,
     control,
     reset,
+    watch,
     formState: {errors},
   } = useFormContext<BasicInfoFormData>();
 
@@ -77,6 +78,21 @@ export const BasicInfo = ({
       hasInitializedRef.current = true;
     }
   }, [basicInfo, reset]);
+
+  // 모든 필수 필드가 작성되었는지 확인
+  const allValues = watch();
+  const isAllFieldsFilled = ![
+    'name',
+    'gender',
+    'contact',
+    'birthDate',
+    'school',
+    'isCollegeStudent',
+    'department',
+    'completedSemesters',
+    'isPrevActivity',
+    'part',
+  ].some((field) => !allValues[field as keyof BasicInfoFormData]);
 
   const renderField = (field: BasicInfoFieldConfig) => {
     const {type, name, label, options, placeholder, autocomplete} =
@@ -134,6 +150,7 @@ export const BasicInfo = ({
                 readOnly={readOnly}
                 className='w-full'
                 error={error?.message}
+                required
               />
             )}
           />
@@ -152,6 +169,7 @@ export const BasicInfo = ({
             autoComplete={autocomplete}
             formatter={formatDigitsToYYYYMMDD}
             maxLength={8}
+            required
           />
         </div>
       );
@@ -168,6 +186,7 @@ export const BasicInfo = ({
             autoComplete={autocomplete}
             formatter={formatDigitsToPhoneNumber}
             maxLength={11}
+            required
           />
         </div>
       );
@@ -185,6 +204,7 @@ export const BasicInfo = ({
           {...register(name)}
           error={errors[name]?.message ?? ''}
           className='w-full'
+          required
         />
       </div>
     );
@@ -216,6 +236,8 @@ export const BasicInfo = ({
           labelTypo='h4'
           onClick={onNext}
           type='button'
+          disabledBackgroundColor='text-disabled'
+          disabled={!isAllFieldsFilled}
         />
         <FullButton
           label='저장하기'

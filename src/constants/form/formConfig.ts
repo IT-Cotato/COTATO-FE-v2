@@ -133,6 +133,7 @@ export const getEtcFields = (
       type: 'dropdown',
       placeholder: '알게 된 경로를 선택해주세요',
       options: normalizedDiscoveryOptions,
+      required: true,
     },
     {
       name: 'otherActivity',
@@ -161,12 +162,14 @@ export const getEtcFields = (
       label: '코테이토의 세션은 매주 금요일 19시에 진행됩니다. ',
       type: 'radio',
       options: [{label: '성실히 참여하겠습니다!', value: 'agree'}],
+      required: true,
     },
     {
       name: 'otAgree',
       label: `최종 합격 시 대면 OT(${otDateLabel})는 필수 참여입니다. `,
       type: 'radio',
       options: [{label: '네, 참석 가능합니다.', value: 'agree'}],
+      required: true,
     },
     {
       name: 'privacyPolicy',
@@ -174,6 +177,7 @@ export const getEtcFields = (
       type: 'textarea',
       readOnly: true,
       defaultValue: PRIVACY_POLICY,
+      required: true,
     },
     {
       name: 'privacyAgree',
@@ -182,6 +186,7 @@ export const getEtcFields = (
         {label: '개인정보의 수집 및 이용에 동의합니다.', value: 'agree'},
       ],
       className: 'justify-end',
+      required: true,
     },
   ];
 };

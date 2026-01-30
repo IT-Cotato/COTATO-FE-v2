@@ -14,7 +14,7 @@ import {EtcFieldConfig} from '@/schemas/apply/apply-type';
 import {useGetEtcQuestionsQuery} from '@/hooks/queries/useApply.query';
 import {StepIndicator} from '@/components/navigation/StepIndicator';
 import {Spinner} from '@/components/ui/Spinner';
-import {PRIVACY_POLICY} from '@/constants/admin/admin-applications';
+import {formFieldStyles} from '@/components/form/form.styles';
 
 export const EtcInfo = ({
   step,
@@ -126,7 +126,12 @@ export const EtcInfo = ({
             currentLength={name ? (watch(name) || '').length : 0}
             error={error?.message as string}
             className={className}
-            {...(name && register(name))}
+            required={field.required}
+            {...(name &&
+              register(
+                name,
+                field.required ? {required: '필수 항목입니다'} : {}
+              ))}
           />
         );
       case 'dropdown':
@@ -135,6 +140,7 @@ export const EtcInfo = ({
             key={name}
             name={name ?? ''}
             control={control}
+            rules={field.required ? {required: '필수 항목입니다'} : {}}
             render={({field: controllerField}) => (
               <FormDropdown
                 label={label ?? ''}
@@ -143,6 +149,7 @@ export const EtcInfo = ({
                 value={controllerField.value}
                 onChange={controllerField.onChange}
                 error={error?.message as string}
+                required={field.required}
               />
             )}
           />
@@ -154,19 +161,30 @@ export const EtcInfo = ({
             label={label ?? ''}
             placeholder={placeholder}
             error={error?.message as string}
-            {...(name && register(name))}
+            required={field.required}
+            {...(name &&
+              register(
+                name,
+                field.required ? {required: '필수 항목입니다'} : {}
+              ))}
           />
         );
       case 'radio':
         return (
           <div key={name} className='flex flex-col gap-2'>
             {label && (
-              <label className='text-h5 text-neutral-600'>{label}</label>
+              <label className={formFieldStyles.label}>
+                {label}
+                {field.required && (
+                  <span className={formFieldStyles.required}>*</span>
+                )}
+              </label>
             )}
             {name && (
               <Controller
                 name={name}
                 control={control}
+                rules={field.required ? {required: '필수 항목입니다'} : {}}
                 render={({field: controllerField}) => (
                   <div className={clsx('flex w-full gap-14.5', className)}>
                     {options?.map((opt) => (
@@ -240,6 +258,7 @@ export const EtcInfo = ({
             variant='primary'
             labelTypo='h4'
             type='submit'
+            disabledBackgroundColor='text-disabled'
             disabled={!isAllRequiredFilled}
           />
         </div>

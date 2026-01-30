@@ -60,7 +60,7 @@ export const PartQuestion = ({
   const {data: pdfFileUrlData} = useGetFileUrlQuery(questionsData?.pdfFileKey);
   const {mutate: uploadFile, isPending: isUploadingFile} = useUploadFile();
 
-  const isAllAnswersFilled = (() => {
+  const isAllRequiredAnswersFilled = (() => {
     if (!questionsData?.questionsWithAnswers) return false;
     const textQuestions = questionsData.questionsWithAnswers.slice(0, -1);
     return textQuestions.every((q) => {
@@ -91,6 +91,12 @@ export const PartQuestion = ({
       hasInitializedRef.current = true;
     }
   }, [questionsData, setValue, activePart]);
+
+  useEffect(() => {
+    setValue('pdfFileKey', undefined);
+    setValue('pdfFileUrl', undefined);
+    setValue('pdfFileName', undefined);
+  }, [activePart, setValue]);
 
   useEffect(() => {
     if (pdfFileUrlData?.pdfUrl) {
@@ -147,8 +153,14 @@ export const PartQuestion = ({
                     currentLength={(watch(`ans_${q.questionId}`) || '').length}
                     placeholder='내용을 입력해주세요'
                     error={errors[`ans_${q.questionId}`]?.message as string}
+                    required
                     {...register(`ans_${q.questionId}`, {
-                      required: '답변을 작성해주세요',
+                      validate: (value) => {
+                        if (!value || value.trim().length === 0) {
+                          return '답변을 작성해주세요';
+                        }
+                        return true;
+                      },
                       maxLength: {
                         value: q.maxLength,
                         message: '글자수를 초과했습니다',
@@ -225,7 +237,8 @@ export const PartQuestion = ({
             labelTypo='h4'
             type='button'
             onClick={onNext}
-            disabled={!isAllAnswersFilled}
+            disabledBackgroundColor='text-disabled'
+            disabled={!isAllRequiredAnswersFilled}
           />
         </div>
 
