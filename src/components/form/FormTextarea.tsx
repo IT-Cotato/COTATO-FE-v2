@@ -14,7 +14,16 @@ interface FormTextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> 
 
 export const FormTextarea = forwardRef<HTMLTextAreaElement, FormTextareaProps>(
   function FormTextarea(
-    {label, error, className, id, currentLength = 0, maxLength, required, ...props},
+    {
+      label,
+      error,
+      className,
+      id,
+      currentLength = 0,
+      maxLength,
+      required,
+      ...props
+    },
     ref
   ) {
     const generatedId = useId();
