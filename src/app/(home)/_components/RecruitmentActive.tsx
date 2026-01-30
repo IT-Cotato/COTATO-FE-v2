@@ -36,7 +36,12 @@ export const RecruitmentActive = () => {
 
   const oldOtNotice = RECRUITMENT_NOTICES[2];
   const notices = RECRUITMENT_NOTICES.map((notice) => {
-    if (notice === oldOtNotice && schedule?.ot) {
+    if (
+      notice === oldOtNotice &&
+      schedule?.ot &&
+      schedule?.cokerthon &&
+      schedule?.demoDay
+    ) {
       return `OT(${formatRecruitmentDate(
         schedule.ot,
         false
