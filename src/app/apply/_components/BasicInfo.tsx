@@ -1,6 +1,6 @@
 'use client';
 
-import {useEffect, useRef} from 'react';
+import {useEffect, useRef, useCallback} from 'react';
 import {useSearchParams} from 'next/navigation';
 import {useFormContext, Controller} from 'react-hook-form';
 import {useQuery} from '@tanstack/react-query';
@@ -43,16 +43,40 @@ export const BasicInfo = ({
     control,
     reset,
     watch,
+    setValue,
+    getValues,
+    unregister,
     formState: {errors},
   } = useFormContext<BasicInfoFormData>();
 
   const hasInitializedRef = useRef(false);
+  const previousPartRef = useRef<string | undefined>(undefined);
 
   const {data: basicInfo} = useQuery({
     queryKey: QUERY_KEYS.APPLY.BASIC_INFO(Number(applicationId)),
     queryFn: () => getBasicInfo(Number(applicationId)),
     enabled: !!applicationId,
   });
+
+  // 파트 질문 필드 초기화 함수
+  const clearPartQuestionFields = useCallback(() => {
+    const currentValues = getValues();
+    Object.keys(currentValues).forEach((key) => {
+      if (key.startsWith('ans_')) {
+        // @ts-expect-error - Dynamic fields
+        unregister(key);
+      }
+    });
+    // @ts-expect-error - Dynamic fields
+    setValue('pdfFileKey', undefined);
+    // @ts-expect-error - Dynamic fields
+    setValue('pdfFileUrl', undefined);
+    // @ts-expect-error - Dynamic fields
+    setValue('pdfFileName', undefined);
+    // 파트가 변경되었음을 표시 (서버 데이터 무시용)
+    // @ts-expect-error - Dynamic fields
+    setValue('partChanged', true);
+  }, [getValues, unregister, setValue]);
 
   useEffect(() => {
     if (basicInfo && !hasInitializedRef.current) {
@@ -75,9 +99,23 @@ export const BasicInfo = ({
         part: basicInfo.applicationPartType as BasicInfoFormData['part'],
       };
       reset(transformedData);
+      previousPartRef.current = basicInfo.applicationPartType;
       hasInitializedRef.current = true;
     }
   }, [basicInfo, reset]);
+
+  // 파트 변경 감지 및 필드 초기화
+  const currentPart = watch('part');
+  useEffect(() => {
+    // 최초 로드가 완료된 후에만 동작
+    if (!hasInitializedRef.current) return;
+
+    // 이전 파트와 현재 파트가 다르면 필드 초기화
+    if (previousPartRef.current && previousPartRef.current !== currentPart) {
+      clearPartQuestionFields();
+    }
+    previousPartRef.current = currentPart;
+  }, [currentPart, clearPartQuestionFields]);
 
   // 모든 필수 필드가 작성되었는지 확인
   const allValues = watch();

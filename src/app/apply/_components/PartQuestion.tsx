@@ -70,39 +70,46 @@ export const PartQuestion = ({
   })();
 
   const hasInitializedRef = useRef(false);
+  const previousPartRef = useRef<PartType | undefined>(undefined);
+  const partChanged = watch('partChanged') as boolean | undefined;
 
   useEffect(() => {
-    if (questionsData && !hasInitializedRef.current) {
+    if (previousPartRef.current && previousPartRef.current !== activePart) {
+      hasInitializedRef.current = false;
+    }
+    previousPartRef.current = activePart;
+  }, [activePart]);
+
+  useEffect(() => {
+    if (questionsData && !hasInitializedRef.current && activePart) {
       const responsePart = questionsData.questionsWithAnswers[0]?.partType;
       const isMatchingPart = responsePart === activePart;
 
-      questionsData.questionsWithAnswers.forEach((q) => {
-        if (q.savedAnswer?.content) {
-          setValue(`ans_${q.questionId}`, q.savedAnswer.content);
-        }
-      });
+      if (isMatchingPart && !partChanged) {
+        questionsData.questionsWithAnswers.forEach((q) => {
+          if (q.savedAnswer?.content) {
+            setValue(`ans_${q.questionId}`, q.savedAnswer.content);
+          }
+        });
 
-      if (isMatchingPart && questionsData.pdfFileKey) {
-        setValue('pdfFileKey', questionsData.pdfFileKey);
-        const fileName =
-          questionsData.pdfFileKey.split('/').pop() || questionsData.pdfFileKey;
-        setValue('pdfFileName', fileName);
+        if (questionsData.pdfFileKey) {
+          setValue('pdfFileKey', questionsData.pdfFileKey);
+          const fileName =
+            questionsData.pdfFileKey.split('/').pop() ||
+            questionsData.pdfFileKey;
+          setValue('pdfFileName', fileName);
+        }
       }
       hasInitializedRef.current = true;
     }
-  }, [questionsData, setValue, activePart]);
+  }, [questionsData, setValue, activePart, partChanged]);
 
   useEffect(() => {
-    setValue('pdfFileKey', undefined);
-    setValue('pdfFileUrl', undefined);
-    setValue('pdfFileName', undefined);
-  }, [activePart, setValue]);
-
-  useEffect(() => {
-    if (pdfFileUrlData?.pdfUrl) {
+    // partChanged가 true면 서버에서 가져온 PDF URL 무시
+    if (pdfFileUrlData?.pdfUrl && !partChanged) {
       setValue('pdfFileUrl', pdfFileUrlData.pdfUrl);
     }
-  }, [pdfFileUrlData, setValue]);
+  }, [pdfFileUrlData, setValue, partChanged]);
 
   const handleFileChange = (files: File[]) => {
     if (files.length === 0) {
