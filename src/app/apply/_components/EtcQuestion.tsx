@@ -223,11 +223,11 @@ export const EtcInfo = ({
     );
   }
   return (
-    <div className='flex w-full flex-col gap-20.25'>
+    <div className='flex w-full flex-col gap-3.5'>
       <div className='flex justify-center py-4'>
         <StepIndicator currentStep={step} totalSteps={3} />
       </div>
-      <div className='flex flex-col gap-10'>
+      <div className='flex flex-col gap-3.5'>
         {etcFields.map((field, idx) => {
           if (field.type === 'row' && 'row' in field) {
             return (
@@ -248,7 +248,7 @@ export const EtcInfo = ({
           <FullButton
             label='이전'
             variant='primary'
-            backgroundColor='neutral-300'
+            backgroundColor='neutral-600'
             labelTypo='h4'
             onClick={onPrev}
             type='button'

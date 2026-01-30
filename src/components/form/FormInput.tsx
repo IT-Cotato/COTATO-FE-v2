@@ -2,7 +2,7 @@
 
 import {forwardRef, useId, type InputHTMLAttributes} from 'react';
 import clsx from 'clsx';
-import {formFieldStyles} from './form.styles';
+import {formFieldStyles} from '@/components/form/form.styles';
 
 export interface FormInputProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string;
@@ -29,7 +29,7 @@ export const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
           className={clsx(
             formFieldStyles.field,
             props.readOnly && formFieldStyles.readOnlyForm,
-            error ? formFieldStyles.error : 'border-neutral-300',
+            error ? formFieldStyles.error : 'border-neutral-200',
             className
           )}
           {...props}

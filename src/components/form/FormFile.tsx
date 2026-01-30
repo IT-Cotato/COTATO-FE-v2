@@ -144,7 +144,7 @@ export const FormFile = forwardRef<HTMLInputElement, FormFileProps>(
         {!props.readOnly && (
           <label
             className={clsx(
-              'flex h-19 items-center justify-center rounded-[10px] bg-neutral-100 px-10 py-4 text-center text-h5 text-neutral-400',
+              'flex h-19 items-center justify-center rounded-[10px] bg-neutral-400 px-10 py-4 text-center text-h5 text-white',
               isUploading ? 'cursor-not-allowed opacity-60' : 'cursor-pointer'
             )}>
             <span>{isUploading ? '파일 업로드 중입니다' : placeholder}</span>

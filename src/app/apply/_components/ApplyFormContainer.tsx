@@ -148,11 +148,11 @@ export const ApplyFormContainer = () => {
             )}
           </div>
 
-          <h2 className='text-h2 text-neutral-800'>
+          <h2 className='pt-4 text-h2 text-neutral-800'>
             {STEP_TITLES[step as keyof typeof STEP_TITLES]}
           </h2>
 
-          <div className='flex w-full flex-col gap-5'>
+          <div className='flex w-full flex-col gap-3.5'>
             <FormProvider {...methods}>
               <form onSubmit={handleFinalSubmit} key={step}>
                 {step === 1 && (
