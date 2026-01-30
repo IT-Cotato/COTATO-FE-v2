@@ -100,7 +100,9 @@ export const PartQuestion = ({
           setValue('pdfFileName', fileName);
         }
       }
-      hasInitializedRef.current = true;
+      if (isMatchingPart) {
+        hasInitializedRef.current = true;
+      }
     }
   }, [questionsData, setValue, activePart, partChanged]);
 
