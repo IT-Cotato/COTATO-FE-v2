@@ -10,6 +10,7 @@ export const QUERY_KEYS = {
       'apply-etc-questions',
       applicationId,
     ],
+    FILE_URL: (fileKey: string) => ['file-url', fileKey],
   },
   ADMIN_GENERATIONS: 'admin-generations',
   ADMIN_APPLICATIONS: 'admin-applications',

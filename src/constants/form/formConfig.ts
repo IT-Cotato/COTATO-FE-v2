@@ -1,5 +1,10 @@
 import {PART_TABS} from '@/constants/common/part';
 import {EtcFormItem, BasicInfoFormItem} from '@/schemas/apply/apply-type';
+import {
+  DISCOVERY_PATH_LABEL_MAP,
+  DISCOVERY_PATH_OPTIONS,
+} from '@/constants/admin/admin-applications';
+import {PRIVACY_POLICY} from '@/constants/admin/admin-applications';
 
 export const SEMESTER_OPTIONS = [
   {value: '4', label: '4학기'},
@@ -25,8 +30,8 @@ export const BASIC_INFO_FIELDS: BasicInfoFormItem[] = [
         type: 'dropdown',
         placeholder: '성별을 선택해주세요',
         options: [
-          {value: 'male', label: '남'},
-          {value: 'female', label: '여'},
+          {value: 'MALE', label: '남'},
+          {value: 'FEMALE', label: '여'},
         ],
       },
       {
@@ -49,11 +54,11 @@ export const BASIC_INFO_FIELDS: BasicInfoFormItem[] = [
         name: 'school',
         label: '학교',
         type: 'input',
-        placeholder: '학교를 작성해주세요',
+        placeholder: 'ex) 감자대학교',
       },
       {
         name: 'isCollegeStudent',
-        label: '재학 여부',
+        label: '',
         type: 'radio',
         options: [
           {label: '재학', value: 'enrolled'},
@@ -104,10 +109,22 @@ export interface EtcFieldDates {
   otDate: string;
 }
 
-export const getEtcFields = (dates?: EtcFieldDates): EtcFormItem[] => {
+export const getEtcFields = (
+  dates?: EtcFieldDates,
+  discoveryOptions?: {value: string; label?: string | null}[]
+): EtcFormItem[] => {
   const interviewStart = dates?.interviewStartDate ?? '';
   const interviewEnd = dates?.interviewEndDate ?? '';
   const otDateLabel = dates?.otDate ?? '';
+
+  const normalizedDiscoveryOptions = (
+    discoveryOptions && discoveryOptions.length > 0
+      ? discoveryOptions
+      : DISCOVERY_PATH_OPTIONS
+  ).map(({value, label}) => ({
+    value,
+    label: label ?? DISCOVERY_PATH_LABEL_MAP[value] ?? value,
+  }));
 
   return [
     {
@@ -115,16 +132,8 @@ export const getEtcFields = (dates?: EtcFieldDates): EtcFormItem[] => {
       label: '동아리를 알게 된 경로를 선택해주세요.',
       type: 'dropdown',
       placeholder: '알게 된 경로를 선택해주세요',
-      options: [
-        {value: 'INSTAGRAM', label: '인스타그램'},
-        {value: 'EVERYTIME', label: '에브리타임'},
-        {value: 'CAMPUSPICK', label: '캠퍼스픽'},
-        {value: 'JIKHAENG', label: '직행'},
-        {value: 'NAVER_CAFE', label: '네이버 카페'},
-        {value: 'OTHER_SNS', label: '그 외 SNS'},
-        {value: 'FRIEND_REFERRAL', label: '지인 소개'},
-        {value: 'NONE', label: '해당 없음'},
-      ],
+      options: normalizedDiscoveryOptions,
+      required: true,
     },
     {
       name: 'otherActivity',
@@ -137,43 +146,38 @@ export const getEtcFields = (dates?: EtcFieldDates): EtcFormItem[] => {
     },
     {
       type: 'group_label',
-      label: `${interviewStart}부터 ${interviewEnd}까지 면접이 진행됩니다. 참여가 불가능한 시간이 있다면 모두 작성해주세요.`,
+      label:
+        interviewStart && interviewEnd
+          ? `${interviewStart}부터 ${interviewEnd}까지 면접이 진행됩니다. 참여가 불가능한 시간이 있다면 모두 작성해주세요.`
+          : '면접이 진행됩니다. 참여가 불가능한 시간이 있다면 모두 작성해주세요.',
     },
     {
-      type: 'row',
-      row: [
-        {
-          name: 'interviewStartDate',
-          label: interviewStart,
-          type: 'input',
-          placeholder: 'ex) 14:00~16:00, 18:00~19:30',
-        },
-        {
-          name: 'interviewEndDate',
-          label: interviewEnd,
-          type: 'input',
-          placeholder: 'ex) 14:00~16:00, 18:00~19:30',
-        },
-      ],
+      name: 'unavailableInterviewTimes',
+      type: 'textarea',
+      placeholder: 'ex) 3월 3일 14:00~16:00, 3월 4일 18:00~19:30',
+      className: 'min-h-[165px]',
     },
     {
       name: 'sessionAgree',
       label: '코테이토의 세션은 매주 금요일 19시에 진행됩니다. ',
       type: 'radio',
       options: [{label: '성실히 참여하겠습니다!', value: 'agree'}],
+      required: true,
     },
     {
       name: 'otAgree',
       label: `최종 합격 시 대면 OT(${otDateLabel})는 필수 참여입니다. `,
       type: 'radio',
       options: [{label: '네, 참석 가능합니다.', value: 'agree'}],
+      required: true,
     },
     {
       name: 'privacyPolicy',
       label: '개인정보 수집 및 이용 동의',
       type: 'textarea',
       readOnly: true,
-      defaultValue: '개인정보 약관 내용',
+      defaultValue: PRIVACY_POLICY,
+      required: true,
     },
     {
       name: 'privacyAgree',
@@ -182,6 +186,7 @@ export const getEtcFields = (dates?: EtcFieldDates): EtcFormItem[] => {
         {label: '개인정보의 수집 및 이용에 동의합니다.', value: 'agree'},
       ],
       className: 'justify-end',
+      required: true,
     },
   ];
 };

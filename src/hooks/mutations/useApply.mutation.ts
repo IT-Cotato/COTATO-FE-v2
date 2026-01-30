@@ -91,8 +91,15 @@ export const useSaveEtcQuestions = (applicationId: number) => {
  * 지원서 최종 제출
  */
 export const useSubmitApplication = (applicationId: number) => {
+  const queryClient = useQueryClient();
+
   return useMutation({
     mutationFn: () => submitApplication(applicationId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: QUERY_KEYS.APPLY.STATUS,
+      });
+    },
     onError: (error: AxiosError) => {
       console.error('지원서 제출에 실패했습니다.', error);
     },

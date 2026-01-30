@@ -18,7 +18,10 @@ import {
   GetFileUrlResponseSchema,
 } from '@/schemas/apply/apply-schema';
 import axios, {AxiosResponse} from 'axios';
-import {createSuccessResponseSchema} from '@/schemas/common/common-schema';
+import {
+  createSuccessResponseSchema,
+  ErrorResponseSchema,
+} from '@/schemas/common/common-schema';
 import {handleApiError} from '@/services/utils/apiHelper';
 
 /**
@@ -37,6 +40,13 @@ export const startApplication = async (): Promise<StartApplicationResponse> => {
 
     return validatedResponse.data;
   } catch (error) {
+    if (axios.isAxiosError(error) && error.response?.status === 400) {
+      const parsed = ErrorResponseSchema.parse(error.response?.data);
+      if (parsed.code === 'AP002') {
+        return {applicationId: 0, isSubmitted: true};
+      }
+      return {applicationId: 0, isSubmitted: true};
+    }
     return handleApiError(error);
   }
 };

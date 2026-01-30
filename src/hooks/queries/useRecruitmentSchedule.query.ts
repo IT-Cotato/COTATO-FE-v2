@@ -27,6 +27,8 @@ export const useRecruitmentScheduleQuery = () => {
         interviewEnd: schedule.interviewEndDate,
         finalAnnouncement: schedule.finalAnnouncement,
         ot: schedule.otDate,
+        cokerthon: schedule.cokerthonDate,
+        demoDay: schedule.demoDayDate,
       };
     },
   });

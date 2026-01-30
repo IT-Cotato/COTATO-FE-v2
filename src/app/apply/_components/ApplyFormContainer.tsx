@@ -1,15 +1,27 @@
 'use client';
 
+import {useRef, useEffect} from 'react';
+import {useRouter} from 'next/navigation';
 import {FormProvider} from 'react-hook-form';
 import {BasicInfo} from '@/app/apply/_components/BasicInfo';
 import {PartQuestion} from '@/app/apply/_components/PartQuestion';
-import {EtcInfo} from '@/app/apply/_components/EtcInfo';
+import {EtcInfo} from '@/app/apply/_components/EtcQuestion';
 import {useApplyFormController} from '@/app/apply/_hooks/useApplyFormController';
 import {ApplicationConfirmModal} from '@/components/modal/ApplicationConfirmModal';
+import {AlreadySubmittedModal} from '@/components/modal/AlreadySubmittedModal';
+import {useApplicationStatusQuery} from '@/hooks/queries/useApply.query';
+import {useAuthStore} from '@/store/useAuthStore';
+import {ROUTES} from '@/constants/routes';
 import HeroMainBanner from '@/components/banner/HeroMainBanner';
 import {useRecruitmentStatusQuery} from '@/hooks/queries/useRecruitmentStatus.query';
 import {useRecruitmentScheduleQuery} from '@/hooks/queries/useRecruitmentSchedule.query';
 import {Spinner} from '@/components/ui/Spinner';
+import {HEADER_HEIGHT} from '@/constants/ui';
+
+interface ApiErrorData {
+  code: string;
+  message: string;
+}
 import {RecruitmentInformation} from '@/components/recruitment/RecruitmentInformation';
 
 const STEP_TITLES = {
@@ -18,6 +30,18 @@ const STEP_TITLES = {
 } as const;
 
 export const ApplyFormContainer = () => {
+  const router = useRouter();
+  const pageTopRef = useRef<HTMLDivElement>(null);
+  const formContainerRef = useRef<HTMLDivElement>(null);
+
+  const {isAuthenticated} = useAuthStore();
+
+  const {
+    data: applicationStatus,
+    isError,
+    error,
+  } = useApplicationStatusQuery(isAuthenticated);
+
   const {
     step,
     methods,
@@ -32,9 +56,46 @@ export const ApplyFormContainer = () => {
   } = useApplyFormController();
 
   const {data: recruitmentStatus, isLoading} = useRecruitmentStatusQuery();
-  const generation = recruitmentStatus?.data?.generationId;
 
+  useEffect(() => {
+    if (step === 1) {
+      pageTopRef.current?.scrollIntoView({behavior: 'smooth'});
+    } else {
+      formContainerRef.current?.scrollIntoView({behavior: 'smooth'});
+    }
+  }, [step]);
+
+  // 모집 기간 종료된 경우 홈으로 리다이렉트
+  useEffect(() => {
+    if (recruitmentStatus && !recruitmentStatus.data?.isActive) {
+      alert('모집 기간이 종료되었습니다.');
+      router.push(ROUTES.HOME);
+    }
+  }, [recruitmentStatus, router]);
+  const generation = recruitmentStatus?.data?.generationId;
   const {data: scheduleData} = useRecruitmentScheduleQuery();
+
+  // 렌더링 중 제출 완료 여부 직접 계산
+  let isConfirmedSubmitted = false;
+  if (isError && error) {
+    // Case 1: apiHelper에서 throw한 커스텀 에러 객체인 경우
+    if (error && typeof error === 'object' && 'code' in error) {
+      if ((error as ApiErrorData).code === 'AP002') {
+        isConfirmedSubmitted = true;
+      } else {
+        // AP002가 아닌 다른 API 에러
+        alert((error as ApiErrorData).message || '오류가 발생했습니다.');
+        router.push(ROUTES.HOME);
+      }
+    }
+    // Case 2: 일반적인 자바스크립트 Error 객체인 경우
+    else if (error instanceof Error) {
+      if (error.name !== 'CancelledError') {
+        alert(error.message);
+        router.push(ROUTES.HOME);
+      }
+    }
+  }
 
   if (isLoading) {
     return (
@@ -44,9 +105,22 @@ export const ApplyFormContainer = () => {
     );
   }
 
+  // 제출 완료된 경우
+  if (applicationStatus?.isSubmitted || isConfirmedSubmitted) {
+    return (
+      <AlreadySubmittedModal
+        isOpen={true}
+        onConfirm={() => router.push(ROUTES.HOME)}
+      />
+    );
+  }
+
   return (
     <>
-      <div className='flex w-full flex-col items-center bg-neutral-50'>
+      <div
+        ref={pageTopRef}
+        style={{scrollMarginTop: HEADER_HEIGHT}}
+        className='flex w-full flex-col items-center bg-neutral-50'>
         {step === 1 && (
           <HeroMainBanner
             heading='COde Together, Arrive TOgether'
@@ -54,7 +128,10 @@ export const ApplyFormContainer = () => {
           />
         )}
 
-        <div className='flex w-full max-w-[1100px] flex-col py-[42.5px]'>
+        <div
+          ref={formContainerRef}
+          style={{scrollMarginTop: HEADER_HEIGHT}}
+          className='flex w-full max-w-275 flex-col py-[42.5px]'>
           <div className='flex flex-col gap-3.5'>
             <h1 className='text-h1 text-neutral-800'>
               <span aria-hidden='true'>🥔</span>
@@ -71,11 +148,11 @@ export const ApplyFormContainer = () => {
             )}
           </div>
 
-          <h2 className='text-h2 text-neutral-800'>
+          <h2 className='pt-4 text-h2 text-neutral-800'>
             {STEP_TITLES[step as keyof typeof STEP_TITLES]}
           </h2>
 
-          <div className='flex w-full flex-col gap-[20px]'>
+          <div className='flex w-full flex-col gap-3.5'>
             <FormProvider {...methods}>
               <form onSubmit={handleFinalSubmit} key={step}>
                 {step === 1 && (

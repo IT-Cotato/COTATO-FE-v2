@@ -56,7 +56,7 @@ export const PartQuestionView = ({
                 <FormLink
                   label={`${data.sequence}. ${data.questionContent}`}
                   readOnly
-                  value={pdfFileUrl}
+                  value={[pdfFileUrl]}
                 />
               ) : (
                 <p className='flex justify-center text-h5 text-neutral-400'>
