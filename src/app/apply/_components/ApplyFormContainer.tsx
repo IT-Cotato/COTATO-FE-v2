@@ -17,7 +17,6 @@ import {useRecruitmentStatusQuery} from '@/hooks/queries/useRecruitmentStatus.qu
 import {useRecruitmentScheduleQuery} from '@/hooks/queries/useRecruitmentSchedule.query';
 import {Spinner} from '@/components/ui/Spinner';
 import {HEADER_HEIGHT} from '@/constants/ui';
-import axios, {AxiosError} from 'axios';
 
 interface ApiErrorData {
   code: string;
@@ -78,10 +77,23 @@ export const ApplyFormContainer = () => {
 
   // 렌더링 중 제출 완료 여부 직접 계산
   let isConfirmedSubmitted = false;
-  if (isError && axios.isAxiosError(error)) {
-    const apiError = error as AxiosError<ApiErrorData>;
-    if (apiError.response?.data?.code === 'AP002') {
-      isConfirmedSubmitted = true;
+  if (isError && error) {
+    // Case 1: apiHelper에서 throw한 커스텀 에러 객체인 경우
+    if (error && typeof error === 'object' && 'code' in error) {
+      if ((error as ApiErrorData).code === 'AP002') {
+        isConfirmedSubmitted = true;
+      } else {
+        // AP002가 아닌 다른 API 에러
+        alert((error as ApiErrorData).message || '오류가 발생했습니다.');
+        router.push(ROUTES.HOME);
+      }
+    }
+    // Case 2: 일반적인 자바스크립트 Error 객체인 경우
+    else if (error instanceof Error) {
+      if (error.name !== 'CancelledError') {
+        alert(error.message);
+        router.push(ROUTES.HOME);
+      }
     }
   }
 
