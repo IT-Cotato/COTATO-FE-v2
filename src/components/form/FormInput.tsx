@@ -24,6 +24,8 @@ export const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
         <input
           ref={ref}
           id={inputId}
+          required={required}
+          aria-required={required || undefined}
           className={clsx(
             formFieldStyles.field,
             props.readOnly && formFieldStyles.readOnlyForm,
