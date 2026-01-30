@@ -51,7 +51,7 @@ export const ProtectedRoute = ({
   const hasShownAlert = useRef(false);
 
   useEffect(() => {
-    if (!isInitialized) return;
+    if (!isInitialized || isRecruitmentStatusLoading) return;
 
     if (!isAuthenticated) {
       if (!hasShownAlert.current) {
@@ -69,7 +69,20 @@ export const ProtectedRoute = ({
         router.push('/');
       }
     }
-  }, [isAuthenticated, isInitialized, requireRole, router, user?.role]);
+
+    if (requireRecruiting && !recruitmentStatus?.data?.isActive) {
+      router.back();
+    }
+  }, [
+    isAuthenticated,
+    isInitialized,
+    isRecruitmentStatusLoading,
+    recruitmentStatus?.data?.isActive,
+    requireRecruiting,
+    requireRole,
+    router,
+    user?.role,
+  ]);
 
   if (isRecruitmentStatusLoading) {
     return null;
@@ -83,8 +96,7 @@ export const ProtectedRoute = ({
     return null;
   }
 
-  if (requireRecruiting && !recruitmentStatus!.data.isActive) {
-    router.back();
+  if (requireRecruiting && !recruitmentStatus?.data?.isActive) {
     return null;
   }
 
