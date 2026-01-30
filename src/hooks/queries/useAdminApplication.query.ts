@@ -6,6 +6,7 @@ import {
   getAdminApplicationEvaluation,
   getAdminApplicationPartQuestions,
 } from '@/services/api/admin/admin-application.api';
+import {getFileUrl} from '@/services/api/apply/apply.api';
 import {useQuery} from '@tanstack/react-query';
 
 /**
@@ -72,5 +73,26 @@ export const useAdminApplicationEvaluation = ({
     queryFn: () =>
       getAdminApplicationEvaluation({applicationId, evaluatorType}),
     enabled: !!applicationId && !!evaluatorType,
+  });
+};
+
+/**
+ * 어드민 - 지원서 열람 탭에서 해당 지원자의 포트폴리오 url을 조회하는 쿼리 훅
+ * @param pdfFileKey 지원서 pdf File key
+ * @returns react query
+ */
+export const useAdminApplicationPdfUrl = (
+  pdfFileKey: string | null | undefined
+) => {
+  return useQuery({
+    queryKey: [QUERY_KEYS.ADMIN_APPLICATION_PDF_URL, pdfFileKey],
+    queryFn: () => {
+      if (!pdfFileKey) {
+        throw new Error('pdfFileKey is required');
+      }
+      return getFileUrl(pdfFileKey);
+    },
+    enabled: !!pdfFileKey,
+    select: (data) => data.pdfUrl,
   });
 };
