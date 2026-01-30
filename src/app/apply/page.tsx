@@ -1,12 +1,7 @@
-'use client';
-
-import {Suspense, useEffect} from 'react';
-import {useRouter, useSearchParams} from 'next/navigation';
 import {ProtectedRoute} from '@/components/auth/ProtectedRoute';
-import {ApplyFormContainer} from '@/app/apply/_components/ApplyFormContainer';
-import {ROUTES} from '@/constants/routes';
 import {Spinner} from '@/components/ui/Spinner';
 import {SuspenseWrapper} from '@/components/wrappers/SuspenseWrapper';
+import ApplyPageContent from '@/app/apply/_components/ApplyPageContent';
 
 /**
  * 지원서 작성 페이지
@@ -17,20 +12,15 @@ import {SuspenseWrapper} from '@/components/wrappers/SuspenseWrapper';
  * - 반드시 ?id= 쿼리 파라미터가 있어야 접근 가능
  */
 export default function ApplyPage() {
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  const applicationId = searchParams.get('id');
-
-  useEffect(() => {
-    if (!applicationId) {
-      router.push(ROUTES.HOME);
-    }
-  }, [applicationId, router]);
-
   return (
     <ProtectedRoute>
-      <SuspenseWrapper>
-        <ApplyFormContainer />
+      <SuspenseWrapper
+        fallback={
+          <div className='flex h-screen items-center justify-center'>
+            <Spinner />
+          </div>
+        }>
+        <ApplyPageContent />
       </SuspenseWrapper>
     </ProtectedRoute>
   );
