@@ -80,13 +80,20 @@ export const AdminRecruitmentInformationContainer = ({
   return (
     <>
       <div className='flex flex-row justify-between'>
+        <label id='generation-label' className='sr-only'>
+          기수 선택
+        </label>
         <GenerationDropdown
+          aria-labelledby='generation-label'
           generation={String(generationId)}
           generations={generations}
           onSelect={handleGenerationChange}
         />
         {isEditing ? (
-          <div className='flex flex-row gap-2.25'>
+          <div
+            role='group'
+            className='flex flex-row gap-2.25'
+            aria-label='모집 정보 편집 중'>
             <Button
               label='저장'
               labelTypo='body_l'

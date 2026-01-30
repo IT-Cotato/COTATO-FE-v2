@@ -34,19 +34,39 @@ export const AdminApplicationsTabContainer = ({
     router.push(`?${params.toString()}`, {scroll: false});
   };
 
+  const handleKeyDown = (
+    e: React.KeyboardEvent<HTMLElement>,
+    index: number
+  ) => {
+    if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+
+    e.preventDefault();
+
+    const nextIndex =
+      e.key === 'ArrowRight'
+        ? (index + 1) % APPLICATIONS_PART_TABS.length
+        : (index - 1 + APPLICATIONS_PART_TABS.length) %
+          APPLICATIONS_PART_TABS.length;
+
+    const nextTab = APPLICATIONS_PART_TABS[nextIndex];
+    handleTabClick(nextTab.value);
+  };
+
   return (
-    <div className='flex gap-7.5'>
-      {APPLICATIONS_PART_TABS.map(({label, value}) => {
+    <div className='flex gap-7.5' role='tablist' aria-label='지원 파트 선택'>
+      {APPLICATIONS_PART_TABS.map(({label, value}, index) => {
         const countKey = PART_COUNT_MAP[value];
         const applyNumber = summary?.[countKey];
-
+        const isActive = activePart === value;
         return (
           <AdminApplicationsTabPart
             key={value}
             partName={label}
             applyNumber={isLoading ? undefined : applyNumber}
-            isActive={activePart === value}
+            isActive={isActive}
+            tabIndex={isActive ? 0 : -1}
             onClick={() => handleTabClick(value)}
+            onKeyDown={(e) => handleKeyDown(e, index)}
           />
         );
       })}
