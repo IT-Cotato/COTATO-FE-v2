@@ -193,7 +193,8 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
         };
         await saveBasicInfo(requestData);
 
-        await queryClient.invalidateQueries({
+        // 저장 후 새 데이터를 즉시 가져오기
+        await queryClient.refetchQueries({
           queryKey: QUERY_KEYS.APPLY.BASIC_INFO(Number(applicationId)),
         });
 
@@ -225,6 +226,10 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
         };
 
         await savePartQuestions(requestData);
+
+        // 저장 후 partChanged 플래그 리셋
+        // @ts-expect-error - Dynamic fields
+        setValue('partChanged', false);
       } else if (step === 3) {
         const formData = data as BasicInfoFormData & {
           discovery?: string;
@@ -299,7 +304,7 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
 
         isValid = invalidFields.length === 0;
       } else {
-        isValid = true;
+        isValid = false;
       }
     } else {
       isValid = true;
