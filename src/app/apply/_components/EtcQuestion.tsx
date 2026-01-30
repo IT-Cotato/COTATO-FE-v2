@@ -13,6 +13,8 @@ import {getEtcFields} from '@/constants/form/formConfig';
 import {EtcFieldConfig} from '@/schemas/apply/apply-type';
 import {useGetEtcQuestionsQuery} from '@/hooks/queries/useApply.query';
 import {StepIndicator} from '@/components/navigation/StepIndicator';
+import {Spinner} from '@/components/ui/Spinner';
+import {formFieldStyles} from '@/components/form/form.styles';
 
 export const EtcInfo = ({
   step,
@@ -48,7 +50,8 @@ export const EtcInfo = ({
 
   const hasInitializedRef = useRef(false);
 
-  const {data: etcQuestions} = useGetEtcQuestionsQuery(applicationId);
+  const {data: etcQuestions, isLoading} =
+    useGetEtcQuestionsQuery(applicationId);
 
   const etcDates = etcQuestions
     ? {
@@ -58,7 +61,7 @@ export const EtcInfo = ({
       }
     : undefined;
 
-  const etcFields = getEtcFields(etcDates);
+  const etcFields = getEtcFields(etcDates, etcQuestions?.discoveryPath.options);
 
   useEffect(() => {
     if (etcQuestions && !hasInitializedRef.current) {
@@ -71,20 +74,10 @@ export const EtcInfo = ({
       }
 
       if (etcQuestions.unavailableInterviewTimes) {
-        const times = etcQuestions.unavailableInterviewTimes.split(', ');
-        times.forEach((time) => {
-          if (time.startsWith(etcQuestions.interviewStartDate)) {
-            const timeOnly = time
-              .replace(etcQuestions.interviewStartDate, '')
-              .trim();
-            setValue('interviewStartDate', timeOnly);
-          } else if (time.startsWith(etcQuestions.interviewEndDate)) {
-            const timeOnly = time
-              .replace(etcQuestions.interviewEndDate, '')
-              .trim();
-            setValue('interviewEndDate', timeOnly);
-          }
-        });
+        setValue(
+          'unavailableInterviewTimes',
+          etcQuestions.unavailableInterviewTimes
+        );
       }
 
       if (etcQuestions.sessionAttendance) {
@@ -132,7 +125,13 @@ export const EtcInfo = ({
             defaultValue={defaultValue}
             currentLength={name ? (watch(name) || '').length : 0}
             error={error?.message as string}
-            {...(name && register(name))}
+            className={className}
+            required={field.required}
+            {...(name &&
+              register(
+                name,
+                field.required ? {required: '필수 항목입니다'} : {}
+              ))}
           />
         );
       case 'dropdown':
@@ -141,6 +140,7 @@ export const EtcInfo = ({
             key={name}
             name={name ?? ''}
             control={control}
+            rules={field.required ? {required: '필수 항목입니다'} : {}}
             render={({field: controllerField}) => (
               <FormDropdown
                 label={label ?? ''}
@@ -149,6 +149,7 @@ export const EtcInfo = ({
                 value={controllerField.value}
                 onChange={controllerField.onChange}
                 error={error?.message as string}
+                required={field.required}
               />
             )}
           />
@@ -160,21 +161,32 @@ export const EtcInfo = ({
             label={label ?? ''}
             placeholder={placeholder}
             error={error?.message as string}
-            {...(name && register(name))}
+            required={field.required}
+            {...(name &&
+              register(
+                name,
+                field.required ? {required: '필수 항목입니다'} : {}
+              ))}
           />
         );
       case 'radio':
         return (
           <div key={name} className='flex flex-col gap-2'>
             {label && (
-              <label className='text-h5 text-neutral-600'>{label}</label>
+              <label className={formFieldStyles.label}>
+                {label}
+                {field.required && (
+                  <span className={formFieldStyles.required}>*</span>
+                )}
+              </label>
             )}
             {name && (
               <Controller
                 name={name}
                 control={control}
+                rules={field.required ? {required: '필수 항목입니다'} : {}}
                 render={({field: controllerField}) => (
-                  <div className={clsx('flex w-full gap-[58px]', className)}>
+                  <div className={clsx('flex w-full gap-14.5', className)}>
                     {options?.map((opt) => (
                       <FormRadio
                         key={opt.value}
@@ -200,12 +212,22 @@ export const EtcInfo = ({
     }
   };
 
+  if (isLoading) {
+    return (
+      <div className='flex w-full flex-col items-center gap-20.25'>
+        <div className='flex justify-center py-4'>
+          <StepIndicator currentStep={step} totalSteps={3} />
+        </div>
+        <Spinner />
+      </div>
+    );
+  }
   return (
-    <div className='flex w-full flex-col gap-[81px]'>
+    <div className='flex w-full flex-col gap-3.5'>
       <div className='flex justify-center py-4'>
         <StepIndicator currentStep={step} totalSteps={3} />
       </div>
-      <div className='flex flex-col gap-10'>
+      <div className='flex flex-col gap-3.5'>
         {etcFields.map((field, idx) => {
           if (field.type === 'row' && 'row' in field) {
             return (
@@ -221,12 +243,12 @@ export const EtcInfo = ({
         })}
       </div>
 
-      <div className='flex flex-col gap-[26px]'>
-        <div className='flex gap-[26px]'>
+      <div className='flex flex-col gap-6.5'>
+        <div className='flex gap-6.5'>
           <FullButton
             label='이전'
             variant='primary'
-            backgroundColor='neutral-300'
+            backgroundColor='neutral-600'
             labelTypo='h4'
             onClick={onPrev}
             type='button'
@@ -236,7 +258,7 @@ export const EtcInfo = ({
             variant='primary'
             labelTypo='h4'
             type='submit'
-            disabled={!isAllRequiredFilled}
+            backgroundColor={isAllRequiredFilled ? 'primary' : 'text-disabled'}
           />
         </div>
         <FullButton

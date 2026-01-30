@@ -11,6 +11,8 @@ export const RecruitmentScheduleDataSchema = z.object({
   interviewEndDate: z.string().nullable(),
   finalAnnouncement: z.string().nullable(),
   otDate: z.string().nullable(),
+  cokerthonDate: z.string().nullable(),
+  demoDayDate: z.string().nullable(),
 });
 
 export const GetRecruitmentScheduleResponseSchema = createSuccessResponseSchema(

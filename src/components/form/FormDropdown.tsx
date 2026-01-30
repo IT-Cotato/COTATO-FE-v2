@@ -1,12 +1,6 @@
 'use client';
 
-import {
-  forwardRef,
-  useId,
-  useRef,
-  useState,
-  type InputHTMLAttributes,
-} from 'react';
+import {forwardRef, useRef, useState, type InputHTMLAttributes} from 'react';
 import clsx from 'clsx';
 import {formFieldStyles} from './form.styles';
 import {useClickOutside} from '@/hooks/useClickOutside';
@@ -22,6 +16,7 @@ interface FormDropdownProps extends Omit<
   onChange?: (value: string) => void;
   error?: string;
   placeholder?: string;
+  required?: boolean;
 }
 
 export const FormDropdown = forwardRef<HTMLInputElement, FormDropdownProps>(
@@ -36,6 +31,7 @@ export const FormDropdown = forwardRef<HTMLInputElement, FormDropdownProps>(
       id,
       className,
       readOnly,
+      required,
       ...props
     },
     ref
@@ -64,7 +60,10 @@ export const FormDropdown = forwardRef<HTMLInputElement, FormDropdownProps>(
 
     return (
       <label className={formFieldStyles.wrapper}>
-        <span className={formFieldStyles.label}>{label}</span>
+        <span className={formFieldStyles.label}>
+          {label}
+          {required && <span className={formFieldStyles.required}>*</span>}
+        </span>
 
         <div ref={dropdownRef} className='relative'>
           <button
@@ -75,7 +74,7 @@ export const FormDropdown = forwardRef<HTMLInputElement, FormDropdownProps>(
               formFieldStyles.field,
               'flex w-full items-center justify-between',
               'disabled:cursor-default disabled:focus:ring-0',
-              error && formFieldStyles.error,
+              error ? formFieldStyles.error : 'border-neutral-200',
               className
             )}>
             <span
@@ -93,12 +92,12 @@ export const FormDropdown = forwardRef<HTMLInputElement, FormDropdownProps>(
           </button>
 
           {isOpen && !readOnly && (
-            <ul className='absolute z-10 mt-2 w-full rounded-[10px] border border-neutral-200 bg-neutral-100 shadow-lg'>
+            <ul className='absolute z-dropdown mt-2 w-full rounded-sm bg-neutral-600 shadow-lg'>
               {options.map((option) => (
                 <li
-                  key={option.label}
+                  key={option.value}
                   onClick={(e) => handleSelect(e, option.value)}
-                  className='cursor-pointer px-4 py-3 text-body-l text-neutral-800 transition-colors hover:bg-neutral-200'>
+                  className='cursor-pointer px-4 py-3 text-body-l text-white transition-colors hover:rounded-sm hover:bg-primary'>
                   {option.label}
                 </li>
               ))}

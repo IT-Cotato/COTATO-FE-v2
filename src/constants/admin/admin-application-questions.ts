@@ -26,4 +26,14 @@ export const scheduleSections = [
     type: 'single',
     start: 'ot',
   },
+  {
+    label: '코커톤 날짜',
+    type: 'single',
+    start: 'cokerthon',
+  },
+  {
+    label: '데모데이 날짜',
+    type: 'single',
+    start: 'demoDay',
+  },
 ] as const;

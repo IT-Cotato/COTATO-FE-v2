@@ -28,6 +28,7 @@ export const AdminApplicationsResultDropdown = ({
   const {bg, label} = APPLICATION_RESULT_CONFIG[selectedResult];
 
   const handleSelect = (value: ApplicationResultStatus) => {
+    if (disabled) return;
     if (value === selectedResult) {
       setIsOpen(false);
       return;
@@ -44,6 +45,8 @@ export const AdminApplicationsResultDropdown = ({
       <button
         type='button'
         disabled={disabled}
+        aria-haspopup='listbox'
+        aria-expanded={isOpen}
         className={clsx(
           'inline-flex w-full items-center justify-center gap-1 rounded-[10px] py-1.5 text-body-s text-white',
           bg
@@ -59,19 +62,31 @@ export const AdminApplicationsResultDropdown = ({
       </button>
 
       {isOpen && (
-        <ul className='absolute top-full z-10 mt-1 w-full rounded-sm bg-neutral-700 text-body-s text-neutral-300 shadow-lg'>
+        <ul
+          role='listbox'
+          aria-label='지원 결과 선택'
+          className='absolute top-full z-10 mt-1 w-full rounded-sm bg-neutral-700 text-body-s text-neutral-300 shadow-lg'>
           {APPLICATION_RESULT_OPTIONS.map((option) => {
             const isSelected = option === selectedResult;
 
             return (
               <li
                 key={option}
+                role='option'
+                aria-selected={isSelected}
+                tabIndex={isSelected ? 0 : -1}
                 className={clsx(
                   'cursor-pointer px-3 py-1.5 text-center',
                   isSelected ? 'text-primary' : 'hover:text-primary',
                   disabled && 'pointer-events-none opacity-60'
                 )}
-                onClick={() => handleSelect(option)}>
+                onClick={() => handleSelect(option)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    handleSelect(option);
+                  }
+                }}>
                 {APPLICATION_RESULT_CONFIG[option].label}
               </li>
             );

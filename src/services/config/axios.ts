@@ -87,7 +87,6 @@ privateAxios.interceptors.request.use(
         `[API Request] ${config.method?.toUpperCase()} ${config.url} ${JSON.stringify(config.data)} ${JSON.stringify(config.params)}`
       );
     }
-
     const token = getAccessToken();
 
     if (token) {

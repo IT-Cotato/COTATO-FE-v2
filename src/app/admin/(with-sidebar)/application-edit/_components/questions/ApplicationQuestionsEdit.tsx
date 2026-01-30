@@ -83,6 +83,7 @@ export const ApplicationQuestionsEdit = ({
               <span className='text-h5 text-neutral-500'>자</span>
             </div>
             <Button
+              aria-label={`질문 ${sequence} 삭제`}
               onClick={() => handleDelete(sequence)}
               label='삭제'
               labelTypo='body_l'
@@ -96,6 +97,7 @@ export const ApplicationQuestionsEdit = ({
         </div>
       ))}
       <FullButton
+        aria-label='지원서 질문 추가'
         label='+ 질문 추가하기'
         variant='outline'
         textColor='primary'

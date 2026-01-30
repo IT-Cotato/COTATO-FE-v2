@@ -20,12 +20,16 @@ export const AdminApplicationQuestionsTabContainer = () => {
   };
 
   return (
-    <div className='flex gap-12.5'>
+    <div role='tablist' aria-label='파트별 질문 선택' className='flex gap-12.5'>
       {PART_TABS.map(({label, value}) => {
         const isActive = partParam === value;
 
         return (
           <Button
+            type='button'
+            role='tab'
+            aria-selected={isActive}
+            tabIndex={isActive ? 0 : -1}
             key={value}
             label={label}
             labelTypo='h5'

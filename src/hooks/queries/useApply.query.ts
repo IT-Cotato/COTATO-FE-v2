@@ -2,9 +2,11 @@
 
 import {useQuery} from '@tanstack/react-query';
 import {
+  getBasicInfo,
   getEtcQuestions,
   getPartQuestions,
   startApplication,
+  getFileUrl,
 } from '@/services/api/apply/apply.api';
 import {QUERY_KEYS} from '@/constants/query-keys';
 
@@ -43,5 +45,28 @@ export const useGetEtcQuestionsQuery = (applicationId: number | null) => {
     queryKey: QUERY_KEYS.APPLY.ETC_QUESTIONS(applicationId!),
     queryFn: () => getEtcQuestions(applicationId!),
     enabled: !!applicationId,
+  });
+};
+
+/**
+ * 기본 정보 조회
+ */
+export const useGetBasicInfoQuery = (applicationId: number | null) => {
+  return useQuery({
+    queryKey: QUERY_KEYS.APPLY.BASIC_INFO(applicationId!),
+    queryFn: () => getBasicInfo(applicationId!),
+    enabled: !!applicationId,
+  });
+};
+
+/**
+ * 파일 URL 조회 (Pre-signed URL)
+ */
+export const useGetFileUrlQuery = (fileKey: string | undefined | null) => {
+  return useQuery({
+    queryKey: QUERY_KEYS.APPLY.FILE_URL(fileKey!),
+    queryFn: () => getFileUrl(fileKey!),
+    enabled: !!fileKey,
+    staleTime: 1000 * 60 * 55,
   });
 };

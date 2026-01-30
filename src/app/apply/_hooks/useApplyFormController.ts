@@ -8,10 +8,18 @@ import {
   PartQuestionRequest,
   EtcQuestionRequest,
 } from '@/schemas/apply/apply-schema';
+import {
+  formatDigitsToYYYYMMDD,
+  formatDigitsToPhoneNumber,
+} from '@/utils/formatter';
 import {BASIC_INFO_FIELDS} from '@/constants/form/formConfig';
 import {useRouter, useSearchParams} from 'next/navigation';
 import {useRecruitmentStore} from '@/store/useRecruitmentStore';
-import {useGetEtcQuestionsQuery} from '@/hooks/queries/useApply.query';
+import {
+  useGetEtcQuestionsQuery,
+  useGetBasicInfoQuery,
+  useGetPartQuestionsQuery,
+} from '@/hooks/queries/useApply.query';
 import {
   useSaveBasicInfo,
   useSavePartQuestions,
@@ -20,6 +28,8 @@ import {
 } from '@/hooks/mutations/useApply.mutation';
 import {useQueryClient} from '@tanstack/react-query';
 import {QUERY_KEYS} from '@/constants/query-keys';
+import {getRecruitmentStatus} from '@/services/api/recruitment/recruitment-status.api';
+import {ROUTES} from '@/constants/routes';
 
 interface UseApplyFormControllerReturn {
   step: number;
@@ -55,10 +65,49 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
   const methods = useForm<BasicInfoFormData>({
     mode: 'onChange',
     resolver: zodResolver(BasicInfoFormSchema),
+    defaultValues: {
+      name: '',
+      gender: undefined,
+      contact: '',
+      birthDate: '',
+      school: '',
+      isCollegeStudent: undefined,
+      department: '',
+      completedSemesters: undefined,
+      isPrevActivity: undefined,
+      part: undefined,
+    },
   });
-  const {trigger, handleSubmit, getValues} = methods;
+  const {trigger, getValues, setValue} = methods;
 
-  const {data: etcQuestions} = useGetEtcQuestionsQuery(
+  // 서버에 저장된 파트 정보 조회
+  const {data: basicInfo} = useGetBasicInfoQuery(
+    applicationId ? Number(applicationId) : null
+  );
+
+  useEffect(() => {
+    const urlPart = searchParams.get('part');
+    const savedPart = basicInfo?.applicationPartType;
+
+    // step 1: part 파라미터가 있으면 제거
+    if (step === 1 && urlPart) {
+      const newParams = new URLSearchParams(searchParams.toString());
+      newParams.delete('part');
+      router.replace(`/apply?${newParams.toString()}`);
+      return;
+    }
+
+    // step 2, 3: 서버 저장 파트와 URL이 다르면 동기화
+    if ((step === 2 || step === 3) && savedPart && urlPart !== savedPart) {
+      const newParams = new URLSearchParams(searchParams.toString());
+      newParams.set('part', savedPart);
+      router.replace(`/apply?${newParams.toString()}`);
+    }
+  }, [step, searchParams, basicInfo?.applicationPartType, router]);
+
+  useGetEtcQuestionsQuery(applicationId ? Number(applicationId) : null);
+
+  const {data: partQuestionsData} = useGetPartQuestionsQuery(
     applicationId ? Number(applicationId) : null
   );
 
@@ -76,6 +125,47 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
   const openConfirmModal = () => setIsConfirmModalOpen(true);
   const closeConfirmModal = () => setIsConfirmModalOpen(false);
 
+  const ensureRecruitmentIsActive = async () => {
+    try {
+      const latest = await queryClient.fetchQuery({
+        queryKey: [QUERY_KEYS.RECRUITMENT_STATUS],
+        queryFn: getRecruitmentStatus,
+        staleTime: 0, // 항상 서버에서 최신 데이터 가져오기
+      });
+
+      if (!latest.data.isActive) {
+        alert('모집 기간이 종료되었습니다.');
+        router.push(ROUTES.HOME);
+        return false;
+      }
+      return true;
+    } catch {
+      if (!isRecruiting) {
+        alert('모집 기간이 종료되었습니다.');
+        router.push(ROUTES.HOME);
+        return false;
+      }
+      return true;
+    }
+  };
+
+  const clearPartQuestionFields = () => {
+    const currentValues = getValues();
+    Object.keys(currentValues).forEach((key) => {
+      if (key.startsWith('ans_')) {
+        // @ts-expect-error - Dynamic fields
+        methods.unregister(key);
+      }
+    });
+    // PDF 파일 필드는 명시적으로 undefined로 설정
+    // @ts-expect-error - Dynamic fields
+    setValue('pdfFileKey', undefined);
+    // @ts-expect-error - Dynamic fields
+    setValue('pdfFileUrl', undefined);
+    // @ts-expect-error - Dynamic fields
+    setValue('pdfFileName', undefined);
+  };
+
   const handleSave = async () => {
     if (!applicationId) return;
     const data = getValues();
@@ -92,8 +182,8 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
         const requestData: BasicInfoRequest = {
           name: data.name,
           gender: data.gender,
-          birthDate: data.birthDate,
-          phoneNumber: data.contact,
+          birthDate: formatDigitsToYYYYMMDD(data.birthDate),
+          phoneNumber: formatDigitsToPhoneNumber(data.contact),
           university: data.school,
           major: data.department,
           completedSemesters: Number(data.completedSemesters),
@@ -102,6 +192,21 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
           applicationPartType: data.part,
         };
         await saveBasicInfo(requestData);
+
+        // 저장 후 새 데이터를 즉시 가져오기
+        await queryClient.refetchQueries({
+          queryKey: QUERY_KEYS.APPLY.BASIC_INFO(Number(applicationId)),
+        });
+
+        const previousPart = basicInfo?.applicationPartType;
+        const currentPart = data.part;
+
+        if (previousPart && previousPart !== currentPart) {
+          await queryClient.invalidateQueries({
+            queryKey: QUERY_KEYS.APPLY.PART_QUESTIONS(Number(applicationId)),
+          });
+          clearPartQuestionFields();
+        }
       } else if (step === 2) {
         const answersToSave = Object.entries(data)
           .filter(([key]) => key.startsWith('ans_'))
@@ -121,29 +226,19 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
         };
 
         await savePartQuestions(requestData);
+
+        // 저장 후 partChanged 플래그 리셋
+        // @ts-expect-error - Dynamic fields
+        setValue('partChanged', false);
       } else if (step === 3) {
         const formData = data as BasicInfoFormData & {
           discovery?: string;
           otherActivity?: string;
-          interviewStartDate?: string;
-          interviewEndDate?: string;
+          unavailableInterviewTimes?: string;
           sessionAgree?: string;
           otAgree?: string;
           privacyAgree?: string;
         };
-
-        const unavailableInterviewTimes = [
-          formData.interviewStartDate
-            ? `${etcQuestions?.interviewStartDate ?? ''} ${
-                formData.interviewStartDate
-              }`
-            : null,
-          formData.interviewEndDate
-            ? `${etcQuestions?.interviewEndDate ?? ''} ${formData.interviewEndDate}`
-            : null,
-        ]
-          .filter(Boolean)
-          .join(', ');
 
         const discoveryPath =
           (formData.discovery as EtcQuestionRequest['discoveryPath']) || 'NONE';
@@ -151,7 +246,7 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
         const requestData: EtcQuestionRequest = {
           discoveryPath,
           parallelActivities: formData.otherActivity || '',
-          unavailableInterviewTimes,
+          unavailableInterviewTimes: formData.unavailableInterviewTimes || '',
           sessionAttendanceAgreed: formData.sessionAgree === 'agree',
           mandatoryEventsAgreed: formData.otAgree === 'agree',
           privacyPolicyAgreed: formData.privacyAgree === 'agree',
@@ -169,22 +264,52 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
   };
 
   const handleNext = async () => {
-    let fieldsToValidate: (keyof BasicInfoFormData)[] = [];
+    let isValid = false;
 
     if (step === 1) {
-      fieldsToValidate = BASIC_INFO_FIELDS.flatMap((field) =>
+      const fieldsToValidate = BASIC_INFO_FIELDS.flatMap((field) =>
         'row' in field && field.row
           ? field.row.map((f) => f.name)
           : [field.name]
-      ).filter(Boolean) as (keyof BasicInfoFormData)[];
+      ).filter(Boolean) as string[];
+
+      // @ts-expect-error - Dynamic fields
+      isValid = await trigger(fieldsToValidate);
     } else if (step === 2) {
-      const values = getValues();
-      fieldsToValidate = Object.keys(values).filter((key) =>
-        key.startsWith('ans_')
-      ) as (keyof BasicInfoFormData)[];
+      // Step 2: ans_ 필드 수동 검증
+      if (partQuestionsData?.questionsWithAnswers) {
+        const textQuestions = partQuestionsData.questionsWithAnswers.slice(
+          0,
+          -1
+        );
+        const allValues = getValues();
+
+        // 수동으로 각 필드 검증
+        const invalidFields: string[] = [];
+        textQuestions.forEach((q) => {
+          const fieldName = `ans_${q.questionId}`;
+          const value = allValues[fieldName as keyof typeof allValues] as
+            | string
+            | undefined;
+
+          if (!value || value.trim().length === 0) {
+            invalidFields.push(fieldName);
+            // @ts-expect-error - Dynamic field names
+            methods.setError(fieldName, {
+              type: 'manual',
+              message: '답변을 작성해주세요',
+            });
+          }
+        });
+
+        isValid = invalidFields.length === 0;
+      } else {
+        isValid = false;
+      }
+    } else {
+      isValid = true;
     }
 
-    const isValid = await trigger(fieldsToValidate);
     if (isValid) {
       await handleSave();
 
@@ -215,6 +340,9 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
     closeConfirmModal();
 
     try {
+      const ok = await ensureRecruitmentIsActive();
+      if (!ok) return;
+
       await handleSave();
       await submitApplication();
       await queryClient.invalidateQueries({queryKey: QUERY_KEYS.APPLY.STATUS});
@@ -224,13 +352,44 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
     }
   };
 
-  const handleFinalSubmit = handleSubmit(() => {
-    if (isRecruiting) {
-      openConfirmModal();
-    } else {
-      router.push('/?submitted=false');
+  /**
+   * 최종 제출은 step 이동 과정에서 이미 각 step별 validation을 거치므로
+   * 여기서는 zodResolver(BasicInfoFormSchema) 검증을 타지 않게 처리합니다.
+   * (검증 실패 시 아무 반응 없이 submit이 막혀 "버튼이 안 눌리는" UX가 발생할 수 있음)
+   */
+  const handleFinalSubmit = async (e?: React.BaseSyntheticEvent) => {
+    e?.preventDefault();
+
+    // Step 3 필수 필드 검증
+    const allValues = getValues();
+    const invalidFields: string[] = [];
+
+    const requiredFields = [
+      'discovery',
+      'sessionAgree',
+      'otAgree',
+      'privacyAgree',
+    ];
+    requiredFields.forEach((fieldName) => {
+      const value = allValues[fieldName as keyof typeof allValues];
+      if (!value) {
+        invalidFields.push(fieldName);
+        // @ts-expect-error - Dynamic field names
+        methods.setError(fieldName, {
+          type: 'manual',
+          message: '필수 항목입니다',
+        });
+      }
+    });
+
+    if (invalidFields.length > 0) {
+      return;
     }
-  });
+
+    const ok = await ensureRecruitmentIsActive();
+    if (!ok) return;
+    openConfirmModal();
+  };
 
   return {
     step,

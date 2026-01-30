@@ -25,6 +25,7 @@ export interface EtcFieldConfig {
   readOnly?: boolean;
   defaultValue?: string;
   className?: string;
+  required?: boolean;
 }
 
 export type EtcFormItem =

@@ -45,26 +45,24 @@ export const AdminApplicationsResultFilter = ({
   };
 
   return (
-    <div className='flex flex-col gap-0.75 rounded-sm bg-neutral-700 p-1.25 text-body-s text-neutral-300'>
+    <div
+      className='flex flex-col gap-0.75 rounded-sm bg-neutral-700 p-1.25 text-body-s text-neutral-300'
+      role='group'
+      aria-label='합격 여부 필터'>
       {RESULT_OPTIONS.map((option) => {
         const isAllSelected = draftSelected.length === 0;
         const isChecked = isAllSelected || draftSelected.includes(option);
 
         return (
-          <div
+          <label
             key={option}
-            className='flex w-full items-center justify-between rounded-sm border-b border-b-neutral-600 px-2 py-1.5'>
-            <span
-              className='cursor-pointer'
-              onClick={() => handleClick(option)}>
-              {option}
-            </span>
-
+            className='flex w-full cursor-pointer items-center justify-between rounded-sm border-b border-b-neutral-600 px-2 py-1.5'>
+            <span>{option}</span>
             <Checkbox
               checked={isChecked}
               onChange={() => handleClick(option)}
             />
-          </div>
+          </label>
         );
       })}
 

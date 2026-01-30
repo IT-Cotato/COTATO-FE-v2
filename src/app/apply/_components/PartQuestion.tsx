@@ -2,11 +2,16 @@
 
 import {useEffect, useRef} from 'react';
 import {useSearchParams} from 'next/navigation';
-import {useFormContext} from 'react-hook-form';
+import {useFormContext, Controller} from 'react-hook-form';
 import {FormTextarea} from '@/components/form/FormTextarea';
 import {FormFile} from '@/components/form/FormFile';
+import {FormLink} from '@/components/form/FormLink';
 import {FullButton} from '@/components/button/FullButton';
-import {useGetPartQuestionsQuery} from '@/hooks/queries/useApply.query';
+import {
+  useGetPartQuestionsQuery,
+  useGetBasicInfoQuery,
+  useGetFileUrlQuery,
+} from '@/hooks/queries/useApply.query';
 import {useUploadFile} from '@/hooks/mutations/useApply.mutation';
 import {PartType} from '@/schemas/admin/admin-application-questions.schema';
 import {Spinner} from '@/components/ui/Spinner';
@@ -33,27 +38,29 @@ export const PartQuestion = ({
     register,
     watch,
     setValue,
+    control,
     formState: {errors},
   } = useFormContext();
-
-  const partParam = searchParams.get('part');
-  const activePart: PartType =
-    PART_TABS.find((tab) => tab.value === partParam)?.value || 'PM';
-
-  const activePartLabel = PART_TABS.find(
-    (tab) => tab.value === activePart
-  )?.label;
 
   const applicationId = searchParams.get('id')
     ? Number(searchParams.get('id'))
     : null;
 
-  const {data: questionsData, isLoading} =
+  const {data: basicInfo, isLoading: isBasicInfoLoading} =
+    useGetBasicInfoQuery(applicationId);
+  const activePart = basicInfo?.applicationPartType as PartType | undefined;
+
+  const activePartLabel = PART_TABS.find(
+    (tab) => tab.value === activePart
+  )?.label;
+
+  const {data: questionsData, isLoading: isQuestionsLoading} =
     useGetPartQuestionsQuery(applicationId);
 
-  const {mutate: uploadFile} = useUploadFile();
+  const {data: pdfFileUrlData} = useGetFileUrlQuery(questionsData?.pdfFileKey);
+  const {mutate: uploadFile, isPending: isUploadingFile} = useUploadFile();
 
-  const isAllAnswersFilled = (() => {
+  const isAllRequiredAnswersFilled = (() => {
     if (!questionsData?.questionsWithAnswers) return false;
     const textQuestions = questionsData.questionsWithAnswers.slice(0, -1);
     return textQuestions.every((q) => {
@@ -63,26 +70,48 @@ export const PartQuestion = ({
   })();
 
   const hasInitializedRef = useRef(false);
+  const previousPartRef = useRef<PartType | undefined>(undefined);
+  const partChanged = watch('partChanged') as boolean | undefined;
 
   useEffect(() => {
-    if (questionsData && !hasInitializedRef.current) {
-      questionsData.questionsWithAnswers.forEach((q) => {
-        if (q.savedAnswer?.content) {
-          setValue(`ans_${q.questionId}`, q.savedAnswer.content);
-        }
-      });
-      if (questionsData.pdfFileKey) {
-        setValue('pdfFileKey', questionsData.pdfFileKey);
-        const fileName =
-          questionsData.pdfFileKey.split('/').pop() || questionsData.pdfFileKey;
-        setValue('pdfFileName', fileName);
-      }
-      if (questionsData.pdfFileUrl) {
-        setValue('pdfFileUrl', questionsData.pdfFileUrl);
-      }
-      hasInitializedRef.current = true;
+    if (previousPartRef.current && previousPartRef.current !== activePart) {
+      hasInitializedRef.current = false;
     }
-  }, [questionsData, setValue]);
+    previousPartRef.current = activePart;
+  }, [activePart]);
+
+  useEffect(() => {
+    if (questionsData && !hasInitializedRef.current && activePart) {
+      const responsePart = questionsData.questionsWithAnswers[0]?.partType;
+      const isMatchingPart = responsePart === activePart;
+
+      if (isMatchingPart && !partChanged) {
+        questionsData.questionsWithAnswers.forEach((q) => {
+          if (q.savedAnswer?.content) {
+            setValue(`ans_${q.questionId}`, q.savedAnswer.content);
+          }
+        });
+
+        if (questionsData.pdfFileKey) {
+          setValue('pdfFileKey', questionsData.pdfFileKey);
+          const fileName =
+            questionsData.pdfFileKey.split('/').pop() ||
+            questionsData.pdfFileKey;
+          setValue('pdfFileName', fileName);
+        }
+      }
+      if (isMatchingPart) {
+        hasInitializedRef.current = true;
+      }
+    }
+  }, [questionsData, setValue, activePart, partChanged]);
+
+  useEffect(() => {
+    // partChanged가 true면 서버에서 가져온 PDF URL 무시
+    if (pdfFileUrlData?.pdfUrl && !partChanged) {
+      setValue('pdfFileUrl', pdfFileUrlData.pdfUrl);
+    }
+  }, [pdfFileUrlData, setValue, partChanged]);
 
   const handleFileChange = (files: File[]) => {
     if (files.length === 0) {
@@ -92,7 +121,8 @@ export const PartQuestion = ({
       return;
     }
 
-    const file = files[files.length - 1];
+    const file = files[0];
+
     uploadFile(file, {
       onSuccess: ({pdfFileKey, pdfFileUrl}) => {
         setValue('pdfFileKey', pdfFileKey);
@@ -103,17 +133,19 @@ export const PartQuestion = ({
   };
 
   return (
-    <div className='flex w-full flex-col gap-[30px]'>
-      <div className='flex flex-col gap-7.5'>
+    <div className='flex w-full flex-col gap-7.5'>
+      <div className='flex flex-col gap-3.5'>
         <h3 className='text-h3 text-primary'>
-          {activePartLabel} 파트에 관한 질문입니다.
+          {activePartLabel
+            ? `${activePartLabel} 파트에 관한 질문입니다.`
+            : '파트별 질문을 불러오는 중...'}
         </h3>
 
         <div className='flex justify-center py-4'>
           <StepIndicator currentStep={step} totalSteps={3} />
         </div>
 
-        {isLoading ? (
+        {isQuestionsLoading || isBasicInfoLoading || !activePart ? (
           <div className='flex h-full w-full items-center justify-center'>
             <Spinner />
           </div>
@@ -126,14 +158,20 @@ export const PartQuestion = ({
                   <FormTextarea
                     key={q.questionId}
                     label={`${q.sequence}. ${q.content}`}
-                    maxLength={q.maxByte}
+                    maxLength={q.maxLength}
                     currentLength={(watch(`ans_${q.questionId}`) || '').length}
                     placeholder='내용을 입력해주세요'
                     error={errors[`ans_${q.questionId}`]?.message as string}
+                    required
                     {...register(`ans_${q.questionId}`, {
-                      required: '답변을 작성해주세요',
+                      validate: (value) => {
+                        if (!value || value.trim().length === 0) {
+                          return '답변을 작성해주세요';
+                        }
+                        return true;
+                      },
                       maxLength: {
-                        value: q.maxByte,
+                        value: q.maxLength,
                         message: '글자수를 초과했습니다',
                       },
                     })}
@@ -148,14 +186,36 @@ export const PartQuestion = ({
                     | string
                     | undefined;
                   return (
-                    <FormFile
-                      label={`${lastQuestion.sequence}. ${lastQuestion.content}`}
-                      placeholder={'파일 업로드하기'}
-                      onFilesChange={handleFileChange}
-                      value={
-                        currentPdfFileName ? [currentPdfFileName] : undefined
-                      }
-                    />
+                    <div className='flex flex-col gap-2.5'>
+                      <label className='text-h5 text-neutral-800'>
+                        {lastQuestion.sequence}. {lastQuestion.content}
+                      </label>
+                      <Controller
+                        control={control}
+                        name={`ans_${lastQuestion.questionId}`}
+                        render={({
+                          field: {onChange, value},
+                          fieldState: {error},
+                        }) => (
+                          <FormLink
+                            value={value ? [value] : ['']}
+                            onChange={(links) => onChange(links[0])}
+                            error={error?.message}
+                            placeholder={`링크를 입력해주세요`}
+                          />
+                        )}
+                      />
+                      <FormFile
+                        placeholder={'파일 업로드하기'}
+                        isUploading={isUploadingFile}
+                        onFilesChange={handleFileChange}
+                        value={
+                          currentPdfFileName ? [currentPdfFileName] : undefined
+                        }
+                        maxCount={1}
+                        maxSize={50 * 1024 * 1024}
+                      />
+                    </div>
                   );
                 })()}
               </>
@@ -186,7 +246,9 @@ export const PartQuestion = ({
             labelTypo='h4'
             type='button'
             onClick={onNext}
-            disabled={!isAllAnswersFilled}
+            backgroundColor={
+              isAllRequiredAnswersFilled ? 'primary' : 'text-disabled'
+            }
           />
         </div>
 
