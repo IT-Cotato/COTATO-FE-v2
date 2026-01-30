@@ -3,10 +3,12 @@
 import {useEffect, ReactNode, useRef} from 'react';
 import {useAuthStore} from '@/store/useAuthStore';
 import {useRouter} from 'next/navigation';
+import {useRecruitmentStatusQuery} from '@/hooks/queries/useRecruitmentStatus.query';
 
 interface ProtectedRouteProps {
   children: ReactNode;
   requireRole?: 'STAFF' | 'APPLICANT';
+  requireRecruiting?: boolean;
 }
 
 /**
@@ -32,8 +34,11 @@ interface ProtectedRouteProps {
 export const ProtectedRoute = ({
   children,
   requireRole,
+  requireRecruiting = false,
 }: ProtectedRouteProps) => {
   const router = useRouter();
+  const {data: recruitmentStatus, isLoading: isRecruitmentStatusLoading} =
+    useRecruitmentStatusQuery();
   const {isAuthenticated, user, isInitialized} = useAuthStore();
   const hasShownAlert = useRef(false);
 
@@ -58,11 +63,20 @@ export const ProtectedRoute = ({
     }
   }, [isAuthenticated, isInitialized, requireRole, router, user?.role]);
 
+  if (isRecruitmentStatusLoading) {
+    return null;
+  }
+
   if (!isInitialized || !isAuthenticated) {
     return null;
   }
 
   if (requireRole && user?.role !== requireRole) {
+    return null;
+  }
+
+  if (requireRecruiting && !recruitmentStatus!.data.isActive) {
+    router.back();
     return null;
   }
 

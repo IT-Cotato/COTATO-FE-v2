@@ -10,7 +10,7 @@ import {ApplyFormContainer} from '@/app/apply/_components/ApplyFormContainer';
  */
 export default function ApplyPage() {
   return (
-    <ProtectedRoute>
+    <ProtectedRoute requireRecruiting={true}>
       <ApplyFormContainer />
     </ProtectedRoute>
   );
