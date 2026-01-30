@@ -7,10 +7,11 @@ import {formFieldStyles} from './form.styles';
 export interface FormInputProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string;
   error?: string;
+  required?: boolean;
 }
 
 export const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
-  function FormInput({label, error, id, className, ...props}, ref) {
+  function FormInput({label, error, id, className, required, ...props}, ref) {
     const generatedId = useId();
     const inputId = id ?? generatedId;
 
@@ -18,6 +19,7 @@ export const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
       <div className={formFieldStyles.wrapper}>
         <label htmlFor={inputId} className={formFieldStyles.label}>
           {label}
+          {required && <span className={formFieldStyles.required}>*</span>}
         </label>
         <input
           ref={ref}

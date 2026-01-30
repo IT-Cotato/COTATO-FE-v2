@@ -9,11 +9,12 @@ interface FormTextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> 
   error?: string;
   currentLength?: number;
   maxLength?: number;
+  required?: boolean;
 }
 
 export const FormTextarea = forwardRef<HTMLTextAreaElement, FormTextareaProps>(
   function FormTextarea(
-    {label, error, className, id, currentLength = 0, maxLength, ...props},
+    {label, error, className, id, currentLength = 0, maxLength, required, ...props},
     ref
   ) {
     const generatedId = useId();
@@ -24,6 +25,7 @@ export const FormTextarea = forwardRef<HTMLTextAreaElement, FormTextareaProps>(
         {label ? (
           <label htmlFor={inputId} className={formFieldStyles.label}>
             {label}
+            {required && <span className={formFieldStyles.required}>*</span>}
           </label>
         ) : null}
 

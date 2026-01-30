@@ -16,6 +16,7 @@ interface FormDropdownProps extends Omit<
   onChange?: (value: string) => void;
   error?: string;
   placeholder?: string;
+  required?: boolean;
 }
 
 export const FormDropdown = forwardRef<HTMLInputElement, FormDropdownProps>(
@@ -30,6 +31,7 @@ export const FormDropdown = forwardRef<HTMLInputElement, FormDropdownProps>(
       id,
       className,
       readOnly,
+      required,
       ...props
     },
     ref
@@ -58,7 +60,10 @@ export const FormDropdown = forwardRef<HTMLInputElement, FormDropdownProps>(
 
     return (
       <label className={formFieldStyles.wrapper}>
-        <span className={formFieldStyles.label}>{label}</span>
+        <span className={formFieldStyles.label}>
+          {label}
+          {required && <span className={formFieldStyles.required}>*</span>}
+        </span>
 
         <div ref={dropdownRef} className='relative'>
           <button
