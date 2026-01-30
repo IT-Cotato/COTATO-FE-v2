@@ -34,24 +34,25 @@ export const BasicInfoFormSchema = z.object({
         return;
       }
 
-      if (isHyphenated) {
-        const [, month, day] = val.split('-');
-        if (month === '00' || day === '00') {
-          ctx.addIssue({
-            code: z.ZodIssueCode.custom,
-            message: '유효하지 않은 날짜입니다.',
-          });
-        }
-      }
-      if (is8Digit) {
-        const month = val.slice(4, 6);
-        const day = val.slice(6, 8);
-        if (month === '00' || day === '00') {
-          ctx.addIssue({
-            code: z.ZodIssueCode.custom,
-            message: '유효하지 않은 날짜입니다.',
-          });
-        }
+      const [yearStr, monthStr, dayStr] = isHyphenated
+        ? val.split('-')
+        : [val.slice(0, 4), val.slice(4, 6), val.slice(6, 8)];
+      const year = Number(yearStr);
+      const month = Number(monthStr);
+      const day = Number(dayStr);
+      const maxDay = new Date(year, month, 0).getDate();
+
+      if (
+        Number.isNaN(year) ||
+        month < 1 ||
+        month > 12 ||
+        day < 1 ||
+        day > maxDay
+      ) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: '생년월일 형식이 올바르지 않습니다.',
+        });
       }
     }),
   school: z.string().min(1, '학교를 입력해주세요'),
