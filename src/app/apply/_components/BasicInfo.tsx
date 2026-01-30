@@ -274,8 +274,7 @@ export const BasicInfo = ({
           labelTypo='h4'
           onClick={onNext}
           type='button'
-          disabledBackgroundColor='text-disabled'
-          disabled={!isAllFieldsFilled}
+          backgroundColor={isAllFieldsFilled ? 'primary' : 'text-disabled'}
         />
         <FullButton
           label='저장하기'

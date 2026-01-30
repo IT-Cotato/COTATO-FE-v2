@@ -244,8 +244,9 @@ export const PartQuestion = ({
             labelTypo='h4'
             type='button'
             onClick={onNext}
-            disabledBackgroundColor='text-disabled'
-            disabled={!isAllRequiredAnswersFilled}
+            backgroundColor={
+              isAllRequiredAnswersFilled ? 'primary' : 'text-disabled'
+            }
           />
         </div>
 
