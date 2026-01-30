@@ -13,7 +13,7 @@ import ApplyPageContent from '@/app/apply/_components/ApplyPageContent';
  */
 export default function ApplyPage() {
   return (
-    <ProtectedRoute>
+    <ProtectedRoute requireRecruiting={true}>
       <SuspenseWrapper
         fallback={
           <div className='flex h-screen items-center justify-center'>
