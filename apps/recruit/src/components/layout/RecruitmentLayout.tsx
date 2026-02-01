@@ -5,7 +5,7 @@ import CountdownTimer from '@/components/layout/CountdownTimer';
 import clsx from 'clsx';
 import {HEADER_HEIGHT} from '@/constants/ui';
 import {NotifyInput} from '@/components/layout/NotifyInput';
-import {Button} from '@/components/button/Button';
+import {Button} from '@repo/ui/components/buttons/Button';
 import {useRecruitmentStatusQuery} from '@/hooks/queries/useRecruitmentStatus.query';
 import {useRouter} from 'next/navigation';
 
@@ -55,17 +55,17 @@ export default function RecruitmentLayout({
           bottomBannerBgImage && 'mb-59.75'
         )}>
         <h1
-          className='mb-7.5 bg-clip-text text-center text-h1 text-transparent'
+          className='text-h1 mb-7.5 bg-clip-text text-center text-transparent'
           style={{backgroundImage: 'var(--branding-gradient)'}}>
           COde Together, Arrive TOgether
         </h1>
 
         <p
-          className={`mb-1.25 text-center text-body-l font-semibold text-primary`}>
+          className={`text-body-l text-primary mb-1.25 text-center font-semibold`}>
           {statusText}
         </p>
 
-        <p className='mb-9 text-center text-body-l whitespace-pre-line text-neutral-300'>
+        <p className='text-body-l mb-9 text-center whitespace-pre-line text-neutral-300'>
           {descriptionText}
         </p>
 

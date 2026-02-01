@@ -1,7 +1,7 @@
 'use client';
 
 import clsx from 'clsx';
-import {FullButton} from '@/components/button/FullButton';
+import {FullButton} from '@repo/ui/components/buttons/FullButton';
 import {mailTabs} from '@/schemas/admin/admin-mail.type';
 
 interface MailSelectProps {

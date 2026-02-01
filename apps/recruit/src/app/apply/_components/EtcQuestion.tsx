@@ -6,7 +6,7 @@ import {useFormContext, Controller} from 'react-hook-form';
 import clsx from 'clsx';
 import {FormTextarea} from '@/components/form/FormTextarea';
 import {FormDropdown} from '@/components/form/FormDropdown';
-import {FullButton} from '@/components/button/FullButton';
+import {FullButton} from '@repo/ui/components/buttons/FullButton';
 import {FormRadio} from '@/components/form/FormRadio';
 import {FormInput} from '@/components/form/FormInput';
 import {getEtcFields} from '@/constants/form/formConfig';
@@ -270,7 +270,7 @@ export const EtcInfo = ({
           onClick={onSave}
         />
         {showSaveSuccess && (
-          <p className='text-center text-primary'>저장이 완료되었습니다</p>
+          <p className='text-primary text-center'>저장이 완료되었습니다</p>
         )}
       </div>
     </div>

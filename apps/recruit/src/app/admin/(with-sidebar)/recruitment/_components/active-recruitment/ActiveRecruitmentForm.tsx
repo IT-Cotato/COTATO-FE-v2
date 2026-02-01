@@ -1,7 +1,7 @@
 'use client';
 
 import {useState} from 'react';
-import {Button} from '@/components/button/Button';
+import {Button} from '@repo/ui/components/buttons/Button';
 import {useRecruitmentStore} from '@/store/useRecruitmentStore';
 import {useGenerationStore} from '@/store/useGenerationStore';
 import {GenerationField} from '@/app/admin/(with-sidebar)/recruitment/_components/active-recruitment/GenerationField';

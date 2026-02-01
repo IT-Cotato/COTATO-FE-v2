@@ -7,7 +7,7 @@ import {useQuery} from '@tanstack/react-query';
 import {FormDropdown} from '@/components/form/FormDropdown';
 import {FormInput} from '@/components/form/FormInput';
 import {FormRadio} from '@/components/form/FormRadio';
-import {FullButton} from '@/components/button/FullButton';
+import {FullButton} from '@repo/ui/components/buttons/FullButton';
 import {BASIC_INFO_FIELDS} from '@/constants/form/formConfig';
 import {BasicInfoFieldConfig} from '@/schemas/apply/apply-type';
 import {BasicInfoFormData} from '@/schemas/apply/apply-schema';
@@ -139,7 +139,7 @@ export const BasicInfo = ({
     if (type === 'radio') {
       return (
         <fieldset key={name} className='flex flex-1 flex-col gap-2'>
-          <legend className='mb-3.5 text-h5 text-neutral-600'>{label}</legend>
+          <legend className='text-h5 mb-3.5 text-neutral-600'>{label}</legend>
           <Controller
             name={name}
             control={control}
@@ -285,7 +285,7 @@ export const BasicInfo = ({
           type='button'
         />
         {showSaveSuccess && (
-          <p className='text-center text-primary'>저장이 완료되었습니다</p>
+          <p className='text-primary text-center'>저장이 완료되었습니다</p>
         )}
       </div>
     </div>

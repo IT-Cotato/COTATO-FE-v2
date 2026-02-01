@@ -1,7 +1,7 @@
 'use client';
 
-import {Button} from '@/components/button/Button';
-import {FullButton} from '@/components/button/FullButton';
+import {Button} from '@repo/ui/components/buttons/Button';
+import {FullButton} from '@repo/ui/components/buttons/FullButton';
 import {ApplicationQuestionsType} from '@/schemas/admin/admin-application-questions.schema';
 import {useEffect} from 'react';
 
@@ -66,19 +66,19 @@ export const ApplicationQuestionsEdit = ({
               value={content}
               placeholder='새로운 질문을 입력해 주세요.'
               onChange={(e) => updateItem(sequence, 'content', e.target.value)}
-              className='min-h-82 w-full rounded-[10px] border border-neutral-300 bg-white px-5.25 py-4.5 text-h5'
+              className='text-h5 min-h-82 w-full rounded-[10px] border border-neutral-300 bg-white px-5.25 py-4.5'
             />
           </div>
 
           <div className='flex flex-row items-center justify-between'>
             <div className='flex items-center gap-3'>
-              <span className='pl-13 text-h5 text-neutral-500'>글자 제한</span>
+              <span className='text-h5 pl-13 text-neutral-500'>글자 제한</span>
               <input
                 value={maxLength}
                 onChange={(e) =>
                   updateItem(sequence, 'maxLength', Number(e.target.value))
                 }
-                className='flex w-17.5 items-center justify-center rounded-[10px] border border-neutral-300 bg-white py-2.75 text-center text-body-l font-semibold text-neutral-600'
+                className='text-body-l flex w-17.5 items-center justify-center rounded-[10px] border border-neutral-300 bg-white py-2.75 text-center font-semibold text-neutral-600'
               />
               <span className='text-h5 text-neutral-500'>자</span>
             </div>

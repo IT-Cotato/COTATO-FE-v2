@@ -1,4 +1,4 @@
-import {FullButton} from '@/components/button/FullButton';
+import {FullButton} from '@repo/ui/components/buttons/FullButton';
 import {FormLink} from '@/components/form/FormLink';
 import {FormTextarea} from '@/components/form/FormTextarea';
 import {PartQuestionWithAnswerType} from '@/schemas/admin/admin-application.schema';
@@ -19,7 +19,7 @@ export const PartQuestionView = ({
   if (questionsWithAnswers.length === 0) {
     return (
       <div className='flex flex-col gap-10'>
-        <p className='text-center text-h5 text-neutral-400'>
+        <p className='text-h5 text-center text-neutral-400'>
           등록된 파트 질문이 없습니다.
         </p>
         <div className='flex flex-row gap-7.5'>
@@ -59,7 +59,7 @@ export const PartQuestionView = ({
                   value={[pdfFileUrl]}
                 />
               ) : (
-                <p className='flex justify-center text-h5 text-neutral-400'>
+                <p className='text-h5 flex justify-center text-neutral-400'>
                   첨부된 포트폴리오가 없습니다.
                 </p>
               )

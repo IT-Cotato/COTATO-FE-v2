@@ -1,7 +1,7 @@
 'use client';
 
 import {GenerationDropdown} from '@/components/dropdown/GenerationDropdown';
-import {Button} from '@/components/button/Button';
+import {Button} from '@repo/ui/components/buttons/Button';
 import {useRouter} from 'next/navigation';
 import {useEffect, useState} from 'react';
 import {Spinner} from '@/components/ui/Spinner';

@@ -1,6 +1,6 @@
 'use client';
 
-import {Button} from '@/components/button/Button';
+import {Button} from '@repo/ui/components/buttons/Button';
 import {useState} from 'react';
 import {RecruitmentNotificationModal} from '@/components/modal/RecruitmentNotificationModal';
 
@@ -37,7 +37,7 @@ export const NotifyInput = () => {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder='메일을 입력해주세요!'
-          className='flex-1 text-body-m text-neutral-800 outline-none placeholder:text-neutral-400'
+          className='text-body-m flex-1 text-neutral-800 outline-none placeholder:text-neutral-400'
         />
         <Button
           type='submit'

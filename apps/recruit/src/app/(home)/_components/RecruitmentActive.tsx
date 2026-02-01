@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import {Button} from '@/components/button/Button';
+import {Button} from '@repo/ui/components/buttons/Button';
 import {RECRUITMENT_NOTICES} from '@/constants/home/recruitment';
 import {useRouter} from 'next/navigation';
 import {ROUTES} from '@/constants/routes';

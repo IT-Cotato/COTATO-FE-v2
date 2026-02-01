@@ -1,6 +1,6 @@
 'use client';
 
-import {Button} from '@/components/button/Button';
+import {Button} from '@repo/ui/components/buttons/Button';
 import {PART_TABS} from '@/constants/common/part';
 import {PartType} from '@/schemas/admin/admin-application-questions.schema';
 

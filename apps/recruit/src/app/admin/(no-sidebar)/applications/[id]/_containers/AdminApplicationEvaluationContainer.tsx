@@ -1,7 +1,7 @@
 'use client';
 
 import {EvaluationTextarea} from '@/app/admin/(no-sidebar)/applications/[id]/_components/EvaluationTextArea';
-import {Button} from '@/components/button/Button';
+import {Button} from '@repo/ui/components/buttons/Button';
 import {EVALUATOR_TABS} from '@/constants/admin/admin-applications';
 import {useAdminApplicationEvaluation} from '@/hooks/queries/useAdminApplication.query';
 import {EvaluatorType} from '@/schemas/admin/admin-application.schema';

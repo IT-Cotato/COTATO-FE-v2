@@ -1,4 +1,4 @@
-import {Button} from '@/components/button/Button';
+import {Button} from '@repo/ui/components/buttons/Button';
 import {clsx} from 'clsx';
 
 interface MailSendFooterProps {
@@ -35,13 +35,13 @@ export const MailSendFooter = ({
 
   return (
     <div className='flex w-full flex-col items-end gap-3'>
-      <div className='flex items-center gap-2.5 text-body-l text-neutral-500'>
+      <div className='text-body-l flex items-center gap-2.5 text-neutral-500'>
         <p>
           ({waitingLabel} 수: {waitingCount}명)
         </p>
         {shouldShowStatus && (
           <div className='flex items-center gap-4 rounded-lg border border-neutral-200 bg-neutral-50 px-4 py-2'>
-            <div className='flex gap-3 text-body-m font-bold'>
+            <div className='text-body-m flex gap-3 font-bold'>
               <span className='text-primary'>성공: {successCount}</span>
               <span className='text-alert'>실패: {failCount}</span>
             </div>

@@ -1,4 +1,4 @@
-import {FullButton} from '@/components/button/FullButton';
+import {FullButton} from '@repo/ui/components/buttons/FullButton';
 import {FormInput} from '@/components/form/FormInput';
 import {FormRadio} from '@/components/form/FormRadio';
 import {FormTextarea} from '@/components/form/FormTextarea';

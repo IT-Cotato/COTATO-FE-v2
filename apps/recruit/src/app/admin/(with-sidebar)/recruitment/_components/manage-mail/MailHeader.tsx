@@ -1,4 +1,4 @@
-import {Button} from '@/components/button/Button';
+import {Button} from '@repo/ui/components/buttons/Button';
 
 interface MailHeaderProps {
   canEdit: boolean;

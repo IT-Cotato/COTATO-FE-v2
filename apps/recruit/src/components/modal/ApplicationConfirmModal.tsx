@@ -1,4 +1,4 @@
-import {FullButton} from '@/components/button/FullButton';
+import {FullButton} from '@repo/ui/components/buttons/FullButton';
 import {Modal} from '@/components/modal/Modal';
 
 interface ApplicationConfirmModalProps {

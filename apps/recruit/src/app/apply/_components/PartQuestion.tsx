@@ -6,7 +6,7 @@ import {useFormContext, Controller} from 'react-hook-form';
 import {FormTextarea} from '@/components/form/FormTextarea';
 import {FormFile} from '@/components/form/FormFile';
 import {FormLink} from '@/components/form/FormLink';
-import {FullButton} from '@/components/button/FullButton';
+import {FullButton} from '@repo/ui/components/buttons/FullButton';
 import {
   useGetPartQuestionsQuery,
   useGetBasicInfoQuery,
@@ -261,7 +261,7 @@ export const PartQuestion = ({
           onClick={onSave}
         />
         {showSaveSuccess && (
-          <p className='text-center text-primary'>저장이 완료되었습니다</p>
+          <p className='text-primary text-center'>저장이 완료되었습니다</p>
         )}
       </div>
     </div>

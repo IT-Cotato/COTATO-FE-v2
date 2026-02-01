@@ -3,7 +3,7 @@
 import {ApplicationQuestionsEdit} from '@/app/admin/(with-sidebar)/application-edit/_components/questions/ApplicationQuestionsEdit';
 import {ApplicationQuestionsView} from '@/app/admin/(with-sidebar)/application-edit/_components/questions/ApplicationQuestionsView';
 import {AdminApplicationQuestionsTabContainer} from '@/app/admin/(with-sidebar)/application-edit/_containers/AdminApplicationQuestionsTabContainer';
-import {Button} from '@/components/button/Button';
+import {Button} from '@repo/ui/components/buttons/Button';
 import {Spinner} from '@/components/ui/Spinner';
 import {SuspenseWrapper} from '@/components/wrappers/SuspenseWrapper';
 import {useAdminApplicationQuestionsMutation} from '@/hooks/mutations/useAdminApplicationQuestions.mutation';
@@ -86,7 +86,7 @@ export const AdminApplicationQuestionsContainer = ({
         {isEditing ? (
           <div className='flex flex-row items-end gap-2.25'>
             {!isFormValid && (
-              <span role='alert' className='mr-1.5 text-body-m text-alert'>
+              <span role='alert' className='text-body-m text-alert mr-1.5'>
                 모든 필드를 작성해 주세요.
               </span>
             )}

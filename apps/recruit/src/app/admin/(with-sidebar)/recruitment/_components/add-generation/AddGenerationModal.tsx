@@ -4,7 +4,7 @@ import {useState, FormEvent} from 'react';
 import Close from '@/assets/modal/close.svg';
 import {useGenerationStore} from '@/store/useGenerationStore';
 import {postGeneration} from '@/services/api/admin/admin-generation.api';
-import {FullButton} from '@/components/button/FullButton';
+import {FullButton} from '@repo/ui/components/buttons/FullButton';
 import {useRecruitmentStore} from '@/store/useRecruitmentStore';
 
 interface AddGenerationModalProps {
@@ -74,7 +74,7 @@ export const AddGenerationModal = ({
 
   return (
     <div
-      className='fixed inset-0 z-modal flex items-center justify-center bg-black/50 backdrop-blur-sm'
+      className='z-modal fixed inset-0 flex items-center justify-center bg-black/50 backdrop-blur-sm'
       onClick={handleClose}
       role='presentation'>
       <section
@@ -109,7 +109,7 @@ export const AddGenerationModal = ({
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
                 placeholder='숫자만 입력해주세요.'
-                className='w-full rounded-[10px] border border-neutral-200 bg-neutral-50 px-6 py-3 transition-all outline-none focus:border-primary focus:bg-white'
+                className='focus:border-primary w-full rounded-[10px] border border-neutral-200 bg-neutral-50 px-6 py-3 transition-all outline-none focus:bg-white'
                 required
               />
             </div>

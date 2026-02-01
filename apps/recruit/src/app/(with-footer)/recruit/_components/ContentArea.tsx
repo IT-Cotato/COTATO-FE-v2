@@ -6,7 +6,7 @@ import {QualificationsCard} from '@/app/(with-footer)/recruit/_components/Qualif
 import {QUALIFICATIONS_CARD_ITEMS} from '@/constants/recruit/recruit-components';
 import {PositionCard} from '@/app/(with-footer)/recruit/_components/PositionCard';
 import {ActivityCard} from '@/app/(with-footer)/recruit/_components/ActivityCard';
-import {Button} from '@/components/button/Button';
+import {Button} from '@repo/ui/components/buttons/Button';
 import {useRouter} from 'next/navigation';
 
 export const ContentArea = () => {
@@ -20,7 +20,7 @@ export const ContentArea = () => {
   return (
     <div className='w-360 pt-10 pb-30'>
       <div className='mb-30'>
-        <p className='mb-7.5 text-center text-h2 text-neutral-800'>모집 일정</p>
+        <p className='text-h2 mb-7.5 text-center text-neutral-800'>모집 일정</p>
         <div className='flex justify-center'>
           {dataTimeline?.map((item, index) => (
             <TimelineItem
@@ -33,11 +33,11 @@ export const ContentArea = () => {
       </div>
 
       <div className='mb-30'>
-        <p className='mb-2.5 text-center text-h4 text-neutral-600'>
+        <p className='text-h4 mb-2.5 text-center text-neutral-600'>
           나는 그냥 말하는 감자인데.. 사망년이라니.. 취준을 하라니..프로젝트
           경험을 쓰라고요?
         </p>
-        <p className='mb-7.5 text-center text-h4 text-neutral-600'>
+        <p className='text-h4 mb-7.5 text-center text-neutral-600'>
           발등에 불 떨어져 군감자가 되어가는 감자들을 모집합니다.
         </p>
         <div className='flex justify-center gap-20'>
@@ -48,7 +48,7 @@ export const ContentArea = () => {
       </div>
 
       <div className='mb-30'>
-        <p className='mb-7.5 text-center text-h2 text-neutral-800'>모집 파트</p>
+        <p className='text-h2 mb-7.5 text-center text-neutral-800'>모집 파트</p>
         <div className='flex justify-center gap-4.5'>
           {dataPosition?.map((item) => (
             <PositionCard key={item.short} item={item} />
@@ -57,14 +57,14 @@ export const ContentArea = () => {
       </div>
 
       <div className='mb-30'>
-        <p className='mb-2.5 text-center text-h2 text-neutral-800'>
+        <p className='text-h2 mb-2.5 text-center text-neutral-800'>
           주요 활동 일정
         </p>
-        <p className='mb-1 text-center text-h5 text-neutral-600'>
+        <p className='text-h5 mb-1 text-center text-neutral-600'>
           정기 세션은 <span className='text-primary'>매주 금요일 19시</span>에{' '}
           <span className='text-primary'>오프라인</span>으로 진행됩니다
         </p>
-        <p className='mb-7.5 text-center text-body-l text-neutral-500'>
+        <p className='text-body-l mb-7.5 text-center text-neutral-500'>
           세부 일정은 추후 변경될 수 있습니다.
         </p>
         <div className='flex flex-wrap justify-center gap-x-5 gap-y-6'>
