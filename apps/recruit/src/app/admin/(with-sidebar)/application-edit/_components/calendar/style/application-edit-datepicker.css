@@ -1,0 +1,10 @@
+.custom-datetime-picker .react-datepicker__header {
+  display: none;
+}
+
+.custom-datetime-picker
+  .react-datepicker__day--today:not(.react-datepicker__day--selected) {
+  background-color: transparent !important;
+  color: #000 !important;
+  border: none !important;
+}
