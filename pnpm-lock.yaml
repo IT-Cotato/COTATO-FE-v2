@@ -202,12 +202,18 @@ importers:
 
   packages/ui:
     dependencies:
+      '@tailwindcss/postcss':
+        specifier: ^4
+        version: 4.1.18
       react:
         specifier: ^19.2.0
         version: 19.2.0
       react-dom:
         specifier: ^19.2.0
         version: 19.2.0(react@19.2.0)
+      tailwindcss:
+        specifier: ^4
+        version: 4.1.18
     devDependencies:
       '@repo/eslint-config':
         specifier: workspace:*
