@@ -3,7 +3,6 @@
 import {CustomDateTimePicker} from '@/app/admin/(with-sidebar)/application-edit/_components/calendar/CustomDateTimePicker';
 import CalendarIcon from '@/assets/icons/calendar.svg';
 import 'react-datepicker/dist/react-datepicker.css';
-import '@/styles/datepicker-custom.css';
 import {useMemo, useRef, useState} from 'react';
 import {useClickOutside} from '@/hooks/useClickOutside';
 import {formatRecruitmentDate} from '@/utils/formatDate';
