@@ -21,6 +21,7 @@
   "devDependencies": {
     "@commitlint/cli": "^20.4.0",
     "@commitlint/config-conventional": "^20.4.0",
+    "eslint-config-next": "^16.1.6",
     "husky": "^8.0.0",
     "lint-staged": "^16.2.7",
     "prettier": "^3.7.4",
