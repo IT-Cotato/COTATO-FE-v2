@@ -1,0 +1,49 @@
+@import 'tailwindcss';
+@import '@repo/ui/styles.css';
+
+@layer base {
+  html,
+  body {
+    height: 100%;
+    width: 100%;
+    overflow: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    overflow-wrap: break-word;
+  }
+  html::-webkit-scrollbar,
+  body::-webkit-scrollbar {
+    display: none;
+  }
+
+  body {
+    font-family: var(--font-pretendard), sans-serif;
+    width: 100%;
+    min-height: 100vh;
+  }
+
+  button {
+    cursor: pointer;
+  }
+
+  input:focus {
+    outline: none;
+  }
+
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  .shadow-default {
+    box-shadow: 0 6px 15px 0 rgba(0, 0, 0, 0.1);
+  }
+
+  .shadow-card {
+    box-shadow: 8px 3px 22px 10px rgba(150, 150, 150, 0.11);
+  }
+}

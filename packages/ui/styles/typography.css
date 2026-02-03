@@ -1,0 +1,90 @@
+@theme static {
+  /* typography - headings */
+  --text-h1: 32px;
+  --text-h1--line-height: 52px;
+  --text-h1--font-weight: 700;
+
+  --text-h2: 28px;
+  --text-h2--line-height: 40px;
+  --text-h2--font-weight: 700;
+
+  --text-h3: 22px;
+  --text-h3--line-height: 36px;
+  --text-h3--font-weight: 700;
+
+  --text-h4: 18px;
+  --text-h4--line-height: 32px;
+  --text-h4--font-weight: 700;
+
+  --text-h5: 16px;
+  --text-h5--line-height: 26px;
+  --text-h5--font-weight: 600;
+
+  /* typography - body */
+  --text-body-l: 14px;
+  --text-body-l--line-height: 22px;
+  --text-body-l--font-weight: 400;
+
+  --text-body-m: 12px;
+  --text-body-m--line-height: 20px;
+  --text-body-m--font-weight: 400;
+
+  --text-body-s: 10px;
+  --text-body-s--line-height: 18px;
+  --text-body-s--font-weight: 400;
+
+  /* typography - body (semibold) */
+  --text-body-l-sb: 14px;
+  --text-body-l-sb--line-height: 22px;
+  --text-body-l-sb--font-weight: 600;
+
+  --text-body-m-sb: 12px;
+  --text-body-m-sb--line-height: 20px;
+  --text-body-m-sb--font-weight: 600;
+
+  --text-body-s-sb: 10px;
+  --text-body-s-sb--line-height: 18px;
+  --text-body-s-sb--font-weight: 600;
+}
+
+/* mobile typo 
+TODO: max width 조절 
+*/
+@media (max-width: 640px) {
+  :root {
+    /* headings */
+    --text-h1: 34px;
+    --text-h1--line-height: 38px;
+    --text-h1--font-weight: 700;
+
+    --text-h2: 28px;
+    --text-h2--line-height: 32px;
+    --text-h2--font-weight: 700;
+
+    --text-h3: 22px;
+    --text-h3--line-height: 26px;
+    --text-h3--font-weight: 600;
+
+    --text-h4: 20px;
+    --text-h4--line-height: 24px;
+    --text-h4--font-weight: 600;
+
+    /* body */
+    --text-body-l: 18px;
+    --text-body-l--line-height: 22px;
+    --text-body-l--font-weight: 400;
+
+    --text-body-m: 17px;
+    --text-body-m--line-height: 21px;
+    --text-body-m--font-weight: 400;
+
+    --text-body-s: 14px;
+    --text-body-s--line-height: 18px;
+    --text-body-s--font-weight: 400;
+
+    /* caption */
+    --text-caption: 12px;
+    --text-caption--line-height: 16px;
+    --text-caption--font-weight: 400;
+  }
+}
