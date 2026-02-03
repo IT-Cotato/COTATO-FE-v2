@@ -7,7 +7,7 @@
     "dev": "next dev --port 3001",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint "
+    "lint": "eslint"
   },
   "dependencies": {
     "@repo/ui": "workspace:*",
