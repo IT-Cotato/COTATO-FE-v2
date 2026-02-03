@@ -1,8 +1,8 @@
-import Email from '../../../assets/footer/email/email.svg';
-import Github from '../../../assets/footer/github/github.svg';
-import Insta from '../../../assets/footer/insta/insta.svg';
-import Kakao from '../../../assets/footer/kakao/kakao.svg';
-import NaverCafe from '../../../assets/footer/naver-cafe/naver-cafe.svg';
+import Email from '@repo/ui/assets/footer/email/email.svg';
+import Github from '@repo/ui/assets/footer/github/github.svg';
+import Insta from '@repo/ui/assets/footer/insta/insta.svg';
+import Kakao from '@repo/ui/assets/footer/kakao/kakao.svg';
+import NaverCafe from '@repo/ui/assets/footer/naver-cafe/naver-cafe.svg';
 import {SocialLink} from './SocialLink';
 
 export const FooterContact = () => {

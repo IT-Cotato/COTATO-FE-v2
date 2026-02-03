@@ -1,4 +1,4 @@
-import MainLogo from '../../../assets/main-logo/main-logo.svg';
+import MainLogo from '@repo/ui/assets/main-logo/main-logo.svg';
 
 export const FooterInfo = () => {
   return (
