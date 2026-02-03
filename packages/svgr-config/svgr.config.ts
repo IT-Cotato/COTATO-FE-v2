@@ -8,7 +8,7 @@ const svgrConfig = {
 
     config.module.rules.push({
       test: /\.svg$/i,
-      issuer: fileLoaderRule.issuer,
+      issuer: fileLoaderRule?.issuer || /\.[jt]sx?$/,
       resourceQuery: {
         not: [...fileLoaderRule.resourceQuery.not, /url/],
       }, // exclude if *.svg?url
@@ -21,29 +21,8 @@ const svgrConfig = {
   turbopack: {
     rules: {
       '*.svg': {
-        loaders: [
-          {
-            loader: '@svgr/webpack',
-            options: {
-              typescript: true,
-              ref: true,
-              svgo: true,
-              svgoConfig: {
-                plugins: [
-                  {
-                    name: 'preset-default',
-                    params: {
-                      overrides: {
-                        removeViewBox: false,
-                      },
-                    },
-                  },
-                ],
-              },
-            },
-          },
-        ],
-        as: '*.tsx',
+        loaders: ['@svgr/webpack'],
+        as: '*.js',
       },
     },
   },
