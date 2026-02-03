@@ -2,6 +2,7 @@
   "name": "recruit",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "next dev --port 3000",
     "build": "next build",
@@ -29,6 +30,7 @@
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
+    "@repo/tailwind-config": "workspace:*",
     "@repo/svgr-config": "workspace:*",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",

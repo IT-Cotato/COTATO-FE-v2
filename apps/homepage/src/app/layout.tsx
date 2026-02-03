@@ -1,5 +1,6 @@
 import type {Metadata} from 'next';
 import '@/styles/globals.css';
+import '@repo/ui/styles.css';
 import localFont from 'next/font/local';
 
 export const metadata: Metadata = {
