@@ -18,6 +18,8 @@ export const AdminApplicationEditContainer = () => {
   const generationList = generations.map((g) => String(g.generationId));
   const generationId = searchParams.get('generationId');
   const questionType = searchParams.get('questionType');
+  const currentGeneration =
+    searchParams.get('generationId') ?? generationList[0];
 
   useEffect(() => {
     if (!generationsData) return;
@@ -46,6 +48,14 @@ export const AdminApplicationEditContainer = () => {
       router.replace(`?${params.toString()}`, {scroll: false});
     }
   }, [generations, generationId, questionType, router, searchParams]);
+
+  if (!currentGeneration) {
+    return (
+      <div className='flex h-100 w-full items-center justify-center'>
+        <p className='text-neutral-500'>등록된 기수 정보가 없습니다.</p>
+      </div>
+    );
+  }
 
   if (!generationId || !questionType) return null;
 

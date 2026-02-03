@@ -4,7 +4,7 @@ import {AdminApplicationsTableContainer} from '@/app/admin/(with-sidebar)/applic
 import {AdminApplicationsTabContainer} from '@/app/admin/(with-sidebar)/applications/_containers/AdminApplicationsTabContainer';
 
 import {GetAdminApplicationsParamsSchema} from '@/schemas/admin/admin-applications.schema';
-import {useRouter, useSearchParams} from 'next/navigation';
+import {useSearchParams} from 'next/navigation';
 import {useAdminApplicationsQuery} from '@/hooks/queries/useAdminApplications.query';
 import {useEffect} from 'react';
 import {AdminApplicationsInformation} from '@/app/admin/(with-sidebar)/applications/_components/info/AdminApplicationsInformation';
@@ -14,7 +14,6 @@ import {useAdminGenerationsQuery} from '@/hooks/queries/useAdminGeneration.query
 
 export const AdminApplicationsContainer = () => {
   const searchParams = useSearchParams();
-  const router = useRouter();
 
   /** 기수 목록 조회 */
   const {data: generationsData} = useAdminGenerationsQuery();
@@ -23,9 +22,9 @@ export const AdminApplicationsContainer = () => {
   const currentGeneration =
     searchParams.get('generationId') ?? generationList[0];
 
+  /** Hook: generations store 업데이트 */
   useEffect(() => {
     if (!generationsData) return;
-
     setGenerations(generationsData.data);
   }, [generationsData, setGenerations]);
 
@@ -46,15 +45,15 @@ export const AdminApplicationsContainer = () => {
 
   const filter = GetAdminApplicationsParamsSchema.parse(rawParams);
 
-  const {data, isLoading, isFetching, isError, error} =
-    useAdminApplicationsQuery(filter);
+  const {data, isLoading, isFetching} = useAdminApplicationsQuery(filter);
 
-  useEffect(() => {
-    if (isError) {
-      alert(error.message);
-      router.back();
-    }
-  }, [isError, error, router]);
+  if (!currentGeneration) {
+    return (
+      <div className='flex h-100 w-full items-center justify-center'>
+        <p className='text-neutral-500'>등록된 기수 정보가 없습니다.</p>
+      </div>
+    );
+  }
 
   const isInitialLoading = isLoading && !data;
   const isRefreshing = isFetching && !!data;
