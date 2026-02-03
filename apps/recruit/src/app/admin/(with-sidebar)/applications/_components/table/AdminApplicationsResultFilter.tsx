@@ -1,8 +1,9 @@
 import {RESULT_OPTIONS} from '@/constants/admin/admin-applications';
 
 import {useEffect, useState} from 'react';
-import {Checkbox} from '@/components/checkbox/CheckBox';
+
 import {ApplicationResultType} from '@/schemas/admin/admin-applications.schema';
+import {Checkbox} from '@repo/ui/components/checkbox/CheckBox';
 
 interface AdminApplicationsResultFilterProps {
   selected: ApplicationResultType[];
@@ -46,7 +47,7 @@ export const AdminApplicationsResultFilter = ({
 
   return (
     <div
-      className='flex flex-col gap-0.75 rounded-sm bg-neutral-700 p-1.25 text-body-s text-neutral-300'
+      className='text-body-s flex flex-col gap-0.75 rounded-sm bg-neutral-700 p-1.25 text-neutral-300'
       role='group'
       aria-label='합격 여부 필터'>
       {RESULT_OPTIONS.map((option) => {

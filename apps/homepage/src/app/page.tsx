@@ -1,12 +1,29 @@
-import {Button} from '@repo/ui/components/buttons/Button';
+'use client';
+
+import HeroMainBanner from '@repo/ui/components/banner/HeroMainBanner';
+import {Footer} from '@repo/ui/components/layout/footer/Footer';
+import Image from 'next/image';
+import HeroBanner from '@/assets/backgrounds/banner/hero-main.webp';
 
 export default function Home() {
   return (
     <>
-      <p className='text-primary'>home</p>
-      <Button
-        label='모노레포 packages/ui에서 가져온 버튼 컴포넌트임'
-        backgroundColor='primary'
+      <div className='bg-active flex flex-col'>
+        <div>sdf</div>
+      </div>
+      <Footer />
+      <HeroMainBanner
+        heading='Cotato와 함께할 여정이 궁금하신가요?'
+        subheading='자주 묻는 질문에서 답을 찾아보세요.'
+        bannerImage={
+          <Image
+            src={HeroBanner}
+            alt='Hero Banner'
+            fill
+            priority
+            className='object-cover object-center'
+          />
+        }
       />
     </>
   );
