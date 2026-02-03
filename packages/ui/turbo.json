@@ -1,7 +1,9 @@
 {
   "extends": ["//"],
   "tasks": {
-    "dependsOn": ["$TURBO_EXTENDS$", "build:styles", "build:components"],
+    "build": {
+      "dependsOn": ["$TURBO_EXTENDS$", "build:styles", "build:components"]
+    },
     "build:styles": {
       "outputs": ["dist/**"]
     },
