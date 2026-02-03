@@ -1,0 +1,46 @@
+@theme static {
+  /* primary */
+  --color-primary: #f87d02;
+
+  /* secondary */
+  --color-secondary: #ffb800;
+
+  /* branding gradient */
+  --branding-gradient: linear-gradient(90deg, #f89202 10.08%, #9e9e9e 103.03%);
+
+  /* neutral */
+  --color-neutral-50: #f5f5f5;
+  --color-neutral-100: #e5e5e5;
+  --color-neutral-200: #d4d4d4;
+  --color-neutral-300: #bdbdbd;
+  --color-neutral-400: #9e9e9e;
+  --color-neutral-500: #757575;
+  --color-neutral-600: #525252;
+  --color-neutral-700: #343434;
+  --color-neutral-800: #1f1f1f;
+
+  /* text */
+  --color-text-default: #f5f5f5;
+  --color-text-muted: #9e9e9e;
+  --color-text-disabled: #9e9e9e;
+
+  /* hover */
+  --color-hover: #ffa726;
+
+  /* active */
+  --color-active: #ff9000;
+
+  /* disabled */
+  --color-disabled: #5a4a3a;
+
+  /* alert */
+  --color-alert: #e5484d;
+
+  --color-white: #ffffff;
+
+  /* z-index */
+  --z-index-header: 101;
+  --z-index-dropdown: 99;
+  --z-index-modal: 102;
+  --z-index-sidebar: 100;
+}
