@@ -1,10 +1,11 @@
-import Potato1 from '@/assets/home/potato/Potato-1.svg';
-import Potato2 from '@/assets/home/potato/Potato-2.svg';
-import Potato3 from '@/assets/home/potato/Potato-3.svg';
+import Image from 'next/image';
 import {useMemo} from 'react';
 
-const POTATO_IMAGES = [Potato1, Potato2, Potato3];
-
+const POTATO_IMAGE_PATHS = [
+  '/potato/Potato-1.svg',
+  '/potato/Potato-2.svg',
+  '/potato/Potato-3.svg',
+];
 interface HomeCotatoReviewProps {
   generation: string;
   part: string;
@@ -20,9 +21,9 @@ export const HomeCotatoReviewCard = ({
   shortDescription,
   longDescription,
 }: HomeCotatoReviewProps) => {
-  const SelectedPotato = useMemo(() => {
-    const randomIndex = Math.floor(Math.random() * POTATO_IMAGES.length);
-    return POTATO_IMAGES[randomIndex];
+  const selectedPotatoPath = useMemo(() => {
+    const randomIndex = Math.floor(Math.random() * POTATO_IMAGE_PATHS.length);
+    return POTATO_IMAGE_PATHS[randomIndex];
   }, []);
 
   return (
@@ -35,7 +36,14 @@ export const HomeCotatoReviewCard = ({
           <p className='text-h4'>{name}</p>
         </div>
 
-        <SelectedPotato />
+        <div className='relative h-20 w-20'>
+          <Image
+            src={selectedPotatoPath}
+            alt='potato'
+            fill
+            className='object-contain'
+          />
+        </div>
       </div>
       <div className='bg-primary text-h5 rounded-[5px] px-7.75 py-2 text-center'>
         {`"${shortDescription}"`}
