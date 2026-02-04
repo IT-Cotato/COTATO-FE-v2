@@ -3,10 +3,12 @@
 import {Button} from '@repo/ui/components/buttons/Button';
 import {useState} from 'react';
 import {RecruitmentNotificationModal} from '@/components/modal/RecruitmentNotificationModal';
+import {useSubscribeRecruitmentNotify} from '@/hooks/mutations/useRecruitment.mutation';
 
 export const NotifyInput = () => {
   const [email, setEmail] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const {mutate} = useSubscribeRecruitmentNotify();
 
   const isValidEmail =
     email.length > 0 && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -14,7 +16,7 @@ export const NotifyInput = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (isValidEmail) {
-      // TODO: API 호출
+      mutate({email});
       setIsModalOpen(true);
     }
   };
