@@ -21,11 +21,7 @@ export const HomeMainScheduleContainer = () => {
       />
       {/** 그리드 4*4 */}
       <div className='grid grid-cols-[repeat(4,auto)] gap-2'>
-        <ScheduleKeycap
-          imageSrc='https://picsum.photos/300/300?random=1'
-          title='OT'
-          subTitle='2026.02.04'
-        />
+        <ScheduleKeycap imageSrc='' title='OT' subTitle='2026.02.04' />
         <BlackPlusKeycap />
         <div className='col-span-2 col-start-3 row-span-2 row-start-1'>
           <WhiteOrangeKeycap
@@ -38,21 +34,13 @@ export const HomeMainScheduleContainer = () => {
           />
         </div>
         <div className='col-start-1 row-span-2'>
-          <OrangeColKeycap
-            imageSrc='https://picsum.photos/400/800?random=10'
-            title='데브토크'
-            subTitle='2026.02.04'
-          />
+          <OrangeColKeycap imageSrc='' title='데브토크' subTitle='2026.02.04' />
         </div>
         <div className='col-start-2 row-start-2'>
           <WhiteArrowKeycap direction='left' />
         </div>
         <div className='col-span-2 col-start-2 row-start-3'>
-          <BlackRowKeycap
-            imageSrc='https://picsum.photos/600/300?random=3'
-            title='코커톤'
-            subTitle='2026.02.04'
-          />
+          <BlackRowKeycap imageSrc='' title='코커톤' subTitle='2026.02.04' />
         </div>
         <div className='col-start-4 row-start-3'>
           <WhiteArrowKeycap direction='down' />
@@ -61,11 +49,7 @@ export const HomeMainScheduleContainer = () => {
           <BlackPlusKeycap />
         </div>
         <div className='group relative col-span-3 col-start-2 row-start-4 h-72.25 w-223.5 cursor-pointer overflow-hidden rounded-[50px]'>
-          <OrangeRowKeycap
-            imageSrc='https://picsum.photos/900/300?random=4'
-            title='Demo Day'
-            subTitle='2026.02.04'
-          />
+          <OrangeRowKeycap imageSrc='' title='Demo Day' subTitle='2026.02.04' />
         </div>
       </div>
     </div>
