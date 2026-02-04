@@ -9,7 +9,7 @@ export const AdminSideBar = () => {
   const pathname = usePathname();
 
   return (
-    <nav className='sticky top-25 z-sidebar flex flex-col gap-7.5 px-6.25 py-12.5'>
+    <nav className='z-sidebar sticky top-30 flex flex-col gap-7.5 px-6.25'>
       <h2 className='text-h4 text-neutral-400'>관리자 페이지</h2>
       <ul className='flex w-50 flex-col gap-2.5'>
         {ADMIN_NAV_ITEMS.map(({label, href}) => {
@@ -21,7 +21,7 @@ export const AdminSideBar = () => {
                 href={href}
                 aria-current={isActive ? 'page' : undefined}
                 className={clsx(
-                  'block w-full rounded-[10px] px-2 py-2.5 text-h5 transition-colors',
+                  'text-h5 block w-full rounded-[10px] px-2 py-2.5 transition-colors',
                   isActive && 'bg-neutral-800 text-neutral-100'
                 )}>
                 {label}

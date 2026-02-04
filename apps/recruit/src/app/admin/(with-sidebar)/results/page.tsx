@@ -4,7 +4,7 @@ import {SuspenseWrapper} from '@/components/wrappers/SuspenseWrapper';
 
 export default function AdminResultsPage() {
   return (
-    <section className='flex min-w-275 flex-col items-center justify-center p-20'>
+    <section className='flex min-w-275 flex-col items-center justify-center p-12.5'>
       <RecruitmentInitializer>
         <SuspenseWrapper>
           <ResultsContainer />
