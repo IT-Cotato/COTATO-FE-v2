@@ -40,7 +40,7 @@ export const WhiteOrangeKeycap = ({
             WebkitMaskImage: "url('/keycap/white-orange-enter-keycap.svg')",
             WebkitMaskSize: '100% 100%',
             WebkitMaskRepeat: 'no-repeat',
-            maskImage: "url('/white-orange-enter-keycap.svg')",
+            maskImage: "url('/keycap/white-orange-enter-keycap.svg')",
             maskSize: '100% 100%',
             maskRepeat: 'no-repeat',
           }}>

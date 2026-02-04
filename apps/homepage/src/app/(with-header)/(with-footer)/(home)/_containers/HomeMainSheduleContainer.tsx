@@ -34,13 +34,21 @@ export const HomeMainScheduleContainer = () => {
           />
         </div>
         <div className='col-start-1 row-span-2'>
-          <OrangeColKeycap imageSrc='' title='데브토크' subTitle='2026.02.04' />
+          <OrangeColKeycap
+            imageSrc='https://picsum.photos/400/800?random=10'
+            title='데브토크'
+            subTitle='2026.02.04'
+          />
         </div>
         <div className='col-start-2 row-start-2'>
           <WhiteArrowKeycap direction='left' />
         </div>
         <div className='col-span-2 col-start-2 row-start-3'>
-          <BlackRowKeycap imageSrc='' title='코커톤' subTitle='2026.02.04' />
+          <BlackRowKeycap
+            imageSrc='https://picsum.photos/600/300?random=3'
+            title='코커톤'
+            subTitle='2026.02.04'
+          />
         </div>
         <div className='col-start-4 row-start-3'>
           <WhiteArrowKeycap direction='down' />
@@ -49,7 +57,11 @@ export const HomeMainScheduleContainer = () => {
           <BlackPlusKeycap />
         </div>
         <div className='group relative col-span-3 col-start-2 row-start-4 h-72.25 w-223.5 cursor-pointer overflow-hidden rounded-[50px]'>
-          <OrangeRowKeycap imageSrc='' title='Demo Day' subTitle='2026.02.04' />
+          <OrangeRowKeycap
+            imageSrc='https://picsum.photos/900/300?random=4'
+            title='Demo Day'
+            subTitle='2026.02.04'
+          />
         </div>
       </div>
     </div>
