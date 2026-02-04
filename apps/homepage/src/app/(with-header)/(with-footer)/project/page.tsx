@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import HeroMainBanner from '@repo/ui/components/banner/HeroMainBanner';
 import HeroBanner from '@/assets/backgrounds/banner/hero-main.webp';
+import {ProjectSection} from '@/app/(with-header)/(with-footer)/project/_components/ProjectSection';
 
 export default function ProjectPage() {
   return (
@@ -18,6 +19,7 @@ export default function ProjectPage() {
           />
         }
       />
+      <ProjectSection />
     </section>
   );
 }
