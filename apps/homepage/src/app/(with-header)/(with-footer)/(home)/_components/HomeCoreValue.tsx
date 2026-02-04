@@ -1,0 +1,56 @@
+import Collaboration from '@/assets/home/core-value/collaboration.svg';
+import CollaborationHover from '@/assets/home/core-value/collaboration-hover.svg';
+import Ownership from '@/assets/home/core-value/ownership.svg';
+import OwnershipHover from '@/assets/home/core-value/ownership-hover.svg';
+import Growth from '@/assets/home/core-value/growth.svg';
+import GrowthHover from '@/assets/home/core-value/growth-hover.svg';
+import {HomeSectionHeader} from '@/app/(with-header)/(with-footer)/(home)/_components/HomeSectionHeader';
+
+export const HomeCoreValue = () => {
+  const items = [
+    {
+      defaultIcon: Collaboration,
+      hoverIcon: CollaborationHover,
+      title: 'Collaboration',
+      desc: '함께 성장하는 협업',
+    },
+    {
+      defaultIcon: Ownership,
+      hoverIcon: OwnershipHover,
+      title: 'Ownership',
+      desc: '주도적으로 만들어가는 경험',
+    },
+    {
+      defaultIcon: Growth,
+      hoverIcon: GrowthHover,
+      title: 'Growth',
+      desc: '함께 도전하며 도착하는 성장',
+    },
+  ];
+
+  return (
+    <div className='flex flex-col gap-17.5'>
+      <HomeSectionHeader mainHeading='Core Value' subHeading='핵심 가치' />
+
+      <div className='flex flex-row gap-7.5'>
+        {items.map((item, idx) => {
+          const DefaultIcon = item.defaultIcon;
+          const HoverIcon = item.hoverIcon;
+          return (
+            <div key={idx} className='group flex flex-col items-center'>
+              <div className='relative h-auto w-auto'>
+                <DefaultIcon className='transition-opacity duration-200 group-hover:opacity-0' />
+                <HoverIcon className='absolute top-0 left-0 opacity-0 transition-opacity duration-200 group-hover:opacity-100' />
+              </div>
+
+              <div className='mt-3 flex flex-col items-center gap-3'>
+                <p className='text-h3 text-neutral-600'>{item.title}</p>
+                <p className='text-h5 text-neutral-400'>{item.desc}</p>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+};
