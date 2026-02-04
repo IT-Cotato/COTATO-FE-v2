@@ -80,7 +80,7 @@ export const AddGenerationModal = ({
       onClick={handleClose}
       role='presentation'>
       <section
-        className='relative w-full max-w-[566px] rounded-[20px] bg-white px-[23px] py-5'
+        className='relative w-full max-w-141.5 rounded-[20px] bg-white px-5.75 py-5'
         onClick={(e) => e.stopPropagation()}
         role='dialog'
         aria-modal='true'
@@ -98,7 +98,7 @@ export const AddGenerationModal = ({
             <h4 id='modal-title' className='text-h4 text-black'>
               기수 추가하기
             </h4>
-            <div className='flex w-full items-center gap-[29px]'>
+            <div className='flex w-full items-center gap-7.25'>
               <label
                 htmlFor='generation-input'
                 className='text-h5 whitespace-nowrap text-black'>
