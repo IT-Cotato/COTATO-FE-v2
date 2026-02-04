@@ -4,6 +4,7 @@ import {HomeBanner} from '@/app/(with-header)/(with-footer)/(home)/_components/H
 import {HomeCotatoReviewContainer} from '@/app/(with-header)/(with-footer)/(home)/_containers/HomeCotatoReviewContainer';
 import {HomePartSectionContainer} from '@/app/(with-header)/(with-footer)/(home)/_containers/HomePartSectionContainer';
 import {HomeMainScheduleContainer} from '@/app/(with-header)/(with-footer)/(home)/_containers/HomeMainSheduleContainer';
+import {SuspenseWrapper} from '@/components/wrappers/SuspenseWrapper';
 
 export default function HomePage() {
   return (
@@ -12,7 +13,9 @@ export default function HomePage() {
       <div className='flex flex-col items-center gap-50 bg-white pt-25 pb-50'>
         <HomeCoreValue />
         <HomeMainScheduleContainer />
-        <HomePartSectionContainer />
+        <SuspenseWrapper>
+          <HomePartSectionContainer />
+        </SuspenseWrapper>
         <HomeCotatoReviewContainer />
         <HomeFinalSection />
       </div>
