@@ -1,5 +1,4 @@
 import Image from 'next/image';
-import OrangeKeycapLongRow from '@/assets/home/keycap/orange-keycap-long-row.svg';
 
 interface OrangeRowKeycapProps {
   imageSrc: string;
@@ -14,7 +13,12 @@ export const OrangeRowKeycap = ({
 }: OrangeRowKeycapProps) => {
   return (
     <div className='group relative col-span-3 col-start-2 row-start-4 h-72.25 w-223.5 cursor-pointer overflow-hidden rounded-[50px]'>
-      <OrangeKeycapLongRow className='h-full w-full transition-opacity duration-300 group-hover:opacity-0' />
+      <Image
+        src='/keycap/orange-keycap-long-row.svg'
+        alt='keycap'
+        className='h-full w-full transition-opacity duration-300 group-hover:opacity-0'
+        fill
+      />
 
       <span className='text-h2 absolute top-16.5 left-16.5 z-10 font-bold text-white transition-colors'>
         {title}

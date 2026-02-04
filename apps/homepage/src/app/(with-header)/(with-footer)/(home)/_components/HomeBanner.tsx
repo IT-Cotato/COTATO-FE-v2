@@ -1,7 +1,6 @@
 import BackgroundKeycap from '@/assets/backgrounds/banner/background-keycap.svg';
 import MainLogo from '@/assets/main-logo/main-logo.svg';
 import MainArrowIcon from '@/assets/home/main-arrow-icon.svg';
-
 export const HomeBanner = () => {
   return (
     <div className='group relative flex w-full items-center justify-center overflow-hidden bg-black'>

@@ -37,7 +37,7 @@ export const WhiteOrangeKeycap = ({
         <div
           className='relative h-full w-full'
           style={{
-            WebkitMaskImage: "url('/white-orange-enter-keycap.svg')",
+            WebkitMaskImage: "url('/keycap/white-orange-enter-keycap.svg')",
             WebkitMaskSize: '100% 100%',
             WebkitMaskRepeat: 'no-repeat',
             maskImage: "url('/white-orange-enter-keycap.svg')",

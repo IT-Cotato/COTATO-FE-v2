@@ -1,6 +1,4 @@
 import Image from 'next/image';
-import BlackKeycapLong from '@/assets/home/keycap/black-keycap-long.svg';
-
 interface BlackRowKeycapProps {
   imageSrc: string;
   title: string;
@@ -14,7 +12,12 @@ export const BlackRowKeycap = ({
 }: BlackRowKeycapProps) => {
   return (
     <div className='group relative h-72.25 w-150 cursor-pointer overflow-hidden rounded-[50px]'>
-      <BlackKeycapLong className='h-full w-full transition-opacity duration-300 group-hover:opacity-0' />
+      <Image
+        src='/keycap/black-keycap-long.svg'
+        alt='keycap'
+        fill
+        className='h-full w-full transition-opacity duration-300 group-hover:opacity-0'
+      />
       <span className='text-h2 absolute top-16.5 left-16.5 z-10 font-bold text-white transition-colors'>
         {title}
       </span>

@@ -1,5 +1,4 @@
 import Image from 'next/image';
-import WhiteKeycap from '@/assets/home/keycap/white-keycap.svg';
 
 interface ScheduleKeycapProps {
   /** 호버 시 보여줄 이미지 경로 */
@@ -24,7 +23,12 @@ export const ScheduleKeycap = ({
   return (
     <div
       className={`group relative inline-block h-72.25 w-72.25 cursor-pointer overflow-hidden rounded-[50px] ${className}`}>
-      <WhiteKeycap className='transition-opacity duration-300 group-hover:opacity-0' />
+      <Image
+        src='/keycap/white-keycap.svg'
+        alt='keycap'
+        fill
+        className='transition-opacity duration-300 group-hover:opacity-0'
+      />
       <div className='absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100'>
         <Image src={imageSrc} alt={title} fill className='object-cover' />
         <div className='absolute inset-0 bg-black/20' />
