@@ -21,7 +21,11 @@ export const HomeMainScheduleContainer = () => {
       />
       {/** 그리드 4*4 */}
       <div className='grid grid-cols-[repeat(4,auto)] gap-2'>
-        <ScheduleKeycap imageSrc='' title='OT' subTitle='2026.02.04' />
+        <ScheduleKeycap
+          imageSrc='https://picsum.photos/300/300?random=1'
+          title='OT'
+          subTitle='2026.02.04'
+        />
         <BlackPlusKeycap />
         <div className='col-span-2 col-start-3 row-span-2 row-start-1'>
           <WhiteOrangeKeycap
