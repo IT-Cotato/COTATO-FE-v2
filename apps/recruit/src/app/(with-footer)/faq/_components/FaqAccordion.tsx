@@ -55,7 +55,7 @@ export const FaqAccordion = ({item}: FaqAccordionProps) => {
             ? 'grid-rows-[1fr] pt-5 opacity-100'
             : 'grid-rows-[0fr] pt-0 opacity-0'
         )}>
-        <p className='text-body-l overflow-hidden text-start font-normal text-neutral-600'>
+        <p className='text-body-l overflow-hidden text-start font-normal whitespace-pre-line text-neutral-600'>
           {item.answer}
         </p>
       </div>
