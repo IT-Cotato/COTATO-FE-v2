@@ -1,11 +1,13 @@
 'use client';
 
 import {useState, FormEvent} from 'react';
+import {useQueryClient} from '@tanstack/react-query';
 import Close from '@/assets/modal/close.svg';
 import {useGenerationStore} from '@/store/useGenerationStore';
 import {postGeneration} from '@/services/api/admin/admin-generation.api';
 import {FullButton} from '@repo/ui/components/buttons/FullButton';
 import {useRecruitmentStore} from '@/store/useRecruitmentStore';
+import {QUERY_KEYS} from '@/constants/query-keys';
 
 interface AddGenerationModalProps {
   isOpen: boolean;
@@ -18,6 +20,8 @@ export const AddGenerationModal = ({
 }: AddGenerationModalProps) => {
   const [inputValue, setInputValue] = useState<string>('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const queryClient = useQueryClient();
   const {addGeneration, setSelectedGenerationId} = useGenerationStore();
   const {isRecruiting, setGeneration} = useRecruitmentStore();
 
@@ -36,11 +40,16 @@ export const AddGenerationModal = ({
       alert('올바른 기수 번호를 입력해주세요.');
       return;
     }
+
     setIsSubmitting(true);
     try {
       const response = await postGeneration({generationId: genId});
 
       if (response.code === 'SUCCESS') {
+        await queryClient.invalidateQueries({
+          queryKey: [QUERY_KEYS.ADMIN_GENERATIONS],
+        });
+
         addGeneration({generationId: genId});
         setSelectedGenerationId(genId);
 
