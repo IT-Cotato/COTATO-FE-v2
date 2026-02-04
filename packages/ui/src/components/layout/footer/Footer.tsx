@@ -1,6 +1,6 @@
-import {FooterContact} from '@/components/layout/FooterContact';
-import {FooterInfo} from '@/components/layout/FooterInfo';
-import {FOOTER_HEIGHT} from '@/constants/ui';
+import {FooterContact} from './FooterContact';
+import {FooterInfo} from './FooterInfo';
+import {FOOTER_HEIGHT} from '../../../constants/ui';
 
 export const Footer = () => {
   return (

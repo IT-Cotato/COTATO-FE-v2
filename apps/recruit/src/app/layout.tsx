@@ -1,5 +1,6 @@
 import {Header} from '@/components/layout/Header';
 import {Metadata} from 'next';
+import '@repo/ui/styles.css';
 import '@/styles/globals.css';
 import localFont from 'next/font/local';
 import Providers from '@/app/providers';

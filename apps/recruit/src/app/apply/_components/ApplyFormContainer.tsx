@@ -12,7 +12,7 @@ import {AlreadySubmittedModal} from '@/components/modal/AlreadySubmittedModal';
 import {useApplicationStatusQuery} from '@/hooks/queries/useApply.query';
 import {useAuthStore} from '@/store/useAuthStore';
 import {ROUTES} from '@/constants/routes';
-import HeroMainBanner from '@/components/banner/HeroMainBanner';
+import HeroBanner from '@/assets/backgrounds/banners/hero-main.webp';
 import {useRecruitmentStatusQuery} from '@/hooks/queries/useRecruitmentStatus.query';
 import {useRecruitmentScheduleQuery} from '@/hooks/queries/useRecruitmentSchedule.query';
 import {Spinner} from '@/components/ui/Spinner';
@@ -23,6 +23,8 @@ interface ApiErrorData {
   message: string;
 }
 import {RecruitmentInformation} from '@/components/recruitment/RecruitmentInformation';
+import HeroMainBanner from '@repo/ui/components/banner/HeroMainBanner';
+import Image from 'next/image';
 
 const STEP_TITLES = {
   2: '파트별 질문',
@@ -125,6 +127,15 @@ export const ApplyFormContainer = () => {
           <HeroMainBanner
             heading='COde Together, Arrive TOgether'
             headingStyle='bg-linear-to-r from-[#F89202] from-0% via-[#F89202] via-10% to-[#9E9E9E] to-100% bg-clip-text text-transparent'
+            bannerImage={
+              <Image
+                src={HeroBanner}
+                alt='Hero Banner'
+                fill
+                priority
+                className='object-cover object-center'
+              />
+            }
           />
         )}
 
@@ -148,7 +159,7 @@ export const ApplyFormContainer = () => {
             )}
           </div>
 
-          <h2 className='pt-4 text-h2 text-neutral-800'>
+          <h2 className='text-h2 pt-4 text-neutral-800'>
             {STEP_TITLES[step as keyof typeof STEP_TITLES]}
           </h2>
 

@@ -1,4 +1,4 @@
-@theme static {
+@theme {
   /* typography - headings */
   --text-h1: 32px;
   --text-h1--line-height: 52px;
@@ -47,9 +47,6 @@
   --text-body-s-sb--font-weight: 600;
 }
 
-/* mobile typo 
-TODO: max width 조절 
-*/
 @media (max-width: 640px) {
   :root {
     /* headings */

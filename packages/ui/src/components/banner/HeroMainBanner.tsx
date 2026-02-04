@@ -1,5 +1,3 @@
-import Image from 'next/image';
-import HeroBanner from '@/assets/backgrounds/banners/hero-main.webp';
 import clsx from 'clsx';
 
 interface HeroMainBannerProps {
@@ -7,6 +5,7 @@ interface HeroMainBannerProps {
   heading: string;
   headingStyle?: string;
   paddingVertical?: number;
+  bannerImage: React.ReactNode;
 }
 
 const HeroMainBanner = ({
@@ -14,6 +13,7 @@ const HeroMainBanner = ({
   heading,
   headingStyle,
   paddingVertical = 104,
+  bannerImage,
 }: HeroMainBannerProps) => {
   return (
     <aside
@@ -23,13 +23,7 @@ const HeroMainBanner = ({
         paddingTop: paddingVertical,
         paddingBottom: paddingVertical,
       }}>
-      <Image
-        src={HeroBanner}
-        alt='HeroMainBanner'
-        fill={true}
-        priority={true}
-        className='object-cover object-center'
-      />
+      {bannerImage && <>{bannerImage}</>}
       <div
         className='absolute inset-0 h-full w-full bg-[#000000]/60'
         aria-hidden='true'
@@ -43,7 +37,7 @@ const HeroMainBanner = ({
         )}
         <h1
           className={clsx(
-            'w-min text-h3 whitespace-nowrap text-neutral-100',
+            'text-h3 w-min whitespace-nowrap text-neutral-100',
             headingStyle
           )}>
           {heading}

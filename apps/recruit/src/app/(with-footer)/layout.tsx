@@ -1,6 +1,7 @@
 import Providers from '@/app/providers';
-import {Footer} from '@/components/layout/Footer';
+
 import {ConditionalAuthProvider} from '@/components/providers/ConditionalAuthProvider';
+import {Footer} from '@repo/ui/components/layout/footer/Footer';
 
 export default function WithFooterLayout({
   children,

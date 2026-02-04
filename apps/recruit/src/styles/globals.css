@@ -1,5 +1,5 @@
 @import 'tailwindcss';
-@import '@repo/ui/styles.css';
+@import '@repo/tailwind-config';
 
 @layer base {
   html,
