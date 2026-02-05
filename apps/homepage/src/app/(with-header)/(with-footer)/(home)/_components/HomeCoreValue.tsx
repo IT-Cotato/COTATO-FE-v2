@@ -1,3 +1,5 @@
+'use client';
+
 import Collaboration from '@/assets/home/core-value/collaboration.svg';
 import CollaborationHover from '@/assets/home/core-value/collaboration-hover.svg';
 import Ownership from '@/assets/home/core-value/ownership.svg';
@@ -29,28 +31,34 @@ export const HomeCoreValue = () => {
   ];
 
   return (
-    <div className='flex flex-col gap-17.5'>
+    <section className='flex flex-col gap-17.5' aria-labelledby='core-value'>
       <HomeSectionHeader mainHeading='Core Value' subHeading='핵심 가치' />
 
-      <div className='flex flex-row gap-7.5'>
+      <ul className='flex flex-row gap-7.5' role='list'>
         {items.map((item, idx) => {
           const DefaultIcon = item.defaultIcon;
           const HoverIcon = item.hoverIcon;
+
           return (
-            <div key={idx} className='group flex flex-col items-center'>
+            <li
+              key={idx}
+              className='group flex flex-col items-center outline-none'
+              tabIndex={0}>
               <div className='relative h-auto w-auto'>
-                <DefaultIcon className='transition-opacity duration-200 group-hover:opacity-0' />
-                <HoverIcon className='absolute top-0 left-0 opacity-0 transition-opacity duration-200 group-hover:opacity-100' />
+                <DefaultIcon className='transition-opacity duration-200 group-hover:opacity-0 group-focus:opacity-0' />
+                <HoverIcon className='absolute top-0 left-0 opacity-0 transition-opacity duration-200 group-hover:opacity-100 group-focus:opacity-100' />
               </div>
 
               <div className='mt-3 flex flex-col items-center gap-3'>
-                <p className='text-h3 text-neutral-600'>{item.title}</p>
+                <strong className='text-h3 font-bold text-neutral-600'>
+                  {item.title}
+                </strong>
                 <p className='text-h5 text-neutral-400'>{item.desc}</p>
               </div>
-            </div>
+            </li>
           );
         })}
-      </div>
-    </div>
+      </ul>
+    </section>
   );
 };
