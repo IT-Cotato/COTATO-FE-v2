@@ -1,7 +1,7 @@
 import {z} from 'zod';
 
 export const BasicInfoFieldsSchema = z.object({
-  name: z.string().min(1, '이름을 입력해주세요'),
+  name: z.string().min(1, '이름을 입력해주세요').max(10, '이름은 10글자 이내로 입력해주세요'),
   gender: z.enum(['MALE', 'FEMALE'], {
     message: '성별을 선택해주세요',
   }),
@@ -55,7 +55,7 @@ export const BasicInfoFieldsSchema = z.object({
         });
       }
     }),
-  school: z.string().min(1, '학교를 입력해주세요'),
+  school: z.string().min(1, '학교를 입력해주세요').max(20, '학교는 20글자 이내로 입력해주세요'),
   isCollegeStudent: z.enum(['enrolled', 'other'], {
     message: '재학 여부를 선택해주세요',
   }),
