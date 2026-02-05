@@ -1,31 +1,22 @@
-/**
- * 홈 파트 섹션의 파트별 사진, 설명을 조회하는 로직을 포함하는 홈 파트 섹션 컨테이너
- */
-
 'use client';
 
-import {useSearchParams, useRouter} from 'next/navigation';
 import {Button} from '@repo/ui/components/buttons/Button';
 import {motion, AnimatePresence} from 'framer-motion';
-import {useEffect, useState} from 'react';
+import {useState, useRef} from 'react';
 import {HomeSectionDescription} from '@/app/(with-header)/(with-footer)/(home)/_components/HomeSectionDescription';
 import Image from 'next/image';
 
+/** 추후 스키마로 변경 */
+const PARTS = ['pm', 'design', 'frontend', 'backend'] as const;
+type PartType = (typeof PARTS)[number];
+
 export const HomePartSectionContainer = () => {
-  const router = useRouter();
-  const searchParams = useSearchParams();
+  const [currentPart, setCurrentPart] = useState<PartType>('pm');
 
-  const parts = ['pm', 'design', 'frontend', 'backend'] as const;
-  const queryPart =
-    (searchParams.get('part') as (typeof parts)[number]) || 'pm';
+  const prevIndexRef = useRef<number>(0);
 
-  const [prevIndex, setPrevIndex] = useState<number>(0);
-  const currentIndex = parts.indexOf(queryPart);
-  const direction = currentIndex > prevIndex ? 1 : -1;
-
-  useEffect(() => {
-    setPrevIndex(currentIndex);
-  }, [currentIndex]);
+  const currentIndex = PARTS.indexOf(currentPart);
+  const direction = currentIndex > prevIndexRef.current ? 1 : -1;
 
   const variants = {
     enter: (direction: number) => ({
@@ -45,8 +36,9 @@ export const HomePartSectionContainer = () => {
     }),
   };
 
-  const handlePartClick = (part: 'pm' | 'design' | 'frontend' | 'backend') => {
-    router.push(`?part=${part}`, {scroll: false});
+  const handlePartClick = (part: PartType) => {
+    prevIndexRef.current = currentIndex;
+    setCurrentPart(part);
   };
 
   return (
@@ -66,7 +58,7 @@ export const HomePartSectionContainer = () => {
           className='flex flex-row gap-6'
           role='tablist'
           aria-label='파트 선택'>
-          {(['pm', 'design', 'frontend', 'backend'] as const).map((partKey) => (
+          {PARTS.map((partKey) => (
             <Button
               key={partKey}
               label={
@@ -82,10 +74,11 @@ export const HomePartSectionContainer = () => {
               labelTypo='h3'
               textColor='neutral-50'
               backgroundColor={
-                queryPart === partKey ? 'primary' : 'text-disabled'
+                currentPart === partKey ? 'primary' : 'text-disabled'
               }
               onClick={() => handlePartClick(partKey)}
               role='tab'
+              aria-selected={currentPart === partKey}
               className='transition-all duration-500 ease-in-out'
             />
           ))}
@@ -94,11 +87,10 @@ export const HomePartSectionContainer = () => {
         <div
           className='relative h-150 w-full overflow-hidden rounded-[40px]'
           role='tabpanel'
-          id={`tabpanel-${queryPart}`}
-          aria-labelledby={`tab-${queryPart}`}>
+          id={`tabpanel-${currentPart}`}>
           <AnimatePresence mode='popLayout' custom={direction} initial={false}>
             <motion.div
-              key={queryPart}
+              key={currentPart}
               custom={direction}
               variants={variants}
               initial='enter'
@@ -112,8 +104,8 @@ export const HomePartSectionContainer = () => {
               className='absolute inset-0 h-full w-full overflow-hidden rounded-[40px]'>
               <div className='relative flex h-full w-full items-center justify-center'>
                 <Image
-                  src='https://picsum.photos/600/300?random=3'
-                  alt=''
+                  src={`https://picsum.photos/600/300?random=${currentPart}`}
+                  alt={`${currentPart} 이미지`}
                   fill
                   className='object-cover'
                 />
@@ -121,10 +113,10 @@ export const HomePartSectionContainer = () => {
 
                 <div className='pointer-events-none absolute inset-0 flex flex-col justify-between p-17.75'>
                   <p className='text-h1 text-neutral-50'>
-                    {partData[queryPart]?.title}
+                    {partData[currentPart].title}
                   </p>
                   <div className='text-h4 text-neutral-100'>
-                    {partData[queryPart]?.desc.map((line, idx) => (
+                    {partData[currentPart].desc.map((line, idx) => (
                       <p key={idx}>{line}</p>
                     ))}
                   </div>
@@ -139,36 +131,8 @@ export const HomePartSectionContainer = () => {
 };
 
 const partData = {
-  pm: {
-    title: 'Project Manager',
-    desc: [
-      '코테이토에는 기획, 디자인, 프론트엔드와 백엔드 개발 총 4개의 파트가 있어요.',
-      '여러 감자들과 함께 스터디와 프로젝트를 진행하며 성장할 수 있어요!',
-      '열정만 있다면 누구나 멋진 회오리 감자로 변신 가능!',
-    ],
-  },
-  design: {
-    title: 'Team Design',
-    desc: [
-      '코테이토에는 기획, 디자인, 프론트엔드와 백엔드 개발 총 4개의 파트가 있어요.',
-      '여러 감자들과 함께 스터디와 프로젝트를 진행하며 성장할 수 있어요!',
-      '열정만 있다면 누구나 멋진 회오리 감자로 변신 가능!',
-    ],
-  },
-  frontend: {
-    title: 'Team Frontend',
-    desc: [
-      '코테이토에는 기획, 디자인, 프론트엔드와 백엔드 개발 총 4개의 파트가 있어요.',
-      '여러 감자들과 함께 스터디와 프로젝트를 진행하며 성장할 수 있어요!',
-      '열정만 있다면 누구나 멋진 회오리 감자로 변신 가능!',
-    ],
-  },
-  backend: {
-    title: 'Team Backend',
-    desc: [
-      '코테이토에는 기획, 디자인, 프론트엔드와 백엔드 개발 총 4개의 파트가 있어요.',
-      '여러 감자들과 함께 스터디와 프로젝트를 진행하며 성장할 수 있어요!',
-      '열정만 있다면 누구나 멋진 회오리 감자로 변신 가능!',
-    ],
-  },
+  pm: {title: 'Project Manager', desc: ['기획 파트 설명...']},
+  design: {title: 'Team Design', desc: ['디자인 파트 설명...']},
+  frontend: {title: 'Team Frontend', desc: ['프론트엔드 파트 설명...']},
+  backend: {title: 'Team Backend', desc: ['백엔드 파트 설명...']},
 };
