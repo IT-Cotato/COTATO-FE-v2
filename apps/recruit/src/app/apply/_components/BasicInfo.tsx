@@ -69,7 +69,6 @@ export const BasicInfo = ({
     setValue('pdfFileKey', undefined);
     setValue('pdfFileUrl', undefined);
     setValue('pdfFileName', undefined);
-    setValue('partChanged', true);
   }, [getValues, unregister, setValue]);
 
   useEffect(() => {

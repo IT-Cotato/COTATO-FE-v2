@@ -14,6 +14,7 @@ import {
 } from '@/hooks/queries/useApply.query';
 import {useUploadFile} from '@/hooks/mutations/useApply.mutation';
 import {PartType} from '@/schemas/admin/admin-application-questions.schema';
+import {ApplyFormData} from '@/schemas/apply/apply-schema';
 import {Spinner} from '@/components/ui/Spinner';
 import {StepIndicator} from '@/components/navigation/StepIndicator';
 import {PART_TABS} from '@/constants/common/part';
@@ -40,7 +41,7 @@ export const PartQuestion = ({
     setValue,
     control,
     formState: {errors},
-  } = useFormContext();
+  } = useFormContext<ApplyFormData>();
 
   const applicationId = searchParams.get('id')
     ? Number(searchParams.get('id'))
@@ -64,14 +65,13 @@ export const PartQuestion = ({
     if (!questionsData?.questionsWithAnswers) return false;
     const textQuestions = questionsData.questionsWithAnswers.slice(0, -1);
     return textQuestions.every((q) => {
-      const answer = watch(`ans_${q.questionId}`);
+      const answer = watch(`ans_${q.questionId}` as any) as string | undefined;
       return answer && answer.trim().length > 0;
     });
   })();
 
   const hasInitializedRef = useRef(false);
   const previousPartRef = useRef<PartType | undefined>(undefined);
-  const partChanged = watch('partChanged') as boolean | undefined;
 
   useEffect(() => {
     if (previousPartRef.current && previousPartRef.current !== activePart) {
@@ -85,10 +85,10 @@ export const PartQuestion = ({
       const responsePart = questionsData.questionsWithAnswers[0]?.partType;
       const isMatchingPart = responsePart === activePart;
 
-      if (isMatchingPart && !partChanged) {
+      if (isMatchingPart) {
         questionsData.questionsWithAnswers.forEach((q) => {
           if (q.savedAnswer?.content) {
-            setValue(`ans_${q.questionId}`, q.savedAnswer.content);
+            setValue(`ans_${q.questionId}` as any, q.savedAnswer.content);
           }
         });
 
@@ -104,14 +104,13 @@ export const PartQuestion = ({
         hasInitializedRef.current = true;
       }
     }
-  }, [questionsData, setValue, activePart, partChanged]);
+  }, [questionsData, setValue, activePart]);
 
   useEffect(() => {
-    // partChanged가 true면 서버에서 가져온 PDF URL 무시
-    if (pdfFileUrlData?.pdfUrl && !partChanged) {
+    if (pdfFileUrlData?.pdfUrl) {
       setValue('pdfFileUrl', pdfFileUrlData.pdfUrl);
     }
-  }, [pdfFileUrlData, setValue, partChanged]);
+  }, [pdfFileUrlData, setValue]);
 
   const handleFileChange = (files: File[]) => {
     if (files.length === 0) {
@@ -159,11 +158,17 @@ export const PartQuestion = ({
                     key={q.questionId}
                     label={`${q.sequence}. ${q.content}`}
                     maxLength={q.maxLength}
-                    currentLength={(watch(`ans_${q.questionId}`) || '').length}
+                    currentLength={
+                      ((watch(`ans_${q.questionId}` as any) as string) || '')
+                        .length
+                    }
                     placeholder='내용을 입력해주세요'
-                    error={errors[`ans_${q.questionId}`]?.message as string}
+                    error={
+                      (errors as Record<string, any>)[`ans_${q.questionId}`]
+                        ?.message as string
+                    }
                     required
-                    {...register(`ans_${q.questionId}`, {
+                    {...register(`ans_${q.questionId}` as any, {
                       validate: (value) => {
                         if (!value || value.trim().length === 0) {
                           return '답변을 작성해주세요';
@@ -182,9 +187,7 @@ export const PartQuestion = ({
                   const lastQuestion =
                     questionsData.questionsWithAnswers.at(-1);
                   if (!lastQuestion) return null;
-                  const currentPdfFileName = watch('pdfFileName') as
-                    | string
-                    | undefined;
+                  const currentPdfFileName = watch('pdfFileName');
                   return (
                     <div className='flex flex-col gap-2.5'>
                       <label className='text-h5 text-neutral-800'>
@@ -192,7 +195,7 @@ export const PartQuestion = ({
                       </label>
                       <Controller
                         control={control}
-                        name={`ans_${lastQuestion.questionId}`}
+                        name={`ans_${lastQuestion.questionId}` as any}
                         render={({
                           field: {onChange, value},
                           fieldState: {error},
@@ -230,8 +233,8 @@ export const PartQuestion = ({
         )}
       </div>
 
-      <div className='flex flex-col gap-[26px]'>
-        <div className='flex gap-[26px]'>
+      <div className='flex flex-col gap-6.5'>
+        <div className='flex gap-6.5'>
           <FullButton
             label='이전'
             variant='primary'
