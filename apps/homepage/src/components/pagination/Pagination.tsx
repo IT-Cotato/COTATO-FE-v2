@@ -56,7 +56,7 @@ export const Pagination = ({
           className={clsx(
             'flex h-10 items-center justify-center p-2 transition-colors',
             isPrevDisabled
-              ? 'cursor-not-allowed text-neutral-300'
+              ? 'cursor-default text-neutral-300'
               : 'text-neutral-500'
           )}>
           <ChevronLeft className='h-6 w-6' />
@@ -114,7 +114,7 @@ export const Pagination = ({
           className={clsx(
             'flex h-10 items-center justify-center p-2 transition-colors',
             isNextDisabled
-              ? 'cursor-not-allowed text-neutral-300'
+              ? 'cursor-default text-neutral-300'
               : 'text-neutral-500'
           )}>
           <span className='px-2'>Next</span>
