@@ -17,19 +17,19 @@ import {useRecruitmentStatusQuery} from '@/hooks/queries/useRecruitmentStatus.qu
 import {useRecruitmentScheduleQuery} from '@/hooks/queries/useRecruitmentSchedule.query';
 import {Spinner} from '@/components/ui/Spinner';
 import {HEADER_HEIGHT} from '@/constants/ui';
+import {RecruitmentInformation} from '@/components/recruitment/RecruitmentInformation';
+import HeroMainBanner from '@repo/ui/components/banner/HeroMainBanner';
+import Image from 'next/image';
 
 interface ApiErrorData {
   code: string;
   message: string;
 }
-import {RecruitmentInformation} from '@/components/recruitment/RecruitmentInformation';
-import HeroMainBanner from '@repo/ui/components/banner/HeroMainBanner';
-import Image from 'next/image';
 
-const STEP_TITLES = {
+const STEP_TITLES: Record<number, string> = {
   2: '파트별 질문',
   3: '기타 질문',
-} as const;
+};
 
 export const ApplyFormContainer = () => {
   const router = useRouter();
@@ -58,6 +58,8 @@ export const ApplyFormContainer = () => {
   } = useApplyFormController();
 
   const {data: recruitmentStatus, isLoading} = useRecruitmentStatusQuery();
+  const generation = recruitmentStatus?.data?.generationId;
+  const {data: scheduleData} = useRecruitmentScheduleQuery();
 
   useEffect(() => {
     if (step === 1) {
@@ -74,30 +76,32 @@ export const ApplyFormContainer = () => {
       router.push(ROUTES.HOME);
     }
   }, [recruitmentStatus, router]);
-  const generation = recruitmentStatus?.data?.generationId;
-  const {data: scheduleData} = useRecruitmentScheduleQuery();
 
-  // 렌더링 중 제출 완료 여부 직접 계산
-  let isConfirmedSubmitted = false;
-  if (isError && error) {
-    // Case 1: apiHelper에서 throw한 커스텀 에러 객체인 경우
-    if (error && typeof error === 'object' && 'code' in error) {
-      if ((error as ApiErrorData).code === 'AP002') {
-        isConfirmedSubmitted = true;
-      } else {
-        // AP002가 아닌 다른 API 에러
-        alert((error as ApiErrorData).message || '오류가 발생했습니다.');
+  // 에러 발생 시 리다이렉트 (AP002 제외)
+  useEffect(() => {
+    if (!isError || !error) return;
+
+    if (typeof error === 'object' && 'code' in error) {
+      const apiError = error as ApiErrorData;
+      if (apiError.code !== 'AP002') {
+        alert(apiError.message || '오류가 발생했습니다.');
         router.push(ROUTES.HOME);
       }
-    }
-    // Case 2: 일반적인 자바스크립트 Error 객체인 경우
-    else if (error instanceof Error) {
+    } else if (error instanceof Error) {
       if (error.name !== 'CancelledError') {
         alert(error.message);
         router.push(ROUTES.HOME);
       }
     }
-  }
+  }, [isError, error, router]);
+
+  // AP002 = 이미 제출 완료
+  const isConfirmedSubmitted =
+    isError &&
+    !!error &&
+    typeof error === 'object' &&
+    'code' in error &&
+    (error as ApiErrorData).code === 'AP002';
 
   if (isLoading) {
     return (
@@ -159,13 +163,15 @@ export const ApplyFormContainer = () => {
             )}
           </div>
 
-          <h2 className='text-h2 pt-4 text-neutral-800'>
-            {STEP_TITLES[step as keyof typeof STEP_TITLES]}
-          </h2>
+          {STEP_TITLES[step] && (
+            <h2 className='text-h2 pt-4 text-neutral-800'>
+              {STEP_TITLES[step]}
+            </h2>
+          )}
 
           <div className='flex w-full flex-col gap-3.5'>
             <FormProvider {...methods}>
-              <form onSubmit={handleFinalSubmit} key={step}>
+              <form onSubmit={handleFinalSubmit}>
                 {step === 1 && (
                   <BasicInfo
                     step={step}
