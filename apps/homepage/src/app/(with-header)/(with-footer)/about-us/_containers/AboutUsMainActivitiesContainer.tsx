@@ -51,11 +51,9 @@ export const AboutUsMainActivitiesContainer = () => {
       <div className='absolute inset-0 z-0'>
         <AboutUsBackgroundSecond className='h-full w-full object-cover' />
       </div>
-
       <h2 className='text-h3 z-10 text-white'>
         코테이토의 메인 활동을 소개합니다
       </h2>
-
       <div className='flex flex-col gap-7.5'>
         {rows.map((row, rowIndex) => (
           <div key={rowIndex} className='flex gap-7.5'>
@@ -84,7 +82,6 @@ export const AboutUsMainActivitiesContainer = () => {
           </div>
         ))}
       </div>
-
       {/* --- App Store 스타일 모달 --- */}
       <AnimatePresence>
         {selectedId && selectedActivity && (
@@ -99,8 +96,8 @@ export const AboutUsMainActivitiesContainer = () => {
 
             <motion.div
               layoutId={`card-${selectedId}`}
-              onClick={(e) => e.stopPropagation()}
-              className='pointer-events-auto relative z-50 h-[80vh] w-274.5 overflow-hidden rounded-[26px] bg-neutral-600 text-black'>
+              onClick={() => setSelectedId(null)}
+              className={`pointer-events-auto relative z-50 h-186.25 overflow-hidden rounded-[26px] bg-neutral-600 text-black ${selectedActivity.id === 1 || selectedActivity.id === 4 ? 'w-274.5' : 'w-189'}`}>
               <div className='relative h-125 w-full'>
                 <Image
                   src={selectedActivity.src}
@@ -111,7 +108,7 @@ export const AboutUsMainActivitiesContainer = () => {
                 <div className='absolute inset-0 bg-linear-to-t from-black/60 to-transparent' />
                 <motion.h3
                   layoutId={`title-${selectedId}`}
-                  className='text-h2 absolute top-20 left-20 text-white'>
+                  className='text-h2 absolute top-20 left-10 font-bold text-white'>
                   {selectedActivity.title}
                 </motion.h3>
               </div>
@@ -120,7 +117,7 @@ export const AboutUsMainActivitiesContainer = () => {
                 initial={{opacity: 0, y: 20}}
                 animate={{opacity: 1, y: 0}}
                 exit={{opacity: 0}}
-                className='overflow-y-auto p-10'>
+                className='custom-scrollbar h-61.25 overflow-y-auto p-10'>
                 <p className='text-h3 leading-relaxed text-white'>
                   {selectedActivity.description}
                 </p>
