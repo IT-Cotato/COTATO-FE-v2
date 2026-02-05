@@ -66,7 +66,7 @@ export const Dropdown = <T extends string>({
       {isOpen && (
         <ul
           role='listbox'
-          className='z-dropdown absolute left-0 mt-1 flex w-full min-w-max flex-col gap-2.5 rounded-sm bg-neutral-700 px-3.25 py-1.5'>
+          className='z-dropdown absolute left-0 mt-1 flex min-w-27.5 flex-col gap-2.5 rounded-sm bg-neutral-700 px-3.25 py-1.5'>
           {options.map((option) => (
             <li
               role='option'
