@@ -3,7 +3,7 @@ import {AboutUsMainActivitiesContainer} from '@/app/(with-header)/(with-footer)/
 
 export default function AboutUsPage() {
   return (
-    <section className='flex flex-col'>
+    <section className='mx-auto flex w-full max-w-480 min-w-360 flex-col items-center justify-center'>
       <AboutUsBanner />
       <AboutUsMainActivitiesContainer />
     </section>
