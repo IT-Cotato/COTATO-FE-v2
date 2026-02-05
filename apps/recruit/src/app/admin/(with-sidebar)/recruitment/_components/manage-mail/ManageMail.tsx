@@ -60,7 +60,7 @@ export const ManageMail = ({
   const canAccess = isGenerationExist || alwaysAble;
   const hasPermission = isRecruiting || alwaysAble;
 
-  const finalCanEdit = canAccess;
+  const finalCanEdit = canAccess && !isSent;
   const finalCanSend =
     canAccess && hasPermission && !isSent && waitingCount > 0;
 
