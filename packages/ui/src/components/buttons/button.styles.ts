@@ -21,6 +21,7 @@ export const buttonLabelTextStyles: Record<
   Record<ButtonLabelTypo, string>
 > = {
   primary: {
+    h3: `text-neutral-50 text-h3`,
     h4: `text-neutral-50 text-h4`,
     h5: `text-neutral-50 text-h5`,
     body_l: `text-neutral-50 text-body-l`,
@@ -28,6 +29,7 @@ export const buttonLabelTextStyles: Record<
     body_s: `text-neutral-50 text-body-s`,
   },
   outline: {
+    h3: `text-neutral-50 text-h3`,
     h4: `text-primary text-h4`,
     h5: `text-primary text-h5`,
     body_l: `text-primary text-body-l`,
