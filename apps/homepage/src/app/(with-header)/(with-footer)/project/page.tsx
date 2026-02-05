@@ -9,6 +9,7 @@ export default function ProjectPage() {
       <HeroMainBanner
         heading='함께 만들어 도착한, COTATO의 프로젝트를 만나보세요'
         subheading='COde Together, Arrive TOgether'
+        paddingVertical={76}
         bannerImage={
           <Image
             src={HeroBanner}
