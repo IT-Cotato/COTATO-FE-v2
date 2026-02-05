@@ -1,10 +1,5 @@
 'use client';
 
-/**
- * 홈 찐감자들의 후기에 대한 데이터를 조회하는 로직을 포함하는 홈 코테이토 리뷰 컨테이너
- * @returns
- */
-
 import {HomeCotatoReviewCard} from '@/app/(with-header)/(with-footer)/(home)/_components/HomeCotatoReviewCard';
 import {HomeSectionDescription} from '@/app/(with-header)/(with-footer)/(home)/_components/HomeSectionDescription';
 import {COTATO_REVIEWS_MOCK_DATA} from '@/mocks/home/mock-cotato-review';
@@ -22,7 +17,6 @@ export const HomeCotatoReviewContainer = () => {
   const gap = 20;
   const moveDistance = cardWidth * ITEMS_PER_PAGE + gap * ITEMS_PER_PAGE;
 
-  /** 추후 서버 데이터로 대체할 것 */
   const totalPages = Math.ceil(
     COTATO_REVIEWS_MOCK_DATA.length / ITEMS_PER_PAGE
   );
@@ -33,24 +27,38 @@ export const HomeCotatoReviewContainer = () => {
     ...COTATO_REVIEWS_MOCK_DATA.slice(0, ITEMS_PER_PAGE),
   ];
 
-  const handleNext = useCallback(async () => {
+  const animateTo = useCallback(
+    async (targetIndex: number) => {
+      setIsTransitioning(true);
+      setDisplayIndex(targetIndex);
+
+      await controls.start({
+        x: -targetIndex * moveDistance,
+        transition: {duration: 0.8, ease: [0.4, 0, 0.2, 1]},
+      });
+
+      if (targetIndex > totalPages) {
+        controls.set({x: -1 * moveDistance});
+        setDisplayIndex(1);
+      } else if (targetIndex < 1) {
+        controls.set({x: -totalPages * moveDistance});
+        setDisplayIndex(totalPages);
+      }
+
+      setIsTransitioning(false);
+    },
+    [controls, moveDistance, totalPages]
+  );
+
+  const handleNext = useCallback(() => {
     if (isTransitioning) return;
-    setIsTransitioning(true);
+    animateTo(displayIndex + 1);
+  }, [animateTo, displayIndex, isTransitioning]);
 
-    const nextIndex = displayIndex + 1;
-    setDisplayIndex(nextIndex);
-
-    await controls.start({
-      x: -nextIndex * moveDistance,
-      transition: {duration: 0.8, ease: [0.4, 0, 0.2, 1]},
-    });
-
-    if (nextIndex > totalPages) {
-      await controls.set({x: -1 * moveDistance});
-      setDisplayIndex(1);
-    }
-    setIsTransitioning(false);
-  }, [isTransitioning, displayIndex, controls, moveDistance, totalPages]);
+  const handleDotClick = (index: number) => {
+    if (isTransitioning || (displayIndex - 1) % totalPages === index) return;
+    animateTo(index + 1);
+  };
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -87,14 +95,23 @@ export const HomeCotatoReviewContainer = () => {
         </motion.div>
       </div>
 
-      <div className='flex justify-center gap-3'>
+      <div
+        className='flex justify-center gap-3'
+        role='tablist'
+        aria-label='리뷰 페이지 선택'>
         {Array.from({length: totalPages}).map((_, index) => {
-          const dotIndex = (displayIndex - 1) % totalPages;
+          const isActive = (displayIndex - 1) % totalPages === index;
           return (
             <button
               key={index}
-              className={`h-1.5 w-1.5 rounded-full transition-all duration-300 ${
-                dotIndex === index ? 'bg-neutral-600' : 'bg-neutral-200'
+              onClick={() => handleDotClick(index)}
+              role='tab'
+              aria-selected={isActive}
+              aria-label={`${index + 1}번 리뷰 그룹 보기`}
+              className={`h-1.5 w-1.5 cursor-pointer rounded-full transition-all duration-300 ${
+                isActive
+                  ? 'bg-neutral-600'
+                  : 'bg-neutral-200 hover:bg-neutral-400'
               }`}
             />
           );
