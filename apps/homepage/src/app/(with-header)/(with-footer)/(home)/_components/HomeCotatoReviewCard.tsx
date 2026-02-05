@@ -1,5 +1,4 @@
 import Image from 'next/image';
-import {useMemo} from 'react';
 
 const POTATO_IMAGE_PATHS = [
   '/potato/Potato-1.svg',
@@ -12,6 +11,7 @@ interface HomeCotatoReviewProps {
   name: string;
   shortDescription: string;
   longDescription: string;
+  id: number;
 }
 
 export const HomeCotatoReviewCard = ({
@@ -20,11 +20,9 @@ export const HomeCotatoReviewCard = ({
   name,
   shortDescription,
   longDescription,
+  id,
 }: HomeCotatoReviewProps) => {
-  const selectedPotatoPath = useMemo(() => {
-    const randomIndex = Math.floor(Math.random() * POTATO_IMAGE_PATHS.length);
-    return POTATO_IMAGE_PATHS[randomIndex];
-  }, []);
+  const selectedPotatoPath = POTATO_IMAGE_PATHS[id % POTATO_IMAGE_PATHS.length];
 
   return (
     <div className='flex h-92 w-84.75 flex-col gap-5 rounded-[30px] bg-neutral-800 px-6.75 py-7 text-white'>
