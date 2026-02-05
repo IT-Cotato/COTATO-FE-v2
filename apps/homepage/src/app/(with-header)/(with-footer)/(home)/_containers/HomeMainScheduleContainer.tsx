@@ -60,7 +60,7 @@ export const HomeMainScheduleContainer = () => {
         <div className='col-start-1 row-start-4 inline-block'>
           <BlackPlusKeycap />
         </div>
-        <div className='group relative col-span-3 col-start-2 row-start-4 h-72.25 w-223.5 cursor-pointer overflow-hidden rounded-[50px]'>
+        <div className='col-span-3 col-start-2 row-start-4'>
           <OrangeRowKeycap
             imageSrc='https://picsum.photos/900/300?random=4'
             title='Demo Day'
