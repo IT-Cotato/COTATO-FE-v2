@@ -31,7 +31,10 @@ export const HomeCoreValue = () => {
   ];
 
   return (
-    <section className='flex flex-col gap-17.5' aria-labelledby='core-value'>
+    <section
+      className='flex scroll-mt-40 flex-col gap-17.5'
+      aria-labelledby='core-value'
+      id='core-value'>
       <HomeSectionHeader mainHeading='Core Value' subHeading='핵심 가치' />
 
       <ul className='flex flex-row gap-7.5' role='list'>
