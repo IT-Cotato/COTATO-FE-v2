@@ -3,7 +3,7 @@ import {HomeFinalSection} from '@/app/(with-header)/(with-footer)/(home)/_compon
 import {HomeBanner} from '@/app/(with-header)/(with-footer)/(home)/_components/HomeBanner';
 import {HomeCotatoReviewContainer} from '@/app/(with-header)/(with-footer)/(home)/_containers/HomeCotatoReviewContainer';
 import {HomePartSectionContainer} from '@/app/(with-header)/(with-footer)/(home)/_containers/HomePartSectionContainer';
-import {HomeMainScheduleContainer} from '@/app/(with-header)/(with-footer)/(home)/_containers/HomeMainSheduleContainer';
+import {HomeMainScheduleContainer} from '@/app/(with-header)/(with-footer)/(home)/_containers/HomeMainScheduleContainer';
 import {SuspenseWrapper} from '@/components/wrappers/SuspenseWrapper';
 
 export default function HomePage() {
