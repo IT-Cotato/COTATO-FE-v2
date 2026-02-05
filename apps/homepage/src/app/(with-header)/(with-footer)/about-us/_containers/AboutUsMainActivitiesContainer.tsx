@@ -49,7 +49,7 @@ export const AboutUsMainActivitiesContainer = () => {
   return (
     <section className='relative flex w-full flex-col items-center gap-25 overflow-hidden bg-[linear-gradient(180deg,#010101_13.94%,rgba(1,1,1,0)_100%)] py-40'>
       <div className='absolute inset-0 z-0'>
-        <AboutUsBackgroundSecond className='h-full w-full object-cover' />
+        <AboutUsBackgroundSecond className='absolute -right-100 h-full w-auto' />
       </div>
       <h2 className='text-h3 z-10 text-white'>
         코테이토의 메인 활동을 소개합니다
