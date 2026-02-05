@@ -8,7 +8,7 @@ export const PROJECTS_MOCK_DATA = [
     thumbnailUrl: '/images/project-mock-img.png',
     projectLink: 'https://github.com',
   },
-  ...Array(11)
+  ...Array(88)
     .fill(null)
     .map((_, i) => ({
       projectId: i + 2,
