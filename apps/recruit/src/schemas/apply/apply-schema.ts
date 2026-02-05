@@ -1,6 +1,6 @@
 import {z} from 'zod';
 
-export const BasicInfoFormSchema = z.object({
+export const BasicInfoFieldsSchema = z.object({
   name: z.string().min(1, '이름을 입력해주세요'),
   gender: z.enum(['MALE', 'FEMALE'], {
     message: '성별을 선택해주세요',
@@ -70,6 +70,27 @@ export const BasicInfoFormSchema = z.object({
     message: '파트를 선택해주세요',
   }),
 });
+
+// 동적 ans_{questionId} 필드는 스키마에 포함하지 않음 (수동 검증)
+export const PartQuestionFieldsSchema = z.object({
+  pdfFileKey: z.string().optional(),
+  pdfFileUrl: z.string().optional(),
+  pdfFileName: z.string().optional(),
+  partChanged: z.boolean().optional(),
+});
+
+export const EtcQuestionFieldsSchema = z.object({
+  discovery: z.string().min(1, '필수 항목입니다'),
+  sessionAgree: z.enum(['agree'], {message: '필수 동의 항목입니다'}),
+  otAgree: z.enum(['agree'], {message: '필수 동의 항목입니다'}),
+  privacyAgree: z.enum(['agree'], {message: '필수 동의 항목입니다'}),
+  otherActivity: z.string().optional(),
+  unavailableInterviewTimes: z.string().optional(),
+});
+
+export const ApplyFormSchema = BasicInfoFieldsSchema.extend(
+  PartQuestionFieldsSchema.shape
+).extend(EtcQuestionFieldsSchema.shape);
 
 export const StartApplicationResponseSchema = z.object({
   applicationId: z.number(),
@@ -175,7 +196,7 @@ export const GetFileUrlResponseSchema = z.object({
   pdfUrl: z.string(),
 });
 
-export type BasicInfoFormData = z.infer<typeof BasicInfoFormSchema>;
+export type BasicInfoFields = z.infer<typeof BasicInfoFieldsSchema>;
 export type StartApplicationResponse = z.infer<
   typeof StartApplicationResponseSchema
 >;
@@ -187,3 +208,6 @@ export type EtcQuestionRequest = z.infer<typeof EtcQuestionRequestSchema>;
 export type EtcQuestionResponse = z.infer<typeof EtcQuestionResponseSchema>;
 export type GetUploadUrlResponse = z.infer<typeof GetUploadUrlResponseSchema>;
 export type GetFileUrlResponse = z.infer<typeof GetFileUrlResponseSchema>;
+export type PartQuestionFields = z.infer<typeof PartQuestionFieldsSchema>;
+export type EtcQuestionFields = z.infer<typeof EtcQuestionFieldsSchema>;
+export type ApplyFormData = z.infer<typeof ApplyFormSchema>;

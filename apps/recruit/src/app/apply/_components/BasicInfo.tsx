@@ -10,7 +10,7 @@ import {FormRadio} from '@/components/form/FormRadio';
 import {FullButton} from '@repo/ui/components/buttons/FullButton';
 import {BASIC_INFO_FIELDS} from '@/constants/form/formConfig';
 import {BasicInfoFieldConfig} from '@/schemas/apply/apply-type';
-import {BasicInfoFormData} from '@/schemas/apply/apply-schema';
+import {ApplyFormData} from '@/schemas/apply/apply-schema';
 import {getBasicInfo} from '@/services/api/apply/apply.api';
 import {QUERY_KEYS} from '@/constants/query-keys';
 import {StepIndicator} from '@/components/navigation/StepIndicator';
@@ -47,7 +47,7 @@ export const BasicInfo = ({
     getValues,
     unregister,
     formState: {errors},
-  } = useFormContext<BasicInfoFormData>();
+  } = useFormContext<ApplyFormData>();
 
   const hasInitializedRef = useRef(false);
   const previousPartRef = useRef<string | undefined>(undefined);
@@ -63,18 +63,12 @@ export const BasicInfo = ({
     const currentValues = getValues();
     Object.keys(currentValues).forEach((key) => {
       if (key.startsWith('ans_')) {
-        // @ts-expect-error - Dynamic fields
-        unregister(key);
+        unregister(key as any);
       }
     });
-    // @ts-expect-error - Dynamic fields
     setValue('pdfFileKey', undefined);
-    // @ts-expect-error - Dynamic fields
     setValue('pdfFileUrl', undefined);
-    // @ts-expect-error - Dynamic fields
     setValue('pdfFileName', undefined);
-    // 파트가 변경되었음을 표시 (서버 데이터 무시용)
-    // @ts-expect-error - Dynamic fields
     setValue('partChanged', true);
   }, [getValues, unregister, setValue]);
 
@@ -88,15 +82,15 @@ export const BasicInfo = ({
         school: basicInfo.university,
         isCollegeStudent: (basicInfo.isEnrolled
           ? 'enrolled'
-          : 'other') as BasicInfoFormData['isCollegeStudent'],
+          : 'other') as ApplyFormData['isCollegeStudent'],
         department: basicInfo.major,
         completedSemesters: String(
           basicInfo.completedSemesters
-        ) as BasicInfoFormData['completedSemesters'],
+        ) as ApplyFormData['completedSemesters'],
         isPrevActivity: (basicInfo.isPrevActivity
           ? 'yes'
-          : 'no') as BasicInfoFormData['isPrevActivity'],
-        part: basicInfo.applicationPartType as BasicInfoFormData['part'],
+          : 'no') as ApplyFormData['isPrevActivity'],
+        part: basicInfo.applicationPartType as ApplyFormData['part'],
       };
       reset(transformedData);
       previousPartRef.current = basicInfo.applicationPartType;
@@ -130,7 +124,7 @@ export const BasicInfo = ({
     'completedSemesters',
     'isPrevActivity',
     'part',
-  ].some((field) => !allValues[field as keyof BasicInfoFormData]);
+  ].some((field) => !allValues[field as keyof ApplyFormData]);
 
   const renderField = (field: BasicInfoFieldConfig) => {
     const {type, name, label, options, placeholder, autocomplete} =
