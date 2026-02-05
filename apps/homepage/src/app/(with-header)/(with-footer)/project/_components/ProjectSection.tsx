@@ -1,3 +1,5 @@
+'use client';
+
 import {PROJECTS_MOCK_DATA} from '@/mocks/project/mock-project';
 import {ProjectCard} from './ProjectCard';
 import {Pagination} from '@/components/pagination/Pagination';
