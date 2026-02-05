@@ -109,7 +109,7 @@ export const HomePartSectionContainer = () => {
                 opacity: {duration: 0.5},
                 filter: {duration: 0.5},
               }}
-              className='absolute inset-0 h-full w-full'>
+              className='absolute inset-0 h-full w-full overflow-hidden rounded-[40px]'>
               <div className='relative flex h-full w-full items-center justify-center'>
                 <Image
                   src='https://picsum.photos/600/300?random=3'
