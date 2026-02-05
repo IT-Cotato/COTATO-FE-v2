@@ -22,14 +22,16 @@ export const ScheduleKeycap = ({
 }: ScheduleKeycapProps) => {
   return (
     <div
-      className={`group relative inline-block h-72.25 w-72.25 cursor-pointer overflow-hidden rounded-[50px] ${className}`}>
+      className={`group relative inline-block h-72.25 w-72.25 cursor-pointer overflow-hidden rounded-[50px] ${className}`}
+      role='button'
+      tabIndex={0}>
       <Image
         src='/keycap/white-keycap.svg'
-        alt='keycap'
+        alt=''
         fill
-        className='transition-opacity duration-300 group-hover:opacity-0'
+        className='transition-opacity duration-300 group-hover:opacity-0 group-focus-visible:opacity-0'
       />
-      <div className='absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100'>
+      <div className='absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100'>
         <Image src={imageSrc} alt={title} fill className='object-cover' />
         <div className='absolute inset-0 bg-black/20' />
       </div>

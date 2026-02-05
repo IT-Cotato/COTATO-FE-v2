@@ -12,21 +12,24 @@ export const OrangeRowKeycap = ({
   subTitle,
 }: OrangeRowKeycapProps) => {
   return (
-    <div className='group relative col-span-3 col-start-2 row-start-4 h-72.25 w-223.5 cursor-pointer overflow-hidden rounded-[50px]'>
+    <div
+      className='group relative col-span-3 col-start-2 row-start-4 h-72.25 w-223.5 cursor-pointer overflow-hidden rounded-[50px]'
+      role='button'
+      tabIndex={0}>
       <Image
         src='/keycap/orange-keycap-long-row.svg'
-        alt='keycap'
-        className='h-full w-full transition-opacity duration-300 group-hover:opacity-0'
+        alt=''
+        className='h-full w-full transition-opacity duration-300 group-hover:opacity-0 group-focus-visible:opacity-0'
         fill
       />
 
       <span className='text-h2 absolute top-16.5 left-16.5 z-10 font-bold text-white transition-colors'>
         {title}
       </span>
-      <span className='text-h4 absolute top-30.5 left-16.5 z-10 font-medium text-neutral-100 opacity-0 transition-opacity group-hover:opacity-100'>
+      <span className='text-h4 absolute top-30.5 left-16.5 z-10 font-medium text-neutral-100 opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100'>
         {subTitle}
       </span>
-      <div className='absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100'>
+      <div className='absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100'>
         <Image src={imageSrc} alt={title} fill className='object-cover' />
         <div className='absolute inset-0 bg-black/20' />
       </div>

@@ -19,21 +19,24 @@ export const WhiteOrangeKeycap = ({
   secondSubTitle,
 }: WhiteOrangeKeycapProps) => {
   return (
-    <div className='group relative cursor-pointer overflow-hidden rounded-[50px]'>
-      <WhiteOrangeKeycapEnter className='h-full w-full transition-opacity duration-300 group-hover:opacity-0' />
+    <div
+      className='group relative cursor-pointer overflow-hidden rounded-[50px]'
+      role='button'
+      tabIndex={0}>
+      <WhiteOrangeKeycapEnter className='h-full w-full transition-opacity duration-300 group-hover:opacity-0 group-focus-visible:opacity-0' />
 
-      <div className='absolute top-0 left-0 z-12 h-1/2 w-1/2 overflow-hidden rounded-[50px] opacity-0 transition-opacity duration-300 group-hover:opacity-100'>
+      <div className='absolute top-0 left-0 z-12 h-1/2 w-1/2 overflow-hidden rounded-[50px] opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100'>
         <Image src={imageSrc} alt={title} fill className='object-cover' />
         <div className='absolute inset-0 bg-black/20' />
       </div>
       <span className='text-h2 absolute top-16.5 left-16.5 z-20 font-bold text-neutral-500 transition-colors group-hover:text-white'>
         {title}
       </span>
-      <span className='text-h4 absolute top-30.5 left-16.5 z-20 font-bold text-neutral-100 opacity-0 transition-opacity group-hover:opacity-100'>
+      <span className='text-h4 absolute top-30.5 left-16.5 z-20 font-bold text-neutral-100 opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100'>
         {subTitle}
       </span>
 
-      <div className='absolute inset-0 z-10 opacity-0 transition-opacity duration-300 group-hover:opacity-100'>
+      <div className='absolute inset-0 z-10 opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100'>
         <div
           className='relative h-full w-full'
           style={{
@@ -56,7 +59,7 @@ export const WhiteOrangeKeycap = ({
       <span className='text-h2 absolute bottom-22.25 left-22.25 z-20 font-bold text-white'>
         {secondTitle}
       </span>
-      <span className='text-h4 absolute right-37.5 bottom-22.25 z-20 font-bold text-neutral-100 opacity-0 transition-opacity group-hover:opacity-100'>
+      <span className='text-h4 absolute right-37.5 bottom-22.25 z-20 font-bold text-neutral-100 opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100'>
         {secondSubTitle}
       </span>
     </div>
