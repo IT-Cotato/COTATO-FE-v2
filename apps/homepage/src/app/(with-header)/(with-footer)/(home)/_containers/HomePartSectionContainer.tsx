@@ -54,6 +54,7 @@ export const HomePartSectionContainer = () => {
       />
 
       <div className='flex flex-col gap-7.5'>
+        {/* TabList */}
         <div
           className='flex flex-row gap-6'
           role='tablist'
@@ -61,6 +62,10 @@ export const HomePartSectionContainer = () => {
           {PARTS.map((partKey) => (
             <Button
               key={partKey}
+              id={`tab-${partKey}`}
+              role='tab'
+              aria-selected={currentPart === partKey}
+              aria-controls={`tabpanel-${partKey}`}
               label={
                 partKey === 'pm'
                   ? '기획'
@@ -77,13 +82,11 @@ export const HomePartSectionContainer = () => {
                 currentPart === partKey ? 'primary' : 'text-disabled'
               }
               onClick={() => handlePartClick(partKey)}
-              role='tab'
-              aria-selected={currentPart === partKey}
               className='transition-all duration-500 ease-in-out'
             />
           ))}
         </div>
-
+        {/** TabPanel */}
         <div
           className='relative h-150 w-full overflow-hidden rounded-[40px]'
           role='tabpanel'
@@ -91,6 +94,10 @@ export const HomePartSectionContainer = () => {
           <AnimatePresence mode='popLayout' custom={direction} initial={false}>
             <motion.div
               key={currentPart}
+              id={`tabpanel-${currentPart}`}
+              role='tabpanel'
+              aria-labelledby={`tab-${currentPart}`}
+              tabIndex={0}
               custom={direction}
               variants={variants}
               initial='enter'
