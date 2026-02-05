@@ -76,7 +76,6 @@ export const PartQuestionFieldsSchema = z.object({
   pdfFileKey: z.string().optional(),
   pdfFileUrl: z.string().optional(),
   pdfFileName: z.string().optional(),
-  partChanged: z.boolean().optional(),
 });
 
 export const EtcQuestionFieldsSchema = z.object({
