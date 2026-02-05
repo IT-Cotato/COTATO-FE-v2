@@ -1,3 +1,11 @@
+import {AboutUsBanner} from '@/app/(with-header)/(with-footer)/about-us/_components/AboutUsBanner';
+import {AboutUsMainActivitiesContainer} from '@/app/(with-header)/(with-footer)/about-us/_containers/AboutUsMainActivitiesContainer';
+
 export default function AboutUsPage() {
-  return <div>ABOUT US</div>;
+  return (
+    <section className='flex flex-col bg-black'>
+      <AboutUsBanner />
+      <AboutUsMainActivitiesContainer />
+    </section>
+  );
 }
