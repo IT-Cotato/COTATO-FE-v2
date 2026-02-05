@@ -47,7 +47,7 @@ export const AboutUsMainActivitiesContainer = () => {
   const selectedActivity = ACTIVITIES.find((a) => a.id === selectedId);
 
   return (
-    <section className='relative flex w-full flex-col items-center gap-25 overflow-hidden py-40'>
+    <section className='relative flex w-full flex-col items-center gap-25 overflow-hidden bg-[linear-gradient(180deg,#010101_13.94%,rgba(1,1,1,0)_100%)] py-40'>
       <div className='absolute inset-0 z-0'>
         <AboutUsBackgroundSecond className='h-full w-full object-cover' />
       </div>
