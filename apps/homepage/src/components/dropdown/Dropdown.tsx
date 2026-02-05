@@ -46,7 +46,7 @@ export const Dropdown = <T extends string>({
         disabled={disabled}
         className={clsx(
           'flex h-10 min-w-27.5 items-center justify-center gap-2.5 self-stretch px-2.5 py-2.5',
-          'rounded-[20px] border border-neutral-200 bg-white shadow-[0_6px_15px_0_rgba(0,0,0,0.10)]',
+          'shadow-default rounded-[20px] border border-neutral-200 bg-white',
           'text-body-l shrink-0 transition-all',
           disabled
             ? 'cursor-not-allowed bg-neutral-100 text-neutral-400'
