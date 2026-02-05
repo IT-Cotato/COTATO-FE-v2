@@ -182,7 +182,6 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
 
       await handleSave();
       await submitApplication();
-      await queryClient.invalidateQueries({queryKey: QUERY_KEYS.APPLY.STATUS});
       router.push('/?submitted=true');
     } catch {
       router.push('/?submitted=false');

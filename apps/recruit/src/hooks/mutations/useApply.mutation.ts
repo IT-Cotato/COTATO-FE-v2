@@ -96,8 +96,9 @@ export const useSubmitApplication = (applicationId: number) => {
   return useMutation({
     mutationFn: () => submitApplication(applicationId),
     onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: QUERY_KEYS.APPLY.STATUS,
+      queryClient.setQueryData(QUERY_KEYS.APPLY.STATUS, {
+        applicationId,
+        isSubmitted: true,
       });
     },
     onError: (error: AxiosError) => {
