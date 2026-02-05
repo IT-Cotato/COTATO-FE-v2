@@ -4,11 +4,11 @@ export const PROJECTS_MOCK_DATA = [
     name: 'Troublog',
     shortDescription: '개발자의 트러블슈팅이 성장으로 이어지는 곳',
     projectType: 'DEMODAY',
-    generationId: 11,
+    generationId: 12,
     thumbnailUrl: '/images/project-mock-img.png',
     projectLink: 'https://github.com',
   },
-  ...Array(88)
+  ...Array(70)
     .fill(null)
     .map((_, i) => ({
       projectId: i + 2,
