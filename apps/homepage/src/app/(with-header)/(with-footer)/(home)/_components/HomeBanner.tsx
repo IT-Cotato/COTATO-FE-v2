@@ -39,7 +39,7 @@ export const HomeBanner = () => {
           </p>
           <MainLogo
             role='img'
-            aria-label='COTEATO 로고'
+            aria-label='COTATO 로고'
             className='h-auto w-auto'
           />
         </div>
