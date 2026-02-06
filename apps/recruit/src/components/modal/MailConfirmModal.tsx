@@ -30,6 +30,7 @@ export const MailConfirmModal = ({
       title={title}
       content={description}
       noContent={!description}
+      titleStyle='text-h4 text-neutral-800'
       actions={
         <>
           <Button

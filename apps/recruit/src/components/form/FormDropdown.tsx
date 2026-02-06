@@ -3,7 +3,7 @@
 import {forwardRef, useRef, useState, type InputHTMLAttributes} from 'react';
 import clsx from 'clsx';
 import {formFieldStyles} from './form.styles';
-import {useClickOutside} from '@/hooks/useClickOutside';
+import {useClickOutside} from '@repo/ui/hooks/useClickOutside';
 import ChevronDown from '@/assets/chevrons/chevron-down.svg';
 
 interface FormDropdownProps extends Omit<
@@ -92,12 +92,12 @@ export const FormDropdown = forwardRef<HTMLInputElement, FormDropdownProps>(
           </button>
 
           {isOpen && !readOnly && (
-            <ul className='absolute z-dropdown mt-2 w-full rounded-sm bg-neutral-600 shadow-lg'>
+            <ul className='z-dropdown absolute mt-2 w-full rounded-sm bg-neutral-600 shadow-lg'>
               {options.map((option) => (
                 <li
                   key={option.value}
                   onClick={(e) => handleSelect(e, option.value)}
-                  className='cursor-pointer px-4 py-3 text-body-l text-white transition-colors hover:rounded-sm hover:bg-primary'>
+                  className='text-body-l hover:bg-primary cursor-pointer px-4 py-3 text-white transition-colors hover:rounded-sm'>
                   {option.label}
                 </li>
               ))}

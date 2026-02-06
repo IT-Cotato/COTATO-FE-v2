@@ -16,6 +16,7 @@ export const SubmissionIncompleteModal = ({
     <Modal
       isOpen={isOpen}
       onClose={onClose}
+      titleStyle='text-h4 text-neutral-800'
       title='지원 기간이 종료되었습니다.'
       content={
         <p>
