@@ -14,7 +14,7 @@ export const AddProjectFormContainer = () => {
   return (
     <section className='flex w-full max-w-275 flex-col gap-7.5 py-7.5'>
       <div className='flex justify-between'>
-        <div className='flex gap-6 px-6'>
+        <div className='flex gap-6.25'>
           <Dropdown
             placeholder='기수'
             value={selectedGeneration}
