@@ -90,6 +90,7 @@ export const AboutUsMainActivitiesContainer = () => {
             />
 
             <motion.div
+              onClick={() => setSelectedId(null)}
               layoutId={`card-${selectedId}`}
               className='relative z-50 flex h-full max-h-[70%] w-full max-w-250 flex-col overflow-hidden rounded-[26px] bg-neutral-600 text-white'>
               <div className='relative h-[40%] min-h-62.5 w-full md:h-[60%]'>
