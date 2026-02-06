@@ -13,11 +13,20 @@ interface FormLinkProps extends Omit<
   placeholder?: string;
   value?: string[];
   onChange?: (links: string[]) => void;
+  hideInnerLabel?: boolean;
 }
 
 export const FormLink = forwardRef<HTMLInputElement, FormLinkProps>(
   function FormLink(
-    {label, className, placeholder, value, onChange, ...props},
+    {
+      label,
+      className,
+      placeholder,
+      value,
+      onChange,
+      hideInnerLabel = false,
+      ...props
+    },
     ref
   ) {
     const [internalLinks, setInternalLinks] = useState<string[]>(['']);
@@ -47,7 +56,11 @@ export const FormLink = forwardRef<HTMLInputElement, FormLinkProps>(
                 formFieldStyles.readOnlyForm,
                 'flex flex-row items-center gap-5 rounded-lg px-4 py-3'
               )}>
-              <label className='text-h5 text-neutral-600'>링크</label>
+              {!hideInnerLabel && (
+                <label className='text-h5 shrink-0 text-neutral-600'>
+                  링크
+                </label>
+              )}
               <a
                 href={link}
                 target='_blank'
@@ -63,14 +76,16 @@ export const FormLink = forwardRef<HTMLInputElement, FormLinkProps>(
               formFieldStyles.field,
               'flex flex-row items-center gap-5 rounded-lg px-4 py-3'
             )}>
-            <label className='text-h5 text-neutral-600'>링크</label>
+            {!hideInnerLabel && (
+              <label className='text-h5 shrink-0 text-neutral-600'>링크</label>
+            )}
             <input
               ref={ref}
               type='text'
               placeholder={placeholder}
               value={links[0] || ''}
               onChange={handleChange}
-              className='flex-1'
+              className='flex-1 outline-none'
               {...props}
             />
           </div>

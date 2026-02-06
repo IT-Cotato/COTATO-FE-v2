@@ -5,7 +5,7 @@ import clsx from 'clsx';
 import {formFieldStyles} from './form.styles';
 
 export interface FormInputProps extends InputHTMLAttributes<HTMLInputElement> {
-  label: string;
+  label?: string;
   error?: string;
   required?: boolean;
 }
@@ -17,10 +17,12 @@ export const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
 
     return (
       <div className={formFieldStyles.wrapper}>
-        <label htmlFor={inputId} className={formFieldStyles.label}>
-          {label}
-          {required && <span className={formFieldStyles.required}>*</span>}
-        </label>
+        {label && (
+          <label htmlFor={inputId} className={formFieldStyles.label}>
+            {label}
+            {required && <span className={formFieldStyles.required}>*</span>}
+          </label>
+        )}
         <input
           ref={ref}
           id={inputId}
