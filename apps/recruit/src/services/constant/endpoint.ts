@@ -20,6 +20,7 @@ export const ENDPOINT = {
     NOTICE: '/api/recruitment',
     STATUS: '/api/recruitment/status',
     SCHEDULE: '/api/recruitment/schedule',
+    SUBSCRIBE: '/api/recruitment/subscribe',
   },
   ADMIN: {
     APPLICATIONS: '/api/admin/applications',
