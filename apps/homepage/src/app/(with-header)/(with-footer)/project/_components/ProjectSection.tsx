@@ -2,8 +2,8 @@
 
 import {PROJECTS_MOCK_DATA} from '@/mocks/project/mock-project';
 import {ProjectCard} from './ProjectCard';
-import {Pagination} from '@/components/pagination/Pagination';
 import {useMemo, useState, useEffect} from 'react';
+import {Pagination} from '@repo/ui/components/pagination/Pagination';
 
 interface ProjectSectionProps {
   generation?: string;
