@@ -23,6 +23,9 @@ export const FormTextarea = forwardRef<HTMLTextAreaElement, FormTextareaProps>(
       <div className={formFieldStyles.wrapper}>
         <label htmlFor={inputId} className={formFieldStyles.label}>
           {label}
+          {props.required && (
+            <span className={formFieldStyles.required}>*</span>
+          )}
         </label>
 
         <div className='relative w-full'>
