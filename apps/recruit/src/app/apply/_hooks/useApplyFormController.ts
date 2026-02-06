@@ -19,6 +19,7 @@ import {getRecruitmentStatus} from '@/services/api/recruitment/recruitment-statu
 import {ROUTES} from '@/constants/routes';
 import {useApplyValidation} from './useApplyValidation';
 import {useApplySave} from './useApplySave';
+import {useApplyStepGuard} from './useApplyStepGuard';
 
 interface UseApplyFormControllerReturn {
   step: number;
@@ -69,7 +70,7 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
   const {getValues} = methods;
 
   // 서버에 저장된 파트 정보 조회
-  const {data: basicInfo} = useGetBasicInfoQuery(
+  const {data: basicInfo, isFetched: isBasicInfoFetched} = useGetBasicInfoQuery(
     applicationId ? Number(applicationId) : null
   );
 
@@ -95,9 +96,20 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
 
   useGetEtcQuestionsQuery(applicationId ? Number(applicationId) : null);
 
-  const {data: partQuestionsData} = useGetPartQuestionsQuery(
-    applicationId ? Number(applicationId) : null
-  );
+  const {data: partQuestionsData, isFetched: isPartQuestionsFetched} =
+    useGetPartQuestionsQuery(
+      applicationId ? Number(applicationId) : null
+    );
+
+  // Step 건너뛰기 방지 가드 훅
+  useApplyStepGuard({
+    step,
+    applicationId: applicationId,
+    basicInfo,
+    isBasicInfoFetched,
+    partQuestionsData,
+    isPartQuestionsFetched,
+  });
 
   const {mutateAsync: submitApplication} = useSubmitApplication(
     Number(applicationId)
