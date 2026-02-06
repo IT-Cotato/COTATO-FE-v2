@@ -34,7 +34,7 @@ export const AddGenerationContainer = () => {
     setGenerations(fetchedGenerations);
 
     const {isActive = false, generationId: activeGenId = null} =
-      statusData?.data || {};
+      statusData || {};
 
     if (!selectedGenerationId) {
       if (isActive && activeGenId !== null) {
@@ -56,8 +56,8 @@ export const AddGenerationContainer = () => {
     selectedGenerationId,
   ]);
 
-  const isRecruiting = statusData?.data.isActive ?? false;
-  const currentGeneration = statusData?.data.generationId;
+  const isRecruiting = statusData?.isActive ?? false;
+  const currentGeneration = statusData?.generationId;
 
   if (isStatusLoading || isGenerationsLoading)
     return (
@@ -69,7 +69,7 @@ export const AddGenerationContainer = () => {
   return (
     <div className='flex w-full flex-col items-start gap-2.5 rounded-[10px] bg-neutral-100 px-8 py-3'>
       <div className='flex items-center gap-5.75 self-stretch'>
-        <p className='shrink-0 text-body-l font-medium text-neutral-600'>
+        <p className='text-body-l shrink-0 font-medium text-neutral-600'>
           기수 추가하기
         </p>
         <div className='scrollbar-hide flex items-center gap-2.5 overflow-x-auto'>
@@ -98,7 +98,7 @@ export const AddGenerationContainer = () => {
                 }}
                 disabled={isRecruiting}
                 className={clsx(
-                  'flex h-9.5 w-15.75 shrink-0 items-center justify-center rounded-[5px] text-body-l font-semibold transition-all',
+                  'text-body-l flex h-9.5 w-15.75 shrink-0 items-center justify-center rounded-[5px] font-semibold transition-all',
                   isSelected
                     ? 'bg-neutral-200 text-neutral-800'
                     : 'bg-white text-neutral-600',

@@ -15,7 +15,7 @@ import {
 import {useSubmitApplication} from '@/hooks/mutations/useApply.mutation';
 import {useQueryClient} from '@tanstack/react-query';
 import {QUERY_KEYS} from '@/constants/query-keys';
-import {getRecruitmentStatus} from '@/services/api/recruitment/recruitment-status.api';
+import {getRecruitmentStatus} from '@/services/api/recruitment/recruitment.api';
 import {ROUTES} from '@/constants/routes';
 import {useApplyValidation} from './useApplyValidation';
 import {useApplySave} from './useApplySave';
@@ -135,7 +135,7 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
         staleTime: 0, // 항상 서버에서 최신 데이터 가져오기
       });
 
-      if (!latest.data.isActive) {
+      if (!latest.isActive) {
         alert('모집 기간이 종료되었습니다.');
         router.push(ROUTES.HOME);
         return false;

@@ -18,7 +18,7 @@ export const RecruitmentActive = () => {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const {data: recruitmentStatus} = useRecruitmentStatusQuery();
-  const generation = recruitmentStatus?.data?.generationId ?? '';
+  const generation = recruitmentStatus?.generationId ?? '';
 
   const {isAuthenticated} = useAuthStore();
 

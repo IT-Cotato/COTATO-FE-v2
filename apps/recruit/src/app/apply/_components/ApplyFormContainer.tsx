@@ -64,7 +64,7 @@ export const ApplyFormContainer = () => {
   } = useApplyFormController();
 
   const {data: recruitmentStatus, isLoading} = useRecruitmentStatusQuery();
-  const generation = recruitmentStatus?.data?.generationId;
+  const generation = recruitmentStatus?.generationId;
   const {data: scheduleData} = useRecruitmentScheduleQuery();
 
   useEffect(() => {
@@ -77,7 +77,7 @@ export const ApplyFormContainer = () => {
 
   // 모집 기간 종료된 경우 홈으로 리다이렉트
   useEffect(() => {
-    if (recruitmentStatus && !recruitmentStatus.data?.isActive) {
+    if (recruitmentStatus && !recruitmentStatus.isActive) {
       alert('모집 기간이 종료되었습니다.');
       router.push(ROUTES.HOME);
     }
