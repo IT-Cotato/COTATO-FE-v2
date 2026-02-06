@@ -1,11 +1,20 @@
-import BackgroundUniverse from '@/assets/about-us/background-universe.svg';
 import {CotatoLogo} from '@/components/logo/CotatoLogo';
+import Image from 'next/image';
 
 export const AboutUsBanner = () => {
   return (
-    <section className='relative flex h-270 w-full items-center justify-center overflow-hidden bg-black'>
-      <div className='absolute inset-0 z-0 flex items-center justify-center'>
-        <BackgroundUniverse className='h-full w-full -translate-y-30 object-cover' />
+    <section
+      className='relative flex h-screen w-full items-center justify-center overflow-hidden bg-black'
+      aria-label='소개 배너'>
+      <div className='relative flex w-full justify-center transition-all duration-500 group-hover:translate-y-4'>
+        <Image
+          src='/keycap/background-universe.svg'
+          alt=''
+          width={1440}
+          height={600}
+          className='object-cover'
+          priority
+        />
       </div>
       <div className='absolute top-1/3 left-1/6 z-10 -translate-y-1/2'>
         <CotatoLogo />
