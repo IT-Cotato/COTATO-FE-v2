@@ -17,7 +17,7 @@ import {AdminApplicationsResultDropdown} from '@/app/admin/(with-sidebar)/applic
 import {formatKoreanDate} from '@/utils/formatDate';
 import {AdminApplicationsResultFilter} from '@/app/admin/(with-sidebar)/applications/_components/table/AdminApplicationsResultFilter';
 import {useRef} from 'react';
-import {useClickOutside} from '@/hooks/useClickOutside';
+import {useClickOutside} from '@repo/ui/hooks/useClickOutside';
 
 interface AdminApplicationsTableViewProps {
   items?: ApplicantType[];
@@ -69,7 +69,7 @@ export const AdminApplicationsTableView = ({
             return (
               <th
                 key={col.key}
-                className='px-3 py-4 text-center align-middle text-body-l font-semibold text-neutral-600'>
+                className='text-body-l px-3 py-4 text-center align-middle font-semibold text-neutral-600'>
                 <div className='flex items-center justify-center gap-2.5'>
                   <span>{col.label}</span>
 

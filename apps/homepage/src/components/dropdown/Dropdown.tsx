@@ -3,7 +3,7 @@
 import {useRef, useState} from 'react';
 import clsx from 'clsx';
 import ChevronDown from '@/assets/chevrons/chevron-down.svg';
-import {useClickOutside} from '@/hooks/useClickOutside';
+import {useClickOutside} from '@repo/ui/hooks/useClickOutside';
 
 interface DropdownProps<T extends string> {
   value: T; // 현재 선택된 값
