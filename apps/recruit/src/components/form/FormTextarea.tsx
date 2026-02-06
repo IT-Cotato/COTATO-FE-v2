@@ -19,6 +19,13 @@ export const FormTextarea = forwardRef<HTMLTextAreaElement, FormTextareaProps>(
     const generatedId = useId();
     const inputId = id ?? generatedId;
 
+    const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+      if (maxLength && e.target.value.length > maxLength) {
+        e.target.value = e.target.value.slice(0, maxLength);
+      }
+      props.onChange?.(e);
+    };
+
     return (
       <div className={formFieldStyles.wrapper}>
         <label htmlFor={inputId} className={formFieldStyles.label}>
@@ -43,6 +50,7 @@ export const FormTextarea = forwardRef<HTMLTextAreaElement, FormTextareaProps>(
             )}
             maxLength={maxLength}
             {...props}
+            onChange={handleChange}
           />
 
           {maxLength && (
