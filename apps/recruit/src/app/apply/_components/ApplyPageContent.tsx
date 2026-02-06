@@ -30,5 +30,9 @@ export default function ApplyPageContent() {
     }
   }, [applicationId, applicationStatus, router]);
 
+  if (!isAuthenticated || !applicationId) {
+    return null;
+  }
+
   return <ApplyFormContainer />;
 }
