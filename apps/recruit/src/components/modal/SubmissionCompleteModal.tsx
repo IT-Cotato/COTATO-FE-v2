@@ -17,6 +17,7 @@ export const SubmissionCompleteModal = ({
       isOpen={isOpen}
       onClose={onClose}
       title='제출이 완료되었습니다!'
+      titleStyle='text-h4 text-neutral-800'
       content={
         <p>
           합격 발표 여부는
