@@ -97,7 +97,7 @@ export const AboutUsMainActivitiesContainer = () => {
             <motion.div
               layoutId={`card-${selectedId}`}
               onClick={() => setSelectedId(null)}
-              className={`pointer-events-auto relative z-50 h-2/3 overflow-hidden rounded-[26px] bg-neutral-600 text-black ${selectedActivity.id === 1 || selectedActivity.id === 4 ? 'w-250' : 'w-150'}`}>
+              className={`pointer-events-auto relative z-50 h-2/3 overflow-hidden rounded-[26px] bg-neutral-600 text-black ${selectedActivity.id === 1 || selectedActivity.id === 4 ? 'w-250' : 'w-170'}`}>
               <div className='relative h-2/3 w-full'>
                 <Image
                   src={selectedActivity.src}
