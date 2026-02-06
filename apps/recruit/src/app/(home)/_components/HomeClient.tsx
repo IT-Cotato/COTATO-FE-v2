@@ -14,7 +14,7 @@ export const HomeClient = () => {
   const router = useRouter();
 
   const {data: recruitmentStatus, isLoading} = useRecruitmentStatusQuery();
-  const isRecruiting = recruitmentStatus?.data?.isActive ?? false;
+  const isRecruiting = recruitmentStatus?.isActive ?? false;
 
   const submittedParam = searchParams.get('submitted');
 

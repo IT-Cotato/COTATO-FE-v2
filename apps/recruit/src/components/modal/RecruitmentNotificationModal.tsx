@@ -16,18 +16,17 @@ export const RecruitmentNotificationModal = ({
     <Modal
       isOpen={isOpen}
       onClose={onClose}
+      titleStyle='text-h4 text-neutral-800'
       title='모집안내 알림 신청이 접수되었습니다.'
       content={
         <>
           코테이토에 관심 가져 주셔서 감사드립니다.
           <br />
           모집이 시작되면 입력하신
-          <span className='font-bold'>이메일</span>로 <br />
+          <span className='text-primary font-bold'> 이메일</span>로 <br />
           관련 안내를 보내드릴 예정입니다. <br />
           <p className='mt-5'>
-            지원 일정 및 공지는
-            <span className='font-bold'>이메일</span>을 통해 확인하실 수
-            있습니다.
+            지원 일정 및 공지는 이메일을 통해 확인하실 수 있습니다.
           </p>
         </>
       }

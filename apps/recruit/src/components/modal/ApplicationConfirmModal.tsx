@@ -17,6 +17,7 @@ export const ApplicationConfirmModal = ({
       isOpen={isOpen}
       onClose={onClose}
       title='지원서를 제출하시겠습니까?'
+      titleStyle='text-h4 text-neutral-800'
       content={
         <>
           <p>제출 후에는 수정이 불가능합니다.</p>

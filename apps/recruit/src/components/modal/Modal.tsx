@@ -36,7 +36,7 @@ export const Modal = ({
 
   return (
     <div
-      className='fixed inset-0 z-modal flex items-center justify-center bg-black/50 backdrop-blur-sm'
+      className='z-modal fixed inset-0 flex items-center justify-center bg-black/50 backdrop-blur-sm'
       onClick={onClose}>
       <FocusTrap
         focusTrapOptions={{
@@ -70,7 +70,7 @@ export const Modal = ({
               {title}
             </h4>
             {content && (
-              <div className='text-body-m font-normal text-neutral-800'>
+              <div className='text-h5 font-normal text-neutral-600'>
                 {content}
               </div>
             )}

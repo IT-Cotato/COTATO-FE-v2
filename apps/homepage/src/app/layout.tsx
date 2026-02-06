@@ -46,7 +46,7 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang='en'
+      lang='ko'
       className={`${pretendard.variable} ${sebangGothic.variable} ${roboto.variable} antialiased`}>
       <body>{children}</body>
     </html>
