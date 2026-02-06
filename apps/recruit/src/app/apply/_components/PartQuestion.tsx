@@ -74,6 +74,11 @@ export const PartQuestion = ({
   const previousPartRef = useRef<PartType | undefined>(undefined);
 
   useEffect(() => {
+    register('pdfFileKey');
+    register('pdfFileUrl');
+  }, [register]);
+
+  useEffect(() => {
     if (previousPartRef.current && previousPartRef.current !== activePart) {
       hasInitializedRef.current = false;
     }
@@ -92,30 +97,31 @@ export const PartQuestion = ({
           }
         });
 
-        if (questionsData.pdfFileKey) {
-          setValue('pdfFileKey', questionsData.pdfFileKey);
-          const fileName =
-            questionsData.pdfFileKey.split('/').pop() ||
-            questionsData.pdfFileKey;
-          setValue('pdfFileName', fileName);
+          if (questionsData.pdfFileKey) {
+            setValue('pdfFileKey', questionsData.pdfFileKey);
+            const fileName =
+              questionsData.pdfFileKey.split('/').pop() ||
+              questionsData.pdfFileKey;
+            setValue('pdfFileName', fileName);
+          }
+          
+          // 마지막 질문(포트폴리오 링크)의 답변을 pdfFileUrl에도 설정
+          const lastQuestion = questionsData.questionsWithAnswers.at(-1);
+          if (lastQuestion?.savedAnswer?.content) {
+            setValue('pdfFileUrl', lastQuestion.savedAnswer.content);
+          }
         }
-      }
       if (isMatchingPart) {
         hasInitializedRef.current = true;
       }
     }
   }, [questionsData, setValue, activePart]);
 
-  useEffect(() => {
-    if (pdfFileUrlData?.pdfUrl) {
-      setValue('pdfFileUrl', pdfFileUrlData.pdfUrl);
-    }
-  }, [pdfFileUrlData, setValue]);
+
 
   const handleFileChange = (files: File[]) => {
     if (files.length === 0) {
       setValue('pdfFileKey', undefined);
-      setValue('pdfFileUrl', undefined);
       setValue('pdfFileName', undefined);
       return;
     }
@@ -123,9 +129,8 @@ export const PartQuestion = ({
     const file = files[0];
 
     uploadFile(file, {
-      onSuccess: ({pdfFileKey, pdfFileUrl}) => {
+      onSuccess: ({pdfFileKey}) => {
         setValue('pdfFileKey', pdfFileKey);
-        setValue('pdfFileUrl', pdfFileUrl);
         setValue('pdfFileName', file.name);
       },
     });
@@ -202,7 +207,10 @@ export const PartQuestion = ({
                         }) => (
                           <FormLink
                             value={value ? [value] : ['']}
-                            onChange={(links) => onChange(links[0])}
+                            onChange={(links) => {
+                              onChange(links[0]);
+                              setValue('pdfFileUrl', links[0]);
+                            }}
                             error={error?.message}
                             placeholder={`링크를 입력해주세요`}
                           />
