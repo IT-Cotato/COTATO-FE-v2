@@ -17,7 +17,7 @@ export const CustomHeader = ({
       <button type='button' onClick={decreaseMonth}>
         <LeftChevron className='h-4 w-4' />
       </button>
-      <span className='text-body-s text-neutral-800'>
+      <span className='text-body-l-sb text-black'>
         {monthDate.toLocaleString('en-US', {
           month: 'long',
           year: 'numeric',

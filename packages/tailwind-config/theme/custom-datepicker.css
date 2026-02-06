@@ -16,8 +16,7 @@
   background-color: #fff !important;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  width: 308px;
+  width: fit-content !important;
   height: auto !important;
 }
 
@@ -52,6 +51,7 @@
   margin: 0 !important;
   display: flex;
   flex-direction: column;
+  align-items: center;
 }
 
 .react-datepicker__day {
