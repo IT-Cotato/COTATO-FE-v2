@@ -12,6 +12,7 @@ const ACTIVITIES = [
     description: 'CS 교육에 대한 설명이 들어갑니다.',
     src: 'https://picsum.photos/800/600?random=1',
     gridClass: 'col-span-12 md:col-span-7',
+    modalWidth: 'max-w-[1098px]',
   },
   {
     id: 2,
@@ -19,6 +20,7 @@ const ACTIVITIES = [
     description: 'CS 퀴즈에 대한 설명이 들어갑니다.',
     src: 'https://picsum.photos/800/600?random=2',
     gridClass: 'col-span-12 md:col-span-5',
+    modalWidth: 'max-w-[756px]',
   },
   {
     id: 3,
@@ -26,6 +28,7 @@ const ACTIVITIES = [
     description: '기획-디자인 10분 발표에 대한 설명이 들어갑니다.',
     src: 'https://picsum.photos/800/600?random=3',
     gridClass: 'col-span-12 md:col-span-5',
+    modalWidth: 'max-w-[756px]',
   },
   {
     id: 4,
@@ -33,6 +36,7 @@ const ACTIVITIES = [
     description: '네트워킹에 대한 설명이 들어갑니다.',
     src: 'https://picsum.photos/800/600?random=4',
     gridClass: 'col-span-12 md:col-span-7',
+    modalWidth: 'max-w-[1098px]',
   },
 ];
 
@@ -41,7 +45,7 @@ export const AboutUsMainActivitiesContainer = () => {
   const selectedActivity = ACTIVITIES.find((a) => a.id === selectedId);
 
   return (
-    <section className='relative flex w-full flex-col items-center gap-10 overflow-hidden bg-[linear-gradient(180deg,#010101_13.94%,rgba(1,1,1,0)_100%)] py-20 md:gap-25 md:py-40'>
+    <div className='relative flex w-full flex-col items-center gap-10 overflow-hidden bg-[linear-gradient(180deg,#010101_13.94%,rgba(1,1,1,0)_100%)] py-20 md:gap-25 md:py-40'>
       <div className='pointer-events-none absolute inset-0 z-0'>
         <AboutUsBackgroundSecond className='absolute -right-20 h-full w-auto opacity-50 md:-right-100 md:opacity-100' />
       </div>
@@ -92,7 +96,7 @@ export const AboutUsMainActivitiesContainer = () => {
             <motion.div
               onClick={() => setSelectedId(null)}
               layoutId={`card-${selectedId}`}
-              className='relative z-50 flex h-full max-h-[70%] w-full max-w-250 flex-col overflow-hidden rounded-[26px] bg-neutral-600 text-white'>
+              className={`relative z-50 flex h-full max-h-[70%] w-full flex-col overflow-hidden rounded-[26px] bg-neutral-600 text-white ${selectedActivity.modalWidth}`}>
               <div className='relative h-[40%] min-h-62.5 w-full md:h-[60%]'>
                 <Image
                   src={selectedActivity.src}
@@ -121,6 +125,6 @@ export const AboutUsMainActivitiesContainer = () => {
           </div>
         )}
       </AnimatePresence>
-    </section>
+    </div>
   );
 };
