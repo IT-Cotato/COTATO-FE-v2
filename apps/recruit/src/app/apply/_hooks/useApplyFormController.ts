@@ -1,10 +1,7 @@
 import {useState, useEffect} from 'react';
 import {useForm, UseFormReturn} from 'react-hook-form';
 import {zodResolver} from '@hookform/resolvers/zod';
-import {
-  ApplyFormSchema,
-  ApplyFormData,
-} from '@/schemas/apply/apply-schema';
+import {ApplyFormSchema, ApplyFormData} from '@/schemas/apply/apply-schema';
 import {useRouter, useSearchParams} from 'next/navigation';
 import {useRecruitmentStore} from '@/store/useRecruitmentStore';
 import {
@@ -97,9 +94,7 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
   useGetEtcQuestionsQuery(applicationId ? Number(applicationId) : null);
 
   const {data: partQuestionsData, isFetched: isPartQuestionsFetched} =
-    useGetPartQuestionsQuery(
-      applicationId ? Number(applicationId) : null
-    );
+    useGetPartQuestionsQuery(applicationId ? Number(applicationId) : null);
 
   // Step 건너뛰기 방지 가드 훅
   useApplyStepGuard({
@@ -160,7 +155,12 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
     const isValid = await validateStep(step, methods, partQuestionsData);
 
     if (isValid) {
-      await handleSave();
+      try {
+        await handleSave();
+      } catch {
+        alert('저장에 실패했습니다. 잠시 후 다시 시도해주세요.');
+        return;
+      }
 
       const params = new URLSearchParams(searchParams.toString());
       params.set('step', String(step + 1));
