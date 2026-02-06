@@ -2,7 +2,7 @@
 
 import {forwardRef, useState, type InputHTMLAttributes} from 'react';
 import clsx from 'clsx';
-import {formFieldStyles} from '@/components/form/form.styles';
+import {formFieldStyles} from './form.styles';
 
 interface FormLinkProps extends Omit<
   InputHTMLAttributes<HTMLInputElement>,

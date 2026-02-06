@@ -1,8 +1,8 @@
 'use client';
 
 import {Controller, useFormContext} from 'react-hook-form';
-import {FormInput, FormInputProps} from './FormInput';
 import {useRef} from 'react';
+import {FormInput, FormInputProps} from '@repo/ui/components/form/FormInput';
 
 interface FormattedInputProps extends Omit<FormInputProps, 'onChange'> {
   name: string;

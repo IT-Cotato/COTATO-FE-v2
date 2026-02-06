@@ -1,13 +1,14 @@
 import {FullButton} from '@repo/ui/components/buttons/FullButton';
-import {FormInput} from '@/components/form/FormInput';
+import {FormInput} from '@repo/ui/components/form/FormInput';
 import {FormRadio} from '@/components/form/FormRadio';
-import {FormTextarea} from '@/components/form/FormTextarea';
+
 import {
   DISCOVERY_PATH_LABEL_MAP,
   ETC_QUESTION_LABELS,
   PRIVACY_POLICY,
 } from '@/constants/admin/admin-applications';
 import {AdminApplicationEtcQuestionsType} from '@/schemas/admin/admin-application.schema';
+import {FormTextarea} from '@repo/ui/components/form/FormTextarea';
 
 interface EtcQuestionViewProps {
   onPrev: () => void;

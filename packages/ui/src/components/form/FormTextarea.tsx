@@ -43,7 +43,7 @@ export const FormTextarea = forwardRef<HTMLTextAreaElement, FormTextareaProps>(
           />
 
           {maxLength && (
-            <div className='absolute right-4 bottom-4 text-h5 text-neutral-400'>
+            <div className='text-h5 absolute right-4 bottom-4 text-neutral-400'>
               <span
                 className={clsx(
                   currentLength > maxLength ? 'text-alert' : 'text-black'

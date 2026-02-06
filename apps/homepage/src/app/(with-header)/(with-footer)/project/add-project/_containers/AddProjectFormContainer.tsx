@@ -1,4 +1,5 @@
 'use client';
+import {AddProjectForm} from '@/app/(with-header)/(with-footer)/project/add-project/_components/add-project/AddProjectForm';
 import {PeriodField} from '@/app/(with-header)/(with-footer)/project/add-project/_components/PeriodField';
 import {Dropdown} from '@/components/dropdown/Dropdown';
 import {useState} from 'react';
@@ -12,7 +13,7 @@ export const AddProjectFormContainer = () => {
   const generations = ['12기', '11기', '10기', '9기']; //나중에 API 데이터로 연동하기
   const activities = ['전체', '데모데이', '해커톤'];
   return (
-    <section className='flex w-full max-w-275 flex-col gap-7.5 py-7.5'>
+    <section className='flex w-full flex-col gap-[34px] py-7.5'>
       <div className='flex justify-between'>
         <div className='flex gap-6.25'>
           <Dropdown
@@ -29,6 +30,7 @@ export const AddProjectFormContainer = () => {
           />
         </div>
       </div>
+      <AddProjectForm />
       <PeriodField
         startDate={startDate}
         setStartDate={setStartDate}

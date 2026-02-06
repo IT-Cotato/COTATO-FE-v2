@@ -2,7 +2,7 @@
 
 import {forwardRef, useId, type InputHTMLAttributes} from 'react';
 import clsx from 'clsx';
-import {formFieldStyles} from '@/components/form/form.styles';
+import {formFieldStyles} from './form.styles';
 
 export interface FormInputProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string;
