@@ -19,13 +19,13 @@ import {Spinner} from '@/components/ui/Spinner';
 import {HEADER_HEIGHT} from '@/constants/ui';
 import {RecruitmentInformation} from '@/components/recruitment/RecruitmentInformation';
 import {scheduleSections} from '@/constants/admin/admin-application-questions';
+import HeroMainBanner from '@repo/ui/components/banner/HeroMainBanner';
+import Image from 'next/image';
 
 const APPLY_SCHEDULE_SECTIONS = scheduleSections.filter(
   (schedule) =>
     schedule.label !== '코커톤 날짜' && schedule.label !== '데모데이 날짜'
 );
-import HeroMainBanner from '@repo/ui/components/banner/HeroMainBanner';
-import Image from 'next/image';
 
 interface ApiErrorData {
   code: string;
