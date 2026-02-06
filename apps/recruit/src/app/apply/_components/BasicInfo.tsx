@@ -249,7 +249,7 @@ export const BasicInfo = ({
   };
 
   return (
-    <div className='flex w-full flex-col gap-5'>
+    <div className='flex w-full flex-col gap-5 pb-14'>
       <div className='flex justify-center pt-5'>
         <StepIndicator currentStep={step} totalSteps={3} />
       </div>
