@@ -10,7 +10,7 @@ export const AboutUsBanner = () => {
         <Image
           src='/keycap/background-universe.svg'
           alt=''
-          width={1440}
+          width={1920}
           height={600}
           className='object-cover'
           priority
