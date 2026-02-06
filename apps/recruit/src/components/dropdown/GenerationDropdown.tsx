@@ -2,7 +2,7 @@
 
 import {useRef, useState} from 'react';
 import ChevronDown from '@/assets/chevrons/chevron-down.svg';
-import {useClickOutside} from '@/hooks/useClickOutside';
+import {useClickOutside} from '@repo/ui/hooks/useClickOutside';
 import clsx from 'clsx';
 
 interface GenerationDropdownProps {
@@ -42,7 +42,7 @@ export const GenerationDropdown = ({
           onClick={handleToggle}
           disabled={disabled}
           className={clsx(
-            'shadow-default flex items-center gap-2 rounded-[30px] px-5 py-2 text-body-l',
+            'shadow-default text-body-l flex items-center gap-2 rounded-[30px] px-5 py-2',
             disabled
               ? 'cursor-not-allowed bg-neutral-100 text-neutral-400'
               : 'bg-white text-neutral-700'
@@ -67,7 +67,7 @@ export const GenerationDropdown = ({
                 aria-selected={gen === generation}
                 key={gen}
                 onClick={() => handleSelect(gen)}
-                className='cursor-pointer py-1.5 text-body-m font-normal text-neutral-400 hover:text-primary'>
+                className='text-body-m hover:text-primary cursor-pointer py-1.5 font-normal text-neutral-400'>
                 {gen}기
               </li>
             ))}

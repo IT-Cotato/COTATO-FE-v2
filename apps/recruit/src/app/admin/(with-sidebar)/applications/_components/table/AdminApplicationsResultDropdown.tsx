@@ -2,7 +2,7 @@ import ChevronDown from '@/assets/chevrons/chevron-down.svg';
 import {useRef, useState} from 'react';
 import clsx from 'clsx';
 
-import {useClickOutside} from '@/hooks/useClickOutside';
+import {useClickOutside} from '@repo/ui/hooks/useClickOutside';
 import {
   APPLICATION_RESULT_CONFIG,
   APPLICATION_RESULT_OPTIONS,
@@ -48,7 +48,7 @@ export const AdminApplicationsResultDropdown = ({
         aria-haspopup='listbox'
         aria-expanded={isOpen}
         className={clsx(
-          'inline-flex w-full items-center justify-center gap-1 rounded-[10px] py-1.5 text-body-s text-white',
+          'text-body-s inline-flex w-full items-center justify-center gap-1 rounded-[10px] py-1.5 text-white',
           bg
         )}
         onClick={() => setIsOpen((prev) => !prev)}>
@@ -65,7 +65,7 @@ export const AdminApplicationsResultDropdown = ({
         <ul
           role='listbox'
           aria-label='지원 결과 선택'
-          className='absolute top-full z-10 mt-1 w-full rounded-sm bg-neutral-700 text-body-s text-neutral-300 shadow-lg'>
+          className='text-body-s absolute top-full z-10 mt-1 w-full rounded-sm bg-neutral-700 text-neutral-300 shadow-lg'>
           {APPLICATION_RESULT_OPTIONS.map((option) => {
             const isSelected = option === selectedResult;
 
