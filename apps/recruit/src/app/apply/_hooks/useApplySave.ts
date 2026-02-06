@@ -19,7 +19,10 @@ import {
 import {QUERY_KEYS} from '@/constants/query-keys';
 
 interface UseApplySaveReturn {
-  handleSave: (step: number, methods: UseFormReturn<ApplyFormData>) => Promise<void>;
+  handleSave: (
+    step: number,
+    methods: UseFormReturn<ApplyFormData>
+  ) => Promise<void>;
   showSaveSuccess: boolean;
 }
 
@@ -89,6 +92,13 @@ export const useApplySave = (
             queryKey: QUERY_KEYS.APPLY.PART_QUESTIONS(applicationId),
           });
           clearPartQuestionFields(methods);
+
+          // 서버에 저장된 PDF 및 답변 데이터도 초기화
+          await savePartQuestions({
+            answers: [],
+            pdfFileKey: null,
+            pdfFileUrl: null,
+          });
         }
       } else if (step === 2) {
         const answersToSave = Object.entries(data)

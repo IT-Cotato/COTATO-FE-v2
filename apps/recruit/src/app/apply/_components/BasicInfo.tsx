@@ -3,7 +3,7 @@
 import {useEffect, useRef, useCallback} from 'react';
 import {useSearchParams} from 'next/navigation';
 import {useFormContext, Controller} from 'react-hook-form';
-import {useQuery} from '@tanstack/react-query';
+import {useQuery, useQueryClient} from '@tanstack/react-query';
 import {FormDropdown} from '@/components/form/FormDropdown';
 import {FormInput} from '@/components/form/FormInput';
 import {FormRadio} from '@/components/form/FormRadio';
@@ -49,6 +49,7 @@ export const BasicInfo = ({
     formState: {errors},
   } = useFormContext<ApplyFormData>();
 
+  const queryClient = useQueryClient();
   const hasInitializedRef = useRef(false);
   const previousPartRef = useRef<string | undefined>(undefined);
 
@@ -69,7 +70,14 @@ export const BasicInfo = ({
     setValue('pdfFileKey', undefined);
     setValue('pdfFileUrl', undefined);
     setValue('pdfFileName', undefined);
-  }, [getValues, unregister, setValue]);
+
+    // 이전 파트의 질문 캐시 제거 (파트 변경 시 이전 데이터가 남아있는 문제 방지)
+    if (applicationId) {
+      queryClient.removeQueries({
+        queryKey: QUERY_KEYS.APPLY.PART_QUESTIONS(Number(applicationId)),
+      });
+    }
+  }, [getValues, unregister, setValue, applicationId, queryClient]);
 
   useEffect(() => {
     if (basicInfo && !hasInitializedRef.current) {
@@ -231,7 +239,6 @@ export const BasicInfo = ({
           placeholder={placeholder}
           readOnly={readOnly}
           autoComplete={autocomplete}
-          maxLength={200}
           {...register(name)}
           error={errors[name]?.message ?? ''}
           className='w-full'
