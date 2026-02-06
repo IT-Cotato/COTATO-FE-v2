@@ -95,7 +95,7 @@ export const ApplyFormContainer = () => {
       }
     } else if (error instanceof Error) {
       if (error.name !== 'CancelledError') {
-        alert(error.message);
+        alert('이미 제출된 지원서입니다.');
         router.push(ROUTES.HOME);
       }
     }
