@@ -97,21 +97,20 @@ export const PartQuestion = ({
           }
         });
 
-          if (questionsData.pdfFileKey) {
-            setValue('pdfFileKey', questionsData.pdfFileKey);
-            const fileName =
-              questionsData.pdfFileKey.split('/').pop() ||
-              questionsData.pdfFileKey;
-            setValue('pdfFileName', fileName);
-          }
-          
-          // 마지막 질문(포트폴리오 링크)의 답변을 pdfFileUrl에도 설정
-          const lastQuestion = questionsData.questionsWithAnswers.at(-1);
-          if (lastQuestion?.savedAnswer?.content) {
-            setValue('pdfFileUrl', lastQuestion.savedAnswer.content);
-          }
+        if (questionsData.pdfFileKey) {
+          setValue('pdfFileKey', questionsData.pdfFileKey);
+          const fileName =
+            questionsData.pdfFileKey.split('/').pop() ||
+            questionsData.pdfFileKey;
+          setValue('pdfFileName', fileName);
         }
-      if (isMatchingPart) {
+
+        // 마지막 질문(포트폴리오 링크)의 답변을 pdfFileUrl에도 설정
+        const lastQuestion = questionsData.questionsWithAnswers.at(-1);
+        if (lastQuestion?.savedAnswer?.content) {
+          setValue('pdfFileUrl', lastQuestion.savedAnswer.content);
+        }
+
         hasInitializedRef.current = true;
       }
     }
