@@ -32,7 +32,7 @@ export default function RecruitmentLayout({
 }: RecruitmentLayoutProps) {
   const router = useRouter();
   const {data: recruitmentStatus} = useRecruitmentStatusQuery();
-  const isRecruiting = recruitmentStatus?.data?.isActive ?? false;
+  const isRecruiting = recruitmentStatus?.isActive ?? false;
 
   return (
     <div
