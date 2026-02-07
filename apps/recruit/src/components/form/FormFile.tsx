@@ -57,7 +57,9 @@ export const FormFile = forwardRef<HTMLInputElement, FormFileProps>(
 
       const newFiles = Array.from(e.target.files);
 
-      if (maxCount && files.length + newFiles.length > maxCount) {
+      const existingCount =
+        files.length > 0 ? files.length : (value?.length ?? 0);
+      if (maxCount && existingCount + newFiles.length > maxCount) {
         alert(`파일은 최대 ${maxCount}개까지 업로드할 수 있습니다.`);
         e.target.value = '';
         return;
@@ -116,7 +118,7 @@ export const FormFile = forwardRef<HTMLInputElement, FormFileProps>(
             key={index}
             className={clsx(
               formFieldStyles.field,
-              'mb-2 flex h-18.25 flex-row items-center rounded-[10px] px-10 py-4 text-h5 text-black'
+              'text-h5 mb-2 flex h-18.25 flex-row items-center rounded-[10px] px-10 py-4 text-black'
             )}>
             <FolderIcon />
             {props.readOnly ? (
@@ -144,7 +146,7 @@ export const FormFile = forwardRef<HTMLInputElement, FormFileProps>(
         {!props.readOnly && (
           <label
             className={clsx(
-              'flex h-19 items-center justify-center rounded-[10px] bg-neutral-400 px-10 py-4 text-center text-h5 text-white',
+              'text-h5 flex h-19 items-center justify-center rounded-[10px] bg-neutral-400 px-10 py-4 text-center text-white',
               isUploading ? 'cursor-not-allowed opacity-60' : 'cursor-pointer'
             )}>
             <span>{isUploading ? '파일 업로드 중입니다' : placeholder}</span>

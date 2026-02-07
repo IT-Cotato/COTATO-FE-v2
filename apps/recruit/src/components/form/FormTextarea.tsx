@@ -19,10 +19,20 @@ export const FormTextarea = forwardRef<HTMLTextAreaElement, FormTextareaProps>(
     const generatedId = useId();
     const inputId = id ?? generatedId;
 
+    const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+      if (maxLength && e.target.value.length > maxLength) {
+        e.target.value = e.target.value.slice(0, maxLength);
+      }
+      props.onChange?.(e);
+    };
+
     return (
       <div className={formFieldStyles.wrapper}>
         <label htmlFor={inputId} className={formFieldStyles.label}>
           {label}
+          {props.required && (
+            <span className={formFieldStyles.required}>*</span>
+          )}
         </label>
 
         <div className='relative w-full'>
@@ -40,10 +50,11 @@ export const FormTextarea = forwardRef<HTMLTextAreaElement, FormTextareaProps>(
             )}
             maxLength={maxLength}
             {...props}
+            onChange={handleChange}
           />
 
           {maxLength && (
-            <div className='absolute right-4 bottom-4 text-h5 text-neutral-400'>
+            <div className='text-h5 absolute right-4 bottom-4 text-neutral-400'>
               <span
                 className={clsx(
                   currentLength > maxLength ? 'text-alert' : 'text-black'

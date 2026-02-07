@@ -47,6 +47,7 @@ export const ENDPOINT = {
     GENERATIONS: '/api/admin/generations',
   },
   APPLY: {
+    STATUS: '/api/applications/status',
     START: '/api/applications/start',
     BASIC_INFO: (applicationId: number) =>
       `/api/applications/${applicationId}/basic-info`,
