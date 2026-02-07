@@ -179,18 +179,25 @@ export const BasicInfo = ({
             name={name}
             control={control}
             render={({field, fieldState: {error}}) => (
-              <FormDropdown
-                id={name}
-                label={label}
-                placeholder={placeholder}
-                options={options || []}
-                value={field.value}
-                onChange={field.onChange}
-                readOnly={readOnly}
-                className='w-full'
-                error={error?.message}
-                required
-              />
+              <>
+                <FormDropdown
+                  id={name}
+                  label={label}
+                  placeholder={placeholder}
+                  options={options || []}
+                  value={field.value}
+                  onChange={field.onChange}
+                  readOnly={readOnly}
+                  className='w-full'
+                  error={error?.message}
+                  required
+                />
+                {name === 'part' && (
+                  <p className='text-body-l mt-2 text-neutral-500'>
+                    * 파트 변경 시 업로드한 파일이 초기화됩니다.
+                  </p>
+                )}
+              </>
             )}
           />
         </div>

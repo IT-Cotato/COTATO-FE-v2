@@ -21,7 +21,8 @@ import {QUERY_KEYS} from '@/constants/query-keys';
 interface UseApplySaveReturn {
   handleSave: (
     step: number,
-    methods: UseFormReturn<ApplyFormData>
+    methods: UseFormReturn<ApplyFormData>,
+    showToast?: boolean
   ) => Promise<void>;
   showSaveSuccess: boolean;
 }
@@ -59,7 +60,8 @@ export const useApplySave = (
 
   const handleSave = async (
     step: number,
-    methods: UseFormReturn<ApplyFormData>
+    methods: UseFormReturn<ApplyFormData>,
+    showToast: boolean = true
   ) => {
     const data = methods.getValues();
 
@@ -88,9 +90,6 @@ export const useApplySave = (
         const currentPart = data.part;
 
         if (previousPart && previousPart !== currentPart) {
-          await queryClient.invalidateQueries({
-            queryKey: QUERY_KEYS.APPLY.PART_QUESTIONS(applicationId),
-          });
           clearPartQuestionFields(methods);
 
           // 서버에 저장된 PDF 및 답변 데이터도 초기화
@@ -130,7 +129,9 @@ export const useApplySave = (
 
         await saveEtcQuestions(requestData);
       }
-      showSuccessMessage();
+      if (showToast) {
+        showSuccessMessage();
+      }
     } catch (e) {
       console.error(
         '지원서 저장에 실패했습니다. 잠시 후 다시 시도해주세요.',
