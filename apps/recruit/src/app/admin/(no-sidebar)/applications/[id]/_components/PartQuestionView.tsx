@@ -2,11 +2,13 @@ import {FullButton} from '@repo/ui/components/buttons/FullButton';
 import {FormLink} from '@/components/form/FormLink';
 import {FormTextarea} from '@/components/form/FormTextarea';
 import {PartQuestionWithAnswerType} from '@/schemas/admin/admin-application.schema';
+import {FormFile} from '@/components/form/FormFile';
 
 interface PartQuestionViewProps {
   onNext: () => void;
   onPrev: () => void;
   questionsWithAnswers: PartQuestionWithAnswerType[];
+  pdfFileKey: string | null | undefined;
   pdfFileUrl: string | null | undefined;
 }
 
@@ -14,6 +16,7 @@ export const PartQuestionView = ({
   onNext,
   onPrev,
   questionsWithAnswers,
+  pdfFileKey,
   pdfFileUrl,
 }: PartQuestionViewProps) => {
   if (questionsWithAnswers.length === 0) {
@@ -58,6 +61,8 @@ export const PartQuestionView = ({
                   readOnly
                   value={[pdfFileUrl]}
                 />
+              ) : pdfFileKey ? (
+                <FormFile readOnly value={[pdfFileKey]} />
               ) : (
                 <p className='text-h5 flex justify-center text-neutral-400'>
                   첨부된 포트폴리오가 없습니다.
