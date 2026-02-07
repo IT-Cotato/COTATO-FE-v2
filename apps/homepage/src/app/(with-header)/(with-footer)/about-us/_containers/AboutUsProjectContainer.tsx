@@ -32,10 +32,10 @@ export const AboutUsProjectContainer = () => {
                 key={project.id}
                 initial={false}
                 animate={{
-                  x: offset * 280,
-                  z: isActive ? 0 : -200,
-                  rotateY: offset === 0 ? 0 : offset > 0 ? -30 : 30,
-                  scale: isActive ? 1 : 0.85,
+                  x: offset * 300,
+                  z: isActive ? 0 : -150,
+                  rotateY: offset === 0 ? 0 : offset > 0 ? -50 : 50,
+                  scale: isActive ? 1 : 0.75,
                   opacity: absOffset > 2 ? 0 : 1,
                 }}
                 transition={{
