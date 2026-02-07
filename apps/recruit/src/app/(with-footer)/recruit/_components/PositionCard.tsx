@@ -26,12 +26,12 @@ export const PositionCard = ({item}: PositionCardProps) => {
 
       <div className='flex flex-col gap-2.5'>
         <BrandLogo className='z-10 h-5 w-5 fill-neutral-50 transition-colors duration-300 group-hover:fill-neutral-800' />
-        <p className='z-10 text-h3 text-neutral-50 transition-colors duration-300 group-hover:text-neutral-800'>
+        <p className='text-h3 z-10 text-neutral-50 transition-colors duration-300 group-hover:text-neutral-800'>
           {item.name}
         </p>
       </div>
 
-      <p className='z-10 mb-7.5 text-body-l wrap-anywhere whitespace-pre-line text-neutral-800 opacity-0 transition-opacity duration-300 group-hover:opacity-100'>
+      <p className='text-body-l z-10 mb-7.5 wrap-anywhere whitespace-pre-line text-neutral-800 opacity-0 transition-opacity duration-300 group-hover:opacity-100'>
         {item.detail}
       </p>
     </div>

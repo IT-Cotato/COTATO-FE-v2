@@ -1,44 +1,21 @@
 import {useState} from 'react';
 import {FormInput} from '@repo/ui/components/form/FormInput';
 import {FormLink} from '@repo/ui/components/form/FormLink';
-import {Position} from '@/schemas/project/project-schema';
 import {PeriodField} from '@/app/(with-header)/(with-footer)/project/add-project/_components/PeriodField';
 import {TeamSection} from '@/app/(with-header)/(with-footer)/project/add-project/_components/TeamSection';
-import {TeamState} from '@/schemas/project/project-type';
+import {useTeamMembers} from '@/app/(with-header)/(with-footer)/project/add-project/_hooks/useTeamMember';
 
 export const AddProjectForm = () => {
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
 
-  const [teamMembers, setTeamMembers] = useState<TeamState>({
-    PM: ['감직이'],
-    DE: ['감직이'],
-    FE: ['감직이'],
-    BE: ['감직이'],
-  });
-
-  const addMember = (role: Position) => {
-    if (teamMembers[role].length >= 4) return; // 4명 제한
-    setTeamMembers((prev) => ({
-      ...prev,
-      [role]: [...prev[role], '감직이'],
-    }));
-  };
-
-  const removeMember = (role: Position, index: number) => {
-    setTeamMembers((prev) => ({
-      ...prev,
-      [role]: prev[role].filter((_, i) => i !== index),
-    }));
-  };
-
-  const updateMemberName = (role: Position, index: number, newName: string) => {
-    setTeamMembers((prev) => {
-      const updatedRole = [...prev[role]];
-      updatedRole[index] = newName;
-      return {...prev, [role]: updatedRole};
+  const {teamMembers, addMember, removeMember, updateMemberName} =
+    useTeamMembers({
+      PM: ['감직이'],
+      DE: ['감직이'],
+      FE: ['감직이'],
+      BE: ['감직이'],
     });
-  };
 
   return (
     <section className='flex flex-col items-start gap-5 self-stretch'>

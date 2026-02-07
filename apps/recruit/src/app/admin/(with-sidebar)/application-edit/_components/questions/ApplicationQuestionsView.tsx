@@ -14,12 +14,12 @@ export const ApplicationQuestionsView = ({
           <div
             role='group'
             aria-labelledby={`question-view-${sequence}`}
-            className='rounded-[10px] border border-neutral-300 bg-white px-5.25 py-4.5 text-h5 text-neutral-800'>
+            className='text-h5 rounded-[10px] border border-neutral-300 bg-white px-5.25 py-4.5 text-neutral-800'>
             <p id={`question-view-${sequence}`}>
               {sequence}. {content}
             </p>
           </div>
-          <div className='ml-6.25 text-h5 text-neutral-400'>
+          <div className='text-h5 ml-6.25 text-neutral-400'>
             글자 제한: {maxLength} 자
           </div>
         </li>

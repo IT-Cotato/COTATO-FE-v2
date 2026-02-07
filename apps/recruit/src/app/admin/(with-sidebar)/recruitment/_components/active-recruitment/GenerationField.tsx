@@ -18,7 +18,7 @@ export const GenerationField = ({
           readOnly
           disabled={disabled}
           onChange={(e) => onChange(e.target.value)}
-          className='w-19 rounded-[10px] bg-neutral-50 py-1.75 text-center text-body-l text-neutral-800'
+          className='text-body-l w-19 rounded-[10px] bg-neutral-50 py-1.75 text-center text-neutral-800'
           aria-label='기수 입력'
         />
         <span className='text-body-m font-semibold text-neutral-800'>기</span>

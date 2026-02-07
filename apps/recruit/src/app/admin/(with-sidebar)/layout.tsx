@@ -9,7 +9,7 @@ export default function AdminWithSideBarLayout({
   return (
     <ProtectedRoute requireRole='STAFF'>
       <section className='flex min-h-screen w-full min-w-360 flex-row bg-white'>
-        <aside className='sticky left-0 z-sidebar bg-neutral-50'>
+        <aside className='z-sidebar sticky left-0 bg-neutral-50'>
           <AdminSideBar />
         </aside>
         <main className='min-w-0 flex-1'>{children}</main>
