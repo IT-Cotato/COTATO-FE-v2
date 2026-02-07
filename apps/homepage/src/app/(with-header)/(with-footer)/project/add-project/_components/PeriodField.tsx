@@ -25,7 +25,12 @@ export const PeriodField = ({
         <DatePicker
           selected={startDate}
           disabled={disabled}
-          onChange={(date: Date | null) => setStartDate(date)}
+          onChange={(date: Date | null) => {
+            setStartDate(date);
+            if (date && endDate && date > endDate) {
+              setEndDate(null);
+            }
+          }}
           dateFormat='yyyy-MM-dd'
           placeholderText='시작 일자'
           customInput={<CustomInput disabled={disabled} />}

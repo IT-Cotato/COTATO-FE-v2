@@ -32,16 +32,18 @@ export const useImageUpload = (
       })
     );
 
-    const updated = [
-      ...images,
-      ...newUploadedImages.map((img, idx) => ({
-        ...img,
-        order: images.length + idx + 1,
-      })),
-    ];
-
-    updateImages(updated);
-    if (images.length === 0 && updated.length > 0) setSelectedId(updated[0].id);
+    setImages((prev) => {
+      const updated = [
+        ...prev,
+        ...newUploadedImages.map((img, idx) => ({
+          ...img,
+          order: prev.length + idx + 1,
+        })),
+      ];
+      onImagesChange(updated);
+      if (prev.length === 0 && updated.length > 0) setSelectedId(updated[0].id);
+      return updated;
+    });
   };
 
   const handleReorder = (event: DragEndEvent) => {
@@ -57,6 +59,9 @@ export const useImageUpload = (
   };
 
   const handleRemove = (id: string) => {
+    const target = images.find((img) => img.id === id);
+    if (target) URL.revokeObjectURL(target.publicUrl);
+
     const filtered = images.filter((img) => img.id !== id);
     const updated = filtered.map((item, index) => ({
       ...item,

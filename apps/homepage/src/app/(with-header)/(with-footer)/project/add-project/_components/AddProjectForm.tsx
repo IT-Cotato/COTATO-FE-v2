@@ -9,7 +9,7 @@ import {FormField} from '@/app/(with-header)/(with-footer)/project/add-project/_
 import {FormTextarea} from '@repo/ui/components/form/FormTextarea';
 import {ImageUploadField} from '@/app/(with-header)/(with-footer)/project/add-project/_components/ImageUploadField';
 import {Button} from '@repo/ui/components/buttons/Button';
-import {Position} from '@/schemas/project/project-schema';
+import {Position} from '@/schemas/project/project.schema';
 import {useProjectForm} from '../_hooks/useProjectForm';
 import {formatDate} from '@repo/ui/utils/date';
 

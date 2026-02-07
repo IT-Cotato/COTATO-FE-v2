@@ -1,4 +1,4 @@
-import {Position} from '@/schemas/project/project-schema';
+import {Position} from '@/schemas/project/project.schema';
 import {MemberChip} from './MemberChip';
 import Plus from '@/assets/plus/plus.svg';
 import {TeamSectionProps} from '@/schemas/project/project-type';

@@ -1,5 +1,5 @@
 import {useState} from 'react';
-import {Position} from '@/schemas/project/project-schema';
+import {Position} from '@/schemas/project/project.schema';
 import {TeamState} from '@/schemas/project/project-type';
 
 export const useTeamMembers = (initialState: TeamState) => {

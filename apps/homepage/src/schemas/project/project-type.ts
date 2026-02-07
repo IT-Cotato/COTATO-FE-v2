@@ -1,4 +1,4 @@
-import {Position, ProjectRegistration} from '@/schemas/project/project-schema';
+import {Position, ProjectRegistration} from '@/schemas/project/project.schema';
 
 export type TeamState = Record<Position, string[]>;
 

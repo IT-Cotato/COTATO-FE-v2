@@ -13,8 +13,8 @@ export const ProjectRegistrationSchema = z.object({
   projectName: z.string().min(1, '프로젝트 명을 입력해주세요.'),
   shortDescription: z.string().min(1, '한줄 소개를 입력해주세요.'),
   projectLink: z.url('링크 형식이 올바르지 않습니다.'),
-  startDate: z.string(), // YYYY-MM-DD
-  endDate: z.string(), // YYYY-MM-DD
+  startDate: z.iso.date('날짜 형식이 올바르지 않습니다.'), // YYYY-MM-DD
+  endDate: z.iso.date('날짜 형식이 올바르지 않습니다.'), // YYYY-MM-DD
   projectIntroduction: z.string(),
   members: z.array(ProjectMemberSchema),
   imageInfos: z.array(
