@@ -11,6 +11,7 @@ import clsx from 'clsx';
 import FolderIcon from '@/assets/icons/folder.svg';
 import DeleteIcon from '@/assets/icons/delete.svg';
 import {formFieldStyles} from '@/components/form/form.styles';
+import {extractFileName} from '@/utils/extractFileName';
 
 interface FormFileProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
@@ -100,7 +101,10 @@ export const FormFile = forwardRef<HTMLInputElement, FormFileProps>(
       !value || value.length === 0
         ? []
         : props.readOnly
-          ? value.map((name) => ({name, url: name}))
+          ? value.map((url) => ({
+              name: extractFileName(url),
+              url: url,
+            }))
           : files.length > 0
             ? files.map((f, i) => ({name: f.name, url: fileUrls[i]}))
             : value.map((name) => ({name, url: ''}));
@@ -118,7 +122,7 @@ export const FormFile = forwardRef<HTMLInputElement, FormFileProps>(
             key={index}
             className={clsx(
               formFieldStyles.field,
-              'mb-2 flex h-18.25 flex-row items-center rounded-[10px] px-10 py-4 text-h5 text-black'
+              'text-h5 mb-2 flex h-18.25 flex-row items-center rounded-[10px] px-10 py-4 text-black'
             )}>
             <FolderIcon />
             {props.readOnly ? (
@@ -146,7 +150,7 @@ export const FormFile = forwardRef<HTMLInputElement, FormFileProps>(
         {!props.readOnly && (
           <label
             className={clsx(
-              'flex h-19 items-center justify-center rounded-[10px] bg-neutral-400 px-10 py-4 text-center text-h5 text-white',
+              'text-h5 flex h-19 items-center justify-center rounded-[10px] bg-neutral-400 px-10 py-4 text-center text-white',
               isUploading ? 'cursor-not-allowed opacity-60' : 'cursor-pointer'
             )}>
             <span>{isUploading ? '파일 업로드 중입니다' : placeholder}</span>
