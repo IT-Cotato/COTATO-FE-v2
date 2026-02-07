@@ -1,34 +1,58 @@
 'use client';
 
-import {useState} from 'react';
+import {useSearchParams, useRouter, usePathname} from 'next/navigation';
 import {ProjectSection} from '@/app/(with-header)/(with-footer)/project/_components/ProjectSection';
 import {Dropdown} from '@/components/dropdown/Dropdown';
 import {Button} from '@repo/ui/components/buttons/Button';
-import {useRouter} from 'next/navigation';
 import {ROUTES} from '@/constants/routes';
+import {MOCK_GENERATIONS} from '@/mocks/project/mock-project';
+import {ACTIVITY_MAP} from '@/constants/project/project-activity';
 
 export const ProjectContainer = () => {
   const router = useRouter();
-  const [selectedGeneration, setSelectedGeneration] = useState<string>('12기');
-  const [selectedActivity, setSelectedActivity] = useState<string>('데모데이');
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
 
-  const generations = ['12기', '11기', '10기', '9기']; //나중에 API 데이터로 연동하기
-  const activities = ['데모데이', '해커톤'];
+  const generations = MOCK_GENERATIONS;
+  const activities = Object.values(ACTIVITY_MAP);
+
+  const genParam =
+    searchParams.get('gen') || generations[0].generationId.toString();
+  const actParam = searchParams.get('act') || 'demoday';
+
+  const selectedGenLabel = `${genParam}기`;
+  const selectedActLabel = ACTIVITY_MAP[actParam] || '데모데이';
+
+  const updateQuery = (key: 'gen' | 'act', value: string) => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.set(key, value);
+    params.set('page', '1'); // 필터 변경 시 무조건 1페이지로
+    router.push(`${pathname}?${params.toString()}`);
+  };
+
   return (
     <section className='flex w-full min-w-275 flex-col gap-7.5 py-7.5'>
       <div className='flex justify-between'>
         <div className='flex gap-6 px-6'>
           <Dropdown
             placeholder='기수'
-            value={selectedGeneration}
-            options={generations}
-            onSelect={(value) => setSelectedGeneration(value)}
+            value={selectedGenLabel}
+            options={generations.map((g) => `${g.generationId}기`)}
+            onSelect={(label) => {
+              const id = label.replace('기', '');
+              updateQuery('gen', id);
+            }}
           />
           <Dropdown
             placeholder='활동'
-            value={selectedActivity}
+            value={selectedActLabel}
             options={activities}
-            onSelect={(value) => setSelectedActivity(value)}
+            onSelect={(label) => {
+              const code = Object.keys(ACTIVITY_MAP).find(
+                (key) => ACTIVITY_MAP[key] === label
+              );
+              if (code) updateQuery('act', code);
+            }}
           />
         </div>
         <Button
@@ -39,10 +63,7 @@ export const ProjectContainer = () => {
           onClick={() => router.push(ROUTES.ADD_PROJECT())}
         />
       </div>
-      <ProjectSection
-        generation={selectedGeneration}
-        activity={selectedActivity}
-      />
+      <ProjectSection generation={genParam} activity={actParam} />
     </section>
   );
 };

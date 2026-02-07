@@ -71,3 +71,8 @@ export const PROJECT_DETAIL_MOCK: Record<number, ProjectDetail> = {
     ],
   },
 };
+
+export const MOCK_GENERATIONS = [
+  {generationId: 12, startDate: '2025-02-07', endDate: '2025-02-07'},
+  {generationId: 11, startDate: '2024-02-07', endDate: '2024-02-07'},
+];
