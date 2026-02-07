@@ -5,4 +5,5 @@ export const ROUTES = {
   MYPAGE: '/mypage',
   ONBOARDING: '/onboarding',
   ADD_PROJECT: '/project/add-project',
+  PROJECT_DETAIL: (projectId: number | string) => `/project/${projectId}`,
 };

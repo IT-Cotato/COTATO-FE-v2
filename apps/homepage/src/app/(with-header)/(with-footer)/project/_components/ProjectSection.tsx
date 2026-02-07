@@ -25,17 +25,8 @@ export const ProjectSection = ({generation, activity}: ProjectSectionProps) => {
         ? project.generationId === parseInt(generation.replace('기', ''))
         : true;
 
-      const activityType =
-        activity === '데모데이'
-          ? 'DEMODAY'
-          : activity === '해커톤'
-            ? 'HACKATHON'
-            : 'ALL';
-
-      const activityMatch =
-        activity && activity !== '전체'
-          ? project.projectType === activityType
-          : true;
+      const activityType = activity === '해커톤' ? 'HACKATHON' : 'DEMODAY';
+      const activityMatch = project.projectType === activityType;
 
       return genMatch && activityMatch;
     });
@@ -56,15 +47,17 @@ export const ProjectSection = ({generation, activity}: ProjectSectionProps) => {
           ))}
         </div>
       ) : (
-        <div className='py-20 text-neutral-400'>
+        <div className='flex min-h-100 w-full items-center justify-center text-neutral-400'>
           조건에 맞는 프로젝트가 없습니다.
         </div>
       )}
-      <Pagination
-        currentPage={currentPage}
-        totalPages={totalPages}
-        onPageChange={(page) => setCurrentPage(page)}
-      />
+      {currentItems.length > 0 && (
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={(page) => setCurrentPage(page)}
+        />
+      )}
     </div>
   );
 };

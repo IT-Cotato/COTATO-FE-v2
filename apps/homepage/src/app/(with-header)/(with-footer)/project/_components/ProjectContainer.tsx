@@ -9,13 +9,13 @@ import {ROUTES} from '@/constants/routes';
 
 export const ProjectContainer = () => {
   const router = useRouter();
-  const [selectedGeneration, setSelectedGeneration] = useState<string>('');
-  const [selectedActivity, setSelectedActivity] = useState<string>('');
+  const [selectedGeneration, setSelectedGeneration] = useState<string>('12기');
+  const [selectedActivity, setSelectedActivity] = useState<string>('데모데이');
 
   const generations = ['12기', '11기', '10기', '9기']; //나중에 API 데이터로 연동하기
-  const activities = ['전체', '데모데이', '해커톤'];
+  const activities = ['데모데이', '해커톤'];
   return (
-    <section className='flex w-full max-w-275 flex-col gap-7.5 py-7.5'>
+    <section className='flex w-full min-w-275 flex-col gap-7.5 py-7.5'>
       <div className='flex justify-between'>
         <div className='flex gap-6 px-6'>
           <Dropdown
