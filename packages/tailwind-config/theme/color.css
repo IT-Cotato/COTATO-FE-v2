@@ -44,4 +44,7 @@
   --z-index-modal: 103;
   --z-index-datepicker: 101;
   --z-index-sidebar: 100;
+
+  /* focus ring */
+  --color-ring: transparent;
 }

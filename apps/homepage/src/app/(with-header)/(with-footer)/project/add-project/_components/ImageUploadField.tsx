@@ -1,6 +1,6 @@
 'use client';
 
-import {useState, useRef} from 'react';
+import {useState, useRef, useEffect} from 'react';
 import {
   DndContext,
   closestCenter,
@@ -16,24 +16,26 @@ import {
   sortableKeyboardCoordinates,
   rectSortingStrategy,
 } from '@dnd-kit/sortable';
+import {restrictToParentElement} from '@dnd-kit/modifiers';
 import {SortableImageItem} from './SortableImageItem';
 import Image from 'next/image';
 import XIcon from '@/assets/cancel/cancel.svg';
 import PlusIcon from '@/assets/plus/plus.svg';
 import {FullButton} from '@repo/ui/components/buttons/FullButton';
-import {restrictToParentElement} from '@dnd-kit/modifiers';
+import {ImageInfo} from '@/schemas/project/project-type';
 
-interface ImageInfo {
-  id: string; // dnd-kit을 위한 고유 id
-  s3Key: string;
-  publicUrl: string;
-  order: number;
+interface ImageUploadFieldProps {
+  onImagesChange: (images: ImageInfo[]) => void;
 }
 
-export const ImageUploadField = () => {
+export const ImageUploadField = ({onImagesChange}: ImageUploadFieldProps) => {
   const [images, setImages] = useState<ImageInfo[]>([]);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    onImagesChange(images);
+  }, [images, onImagesChange]);
 
   const sensors = useSensors(
     useSensor(PointerSensor, {activationConstraint: {distance: 8}}),
@@ -53,10 +55,7 @@ export const ImageUploadField = () => {
 
     setImages((prev) => {
       const updated = [...prev, ...newImages];
-      // 이미지가 처음 업로드될 때 첫 번째 이미지를 선택 상태로 설정
-      if (prev.length === 0 && updated.length > 0) {
-        setSelectedId(updated[0].id);
-      }
+      if (prev.length === 0 && updated.length > 0) setSelectedId(updated[0].id);
       return updated;
     });
   };
@@ -68,7 +67,6 @@ export const ImageUploadField = () => {
         const oldIndex = items.findIndex((item) => item.id === active.id);
         const newIndex = items.findIndex((item) => item.id === over.id);
         const newArray = arrayMove(items, oldIndex, newIndex);
-
         return newArray.map((item, index) => ({...item, order: index + 1}));
       });
     }
@@ -81,10 +79,8 @@ export const ImageUploadField = () => {
         ...item,
         order: index + 1,
       }));
-
-      if (selectedId === id) {
+      if (selectedId === id)
         setSelectedId(updated.length > 0 ? updated[0].id : null);
-      }
       return updated;
     });
   };
@@ -94,7 +90,6 @@ export const ImageUploadField = () => {
   return (
     <div className='flex w-full gap-4'>
       <div className='flex flex-col gap-4.75'>
-        {/*이미지 미리보기 필드 */}
         <div className='group relative h-53.5 w-98.75 overflow-hidden rounded-[10px] bg-neutral-200'>
           {selectedImage ? (
             <>
@@ -104,7 +99,6 @@ export const ImageUploadField = () => {
                 className='object-cover'
                 alt='Preview'
               />
-              {/* 이미지 있을 때 호버 시에만 나타나는 삭제 버튼 */}
               <div className='invisible absolute inset-0 z-10 flex items-center justify-center group-hover:visible'>
                 <button
                   type='button'
@@ -115,7 +109,6 @@ export const ImageUploadField = () => {
               </div>
             </>
           ) : (
-            /* 이미지가 없을 때 중앙 플러스 버튼 */
             <div className='flex h-full items-center justify-center'>
               <div className='shadow-default flex h-14 w-17.5 items-center justify-center rounded-[10px] bg-[rgba(158,158,158,0.60)] p-[16px_23px] text-white'>
                 <PlusIcon className='h-5 w-5 text-white' />
@@ -141,7 +134,6 @@ export const ImageUploadField = () => {
           onChange={handleFileChange}
         />
       </div>
-      {/*이미지 전체 보기 필드 */}
       <div className='project-scrollbar h-70 flex-1 overflow-y-auto rounded-[5px] pr-1.5'>
         <div className='min-h-full w-170 rounded-[5px] bg-[rgba(189,189,189,0.2)] px-2.25 py-4'>
           {images.length === 0 ? (

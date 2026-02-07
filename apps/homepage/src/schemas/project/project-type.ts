@@ -20,3 +20,10 @@ export interface TeamSectionProps {
 export interface ProjectRegisterResponse {
   projectId: number;
 }
+
+export interface ImageInfo {
+  id: string; // dnd-kit 추적용 고유 id
+  s3Key: string;
+  publicUrl: string;
+  order: number; // 순서
+}
