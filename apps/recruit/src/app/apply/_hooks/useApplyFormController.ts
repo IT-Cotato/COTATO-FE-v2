@@ -148,11 +148,7 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
 
   const handleSave = async () => {
     if (!applicationId) return;
-    try {
-      await saveForm(step, methods);
-    } catch {
-      alert('저장에 실패했습니다. 잠시 후 다시 시도해주세요.');
-    }
+    await saveForm(step, methods);
   };
 
   const handleNext = async () => {
@@ -201,6 +197,7 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
       await submitApplication();
       router.push('/?submitted=true');
     } catch {
+      alert('제출에 실패했습니다. 잠시 후 다시 시도해주세요.');
       router.push('/?submitted=false');
     }
   };
