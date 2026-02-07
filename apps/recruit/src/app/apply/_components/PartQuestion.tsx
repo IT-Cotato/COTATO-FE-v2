@@ -81,9 +81,12 @@ export const PartQuestion = ({
   useEffect(() => {
     if (previousPartRef.current && previousPartRef.current !== activePart) {
       hasInitializedRef.current = false;
+      setValue('pdfFileKey', undefined);
+      setValue('pdfFileName', undefined);
+      setValue('pdfFileUrl', undefined);
     }
     previousPartRef.current = activePart;
-  }, [activePart]);
+  }, [activePart, setValue]);
 
   useEffect(() => {
     if (questionsData && !hasInitializedRef.current && activePart) {
@@ -103,12 +106,17 @@ export const PartQuestion = ({
             questionsData.pdfFileKey.split('/').pop() ||
             questionsData.pdfFileKey;
           setValue('pdfFileName', fileName);
+        } else {
+          setValue('pdfFileKey', undefined);
+          setValue('pdfFileName', undefined);
         }
 
         // 마지막 질문(포트폴리오 링크)의 답변을 pdfFileUrl에도 설정
         const lastQuestion = questionsData.questionsWithAnswers.at(-1);
         if (lastQuestion?.savedAnswer?.content) {
           setValue('pdfFileUrl', lastQuestion.savedAnswer.content);
+        } else {
+          setValue('pdfFileUrl', undefined);
         }
 
         hasInitializedRef.current = true;
