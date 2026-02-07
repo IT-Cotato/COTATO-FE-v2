@@ -159,8 +159,9 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
     const isValid = await validateStep(step, methods, partQuestionsData);
 
     if (isValid) {
+      if (!applicationId) return;
       try {
-        await handleSave();
+        await saveForm(step, methods, false);
       } catch {
         alert('저장에 실패했습니다. 잠시 후 다시 시도해주세요.');
         return;
