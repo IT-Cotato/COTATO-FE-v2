@@ -55,20 +55,43 @@ export const PartQuestionView = ({
         return (
           <div key={data.sequence} className='flex flex-col gap-5'>
             {isLastQuestion ? (
-              pdfFileUrl ? (
-                <FormLink
-                  label={`${data.sequence}. ${data.questionContent}`}
-                  readOnly
-                  value={[pdfFileUrl]}
-                />
-              ) : pdfFileKey ? (
-                <FormFile readOnly value={[pdfFileKey]} />
-              ) : (
-                <p className='text-h5 flex justify-center text-neutral-400'>
-                  첨부된 포트폴리오가 없습니다.
-                </p>
-              )
+              <div className='flex flex-col gap-5'>
+                {/* 1. 링크와 파일이 하나라도 있는 경우 */}
+                {pdfFileUrl || pdfFileKey ? (
+                  <>
+                    {/* 링크 렌더링 */}
+                    {pdfFileUrl && (
+                      <FormLink
+                        label={`${data.sequence}. ${data.questionContent}${pdfFileKey ? ' (링크)' : ''}`}
+                        readOnly
+                        value={[pdfFileUrl]}
+                      />
+                    )}
+                    {/* 파일 렌더링 */}
+                    {pdfFileKey && (
+                      <FormFile
+                        label={
+                          !pdfFileUrl
+                            ? `${data.sequence}. ${data.questionContent} (파일)`
+                            : '첨부 파일'
+                        }
+                        readOnly
+                        value={[pdfFileKey]}
+                      />
+                    )}
+                  </>
+                ) : (
+                  /* 2. 둘 다 없는 경우 */
+                  <div className='flex flex-col gap-2'>
+                    <label className='text-h6 font-bold'>{`${data.sequence}. ${data.questionContent}`}</label>
+                    <p className='text-h5 flex justify-center rounded-lg border border-dashed py-4 text-neutral-400'>
+                      첨부된 포트폴리오가 없습니다.
+                    </p>
+                  </div>
+                )}
+              </div>
             ) : (
+              /* 일반 질문 렌더링 */
               <FormTextarea
                 label={`${data.sequence}. ${data.questionContent}`}
                 readOnly
