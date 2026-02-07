@@ -50,7 +50,7 @@ export const AddProjectForm = ({
       imageInfos: states.uploadedImages.map((img, index) => ({
         s3Key: img.s3Key,
         publicUrl: img.publicUrl,
-        order: index + 1,
+        order: index + 1, // 추후 api 명세에 맞춰서 index를 그대로 보낼 수도 있음
       })),
     };
 
@@ -114,6 +114,7 @@ export const AddProjectForm = ({
         height={40}
         disabled={!isFormValid}
         onClick={handleSubmit}
+        borderRadius={10}
       />
     </section>
   );
