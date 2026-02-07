@@ -11,8 +11,17 @@ import {ImageUploadField} from '@/app/(with-header)/(with-footer)/project/add-pr
 import {Button} from '@repo/ui/components/buttons/Button';
 import {Position} from '@/schemas/project/project-schema';
 import {useProjectForm} from '../_hooks/useProjectForm';
+import {formatDate} from '@repo/ui/utils/date';
 
-export const AddProjectForm = () => {
+interface AddProjectFormProps {
+  generationId: number;
+  projectType: string;
+}
+
+export const AddProjectForm = ({
+  generationId,
+  projectType,
+}: AddProjectFormProps) => {
   const {teamMembers, addMember, removeMember, updateMemberName} =
     useTeamMembers({
       PM: ['감직이'],
@@ -27,13 +36,13 @@ export const AddProjectForm = () => {
     if (!isFormValid) return;
 
     const requestBody = {
-      generationId: 0,
-      projectType: 'DEMODAY',
+      generationId,
+      projectType,
       projectName: states.projectName,
       shortDescription: states.shortDescription,
       projectLink: states.projectLink,
-      startDate: states.startDate?.toISOString().split('T')[0],
-      endDate: states.endDate?.toISOString().split('T')[0],
+      startDate: formatDate(states.startDate),
+      endDate: formatDate(states.endDate),
       projectIntroduction: states.projectIntroduction,
       members: Object.entries(teamMembers).flatMap(([role, names]) =>
         names.map((name) => ({name, position: role as Position}))

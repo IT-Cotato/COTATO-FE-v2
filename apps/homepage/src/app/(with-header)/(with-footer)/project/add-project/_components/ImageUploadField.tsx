@@ -42,22 +42,38 @@ export const ImageUploadField = ({onImagesChange}: ImageUploadFieldProps) => {
     useSensor(KeyboardSensor, {coordinateGetter: sortableKeyboardCoordinates})
   );
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  // 추후 실제 presigned url 발급 로직 연결 예정
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (!files) return;
 
-    const newImages = Array.from(files).map((file, index) => ({
-      id: Math.random().toString(36).slice(2, 11),
-      s3Key: `mock/${file.name}`,
-      publicUrl: URL.createObjectURL(file),
-      order: images.length + index + 1,
-    }));
+    const newUploadedImages = await Promise.all(
+      Array.from(files).map(async (file) => {
+        const mockS3Key = `projects/${Date.now()}-${file.name}`;
+        await new Promise((resolve) => setTimeout(resolve, 500));
+
+        return {
+          id: Math.random().toString(36).slice(2, 11),
+          s3Key: mockS3Key,
+          publicUrl: URL.createObjectURL(file),
+          order: 0,
+        };
+      })
+    );
 
     setImages((prev) => {
-      const updated = [...prev, ...newImages];
+      const updated = [
+        ...prev,
+        ...newUploadedImages.map((img, idx) => ({
+          ...img,
+          order: prev.length + idx + 1,
+        })),
+      ];
       if (prev.length === 0 && updated.length > 0) setSelectedId(updated[0].id);
       return updated;
     });
+
+    if (fileInputRef.current) fileInputRef.current.value = '';
   };
 
   const handleDragEnd = (event: DragEndEvent) => {

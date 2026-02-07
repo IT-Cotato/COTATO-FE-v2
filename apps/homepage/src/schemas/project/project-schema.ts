@@ -9,7 +9,7 @@ export const ProjectMemberSchema = z.object({
 
 export const ProjectRegistrationSchema = z.object({
   generationId: z.number(),
-  projectType: z.enum(['DEMODAY', 'OTHERS']),
+  projectType: z.enum(['DEMODAY', 'HACKATHON']),
   projectName: z.string().min(1, '프로젝트 명을 입력해주세요.'),
   shortDescription: z.string().min(1, '한줄 소개를 입력해주세요.'),
   projectLink: z.url('링크 형식이 올바르지 않습니다.'),
