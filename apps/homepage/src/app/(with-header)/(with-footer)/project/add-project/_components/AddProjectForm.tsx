@@ -6,6 +6,7 @@ import {TeamSection} from '@/app/(with-header)/(with-footer)/project/add-project
 import {useTeamMembers} from '@/app/(with-header)/(with-footer)/project/add-project/_hooks/useTeamMember';
 import {FormField} from '@/app/(with-header)/(with-footer)/project/add-project/_components/FormField';
 import {FormTextarea} from '@repo/ui/components/form/FormTextarea';
+import {ImageUploadField} from '@/app/(with-header)/(with-footer)/project/add-project/_components/ImageUploadField';
 
 export const AddProjectForm = () => {
   const [startDate, setStartDate] = useState<Date | null>(null);
@@ -46,6 +47,9 @@ export const AddProjectForm = () => {
       />
       <FormField variant='column' label='프로젝트 설명'>
         <FormTextarea isProject placeholder='프로젝트 설명을 입력해주세요.' />
+      </FormField>
+      <FormField variant='column' label='자료 업로드'>
+        <ImageUploadField />
       </FormField>
     </section>
   );

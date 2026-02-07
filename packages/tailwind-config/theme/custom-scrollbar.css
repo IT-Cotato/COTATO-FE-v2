@@ -31,3 +31,21 @@
     width: 0 !important;
   }
 }
+
+@utility project-scrollbar {
+  &::-webkit-scrollbar {
+    width: 7px !important;
+    display: block !important;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: var(--color-neutral-300) !important;
+    border-radius: 20px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--color-neutral-500) !important;
+    border-radius: 20px !important;
+    background-clip: padding-box;
+  }
+}
