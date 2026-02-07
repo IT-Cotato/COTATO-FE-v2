@@ -15,7 +15,7 @@ export const AboutUsProjectContainer = () => {
   };
 
   return (
-    <div className='flex min-h-175 flex-col items-center gap-12 py-20'>
+    <div className='flex min-h-175 flex-col items-center gap-25 py-20'>
       <h3 className='text-h3 font-bold text-neutral-800'>
         코테이토의 프로젝트를 소개합니다
       </h3>

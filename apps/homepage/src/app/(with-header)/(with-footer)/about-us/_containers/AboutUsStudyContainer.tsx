@@ -4,7 +4,7 @@ import {AboutUsTickerColumn} from '@/app/(with-header)/(with-footer)/about-us/_c
 
 export const AboutUsStudyContainer = () => {
   return (
-    <section className='flex flex-col items-center gap-15 overflow-hidden py-40'>
+    <section className='flex flex-col items-center gap-25 overflow-hidden py-40'>
       <h3 className='text-h3 text-neutral-800'>
         코테이토의 스터디를 소개합니다
       </h3>
