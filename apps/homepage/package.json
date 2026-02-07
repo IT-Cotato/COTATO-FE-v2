@@ -15,7 +15,8 @@
     "next": "16.1.0",
     "react": "^19.2.3",
     "react-datepicker": "^9.1.0",
-    "react-dom": "^19.2.3"
+    "react-dom": "^19.2.3",
+    "zod": "^4.3.2"
   },
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",
