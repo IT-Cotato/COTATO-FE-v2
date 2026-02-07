@@ -68,17 +68,7 @@ export const PartQuestionView = ({
                       />
                     )}
                     {/* 파일 렌더링 */}
-                    {pdfFileKey && (
-                      <FormFile
-                        label={
-                          !pdfFileUrl
-                            ? `${data.sequence}. ${data.questionContent} (파일)`
-                            : '첨부 파일'
-                        }
-                        readOnly
-                        value={[pdfFileKey]}
-                      />
-                    )}
+                    {pdfFileKey && <FormFile readOnly value={[pdfFileKey]} />}
                   </>
                 ) : (
                   /* 2. 둘 다 없는 경우 */
