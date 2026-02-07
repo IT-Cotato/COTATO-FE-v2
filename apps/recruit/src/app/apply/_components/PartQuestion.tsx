@@ -76,6 +76,7 @@ export const PartQuestion = ({
   useEffect(() => {
     register('pdfFileKey');
     register('pdfFileUrl');
+    register('pdfFileName');
   }, [register]);
 
   useEffect(() => {
