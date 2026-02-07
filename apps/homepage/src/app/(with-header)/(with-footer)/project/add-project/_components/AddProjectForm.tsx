@@ -3,7 +3,7 @@ import {FormInput} from '@repo/ui/components/form/FormInput';
 import {FormLink} from '@repo/ui/components/form/FormLink';
 import {useState} from 'react';
 import Plus from '@/assets/plus/plus.svg';
-import {MemberChip} from '@/app/(with-header)/(with-footer)/project/add-project/_components/add-project/MemberChip';
+import {MemberChip} from '@/app/(with-header)/(with-footer)/project/add-project/_components/MemberChip';
 
 type Role = 'PM' | 'DE' | 'FE' | 'BE';
 
@@ -90,11 +90,13 @@ export const AddProjectForm = () => {
                     }
                   />
                 ))}
-                <button
-                  onClick={() => addMember(role)}
-                  className='flex h-8 w-8 items-center justify-center rounded-[15px] bg-neutral-100 text-neutral-600'>
-                  <Plus className='h-4 w-4' />
-                </button>
+                {teamMembers[role].length < 4 && (
+                  <button
+                    onClick={() => addMember(role)}
+                    className='flex h-8 w-8 items-center justify-center rounded-[15px] bg-neutral-100 text-neutral-600'>
+                    <Plus className='h-4 w-4' />
+                  </button>
+                )}
               </div>
             </div>
           ))}

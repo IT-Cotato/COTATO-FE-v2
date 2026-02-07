@@ -1,5 +1,5 @@
 'use client';
-import {AddProjectForm} from '@/app/(with-header)/(with-footer)/project/add-project/_components/add-project/AddProjectForm';
+import {AddProjectForm} from '@/app/(with-header)/(with-footer)/project/add-project/_components/AddProjectForm';
 import {Dropdown} from '@/components/dropdown/Dropdown';
 import {useState} from 'react';
 
