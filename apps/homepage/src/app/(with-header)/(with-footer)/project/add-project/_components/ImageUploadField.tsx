@@ -21,6 +21,7 @@ import Image from 'next/image';
 import XIcon from '@/assets/cancel/cancel.svg';
 import PlusIcon from '@/assets/plus/plus.svg';
 import {FullButton} from '@repo/ui/components/buttons/FullButton';
+import {restrictToParentElement} from '@dnd-kit/modifiers';
 
 interface ImageInfo {
   id: string; // dnd-kit을 위한 고유 id
@@ -31,7 +32,7 @@ interface ImageInfo {
 
 export const ImageUploadField = () => {
   const [images, setImages] = useState<ImageInfo[]>([]);
-  const [selectedIndex, setSelectedIndex] = useState<number>(0);
+  const [selectedId, setSelectedId] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const sensors = useSensors(
@@ -43,18 +44,23 @@ export const ImageUploadField = () => {
     const files = e.target.files;
     if (!files) return;
 
-    // 추후 presigned url 발급 및 S3 업로드 로직 추가 예정
     const newImages = Array.from(files).map((file, index) => ({
       id: Math.random().toString(36).slice(2, 11),
       s3Key: `mock/${file.name}`,
-      publicUrl: URL.createObjectURL(file), // 임시 url
+      publicUrl: URL.createObjectURL(file),
       order: images.length + index + 1,
     }));
 
-    setImages((prev) => [...prev, ...newImages]);
+    setImages((prev) => {
+      const updated = [...prev, ...newImages];
+      // 이미지가 처음 업로드될 때 첫 번째 이미지를 선택 상태로 설정
+      if (prev.length === 0 && updated.length > 0) {
+        setSelectedId(updated[0].id);
+      }
+      return updated;
+    });
   };
 
-  // 드래그 종료
   const handleDragEnd = (event: DragEndEvent) => {
     const {active, over} = event;
     if (over && active.id !== over.id) {
@@ -71,20 +77,29 @@ export const ImageUploadField = () => {
   const removeImage = (id: string) => {
     setImages((prev) => {
       const filtered = prev.filter((img) => img.id !== id);
-      return filtered.map((item, index) => ({...item, order: index + 1}));
+      const updated = filtered.map((item, index) => ({
+        ...item,
+        order: index + 1,
+      }));
+
+      if (selectedId === id) {
+        setSelectedId(updated.length > 0 ? updated[0].id : null);
+      }
+      return updated;
     });
-    if (selectedIndex >= images.length - 1) setSelectedIndex(0);
   };
+
+  const selectedImage = images.find((img) => img.id === selectedId);
 
   return (
     <div className='flex w-full gap-4'>
       <div className='flex flex-col gap-4.75'>
         {/*이미지 미리보기 필드 */}
         <div className='group relative h-53.5 w-98.75 overflow-hidden rounded-[10px] bg-neutral-200'>
-          {images.length > 0 ? (
+          {selectedImage ? (
             <>
               <Image
-                src={images[selectedIndex]?.publicUrl}
+                src={selectedImage.publicUrl}
                 fill
                 className='object-cover'
                 alt='Preview'
@@ -93,7 +108,7 @@ export const ImageUploadField = () => {
               <div className='invisible absolute inset-0 z-10 flex items-center justify-center group-hover:visible'>
                 <button
                   type='button'
-                  onClick={() => removeImage(images[selectedIndex].id)}
+                  onClick={() => removeImage(selectedImage.id)}
                   className='shadow-default flex h-14 w-17.5 items-center justify-center rounded-[10px] bg-[rgba(229,72,77,0.60)] p-[16px_23px] transition-all'>
                   <XIcon className='h-5 w-5 text-white' />
                 </button>
@@ -126,7 +141,7 @@ export const ImageUploadField = () => {
           onChange={handleFileChange}
         />
       </div>
-      {/* 이미지 전체 보기 필드 */}
+      {/*이미지 전체 보기 필드 */}
       <div className='project-scrollbar h-70 flex-1 overflow-y-auto rounded-[5px] pr-1.5'>
         <div className='min-h-full w-170 rounded-[5px] bg-[rgba(189,189,189,0.2)] px-2.25 py-4'>
           {images.length === 0 ? (
@@ -137,14 +152,15 @@ export const ImageUploadField = () => {
             <DndContext
               sensors={sensors}
               collisionDetection={closestCenter}
-              onDragEnd={handleDragEnd}>
+              onDragEnd={handleDragEnd}
+              modifiers={[restrictToParentElement]}>
               <SortableContext items={images} strategy={rectSortingStrategy}>
                 <div className='grid grid-cols-[repeat(auto-fill,204px)] gap-x-6 gap-y-5'>
-                  {images.map((img, index) => (
+                  {images.map((img) => (
                     <SortableImageItem
                       key={img.id}
                       img={img}
-                      onSelect={() => setSelectedIndex(index)}
+                      onSelect={() => setSelectedId(img.id)}
                     />
                   ))}
                 </div>
