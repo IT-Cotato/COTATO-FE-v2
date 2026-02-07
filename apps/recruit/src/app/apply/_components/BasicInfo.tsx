@@ -3,14 +3,14 @@
 import {useEffect, useRef, useCallback} from 'react';
 import {useSearchParams} from 'next/navigation';
 import {useFormContext, Controller} from 'react-hook-form';
-import {useQuery} from '@tanstack/react-query';
+import {useQuery, useQueryClient} from '@tanstack/react-query';
 import {FormDropdown} from '@/components/form/FormDropdown';
 import {FormInput} from '@repo/ui/components/form/FormInput';
 import {FormRadio} from '@/components/form/FormRadio';
 import {FullButton} from '@repo/ui/components/buttons/FullButton';
 import {BASIC_INFO_FIELDS} from '@/constants/form/formConfig';
 import {BasicInfoFieldConfig} from '@/schemas/apply/apply-type';
-import {BasicInfoFormData} from '@/schemas/apply/apply-schema';
+import {ApplyFormData} from '@/schemas/apply/apply-schema';
 import {getBasicInfo} from '@/services/api/apply/apply.api';
 import {QUERY_KEYS} from '@/constants/query-keys';
 import {StepIndicator} from '@/components/navigation/StepIndicator';
@@ -47,8 +47,9 @@ export const BasicInfo = ({
     getValues,
     unregister,
     formState: {errors},
-  } = useFormContext<BasicInfoFormData>();
+  } = useFormContext<ApplyFormData>();
 
+  const queryClient = useQueryClient();
   const hasInitializedRef = useRef(false);
   const previousPartRef = useRef<string | undefined>(undefined);
 
@@ -63,20 +64,20 @@ export const BasicInfo = ({
     const currentValues = getValues();
     Object.keys(currentValues).forEach((key) => {
       if (key.startsWith('ans_')) {
-        // @ts-expect-error - Dynamic fields
-        unregister(key);
+        unregister(key as any);
       }
     });
-    // @ts-expect-error - Dynamic fields
     setValue('pdfFileKey', undefined);
-    // @ts-expect-error - Dynamic fields
     setValue('pdfFileUrl', undefined);
-    // @ts-expect-error - Dynamic fields
     setValue('pdfFileName', undefined);
-    // 파트가 변경되었음을 표시 (서버 데이터 무시용)
-    // @ts-expect-error - Dynamic fields
-    setValue('partChanged', true);
-  }, [getValues, unregister, setValue]);
+
+    // 이전 파트의 질문 캐시 제거 (파트 변경 시 이전 데이터가 남아있는 문제 방지)
+    if (applicationId) {
+      queryClient.removeQueries({
+        queryKey: QUERY_KEYS.APPLY.PART_QUESTIONS(Number(applicationId)),
+      });
+    }
+  }, [getValues, unregister, setValue, applicationId, queryClient]);
 
   useEffect(() => {
     if (basicInfo && !hasInitializedRef.current) {
@@ -88,15 +89,15 @@ export const BasicInfo = ({
         school: basicInfo.university,
         isCollegeStudent: (basicInfo.isEnrolled
           ? 'enrolled'
-          : 'other') as BasicInfoFormData['isCollegeStudent'],
+          : 'other') as ApplyFormData['isCollegeStudent'],
         department: basicInfo.major,
         completedSemesters: String(
           basicInfo.completedSemesters
-        ) as BasicInfoFormData['completedSemesters'],
+        ) as ApplyFormData['completedSemesters'],
         isPrevActivity: (basicInfo.isPrevActivity
           ? 'yes'
-          : 'no') as BasicInfoFormData['isPrevActivity'],
-        part: basicInfo.applicationPartType as BasicInfoFormData['part'],
+          : 'no') as ApplyFormData['isPrevActivity'],
+        part: basicInfo.applicationPartType as ApplyFormData['part'],
       };
       reset(transformedData);
       previousPartRef.current = basicInfo.applicationPartType;
@@ -130,7 +131,7 @@ export const BasicInfo = ({
     'completedSemesters',
     'isPrevActivity',
     'part',
-  ].some((field) => !allValues[field as keyof BasicInfoFormData]);
+  ].some((field) => !allValues[field as keyof ApplyFormData]);
 
   const renderField = (field: BasicInfoFieldConfig) => {
     const {type, name, label, options, placeholder, autocomplete} =
@@ -178,18 +179,25 @@ export const BasicInfo = ({
             name={name}
             control={control}
             render={({field, fieldState: {error}}) => (
-              <FormDropdown
-                id={name}
-                label={label}
-                placeholder={placeholder}
-                options={options || []}
-                value={field.value}
-                onChange={field.onChange}
-                readOnly={readOnly}
-                className='w-full'
-                error={error?.message}
-                required
-              />
+              <>
+                <FormDropdown
+                  id={name}
+                  label={label}
+                  placeholder={placeholder}
+                  options={options || []}
+                  value={field.value}
+                  onChange={field.onChange}
+                  readOnly={readOnly}
+                  className='w-full'
+                  error={error?.message}
+                  required
+                />
+                {name === 'part' && (
+                  <p className='text-body-l mt-2 text-neutral-500'>
+                    * 파트 변경 시 업로드한 파일이 초기화됩니다.
+                  </p>
+                )}
+              </>
             )}
           />
         </div>
@@ -238,7 +246,6 @@ export const BasicInfo = ({
           placeholder={placeholder}
           readOnly={readOnly}
           autoComplete={autocomplete}
-          maxLength={200}
           {...register(name)}
           error={errors[name]?.message ?? ''}
           className='w-full'
@@ -249,7 +256,7 @@ export const BasicInfo = ({
   };
 
   return (
-    <div className='flex w-full flex-col gap-5'>
+    <div className='flex w-full flex-col gap-5 pb-14'>
       <div className='flex justify-center pt-5'>
         <StepIndicator currentStep={step} totalSteps={3} />
       </div>

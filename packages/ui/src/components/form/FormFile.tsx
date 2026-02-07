@@ -57,7 +57,9 @@ export const FormFile = forwardRef<HTMLInputElement, FormFileProps>(
 
       const newFiles = Array.from(e.target.files);
 
-      if (maxCount && files.length + newFiles.length > maxCount) {
+      const existingCount =
+        files.length > 0 ? files.length : (value?.length ?? 0);
+      if (maxCount && existingCount + newFiles.length > maxCount) {
         alert(`파일은 최대 ${maxCount}개까지 업로드할 수 있습니다.`);
         e.target.value = '';
         return;

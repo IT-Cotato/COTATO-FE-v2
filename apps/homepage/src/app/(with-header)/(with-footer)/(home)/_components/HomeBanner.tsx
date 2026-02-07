@@ -1,8 +1,8 @@
 'use client';
 
-import MainLogo from '@/assets/main-logo/main-logo.svg';
 import MainArrowIcon from '@/assets/home/main-arrow-icon.svg';
 import Image from 'next/image';
+import {CotatoLogo} from '@/components/logo/CotatoLogo';
 
 export const HomeBanner = () => {
   const scrollToNextSection = () => {
@@ -33,16 +33,7 @@ export const HomeBanner = () => {
       />
 
       <div className='absolute top-1/3 left-1/2 flex -translate-x-1/2 -translate-y-2/3 flex-col items-center opacity-0 transition-opacity duration-300 group-hover:opacity-100'>
-        <div className='flex flex-col items-center gap-9.5'>
-          <p className='text-h4 bg-linear-to-r from-[#F89202] via-[#F89202] to-[#9E9E9E] bg-clip-text whitespace-nowrap text-transparent'>
-            COde Together, Arrive TOgether
-          </p>
-          <MainLogo
-            role='img'
-            aria-label='COTATO 로고'
-            className='h-auto w-auto'
-          />
-        </div>
+        <CotatoLogo />
       </div>
 
       <div

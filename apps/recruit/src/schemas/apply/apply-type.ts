@@ -1,8 +1,8 @@
-import {BasicInfoFormData} from '@/schemas/apply/apply-schema';
+import {BasicInfoFields} from '@/schemas/apply/apply-schema';
 
 // BasicInfo
 export interface BasicInfoFieldConfig {
-  name: keyof BasicInfoFormData;
+  name: keyof BasicInfoFields;
   label: string;
   type: 'input' | 'dropdown' | 'radio';
   placeholder?: string;
@@ -14,7 +14,7 @@ export type BasicInfoFormItem =
   | BasicInfoFieldConfig
   | {row: readonly BasicInfoFieldConfig[]; name?: never; type?: never};
 
-// EtcInfo
+// EtcQuestion
 export interface EtcFieldConfig {
   name?: string;
   label?: string;
