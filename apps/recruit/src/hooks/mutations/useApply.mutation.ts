@@ -27,9 +27,10 @@ export const useStartApplicationMutation = () => {
 
   return useMutation({
     mutationFn: () => startApplication(),
-    onSuccess: (data) => {
-      // 결과를 캐시에 저장하여 다른 컴포넌트에서 재사용
-      queryClient.setQueryData(QUERY_KEYS.APPLY.STATUS, data);
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: QUERY_KEYS.APPLY.STATUS,
+      });
     },
   });
 };
