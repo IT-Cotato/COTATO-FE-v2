@@ -1,15 +1,10 @@
-import {PeriodField} from '@/app/(with-header)/(with-footer)/project/add-project/_components/PeriodField';
+import {useState} from 'react';
 import {FormInput} from '@repo/ui/components/form/FormInput';
 import {FormLink} from '@repo/ui/components/form/FormLink';
-import {useState} from 'react';
-import Plus from '@/assets/plus/plus.svg';
-import {MemberChip} from '@/app/(with-header)/(with-footer)/project/add-project/_components/MemberChip';
-
-type Role = 'PM' | 'DE' | 'FE' | 'BE';
-
-interface TeamState {
-  [key: string]: string[];
-}
+import {Position} from '@/schemas/project/project-schema';
+import {PeriodField} from '@/app/(with-header)/(with-footer)/project/add-project/_components/PeriodField';
+import {TeamSection} from '@/app/(with-header)/(with-footer)/project/add-project/_components/TeamSection';
+import {TeamState} from '@/schemas/project/project-type';
 
 export const AddProjectForm = () => {
   const [startDate, setStartDate] = useState<Date | null>(null);
@@ -22,21 +17,22 @@ export const AddProjectForm = () => {
     BE: ['감직이'],
   });
 
-  const addMember = (role: Role) => {
+  const addMember = (role: Position) => {
+    if (teamMembers[role].length >= 4) return; // 4명 제한
     setTeamMembers((prev) => ({
       ...prev,
       [role]: [...prev[role], '감직이'],
     }));
   };
 
-  const removeMember = (role: Role, index: number) => {
+  const removeMember = (role: Position, index: number) => {
     setTeamMembers((prev) => ({
       ...prev,
       [role]: prev[role].filter((_, i) => i !== index),
     }));
   };
 
-  const updateMemberName = (role: Role, index: number, newName: string) => {
+  const updateMemberName = (role: Position, index: number, newName: string) => {
     setTeamMembers((prev) => {
       const updatedRole = [...prev[role]];
       updatedRole[index] = newName;
@@ -73,35 +69,12 @@ export const AddProjectForm = () => {
           setEndDate={setEndDate}
         />
       </div>
-      <div className='flex w-full items-start gap-27.5'>
-        <span className='text-h4 text-neutral-600'>팀 구성</span>
-        <div className='flex flex-col gap-6'>
-          {(['PM', 'DE', 'FE', 'BE'] as Role[]).map((role) => (
-            <div key={role} className='flex items-center gap-12.5'>
-              <span className='text-h4 w-8.25 text-neutral-400'>{role}</span>
-              <div className='flex flex-wrap items-center gap-2.5'>
-                {teamMembers[role].map((name, index) => (
-                  <MemberChip
-                    key={`${role}-${index}`}
-                    name={name}
-                    onDelete={() => removeMember(role, index)}
-                    onUpdate={(newName) =>
-                      updateMemberName(role, index, newName)
-                    }
-                  />
-                ))}
-                {teamMembers[role].length < 4 && (
-                  <button
-                    onClick={() => addMember(role)}
-                    className='flex h-8 w-8 items-center justify-center rounded-[15px] bg-neutral-100 text-neutral-600'>
-                    <Plus className='h-4 w-4' />
-                  </button>
-                )}
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
+      <TeamSection
+        teamMembers={teamMembers}
+        onAdd={addMember}
+        onDelete={removeMember}
+        onUpdate={updateMemberName}
+      />
     </section>
   );
 };
