@@ -28,6 +28,8 @@ export const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
           id={inputId}
           required={required}
           aria-required={required || undefined}
+          autoComplete='off'
+          spellCheck='false'
           className={clsx(
             formFieldStyles.field,
             props.readOnly && formFieldStyles.readOnlyForm,

@@ -50,6 +50,7 @@ export const FormTextarea = forwardRef<HTMLTextAreaElement, FormTextareaProps>(
           <textarea
             ref={ref}
             id={inputId}
+            spellCheck='false'
             className={clsx(
               'w-full resize-none transition-all',
               formFieldStyles.field,
