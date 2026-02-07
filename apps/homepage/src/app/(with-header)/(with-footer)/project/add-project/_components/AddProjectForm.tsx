@@ -48,9 +48,11 @@ export const AddProjectForm = () => {
       <FormField variant='column' label='프로젝트 설명'>
         <FormTextarea isProject placeholder='프로젝트 설명을 입력해주세요.' />
       </FormField>
-      <FormField variant='column' label='자료 업로드'>
-        <ImageUploadField />
-      </FormField>
+      <div className='mt-2.5 w-full'>
+        <FormField variant='column' label='자료 업로드'>
+          <ImageUploadField />
+        </FormField>
+      </div>
     </section>
   );
 };
