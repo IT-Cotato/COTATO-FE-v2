@@ -7,6 +7,8 @@ import {
   EtcQuestionRequest,
   EtcQuestionResponse,
   EtcQuestionResponseSchema,
+  GetApplicationStatusResponse,
+  GetApplicationStatusResponseSchema,
   PartQuestionRequest,
   PartQuestionResponse,
   PartQuestionResponseSchema,
@@ -23,6 +25,27 @@ import {
   ErrorResponseSchema,
 } from '@/schemas/common/common-schema';
 import {handleApiError} from '@/services/utils/apiHelper';
+
+/**
+ * 지원서 상태 조회
+ */
+export const getApplicationStatus =
+  async (): Promise<GetApplicationStatusResponse> => {
+    try {
+      const response: AxiosResponse = await privateAxios.get(
+        ENDPOINT.APPLY.STATUS
+      );
+
+      const responseSchema = createSuccessResponseSchema(
+        GetApplicationStatusResponseSchema
+      );
+      const validatedResponse = responseSchema.parse(response.data);
+
+      return validatedResponse.data;
+    } catch (error) {
+      return handleApiError(error);
+    }
+  };
 
 /**
  * 지원서 시작
