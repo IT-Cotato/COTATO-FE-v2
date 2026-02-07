@@ -9,6 +9,7 @@ import {useState} from 'react';
 import {LoginModal} from '@/components/modal/LoginModal';
 import {useAuthStore} from '@/store/useAuthStore';
 import {useApplicationStatusQuery} from '@/hooks/queries/useApply.query';
+import {useStartApplicationMutation} from '@/hooks/mutations/useApply.mutation';
 import {useRecruitmentScheduleQuery} from '@/hooks/queries/useRecruitmentSchedule.query';
 import {useRecruitmentStatusQuery} from '@/hooks/queries/useRecruitmentStatus.query';
 import {formatRecruitmentDate} from '@/utils/formatDate';
@@ -22,15 +23,32 @@ export const RecruitmentActive = () => {
 
   const {isAuthenticated} = useAuthStore();
 
-  const {data: applicationStatus} = useApplicationStatusQuery(isAuthenticated);
+  const {data: applicationStatus, isLoading: isStatusLoading} =
+    useApplicationStatusQuery(isAuthenticated);
+  const {mutate: startApplication, isPending: isStarting} =
+    useStartApplicationMutation();
   const {data: schedule} = useRecruitmentScheduleQuery();
   const hasSubmitted = applicationStatus?.isSubmitted ?? false;
 
   const handleApplyClick = () => {
     if (!isAuthenticated) {
       setIsModalOpen(true);
-    } else if (applicationStatus && !applicationStatus.isSubmitted) {
+      return;
+    }
+
+    if (applicationStatus) {
+      // 기존 지원서가 있으면 바로 이동
       router.push(`${ROUTES.APPLY}?id=${applicationStatus.applicationId}`);
+    } else {
+      // 신규 지원: 지원서 생성 후 이동
+      startApplication(undefined, {
+        onSuccess: (data) => {
+          router.push(`${ROUTES.APPLY}?id=${data.applicationId}`);
+        },
+        onError: () => {
+          alert('지원서 생성에 실패했습니다. 다시 시도해주세요.');
+        },
+      });
     }
   };
 
@@ -83,9 +101,15 @@ export const RecruitmentActive = () => {
           </div>
           <div className='flex justify-end'>
             <Button
-              label={hasSubmitted ? '제출 완료' : '지원하기'}
+              label={
+                isStatusLoading
+                  ? '로딩 중...'
+                  : hasSubmitted
+                    ? '제출 완료'
+                    : '지원하기'
+              }
               onClick={handleApplyClick}
-              disabled={hasSubmitted}
+              disabled={hasSubmitted || isStarting || isStatusLoading}
             />
           </div>
         </div>
