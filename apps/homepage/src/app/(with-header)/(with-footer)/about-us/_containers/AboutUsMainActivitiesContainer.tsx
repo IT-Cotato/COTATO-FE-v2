@@ -50,9 +50,9 @@ export const AboutUsMainActivitiesContainer = () => {
         <AboutUsBackgroundSecond className='absolute -right-20 h-full w-auto opacity-50 md:-right-100 md:opacity-100' />
       </div>
 
-      <h2 className='text-h3 z-10 px-4 text-center text-white'>
+      <h3 className='text-h3 z-10 px-4 text-center text-white'>
         코테이토의 메인 활동을 소개합니다
-      </h2>
+      </h3>
 
       {/* Grid Container: 12컬럼 시스템 */}
       <div className='z-10 grid w-full max-w-310 grid-cols-12 gap-4 px-6 md:gap-7.5'>
