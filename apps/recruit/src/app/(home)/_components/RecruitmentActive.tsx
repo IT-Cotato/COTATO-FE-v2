@@ -43,6 +43,10 @@ export const RecruitmentActive = () => {
       // 신규 지원: 지원서 생성 후 이동
       startApplication(undefined, {
         onSuccess: (data) => {
+          if (!data.applicationId || data.isSubmitted) {
+            alert('이미 제출된 지원서가 있습니다.');
+            return;
+          }
           router.push(`${ROUTES.APPLY}?id=${data.applicationId}`);
         },
         onError: () => {

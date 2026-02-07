@@ -83,31 +83,21 @@ export const ApplyFormContainer = () => {
     }
   }, [recruitmentStatus, router]);
 
-  // 에러 발생 시 리다이렉트 (AP002 제외)
+  // 에러 발생 시 리다이렉트
   useEffect(() => {
     if (!isError || !error) return;
 
     if (typeof error === 'object' && 'code' in error) {
       const apiError = error as ApiErrorData;
-      if (apiError.code !== 'AP002') {
-        alert(apiError.message || '오류가 발생했습니다.');
-        router.push(ROUTES.HOME);
-      }
+      alert(apiError.message || '오류가 발생했습니다.');
+      router.push(ROUTES.HOME);
     } else if (error instanceof Error) {
       if (error.name !== 'CancelledError') {
-        alert('이미 제출된 지원서입니다.');
+        alert('오류가 발생했습니다.');
         router.push(ROUTES.HOME);
       }
     }
   }, [isError, error, router]);
-
-  // AP002 = 이미 제출 완료
-  const isConfirmedSubmitted =
-    isError &&
-    !!error &&
-    typeof error === 'object' &&
-    'code' in error &&
-    (error as ApiErrorData).code === 'AP002';
 
   if (isLoading) {
     return (
@@ -118,7 +108,7 @@ export const ApplyFormContainer = () => {
   }
 
   // 제출 완료된 경우
-  if (applicationStatus?.isSubmitted || isConfirmedSubmitted) {
+  if (applicationStatus?.isSubmitted) {
     return (
       <AlreadySubmittedModal
         isOpen={true}
