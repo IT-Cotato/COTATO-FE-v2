@@ -36,7 +36,7 @@ export const ProjectContainer = () => {
           labelTypo='body_l'
           width={127}
           height={40}
-          onClick={() => router.push(ROUTES.ADD_PROJECT)}
+          onClick={() => router.push(ROUTES.ADD_PROJECT())}
         />
       </div>
       <ProjectSection

@@ -1,20 +1,41 @@
 'use client';
-import {AddProjectForm} from '@/app/(with-header)/(with-footer)/project/add-project/_components/AddProjectForm';
+
+import {useSearchParams} from 'next/navigation';
+import {useState, useMemo} from 'react';
+import {PROJECT_DETAIL_MOCK} from '@/mocks/project/mock-project';
+import {ProjectDetail} from '@/schemas/project/project.schema';
+import {AddProjectForm} from '../_components/AddProjectForm';
 import {Dropdown} from '@/components/dropdown/Dropdown';
-import {useState} from 'react';
 
 export const AddProjectFormContainer = () => {
-  const [selectedGeneration, setSelectedGeneration] = useState<string>('12기');
-  const [selectedActivity, setSelectedActivity] = useState<string>('데모데이');
+  const searchParams = useSearchParams();
+  const editId = searchParams.get('edit'); // url에서 ID 추출
+
+  // editId가 있을 때만 데이터를 찾음
+  const editData = useMemo(() => {
+    if (!editId) return undefined;
+    return (PROJECT_DETAIL_MOCK[Number(editId)] ||
+      PROJECT_DETAIL_MOCK[1]) as ProjectDetail;
+  }, [editId]);
+
+  // editData가 있으면 해당 데이터로 초기값 설정
+  const [selectedGeneration, setSelectedGeneration] = useState<string>(
+    editData ? `${editData.generationId}기` : '12기'
+  );
+  const [selectedActivity, setSelectedActivity] = useState<string>(
+    editData
+      ? editData.projectType === 'DEMODAY'
+        ? '데모데이'
+        : '해커톤'
+      : '데모데이'
+  );
 
   const generations = ['12기', '11기', '10기', '9기']; //나중에 API 데이터로 연동하기
   const activities = ['데모데이', '해커톤'];
 
   const getGenerationId = (gen: string) => parseInt(gen.replace('기', ''));
-  const getProjectType = (act: string): 'DEMODAY' | 'HACKATHON' => {
-    if (act === '데모데이') return 'DEMODAY';
-    return 'HACKATHON';
-  };
+  const getProjectType = (act: string): 'DEMODAY' | 'HACKATHON' =>
+    act === '데모데이' ? 'DEMODAY' : 'HACKATHON';
 
   return (
     <section className='flex w-full flex-col gap-8.5 py-7.5'>
@@ -37,6 +58,7 @@ export const AddProjectFormContainer = () => {
       <AddProjectForm
         generationId={getGenerationId(selectedGeneration)}
         projectType={getProjectType(selectedActivity)}
+        initialData={editData}
       />
     </section>
   );

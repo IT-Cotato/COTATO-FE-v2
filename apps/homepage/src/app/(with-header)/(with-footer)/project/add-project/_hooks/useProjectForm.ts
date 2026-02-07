@@ -1,16 +1,37 @@
 import {useState, useMemo} from 'react';
 import {ImageInfo, TeamState} from '@/schemas/project/project-type';
+import {ProjectDetail} from '@/schemas/project/project.schema';
 
-export const useProjectForm = (teamMembers: TeamState) => {
-  const [projectName, setProjectName] = useState('');
-  const [shortDescription, setShortDescription] = useState('');
-  const [projectLink, setProjectLink] = useState('');
-  const [startDate, setStartDate] = useState<Date | null>(null);
-  const [endDate, setEndDate] = useState<Date | null>(null);
-  const [projectIntroduction, setProjectIntroduction] = useState('');
-  const [uploadedImages, setUploadedImages] = useState<ImageInfo[]>([]);
+export const useProjectForm = (
+  teamMembers: TeamState,
+  initialData?: ProjectDetail
+) => {
+  // initialData가 있으면 해당 값을, 없으면 빈 값을 초기값으로 설정
+  const [projectName, setProjectName] = useState(
+    initialData?.projectName || ''
+  );
+  const [shortDescription, setShortDescription] = useState(
+    initialData?.shortDescription || ''
+  );
+  const [projectLink, setProjectLink] = useState(
+    initialData?.projectLink || ''
+  );
+  const [startDate, setStartDate] = useState<Date | null>(
+    initialData?.startDate ? new Date(initialData.startDate) : null
+  );
+  const [endDate, setEndDate] = useState<Date | null>(
+    initialData?.endDate ? new Date(initialData.endDate) : null
+  );
+  const [projectIntroduction, setProjectIntroduction] = useState(
+    initialData?.projectIntroduction || ''
+  );
+  const [uploadedImages, setUploadedImages] = useState<ImageInfo[]>(
+    initialData?.imageInfos.map((img) => ({
+      ...img,
+      id: Math.random().toString(36).slice(2, 11), // dnd-kit용 id
+    })) || []
+  );
 
-  // 모든 필드 및 팀 구성 유효성 확인
   const isFormValid = useMemo(() => {
     const hasBaseInfo =
       [projectName, shortDescription, projectLink, projectIntroduction].every(

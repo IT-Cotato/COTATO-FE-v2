@@ -1,10 +1,14 @@
 import {ProjectDetail} from '@/schemas/project/project.schema';
 import LinkIcon from '@/assets/link/link.svg';
 import {Button} from '@repo/ui/components/buttons/Button';
+import {useRouter} from 'next/navigation';
+import {ROUTES} from '@/constants/routes';
 
 export const ProjectDetailHeader = ({data}: {data: ProjectDetail}) => {
+  const router = useRouter();
+
   const handleEdit = () => {
-    console.log('수정');
+    router.push(ROUTES.ADD_PROJECT(data.projectId));
   };
 
   const handleDelete = () => {
