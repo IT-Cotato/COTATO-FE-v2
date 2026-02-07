@@ -56,7 +56,7 @@ export const ImageUploadField = ({
           type='file'
           ref={fileInputRef}
           className='hidden'
-          accept='image/*'
+          accept='.jpg,.png,.jpeg'
           multiple
           onChange={onFileChange}
         />

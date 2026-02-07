@@ -17,10 +17,19 @@ export const useImageUpload = (
     [onImagesChange]
   );
 
-  // 업로드 시뮬레이션
   const handleUpload = async (files: FileList) => {
+    const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png'];
+    const filteredFiles = Array.from(files).filter((file) =>
+      allowedTypes.includes(file.type)
+    );
+
+    if (filteredFiles.length === 0) {
+      alert('JPG, JPEG, PNG 파일만 업로드 가능합니다.');
+      return;
+    }
+
     const newUploadedImages = await Promise.all(
-      Array.from(files).map(async (file) => {
+      filteredFiles.map(async (file) => {
         const mockS3Key = `projects/${Date.now()}-${file.name}`;
         await new Promise((resolve) => setTimeout(resolve, 500));
         return {
@@ -32,18 +41,16 @@ export const useImageUpload = (
       })
     );
 
-    setImages((prev) => {
-      const updated = [
-        ...prev,
-        ...newUploadedImages.map((img, idx) => ({
-          ...img,
-          order: prev.length + idx + 1,
-        })),
-      ];
-      onImagesChange(updated);
-      if (prev.length === 0 && updated.length > 0) setSelectedId(updated[0].id);
-      return updated;
-    });
+    const updated = [
+      ...images,
+      ...newUploadedImages.map((img, idx) => ({
+        ...img,
+        order: images.length + idx + 1,
+      })),
+    ];
+
+    updateImages(updated);
+    if (images.length === 0 && updated.length > 0) setSelectedId(updated[0].id);
   };
 
   const handleReorder = (event: DragEndEvent) => {
@@ -52,9 +59,11 @@ export const useImageUpload = (
       const oldIndex = images.findIndex((item) => item.id === active.id);
       const newIndex = images.findIndex((item) => item.id === over.id);
       const newArray = arrayMove(images, oldIndex, newIndex);
-      updateImages(
-        newArray.map((item, index) => ({...item, order: index + 1}))
-      );
+      const updated = newArray.map((item, index) => ({
+        ...item,
+        order: index + 1,
+      }));
+      updateImages(updated);
     }
   };
 
@@ -63,10 +72,11 @@ export const useImageUpload = (
     if (target) URL.revokeObjectURL(target.publicUrl);
 
     const filtered = images.filter((img) => img.id !== id);
-    const updated = filtered.map((item, index) => ({
-      ...item,
+    const updated = filtered.map((prev, index) => ({
+      ...prev,
       order: index + 1,
     }));
+
     updateImages(updated);
     if (selectedId === id)
       setSelectedId(updated.length > 0 ? updated[0].id : null);
