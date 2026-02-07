@@ -124,8 +124,6 @@ export const PartQuestion = ({
     }
   }, [questionsData, setValue, activePart]);
 
-
-
   const handleFileChange = (files: File[]) => {
     if (files.length === 0) {
       setValue('pdfFileKey', undefined);
@@ -216,7 +214,7 @@ export const PartQuestion = ({
                             value={value ? [value] : ['']}
                             onChange={(links) => {
                               onChange(links[0]);
-                              setValue('pdfFileUrl', links[0]);
+                              setValue('pdfFileUrl', links[0] || undefined);
                             }}
                             error={error?.message}
                             placeholder={`링크를 입력해주세요`}
