@@ -7,6 +7,7 @@ interface OnboardingFormPasswordProps {
   value: string;
   onChange: (value: string) => void;
   onTogglePasswordVisibiltiy: () => void;
+  error?: string;
 }
 
 export const OnboardingFormPassword = ({
@@ -15,6 +16,7 @@ export const OnboardingFormPassword = ({
   value,
   onChange,
   onTogglePasswordVisibiltiy,
+  error,
 }: OnboardingFormPasswordProps) => {
   return (
     <div className='flex flex-col gap-3'>
@@ -34,6 +36,7 @@ export const OnboardingFormPassword = ({
           {showPassword ? <PasswordOpenIcon /> : <PasswordIcon />}
         </button>
       </div>
+      {error && <span className='text-body-l text-alert'>{error}</span>}
     </div>
   );
 };

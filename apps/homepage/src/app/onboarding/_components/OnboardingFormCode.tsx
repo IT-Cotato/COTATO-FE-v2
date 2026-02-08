@@ -5,6 +5,7 @@ interface OnboardingFormCodeProps {
   value: string;
   placeholder: string;
   type: string;
+  error?: string;
 }
 
 export const OnboardingFormCode = ({
@@ -14,6 +15,7 @@ export const OnboardingFormCode = ({
   value,
   placeholder,
   type,
+  error,
 }: OnboardingFormCodeProps) => {
   return (
     <div className='flex flex-col gap-3'>
@@ -29,6 +31,7 @@ export const OnboardingFormCode = ({
           {buttonLabel}
         </button>
       </div>
+      {error && <span className='text-body-l text-alert'>{error}</span>}
     </div>
   );
 };
