@@ -26,7 +26,7 @@ export const AdminApplicationContainer = () => {
   const {data: basicInfo} = useAdminApplicationBasicInfo(applicationId);
   const {data: partQuestions} = useAdminApplicationPartQuestions(applicationId);
   const {data: etcQuestions} = useAdminApplicationEtcQuestions(applicationId);
-  const {data: pdfFileUrl} = useAdminApplicationPdfUrl(
+  const {data: pdfFileKey} = useAdminApplicationPdfUrl(
     partQuestions?.data.pdfFileKey
   );
 
@@ -91,7 +91,8 @@ export const AdminApplicationContainer = () => {
               onPrev={handlePrev}
               onNext={handleNext}
               questionsWithAnswers={partQuestions.data.questionsWithAnswers}
-              pdfFileUrl={pdfFileUrl}
+              pdfFileKey={pdfFileKey}
+              pdfFileUrl={partQuestions.data.pdfFileUrl}
             />
           </div>
         )}
