@@ -7,7 +7,7 @@ export default function MyPageLayout({
 }>) {
   return (
     <section className='flex min-h-screen w-full flex-row'>
-      <aside className='z-sidebar'>
+      <aside className='z-sidebar bg-neutral-50'>
         <SideBar isAdmin />
       </aside>
       <main className='min-w-0 flex-1'>{children}</main>
