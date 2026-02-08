@@ -57,12 +57,18 @@ importers:
       '@repo/ui':
         specifier: workspace:*
         version: link:../../packages/ui
+      '@tanstack/react-query':
+        specifier: ^5.90.12
+        version: 5.90.20(react@19.2.3)
       '@use-funnel/browser':
         specifier: ^0.0.16
         version: 0.0.16(react@19.2.3)
       '@use-funnel/next':
         specifier: ^0.0.22
         version: 0.0.22(next@16.1.0(@babel/core@7.29.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react@19.2.3)
+      axios:
+        specifier: ^1.13.2
+        version: 1.13.4
       framer-motion:
         specifier: ^12.31.0
         version: 12.31.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
