@@ -4,6 +4,7 @@ import Image from 'next/image';
 import {useState} from 'react';
 import {motion, AnimatePresence} from 'framer-motion';
 import AboutUsBackgroundSecond from '@/assets/about-us/background-about-us-second.svg';
+import {AboutUsDescription} from '@/app/(with-header)/(with-footer)/about-us/_components/AboutUsDescription';
 
 const ACTIVITIES = [
   {
@@ -12,7 +13,6 @@ const ACTIVITIES = [
     description: 'CS 교육에 대한 설명이 들어갑니다.',
     src: 'https://picsum.photos/800/600?random=1',
     gridClass: 'col-span-12 md:col-span-7',
-    modalWidth: 'max-w-[1098px]',
   },
   {
     id: 2,
@@ -20,7 +20,6 @@ const ACTIVITIES = [
     description: 'CS 퀴즈에 대한 설명이 들어갑니다.',
     src: 'https://picsum.photos/800/600?random=2',
     gridClass: 'col-span-12 md:col-span-5',
-    modalWidth: 'max-w-[756px]',
   },
   {
     id: 3,
@@ -28,7 +27,6 @@ const ACTIVITIES = [
     description: '기획-디자인 10분 발표에 대한 설명이 들어갑니다.',
     src: 'https://picsum.photos/800/600?random=3',
     gridClass: 'col-span-12 md:col-span-5',
-    modalWidth: 'max-w-[756px]',
   },
   {
     id: 4,
@@ -36,7 +34,6 @@ const ACTIVITIES = [
     description: '네트워킹에 대한 설명이 들어갑니다.',
     src: 'https://picsum.photos/800/600?random=4',
     gridClass: 'col-span-12 md:col-span-7',
-    modalWidth: 'max-w-[1098px]',
   },
 ];
 
@@ -50,9 +47,12 @@ export const AboutUsMainActivitiesContainer = () => {
         <AboutUsBackgroundSecond className='absolute -right-20 h-full w-auto opacity-50 md:-right-100 md:opacity-100' />
       </div>
 
-      <h3 className='text-h3 z-10 px-4 text-center text-white'>
-        코테이토의 메인 활동을 소개합니다
-      </h3>
+      <AboutUsDescription
+        title='코테이토의 활동을 소개합니다'
+        subTitle='다양한 활동을 통해 직군별 역량과 협업 경험을 동시에 쌓습니다.'
+        titleColor='text-white'
+        subTitleColor='text-neutral-300'
+      />
 
       {/* Grid Container: 12컬럼 시스템 */}
       <div className='z-10 grid w-full max-w-310 grid-cols-12 gap-4 px-6 md:gap-7.5'>
@@ -96,7 +96,7 @@ export const AboutUsMainActivitiesContainer = () => {
             <motion.div
               onClick={() => setSelectedId(null)}
               layoutId={`card-${selectedId}`}
-              className={`relative z-50 flex h-full max-h-[70%] w-full flex-col overflow-hidden rounded-[26px] bg-neutral-600 text-white ${selectedActivity.modalWidth}`}>
+              className='relative z-50 flex h-full max-h-[70%] w-full max-w-[40%] flex-col overflow-hidden rounded-[26px] bg-neutral-600 text-white'>
               <div className='relative h-[40%] min-h-62.5 w-full md:h-[60%]'>
                 <Image
                   src={selectedActivity.src}
