@@ -34,7 +34,7 @@ export const ImageUploadField = ({
     useSensor(KeyboardSensor, {coordinateGetter: sortableKeyboardCoordinates})
   );
 
-  const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) handleUpload(e.target.files);
     if (fileInputRef.current) fileInputRef.current.value = '';
   };
@@ -58,7 +58,7 @@ export const ImageUploadField = ({
           className='hidden'
           accept='.jpg,.png,.jpeg'
           multiple
-          onChange={onFileChange}
+          onChange={handleFileChange}
         />
       </div>
       <ImageSortableList
