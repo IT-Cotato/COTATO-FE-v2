@@ -3,9 +3,7 @@
 import {useEffect, useRef} from 'react';
 import {useSearchParams} from 'next/navigation';
 import {useFormContext, Controller} from 'react-hook-form';
-import {FormTextarea} from '@/components/form/FormTextarea';
-import {FormFile} from '@/components/form/FormFile';
-import {FormLink} from '@/components/form/FormLink';
+import {FormTextarea} from '@repo/ui/components/form/FormTextarea';
 import {FullButton} from '@repo/ui/components/buttons/FullButton';
 import {
   useGetPartQuestionsQuery,
@@ -18,6 +16,8 @@ import {ApplyFormData} from '@/schemas/apply/apply-schema';
 import {Spinner} from '@/components/ui/Spinner';
 import {StepIndicator} from '@/components/navigation/StepIndicator';
 import {PART_TABS} from '@/constants/common/part';
+import {FormFile} from '@repo/ui/components/form/FormFile';
+import {FormLink} from '@repo/ui/components/form/FormLink';
 
 interface PartQuestionProps {
   step: number;

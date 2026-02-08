@@ -5,7 +5,7 @@ import {useSearchParams} from 'next/navigation';
 import {useFormContext, Controller} from 'react-hook-form';
 import {useQuery, useQueryClient} from '@tanstack/react-query';
 import {FormDropdown} from '@/components/form/FormDropdown';
-import {FormInput} from '@/components/form/FormInput';
+import {FormInput} from '@repo/ui/components/form/FormInput';
 import {FormRadio} from '@/components/form/FormRadio';
 import {FullButton} from '@repo/ui/components/buttons/FullButton';
 import {BASIC_INFO_FIELDS} from '@/constants/form/formConfig';

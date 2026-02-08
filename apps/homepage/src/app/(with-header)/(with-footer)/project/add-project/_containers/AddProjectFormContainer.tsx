@@ -1,0 +1,43 @@
+'use client';
+import {AddProjectForm} from '@/app/(with-header)/(with-footer)/project/add-project/_components/AddProjectForm';
+import {Dropdown} from '@/components/dropdown/Dropdown';
+import {useState} from 'react';
+
+export const AddProjectFormContainer = () => {
+  const [selectedGeneration, setSelectedGeneration] = useState<string>('12기');
+  const [selectedActivity, setSelectedActivity] = useState<string>('데모데이');
+
+  const generations = ['12기', '11기', '10기', '9기']; //나중에 API 데이터로 연동하기
+  const activities = ['데모데이', '해커톤'];
+
+  const getGenerationId = (gen: string) => parseInt(gen.replace('기', ''));
+  const getProjectType = (act: string): 'DEMODAY' | 'HACKATHON' => {
+    if (act === '데모데이') return 'DEMODAY';
+    return 'HACKATHON';
+  };
+
+  return (
+    <section className='flex w-full flex-col gap-8.5 py-7.5'>
+      <div className='flex justify-between'>
+        <div className='flex gap-6.25'>
+          <Dropdown
+            placeholder='기수'
+            value={selectedGeneration}
+            options={generations}
+            onSelect={(value) => setSelectedGeneration(value)}
+          />
+          <Dropdown
+            placeholder='활동'
+            value={selectedActivity}
+            options={activities}
+            onSelect={(value) => setSelectedActivity(value)}
+          />
+        </div>
+      </div>
+      <AddProjectForm
+        generationId={getGenerationId(selectedGeneration)}
+        projectType={getProjectType(selectedActivity)}
+      />
+    </section>
+  );
+};

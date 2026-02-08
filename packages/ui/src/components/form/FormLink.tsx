@@ -2,7 +2,7 @@
 
 import {forwardRef, useState, type InputHTMLAttributes} from 'react';
 import clsx from 'clsx';
-import {formFieldStyles} from '@/components/form/form.styles';
+import {formFieldStyles} from './form.styles';
 
 interface FormLinkProps extends Omit<
   InputHTMLAttributes<HTMLInputElement>,
@@ -13,11 +13,20 @@ interface FormLinkProps extends Omit<
   placeholder?: string;
   value?: string[];
   onChange?: (links: string[]) => void;
+  hideInnerLabel?: boolean;
 }
 
 export const FormLink = forwardRef<HTMLInputElement, FormLinkProps>(
   function FormLink(
-    {label, className, placeholder, value, onChange, ...props},
+    {
+      label,
+      className,
+      placeholder,
+      value,
+      onChange,
+      hideInnerLabel = false,
+      ...props
+    },
     ref
   ) {
     const [internalLinks, setInternalLinks] = useState<string[]>(['']);
@@ -53,9 +62,11 @@ export const FormLink = forwardRef<HTMLInputElement, FormLinkProps>(
                     formFieldStyles.readOnlyForm,
                     'flex flex-row items-center gap-5 rounded-lg px-4 py-3'
                   )}>
-                  <label className='text-h5 shrink-0 text-neutral-600'>
-                    링크 {displayLinks.length > 1 && index + 1}
-                  </label>
+                  {!hideInnerLabel && (
+                    <label className='text-h5 shrink-0 text-neutral-600'>
+                      링크 {displayLinks.length > 1 ? index + 1 : ''}
+                    </label>
+                  )}
                   <a
                     href={link.startsWith('http') ? link : `https://${link}`}
                     target='_blank'
@@ -77,7 +88,9 @@ export const FormLink = forwardRef<HTMLInputElement, FormLinkProps>(
               formFieldStyles.field,
               'flex flex-row items-center gap-5 rounded-lg px-4 py-3'
             )}>
-            <label className='text-h5 shrink-0 text-neutral-600'>링크</label>
+            {!hideInnerLabel && (
+              <label className='text-h5 shrink-0 text-neutral-600'>링크</label>
+            )}
             <input
               ref={ref}
               type='text'

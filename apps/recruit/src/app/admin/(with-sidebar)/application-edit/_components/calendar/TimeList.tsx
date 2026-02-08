@@ -10,7 +10,7 @@ export const TimeList = ({values, onSelect}: TimeListProps) => {
         <li
           key={value}
           onClick={() => onSelect(value)}
-          className='cursor-pointer px-3 py-1 text-center text-body-s font-normal'>
+          className='text-body-s cursor-pointer px-3 py-1 text-center font-normal'>
           {String(value).padStart(2, '0')}
         </li>
       ))}

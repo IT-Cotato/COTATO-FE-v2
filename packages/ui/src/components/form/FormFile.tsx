@@ -10,8 +10,8 @@ import {
 import clsx from 'clsx';
 import FolderIcon from '@/assets/icons/folder.svg';
 import DeleteIcon from '@/assets/icons/delete.svg';
-import {formFieldStyles} from '@/components/form/form.styles';
-import {extractFileName} from '@/utils/extractFileName';
+import {formFieldStyles} from './form.styles';
+import {extractFileName} from '../../utils/extractFileName';
 
 interface FormFileProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;

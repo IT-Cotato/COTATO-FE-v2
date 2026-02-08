@@ -2,9 +2,10 @@
 
 import {forwardRef, useRef, useState, type InputHTMLAttributes} from 'react';
 import clsx from 'clsx';
-import {formFieldStyles} from './form.styles';
+
 import {useClickOutside} from '@repo/ui/hooks/useClickOutside';
 import ChevronDown from '@/assets/chevrons/chevron-down.svg';
+import {formFieldStyles} from '@repo/ui/components/form/form.styles';
 
 interface FormDropdownProps extends Omit<
   InputHTMLAttributes<HTMLInputElement>,

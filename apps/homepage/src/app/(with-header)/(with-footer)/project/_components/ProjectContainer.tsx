@@ -4,8 +4,11 @@ import {useState} from 'react';
 import {ProjectSection} from '@/app/(with-header)/(with-footer)/project/_components/ProjectSection';
 import {Dropdown} from '@/components/dropdown/Dropdown';
 import {Button} from '@repo/ui/components/buttons/Button';
+import {useRouter} from 'next/navigation';
+import {ROUTES} from '@/constants/routes';
 
 export const ProjectContainer = () => {
+  const router = useRouter();
   const [selectedGeneration, setSelectedGeneration] = useState<string>('');
   const [selectedActivity, setSelectedActivity] = useState<string>('');
 
@@ -28,7 +31,13 @@ export const ProjectContainer = () => {
             onSelect={(value) => setSelectedActivity(value)}
           />
         </div>
-        <Button label='추가하기' labelTypo='body_l' width={127} height={40} />
+        <Button
+          label='추가하기'
+          labelTypo='body_l'
+          width={127}
+          height={40}
+          onClick={() => router.push(ROUTES.ADD_PROJECT)}
+        />
       </div>
       <ProjectSection
         generation={selectedGeneration}

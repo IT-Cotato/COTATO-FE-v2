@@ -1,8 +1,8 @@
 import {FullButton} from '@repo/ui/components/buttons/FullButton';
-import {FormLink} from '@/components/form/FormLink';
-import {FormTextarea} from '@/components/form/FormTextarea';
+import {FormTextarea} from '@repo/ui/components/form/FormTextarea';
 import {PartQuestionWithAnswerType} from '@/schemas/admin/admin-application.schema';
-import {FormFile} from '@/components/form/FormFile';
+import {FormLink} from '@repo/ui/components/form/FormLink';
+import {FormFile} from '@repo/ui/components/form/FormFile';
 
 interface PartQuestionViewProps {
   onNext: () => void;

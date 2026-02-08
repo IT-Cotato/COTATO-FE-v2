@@ -5,15 +5,25 @@ import clsx from 'clsx';
 import {formFieldStyles} from './form.styles';
 
 interface FormTextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
-  label: string;
+  label?: string;
   error?: string;
   currentLength?: number;
   maxLength?: number;
+  isProject?: boolean;
 }
 
 export const FormTextarea = forwardRef<HTMLTextAreaElement, FormTextareaProps>(
   function FormTextarea(
-    {label, error, className, id, currentLength = 0, maxLength, ...props},
+    {
+      label,
+      error,
+      className,
+      id,
+      currentLength = 0,
+      maxLength,
+      isProject,
+      ...props
+    },
     ref
   ) {
     const generatedId = useId();
@@ -28,31 +38,35 @@ export const FormTextarea = forwardRef<HTMLTextAreaElement, FormTextareaProps>(
 
     return (
       <div className={formFieldStyles.wrapper}>
-        <label htmlFor={inputId} className={formFieldStyles.label}>
-          {label}
-          {props.required && (
-            <span className={formFieldStyles.required}>*</span>
-          )}
-        </label>
-
+        {!isProject && label && (
+          <label htmlFor={inputId} className={formFieldStyles.label}>
+            {label}
+            {props.required && (
+              <span className={formFieldStyles.required}>*</span>
+            )}
+          </label>
+        )}
         <div className='relative w-full'>
           <textarea
             ref={ref}
             id={inputId}
+            spellCheck='false'
             className={clsx(
-              'min-h-54.5 w-full resize-none',
+              'w-full resize-none transition-all',
               formFieldStyles.field,
-              'px-4.75 py-4.5',
               'read-only:cursor-default read-only:focus:ring-0',
+              isProject
+                ? 'h-24 min-h-24 px-4 py-3.5'
+                : 'min-h-54.5 px-4.75 py-4.5',
               error && formFieldStyles.error,
               props.readOnly && formFieldStyles.readOnlyTextarea,
+              isProject && 'text-h5 placeholder:text-neutral-400',
               className
             )}
             maxLength={maxLength}
             {...props}
             onChange={handleChange}
           />
-
           {maxLength && (
             <div className='text-h5 absolute right-4 bottom-4 text-neutral-400'>
               <span
@@ -65,7 +79,6 @@ export const FormTextarea = forwardRef<HTMLTextAreaElement, FormTextareaProps>(
             </div>
           )}
         </div>
-
         {error && <span className={formFieldStyles.errorMessage}>{error}</span>}
       </div>
     );

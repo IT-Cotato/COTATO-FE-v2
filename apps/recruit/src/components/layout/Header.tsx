@@ -62,7 +62,7 @@ export const Header = () => {
     <>
       <header
         style={{height: `${HEADER_HEIGHT}px`}}
-        className='sticky top-0 z-header flex w-full min-w-360 items-center justify-between bg-black pr-26.25 pl-6.25'>
+        className='z-header sticky top-0 flex w-full min-w-360 items-center justify-between bg-black pr-26.25 pl-6.25'>
         <div>
           <Link href='https://www.cotato.kr/' target='_blank'>
             <MainLogo className='w-36.5' />
@@ -108,14 +108,14 @@ export const Header = () => {
                 trigger={
                   <button
                     type='button'
-                    className='flex cursor-pointer items-center justify-center gap-2.5 px-4.25 py-6 text-body-l-sb text-white'>
+                    className='text-body-l-sb flex cursor-pointer items-center justify-center gap-2.5 px-4.25 py-6 text-white'>
                     <SmallLogo className='h-4 w-4 text-white' /> {user.name}
                   </button>
                 }
-                className='absolute rounded-sm border border-primary bg-black px-2 py-1'>
+                className='border-primary absolute rounded-sm border bg-black px-2 py-1'>
                 <button
                   onClick={handleLogoutClick}
-                  className='flex w-full items-center gap-0.75 text-body-l-sb text-primary'>
+                  className='text-body-l-sb text-primary flex w-full items-center gap-0.75'>
                   <Logout />
                   LOGOUT
                 </button>
@@ -123,7 +123,7 @@ export const Header = () => {
             ) : (
               <button
                 onClick={() => setIsModalOpen(true)}
-                className='px-4.25 text-center text-body-l-sb text-primary'>
+                className='text-body-l-sb text-primary px-4.25 text-center'>
                 LOGIN
               </button>
             ))}

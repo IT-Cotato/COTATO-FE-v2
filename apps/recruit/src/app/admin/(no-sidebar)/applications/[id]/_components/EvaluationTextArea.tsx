@@ -39,7 +39,7 @@ export const EvaluationTextarea = ({
       value={draft ?? evaluation?.data.comment ?? ''}
       onChange={(e) => setDraft(e.target.value)}
       placeholder='면접 질문 및 서류평가에 대해 자유롭게 작성해주세요.'
-      className='min-h-35 w-full resize-none rounded-[10px] border-[1.5px] border-neutral-200 bg-white p-5 text-h5 outline-none placeholder:text-neutral-400'
+      className='text-h5 min-h-35 w-full resize-none rounded-[10px] border-[1.5px] border-neutral-200 bg-white p-5 outline-none placeholder:text-neutral-400'
     />
   );
 };

@@ -37,7 +37,7 @@ export const FaqSideBar = () => {
                 aria-current={isActive ? 'page' : undefined}>
                 <p
                   className={clsx(
-                    'w-45.25 rounded-[5px] px-2 py-1.25 text-h5 transition-colors duration-300',
+                    'text-h5 w-45.25 rounded-[5px] px-2 py-1.25 transition-colors duration-300',
                     isActive
                       ? 'bg-neutral-800 text-neutral-100'
                       : 'text-neutral-800'

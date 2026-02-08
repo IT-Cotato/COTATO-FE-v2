@@ -13,7 +13,7 @@ export const QualificationsCard = ({item}: QualificationsCardProps) => {
         alt='QualificationsCard'
         draggable={false}
       />
-      <p className='text-center text-h5 wrap-anywhere whitespace-pre-line text-neutral-800'>
+      <p className='text-h5 text-center wrap-anywhere whitespace-pre-line text-neutral-800'>
         {item.description}
       </p>
     </div>

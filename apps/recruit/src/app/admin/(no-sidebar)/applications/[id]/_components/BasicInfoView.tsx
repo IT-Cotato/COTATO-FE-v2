@@ -1,8 +1,8 @@
 import {FullButton} from '@repo/ui/components/buttons/FullButton';
-import {FormInput} from '@/components/form/FormInput';
 import {FormRadio} from '@/components/form/FormRadio';
 import {BASIC_INFO_LABELS} from '@/constants/admin/admin-applications';
 import {AdminApplicationBasicInfoType} from '@/schemas/admin/admin-application.schema';
+import {FormInput} from '@repo/ui/components/form/FormInput';
 
 interface BasicInfoViewProps {
   onNext: () => void;

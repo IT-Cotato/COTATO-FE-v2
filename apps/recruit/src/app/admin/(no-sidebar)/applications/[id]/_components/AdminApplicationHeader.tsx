@@ -13,8 +13,8 @@ export const AdminApplicationHeader = ({
 }: AdminApplicationHeaderProps) => {
   return (
     <header>
-      <h1 className='flex gap-5 text-h4 font-bold text-neutral-800'>
-        <LogoIcon className='h-7.5 w-7.5 text-active' />
+      <h1 className='text-h4 flex gap-5 font-bold text-neutral-800'>
+        <LogoIcon className='text-active h-7.5 w-7.5' />
         <span> {generation}기 </span>
         <span>
           {PART_TABS.find((tab) => tab.value === basicInfo.applicationPartType)
@@ -22,7 +22,7 @@ export const AdminApplicationHeader = ({
         </span>
         <span> {basicInfo.name} </span>
         <span>지원서</span>
-        <LogoIcon className='h-7.5 w-7.5 text-active' />
+        <LogoIcon className='text-active h-7.5 w-7.5' />
       </h1>
     </header>
   );

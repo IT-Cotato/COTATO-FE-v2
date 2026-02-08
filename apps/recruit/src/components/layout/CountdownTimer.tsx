@@ -60,26 +60,26 @@ export default function CountdownTimer({
   return (
     <div className='flex items-end gap-10'>
       <div className='flex flex-col'>
-        <p className={clsx(textColor, 'text-center text-body-l-sb')}>HOUR</p>
-        <span className='text-center text-h1 text-neutral-400'>
+        <p className={clsx(textColor, 'text-body-l-sb text-center')}>HOUR</p>
+        <span className='text-h1 text-center text-neutral-400'>
           {timeLeft.h}시간
         </span>
       </div>
 
-      <span className='text-center text-h1 text-neutral-400'>:</span>
+      <span className='text-h1 text-center text-neutral-400'>:</span>
 
       <div className='flex flex-col'>
-        <p className={clsx(textColor, 'text-center text-body-l-sb')}>MINUTE</p>
-        <span className='text-center text-h1 text-neutral-400'>
+        <p className={clsx(textColor, 'text-body-l-sb text-center')}>MINUTE</p>
+        <span className='text-h1 text-center text-neutral-400'>
           {timeLeft.m}분
         </span>
       </div>
 
-      <span className='text-center text-h1 text-neutral-400'>:</span>
+      <span className='text-h1 text-center text-neutral-400'>:</span>
 
       <div className='flex flex-col'>
-        <p className={clsx(textColor, 'text-center text-body-l-sb')}>SECOND</p>
-        <span className='text-center text-h1 text-neutral-400'>
+        <p className={clsx(textColor, 'text-body-l-sb text-center')}>SECOND</p>
+        <span className='text-h1 text-center text-neutral-400'>
           {timeLeft.s}초
         </span>
       </div>

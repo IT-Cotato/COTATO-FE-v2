@@ -27,6 +27,9 @@ export const buttonLabelTextStyles: Record<
     body_l: `text-neutral-50 text-body-l`,
     body_m: `text-neutral-50 text-body-m`,
     body_s: `text-neutral-50 text-body-s`,
+    body_l_sb: `text-neutral-50 text-body-l-sb`,
+    body_m_sb: `text-neutral-50 text-body-m-sb`,
+    body_s_sb: `text-neutral-50 text-body-s-sb`,
   },
   outline: {
     h3: `text-neutral-50 text-h3`,
@@ -35,6 +38,9 @@ export const buttonLabelTextStyles: Record<
     body_l: `text-primary text-body-l`,
     body_m: `text-primary text-body-m`,
     body_s: `text-primary text-body-s`,
+    body_l_sb: `text-primary text-body-l-sb`,
+    body_m_sb: `text-primary text-body-m-sb`,
+    body_s_sb: `text-primary text-body-s-sb`,
   },
 };
 

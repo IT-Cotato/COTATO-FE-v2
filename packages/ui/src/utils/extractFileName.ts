@@ -5,7 +5,7 @@ export const extractFileName = (url: string) => {
     // 1. 쿼리 파라미터(?...) 제거
     const urlWithoutQuery = url.split('?')[0];
     // 2. 경로의 마지막 세그먼트 추출
-    const encodedName = urlWithoutQuery.split('/').pop() || '';
+    const encodedName = urlWithoutQuery?.split('/').pop() || '';
     // 3. URL 인코딩(한글 등) 복원
     return decodeURIComponent(encodedName);
   } catch (error) {

@@ -19,7 +19,7 @@ export const ResultTable = ({data}: ResultTableProps) => {
           ))}
         </colgroup>
         <thead>
-          <tr className='bg-neutral-200 text-body-l font-semibold'>
+          <tr className='text-body-l bg-neutral-200 font-semibold'>
             <th className='px-5.5 py-[11.5px] whitespace-nowrap text-neutral-600'>
               합격 여부
             </th>
@@ -35,7 +35,7 @@ export const ResultTable = ({data}: ResultTableProps) => {
         <tbody className='divide-y divide-neutral-50 bg-neutral-50'>
           {data.map((row, index) => (
             <tr key={index}>
-              <td className='px-5.5 py-[11.5px] text-body-l font-semibold whitespace-nowrap text-neutral-600'>
+              <td className='text-body-l px-5.5 py-[11.5px] font-semibold whitespace-nowrap text-neutral-600'>
                 {row.status}
               </td>
               {RESULT_PARTS.map((part) => (

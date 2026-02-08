@@ -79,7 +79,7 @@ export const AdminApplicationsInformation = ({
             지원기간
           </p>
 
-          <div className='flex flex-row gap-2.5 text-body-l font-normal'>
+          <div className='text-body-l flex flex-row gap-2.5 font-normal'>
             {isLoading ? (
               <Spinner size='sm' />
             ) : (
@@ -116,7 +116,7 @@ export const AdminApplicationsInformation = ({
             value={keyword}
             onChange={(e) => setKeyword(e.target.value)}
             disabled={isLoading}
-            className='w-full text-body-l font-normal outline-none placeholder:text-neutral-600'
+            className='text-body-l w-full font-normal outline-none placeholder:text-neutral-600'
           />
         </form>
       </div>

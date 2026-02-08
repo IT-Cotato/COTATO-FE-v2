@@ -4,18 +4,18 @@ import {useEffect, useRef} from 'react';
 import {useSearchParams} from 'next/navigation';
 import {useFormContext, Controller} from 'react-hook-form';
 import clsx from 'clsx';
-import {FormTextarea} from '@/components/form/FormTextarea';
+import {FormTextarea} from '@repo/ui/components/form/FormTextarea';
 import {FormDropdown} from '@/components/form/FormDropdown';
 import {FullButton} from '@repo/ui/components/buttons/FullButton';
 import {FormRadio} from '@/components/form/FormRadio';
-import {FormInput} from '@/components/form/FormInput';
+import {FormInput} from '@repo/ui/components/form/FormInput';
 import {getEtcFields} from '@/constants/form/formConfig';
 import {EtcFieldConfig} from '@/schemas/apply/apply-type';
 import {ApplyFormData} from '@/schemas/apply/apply-schema';
 import {useGetEtcQuestionsQuery} from '@/hooks/queries/useApply.query';
 import {StepIndicator} from '@/components/navigation/StepIndicator';
 import {Spinner} from '@/components/ui/Spinner';
-import {formFieldStyles} from '@/components/form/form.styles';
+import {formFieldStyles} from '@repo/ui/components/form/form.styles';
 
 export const EtcInfo = ({
   step,

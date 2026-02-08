@@ -16,7 +16,7 @@ export const MailField = ({isEditing, content, setContent}: MailFieldProps) => {
         className='custom-scrollbar h-full w-full overflow-y-auto'>
         {isEditing ? (
           <textarea
-            className='flex min-h-full w-full resize-none bg-transparent text-body-m text-black outline-none'
+            className='text-body-m flex min-h-full w-full resize-none bg-transparent text-black outline-none'
             value={content}
             onChange={(e) => {
               setContent(e.target.value);
@@ -33,7 +33,7 @@ export const MailField = ({isEditing, content, setContent}: MailFieldProps) => {
             spellCheck={false}
           />
         ) : (
-          <div className='w-full text-body-m whitespace-pre-wrap text-black'>
+          <div className='text-body-m w-full whitespace-pre-wrap text-black'>
             {content}
           </div>
         )}
