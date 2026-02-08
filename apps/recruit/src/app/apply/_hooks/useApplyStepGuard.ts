@@ -1,6 +1,9 @@
 import {useEffect} from 'react';
 import {useRouter, useSearchParams} from 'next/navigation';
-import {BasicInfoResponse, PartQuestionResponse} from '@/schemas/apply/apply-schema';
+import {
+  BasicInfoResponse,
+  PartQuestionResponse,
+} from '@/schemas/apply/apply-schema';
 
 interface UseApplyStepGuardProps {
   step: number;
@@ -68,7 +71,8 @@ export const useApplyStepGuard = ({
         textQuestions &&
         textQuestions.length > 0 &&
         textQuestions.every(
-          (q) => q.savedAnswer !== null && q.savedAnswer.content.trim().length > 0
+          (q) =>
+            q.savedAnswer !== null && q.savedAnswer.content.trim().length > 0
         );
 
       if (!isStep2Complete) {

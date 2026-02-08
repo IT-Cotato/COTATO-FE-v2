@@ -1,7 +1,4 @@
-import {
-  ApplyFormData,
-  ApplyFormSchema,
-} from '@/schemas/apply/apply-schema';
+import {ApplyFormData, ApplyFormSchema} from '@/schemas/apply/apply-schema';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {useForm} from 'react-hook-form';
 
