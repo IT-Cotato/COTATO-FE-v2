@@ -47,7 +47,8 @@ export default function RootLayout({
   return (
     <html
       lang='ko'
-      className={`${pretendard.variable} ${sebangGothic.variable} ${roboto.variable} antialiased`}>
+      className={`${pretendard.variable} ${sebangGothic.variable} ${roboto.variable} antialiased`}
+      suppressHydrationWarning>
       <body>{children}</body>
     </html>
   );

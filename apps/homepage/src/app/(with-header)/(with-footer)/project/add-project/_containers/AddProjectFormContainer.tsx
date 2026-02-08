@@ -1,7 +1,7 @@
 'use client';
 
 import {useSearchParams} from 'next/navigation';
-import {useState, useMemo} from 'react';
+import {useState, useMemo, useEffect} from 'react';
 import {PROJECT_DETAIL_MOCK} from '@/mocks/project/mock-project';
 import {ProjectDetail} from '@/schemas/project/project.schema';
 import {AddProjectForm} from '../_components/AddProjectForm';
@@ -22,17 +22,21 @@ export const AddProjectFormContainer = () => {
     return data as ProjectDetail;
   }, [editId]);
 
-  // editData가 있으면 해당 데이터로 초기값 설정
-  const [selectedGeneration, setSelectedGeneration] = useState<string>(
-    editData ? `${editData.generationId}기` : '12기'
-  );
-  const [selectedActivity, setSelectedActivity] = useState<string>(
-    editData
-      ? editData.projectType === 'DEMODAY'
-        ? '데모데이'
-        : '해커톤'
-      : '데모데이'
-  );
+  const [selectedGeneration, setSelectedGeneration] = useState<string>('12기');
+  const [selectedActivity, setSelectedActivity] = useState<string>('데모데이');
+
+  // editData가 바뀔 때 드롭다운 상태 동기화
+  useEffect(() => {
+    if (editData) {
+      setSelectedGeneration(`${editData.generationId}기`);
+      setSelectedActivity(
+        editData.projectType === 'DEMODAY' ? '데모데이' : '해커톤'
+      );
+    } else {
+      setSelectedGeneration('12기');
+      setSelectedActivity('데모데이');
+    }
+  }, [editData]);
 
   const generations = ['12기', '11기', '10기', '9기']; //나중에 API 데이터로 연동하기
   const activities = ['데모데이', '해커톤'];

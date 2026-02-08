@@ -35,7 +35,7 @@ export const useImageUpload = (
 
     const newUploadedImages = await Promise.all(
       filteredFiles.map(async (file) => {
-        const mockS3Key = `projects/${Date.now()}-${file.name}-${Math.random().toString(36).slice(2, 5)}`;
+        const mockS3Key = `projects/${Date.now()}-${file.name}`;
         await new Promise((resolve) => setTimeout(resolve, 500));
 
         return {

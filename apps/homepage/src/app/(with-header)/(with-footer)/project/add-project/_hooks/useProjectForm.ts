@@ -1,4 +1,4 @@
-import {useState, useMemo} from 'react';
+import {useState, useMemo, useEffect} from 'react';
 import {ImageInfo, TeamState} from '@/schemas/project/project-type';
 import {ProjectDetail} from '@/schemas/project/project.schema';
 
@@ -31,6 +31,24 @@ export const useProjectForm = (
       id: img.s3Key,
     })) || []
   );
+
+  // initialData가 바뀔 때 폼의 모든 입력값 동기화
+  useEffect(() => {
+    setProjectName(initialData?.projectName || '');
+    setShortDescription(initialData?.shortDescription || '');
+    setProjectLink(initialData?.projectLink || '');
+    setStartDate(
+      initialData?.startDate ? new Date(initialData.startDate) : null
+    );
+    setEndDate(initialData?.endDate ? new Date(initialData.endDate) : null);
+    setProjectIntroduction(initialData?.projectIntroduction || '');
+    setUploadedImages(
+      initialData?.imageInfos.map((img) => ({
+        ...img,
+        id: img.s3Key,
+      })) || []
+    );
+  }, [initialData]);
 
   const isFormValid = useMemo(() => {
     const hasBaseInfo =
