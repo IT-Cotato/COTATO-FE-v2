@@ -218,7 +218,6 @@ export const PartQuestion = ({
                               setValue('pdfFileUrl', links[0] || undefined);
                             }}
                             error={error?.message}
-                            placeholder={`링크를 입력해주세요`}
                           />
                         )}
                       />

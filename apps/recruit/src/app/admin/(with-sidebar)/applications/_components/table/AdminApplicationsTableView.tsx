@@ -150,7 +150,7 @@ export const AdminApplicationsTableView = ({
             <td className='truncate px-3 py-4'>
               <p className='text-center'>{app.phoneNumber}</p>
             </td>
-            <td className='flex items-center justify-center truncate px-3 py-4'>
+            <td className='truncate px-3 py-4'>
               <p className='text-center'>{formatKoreanDate(app.submittedAt)}</p>
             </td>
             <td className='px-3 py-4'>
