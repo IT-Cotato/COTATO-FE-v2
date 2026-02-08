@@ -59,9 +59,24 @@ export const startApplication = async (): Promise<StartApplicationResponse> => {
     const responseSchema = createSuccessResponseSchema(
       StartApplicationResponseSchema
     );
-    const validatedResponse = responseSchema.parse(response.data);
 
-    return validatedResponse.data;
+    const parsed = responseSchema.safeParse(response.data);
+
+    if (parsed.success) {
+      return parsed.data.data;
+    }
+
+    // 파싱 실패 시
+    // status 조회 API를 통해 applicationId 재확인 시도
+    const statusData = await getApplicationStatus();
+    if (statusData && statusData.applicationId) {
+      return {
+        applicationId: statusData.applicationId,
+        isSubmitted: statusData.isSubmitted ?? false,
+      };
+    }
+
+    throw parsed.error;
   } catch (error) {
     return handleApiError(error);
   }
