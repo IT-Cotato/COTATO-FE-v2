@@ -6,10 +6,17 @@ export const ROUTES = {
   ONBOARDING: '/onboarding',
   ADD_PROJECT: '/project/add-project',
 
+  //mypage routes
+  MYPAGE_ACTIVITY: '/mypage/activity',
+  MYPAGE_ATTENDANCE: '/mypage/attendance',
+  MYPAGE_CSQUIZ: '/mypage/csquiz',
+  MYPAGE_SECURITY: '/mypage/security',
+  MYPAGE_TERMS: '/mypage/terms',
+
   //admin routes
-  ADMIN_USERS: '/admin/users',
-  ADMIN_APPROVALS: '/admin/approvals',
-  ADMIN_SESSIONS: '/admin/sessions',
-  ADMIN_ATTENDANCE: '/admin/attendance',
-  ADMIN_PENALTIES: '/admin/penalties',
+  ADMIN_USERS: '/mypage/admin/users',
+  ADMIN_APPROVALS: '/mypage/admin/approvals',
+  ADMIN_SESSIONS: '/mypage/admin/sessions',
+  ADMIN_ATTENDANCE: '/mypage/admin/attendance',
+  ADMIN_PENALTIES: '/mypage/admin/penalties',
 };
