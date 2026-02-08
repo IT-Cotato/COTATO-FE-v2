@@ -14,8 +14,12 @@ export const AddProjectFormContainer = () => {
   // editId가 있을 때만 데이터를 찾음
   const editData = useMemo(() => {
     if (!editId) return undefined;
-    return (PROJECT_DETAIL_MOCK[Number(editId)] ||
-      PROJECT_DETAIL_MOCK[1]) as ProjectDetail;
+    const data = PROJECT_DETAIL_MOCK[Number(editId)];
+    if (!data) {
+      console.warn(`Project with id ${editId} not found`);
+      return undefined;
+    }
+    return data as ProjectDetail;
   }, [editId]);
 
   // editData가 있으면 해당 데이터로 초기값 설정

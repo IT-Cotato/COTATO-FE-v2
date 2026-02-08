@@ -5,6 +5,8 @@ export const ROUTES = {
   MYPAGE: '/mypage',
   ONBOARDING: '/onboarding',
   ADD_PROJECT: (editId?: number | string) =>
-    editId ? `/project/add-project?edit=${editId}` : '/project/add-project',
+    editId !== undefined
+      ? `/project/add-project?edit=${editId}`
+      : '/project/add-project',
   PROJECT_DETAIL: (projectId: number | string) => `/project/${projectId}`,
 };

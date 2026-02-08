@@ -21,7 +21,7 @@ export const ProjectDetailContainer = () => {
       acc[pos].push(member.name);
       return acc;
     },
-    {} as Record<Position, string[]>
+    {PM: [], DE: [], FE: [], BE: []} as Record<Position, string[]>
   );
 
   const positions: Position[] = ['PM', 'DE', 'FE', 'BE'];

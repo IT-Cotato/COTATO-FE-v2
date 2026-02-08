@@ -1,9 +1,9 @@
-import {ProjectRegistration} from '@/schemas/project/project.schema';
+import {ProjectRegistration, Position} from '@/schemas/project/project.schema';
 
 /**
  * 팀 생성 및 관리용 타입
  */
-export type Position = 'PM' | 'DE' | 'FE' | 'BE';
+export type {Position};
 export type TeamState = Record<Position, string[]>;
 
 /**

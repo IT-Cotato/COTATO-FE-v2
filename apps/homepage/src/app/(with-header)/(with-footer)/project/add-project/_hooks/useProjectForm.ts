@@ -28,7 +28,7 @@ export const useProjectForm = (
   const [uploadedImages, setUploadedImages] = useState<ImageInfo[]>(
     initialData?.imageInfos.map((img) => ({
       ...img,
-      id: Math.random().toString(36).slice(2, 11), // dnd-kit용 id
+      id: img.s3Key,
     })) || []
   );
 
