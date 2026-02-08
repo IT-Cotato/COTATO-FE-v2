@@ -6,6 +6,7 @@ interface OnboardingFormCodeProps {
   placeholder: string;
   type: string;
   error?: string;
+  onButtonClick: () => void;
 }
 
 export const OnboardingFormCode = ({
@@ -16,6 +17,7 @@ export const OnboardingFormCode = ({
   placeholder,
   type,
   error,
+  onButtonClick,
 }: OnboardingFormCodeProps) => {
   return (
     <div className='flex flex-col gap-3'>
@@ -27,7 +29,9 @@ export const OnboardingFormCode = ({
           onChange={(e) => onChange(e.target.value)}
           placeholder={placeholder}
           className='placeholder:text-neutral-100'></input>
-        <button className='bg-primary text-body-m absolute top-3.5 right-6.25 h-7.75 w-23.25 rounded-[10px]'>
+        <button
+          className='bg-primary text-body-m absolute top-3.5 right-6.25 h-7.75 w-23.25 rounded-[10px]'
+          onClick={onButtonClick}>
           {buttonLabel}
         </button>
       </div>
