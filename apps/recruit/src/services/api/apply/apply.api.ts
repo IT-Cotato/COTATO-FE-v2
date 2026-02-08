@@ -68,20 +68,22 @@ export const startApplication = async (): Promise<StartApplicationResponse> => {
 
     // 파싱 실패 시
     // status 조회 API를 통해 applicationId 재확인 시도
-    const statusData = await getApplicationStatus();
-    if (statusData && statusData.applicationId) {
-      return {
-        applicationId: statusData.applicationId,
-        isSubmitted: statusData.isSubmitted ?? false,
-      };
+    try {
+      const statusData = await getApplicationStatus();
+      if (statusData?.applicationId) {
+        return {
+          applicationId: statusData.applicationId,
+          isSubmitted: statusData.isSubmitted ?? false,
+        };
+      }
+    } catch {
+      // status 조회도 실패하면 원래의 파싱 에러를 throw
     }
-
     throw parsed.error;
   } catch (error) {
     return handleApiError(error);
   }
 };
-
 /**
  * 기본 인적사항 조회
  */
