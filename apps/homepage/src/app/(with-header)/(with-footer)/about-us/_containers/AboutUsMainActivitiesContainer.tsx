@@ -45,14 +45,14 @@ export const AboutUsMainActivitiesContainer = () => {
   const selectedActivity = ACTIVITIES.find((a) => a.id === selectedId);
 
   return (
-    <div className='relative flex w-full flex-col items-center gap-10 overflow-hidden bg-[linear-gradient(180deg,#010101_13.94%,rgba(1,1,1,0)_100%)] py-20 md:gap-25 md:py-40'>
+    <div className='relative flex w-full flex-col items-center gap-25 overflow-hidden bg-[linear-gradient(180deg,#010101_13.94%,rgba(1,1,1,0)_100%)] py-20 md:gap-25 md:py-40'>
       <div className='pointer-events-none absolute inset-0 z-0'>
         <AboutUsBackgroundSecond className='absolute -right-20 h-full w-auto opacity-50 md:-right-100 md:opacity-100' />
       </div>
 
-      <h2 className='text-h3 z-10 px-4 text-center text-white'>
+      <h3 className='text-h3 z-10 px-4 text-center text-white'>
         코테이토의 메인 활동을 소개합니다
-      </h2>
+      </h3>
 
       {/* Grid Container: 12컬럼 시스템 */}
       <div className='z-10 grid w-full max-w-310 grid-cols-12 gap-4 px-6 md:gap-7.5'>

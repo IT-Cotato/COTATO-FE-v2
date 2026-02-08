@@ -11,6 +11,7 @@ import clsx from 'clsx';
 import FolderIcon from '@/assets/icons/folder.svg';
 import DeleteIcon from '@/assets/icons/delete.svg';
 import {formFieldStyles} from './form.styles';
+import {extractFileName} from '../../utils/extractFileName';
 
 interface FormFileProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
@@ -100,7 +101,10 @@ export const FormFile = forwardRef<HTMLInputElement, FormFileProps>(
       !value || value.length === 0
         ? []
         : props.readOnly
-          ? value.map((name) => ({name, url: name}))
+          ? value.map((url) => ({
+              name: extractFileName(url),
+              url: url,
+            }))
           : files.length > 0
             ? files.map((f, i) => ({name: f.name, url: fileUrls[i]}))
             : value.map((name) => ({name, url: ''}));
