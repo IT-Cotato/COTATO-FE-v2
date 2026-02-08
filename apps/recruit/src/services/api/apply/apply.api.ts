@@ -59,14 +59,31 @@ export const startApplication = async (): Promise<StartApplicationResponse> => {
     const responseSchema = createSuccessResponseSchema(
       StartApplicationResponseSchema
     );
-    const validatedResponse = responseSchema.parse(response.data);
 
-    return validatedResponse.data;
+    const parsed = responseSchema.safeParse(response.data);
+
+    if (parsed.success) {
+      return parsed.data.data;
+    }
+
+    // 파싱 실패 시
+    // status 조회 API를 통해 applicationId 재확인 시도
+    try {
+      const statusData = await getApplicationStatus();
+      if (statusData?.applicationId) {
+        return {
+          applicationId: statusData.applicationId,
+          isSubmitted: statusData.isSubmitted ?? false,
+        };
+      }
+    } catch {
+      // status 조회도 실패하면 원래의 파싱 에러를 throw
+    }
+    throw parsed.error;
   } catch (error) {
     return handleApiError(error);
   }
 };
-
 /**
  * 기본 인적사항 조회
  */
