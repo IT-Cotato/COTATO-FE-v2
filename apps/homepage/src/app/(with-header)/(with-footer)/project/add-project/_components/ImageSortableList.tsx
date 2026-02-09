@@ -1,3 +1,4 @@
+import {useId} from 'react';
 import {
   DndContext,
   closestCenter,
@@ -23,6 +24,8 @@ export const ImageSortableList = ({
   onDragEnd,
   onSelect,
 }: ImageSortableListProps) => {
+  const dndContextId = useId();
+
   return (
     <div className='project-scrollbar h-70 flex-1 overflow-y-auto rounded-[5px] pr-1.5'>
       <div className='min-h-full w-170 rounded-[5px] bg-[rgba(189,189,189,0.2)] px-2.25 py-4'>
@@ -32,6 +35,7 @@ export const ImageSortableList = ({
           </div>
         ) : (
           <DndContext
+            id={dndContextId}
             sensors={sensors}
             collisionDetection={closestCenter}
             onDragEnd={onDragEnd}

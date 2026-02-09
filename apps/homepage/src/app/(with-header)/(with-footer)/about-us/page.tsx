@@ -1,5 +1,6 @@
 import {AboutUsBanner} from '@/app/(with-header)/(with-footer)/about-us/_components/AboutUsBanner';
 import {AboutUsMainActivitiesContainer} from '@/app/(with-header)/(with-footer)/about-us/_containers/AboutUsMainActivitiesContainer';
+import {AboutUsManagementTeamContainer} from '@/app/(with-header)/(with-footer)/about-us/_containers/AboutUsManagementTeamContainer';
 import {AboutUsProjectContainer} from '@/app/(with-header)/(with-footer)/about-us/_containers/AboutUsProjectContainer';
 import {AboutUsStudyContainer} from '@/app/(with-header)/(with-footer)/about-us/_containers/AboutUsStudyContainer';
 
@@ -10,6 +11,7 @@ export default function AboutUsPage() {
       <AboutUsMainActivitiesContainer />
       <AboutUsStudyContainer />
       <AboutUsProjectContainer />
+      <AboutUsManagementTeamContainer />
     </section>
   );
 }

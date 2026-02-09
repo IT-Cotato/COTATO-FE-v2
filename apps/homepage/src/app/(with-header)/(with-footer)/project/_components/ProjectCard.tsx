@@ -1,6 +1,9 @@
+import {ROUTES} from '@/constants/routes';
 import Image from 'next/image';
+import {useRouter} from 'next/navigation';
 
 interface ProjectCardProps {
+  projectId: number;
   name: string;
   shortDescription: string;
   projectType: string;
@@ -9,14 +12,19 @@ interface ProjectCardProps {
 }
 
 export const ProjectCard = ({
+  projectId,
   name,
   shortDescription,
   projectType,
   generationId,
   thumbnailUrl,
 }: ProjectCardProps) => {
+  const router = useRouter();
+
   return (
-    <div className='flex flex-col gap-2.75'>
+    <div
+      className='flex flex-col gap-2.75'
+      onClick={() => router.push(ROUTES.PROJECT_DETAIL(projectId))}>
       <div className='relative h-50 w-82.5 overflow-hidden rounded-t-[20px] bg-white'>
         <Image src={thumbnailUrl} alt={name} fill className='object-cover' />
       </div>

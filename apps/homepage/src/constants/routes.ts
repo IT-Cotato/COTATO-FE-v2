@@ -4,6 +4,7 @@ export const ROUTES = {
   PROJECT: '/project',
   MYPAGE: '/mypage',
   ONBOARDING: '/onboarding',
+
   ADD_PROJECT: '/project/add-project',
 
   //mypage routes
@@ -19,4 +20,11 @@ export const ROUTES = {
   ADMIN_SESSIONS: '/mypage/admin/sessions',
   ADMIN_ATTENDANCE: '/mypage/admin/attendance',
   ADMIN_PENALTIES: '/mypage/admin/penalties',
+
+  ADD_PROJECT: (editId?: number | string) =>
+    editId !== undefined
+      ? `/project/add-project?edit=${editId}`
+      : '/project/add-project',
+  PROJECT_DETAIL: (projectId: number | string) => `/project/${projectId}`,
+
 };

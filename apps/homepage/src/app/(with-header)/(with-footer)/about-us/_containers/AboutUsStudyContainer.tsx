@@ -1,13 +1,18 @@
 'use client';
 
+import {AboutUsDescription} from '@/app/(with-header)/(with-footer)/about-us/_components/AboutUsDescription';
 import {AboutUsTickerColumn} from '@/app/(with-header)/(with-footer)/about-us/_components/AboutUsTickerColumn';
 
 export const AboutUsStudyContainer = () => {
   return (
     <section className='flex flex-col items-center gap-25 overflow-hidden py-40'>
-      <h3 className='text-h3 text-neutral-800'>
-        코테이토의 스터디를 소개합니다
-      </h3>
+      <AboutUsDescription
+        title='코테이토의 스터디를 소개합니다'
+        subTitle='COTATO에는 다양한 스터디가 활발하게 운영되며, 배움과 성장을 목표로 한 구성원들이 모여'
+        subTitleOption='완성도 높은 다양한 스터디가 꾸준히 운영됩니다.'
+        titleColor='text-neutral-800'
+        subTitleColor='text-neutral-500'
+      />
 
       <div className='relative flex w-full max-w-250 gap-4'>
         <div className='pointer-events-none absolute inset-x-0 top-0 z-10 h-32 bg-linear-to-b from-neutral-50 to-transparent' />

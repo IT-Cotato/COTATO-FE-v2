@@ -5,6 +5,7 @@ import {motion, AnimatePresence} from 'framer-motion';
 import Image from 'next/image';
 import {useRouter} from 'next/navigation';
 import {ROUTES} from '@/constants/routes';
+import {AboutUsDescription} from '@/app/(with-header)/(with-footer)/about-us/_components/AboutUsDescription';
 
 export const AboutUsProjectContainer = () => {
   const [index, setIndex] = useState<number>(0);
@@ -16,9 +17,12 @@ export const AboutUsProjectContainer = () => {
 
   return (
     <div className='flex min-h-175 flex-col items-center gap-25 py-20'>
-      <h3 className='text-h3 font-bold text-neutral-800'>
-        코테이토의 프로젝트를 소개합니다
-      </h3>
+      <AboutUsDescription
+        title='코테이토의 프로젝트를 소개합니다'
+        subTitle='함께 만들어 도착한, COTATO의 프로젝트를 만나보세요'
+        titleColor='text-neutral-800'
+        subTitleColor='text-neutral-500'
+      />
 
       <div className='relative flex h-125 w-full max-w-360 items-center justify-center perspective-distant'>
         <div className='relative flex h-full w-full items-center justify-center transform-3d'>
