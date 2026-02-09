@@ -2,9 +2,6 @@
 
 import {AdminApplicationEvaluationContainer} from '@/app/admin/(no-sidebar)/applications/[id]/_containers/AdminApplicationEvaluationContainer';
 import {AdminApplicationHeader} from '@/app/admin/(no-sidebar)/applications/[id]/_components/AdminApplicationHeader';
-import {BasicInfoView} from '@/app/admin/(no-sidebar)/applications/[id]/_components/BasicInfoView';
-import {EtcQuestionView} from '@/app/admin/(no-sidebar)/applications/[id]/_components/EtcQuestionView';
-import {PartQuestionView} from '@/app/admin/(no-sidebar)/applications/[id]/_components/PartQuestionView';
 import {StepIndicator} from '@/components/navigation/StepIndicator';
 import {
   useAdminApplicationBasicInfo,
@@ -14,6 +11,9 @@ import {
 } from '@/hooks/queries/useAdminApplication.query';
 import {useParams, useRouter, useSearchParams} from 'next/navigation';
 import {APPLICATIONS_PART_TABS} from '@/constants/admin/admin-applications';
+import {BasicInfoView} from '@/components/application/BasicInfoView';
+import {PartQuestionView} from '@/components/application/PartQuestionView';
+import {EtcQuestionView} from '@/components/application/EtcQuestionView';
 
 export const AdminApplicationContainer = () => {
   const searchParams = useSearchParams();

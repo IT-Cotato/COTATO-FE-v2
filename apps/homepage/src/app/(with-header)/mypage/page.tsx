@@ -1,3 +1,6 @@
+import {redirect} from 'next/navigation';
+import {ROUTES} from '@/constants/routes';
+
 export default function MyPage() {
-  return <div>MYPAGE</div>;
+  redirect(ROUTES.MYPAGE_ACTIVITY);
 }

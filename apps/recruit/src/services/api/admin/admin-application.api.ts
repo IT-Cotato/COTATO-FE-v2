@@ -1,15 +1,17 @@
 import {
   EvaluatorType,
-  GetAdminApplicationBasicInfoResponse,
-  GetAdminApplicationBasicInfoResponseSchema,
-  GetAdminApplicationEtcQuestionsResponse,
-  GetAdminApplicationEtcQuestionsResponseSchema,
   GetAdminApplicationEvaluationResponse,
   GetAdminApplicationEvaluationResponseSchema,
-  GetAdminApplicationPartQuestionsResponse,
-  GetAdminApplicationPartQuestionsResponseSchema,
   PostAdminApplicationEvaluationRequest,
 } from '@/schemas/admin/admin-application.schema';
+import {
+  GetApplicationBasicInfoResponse,
+  GetApplicationBasicInfoResponseSchema,
+  GetApplicationEtcQuestionsResponse,
+  GetApplicationEtcQuestionsResponseSchema,
+  GetApplicationPartQuestionsResponse,
+  GetApplicationPartQuestionsResponseSchema,
+} from '@/schemas/common/application-schema';
 import {privateAxios} from '@/services/config/axios';
 import {ENDPOINT} from '@/services/constant/endpoint';
 import {handleApiError} from '@/services/utils/apiHelper';
@@ -23,13 +25,13 @@ import {handleApiError} from '@/services/utils/apiHelper';
 
 export const getAdminApplicationBasicInfo = async (
   applicationId: number
-): Promise<GetAdminApplicationBasicInfoResponse> => {
+): Promise<GetApplicationBasicInfoResponse> => {
   try {
     const response = await privateAxios.get(
       ENDPOINT.ADMIN.APPLICATION_BASIC_INFO(applicationId)
     );
 
-    return GetAdminApplicationBasicInfoResponseSchema.parse(response.data);
+    return GetApplicationBasicInfoResponseSchema.parse(response.data);
   } catch (error: unknown) {
     return handleApiError(error);
   }
@@ -44,13 +46,13 @@ export const getAdminApplicationBasicInfo = async (
  */
 export const getAdminApplicationPartQuestions = async (
   applicationId: number
-): Promise<GetAdminApplicationPartQuestionsResponse> => {
+): Promise<GetApplicationPartQuestionsResponse> => {
   try {
     const response = await privateAxios.get(
       ENDPOINT.ADMIN.APPLICATION_PART_QUESTIONS(applicationId)
     );
 
-    return GetAdminApplicationPartQuestionsResponseSchema.parse(response.data);
+    return GetApplicationPartQuestionsResponseSchema.parse(response.data);
   } catch (error: unknown) {
     return handleApiError(error);
   }
@@ -63,13 +65,13 @@ export const getAdminApplicationPartQuestions = async (
  */
 export const getAdminApplicationEtcQuestions = async (
   applicationId: number
-): Promise<GetAdminApplicationEtcQuestionsResponse> => {
+): Promise<GetApplicationEtcQuestionsResponse> => {
   try {
     const response = await privateAxios.get(
       ENDPOINT.ADMIN.APPLICATION_ETC_QUESTIONS(applicationId)
     );
 
-    return GetAdminApplicationEtcQuestionsResponseSchema.parse(response.data);
+    return GetApplicationEtcQuestionsResponseSchema.parse(response.data);
   } catch (error: unknown) {
     return handleApiError(error);
   }
