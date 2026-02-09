@@ -46,9 +46,9 @@ export const MyPageSubmittedApplicationsContainer = () => {
                 <th className='px-6 py-4 text-center font-semibold'>지원서</th>
               </tr>
             </thead>
-            <tbody className=''>
+            <tbody>
               {applications?.map((item) => (
-                <tr key={item.applicationId} className=''>
+                <tr key={item.applicationId}>
                   <td className='text-body-l px-6 py-5 text-neutral-800'>
                     {item.generationNumber}
                   </td>
@@ -73,6 +73,11 @@ export const MyPageSubmittedApplicationsContainer = () => {
                   </td>
                 </tr>
               ))}
+              {applications?.length === 0 && (
+                <span className='text-body-l text-neutral-800'>
+                  아직 지원하신 내용이 없습니다.
+                </span>
+              )}
             </tbody>
           </table>
         </div>
