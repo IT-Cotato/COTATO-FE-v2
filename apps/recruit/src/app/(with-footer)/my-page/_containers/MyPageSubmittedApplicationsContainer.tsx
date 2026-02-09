@@ -1,6 +1,7 @@
 'use client';
 
 import ChevronRight from '@/assets/chevrons/chevron-right.svg';
+import {Spinner} from '@/components/ui/Spinner';
 import {ROUTES} from '@/constants/routes';
 import {useSubmittedApplications} from '@/hooks/queries/useMyPage.query';
 import {useRouter} from 'next/navigation';
@@ -20,7 +21,13 @@ export const MyPageSubmittedApplicationsContainer = () => {
     router.push(`${ROUTES.MYPAGE}/${id}`);
   };
 
-  if (isLoading) return <div className='py-20 text-center'>로딩 중...</div>;
+  if (isLoading)
+    return (
+      <div className='flex min-h-screen w-full items-center justify-center'>
+        <Spinner />
+      </div>
+    );
+
   if (isError)
     return (
       <div className='text-alert py-20 text-center'>
