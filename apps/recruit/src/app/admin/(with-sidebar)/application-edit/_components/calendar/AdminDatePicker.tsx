@@ -4,9 +4,9 @@ import {CustomDateTimePicker} from '@/app/admin/(with-sidebar)/application-edit/
 import CalendarIcon from '@/assets/icons/calendar.svg';
 import 'react-datepicker/dist/react-datepicker.css';
 import {useMemo, useRef, useState} from 'react';
-import {useClickOutside} from '@/hooks/useClickOutside';
 import {formatRecruitmentDate} from '@/utils/formatDate';
 import clsx from 'clsx';
+import {useClickOutside} from '@repo/ui/hooks/useClickOutside';
 
 interface AdminDatePickerProps {
   value?: string | null;

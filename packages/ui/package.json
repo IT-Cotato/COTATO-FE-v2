@@ -3,27 +3,41 @@
   "version": "0.0.0",
   "private": true,
   "exports": {
-    "./*": "./src/*.tsx",
-    "./styles.css": "./styles/index.css"
+    "./styles.css": "./dist/index.css",
+    "./*": "./dist/*.js",
+    "./assets/*": "./dist/assets/*"
   },
   "scripts": {
     "lint": "eslint . --max-warnings 0",
     "generate:component": "turbo gen react-component",
-    "check-types": "tsc --noEmit"
+    "check-types": "tsc --noEmit",
+    "build:styles": "tailwindcss -i ./src/styles.css -o ./dist/index.css",
+    "build:components": "tsc",
+    "build:assets": "cpx \"src/assets/**/*\" dist/assets",
+    "build": "pnpm run build:components && pnpm run build:styles && pnpm run build:assets",
+    "dev:styles": "tailwindcss -i ./src/styles.css -o ./dist/index.css --watch",
+    "dev:components": "tsc --watch",
+    "dev:assets": "cpx \"src/assets/**/*\" dist/assets --watch"
   },
   "devDependencies": {
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
     "@repo/eslint-config": "workspace:*",
+    "@repo/tailwind-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
+    "@tailwindcss/cli": "^4.1.5",
+    "@tailwindcss/postcss": "^4.1.5",
     "@types/node": "^22.15.3",
     "@types/react": "19.2.2",
     "@types/react-dom": "19.2.2",
+    "autoprefixer": "^10.4.20",
+    "cpx": "^1.5.0",
     "eslint": "^9.39.1",
+    "tailwindcss": "^4.1.5",
     "typescript": "5.9.2"
   },
-  "dependencies": {
+  "peerDependencies": {
     "react": "^19.2.0",
-    "react-dom": "^19.2.0",
-    "tailwindcss": "^4",
-    "@tailwindcss/postcss": "^4"
+    "react-dom": "^19.2.0"
   }
 }

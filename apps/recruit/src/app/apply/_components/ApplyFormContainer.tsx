@@ -12,22 +12,30 @@ import {AlreadySubmittedModal} from '@/components/modal/AlreadySubmittedModal';
 import {useApplicationStatusQuery} from '@/hooks/queries/useApply.query';
 import {useAuthStore} from '@/store/useAuthStore';
 import {ROUTES} from '@/constants/routes';
-import HeroMainBanner from '@/components/banner/HeroMainBanner';
+import HeroBanner from '@/assets/backgrounds/banners/hero-main.webp';
 import {useRecruitmentStatusQuery} from '@/hooks/queries/useRecruitmentStatus.query';
 import {useRecruitmentScheduleQuery} from '@/hooks/queries/useRecruitmentSchedule.query';
 import {Spinner} from '@/components/ui/Spinner';
 import {HEADER_HEIGHT} from '@/constants/ui';
+import {RecruitmentInformation} from '@/components/recruitment/RecruitmentInformation';
+import {scheduleSections} from '@/constants/admin/admin-application-questions';
+import HeroMainBanner from '@repo/ui/components/banner/HeroMainBanner';
+import Image from 'next/image';
+
+const APPLY_SCHEDULE_SECTIONS = scheduleSections.filter(
+  (schedule) =>
+    schedule.label !== '코커톤 날짜' && schedule.label !== '데모데이 날짜'
+);
 
 interface ApiErrorData {
   code: string;
   message: string;
 }
-import {RecruitmentInformation} from '@/components/recruitment/RecruitmentInformation';
 
-const STEP_TITLES = {
+const STEP_TITLES: Record<number, string> = {
   2: '파트별 질문',
   3: '기타 질문',
-} as const;
+};
 
 export const ApplyFormContainer = () => {
   const router = useRouter();
@@ -56,6 +64,8 @@ export const ApplyFormContainer = () => {
   } = useApplyFormController();
 
   const {data: recruitmentStatus, isLoading} = useRecruitmentStatusQuery();
+  const generation = recruitmentStatus?.generationId;
+  const {data: scheduleData} = useRecruitmentScheduleQuery();
 
   useEffect(() => {
     if (step === 1) {
@@ -67,35 +77,27 @@ export const ApplyFormContainer = () => {
 
   // 모집 기간 종료된 경우 홈으로 리다이렉트
   useEffect(() => {
-    if (recruitmentStatus && !recruitmentStatus.data?.isActive) {
+    if (recruitmentStatus && !recruitmentStatus.isActive) {
       alert('모집 기간이 종료되었습니다.');
       router.push(ROUTES.HOME);
     }
   }, [recruitmentStatus, router]);
-  const generation = recruitmentStatus?.data?.generationId;
-  const {data: scheduleData} = useRecruitmentScheduleQuery();
 
-  // 렌더링 중 제출 완료 여부 직접 계산
-  let isConfirmedSubmitted = false;
-  if (isError && error) {
-    // Case 1: apiHelper에서 throw한 커스텀 에러 객체인 경우
-    if (error && typeof error === 'object' && 'code' in error) {
-      if ((error as ApiErrorData).code === 'AP002') {
-        isConfirmedSubmitted = true;
-      } else {
-        // AP002가 아닌 다른 API 에러
-        alert((error as ApiErrorData).message || '오류가 발생했습니다.');
-        router.push(ROUTES.HOME);
-      }
-    }
-    // Case 2: 일반적인 자바스크립트 Error 객체인 경우
-    else if (error instanceof Error) {
+  // 에러 발생 시 리다이렉트
+  useEffect(() => {
+    if (!isError || !error) return;
+
+    if (typeof error === 'object' && 'code' in error) {
+      const apiError = error as ApiErrorData;
+      alert(apiError.message || '오류가 발생했습니다.');
+      router.push(ROUTES.HOME);
+    } else if (error instanceof Error) {
       if (error.name !== 'CancelledError') {
-        alert(error.message);
+        alert('오류가 발생했습니다.');
         router.push(ROUTES.HOME);
       }
     }
-  }
+  }, [isError, error, router]);
 
   if (isLoading) {
     return (
@@ -106,7 +108,7 @@ export const ApplyFormContainer = () => {
   }
 
   // 제출 완료된 경우
-  if (applicationStatus?.isSubmitted || isConfirmedSubmitted) {
+  if (applicationStatus?.isSubmitted) {
     return (
       <AlreadySubmittedModal
         isOpen={true}
@@ -125,6 +127,15 @@ export const ApplyFormContainer = () => {
           <HeroMainBanner
             heading='COde Together, Arrive TOgether'
             headingStyle='bg-linear-to-r from-[#F89202] from-0% via-[#F89202] via-10% to-[#9E9E9E] to-100% bg-clip-text text-transparent'
+            bannerImage={
+              <Image
+                src={HeroBanner}
+                alt='Hero Banner'
+                fill
+                priority
+                className='object-cover object-center'
+              />
+            }
           />
         )}
 
@@ -141,6 +152,7 @@ export const ApplyFormContainer = () => {
             {scheduleData && (
               <RecruitmentInformation
                 variant='plain'
+                sections={APPLY_SCHEDULE_SECTIONS}
                 data={scheduleData}
                 isEditing={false}
                 onChange={() => {}}
@@ -148,13 +160,15 @@ export const ApplyFormContainer = () => {
             )}
           </div>
 
-          <h2 className='pt-4 text-h2 text-neutral-800'>
-            {STEP_TITLES[step as keyof typeof STEP_TITLES]}
-          </h2>
+          {STEP_TITLES[step] && (
+            <h2 className='text-h2 pt-4 text-neutral-800'>
+              {STEP_TITLES[step]}
+            </h2>
+          )}
 
           <div className='flex w-full flex-col gap-3.5'>
             <FormProvider {...methods}>
-              <form onSubmit={handleFinalSubmit} key={step}>
+              <form onSubmit={handleFinalSubmit}>
                 {step === 1 && (
                   <BasicInfo
                     step={step}

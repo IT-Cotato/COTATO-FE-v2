@@ -7,6 +7,8 @@ import {
   EtcQuestionRequest,
   EtcQuestionResponse,
   EtcQuestionResponseSchema,
+  GetApplicationStatusResponse,
+  GetApplicationStatusResponseSchema,
   PartQuestionRequest,
   PartQuestionResponse,
   PartQuestionResponseSchema,
@@ -25,6 +27,27 @@ import {
 import {handleApiError} from '@/services/utils/apiHelper';
 
 /**
+ * 지원서 상태 조회
+ */
+export const getApplicationStatus =
+  async (): Promise<GetApplicationStatusResponse> => {
+    try {
+      const response: AxiosResponse = await privateAxios.get(
+        ENDPOINT.APPLY.STATUS
+      );
+
+      const responseSchema = createSuccessResponseSchema(
+        GetApplicationStatusResponseSchema
+      );
+      const validatedResponse = responseSchema.parse(response.data);
+
+      return validatedResponse.data;
+    } catch (error) {
+      return handleApiError(error);
+    }
+  };
+
+/**
  * 지원서 시작
  */
 export const startApplication = async (): Promise<StartApplicationResponse> => {
@@ -36,21 +59,31 @@ export const startApplication = async (): Promise<StartApplicationResponse> => {
     const responseSchema = createSuccessResponseSchema(
       StartApplicationResponseSchema
     );
-    const validatedResponse = responseSchema.parse(response.data);
 
-    return validatedResponse.data;
-  } catch (error) {
-    if (axios.isAxiosError(error) && error.response?.status === 400) {
-      const parsed = ErrorResponseSchema.parse(error.response?.data);
-      if (parsed.code === 'AP002') {
-        return {applicationId: 0, isSubmitted: true};
-      }
-      return {applicationId: 0, isSubmitted: true};
+    const parsed = responseSchema.safeParse(response.data);
+
+    if (parsed.success) {
+      return parsed.data.data;
     }
+
+    // 파싱 실패 시
+    // status 조회 API를 통해 applicationId 재확인 시도
+    try {
+      const statusData = await getApplicationStatus();
+      if (statusData?.applicationId) {
+        return {
+          applicationId: statusData.applicationId,
+          isSubmitted: statusData.isSubmitted ?? false,
+        };
+      }
+    } catch {
+      // status 조회도 실패하면 원래의 파싱 에러를 throw
+    }
+    throw parsed.error;
+  } catch (error) {
     return handleApiError(error);
   }
 };
-
 /**
  * 기본 인적사항 조회
  */

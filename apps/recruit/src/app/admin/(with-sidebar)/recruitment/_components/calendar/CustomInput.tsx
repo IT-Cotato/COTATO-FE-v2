@@ -17,7 +17,7 @@ export const CustomInput = forwardRef<HTMLButtonElement, CustomInputProps>(
         onClick={onClick}
         disabled={disabled}
         className={clsx(
-          'flex h-9 w-38.5 items-center justify-between gap-2.5 rounded-[10px] bg-neutral-50 px-4 py-1.5 text-body-l text-neutral-800',
+          'text-body-l flex h-9 w-38.5 items-center justify-between gap-2.5 rounded-[10px] bg-neutral-50 px-4 py-1.5 text-neutral-800',
           {
             'cursor-pointer': !disabled,
             'cursor-default': disabled,

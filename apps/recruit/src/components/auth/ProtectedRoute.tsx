@@ -70,14 +70,14 @@ export const ProtectedRoute = ({
       }
     }
 
-    if (requireRecruiting && !recruitmentStatus?.data?.isActive) {
+    if (requireRecruiting && !recruitmentStatus?.isActive) {
       router.back();
     }
   }, [
     isAuthenticated,
     isInitialized,
     isRecruitmentStatusLoading,
-    recruitmentStatus?.data?.isActive,
+    recruitmentStatus?.isActive,
     requireRecruiting,
     requireRole,
     router,
@@ -96,7 +96,7 @@ export const ProtectedRoute = ({
     return null;
   }
 
-  if (requireRecruiting && !recruitmentStatus?.data?.isActive) {
+  if (requireRecruiting && !recruitmentStatus?.isActive) {
     return null;
   }
 

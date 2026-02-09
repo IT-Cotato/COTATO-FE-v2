@@ -2,9 +2,6 @@
 
 import {AdminApplicationEvaluationContainer} from '@/app/admin/(no-sidebar)/applications/[id]/_containers/AdminApplicationEvaluationContainer';
 import {AdminApplicationHeader} from '@/app/admin/(no-sidebar)/applications/[id]/_components/AdminApplicationHeader';
-import {BasicInfoView} from '@/app/admin/(no-sidebar)/applications/[id]/_components/BasicInfoView';
-import {EtcQuestionView} from '@/app/admin/(no-sidebar)/applications/[id]/_components/EtcQuestionView';
-import {PartQuestionView} from '@/app/admin/(no-sidebar)/applications/[id]/_components/PartQuestionView';
 import {StepIndicator} from '@/components/navigation/StepIndicator';
 import {
   useAdminApplicationBasicInfo,
@@ -14,6 +11,9 @@ import {
 } from '@/hooks/queries/useAdminApplication.query';
 import {useParams, useRouter, useSearchParams} from 'next/navigation';
 import {APPLICATIONS_PART_TABS} from '@/constants/admin/admin-applications';
+import {BasicInfoView} from '@/components/application/BasicInfoView';
+import {PartQuestionView} from '@/components/application/PartQuestionView';
+import {EtcQuestionView} from '@/components/application/EtcQuestionView';
 
 export const AdminApplicationContainer = () => {
   const searchParams = useSearchParams();
@@ -26,7 +26,7 @@ export const AdminApplicationContainer = () => {
   const {data: basicInfo} = useAdminApplicationBasicInfo(applicationId);
   const {data: partQuestions} = useAdminApplicationPartQuestions(applicationId);
   const {data: etcQuestions} = useAdminApplicationEtcQuestions(applicationId);
-  const {data: pdfFileUrl} = useAdminApplicationPdfUrl(
+  const {data: pdfFileKey} = useAdminApplicationPdfUrl(
     partQuestions?.data.pdfFileKey
   );
 
@@ -51,7 +51,7 @@ export const AdminApplicationContainer = () => {
 
   if (Number.isNaN(applicationId)) {
     return (
-      <p className='text-center text-h3 text-alert'>잘못된 지원서 ID입니다.</p>
+      <p className='text-h3 text-alert text-center'>잘못된 지원서 ID입니다.</p>
     );
   }
 
@@ -78,7 +78,7 @@ export const AdminApplicationContainer = () => {
 
         {step === 2 && (
           <div className='flex flex-col gap-4'>
-            <label className='text-h3 font-bold text-primary'>
+            <label className='text-h3 text-primary font-bold'>
               {APPLICATIONS_PART_TABS.find(
                 (tab) => tab.value === basicInfo.data.applicationPartType
               )?.label ?? '-'}{' '}
@@ -91,7 +91,8 @@ export const AdminApplicationContainer = () => {
               onPrev={handlePrev}
               onNext={handleNext}
               questionsWithAnswers={partQuestions.data.questionsWithAnswers}
-              pdfFileUrl={pdfFileUrl}
+              pdfFileKey={pdfFileKey}
+              pdfFileUrl={partQuestions.data.pdfFileUrl}
             />
           </div>
         )}

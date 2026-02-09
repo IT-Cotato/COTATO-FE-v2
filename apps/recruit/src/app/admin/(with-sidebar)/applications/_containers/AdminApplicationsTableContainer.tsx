@@ -1,6 +1,5 @@
 import {useRouter, useSearchParams} from 'next/navigation';
 import {useRef, useState} from 'react';
-import {AdminApplicationsPagination} from '@/app/admin/(with-sidebar)/applications/_components/table/AdminApplicationsPagination';
 import {AdminApplicationsTableView} from '@/app/admin/(with-sidebar)/applications/_components/table/AdminApplicationsTableView';
 import {
   ApplicationResultLabel,
@@ -11,6 +10,7 @@ import {
 import {ApplicantsPageType} from '@/schemas/admin/admin-applications.schema';
 import {Spinner} from '@/components/ui/Spinner';
 import {useUpdateApplicationPassStatus} from '@/hooks/mutations/useAdminApplications.mutation';
+import {Pagination} from '@repo/ui/components/pagination/Pagination';
 
 interface AdminApplicationsTableContainerProps {
   generationId: string;
@@ -124,11 +124,12 @@ export const AdminApplicationsTableContainer = ({
           </div>
 
           <div className='flex w-full justify-center'>
-            <AdminApplicationsPagination
+            <Pagination
               currentPage={applicants.pageInfo.currentPage}
               totalPages={applicants.pageInfo.totalPages}
               onPageChange={handleUpdatePage}
               disabled={isLoading}
+              variant='admin'
             />
           </div>
         </>
@@ -136,7 +137,7 @@ export const AdminApplicationsTableContainer = ({
 
       {/* 로딩 끝 + 데이터 없음 */}
       {isEmpty && (
-        <div className='flex w-full justify-center pt-56.5 text-body-l font-normal'>
+        <div className='text-body-l flex w-full justify-center pt-56.5 font-normal'>
           아직 지원자가 없습니다.
         </div>
       )}

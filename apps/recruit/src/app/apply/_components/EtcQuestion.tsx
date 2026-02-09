@@ -4,17 +4,18 @@ import {useEffect, useRef} from 'react';
 import {useSearchParams} from 'next/navigation';
 import {useFormContext, Controller} from 'react-hook-form';
 import clsx from 'clsx';
-import {FormTextarea} from '@/components/form/FormTextarea';
+import {FormTextarea} from '@repo/ui/components/form/FormTextarea';
 import {FormDropdown} from '@/components/form/FormDropdown';
 import {FullButton} from '@repo/ui/components/buttons/FullButton';
 import {FormRadio} from '@/components/form/FormRadio';
-import {FormInput} from '@/components/form/FormInput';
+import {FormInput} from '@repo/ui/components/form/FormInput';
 import {getEtcFields} from '@/constants/form/formConfig';
 import {EtcFieldConfig} from '@/schemas/apply/apply-type';
+import {ApplyFormData} from '@/schemas/apply/apply-schema';
 import {useGetEtcQuestionsQuery} from '@/hooks/queries/useApply.query';
 import {StepIndicator} from '@/components/navigation/StepIndicator';
 import {Spinner} from '@/components/ui/Spinner';
-import {formFieldStyles} from '@/components/form/form.styles';
+import {formFieldStyles} from '@repo/ui/components/form/form.styles';
 
 export const EtcInfo = ({
   step,
@@ -38,7 +39,7 @@ export const EtcInfo = ({
     watch,
     setValue,
     formState: {errors},
-  } = useFormContext();
+  } = useFormContext<ApplyFormData>();
 
   const discovery = watch('discovery');
   const sessionAgree = watch('sessionAgree');
@@ -106,7 +107,7 @@ export const EtcInfo = ({
       defaultValue,
       className,
     } = field;
-    const error = name ? errors[name] : undefined;
+    const error = name ? (errors as Record<string, any>)[name] : undefined;
 
     switch (type) {
       case 'group_label':
@@ -123,13 +124,13 @@ export const EtcInfo = ({
             maxLength={maxLength}
             readOnly={readOnly}
             defaultValue={defaultValue}
-            currentLength={name ? (watch(name) || '').length : 0}
+            currentLength={name ? (watch(name as any) || '').length : 0}
             error={error?.message as string}
             className={className}
             required={field.required}
             {...(name &&
               register(
-                name,
+                name as any,
                 field.required ? {required: '필수 항목입니다'} : {}
               ))}
           />
@@ -138,7 +139,7 @@ export const EtcInfo = ({
         return (
           <Controller
             key={name}
-            name={name ?? ''}
+            name={(name ?? '') as any}
             control={control}
             rules={field.required ? {required: '필수 항목입니다'} : {}}
             render={({field: controllerField}) => (
@@ -164,7 +165,7 @@ export const EtcInfo = ({
             required={field.required}
             {...(name &&
               register(
-                name,
+                name as any,
                 field.required ? {required: '필수 항목입니다'} : {}
               ))}
           />
@@ -182,7 +183,7 @@ export const EtcInfo = ({
             )}
             {name && (
               <Controller
-                name={name}
+                name={name as any}
                 control={control}
                 rules={field.required ? {required: '필수 항목입니다'} : {}}
                 render={({field: controllerField}) => (

@@ -9,6 +9,7 @@ import {clsx} from 'clsx';
 
 interface RecruitmentInformationProps {
   variant?: 'bordered' | 'plain';
+  sections?: readonly (typeof scheduleSections)[number][];
   data: RecruitmentInformationType;
   isEditing: boolean;
   onChange: (next: RecruitmentInformationType) => void;
@@ -16,6 +17,7 @@ interface RecruitmentInformationProps {
 
 export const RecruitmentInformation = ({
   variant = 'bordered',
+  sections = scheduleSections,
   data,
   isEditing,
   onChange,
@@ -26,7 +28,7 @@ export const RecruitmentInformation = ({
         'flex flex-col gap-5 rounded-[10px]',
         variant === 'bordered' && 'border border-neutral-300 px-6.25 py-7.5'
       )}>
-      {scheduleSections.map((section) =>
+      {sections.map((section) =>
         isEditing ? (
           <RecruitmentInfoEditRow
             key={section.label}

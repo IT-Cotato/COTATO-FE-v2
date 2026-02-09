@@ -1,5 +1,6 @@
 import type {Metadata} from 'next';
 import '@/styles/globals.css';
+import '@repo/ui/styles.css';
 import localFont from 'next/font/local';
 
 export const metadata: Metadata = {
@@ -45,7 +46,7 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang='en'
+      lang='ko'
       className={`${pretendard.variable} ${sebangGothic.variable} ${roboto.variable} antialiased`}>
       <body>{children}</body>
     </html>

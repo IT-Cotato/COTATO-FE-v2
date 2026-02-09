@@ -1,0 +1,51 @@
+@utility custom-scrollbar {
+  &::-webkit-scrollbar {
+    width: 6px !important;
+    height: 6px !important;
+    display: block !important;
+  }
+
+  &::-webkit-scrollbar-button {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: var(--color-neutral-50) !important;
+    border-radius: 20px !important;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--color-neutral-500) !important;
+    border-radius: 20px !important;
+    border: 1.5px solid var(--color-neutral-50);
+    background-clip: padding-box;
+  }
+
+  & textarea {
+    scrollbar-width: none !important;
+  }
+  & textarea::-webkit-scrollbar {
+    display: none !important;
+    width: 0 !important;
+  }
+}
+
+@utility project-scrollbar {
+  &::-webkit-scrollbar {
+    width: 7px !important;
+    display: block !important;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: var(--color-neutral-300) !important;
+    border-radius: 20px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--color-neutral-500) !important;
+    border-radius: 20px !important;
+    background-clip: padding-box;
+  }
+}

@@ -78,7 +78,8 @@ export const AdminApplicationQuestionsContainer = ({
     <form
       aria-labelledby='questions-form-title'
       aria-busy={isPending}
-      className='flex flex-col gap-6'>
+      className='flex flex-col gap-6'
+      onSubmit={(e) => e.preventDefault()}>
       <h2 id='questions-form-title' className='sr-only'>
         지원서 질문 관리
       </h2>

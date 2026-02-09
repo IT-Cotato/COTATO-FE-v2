@@ -7,7 +7,7 @@ import {useGenerationStore} from '@/store/useGenerationStore';
 import {GenerationField} from '@/app/admin/(with-sidebar)/recruitment/_components/active-recruitment/GenerationField';
 import {RecruitmentConfirmModal} from '@/components/modal/RecruitConfirmModal';
 import {useAdminRecruitmentMutation} from '@/hooks/mutations/useAdminRecruitment.mutation';
-import {Checkbox} from '@/components/checkbox/CheckBox';
+import {Checkbox} from '@repo/ui/components/checkbox/CheckBox';
 
 export const ActiveRecruitmentForm = () => {
   const {

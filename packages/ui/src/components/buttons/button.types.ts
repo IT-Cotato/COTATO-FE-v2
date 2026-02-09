@@ -2,7 +2,16 @@ import {ButtonHTMLAttributes} from 'react';
 
 export type ButtonVariant = 'primary' | 'outline';
 
-export type ButtonLabelTypo = 'h4' | 'h5' | 'body_l' | 'body_m' | 'body_s';
+export type ButtonLabelTypo =
+  | 'h3'
+  | 'h4'
+  | 'h5'
+  | 'body_l'
+  | 'body_m'
+  | 'body_s'
+  | 'body_l_sb'
+  | 'body_m_sb'
+  | 'body_s_sb';
 
 export type ColorKey =
   | 'primary'

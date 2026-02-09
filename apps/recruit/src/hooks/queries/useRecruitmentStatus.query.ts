@@ -2,7 +2,7 @@ import {useQuery} from '@tanstack/react-query';
 import {useRecruitmentStore} from '@/store/useRecruitmentStore';
 import {useEffect} from 'react';
 import {QUERY_KEYS} from '@/constants/query-keys';
-import {getRecruitmentStatus} from '@/services/api/recruitment/recruitment-status.api';
+import {getRecruitmentStatus} from '@/services/api/recruitment/recruitment.api';
 
 export const useRecruitmentStatusQuery = (options?: {
   refetchInterval?: number;
@@ -19,9 +19,9 @@ export const useRecruitmentStatusQuery = (options?: {
 
   // 서버 데이터로 store 동기화
   useEffect(() => {
-    if (query.data?.data) {
+    if (query.data) {
       const {isActive, generationId, isAdditionalRecruitmentActive} =
-        query.data.data;
+        query.data;
 
       setIsRecruiting(isActive);
       setIsAdditional(isAdditionalRecruitmentActive);

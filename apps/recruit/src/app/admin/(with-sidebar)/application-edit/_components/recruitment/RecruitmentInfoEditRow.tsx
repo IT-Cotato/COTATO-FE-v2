@@ -20,7 +20,7 @@ export const RecruitmentInfoEditRow = ({
 
   return (
     <div className='flex items-center gap-7.5'>
-      <div className='w-42.5 shrink-0 rounded-[10px] border-2 border-neutral-100 py-2 text-center text-h5'>
+      <div className='text-h5 w-42.5 shrink-0 rounded-[10px] border-2 border-neutral-100 py-2 text-center'>
         {label}
       </div>
 

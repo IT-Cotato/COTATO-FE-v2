@@ -20,6 +20,16 @@ export const ENDPOINT = {
     NOTICE: '/api/recruitment',
     STATUS: '/api/recruitment/status',
     SCHEDULE: '/api/recruitment/schedule',
+    SUBSCRIBE: '/api/recruitment/subscribe',
+  },
+  SUBMITTED_APPLICATIONS: {
+    SUBMITTED_APPLICATIONS_BASIC_INFO: (applicationId: number) =>
+      `/api/submitted-applications/${applicationId}/basic-info`,
+    SUBMITTED_APPLICATIONS_ETC_INFO: (applicationId: number) =>
+      `/api/submitted-applications/${applicationId}/etc-info`,
+    SUBMITTED_APPLICATIONS_PART_QUESTIONS: (applicationId: number) =>
+      `/api/submitted-applications/${applicationId}/part-questions`,
+    SUBMITTED_APPLICATIONS_MYPAGE: '/api/submitted-applications/mypage',
   },
   ADMIN: {
     APPLICATIONS: '/api/admin/applications',
@@ -46,6 +56,7 @@ export const ENDPOINT = {
     GENERATIONS: '/api/admin/generations',
   },
   APPLY: {
+    STATUS: '/api/applications/status',
     START: '/api/applications/start',
     BASIC_INFO: (applicationId: number) =>
       `/api/applications/${applicationId}/basic-info`,
