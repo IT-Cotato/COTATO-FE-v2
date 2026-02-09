@@ -5,14 +5,12 @@ import {Spinner} from '@/components/ui/Spinner';
 import {ROUTES} from '@/constants/routes';
 import {useSubmittedApplications} from '@/hooks/queries/useMyPage.query';
 import {PART_MAP} from '@/schemas/my-page/my-page.schema';
-import {useRouter} from 'next/navigation';
 
 export const MyPageSubmittedApplicationsContainer = () => {
   const {data: applications, isLoading, isError} = useSubmittedApplications();
-  const router = useRouter();
 
   const handleApplicationClick = (id: number) => {
-    router.push(`${ROUTES.MYPAGE}/${id}`);
+    window.open(`${ROUTES.MYPAGE}/${id}`, '_blank', 'noopener,noreferrer');
   };
 
   if (isLoading)
