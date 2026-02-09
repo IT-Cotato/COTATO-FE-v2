@@ -2,10 +2,10 @@ import {createSuccessResponseSchema} from '@/schemas/common/common-schema';
 import {z} from 'zod';
 
 export const PART_MAP: Record<string, string> = {
-  BACKEND: '백엔드',
-  FRONTEND: '프론트엔드',
-  DESIGN: '디자인',
-  PLANNING: '기획',
+  BE: '백엔드',
+  FE: '프론트엔드',
+  DE: '디자인',
+  PM: '기획',
 };
 
 export const ApplicationSchema = z.object({

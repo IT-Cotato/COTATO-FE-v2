@@ -4,14 +4,8 @@ import ChevronRight from '@/assets/chevrons/chevron-right.svg';
 import {Spinner} from '@/components/ui/Spinner';
 import {ROUTES} from '@/constants/routes';
 import {useSubmittedApplications} from '@/hooks/queries/useMyPage.query';
+import {PART_MAP} from '@/schemas/my-page/my-page.schema';
 import {useRouter} from 'next/navigation';
-
-const PART_LABEL_MAP: Record<string, string> = {
-  FE: '프론트엔드',
-  BE: '백엔드',
-  DE: '디자인',
-  PM: '기획',
-};
 
 export const MyPageSubmittedApplicationsContainer = () => {
   const {data: applications, isLoading, isError} = useSubmittedApplications();
@@ -70,9 +64,8 @@ export const MyPageSubmittedApplicationsContainer = () => {
                       {item.generationNumber}
                     </td>
                     <td className='text-body-l px-6 py-5 text-neutral-800'>
-                      {PART_LABEL_MAP[
-                        item.part as keyof typeof PART_LABEL_MAP
-                      ] || item.part}
+                      {PART_MAP[item.part as keyof typeof PART_MAP] ||
+                        item.part}
                     </td>
                     <td className='px-6 py-5 text-center'>
                       <span className='bg-primary text-body-l-sb rounded-[10px] px-4 py-2 text-white'>
