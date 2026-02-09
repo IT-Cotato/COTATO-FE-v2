@@ -1,3 +1,5 @@
+import clsx from 'clsx';
+
 interface OnboardingFormCodeProps {
   label: string;
   onChange: (value: string) => void;
@@ -7,6 +9,8 @@ interface OnboardingFormCodeProps {
   type: string;
   error?: string;
   onButtonClick: () => void;
+  buttonColor?: string;
+  disabled?: boolean;
 }
 
 export const OnboardingFormCode = ({
@@ -17,6 +21,8 @@ export const OnboardingFormCode = ({
   placeholder,
   type,
   error,
+  buttonColor,
+  disabled,
   onButtonClick,
 }: OnboardingFormCodeProps) => {
   return (
@@ -30,8 +36,12 @@ export const OnboardingFormCode = ({
           placeholder={placeholder}
           className='placeholder:text-neutral-100'></input>
         <button
-          className='bg-primary text-body-m absolute top-3.5 right-6.25 h-7.75 w-23.25 rounded-[10px]'
-          onClick={onButtonClick}>
+          onClick={onButtonClick}
+          className={clsx(
+            'text-body-m absolute right-6.25 h-7.75 w-23.25 rounded-[10px] transition-colors',
+            buttonColor,
+            disabled ? 'cursor-not-allowed' : 'cursor-pointer'
+          )}>
           {buttonLabel}
         </button>
       </div>
