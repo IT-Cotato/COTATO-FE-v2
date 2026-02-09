@@ -41,7 +41,7 @@ export const MyPageSubmittedApplicationsContainer = () => {
         <h1 className='text-h4 flex w-full items-start font-bold text-neutral-800'>
           마이페이지
         </h1>
-        <div className='flex min-h-79.25 max-w-480 min-w-[1100px] flex-col items-center justify-center gap-8 rounded-[10px] bg-neutral-50 px-20'>
+        <div className='flex min-h-79.25 max-w-480 min-w-275 flex-col items-center justify-center gap-8 rounded-[10px] bg-neutral-50 px-20'>
           <h2 className='text-h4 flex w-full items-start text-neutral-800'>
             지원 현황
           </h2>
@@ -92,9 +92,13 @@ export const MyPageSubmittedApplicationsContainer = () => {
                   </tr>
                 ))}
                 {applications?.length === 0 && (
-                  <span className='text-body-l text-neutral-800'>
-                    아직 지원하신 내용이 없습니다.
-                  </span>
+                  <tr>
+                    <td
+                      colSpan={4}
+                      className='text-body-l py-10 text-center text-neutral-800'>
+                      아직 지원하신 내용이 없습니다.
+                    </td>
+                  </tr>
                 )}
               </tbody>
             </table>
