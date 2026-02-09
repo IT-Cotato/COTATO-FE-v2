@@ -16,10 +16,13 @@ import {useImageUpload} from '../_hooks/useImageUpload';
 
 export const ImageUploadField = ({
   onImagesChange,
+  initialImages = [],
 }: {
   onImagesChange: (imgs: ImageInfo[]) => void;
+  initialImages?: ImageInfo[];
 }) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
+
   const {
     images,
     selectedImage,
@@ -27,7 +30,7 @@ export const ImageUploadField = ({
     handleUpload,
     handleReorder,
     handleRemove,
-  } = useImageUpload(onImagesChange);
+  } = useImageUpload(onImagesChange, initialImages);
 
   const sensors = useSensors(
     useSensor(PointerSensor, {activationConstraint: {distance: 8}}),

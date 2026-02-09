@@ -1,12 +1,12 @@
 import {FullButton} from '@repo/ui/components/buttons/FullButton';
 import {FormRadio} from '@/components/form/FormRadio';
 import {BASIC_INFO_LABELS} from '@/constants/admin/admin-applications';
-import {AdminApplicationBasicInfoType} from '@/schemas/admin/admin-application.schema';
 import {FormInput} from '@repo/ui/components/form/FormInput';
+import {ApplicationBasicInfoType} from '@/schemas/common/application-schema';
 
 interface BasicInfoViewProps {
   onNext: () => void;
-  basicInfo: AdminApplicationBasicInfoType;
+  basicInfo: ApplicationBasicInfoType;
 }
 
 export const BasicInfoView = ({onNext, basicInfo}: BasicInfoViewProps) => {

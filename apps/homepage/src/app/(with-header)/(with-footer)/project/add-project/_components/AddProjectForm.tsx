@@ -9,28 +9,46 @@ import {FormField} from '@/app/(with-header)/(with-footer)/project/add-project/_
 import {FormTextarea} from '@repo/ui/components/form/FormTextarea';
 import {ImageUploadField} from '@/app/(with-header)/(with-footer)/project/add-project/_components/ImageUploadField';
 import {Button} from '@repo/ui/components/buttons/Button';
-import {Position} from '@/schemas/project/project.schema';
 import {useProjectForm} from '../_hooks/useProjectForm';
 import {formatDate} from '@repo/ui/utils/date';
+import {ProjectDetail, Position} from '@/schemas/project/project.schema';
+import {TeamState} from '@/schemas/project/project-type';
 
 interface AddProjectFormProps {
   generationId: number;
   projectType: string;
+  initialData?: ProjectDetail;
 }
 
 export const AddProjectForm = ({
   generationId,
   projectType,
+  initialData,
 }: AddProjectFormProps) => {
-  const {teamMembers, addMember, removeMember, updateMemberName} =
-    useTeamMembers({
-      PM: ['감직이'],
-      DE: ['감직이'],
-      FE: ['감직이'],
-      BE: ['감직이'],
-    });
+  const isEdit = !!initialData;
 
-  const {states, setters, isFormValid} = useProjectForm(teamMembers);
+  const formatInitialMembers = (
+    members: {name: string; position: Position}[]
+  ): TeamState => {
+    const result: TeamState = {PM: [], DE: [], FE: [], BE: []};
+    members.forEach((m) => {
+      if (result[m.position]) result[m.position].push(m.name);
+    });
+    return result;
+  };
+
+  // 팀 멤버 초기값 설정
+  const {teamMembers, addMember, removeMember, updateMemberName} =
+    useTeamMembers(
+      initialData
+        ? formatInitialMembers(initialData.members)
+        : {PM: ['감직이'], DE: ['감직이'], FE: ['감직이'], BE: ['감직이']}
+    );
+
+  const {states, setters, isFormValid} = useProjectForm(
+    teamMembers,
+    initialData
+  );
 
   const handleSubmit = () => {
     if (!isFormValid) return;
@@ -54,7 +72,11 @@ export const AddProjectForm = ({
       })),
     };
 
-    console.log('API 전송 데이터:', requestBody);
+    if (isEdit) {
+      console.log('수정 API 호출:', requestBody);
+    } else {
+      console.log('등록 API 호출:', requestBody);
+    }
   };
 
   return (
@@ -105,11 +127,14 @@ export const AddProjectForm = ({
       </FormField>
       <div className='mt-2.5 w-full'>
         <FormField variant='column' label='자료 업로드'>
-          <ImageUploadField onImagesChange={setters.setUploadedImages} />
+          <ImageUploadField
+            onImagesChange={setters.setUploadedImages}
+            initialImages={states.uploadedImages}
+          />
         </FormField>
       </div>
       <Button
-        label='추가하기'
+        label={isEdit ? '수정하기' : '추가하기'}
         width={127}
         height={40}
         disabled={!isFormValid}

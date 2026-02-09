@@ -1,5 +1,5 @@
 import {useState, useEffect} from 'react';
-import X from '@/assets/cancel/cancel.svg';
+import XIcon from '@/assets/cancel/cancel.svg';
 
 export const MemberChip = ({
   name,
@@ -55,7 +55,7 @@ export const MemberChip = ({
       <button
         onClick={onDelete}
         className='absolute right-5 hidden group-hover:block'>
-        <X className='h-3 w-3' />
+        <XIcon className='h-3 w-3' />
       </button>
     </div>
   );

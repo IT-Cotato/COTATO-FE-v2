@@ -17,6 +17,7 @@ import {ROUTES} from '@/constants/routes';
 import {useApplyValidation} from './useApplyValidation';
 import {useApplySave} from './useApplySave';
 import {useApplyStepGuard} from './useApplyStepGuard';
+import {usePreventNavigation} from './usePreventNavigation';
 
 interface UseApplyFormControllerReturn {
   step: number;
@@ -95,6 +96,9 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
 
   const {data: partQuestionsData, isFetched: isPartQuestionsFetched} =
     useGetPartQuestionsQuery(applicationId ? Number(applicationId) : null);
+
+  // 폼 수정 중 이탈 방지
+  usePreventNavigation(methods.formState.isDirty);
 
   // Step 건너뛰기 방지 가드 훅
   useApplyStepGuard({

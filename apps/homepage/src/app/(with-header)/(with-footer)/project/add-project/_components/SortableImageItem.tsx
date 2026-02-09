@@ -19,6 +19,7 @@ export const SortableImageItem = ({img, onSelect}: SortableImageItemProps) => {
     transform: CSS.Transform.toString(transform),
     transition,
     zIndex: isDragging ? 50 : 1,
+    touchAction: 'none', // 모바일에서 드래그 충돌 방지
   };
 
   return (
@@ -37,8 +38,9 @@ export const SortableImageItem = ({img, onSelect}: SortableImageItemProps) => {
           fill
           sizes='204px'
           className='object-cover'
+          priority={img.order <= 4} // 첫 4개 이미지 우선 로딩 -> LCP 최적화
         />
-        <div className='absolute inset-0 z-10 flex items-center justify-center'>
+        <div className='pointer-events-none absolute inset-0 z-10 flex items-center justify-center'>
           <div className='flex h-14 w-15.75 items-center justify-center rounded-[10px] bg-[rgba(158,158,158,0.60)]'>
             <span className='text-h4 text-neutral-50'>{img.order}</span>
           </div>

@@ -7,12 +7,13 @@ import {
   ETC_QUESTION_LABELS,
   PRIVACY_POLICY,
 } from '@/constants/admin/admin-applications';
-import {AdminApplicationEtcQuestionsType} from '@/schemas/admin/admin-application.schema';
+
 import {FormTextarea} from '@repo/ui/components/form/FormTextarea';
+import {ApplicationEtcQuestionsType} from '@/schemas/common/application-schema';
 
 interface EtcQuestionViewProps {
   onPrev: () => void;
-  etcQuestions: AdminApplicationEtcQuestionsType;
+  etcQuestions: ApplicationEtcQuestionsType;
 }
 
 export const EtcQuestionView = ({
