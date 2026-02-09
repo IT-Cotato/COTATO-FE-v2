@@ -27,11 +27,7 @@ export const Dropdown = ({trigger, children, className}: DropdownProps) => {
     <div className='relative inline-block' ref={ref}>
       <div onClick={() => setOpen((prev) => !prev)}>{trigger}</div>
       {open && (
-        <div
-          className={clsx(
-            'z-dropdown absolute top-full left-0 mt-[-20px]',
-            className
-          )}>
+        <div className={clsx('z-dropdown absolute top-full left-0', className)}>
           {children}
         </div>
       )}

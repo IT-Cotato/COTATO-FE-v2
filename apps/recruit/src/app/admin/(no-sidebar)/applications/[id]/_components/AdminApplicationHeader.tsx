@@ -1,10 +1,10 @@
-import {AdminApplicationBasicInfoType} from '@/schemas/admin/admin-application.schema';
 import LogoIcon from '@/assets/small-logo/small-logo.svg';
 import {PART_TABS} from '@/constants/common/part';
+import {ApplicationBasicInfoType} from '@/schemas/common/application-schema';
 
 interface AdminApplicationHeaderProps {
   generation: string | null;
-  basicInfo: AdminApplicationBasicInfoType;
+  basicInfo: ApplicationBasicInfoType;
 }
 
 export const AdminApplicationHeader = ({

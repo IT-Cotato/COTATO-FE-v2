@@ -12,6 +12,7 @@ export const QUERY_KEYS = {
     ],
     FILE_URL: (fileKey: string) => ['file-url', fileKey],
   },
+  MY_PAGE_SUBMITTED_APPLICATIONS: 'submitted-applications',
   ADMIN_GENERATIONS: 'admin-generations',
   ADMIN_APPLICATIONS: 'admin-applications',
   ADMIN_APPLICATION_BASIC_INFO: 'admin-application-basic-info',
