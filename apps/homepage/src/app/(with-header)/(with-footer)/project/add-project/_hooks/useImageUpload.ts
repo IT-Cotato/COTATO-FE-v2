@@ -4,10 +4,15 @@ import {DragEndEvent} from '@dnd-kit/core';
 import {arrayMove} from '@dnd-kit/sortable';
 
 export const useImageUpload = (
-  onImagesChange: (images: ImageInfo[]) => void
+  onImagesChange: (images: ImageInfo[]) => void,
+  initialImages: ImageInfo[] = []
 ) => {
-  const [images, setImages] = useState<ImageInfo[]>([]);
-  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [images, setImages] = useState<ImageInfo[]>(initialImages);
+
+  // 수정 모드일 때 첫번째 이미지를 미리보기로 설정
+  const [selectedId, setSelectedId] = useState<string | null>(
+    initialImages.length > 0 ? initialImages[0].id : null
+  );
 
   const updateImages = useCallback(
     (newImages: ImageInfo[]) => {
@@ -32,8 +37,9 @@ export const useImageUpload = (
       filteredFiles.map(async (file) => {
         const mockS3Key = `projects/${Date.now()}-${file.name}`;
         await new Promise((resolve) => setTimeout(resolve, 500));
+
         return {
-          id: Math.random().toString(36).slice(2, 11),
+          id: mockS3Key,
           s3Key: mockS3Key,
           publicUrl: URL.createObjectURL(file),
           order: 0,
