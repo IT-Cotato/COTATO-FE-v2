@@ -25,7 +25,7 @@ export const useUpdateProjectMutation = (projectId: number) => {
       alert('프로젝트가 수정되었습니다.');
     },
     onError: () => {
-      alert('수정에 실패했습니다. 다시 시도해주세요.');
+      alert('수정에 실패했습니다.');
     },
   });
 };
@@ -41,6 +41,9 @@ export const useCreateProjectMutation = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({queryKey: ['projects']});
       alert('프로젝트가 등록되었습니다.');
+    },
+    onError: () => {
+      alert('등록에 실패했습니다. 다시 시도해주세요.');
     },
   });
 };

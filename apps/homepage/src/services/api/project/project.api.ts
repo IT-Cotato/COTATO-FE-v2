@@ -59,7 +59,7 @@ export const updateProject = async (
  */
 export const createProject = async (data: ProjectRegistration) => {
   try {
-    const response = await publicAxios.post(ENDPOINT.PROJECT.LIST, data);
+    const response = await publicAxios.post(ENDPOINT.PROJECT.CREATE, data);
     return response.data;
   } catch (error) {
     return handleApiError(error);

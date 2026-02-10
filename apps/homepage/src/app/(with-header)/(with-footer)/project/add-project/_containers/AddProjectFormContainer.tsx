@@ -10,7 +10,8 @@ import {Spinner} from '@repo/ui/components/spinner/Spinner';
 
 export const AddProjectFormContainer = () => {
   const searchParams = useSearchParams();
-  const editId = searchParams.get('edit');
+  const rawEditId = searchParams.get('edit');
+  const editId = rawEditId && !isNaN(Number(rawEditId)) ? rawEditId : null;
 
   const {data: generationList, isLoading: isGenLoading} = useGenerationQuery();
 

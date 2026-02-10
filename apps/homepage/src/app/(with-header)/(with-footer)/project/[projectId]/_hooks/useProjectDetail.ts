@@ -51,7 +51,7 @@ export const useProjectDetail = (projectId: number) => {
 
     return mappedData.memberInfos.reduce((acc, member) => {
       const pos = member.position;
-      if (acc[pos]) acc[pos].push(member.name);
+      if (pos in acc) acc[pos].push(member.name);
       return acc;
     }, initialGroups);
   }, [mappedData]);

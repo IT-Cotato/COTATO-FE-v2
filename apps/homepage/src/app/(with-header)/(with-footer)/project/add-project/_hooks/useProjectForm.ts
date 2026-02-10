@@ -23,15 +23,20 @@ export const useProjectForm = (
     initialData?.introduction || ''
   );
 
-  const [uploadedImages, setUploadedImages] = useState<ImageInfo[]>(
-    initialData?.imageInfos?.map((img) => ({
+  const mapImageInfos = (
+    imageInfos?: ProjectDetail['imageInfos']
+  ): ImageInfo[] =>
+    imageInfos?.map((img) => ({
       id:
         img?.imageId?.toString() ??
-        `temp-${Math.random().toString(36).substr(2, 9)}`,
+        `temp-${Math.random().toString(36).substring(2, 11)}`,
       s3Key: '',
       publicUrl: img?.imageUrl ?? '',
       order: img?.imageOrder ?? 0,
-    })) || []
+    })) || [];
+
+  const [uploadedImages, setUploadedImages] = useState<ImageInfo[]>(
+    mapImageInfos(initialData?.imageInfos)
   );
 
   useEffect(() => {
@@ -44,16 +49,7 @@ export const useProjectForm = (
       );
       setEndDate(initialData.endDate ? new Date(initialData.endDate) : null);
       setIntroduction(initialData.introduction || '');
-      setUploadedImages(
-        initialData.imageInfos?.map((img) => ({
-          id:
-            img?.imageId?.toString() ??
-            `temp-${Math.random().toString(36).substr(2, 9)}`,
-          s3Key: '',
-          publicUrl: img?.imageUrl ?? '',
-          order: img?.imageOrder ?? 0,
-        })) || []
-      );
+      setUploadedImages(mapImageInfos(initialData.imageInfos));
     }
   }, [initialData]);
 

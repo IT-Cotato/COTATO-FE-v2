@@ -25,7 +25,12 @@ export const ProjectContainer = () => {
   }, [generations]);
 
   const currentGen = useMemo(() => {
-    if (genParam) return genParam;
+    if (
+      genParam &&
+      sortedGenerations.some((g) => g.generationId.toString() === genParam)
+    ) {
+      return genParam;
+    }
     return sortedGenerations.length > 0
       ? sortedGenerations[0].generationId.toString()
       : null;

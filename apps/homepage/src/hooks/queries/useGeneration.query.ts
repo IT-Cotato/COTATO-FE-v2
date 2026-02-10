@@ -4,7 +4,7 @@ import {useQuery} from '@tanstack/react-query';
 
 export const useGenerationQuery = () => {
   return useQuery({
-    queryKey: [QUERY_KEYS.GENERATIONS],
+    queryKey: QUERY_KEYS.GENERATIONS,
     queryFn: getGenerations,
   });
 };
