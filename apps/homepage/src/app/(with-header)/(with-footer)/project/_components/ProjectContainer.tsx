@@ -8,16 +8,15 @@ import {Button} from '@repo/ui/components/buttons/Button';
 import {ROUTES} from '@/constants/routes';
 import {ACTIVITY_MAP} from '@/constants/project/project-activity';
 import {useGenerationQuery} from '@/hooks/queries/useGeneration.queries';
+import {Spinner} from '@repo/ui/components/spinner/Spinner';
 
 export const ProjectContainer = () => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-
-  const {data: generations = [], isLoading} = useGenerationQuery();
-
   const genParam = searchParams.get('gen');
   const actParam = searchParams.get('act') || 'demoday';
+  const {data: generations = [], isLoading} = useGenerationQuery();
 
   const currentGen = useMemo(() => {
     if (genParam) return genParam;
@@ -42,7 +41,9 @@ export const ProjectContainer = () => {
 
   if (isLoading) {
     return (
-      <div className='flex min-h-100 items-center justify-center'>Spinner</div>
+      <div className='flex min-h-100 items-center justify-center'>
+        <Spinner />
+      </div>
     );
   }
 
@@ -55,8 +56,8 @@ export const ProjectContainer = () => {
             value={selectedGenLabel}
             options={generations.map((g) => `${g.generationId}기`)}
             onSelect={(label) => {
-              const id = label.replace('기', '');
-              updateQuery('gen', id);
+              const gen = label.replace('기', '');
+              updateQuery('gen', gen);
             }}
           />
           <Dropdown
@@ -64,10 +65,10 @@ export const ProjectContainer = () => {
             value={selectedActLabel}
             options={activityLabels}
             onSelect={(label) => {
-              const code = Object.keys(ACTIVITY_MAP).find(
+              const act = Object.keys(ACTIVITY_MAP).find(
                 (key) => ACTIVITY_MAP[key] === label
               );
-              if (code) updateQuery('act', code);
+              if (act) updateQuery('act', act);
             }}
           />
         </div>

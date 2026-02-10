@@ -1,7 +1,7 @@
 'use client';
 
 import ChevronRight from '@/assets/chevrons/chevron-right.svg';
-import {Spinner} from '@/components/ui/Spinner';
+import {Spinner} from '@repo/ui/components/spinner/Spinner';
 import {ROUTES} from '@/constants/routes';
 import {useSubmittedApplications} from '@/hooks/queries/useMyPage.query';
 import {PART_MAP} from '@/schemas/my-page/my-page.schema';

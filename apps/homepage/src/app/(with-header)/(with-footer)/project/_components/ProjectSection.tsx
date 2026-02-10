@@ -5,6 +5,7 @@ import {ProjectCard} from './ProjectCard';
 import {Pagination} from '@repo/ui/components/pagination/Pagination';
 import {useProjectListQuery} from '@/hooks/queries/useProject.queries';
 import {ProjectType} from '@/schemas/project/project-type';
+import {Spinner} from '@repo/ui/components/spinner/Spinner';
 
 interface ProjectSectionProps {
   generation: string;
@@ -38,7 +39,9 @@ export const ProjectSection = ({generation, activity}: ProjectSectionProps) => {
 
   if (isLoading) {
     return (
-      <div className='flex min-h-100 items-center justify-center'>Spinner</div>
+      <div className='flex min-h-100 items-center justify-center'>
+        <Spinner />
+      </div>
     );
   }
 
