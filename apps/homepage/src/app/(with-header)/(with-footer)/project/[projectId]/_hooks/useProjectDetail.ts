@@ -49,7 +49,6 @@ export const useProjectDetail = (projectId: number) => {
       DESIGN: [],
       FE: [],
       BE: [],
-      NONE: [],
     };
     if (!mappedData) return initialGroups;
 

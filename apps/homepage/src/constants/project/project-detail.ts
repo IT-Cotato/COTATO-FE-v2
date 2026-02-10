@@ -1,7 +1,6 @@
 export const POSITION_LABEL = {
   PM: 'PM',
-  DESIGN: 'DESIGN',
-  FE: 'FRONTEND',
-  BE: 'BACKEND',
-  NONE: '',
+  DESIGN: 'DE',
+  FE: 'FE',
+  BE: 'BE',
 } as const;

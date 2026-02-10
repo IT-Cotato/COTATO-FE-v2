@@ -1,6 +1,6 @@
 import {z} from 'zod';
 
-export const PositionEnum = z.enum(['PM', 'DESIGN', 'FE', 'BE', 'NONE']);
+export const PositionEnum = z.enum(['PM', 'DESIGN', 'FE', 'BE']);
 
 export const ProjectMemberSchema = z.object({
   name: z.string().min(1, '이름을 입력해주세요.'),
