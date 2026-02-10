@@ -16,7 +16,10 @@ export const AddProjectFormContainer = () => {
 
   const generations = useMemo(() => {
     if (!generationList) return [];
-    return generationList.map((item) => `${item.generationId}기`);
+
+    return [...generationList]
+      .sort((a, b) => b.generationId - a.generationId)
+      .map((item) => `${item.generationId}기`);
   }, [generationList]);
 
   const editData = useMemo(() => {
@@ -30,7 +33,7 @@ export const AddProjectFormContainer = () => {
 
   useEffect(() => {
     if (!editId && generations.length > 0 && !selectedGeneration) {
-      setSelectedGeneration(generations[0]); // 가장 최신 기수를 기본값으로
+      setSelectedGeneration(generations[0]);
     }
   }, [generations, editId, selectedGeneration]);
 
