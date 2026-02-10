@@ -71,16 +71,18 @@ export const AddProjectForm = ({
       projectName: states.name,
       shortDescription: states.shortDescription,
       projectLink: states.projectLink,
-      startDate: formatDate(states.startDate)!,
-      endDate: formatDate(states.endDate)!,
+      startDate: formatDate(states.startDate) ?? '',
+      endDate: formatDate(states.endDate) ?? '',
       projectIntroduction: states.introduction,
       members: Object.entries(teamMembers).flatMap(([role, names]) =>
         names.map((name) => ({name, position: role as Position}))
       ),
-      imageInfos: states.uploadedImages.map((img, index) => ({
-        s3Key: img.s3Key,
-        order: index,
-      })),
+      imageInfos: states.uploadedImages.map(
+        (img: {s3Key: string}, index: number) => ({
+          s3Key: img.s3Key,
+          order: index,
+        })
+      ),
     };
 
     if (isEdit) {

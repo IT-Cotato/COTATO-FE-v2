@@ -27,6 +27,12 @@ export const ProjectDetailHeader = ({data}: {data: ProjectDetail}) => {
 
   const hasLink = !!data.projectLink && data.projectLink.trim() !== '';
 
+  const normalizedLink =
+    data.projectLink.startsWith('http://') ||
+    data.projectLink.startsWith('https://')
+      ? data.projectLink
+      : `https://${data.projectLink}`;
+
   return (
     <header className='flex items-end justify-between'>
       <div className='flex flex-col gap-3.75'>
@@ -42,7 +48,7 @@ export const ProjectDetailHeader = ({data}: {data: ProjectDetail}) => {
           <h1 className='text-h1 text-neutral-800'>{data.name}</h1>
           {hasLink && (
             <a
-              href={data.projectLink}
+              href={normalizedLink}
               target='_blank'
               rel='noopener noreferrer'
               className='shadow-default flex items-center gap-2.5 rounded-[10px] px-3.75 py-2.25 text-neutral-400'>

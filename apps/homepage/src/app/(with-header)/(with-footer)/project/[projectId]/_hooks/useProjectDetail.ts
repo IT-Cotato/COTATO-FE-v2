@@ -1,19 +1,9 @@
 import {useMemo} from 'react';
-import {useQuery} from '@tanstack/react-query';
-import {QUERY_KEYS} from '@/constants/query-keys';
-import {getProjectDetail} from '@/services/api/project/project.api';
 import {Position, ProjectDetail} from '@/schemas/project/project.schema';
+import {useProjectDetailQuery} from '@/hooks/queries/useProject.query';
 
 export const useProjectDetail = (projectId: number) => {
-  const {
-    data: apiData,
-    isLoading,
-    isError,
-  } = useQuery<ProjectDetail>({
-    queryKey: QUERY_KEYS.PROJECT.DETAIL(projectId),
-    queryFn: () => getProjectDetail(projectId),
-    enabled: !!projectId,
-  });
+  const {data: apiData, isLoading, isError} = useProjectDetailQuery(projectId);
 
   const mappedData = useMemo<ProjectDetail | null>(() => {
     if (!apiData) return null;

@@ -13,7 +13,11 @@ export const AddProjectFormContainer = () => {
   const rawEditId = searchParams.get('edit');
   const editId = rawEditId && !isNaN(Number(rawEditId)) ? rawEditId : null;
 
-  const {data: generationList, isLoading: isGenLoading} = useGenerationQuery();
+  const {
+    data: generationList,
+    isLoading: isGenLoading,
+    isError: isGenError,
+  } = useGenerationQuery();
 
   const {
     data: editData,
@@ -60,7 +64,7 @@ export const AddProjectFormContainer = () => {
     );
   }
 
-  if (editId && isError) {
+  if (isGenError || (editId && isError)) {
     return (
       <div className='flex min-h-100 items-center justify-center text-neutral-400'>
         데이터를 불러오는 중 문제가 발생했습니다.
