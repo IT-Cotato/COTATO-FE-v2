@@ -13,14 +13,12 @@ export const useProjectForm = (
   const [projectLink, setProjectLink] = useState(
     initialData?.projectLink || ''
   );
-
   const [startDate, setStartDate] = useState<Date | null>(
     initialData?.startDate ? new Date(initialData.startDate) : null
   );
   const [endDate, setEndDate] = useState<Date | null>(
     initialData?.endDate ? new Date(initialData.endDate) : null
   );
-
   const [introduction, setIntroduction] = useState(
     initialData?.introduction || ''
   );
@@ -46,7 +44,6 @@ export const useProjectForm = (
       );
       setEndDate(initialData.endDate ? new Date(initialData.endDate) : null);
       setIntroduction(initialData.introduction || '');
-
       setUploadedImages(
         initialData.imageInfos?.map((img) => ({
           id:
@@ -61,35 +58,21 @@ export const useProjectForm = (
   }, [initialData]);
 
   const isFormValid = useMemo(() => {
-    const hasBaseInfo =
-      [name, shortDescription, projectLink, introduction].every(
-        (val) => val.trim() !== ''
-      ) &&
-      startDate &&
-      endDate &&
-      uploadedImages.length > 0;
+    const hasRequiredName = name.trim() !== '';
+
+    const hasRequiredDates = !!(startDate && endDate);
 
     const teamValues = Object.values(teamMembers);
     const hasValidMembers =
-      teamValues.every((members: string[]) => members.length > 0) &&
+      teamValues.every((members) => members.length > 0) &&
       teamValues
         .flat()
         .every(
-          (memberName: string) =>
-            memberName.trim() !== '' && memberName !== '감직이'
+          (memberName) => memberName.trim() !== '' && memberName !== '감직이'
         );
 
-    return !!(hasBaseInfo && hasValidMembers);
-  }, [
-    name,
-    shortDescription,
-    projectLink,
-    startDate,
-    endDate,
-    introduction,
-    uploadedImages,
-    teamMembers,
-  ]);
+    return !!(hasRequiredName && hasRequiredDates && hasValidMembers);
+  }, [name, startDate, endDate, teamMembers]);
 
   return {
     states: {

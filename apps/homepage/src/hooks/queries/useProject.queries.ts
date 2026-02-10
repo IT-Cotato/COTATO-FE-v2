@@ -19,7 +19,7 @@ export const useProjectListQuery = (params: ProjectListParams) => {
  */
 export const useProjectDetailQuery = (projectId: number) => {
   return useQuery({
-    queryKey: QUERY_KEYS.PROJECT.DETAIL(projectId), // 정의한 키 사용
+    queryKey: QUERY_KEYS.PROJECT.DETAIL(projectId),
     queryFn: () => getProjectDetail(projectId),
     enabled: !!projectId,
   });

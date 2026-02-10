@@ -39,7 +39,6 @@ export interface ImageInfo {
 
 /**
  * 프로젝트 목록 조회용
- * 썸네일 정보를 포함
  */
 export interface ProjectListItem {
   projectId: number;

@@ -1,5 +1,7 @@
 'use client';
 
+import {useRouter} from 'next/navigation';
+import {ROUTES} from '@/constants/routes';
 import {FormInput} from '@repo/ui/components/form/FormInput';
 import {FormLink} from '@repo/ui/components/form/FormLink';
 import {PeriodField} from '@/app/(with-header)/(with-footer)/project/add-project/_components/PeriodField';
@@ -13,10 +15,14 @@ import {useProjectForm} from '../_hooks/useProjectForm';
 import {formatDate} from '@repo/ui/utils/date';
 import {ProjectDetail, Position} from '@/schemas/project/project.schema';
 import {TeamState} from '@/schemas/project/project-type';
+import {
+  useCreateProjectMutation,
+  useUpdateProjectMutation,
+} from '@/hooks/mutations/useProject.mutations';
 
 interface AddProjectFormProps {
   generationId: number;
-  projectType: string;
+  projectType: 'DEMODAY' | 'HACKATHON';
   initialData?: ProjectDetail;
 }
 
@@ -25,19 +31,21 @@ export const AddProjectForm = ({
   projectType,
   initialData,
 }: AddProjectFormProps) => {
+  const router = useRouter();
   const isEdit = !!initialData;
+
+  const {mutate: updateProject} = useUpdateProjectMutation(
+    initialData?.projectId || 0
+  );
+  const {mutate: createProject} = useCreateProjectMutation();
 
   const formatInitialMembers = (
     members: {name: string; position: Position}[] | undefined
   ): TeamState => {
     const result: TeamState = {PM: [], DESIGN: [], FE: [], BE: []};
-
     if (!members) return result;
-
     members.forEach((m) => {
-      if (result[m.position]) {
-        result[m.position].push(m.name);
-      }
+      if (result[m.position]) result[m.position].push(m.name);
     });
     return result;
   };
@@ -61,11 +69,11 @@ export const AddProjectForm = ({
       generationId,
       projectType,
       projectName: states.name,
-      shortDescription: states.shortDescription,
-      projectLink: states.projectLink,
-      startDate: formatDate(states.startDate),
-      endDate: formatDate(states.endDate),
-      projectIntroduction: states.introduction,
+      shortDescription: states.shortDescription || '',
+      projectLink: states.projectLink || '',
+      startDate: formatDate(states.startDate)!,
+      endDate: formatDate(states.endDate)!,
+      projectIntroduction: states.introduction || '',
       members: Object.entries(teamMembers).flatMap(([role, names]) =>
         names.map((name) => ({name, position: role as Position}))
       ),
@@ -76,12 +84,16 @@ export const AddProjectForm = ({
     };
 
     if (isEdit) {
-      console.log('수정 API 호출:', requestBody);
+      updateProject(requestBody, {
+        onSuccess: () =>
+          router.push(ROUTES.PROJECT_DETAIL(initialData?.projectId || 0)),
+      });
     } else {
-      console.log('등록 API 호출:', requestBody);
+      createProject(requestBody, {
+        onSuccess: () => router.push(ROUTES.PROJECT),
+      });
     }
   };
-
   return (
     <section className='flex flex-col items-end gap-5 self-stretch'>
       <FormField label='프로젝트 명'>
@@ -103,7 +115,7 @@ export const AddProjectForm = ({
           value={[states.projectLink]}
           onChange={(links) => setters.setProjectLink(links[0] || '')}
           placeholder='링크를 첨부해주세요.'
-          hideInnerLabel={true}
+          hideInnerLabel
         />
       </FormField>
       <FormField label='기간'>

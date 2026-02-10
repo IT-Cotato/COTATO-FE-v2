@@ -1,15 +1,13 @@
 import {z} from 'zod';
 
-// 포지션 Enum (NONE 제외)
 export const PositionEnum = z.enum(['PM', 'DESIGN', 'FE', 'BE']);
 
-// 1. 프로젝트 등록 요청 스키마 (Admin POST /v1/api/admin/projects)
 export const ProjectRegistrationSchema = z.object({
   generationId: z.number().int(),
   projectType: z.enum(['HACKATHON', 'DEMODAY']),
   projectName: z.string().min(1, '프로젝트 명을 입력해주세요.'),
-  shortDescription: z.string().optional(), // 명세상 필수 표시 없음
-  projectLink: z.string().optional(), // 명세상 필수 표시 없음
+  shortDescription: z.string().optional(),
+  projectLink: z.string().optional(),
   startDate: z
     .string()
     .regex(/^\d{4}-\d{2}-\d{2}$/, '날짜 형식이 올바르지 않습니다.'),
@@ -20,7 +18,7 @@ export const ProjectRegistrationSchema = z.object({
   members: z.array(
     z.object({
       name: z.string().min(1, '이름을 입력해주세요.'),
-      position: PositionEnum, // NONE 제외된 버전
+      position: PositionEnum,
     })
   ),
   imageInfos: z.array(
@@ -31,7 +29,6 @@ export const ProjectRegistrationSchema = z.object({
   ),
 });
 
-// 2. 프로젝트 상세 응답 스키마 (GET /v1/api/projects/{projectId})
 export const ProjectDetailSchema = z.object({
   projectId: z.number().int(),
   name: z.string(),
@@ -58,7 +55,7 @@ export const ProjectDetailSchema = z.object({
   ),
 });
 
-// 타입 추출
 export type ProjectRegistration = z.infer<typeof ProjectRegistrationSchema>;
 export type ProjectDetail = z.infer<typeof ProjectDetailSchema>;
 export type Position = z.infer<typeof PositionEnum>;
+export type ProjectDetailResponse = ProjectDetail;
