@@ -14,16 +14,22 @@ export const ProjectContainer = () => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
+
   const genParam = searchParams.get('gen');
   const actParam = searchParams.get('act') || 'demoday';
+
   const {data: generations = [], isLoading} = useGenerationQuery();
+
+  const sortedGenerations = useMemo(() => {
+    return [...generations].sort((a, b) => b.generationId - a.generationId);
+  }, [generations]);
 
   const currentGen = useMemo(() => {
     if (genParam) return genParam;
-    return generations.length > 0
-      ? generations[0].generationId.toString()
+    return sortedGenerations.length > 0
+      ? sortedGenerations[0].generationId.toString()
       : null;
-  }, [genParam, generations]);
+  }, [genParam, sortedGenerations]);
 
   const selectedGenLabel = currentGen ? `${currentGen}기` : '기수 선택';
   const selectedActLabel = ACTIVITY_MAP[actParam] || '데모데이';
@@ -54,7 +60,7 @@ export const ProjectContainer = () => {
           <Dropdown
             placeholder='기수'
             value={selectedGenLabel}
-            options={generations.map((g) => `${g.generationId}기`)}
+            options={sortedGenerations.map((g) => `${g.generationId}기`)}
             onSelect={(label) => {
               const gen = label.replace('기', '');
               updateQuery('gen', gen);
@@ -80,7 +86,7 @@ export const ProjectContainer = () => {
           onClick={() => router.push(ROUTES.ADD_PROJECT())}
         />
       </div>
-      {generations.length === 0 ? (
+      {sortedGenerations.length === 0 ? (
         <div className='flex min-h-100 w-full items-center justify-center text-neutral-400'>
           등록된 기수 정보가 없습니다.
         </div>
