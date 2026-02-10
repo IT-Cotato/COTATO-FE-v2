@@ -6,42 +6,46 @@ import {PROJECT_DETAIL_MOCK} from '@/mocks/project/mock-project';
 import {ProjectDetail} from '@/schemas/project/project.schema';
 import {AddProjectForm} from '../_components/AddProjectForm';
 import {Dropdown} from '@/components/dropdown/Dropdown';
+import {useGenerationQuery} from '@/hooks/queries/useGeneration.queries';
 
 export const AddProjectFormContainer = () => {
   const searchParams = useSearchParams();
-  const editId = searchParams.get('edit'); // url에서 ID 추출
+  const editId = searchParams.get('edit');
 
-  // editId가 있을 때만 데이터를 찾음
+  const {data: generationList} = useGenerationQuery();
+
+  const generations = useMemo(() => {
+    if (!generationList) return [];
+    return generationList.map((item) => `${item.generationId}기`);
+  }, [generationList]);
+
   const editData = useMemo(() => {
     if (!editId) return undefined;
     const data = PROJECT_DETAIL_MOCK[Number(editId)];
-    if (!data) {
-      console.warn(`Project with id ${editId} not found`);
-      return undefined;
-    }
     return data as ProjectDetail;
   }, [editId]);
 
-  const [selectedGeneration, setSelectedGeneration] = useState<string>('12기');
+  const [selectedGeneration, setSelectedGeneration] = useState<string>('');
   const [selectedActivity, setSelectedActivity] = useState<string>('데모데이');
 
-  // editData가 바뀔 때 드롭다운 상태 동기화
+  useEffect(() => {
+    if (!editId && generations.length > 0 && !selectedGeneration) {
+      setSelectedGeneration(generations[0]); // 가장 최신 기수를 기본값으로
+    }
+  }, [generations, editId, selectedGeneration]);
+
   useEffect(() => {
     if (editData) {
       setSelectedGeneration(`${editData.generationId}기`);
       setSelectedActivity(
         editData.projectType === 'DEMODAY' ? '데모데이' : '해커톤'
       );
-    } else {
-      setSelectedGeneration('12기');
-      setSelectedActivity('데모데이');
     }
   }, [editData]);
 
-  const generations = ['12기', '11기', '10기', '9기']; //나중에 API 데이터로 연동하기
   const activities = ['데모데이', '해커톤'];
 
-  const getGenerationId = (gen: string) => parseInt(gen.replace('기', ''));
+  const getGenerationId = (gen: string) => parseInt(gen.replace('기', '')) || 0;
   const getProjectType = (act: string): 'DEMODAY' | 'HACKATHON' =>
     act === '데모데이' ? 'DEMODAY' : 'HACKATHON';
 
