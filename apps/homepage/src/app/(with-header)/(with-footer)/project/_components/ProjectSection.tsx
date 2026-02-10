@@ -1,10 +1,10 @@
 'use client';
 
 import {useSearchParams, useRouter, usePathname} from 'next/navigation';
-import {PROJECTS_MOCK_DATA} from '@/mocks/project/mock-project';
 import {ProjectCard} from './ProjectCard';
-import {useMemo} from 'react';
 import {Pagination} from '@repo/ui/components/pagination/Pagination';
+import {useProjectListQuery} from '@/hooks/queries/useProject.queries';
+import {ProjectType} from '@/schemas/project/project-type';
 
 interface ProjectSectionProps {
   generation: string;
@@ -17,20 +17,15 @@ export const ProjectSection = ({generation, activity}: ProjectSectionProps) => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-
   const currentPage = Number(searchParams.get('page')) || 1;
 
-  const filteredProjects = useMemo(() => {
-    return PROJECTS_MOCK_DATA.filter((project) => {
-      const genMatch = project.generationId === Number(generation);
-      const activityMatch = project.projectType === activity.toUpperCase();
+  const {data: projects = [], isLoading} = useProjectListQuery({
+    generationId: Number(generation),
+    projectType: activity.toUpperCase() as ProjectType,
+  });
 
-      return genMatch && activityMatch;
-    });
-  }, [generation, activity]);
-
-  const totalPages = Math.ceil(filteredProjects.length / ITEMS_PER_PAGE);
-  const currentItems = filteredProjects.slice(
+  const totalPages = Math.ceil(projects.length / ITEMS_PER_PAGE);
+  const currentItems = projects.slice(
     (currentPage - 1) * ITEMS_PER_PAGE,
     currentPage * ITEMS_PER_PAGE
   );
@@ -40,6 +35,11 @@ export const ProjectSection = ({generation, activity}: ProjectSectionProps) => {
     params.set('page', page.toString());
     router.push(`${pathname}?${params.toString()}`);
   };
+
+  if (isLoading)
+    return (
+      <div className='flex min-h-100 items-center justify-center'>Spinner</div>
+    );
 
   return (
     <div className='flex w-full flex-col items-center gap-10'>
@@ -54,7 +54,7 @@ export const ProjectSection = ({generation, activity}: ProjectSectionProps) => {
           조건에 맞는 프로젝트가 없습니다.
         </div>
       )}
-      {currentItems.length > 0 && (
+      {projects.length > ITEMS_PER_PAGE && (
         <Pagination
           currentPage={currentPage}
           totalPages={totalPages}
