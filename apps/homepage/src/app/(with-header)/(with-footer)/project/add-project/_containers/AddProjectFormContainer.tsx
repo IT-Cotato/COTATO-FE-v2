@@ -2,31 +2,30 @@
 
 import {useSearchParams} from 'next/navigation';
 import {useState, useMemo, useEffect} from 'react';
-import {PROJECT_DETAIL_MOCK} from '@/mocks/project/mock-project';
-import {ProjectDetail} from '@/schemas/project/project.schema';
 import {AddProjectForm} from '../_components/AddProjectForm';
 import {Dropdown} from '@/components/dropdown/Dropdown';
 import {useGenerationQuery} from '@/hooks/queries/useGeneration.queries';
+import {useProjectDetailQuery} from '@/hooks/queries/useProject.queries'; // 상세조회 훅 임포트
+import {Spinner} from '@repo/ui/components/spinner/Spinner';
 
 export const AddProjectFormContainer = () => {
   const searchParams = useSearchParams();
   const editId = searchParams.get('edit');
 
-  const {data: generationList} = useGenerationQuery();
+  const {data: generationList, isLoading: isGenLoading} = useGenerationQuery();
+
+  const {
+    data: editData,
+    isLoading: isDetailLoading,
+    isError,
+  } = useProjectDetailQuery(Number(editId));
 
   const generations = useMemo(() => {
     if (!generationList) return [];
-
     return [...generationList]
       .sort((a, b) => b.generationId - a.generationId)
       .map((item) => `${item.generationId}기`);
   }, [generationList]);
-
-  const editData = useMemo(() => {
-    if (!editId) return undefined;
-    const data = PROJECT_DETAIL_MOCK[Number(editId)];
-    return data as ProjectDetail;
-  }, [editId]);
 
   const [selectedGeneration, setSelectedGeneration] = useState<string>('');
   const [selectedActivity, setSelectedActivity] = useState<string>('데모데이');
@@ -51,6 +50,22 @@ export const AddProjectFormContainer = () => {
   const getGenerationId = (gen: string) => parseInt(gen.replace('기', '')) || 0;
   const getProjectType = (act: string): 'DEMODAY' | 'HACKATHON' =>
     act === '데모데이' ? 'DEMODAY' : 'HACKATHON';
+
+  if (isGenLoading || (editId && isDetailLoading)) {
+    return (
+      <div className='flex min-h-100 items-center justify-center'>
+        <Spinner />
+      </div>
+    );
+  }
+
+  if (editId && isError) {
+    return (
+      <div className='flex min-h-100 items-center justify-center text-neutral-400'>
+        데이터를 불러오는 중 문제가 발생했습니다.
+      </div>
+    );
+  }
 
   return (
     <section className='flex w-full flex-col gap-8.5 py-7.5'>
