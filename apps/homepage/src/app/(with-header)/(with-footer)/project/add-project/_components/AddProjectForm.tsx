@@ -69,11 +69,11 @@ export const AddProjectForm = ({
       generationId,
       projectType,
       projectName: states.name,
-      shortDescription: states.shortDescription || '',
-      projectLink: states.projectLink || '',
+      shortDescription: states.shortDescription,
+      projectLink: states.projectLink,
       startDate: formatDate(states.startDate)!,
       endDate: formatDate(states.endDate)!,
-      projectIntroduction: states.introduction || '',
+      projectIntroduction: states.introduction,
       members: Object.entries(teamMembers).flatMap(([role, names]) =>
         names.map((name) => ({name, position: role as Position}))
       ),
@@ -94,6 +94,7 @@ export const AddProjectForm = ({
       });
     }
   };
+
   return (
     <section className='flex flex-col items-end gap-5 self-stretch'>
       <FormField label='프로젝트 명'>

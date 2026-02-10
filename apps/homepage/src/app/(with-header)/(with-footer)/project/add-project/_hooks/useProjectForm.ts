@@ -58,9 +58,18 @@ export const useProjectForm = (
   }, [initialData]);
 
   const isFormValid = useMemo(() => {
-    const hasRequiredName = name.trim() !== '';
+    const hasBaseInfo = [
+      name,
+      shortDescription,
+      projectLink,
+      introduction,
+    ].every((val) => val.trim() !== '');
 
-    const hasRequiredDates = !!(startDate && endDate);
+    const hasRequiredAssets = !!(
+      startDate &&
+      endDate &&
+      uploadedImages.length > 0
+    );
 
     const teamValues = Object.values(teamMembers);
     const hasValidMembers =
@@ -71,8 +80,17 @@ export const useProjectForm = (
           (memberName) => memberName.trim() !== '' && memberName !== '감직이'
         );
 
-    return !!(hasRequiredName && hasRequiredDates && hasValidMembers);
-  }, [name, startDate, endDate, teamMembers]);
+    return !!(hasBaseInfo && hasRequiredAssets && hasValidMembers);
+  }, [
+    name,
+    shortDescription,
+    projectLink,
+    introduction,
+    startDate,
+    endDate,
+    uploadedImages,
+    teamMembers,
+  ]);
 
   return {
     states: {
