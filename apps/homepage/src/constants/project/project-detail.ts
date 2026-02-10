@@ -3,4 +3,5 @@ export const POSITION_LABEL = {
   DESIGN: 'DESIGN',
   FE: 'FRONTEND',
   BE: 'BACKEND',
+  NONE: '',
 } as const;

@@ -46,9 +46,10 @@ export const useProjectDetail = (projectId: number) => {
   const groupedMembers = useMemo(() => {
     const initialGroups: Record<Position, string[]> = {
       PM: [],
-      DE: [],
+      DESIGN: [],
       FE: [],
       BE: [],
+      NONE: [],
     };
     if (!mappedData) return initialGroups;
 
@@ -59,11 +60,13 @@ export const useProjectDetail = (projectId: number) => {
     }, initialGroups);
   }, [mappedData]);
 
+  const positions: Position[] = ['PM', 'DESIGN', 'FE', 'BE'];
+
   return {
     data: mappedData,
     groupedMembers,
     isLoading,
     isError,
-    positions: ['PM', 'DE', 'FE', 'BE'] as Position[],
+    positions,
   };
 };

@@ -36,7 +36,7 @@ export const PROJECT_DETAIL_MOCK: Record<number, ProjectDetail> = {
       'Troublog는 개발 중 발생하는 에러를 기록하고 공유하는 플랫폼입니다.',
     members: [
       {name: '김철수', position: 'PM'},
-      {name: '이영희', position: 'DE'},
+      {name: '이영희', position: 'DESIGN'},
       {name: '박지성', position: 'FE'},
       {name: '손흥민', position: 'BE'},
     ],
@@ -59,7 +59,7 @@ export const PROJECT_DETAIL_MOCK: Record<number, ProjectDetail> = {
       '모각코는 해커톤 기간 동안 진행된 프로젝트로, 물리적으로 떨어져 있는 개발자들이 온라인상에서 함께 모여 코딩하는 경험을 제공합니다. 실시간 화상 공유와 집중 시간 타이머 기능을 통해 높은 몰입도를 지향합니다.',
     members: [
       {name: '이강인', position: 'PM'},
-      {name: '김민재', position: 'DE'},
+      {name: '김민재', position: 'DESIGN'},
       {name: '황희찬', position: 'FE'},
       {name: '조규성', position: 'FE'},
 
