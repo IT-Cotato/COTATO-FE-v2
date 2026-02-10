@@ -3,7 +3,7 @@
 import {useSearchParams, useRouter, usePathname} from 'next/navigation';
 import {ProjectCard} from './ProjectCard';
 import {Pagination} from '@repo/ui/components/pagination/Pagination';
-import {useProjectListQuery} from '@/hooks/queries/useProject.queries';
+import {useProjectListQuery} from '@/hooks/queries/useProject.query';
 import {ProjectType} from '@/schemas/project/project-type';
 import {Spinner} from '@repo/ui/components/spinner/Spinner';
 

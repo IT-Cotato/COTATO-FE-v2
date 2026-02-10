@@ -18,7 +18,7 @@ import {TeamState} from '@/schemas/project/project-type';
 import {
   useCreateProjectMutation,
   useUpdateProjectMutation,
-} from '@/hooks/mutations/useProject.mutations';
+} from '@/hooks/mutations/useProject.mutation';
 
 interface AddProjectFormProps {
   generationId: number;

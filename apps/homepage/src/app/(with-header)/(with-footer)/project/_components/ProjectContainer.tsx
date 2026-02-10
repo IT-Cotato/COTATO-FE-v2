@@ -7,7 +7,7 @@ import {Dropdown} from '@/components/dropdown/Dropdown';
 import {Button} from '@repo/ui/components/buttons/Button';
 import {ROUTES} from '@/constants/routes';
 import {ACTIVITY_MAP} from '@/constants/project/project-activity';
-import {useGenerationQuery} from '@/hooks/queries/useGeneration.queries';
+import {useGenerationQuery} from '@/hooks/queries/useGeneration.query';
 import {Spinner} from '@repo/ui/components/spinner/Spinner';
 
 export const ProjectContainer = () => {

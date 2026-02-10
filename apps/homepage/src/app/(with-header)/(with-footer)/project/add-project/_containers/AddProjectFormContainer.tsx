@@ -4,8 +4,8 @@ import {useSearchParams} from 'next/navigation';
 import {useState, useMemo, useEffect} from 'react';
 import {AddProjectForm} from '../_components/AddProjectForm';
 import {Dropdown} from '@/components/dropdown/Dropdown';
-import {useGenerationQuery} from '@/hooks/queries/useGeneration.queries';
-import {useProjectDetailQuery} from '@/hooks/queries/useProject.queries'; // 상세조회 훅 임포트
+import {useGenerationQuery} from '@/hooks/queries/useGeneration.query';
+import {useProjectDetailQuery} from '@/hooks/queries/useProject.query';
 import {Spinner} from '@repo/ui/components/spinner/Spinner';
 
 export const AddProjectFormContainer = () => {

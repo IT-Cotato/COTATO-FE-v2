@@ -5,7 +5,7 @@ import LinkIcon from '@/assets/link/link.svg';
 import {Button} from '@repo/ui/components/buttons/Button';
 import {useRouter} from 'next/navigation';
 import {ROUTES} from '@/constants/routes';
-import {useDeleteProjectMutation} from '@/hooks/mutations/useProject.mutations';
+import {useDeleteProjectMutation} from '@/hooks/mutations/useProject.mutation';
 
 export const ProjectDetailHeader = ({data}: {data: ProjectDetail}) => {
   const router = useRouter();
