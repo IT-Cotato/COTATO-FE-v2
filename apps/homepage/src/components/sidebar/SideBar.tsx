@@ -22,7 +22,7 @@ export const SideBar = ({isAdmin = false}: SideBarProps) => {
   };
 
   return (
-    <nav className='z-sidebar no-scrollbar sticky top-30 flex max-h-[calc(100vh-7.5rem)] flex-col gap-7.5 overflow-y-auto px-6.25'>
+    <nav className='z-sidebar no-scrollbar sticky top-30 flex flex-col gap-7.5 overflow-y-auto px-6.25 py-10'>
       {groups.map(({title, items}) => (
         <div key={title} className='flex flex-col gap-4.75'>
           <h4 className='text-h4 text-neutral-400'>{title}</h4>
@@ -59,7 +59,7 @@ export const SideBar = ({isAdmin = false}: SideBarProps) => {
         labelTypo='body_l_sb'
         borderRadius={30}
         onClick={handleLogout}
-        wrapperClassName={clsx('mb-10', isAdmin ? 'mt-[175px]' : 'mt-[505px]')}
+        wrapperClassName={clsx(isAdmin ? 'mt-[175px]' : 'mt-[505px]')}
       />
     </nav>
   );
