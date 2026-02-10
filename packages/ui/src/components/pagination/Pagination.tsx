@@ -59,7 +59,7 @@ export const Pagination = ({
             : 'text-neutral-500'
         )}>
         <ChevronLeft className='h-6 w-6' />
-        <span className='px-2'>{isAdmin ? '이전' : 'Previous'}</span>
+        <span className='px-2'>이전</span>
       </button>
 
       <div className='flex items-center gap-1'>
@@ -120,7 +120,7 @@ export const Pagination = ({
             ? 'cursor-default text-neutral-300'
             : 'text-neutral-500'
         )}>
-        <span className='px-2'>{isAdmin ? '다음' : 'Next'}</span>
+        <span className='px-2'>다음</span>
         <ChevronLeft className='h-6 w-6 rotate-180' />
       </button>
     </nav>

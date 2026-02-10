@@ -21,7 +21,7 @@ export const TeamSection = ({
             <span className='text-h4 w-8.25 text-neutral-400'>
               {POSITION_LABEL[role]}
             </span>
-            <div className='flex flex-wrap items-center gap-2.5'>
+            <div className='no-scrollbar flex w-215 items-center gap-2.5 overflow-x-auto whitespace-nowrap'>
               {teamMembers[role].map((name, index) => (
                 <MemberChip
                   key={`${role}-${index}`}
@@ -30,7 +30,7 @@ export const TeamSection = ({
                   onUpdate={(newName) => onUpdate(role, index, newName)}
                 />
               ))}
-              {teamMembers[role].length < 4 && (
+              {teamMembers[role].length < 5 && (
                 <button
                   type='button'
                   onClick={() => onAdd(role)}

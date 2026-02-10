@@ -58,7 +58,7 @@ export const ProjectSection = ({generation, activity}: ProjectSectionProps) => {
           조건에 맞는 프로젝트가 없습니다.
         </div>
       )}
-      {projects.length > ITEMS_PER_PAGE && (
+      {projects.length > 0 && (
         <Pagination
           currentPage={currentPage}
           totalPages={totalPages}

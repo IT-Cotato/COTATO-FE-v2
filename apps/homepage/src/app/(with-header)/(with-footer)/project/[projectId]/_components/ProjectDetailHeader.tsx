@@ -25,6 +25,8 @@ export const ProjectDetailHeader = ({data}: {data: ProjectDetail}) => {
     });
   };
 
+  const hasLink = !!data.projectLink && data.projectLink.trim() !== '';
+
   return (
     <header className='flex items-end justify-between'>
       <div className='flex flex-col gap-3.75'>
@@ -38,14 +40,16 @@ export const ProjectDetailHeader = ({data}: {data: ProjectDetail}) => {
         </div>
         <div className='flex items-center gap-4.5'>
           <h1 className='text-h1 text-neutral-800'>{data.name}</h1>
-          <a
-            href={data.projectLink}
-            target='_blank'
-            rel='noopener noreferrer'
-            className='shadow-default flex items-center gap-2.5 rounded-[10px] px-3.75 py-2.25 text-neutral-400'>
-            <span className='text-h5'>LINK</span>
-            <LinkIcon className='h-5 w-5 text-neutral-400' />
-          </a>
+          {hasLink && (
+            <a
+              href={data.projectLink}
+              target='_blank'
+              rel='noopener noreferrer'
+              className='shadow-default flex items-center gap-2.5 rounded-[10px] px-3.75 py-2.25 text-neutral-400'>
+              <span className='text-h5'>LINK</span>
+              <LinkIcon className='h-5 w-5 text-neutral-400' />
+            </a>
+          )}
         </div>
       </div>
       <div className='flex gap-3'>
