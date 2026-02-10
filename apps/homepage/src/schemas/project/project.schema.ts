@@ -1,6 +1,6 @@
 import {z} from 'zod';
 
-export const PositionEnum = z.enum(['PM', 'DE', 'FE', 'BE']);
+export const PositionEnum = z.enum(['PM', 'DESIGN', 'FE', 'BE', 'NONE']);
 
 export const ProjectMemberSchema = z.object({
   name: z.string().min(1, '이름을 입력해주세요.'),
@@ -62,7 +62,7 @@ export interface ProjectDetailResponse {
   name: string;
   shortDescription: string;
   introduction: string;
-  projectType: 'DEMODAY' | 'HACKATHON';
+  projectType: 'HACKATHON' | 'DEMODAY';
   projectLink: string;
   startDate: string;
   endDate: string;
