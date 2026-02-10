@@ -1,18 +1,28 @@
+'use client';
+
 import {ProjectDetail} from '@/schemas/project/project.schema';
 import LinkIcon from '@/assets/link/link.svg';
 import {Button} from '@repo/ui/components/buttons/Button';
 import {useRouter} from 'next/navigation';
 import {ROUTES} from '@/constants/routes';
+import {useDeleteProjectMutation} from '@/hooks/mutations/useProject.mutations';
 
 export const ProjectDetailHeader = ({data}: {data: ProjectDetail}) => {
   const router = useRouter();
+  const {mutate: deleteProject} = useDeleteProjectMutation();
 
   const handleEdit = () => {
     router.push(ROUTES.ADD_PROJECT(data.projectId));
   };
 
   const handleDelete = () => {
-    console.log('삭제');
+    if (!window.confirm('정말 이 프로젝트를 삭제하시겠습니까?')) return;
+
+    deleteProject(data.projectId, {
+      onSuccess: () => {
+        router.push(ROUTES.PROJECT);
+      },
+    });
   };
 
   return (

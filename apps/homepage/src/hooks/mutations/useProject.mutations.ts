@@ -1,5 +1,9 @@
 import {useMutation, useQueryClient} from '@tanstack/react-query';
-import {updateProject, createProject} from '@/services/api/project/project.api';
+import {
+  updateProject,
+  createProject,
+  deleteProject,
+} from '@/services/api/project/project.api';
 import {ProjectRegistration} from '@/schemas/project/project.schema';
 import {QUERY_KEYS} from '@/constants/query-keys';
 
@@ -37,6 +41,21 @@ export const useCreateProjectMutation = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({queryKey: ['projects']});
       alert('프로젝트가 등록되었습니다.');
+    },
+  });
+};
+
+export const useDeleteProjectMutation = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (projectId: number) => deleteProject(projectId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({queryKey: ['projects']});
+      alert('프로젝트가 성공적으로 삭제되었습니다.');
+    },
+    onError: () => {
+      alert('삭제 중 오류가 발생했습니다.');
     },
   });
 };

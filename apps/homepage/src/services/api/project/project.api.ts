@@ -106,3 +106,17 @@ export const uploadFileToS3 = async (presignedUrl: string, file: File) => {
 
   return true;
 };
+
+/**
+ * 프로젝트 삭제
+ */
+export const deleteProject = async (projectId: number) => {
+  try {
+    const response = await publicAxios.delete(
+      ENDPOINT.PROJECT.EDIT(projectId) // edit과 동일한 엔드포인트 사용함
+    );
+    return response.data;
+  } catch (error) {
+    return handleApiError(error);
+  }
+};
