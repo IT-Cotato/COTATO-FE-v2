@@ -27,11 +27,12 @@ export const ProjectDetailHeader = ({data}: {data: ProjectDetail}) => {
 
   const hasLink = !!data.projectLink && data.projectLink.trim() !== '';
 
-  const normalizedLink =
-    data.projectLink.startsWith('http://') ||
-    data.projectLink.startsWith('https://')
+  const normalizedLink = hasLink
+    ? data.projectLink.startsWith('http://') ||
+      data.projectLink.startsWith('https://')
       ? data.projectLink
-      : `https://${data.projectLink}`;
+      : `https://${data.projectLink}`
+    : '';
 
   return (
     <header className='flex items-end justify-between'>
