@@ -41,18 +41,21 @@ export const ProjectDetailHeader = ({data}: {data: ProjectDetail}) => {
       <div className='flex gap-3'>
         <Button
           variant='outline'
-          label='수정'
-          width={80}
+          label='수정하기'
+          width={127}
           height={40}
-          textColor='neutral-400'
+          textColor='neutral-600'
+          labelTypo='body_l_sb'
           onClick={handleEdit}
+          borderColor='neutral-200'
         />
         <Button
           variant='primary'
-          label='삭제'
-          width={80}
+          label='삭제하기'
+          width={127}
           height={40}
           backgroundColor='alert'
+          labelTypo='body_l_sb'
           onClick={handleDelete}
         />
       </div>
