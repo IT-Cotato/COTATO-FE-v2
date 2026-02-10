@@ -12,6 +12,7 @@ interface DropdownProps<T extends string> {
   placeholder?: string;
   disabled?: boolean;
   className?: string;
+  width?: number;
 }
 
 export const Dropdown = <T extends string>({
@@ -21,6 +22,7 @@ export const Dropdown = <T extends string>({
   placeholder = '선택해주세요',
   disabled,
   className,
+  width,
 }: DropdownProps<T>) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
@@ -38,20 +40,27 @@ export const Dropdown = <T extends string>({
     setIsOpen(false);
   };
 
+  const dropdownWidth = width ? `${width}px` : undefined;
+
   return (
-    <div className={clsx('relative inline-block', className)} ref={dropdownRef}>
+    <div
+      className={clsx('relative inline-block', className)}
+      ref={dropdownRef}
+      style={{width: dropdownWidth}}>
       <button
         type='button'
         onClick={handleToggle}
         disabled={disabled}
         className={clsx(
-          'flex h-10 min-w-27.5 items-center justify-center gap-2.5 self-stretch px-2.5 py-2.5',
+          'flex h-10 items-center justify-center gap-2.5 self-stretch px-2.5 py-2.5',
           'rounded-[20px] border border-neutral-200 bg-white',
-          'text-body-l shrink-0 transition-all',
+          'text-body-l w-full shrink-0 transition-all',
           disabled
             ? 'cursor-not-allowed bg-neutral-100 text-neutral-400'
-            : 'bg-white text-neutral-600'
+            : 'bg-white text-neutral-600',
+          !width && 'min-w-27.5'
         )}
+        style={{width: dropdownWidth}}
         aria-expanded={isOpen}
         aria-haspopup='listbox'>
         <span>{value || placeholder}</span>
@@ -66,7 +75,11 @@ export const Dropdown = <T extends string>({
       {isOpen && (
         <ul
           role='listbox'
-          className='z-dropdown absolute left-0 mt-1 flex min-w-27.5 flex-col gap-2.5 rounded-sm bg-neutral-700 px-3.25 py-1.5'>
+          className={clsx(
+            'z-dropdown absolute left-0 mt-1 flex w-full flex-col gap-2.5 rounded-sm bg-neutral-700 px-3.25 py-1.5',
+            !width && 'min-w-27.5'
+          )}
+          style={{width: dropdownWidth}}>
           {options.map((option) => (
             <li
               role='option'
