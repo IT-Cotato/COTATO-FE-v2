@@ -27,7 +27,7 @@ export const ProjectDetailHeader = ({data}: {data: ProjectDetail}) => {
           </span>
         </div>
         <div className='flex items-center gap-4.5'>
-          <h1 className='text-h1 text-neutral-800'>{data.projectName}</h1>
+          <h1 className='text-h1 text-neutral-800'>{data.name}</h1>
           <a
             href={data.projectLink}
             target='_blank'

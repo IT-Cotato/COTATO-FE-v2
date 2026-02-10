@@ -6,53 +6,63 @@ export const useProjectForm = (
   teamMembers: TeamState,
   initialData?: ProjectDetail
 ) => {
-  // initialData가 있으면 해당 값을, 없으면 빈 값을 초기값으로 설정
-  const [projectName, setProjectName] = useState(
-    initialData?.projectName || ''
-  );
+  const [name, setName] = useState(initialData?.name || '');
   const [shortDescription, setShortDescription] = useState(
     initialData?.shortDescription || ''
   );
   const [projectLink, setProjectLink] = useState(
     initialData?.projectLink || ''
   );
+
   const [startDate, setStartDate] = useState<Date | null>(
     initialData?.startDate ? new Date(initialData.startDate) : null
   );
   const [endDate, setEndDate] = useState<Date | null>(
     initialData?.endDate ? new Date(initialData.endDate) : null
   );
-  const [projectIntroduction, setProjectIntroduction] = useState(
-    initialData?.projectIntroduction || ''
+
+  const [introduction, setIntroduction] = useState(
+    initialData?.introduction || ''
   );
+
   const [uploadedImages, setUploadedImages] = useState<ImageInfo[]>(
-    initialData?.imageInfos.map((img) => ({
-      ...img,
-      id: img.s3Key,
+    initialData?.imageInfos?.map((img) => ({
+      id:
+        img?.imageId?.toString() ??
+        `temp-${Math.random().toString(36).substr(2, 9)}`,
+      s3Key: '',
+      publicUrl: img?.imageUrl ?? '',
+      order: img?.imageOrder ?? 0,
     })) || []
   );
 
-  // initialData가 바뀔 때 폼의 모든 입력값 동기화
   useEffect(() => {
-    setProjectName(initialData?.projectName || '');
-    setShortDescription(initialData?.shortDescription || '');
-    setProjectLink(initialData?.projectLink || '');
-    setStartDate(
-      initialData?.startDate ? new Date(initialData.startDate) : null
-    );
-    setEndDate(initialData?.endDate ? new Date(initialData.endDate) : null);
-    setProjectIntroduction(initialData?.projectIntroduction || '');
-    setUploadedImages(
-      initialData?.imageInfos.map((img) => ({
-        ...img,
-        id: img.s3Key,
-      })) || []
-    );
+    if (initialData) {
+      setName(initialData.name || '');
+      setShortDescription(initialData.shortDescription || '');
+      setProjectLink(initialData.projectLink || '');
+      setStartDate(
+        initialData.startDate ? new Date(initialData.startDate) : null
+      );
+      setEndDate(initialData.endDate ? new Date(initialData.endDate) : null);
+      setIntroduction(initialData.introduction || '');
+
+      setUploadedImages(
+        initialData.imageInfos?.map((img) => ({
+          id:
+            img?.imageId?.toString() ??
+            `temp-${Math.random().toString(36).substr(2, 9)}`,
+          s3Key: '',
+          publicUrl: img?.imageUrl ?? '',
+          order: img?.imageOrder ?? 0,
+        })) || []
+      );
+    }
   }, [initialData]);
 
   const isFormValid = useMemo(() => {
     const hasBaseInfo =
-      [projectName, shortDescription, projectLink, projectIntroduction].every(
+      [name, shortDescription, projectLink, introduction].every(
         (val) => val.trim() !== ''
       ) &&
       startDate &&
@@ -64,37 +74,40 @@ export const useProjectForm = (
       teamValues.every((members: string[]) => members.length > 0) &&
       teamValues
         .flat()
-        .every((name: string) => name.trim() !== '' && name !== '감직이');
+        .every(
+          (memberName: string) =>
+            memberName.trim() !== '' && memberName !== '감직이'
+        );
 
     return !!(hasBaseInfo && hasValidMembers);
   }, [
-    projectName,
+    name,
     shortDescription,
     projectLink,
     startDate,
     endDate,
-    projectIntroduction,
+    introduction,
     uploadedImages,
     teamMembers,
   ]);
 
   return {
     states: {
-      projectName,
+      name,
       shortDescription,
       projectLink,
       startDate,
       endDate,
-      projectIntroduction,
+      introduction,
       uploadedImages,
     },
     setters: {
-      setProjectName,
+      setName,
       setShortDescription,
       setProjectLink,
       setStartDate,
       setEndDate,
-      setProjectIntroduction,
+      setIntroduction,
       setUploadedImages,
     },
     isFormValid,

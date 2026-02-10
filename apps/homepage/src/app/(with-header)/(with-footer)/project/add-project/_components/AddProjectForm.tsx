@@ -28,20 +28,24 @@ export const AddProjectForm = ({
   const isEdit = !!initialData;
 
   const formatInitialMembers = (
-    members: {name: string; position: Position}[]
+    members: {name: string; position: Position}[] | undefined
   ): TeamState => {
     const result: TeamState = {PM: [], DESIGN: [], FE: [], BE: []};
+
+    if (!members) return result;
+
     members.forEach((m) => {
-      if (result[m.position]) result[m.position].push(m.name);
+      if (result[m.position]) {
+        result[m.position].push(m.name);
+      }
     });
     return result;
   };
 
-  // 팀 멤버 초기값 설정
   const {teamMembers, addMember, removeMember, updateMemberName} =
     useTeamMembers(
-      initialData
-        ? formatInitialMembers(initialData.members)
+      initialData?.memberInfos
+        ? formatInitialMembers(initialData.memberInfos)
         : {PM: ['감직이'], DESIGN: ['감직이'], FE: ['감직이'], BE: ['감직이']}
     );
 
@@ -56,19 +60,18 @@ export const AddProjectForm = ({
     const requestBody = {
       generationId,
       projectType,
-      projectName: states.projectName,
+      projectName: states.name,
       shortDescription: states.shortDescription,
       projectLink: states.projectLink,
       startDate: formatDate(states.startDate),
       endDate: formatDate(states.endDate),
-      projectIntroduction: states.projectIntroduction,
+      projectIntroduction: states.introduction,
       members: Object.entries(teamMembers).flatMap(([role, names]) =>
         names.map((name) => ({name, position: role as Position}))
       ),
       imageInfos: states.uploadedImages.map((img, index) => ({
         s3Key: img.s3Key,
-        publicUrl: img.publicUrl,
-        order: index + 1, // 추후 api 명세에 맞춰서 index를 그대로 보낼 수도 있음
+        order: index,
       })),
     };
 
@@ -83,8 +86,8 @@ export const AddProjectForm = ({
     <section className='flex flex-col items-end gap-5 self-stretch'>
       <FormField label='프로젝트 명'>
         <FormInput
-          value={states.projectName}
-          onChange={(e) => setters.setProjectName(e.target.value)}
+          value={states.name}
+          onChange={(e) => setters.setName(e.target.value)}
           placeholder='프로젝트 명을 작성해주세요.'
         />
       </FormField>
@@ -119,8 +122,8 @@ export const AddProjectForm = ({
       />
       <FormField variant='column' label='프로젝트 설명'>
         <FormTextarea
-          value={states.projectIntroduction}
-          onChange={(e) => setters.setProjectIntroduction(e.target.value)}
+          value={states.introduction}
+          onChange={(e) => setters.setIntroduction(e.target.value)}
           isProject
           placeholder='프로젝트 설명을 입력해주세요.'
         />

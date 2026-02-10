@@ -2,18 +2,14 @@ import {useMemo} from 'react';
 import {useQuery} from '@tanstack/react-query';
 import {QUERY_KEYS} from '@/constants/query-keys';
 import {getProjectDetail} from '@/services/api/project/project.api';
-import {
-  Position,
-  ProjectDetail,
-  ProjectDetailResponse,
-} from '@/schemas/project/project.schema';
+import {Position, ProjectDetail} from '@/schemas/project/project.schema';
 
 export const useProjectDetail = (projectId: number) => {
   const {
     data: apiData,
     isLoading,
     isError,
-  } = useQuery<ProjectDetailResponse>({
+  } = useQuery<ProjectDetail>({
     queryKey: QUERY_KEYS.PROJECT.DETAIL(projectId),
     queryFn: () => getProjectDetail(projectId),
     enabled: !!projectId,
@@ -23,22 +19,23 @@ export const useProjectDetail = (projectId: number) => {
     if (!apiData) return null;
     return {
       projectId: apiData.projectId,
-      projectName: apiData.name,
+      name: apiData.name,
       shortDescription: apiData.shortDescription,
-      projectIntroduction: apiData.introduction,
+      introduction: apiData.introduction,
       projectType: apiData.projectType,
       projectLink: apiData.projectLink,
       startDate: apiData.startDate,
       endDate: apiData.endDate,
       generationId: apiData.generationId,
       imageInfos: apiData.imageInfos.map((img) => ({
-        s3Key: img.imageId.toString(),
-        publicUrl: img.imageUrl,
-        order: img.imageOrder,
+        imageId: img.imageId,
+        imageUrl: img.imageUrl,
+        imageOrder: img.imageOrder,
       })),
-      members: apiData.memberInfos.map((m) => ({
+      memberInfos: apiData.memberInfos.map((m) => ({
+        memberId: m.memberId,
         name: m.name,
-        position: m.position as Position,
+        position: m.position,
       })),
     };
   }, [apiData]);
@@ -52,7 +49,7 @@ export const useProjectDetail = (projectId: number) => {
     };
     if (!mappedData) return initialGroups;
 
-    return mappedData.members.reduce((acc, member) => {
+    return mappedData.memberInfos.reduce((acc, member) => {
       const pos = member.position;
       if (acc[pos]) acc[pos].push(member.name);
       return acc;

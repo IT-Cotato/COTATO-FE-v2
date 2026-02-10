@@ -5,8 +5,8 @@ export const ProjectDetailImage = ({data}: {data: ProjectDetail}) => (
   <section className='flex w-full flex-col'>
     {data.imageInfos.map((img) => (
       <Image
-        key={img.s3Key}
-        src={img.publicUrl}
+        key={img.imageId}
+        src={img.imageUrl}
         alt='project-img'
         width={0}
         height={0}
