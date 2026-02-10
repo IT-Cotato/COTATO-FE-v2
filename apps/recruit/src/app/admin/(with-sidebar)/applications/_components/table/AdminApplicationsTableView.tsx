@@ -4,6 +4,7 @@ import {
   APPLICATION_RESULT_OPTIONS,
   ApplicationResultLabel,
   APPLICATIONS_PART_TABS,
+  RESULT_OPTIONS,
 } from '@/constants/admin/admin-applications';
 import {ROUTES} from '@/constants/routes';
 import DefaultFilterIcon from '@repo/ui/assets/icons/filter-default.svg';
@@ -16,7 +17,7 @@ import {
   ApplicationPassStatus,
 } from '@/schemas/admin/admin-applications.schema';
 import {formatKoreanDate} from '@/utils/formatDate';
-import {AdminApplicationsResultFilter} from '@/app/admin/(with-sidebar)/applications/_components/table/AdminApplicationsResultFilter';
+import {CheckboxFilter} from '@repo/ui/components/filter/CheckboxFilter';
 import {useRef} from 'react';
 import {useClickOutside} from '@repo/ui/hooks/useClickOutside';
 import {StatusDropdown} from '@repo/ui/components/dropdown/StatusDropdown';
@@ -92,7 +93,8 @@ export const AdminApplicationsTableView = ({
 
                       {isFilterOpen && (
                         <div className='absolute top-full left-0 z-50 mt-2 w-27 -translate-x-3/4'>
-                          <AdminApplicationsResultFilter
+                          <CheckboxFilter
+                            options={RESULT_OPTIONS}
                             selected={selectedResults}
                             onChange={onFilterChange}
                             onClose={onFilterClose}
