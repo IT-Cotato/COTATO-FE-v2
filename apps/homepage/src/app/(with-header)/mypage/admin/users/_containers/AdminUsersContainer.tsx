@@ -32,7 +32,7 @@ export const AdminUsersContainer = () => {
               'text-body-l cursor-pointer pb-2 font-semibold transition-colors',
               activeTab === value
                 ? 'border-primary text-primary border-b-2'
-                : 'text-neutral-400 hover:text-neutral-600'
+                : 'text-neutral-400'
             )}
             onClick={() => handleTabClick(value)}>
             {label}
