@@ -49,3 +49,16 @@
     background-clip: padding-box;
   }
 }
+
+@utility no-scrollbar {
+  /* Chrome, Safari, Edge */
+  &::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  /* Firefox */
+  scrollbar-width: none !important;
+
+  /* IE and Edge */
+  -ms-overflow-style: none !important;
+}
