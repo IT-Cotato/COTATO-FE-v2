@@ -1,11 +1,13 @@
 import {
   APPLICATION_COLUMNS,
+  APPLICATION_RESULT_CONFIG,
+  APPLICATION_RESULT_OPTIONS,
   ApplicationResultLabel,
   APPLICATIONS_PART_TABS,
 } from '@/constants/admin/admin-applications';
 import {ROUTES} from '@/constants/routes';
-import DefaultFilterIcon from '@/assets/icons/filter-default.svg';
-import FinishFilterIcon from '@/assets/icons/filter-finish.svg';
+import DefaultFilterIcon from '@repo/ui/assets/icons/filter-default.svg';
+import FinishFilterIcon from '@repo/ui/assets/icons/filter-finish.svg';
 import DownArrowIcon from '@/assets/arrow/down-arrow.svg';
 
 import clsx from 'clsx';
@@ -13,11 +15,11 @@ import {
   ApplicantType,
   ApplicationPassStatus,
 } from '@/schemas/admin/admin-applications.schema';
-import {AdminApplicationsResultDropdown} from '@/app/admin/(with-sidebar)/applications/_components/table/AdminApplicationsResultDropdown';
 import {formatKoreanDate} from '@/utils/formatDate';
 import {AdminApplicationsResultFilter} from '@/app/admin/(with-sidebar)/applications/_components/table/AdminApplicationsResultFilter';
 import {useRef} from 'react';
 import {useClickOutside} from '@repo/ui/hooks/useClickOutside';
+import {StatusDropdown} from '@repo/ui/components/dropdown/StatusDropdown';
 
 interface AdminApplicationsTableViewProps {
   items?: ApplicantType[];
@@ -155,12 +157,15 @@ export const AdminApplicationsTableView = ({
             </td>
             <td className='px-3 py-4'>
               <div className='flex items-center justify-center'>
-                <AdminApplicationsResultDropdown
-                  result={app.passStatus}
-                  disabled={isUpdating}
-                  onChange={(nextStatus) =>
-                    onChangePassStatus(app.applicationId, nextStatus)
+                <StatusDropdown
+                  value={app.passStatus ?? 'PENDING'}
+                  options={APPLICATION_RESULT_OPTIONS}
+                  config={APPLICATION_RESULT_CONFIG}
+                  onChange={(value) =>
+                    onChangePassStatus(app.applicationId, value)
                   }
+                  disabled={isUpdating}
+                  ariaLabel='지원 결과 선택'
                 />
               </div>
             </td>
