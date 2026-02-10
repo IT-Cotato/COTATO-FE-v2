@@ -29,9 +29,7 @@ export const getProjectDetail = async (
   projectId: number
 ): Promise<ProjectDetailResponse> => {
   try {
-    const response = await publicAxios.get(
-      `${ENDPOINT.PROJECT.LIST}/${projectId}`
-    );
+    const response = await publicAxios.get(ENDPOINT.PROJECT.DETAIL(projectId));
     return response.data;
   } catch (error) {
     return handleApiError(error);
@@ -47,7 +45,7 @@ export const updateProject = async (
 ) => {
   try {
     const response = await publicAxios.patch(
-      `${ENDPOINT.PROJECT.LIST}/${projectId}`,
+      ENDPOINT.PROJECT.EDIT(projectId),
       data
     );
     return response.data;
@@ -66,4 +64,45 @@ export const createProject = async (data: ProjectRegistration) => {
   } catch (error) {
     return handleApiError(error);
   }
+};
+
+/**
+ * 프로젝트 이미지 PresignedUrl 발급
+ */
+export const getPresignedUrl = async (params: {
+  fileName: string;
+  contentType: string;
+}) => {
+  try {
+    const response = await publicAxios.post(
+      ENDPOINT.PROJECT.PRESIGNED_URL,
+      params
+    );
+    return response.data as {
+      presignedUrl: string;
+      s3Key: string;
+      expireAt: string;
+    };
+  } catch (error) {
+    return handleApiError(error);
+  }
+};
+
+/**
+ * S3로 직접 파일 업로드
+ */
+export const uploadFileToS3 = async (presignedUrl: string, file: File) => {
+  const response = await fetch(presignedUrl, {
+    method: 'PUT',
+    body: file,
+    headers: {
+      'Content-Type': file.type,
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error('S3 업로드 실패');
+  }
+
+  return true;
 };
