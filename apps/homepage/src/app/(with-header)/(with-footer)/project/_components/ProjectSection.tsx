@@ -36,10 +36,11 @@ export const ProjectSection = ({generation, activity}: ProjectSectionProps) => {
     router.push(`${pathname}?${params.toString()}`);
   };
 
-  if (isLoading)
+  if (isLoading) {
     return (
       <div className='flex min-h-100 items-center justify-center'>Spinner</div>
     );
+  }
 
   return (
     <div className='flex w-full flex-col items-center gap-10'>

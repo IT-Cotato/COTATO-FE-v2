@@ -1,13 +1,13 @@
 'use client';
 
 import {useSearchParams, useRouter, usePathname} from 'next/navigation';
+import {useCallback, useMemo} from 'react';
 import {ProjectSection} from './ProjectSection';
 import {Dropdown} from '@/components/dropdown/Dropdown';
 import {Button} from '@repo/ui/components/buttons/Button';
 import {ROUTES} from '@/constants/routes';
 import {ACTIVITY_MAP} from '@/constants/project/project-activity';
 import {useGenerationQuery} from '@/hooks/queries/useGeneration.queries';
-import {useCallback} from 'react';
 
 export const ProjectContainer = () => {
   const router = useRouter();
@@ -15,14 +15,20 @@ export const ProjectContainer = () => {
   const searchParams = useSearchParams();
 
   const {data: generations = [], isLoading} = useGenerationQuery();
-  const activities = Object.values(ACTIVITY_MAP);
 
   const genParam = searchParams.get('gen');
-  const currentGen =
-    genParam ||
-    (generations.length > 0 ? generations[0].generationId.toString() : null);
+  const actParam = searchParams.get('act') || 'demoday';
 
-  const actParam = searchParams.get('act') || 'DEMODAY';
+  const currentGen = useMemo(() => {
+    if (genParam) return genParam;
+    return generations.length > 0
+      ? generations[0].generationId.toString()
+      : null;
+  }, [genParam, generations]);
+
+  const selectedGenLabel = currentGen ? `${currentGen}기` : '기수 선택';
+  const selectedActLabel = ACTIVITY_MAP[actParam] || '데모데이';
+  const activityLabels = useMemo(() => Object.values(ACTIVITY_MAP), []);
 
   const updateQuery = useCallback(
     (key: 'gen' | 'act', value: string) => {
@@ -34,14 +40,11 @@ export const ProjectContainer = () => {
     [searchParams, pathname, router]
   );
 
-  const selectedGenLabel = currentGen ? `${currentGen}기` : '기수 선택';
-  const selectedActLabel =
-    ACTIVITY_MAP[actParam as keyof typeof ACTIVITY_MAP] || '데모데이';
-
-  if (isLoading)
+  if (isLoading) {
     return (
       <div className='flex min-h-100 items-center justify-center'>Spinner</div>
     );
+  }
 
   return (
     <section className='flex w-full min-w-275 flex-col gap-7.5 py-7.5'>
@@ -59,11 +62,10 @@ export const ProjectContainer = () => {
           <Dropdown
             placeholder='활동'
             value={selectedActLabel}
-            options={activities}
+            options={activityLabels}
             onSelect={(label) => {
               const code = Object.keys(ACTIVITY_MAP).find(
-                (key) =>
-                  ACTIVITY_MAP[key as keyof typeof ACTIVITY_MAP] === label
+                (key) => ACTIVITY_MAP[key] === label
               );
               if (code) updateQuery('act', code);
             }}
@@ -77,7 +79,7 @@ export const ProjectContainer = () => {
           onClick={() => router.push(ROUTES.ADD_PROJECT())}
         />
       </div>
-      {generations.length === 0 && !isLoading ? (
+      {generations.length === 0 ? (
         <div className='flex min-h-100 w-full items-center justify-center text-neutral-400'>
           등록된 기수 정보가 없습니다.
         </div>
