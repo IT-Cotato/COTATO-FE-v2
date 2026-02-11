@@ -27,8 +27,11 @@ export const RecruitmentActive = () => {
     useApplicationStatusQuery(isAuthenticated);
   const {mutate: startApplication, isPending: isStarting} =
     useStartApplicationMutation();
-  const {data: schedule, isLoading: isScheduleLoading} =
-    useRecruitmentScheduleQuery();
+  const {
+    data: schedule,
+    isLoading: isScheduleLoading,
+    isError: isScheduleError,
+  } = useRecruitmentScheduleQuery();
   const hasSubmitted = applicationStatus?.isSubmitted ?? false;
 
   const now = new Date();
@@ -131,13 +134,15 @@ export const RecruitmentActive = () => {
               label={
                 isStatusLoading || isScheduleLoading
                   ? '로딩 중...'
-                  : !isInPeriod
-                    ? isAfterEnd
-                      ? '모집 마감'
-                      : '모집 예정'
-                    : hasSubmitted
-                      ? '제출 완료'
-                      : '지원하기'
+                  : isScheduleError
+                    ? '오류 발생'
+                    : !isInPeriod
+                      ? isAfterEnd
+                        ? '모집 마감'
+                        : '모집 예정'
+                      : hasSubmitted
+                        ? '제출 완료'
+                        : '지원하기'
               }
               onClick={handleApplyClick}
               disabled={
