@@ -1,7 +1,7 @@
 'use client';
 
 import {ReactNode} from 'react';
-import Close from '@/assets/modal/close.svg';
+import Close from '@repo/ui/assets/modal/close.svg';
 import clsx from 'clsx';
 import {FocusTrap} from 'focus-trap-react';
 
@@ -58,7 +58,8 @@ export const Modal = ({
           <div
             className={clsx(
               'flex flex-col items-center justify-center text-center',
-              noContent ? 'gap-26.75' : 'gap-7.5',
+              !contentWrapperClassName?.includes('gap-') &&
+                (noContent ? 'gap-26.75' : 'gap-7.5'),
               contentWrapperClassName
             )}>
             <h4

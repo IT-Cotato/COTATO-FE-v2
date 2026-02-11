@@ -1,5 +1,7 @@
 'use client';
 
+import {useRouter} from 'next/navigation';
+import {ROUTES} from '@/constants/routes';
 import {FormInput} from '@repo/ui/components/form/FormInput';
 import {FormLink} from '@repo/ui/components/form/FormLink';
 import {PeriodField} from '@/app/(with-header)/(with-footer)/project/add-project/_components/PeriodField';
@@ -13,10 +15,14 @@ import {useProjectForm} from '../_hooks/useProjectForm';
 import {formatDate} from '@repo/ui/utils/date';
 import {ProjectDetail, Position} from '@/schemas/project/project.schema';
 import {TeamState} from '@/schemas/project/project-type';
+import {
+  useCreateProjectMutation,
+  useUpdateProjectMutation,
+} from '@/hooks/mutations/useProject.mutation';
 
 interface AddProjectFormProps {
   generationId: number;
-  projectType: string;
+  projectType: 'DEMODAY' | 'HACKATHON';
   initialData?: ProjectDetail;
 }
 
@@ -25,24 +31,30 @@ export const AddProjectForm = ({
   projectType,
   initialData,
 }: AddProjectFormProps) => {
+  const router = useRouter();
   const isEdit = !!initialData;
 
+  const {mutate: updateProject} = useUpdateProjectMutation(
+    initialData?.projectId || 0
+  );
+  const {mutate: createProject} = useCreateProjectMutation();
+
   const formatInitialMembers = (
-    members: {name: string; position: Position}[]
+    members: {name: string; position: Position}[] | undefined
   ): TeamState => {
-    const result: TeamState = {PM: [], DE: [], FE: [], BE: []};
+    const result: TeamState = {PM: [], DESIGN: [], FE: [], BE: []};
+    if (!members) return result;
     members.forEach((m) => {
       if (result[m.position]) result[m.position].push(m.name);
     });
     return result;
   };
 
-  // 팀 멤버 초기값 설정
   const {teamMembers, addMember, removeMember, updateMemberName} =
     useTeamMembers(
-      initialData
-        ? formatInitialMembers(initialData.members)
-        : {PM: ['감직이'], DE: ['감직이'], FE: ['감직이'], BE: ['감직이']}
+      initialData?.memberInfos
+        ? formatInitialMembers(initialData.memberInfos)
+        : {PM: ['감직이'], DESIGN: ['감직이'], FE: ['감직이'], BE: ['감직이']}
     );
 
   const {states, setters, isFormValid} = useProjectForm(
@@ -56,26 +68,32 @@ export const AddProjectForm = ({
     const requestBody = {
       generationId,
       projectType,
-      projectName: states.projectName,
+      projectName: states.name,
       shortDescription: states.shortDescription,
       projectLink: states.projectLink,
-      startDate: formatDate(states.startDate),
-      endDate: formatDate(states.endDate),
-      projectIntroduction: states.projectIntroduction,
+      startDate: formatDate(states.startDate) ?? '',
+      endDate: formatDate(states.endDate) ?? '',
+      projectIntroduction: states.introduction,
       members: Object.entries(teamMembers).flatMap(([role, names]) =>
         names.map((name) => ({name, position: role as Position}))
       ),
-      imageInfos: states.uploadedImages.map((img, index) => ({
-        s3Key: img.s3Key,
-        publicUrl: img.publicUrl,
-        order: index + 1, // 추후 api 명세에 맞춰서 index를 그대로 보낼 수도 있음
-      })),
+      imageInfos: states.uploadedImages.map(
+        (img: {s3Key: string}, index: number) => ({
+          s3Key: img.s3Key,
+          order: index,
+        })
+      ),
     };
 
     if (isEdit) {
-      console.log('수정 API 호출:', requestBody);
+      updateProject(requestBody, {
+        onSuccess: () =>
+          router.push(ROUTES.PROJECT_DETAIL(initialData?.projectId || 0)),
+      });
     } else {
-      console.log('등록 API 호출:', requestBody);
+      createProject(requestBody, {
+        onSuccess: () => router.push(ROUTES.PROJECT),
+      });
     }
   };
 
@@ -83,8 +101,8 @@ export const AddProjectForm = ({
     <section className='flex flex-col items-end gap-5 self-stretch'>
       <FormField label='프로젝트 명'>
         <FormInput
-          value={states.projectName}
-          onChange={(e) => setters.setProjectName(e.target.value)}
+          value={states.name}
+          onChange={(e) => setters.setName(e.target.value)}
           placeholder='프로젝트 명을 작성해주세요.'
         />
       </FormField>
@@ -100,7 +118,7 @@ export const AddProjectForm = ({
           value={[states.projectLink]}
           onChange={(links) => setters.setProjectLink(links[0] || '')}
           placeholder='링크를 첨부해주세요.'
-          hideInnerLabel={true}
+          hideInnerLabel
         />
       </FormField>
       <FormField label='기간'>
@@ -119,8 +137,8 @@ export const AddProjectForm = ({
       />
       <FormField variant='column' label='프로젝트 설명'>
         <FormTextarea
-          value={states.projectIntroduction}
-          onChange={(e) => setters.setProjectIntroduction(e.target.value)}
+          value={states.introduction}
+          onChange={(e) => setters.setIntroduction(e.target.value)}
           isProject
           placeholder='프로젝트 설명을 입력해주세요.'
         />

@@ -51,7 +51,7 @@ export const ProjectDetailInfo = ({
         프로젝트 소개
       </div>
       <div className='text-h5 custom-scrollbar max-h-42.75 flex-1 overflow-y-auto rounded-[10px] bg-neutral-50 px-3.5 py-2.5 text-neutral-600'>
-        {data.projectIntroduction}
+        {data.introduction}
       </div>
     </div>
   </section>

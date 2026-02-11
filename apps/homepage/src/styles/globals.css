@@ -46,4 +46,8 @@
   .shadow-card {
     box-shadow: 8px 3px 22px 10px rgba(150, 150, 150, 0.11);
   }
+
+  .shadow-mem-card {
+    box-shadow: 0 0 40px 0 rgba(0, 0, 0, 0.08);
+  }
 }

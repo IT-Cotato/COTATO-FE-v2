@@ -18,4 +18,13 @@ export const ENDPOINT = {
     LOGOUT: '/v1/api/auth/logout',
     EMAIL: '/v1/api/auth/email',
   },
-};
+
+  PROJECT: {
+    LIST: '/v1/api/projects',
+    DETAIL: (projectId: number) => `/v1/api/projects/${projectId}`,
+    CREATE: '/v1/api/admin/projects',
+    EDIT: (projectId: number) => `/v1/api/admin/projects/${projectId}`,
+    PRESIGNED_URL: '/v1/api/admin/projects/presigned-url',
+  },
+  GENERATIONS: '/v1/api/generations',
+} as const;
