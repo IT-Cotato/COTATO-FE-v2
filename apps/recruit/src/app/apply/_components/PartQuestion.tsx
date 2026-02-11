@@ -230,7 +230,10 @@ export const PartQuestion = ({
                         }
                         maxCount={1}
                         maxSize={50 * 1024 * 1024}
-                      />
+                      />  
+                  <p className='text-body-l text-alert'>
+                    * 파트 변경 시 업로드한 파일이 초기화됩니다.
+                  </p>
                     </div>
                   );
                 })()}

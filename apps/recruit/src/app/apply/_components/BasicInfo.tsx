@@ -193,7 +193,7 @@ export const BasicInfo = ({
                   required
                 />
                 {name === 'part' && (
-                  <p className='text-body-l mt-2 text-neutral-500'>
+                  <p className='text-body-l mt-2 text-alert'>
                     * 파트 변경 시 업로드한 파일이 초기화됩니다.
                   </p>
                 )}
