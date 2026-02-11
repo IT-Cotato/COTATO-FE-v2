@@ -270,6 +270,7 @@ export const EtcInfo = ({
           type='button'
           onClick={onSave}
         />
+        <p className='text-alert text-center -mt-4.5'>  * 제출 후 마이페이지에서 확인 가능합니다.</p>
         {showSaveSuccess && (
           <p className='text-primary text-center'>저장이 완료되었습니다</p>
         )}
