@@ -27,7 +27,13 @@ export const OnboardingFormInput = ({
         value={value}
         type={type}
         onChange={(e) => onChange(e.target.value)}
-        className='placeholder:text-body-l focus:ring-primary rounded-[9px] bg-neutral-800 px-6.25 py-4.75 text-neutral-100 placeholder:text-neutral-100 focus:ring-1'></input>
+        className={clsx(
+          'rounded-[9px] bg-neutral-800 px-6.25 py-4.75 text-neutral-100 transition-shadow outline-none',
+          'placeholder:text-body-l placeholder:text-neutral-400',
+          'focus:ring-1',
+          error ? 'focus:ring-alert' : 'focus:ring-primary'
+        )}
+      />
       {error && <span className='text-body-l text-alert'>{error}</span>}
     </div>
   );
