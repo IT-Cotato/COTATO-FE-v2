@@ -11,7 +11,8 @@ import {ProjectDeleteModal} from '@/app/(with-header)/(with-footer)/project/[pro
 
 export const ProjectDetailHeader = ({data}: {data: ProjectDetail}) => {
   const router = useRouter();
-  const {mutate: deleteProject} = useDeleteProjectMutation();
+  const {mutate: deleteProject, isPending: isDeleting} =
+    useDeleteProjectMutation();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleEdit = () => {
@@ -23,6 +24,7 @@ export const ProjectDetailHeader = ({data}: {data: ProjectDetail}) => {
   };
 
   const handleConfirmDelete = () => {
+    if (isDeleting) return;
     deleteProject(data.projectId, {
       onSuccess: () => {
         setIsModalOpen(false);

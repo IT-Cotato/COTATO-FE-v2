@@ -1,3 +1,4 @@
+import {getJosa} from '@/utils/getJosa';
 import {FullButton} from '@repo/ui/components/buttons/FullButton';
 import {Modal} from '@repo/ui/components/modal/Modal';
 
@@ -18,7 +19,7 @@ export const ProjectDeleteModal = ({
     <Modal
       isOpen={isOpen}
       onClose={onClose}
-      title={`${projectName}을 삭제하시겠습니까?`}
+      title={`${projectName}${getJosa(projectName, '을/를')} 삭제하시겠습니까?`}
       titleStyle='text-h4 text-neutral-800'
       content='확인 버튼 클릭 시 프로젝트가 영구 삭제됩니다.'
       actions={
