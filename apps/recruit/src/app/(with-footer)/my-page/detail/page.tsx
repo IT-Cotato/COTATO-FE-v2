@@ -1,4 +1,4 @@
-import {MyPageApplicationDetailContainer} from '@/app/(with-footer)/my-page/[id]/_containers/MyPageApplicationDetailContainer';
+import {MyPageApplicationDetailContainer} from '@/app/(with-footer)/my-page/detail/_containers/MyPageApplicationDetailContainer';
 
 export default function MyPageApplicationDetailPage() {
   return (
