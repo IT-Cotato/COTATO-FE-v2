@@ -9,6 +9,7 @@ if (!baseUrl) {
 export const API_BASE_URL = baseUrl;
 
 export const ENDPOINT = {
+  /** 인증 관련 API */
   AUTH: {
     LOGIN: '/v1/api/auth/login',
     JOIN: '/v1/api/auth/join',
@@ -19,6 +20,13 @@ export const ENDPOINT = {
     EMAIL: '/v1/api/auth/email',
   },
 
+  /** 회원 관련 API */
+  MEMBERS: {
+    INFO: '/v1/api/members/info',
+    UPDATE_PASSWORD: '/v1/api/members/update/password',
+  },
+
+  /** */
   PROJECT: {
     LIST: '/v1/api/projects',
     DETAIL: (projectId: number) => `/v1/api/projects/${projectId}`,
