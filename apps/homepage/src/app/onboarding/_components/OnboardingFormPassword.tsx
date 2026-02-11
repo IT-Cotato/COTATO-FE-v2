@@ -9,6 +9,7 @@ interface OnboardingFormPasswordProps {
   onChange: (value: string) => void;
   onTogglePasswordVisibility: () => void;
   error?: string;
+  placeholder?: string;
 }
 
 export const OnboardingFormPassword = ({
@@ -18,13 +19,14 @@ export const OnboardingFormPassword = ({
   onChange,
   onTogglePasswordVisibility,
   error,
+  placeholder,
 }: OnboardingFormPasswordProps) => {
   return (
     <div className='flex flex-col gap-3'>
       <label className='text-h5 text-neutral-100'>{label}</label>
       <div className='relative w-full'>
         <input
-          placeholder='Password'
+          placeholder={placeholder || 'Password'}
           value={value}
           onChange={(e) => onChange(e.target.value)}
           type={showPassword ? 'text' : 'password'}
