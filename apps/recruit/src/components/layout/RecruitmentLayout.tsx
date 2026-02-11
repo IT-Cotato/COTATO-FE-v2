@@ -52,7 +52,7 @@ export default function RecruitmentLayout({
       <div
         className={clsx(
           'relative flex w-360 flex-col items-center justify-center',
-          bottomBannerBgImage && 'mb-59.75'
+          bottomBannerBgImage && 'mb-[16.6vw]'
         )}>
         <h1
           className='text-h1 mb-7.5 bg-clip-text text-center text-transparent'
@@ -93,14 +93,14 @@ export default function RecruitmentLayout({
 
       {/* 하단 배경 이미지 (props로 받은 bottomBannerBgImage 사용) */}
       {bottomBannerBgImage && (
-        <div className='absolute bottom-0 h-59.75 w-full'>
+        <div className='absolute bottom-0 w-full'>
           <Image
             src={bottomBannerBgImage}
             alt=''
             aria-hidden={true}
             draggable={false}
-            fill
-            className='object-cover object-bottom'
+            className='h-auto w-full'
+            sizes='100vw'
           />
         </div>
       )}
