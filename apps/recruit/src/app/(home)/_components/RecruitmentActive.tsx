@@ -27,28 +27,21 @@ export const RecruitmentActive = () => {
     useApplicationStatusQuery(isAuthenticated);
   const {mutate: startApplication, isPending: isStarting} =
     useStartApplicationMutation();
-  const {data: schedule} = useRecruitmentScheduleQuery();
+  const {data: schedule, isLoading: isScheduleLoading} =
+    useRecruitmentScheduleQuery();
   const hasSubmitted = applicationStatus?.isSubmitted ?? false;
 
-  // 모집 기간 체크 함수
-  const isWithinRecruitmentPeriod = () => {
-    if (!schedule?.recruitmentStart || !schedule?.recruitmentEnd) {
-      return false; // 일정 정보가 없으면 지원 불가
-    }
+  const now = new Date();
+  const start = schedule?.recruitmentStart
+    ? new Date(schedule.recruitmentStart)
+    : null;
+  const end = schedule?.recruitmentEnd
+    ? new Date(schedule.recruitmentEnd)
+    : null;
 
-    const now = new Date();
-    const start = new Date(schedule.recruitmentStart);
-    const end = new Date(schedule.recruitmentEnd);
-
-    return now >= start && now <= end;
-  };
-
-  const isBeforeStart =
-    schedule?.recruitmentStart &&
-    new Date() < new Date(schedule.recruitmentStart);
-  const isAfterEnd =
-    schedule?.recruitmentEnd && new Date() > new Date(schedule.recruitmentEnd);
-  const isInPeriod = isWithinRecruitmentPeriod();
+  const isBeforeStart = start != null && now < start;
+  const isAfterEnd = end != null && now > end;
+  const isInPeriod = start != null && end != null && now >= start && now <= end;
 
   const handleApplyClick = () => {
     // 모집 기간 체크
@@ -136,7 +129,7 @@ export const RecruitmentActive = () => {
           <div className='flex justify-end'>
             <Button
               label={
-                isStatusLoading
+                isStatusLoading || isScheduleLoading
                   ? '로딩 중...'
                   : !isInPeriod
                     ? isAfterEnd
@@ -148,7 +141,11 @@ export const RecruitmentActive = () => {
               }
               onClick={handleApplyClick}
               disabled={
-                hasSubmitted || isStarting || isStatusLoading || !isInPeriod
+                hasSubmitted ||
+                isStarting ||
+                isStatusLoading ||
+                !isInPeriod ||
+                isScheduleLoading
               }
             />
           </div>
