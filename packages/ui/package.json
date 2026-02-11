@@ -20,8 +20,6 @@
     "dev:assets": "cpx \"src/assets/**/*\" dist/assets --watch"
   },
   "devDependencies": {
-    "react": "^19.2.0",
-    "react-dom": "^19.2.0",
     "@repo/eslint-config": "workspace:*",
     "@repo/tailwind-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
@@ -33,11 +31,17 @@
     "autoprefixer": "^10.4.20",
     "cpx": "^1.5.0",
     "eslint": "^9.39.1",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
     "tailwindcss": "^4.1.5",
     "typescript": "5.9.2"
   },
   "peerDependencies": {
     "react": "^19.2.0",
     "react-dom": "^19.2.0"
+  },
+  "dependencies": {
+    "focus-trap": "^8.0.0",
+    "focus-trap-react": "^11.0.4"
   }
 }
