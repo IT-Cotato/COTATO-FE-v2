@@ -59,6 +59,7 @@ export const FormTextarea = forwardRef<HTMLTextAreaElement, FormTextareaProps>(
                 ? 'h-24 min-h-24 px-4 py-3.5'
                 : 'min-h-54.5 px-4.75 py-4.5',
               error && formFieldStyles.error,
+              error && formFieldStyles.errorFocus,
               props.readOnly && formFieldStyles.readOnlyTextarea,
               isProject && 'text-h5 placeholder:text-neutral-400',
               className
