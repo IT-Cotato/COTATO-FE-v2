@@ -13,7 +13,7 @@ export default function WithFooterLayout({
       <ConditionalAuthProvider>
         <main className='flex-1'>{children}</main>
       </ConditionalAuthProvider>
-      <Footer />
+      <Footer isRecruit={true} />
     </Providers>
   );
 }
