@@ -37,12 +37,20 @@ export const AdminUsersTableContainer = ({
   const currentPage = pageParam ? Number(pageParam) : 1;
   const isLoading = false;
 
+  /**
+   * 페이지 변경 핸들러
+   * @param page - 이동할 페이지 번호
+   */
   const handleUpdatePage = (page: number) => {
     const params = new URLSearchParams(searchParams.toString());
     params.set('page', String(page));
     router.push(`?${params.toString()}`);
   };
 
+  /**
+   * 멤버 상태 필터 변경 핸들러
+   * @param labels - 선택된 상태 라벨 배열
+   */
   const handleFilterChange = (labels: MemberStatusKey[]) => {
     const params = new URLSearchParams(searchParams.toString());
     params.delete('status');
