@@ -6,21 +6,30 @@ import {Button} from '@repo/ui/components/buttons/Button';
 import {useRouter} from 'next/navigation';
 import {ROUTES} from '@/constants/routes';
 import {useDeleteProjectMutation} from '@/hooks/mutations/useProject.mutation';
+import {useState} from 'react';
+import {ProjectDeleteModal} from '@/app/(with-header)/(with-footer)/project/[projectId]/_components/ProjectDeleteModal';
 
 export const ProjectDetailHeader = ({data}: {data: ProjectDetail}) => {
   const router = useRouter();
   const {mutate: deleteProject} = useDeleteProjectMutation();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleEdit = () => {
     router.push(ROUTES.ADD_PROJECT(data.projectId));
   };
 
-  const handleDelete = () => {
-    if (!window.confirm('정말 이 프로젝트를 삭제하시겠습니까?')) return;
+  const handleDeleteClick = () => {
+    setIsModalOpen(true);
+  };
 
+  const handleConfirmDelete = () => {
     deleteProject(data.projectId, {
       onSuccess: () => {
+        setIsModalOpen(false);
         router.push(ROUTES.PROJECT);
+      },
+      onError: () => {
+        setIsModalOpen(false);
       },
     });
   };
@@ -77,9 +86,15 @@ export const ProjectDetailHeader = ({data}: {data: ProjectDetail}) => {
           height={40}
           backgroundColor='alert'
           labelTypo='body_l_sb'
-          onClick={handleDelete}
+          onClick={handleDeleteClick}
         />
       </div>
+      <ProjectDeleteModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onConfirm={handleConfirmDelete}
+        projectName={data.name}
+      />
     </header>
   );
 };
