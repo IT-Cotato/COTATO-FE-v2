@@ -30,7 +30,37 @@ export const RecruitmentActive = () => {
   const {data: schedule} = useRecruitmentScheduleQuery();
   const hasSubmitted = applicationStatus?.isSubmitted ?? false;
 
+  // 모집 기간 체크 함수
+  const isWithinRecruitmentPeriod = () => {
+    if (!schedule?.recruitmentStart || !schedule?.recruitmentEnd) {
+      return false; // 일정 정보가 없으면 지원 불가
+    }
+
+    const now = new Date();
+    const start = new Date(schedule.recruitmentStart);
+    const end = new Date(schedule.recruitmentEnd);
+
+    return now >= start && now <= end;
+  };
+
+  const isBeforeStart =
+    schedule?.recruitmentStart &&
+    new Date() < new Date(schedule.recruitmentStart);
+  const isAfterEnd =
+    schedule?.recruitmentEnd && new Date() > new Date(schedule.recruitmentEnd);
+  const isInPeriod = isWithinRecruitmentPeriod();
+
   const handleApplyClick = () => {
+    // 모집 기간 체크
+    if (!isInPeriod) {
+      if (isBeforeStart) {
+        alert('아직 모집 기간이 아닙니다.');
+      } else if (isAfterEnd) {
+        alert('모집이 마감되었습니다.');
+      }
+      return;
+    }
+
     if (!isAuthenticated) {
       setIsModalOpen(true);
       return;
@@ -50,7 +80,7 @@ export const RecruitmentActive = () => {
           router.push(`${ROUTES.APPLY}?id=${data.applicationId}`);
         },
         onError: () => {
-          alert('지원서 생성에 실패했습니다. 다시 시도해주세요.');
+          alert('지원서 생성에 실패했습니다. 잠시 후 다시 시도해주세요.');
         },
       });
     }
@@ -108,12 +138,18 @@ export const RecruitmentActive = () => {
               label={
                 isStatusLoading
                   ? '로딩 중...'
-                  : hasSubmitted
-                    ? '제출 완료'
-                    : '지원하기'
+                  : !isInPeriod
+                    ? isAfterEnd
+                      ? '모집 마감'
+                      : '모집 예정'
+                    : hasSubmitted
+                      ? '제출 완료'
+                      : '지원하기'
               }
               onClick={handleApplyClick}
-              disabled={hasSubmitted || isStarting || isStatusLoading}
+              disabled={
+                hasSubmitted || isStarting || isStatusLoading || !isInPeriod
+              }
             />
           </div>
         </div>
