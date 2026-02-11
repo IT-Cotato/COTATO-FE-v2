@@ -1,21 +1,23 @@
 import {AttendanceResult} from '@/schemas/mypage-mem/attendance.schema';
 
 export const ATTENDANCE_LABEL = {
-  PRESENT: {label: '출석', className: 'bg-orange-500'},
-  LATE: {label: '지각', className: 'bg-brown-500'},
-  ABSENT: {label: '결석', className: 'bg-gray-500'},
-  UNAUTHORIZED_ABSENT: {label: '무단결석', className: 'bg-red-500'},
+  PRESENT: {label: '출석', className: 'bg-chip'},
+  LATE: {label: '지각', className: 'bg-disabled'},
+  ABSENT: {label: '결석', className: 'bg-alert'},
+  UNAUTHORIZED_ABSENT: {label: '무단결석', className: 'bg-neutral-600'},
 } as const;
 
 export const POINT_LABEL = {
-  BONUS: {label: '상점', className: 'bg-green-500'},
-  MINUS: {label: '벌점', className: 'bg-red-500'},
+  TOTAL_POINT: {label: '총합', className: 'bg-primary'},
+  BONUS: {label: '상점', className: 'bg-chip'},
+  MINUS: {label: '벌점', className: 'bg-alert'},
+  BEER_NETWORKING: {label: '비어 네트워킹', className: 'bg-secondary'},
 } as const;
 
 export const ATTENDANCE_STATUS = {
   PRESENT: {
     label: '출석',
-    className: 'bg-primary',
+    className: 'bg-chip',
   },
   LATE: {
     label: '지각',
@@ -23,11 +25,11 @@ export const ATTENDANCE_STATUS = {
   },
   ABSENT: {
     label: '결석',
-    className: 'bg-neutral-500',
+    className: 'bg-alert',
   },
   UNAUTHORIZED_ABSENT: {
     label: '무단결석',
-    className: 'bg-alert',
+    className: 'bg-neutral-600',
   },
 } as const satisfies Record<
   AttendanceResult,
@@ -35,12 +37,20 @@ export const ATTENDANCE_STATUS = {
 >;
 
 export const POINT_STATUS = {
+  TOTAL_POINT: {
+    label: '총합',
+    className: 'bg-primary',
+  },
   BONUS: {
     label: '상점',
-    className: 'bg-[#57B34D]',
+    className: 'bg-chip',
   },
   MINUS: {
     label: '벌점',
     className: 'bg-alert',
+  },
+  BEER_NETWORKING: {
+    label: '비어 네트워킹',
+    className: 'bg-secondary',
   },
 } as const;

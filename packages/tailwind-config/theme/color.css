@@ -38,6 +38,8 @@
 
   --color-white: #ffffff;
 
+  --color-chip: #68ca3a;
+
   /* z-index */
   --z-index-header: 102;
   --z-index-dropdown: 99;
