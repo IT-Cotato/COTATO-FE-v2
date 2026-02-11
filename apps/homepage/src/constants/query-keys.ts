@@ -7,4 +7,7 @@ export const QUERY_KEYS = {
     DETAIL: (projectId: number) => ['projects', 'detail', projectId],
   },
   GENERATIONS: ['generations'],
+  MEMBERS: {
+    INFO: ['members-info'],
+  },
 } as const;
