@@ -14,7 +14,7 @@ import {EtcFieldConfig} from '@/schemas/apply/apply-type';
 import {ApplyFormData} from '@/schemas/apply/apply-schema';
 import {useGetEtcQuestionsQuery} from '@/hooks/queries/useApply.query';
 import {StepIndicator} from '@/components/navigation/StepIndicator';
-import {Spinner} from '@/components/ui/Spinner';
+import {Spinner} from '@repo/ui/components/spinner/Spinner';
 import {formFieldStyles} from '@repo/ui/components/form/form.styles';
 
 export const EtcInfo = ({

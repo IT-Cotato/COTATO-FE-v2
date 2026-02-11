@@ -4,7 +4,7 @@ import {ApplicationQuestionsEdit} from '@/app/admin/(with-sidebar)/application-e
 import {ApplicationQuestionsView} from '@/app/admin/(with-sidebar)/application-edit/_components/questions/ApplicationQuestionsView';
 import {AdminApplicationQuestionsTabContainer} from '@/app/admin/(with-sidebar)/application-edit/_containers/AdminApplicationQuestionsTabContainer';
 import {Button} from '@repo/ui/components/buttons/Button';
-import {Spinner} from '@/components/ui/Spinner';
+import {Spinner} from '@repo/ui/components/spinner/Spinner';
 import {SuspenseWrapper} from '@/components/wrappers/SuspenseWrapper';
 import {useAdminApplicationQuestionsMutation} from '@/hooks/mutations/useAdminApplicationQuestions.mutation';
 import {useAdminApplicationQuestionsQuery} from '@/hooks/queries/useAdminApplicationQuestions.query';

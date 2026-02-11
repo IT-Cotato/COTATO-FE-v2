@@ -1,30 +1,34 @@
 'use client';
 
 import {useParams} from 'next/navigation';
-import {PROJECT_DETAIL_MOCK} from '@/mocks/project/mock-project';
-import {Position, ProjectDetail} from '@/schemas/project/project.schema';
-import {ProjectDetailHeader} from '@/app/(with-header)/(with-footer)/project/[projectId]/_components/ProjectDetailHeader';
-import {ProjectDetailInfo} from '@/app/(with-header)/(with-footer)/project/[projectId]/_components/ProjectDetailInfo';
-import {ProjectDetailImage} from '@/app/(with-header)/(with-footer)/project/[projectId]/_components/ProjectDetailImage';
+import {ProjectDetailHeader} from '../_components/ProjectDetailHeader';
+import {ProjectDetailInfo} from '../_components/ProjectDetailInfo';
+import {ProjectDetailImage} from '../_components/ProjectDetailImage';
+import {Spinner} from '@repo/ui/components/spinner/Spinner';
+import {useProjectDetail} from '@/app/(with-header)/(with-footer)/project/[projectId]/_hooks/useProjectDetail';
 
 export const ProjectDetailContainer = () => {
   const params = useParams();
+  const projectId = Number(params?.projectId);
 
-  const projectId = params?.projectId;
-  const data = (PROJECT_DETAIL_MOCK[Number(projectId)] ||
-    PROJECT_DETAIL_MOCK[1]) as ProjectDetail;
+  const {data, groupedMembers, positions, isLoading, isError} =
+    useProjectDetail(projectId);
 
-  const groupedMembers = data.members.reduce(
-    (acc, member) => {
-      const pos = member.position;
-      if (!acc[pos]) acc[pos] = [];
-      acc[pos].push(member.name);
-      return acc;
-    },
-    {PM: [], DE: [], FE: [], BE: []} as Record<Position, string[]>
-  );
+  if (isLoading) {
+    return (
+      <div className='flex min-h-100 items-center justify-center'>
+        <Spinner />
+      </div>
+    );
+  }
 
-  const positions: Position[] = ['PM', 'DE', 'FE', 'BE'];
+  if (isError || !data) {
+    return (
+      <div className='flex min-h-100 items-center justify-center text-neutral-400'>
+        정보를 불러올 수 없습니다.
+      </div>
+    );
+  }
 
   return (
     <main className='flex w-275 flex-col py-7.5'>

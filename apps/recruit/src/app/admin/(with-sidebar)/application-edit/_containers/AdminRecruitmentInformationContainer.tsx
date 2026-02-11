@@ -4,7 +4,7 @@ import {GenerationDropdown} from '@/components/dropdown/GenerationDropdown';
 import {Button} from '@repo/ui/components/buttons/Button';
 import {useRouter} from 'next/navigation';
 import {useEffect, useState} from 'react';
-import {Spinner} from '@/components/ui/Spinner';
+import {Spinner} from '@repo/ui/components/spinner/Spinner';
 import {useAdminRecruitmentInformationsQuery} from '@/hooks/queries/useAdminRecruitmentInformations.query';
 import {useAdminRecruitmentInformationsMutation} from '@/hooks/mutations/useAdminRecruitmentInformations.mutation';
 import {RecruitmentInformationType} from '@/schemas/admin/admin-recruitment-information.schema';

@@ -1,5 +1,6 @@
 import {useState, useEffect} from 'react';
 import XIcon from '@/assets/cancel/cancel.svg';
+import {POSITION_LABEL} from '@/constants/project/project-detail';
 
 export const MemberChip = ({
   name,

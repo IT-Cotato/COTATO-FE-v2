@@ -13,7 +13,7 @@ import {
 import {useUploadFile} from '@/hooks/mutations/useApply.mutation';
 import {PartType} from '@/schemas/admin/admin-application-questions.schema';
 import {ApplyFormData} from '@/schemas/apply/apply-schema';
-import {Spinner} from '@/components/ui/Spinner';
+import {Spinner} from '@repo/ui/components/spinner/Spinner';
 import {StepIndicator} from '@/components/navigation/StepIndicator';
 import {PART_TABS} from '@/constants/common/part';
 import {FormFile} from '@repo/ui/components/form/FormFile';

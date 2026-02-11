@@ -1,7 +1,7 @@
 'use client';
 
-import {Modal} from '@/components/modal/Modal';
 import {GoogleLoginButton} from '@/components/button/GoogleLoginButton';
+import {Modal} from '@repo/ui/components/modal/Modal';
 
 interface LoginModalProps {
   title: string;

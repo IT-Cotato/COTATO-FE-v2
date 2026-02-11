@@ -8,7 +8,7 @@ import {useSearchParams} from 'next/navigation';
 import {useAdminApplicationsQuery} from '@/hooks/queries/useAdminApplications.query';
 import {useEffect} from 'react';
 import {AdminApplicationsInformation} from '@/app/admin/(with-sidebar)/applications/_components/info/AdminApplicationsInformation';
-import {Spinner} from '@/components/ui/Spinner';
+import {Spinner} from '@repo/ui/components/spinner/Spinner';
 import {useGenerationStore} from '@/store/useGenerationStore';
 import {useAdminGenerationsQuery} from '@/hooks/queries/useAdminGeneration.query';
 

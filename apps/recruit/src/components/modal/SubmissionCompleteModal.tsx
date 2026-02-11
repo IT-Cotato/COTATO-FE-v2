@@ -1,5 +1,5 @@
 import {FullButton} from '@repo/ui/components/buttons/FullButton';
-import {Modal} from '@/components/modal/Modal';
+import {Modal} from '@repo/ui/components/modal/Modal';
 
 interface SubmissionCompleteModalProps {
   isOpen: boolean;

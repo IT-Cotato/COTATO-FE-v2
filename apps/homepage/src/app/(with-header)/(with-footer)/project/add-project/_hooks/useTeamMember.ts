@@ -6,7 +6,7 @@ export const useTeamMembers = (initialState: TeamState) => {
   const [teamMembers, setTeamMembers] = useState<TeamState>(initialState);
 
   const addMember = (role: Position) => {
-    if (teamMembers[role].length >= 4) return;
+    if (teamMembers[role].length >= 5) return;
     setTeamMembers((prev) => ({
       ...prev,
       [role]: [...prev[role], '감직이'],

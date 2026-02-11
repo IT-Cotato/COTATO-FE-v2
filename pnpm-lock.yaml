@@ -57,6 +57,12 @@ importers:
       '@repo/ui':
         specifier: workspace:*
         version: link:../../packages/ui
+      '@tanstack/react-query':
+        specifier: ^5.90.12
+        version: 5.90.20(react@19.2.3)
+      axios:
+        specifier: ^1.13.2
+        version: 1.13.4
       framer-motion:
         specifier: ^12.31.0
         version: 12.31.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
@@ -246,6 +252,10 @@ importers:
   packages/typescript-config: {}
 
   packages/ui:
+    dependencies:
+      focus-trap-react:
+        specifier: ^11.0.4
+        version: 11.0.6(@types/react-dom@19.2.2(@types/react@19.2.2))(@types/react@19.2.2)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
     devDependencies:
       '@repo/eslint-config':
         specifier: workspace:*
@@ -6835,6 +6845,15 @@ snapshots:
       keyv: 4.5.4
 
   flatted@3.3.3: {}
+
+  focus-trap-react@11.0.6(@types/react-dom@19.2.2(@types/react@19.2.2))(@types/react@19.2.2)(react-dom@19.2.0(react@19.2.0))(react@19.2.0):
+    dependencies:
+      '@types/react': 19.2.2
+      '@types/react-dom': 19.2.2(@types/react@19.2.2)
+      focus-trap: 7.8.0
+      react: 19.2.0
+      react-dom: 19.2.0(react@19.2.0)
+      tabbable: 6.4.0
 
   focus-trap-react@11.0.6(@types/react-dom@19.2.2(@types/react@19.2.2))(@types/react@19.2.2)(react-dom@19.2.3(react@19.2.3))(react@19.2.3):
     dependencies:
