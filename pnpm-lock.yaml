@@ -60,6 +60,12 @@ importers:
       '@tanstack/react-query':
         specifier: ^5.90.12
         version: 5.90.20(react@19.2.3)
+      '@use-funnel/browser':
+        specifier: ^0.0.16
+        version: 0.0.16(react@19.2.3)
+      '@use-funnel/next':
+        specifier: ^0.0.22
+        version: 0.0.22(next@16.1.0(@babel/core@7.29.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react@19.2.3)
       axios:
         specifier: ^1.13.2
         version: 1.13.4
@@ -81,6 +87,9 @@ importers:
       zod:
         specifier: ^4.3.2
         version: 4.3.6
+      zustand:
+        specifier: ^5.0.9
+        version: 5.0.11(@types/react@19.2.2)(react@19.2.3)
     devDependencies:
       '@repo/eslint-config':
         specifier: workspace:*
@@ -1743,6 +1752,22 @@ packages:
     resolution: {integrity: sha512-lrW200hZdbfRtztbygyaq/6jP6AKE8qQN2KvPcJ+x7wiD038YtnYtZ82IMNJ69GJibV7bwL3y9FgK+5w/pYt6g==}
     cpu: [x64]
     os: [win32]
+
+  '@use-funnel/browser@0.0.16':
+    resolution: {integrity: sha512-L3qOxT3aU82LVKcj14K6Z/qndCt1qV8XBfyK2zRNR/btD6787bznmuevwFwcPZnze9VkzsQAJlRHHsrPAByIKw==}
+    peerDependencies:
+      react: '>=16.8'
+
+  '@use-funnel/core@0.0.13':
+    resolution: {integrity: sha512-0cFqUs0Z5QWnTG5ua2FZloKyGn3KAbA9miaFOa6RAeBmm74lilyFk4ovLe/9g1W58ZZlR3+1wbjDzyAT9yIGig==}
+    peerDependencies:
+      react: '>=16.8'
+
+  '@use-funnel/next@0.0.22':
+    resolution: {integrity: sha512-AFdROs+MfC+HxVnHNyI6jNuWmgV1YjUq6IG2ckps2PTqPLp7ZowtmVAa1k7iJxEBu/0PXqXiLstEku1V8kZACQ==}
+    peerDependencies:
+      next: '>=12'
+      react: '>=16.8'
 
   acorn-jsx@5.3.2:
     resolution: {integrity: sha512-rq9s+JNhf0IChjtDXxllJ7g41oZk5SlXtp0LHwyA5cejwn7vKmKp4pPri6YEePv2PU65sAsegbXtIinmDFDXgQ==}
@@ -5805,6 +5830,21 @@ snapshots:
 
   '@unrs/resolver-binding-win32-x64-msvc@1.11.1':
     optional: true
+
+  '@use-funnel/browser@0.0.16(react@19.2.3)':
+    dependencies:
+      '@use-funnel/core': 0.0.13(react@19.2.3)
+      react: 19.2.3
+
+  '@use-funnel/core@0.0.13(react@19.2.3)':
+    dependencies:
+      react: 19.2.3
+
+  '@use-funnel/next@0.0.22(next@16.1.0(@babel/core@7.29.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react@19.2.3)':
+    dependencies:
+      '@use-funnel/core': 0.0.13(react@19.2.3)
+      next: 16.1.0(@babel/core@7.29.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+      react: 19.2.3
 
   acorn-jsx@5.3.2(acorn@8.15.0):
     dependencies:
