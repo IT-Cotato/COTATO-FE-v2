@@ -14,7 +14,7 @@ import BeerIcon from '@/assets/mypage-mem/activity/beer-networking.svg';
 type CombinedCardProps = StatusCardItem | PenaltyCardItem;
 
 export const StatusCard = (props: CombinedCardProps) => {
-  const {label, value, variant, unit = ''} = props;
+  const {label, value, variant} = props;
 
   const IconMap = {
     // 출석
@@ -38,7 +38,6 @@ export const StatusCard = (props: CombinedCardProps) => {
       <span>{label}</span>
       <div className='h-12.5 w-full rounded-[10px] bg-neutral-50 py-2.25 text-center'>
         {value}
-        {unit}
       </div>
     </div>
   );

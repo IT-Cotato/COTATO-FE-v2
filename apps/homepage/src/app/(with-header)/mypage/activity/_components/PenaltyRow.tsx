@@ -14,7 +14,7 @@ export const PenaltyRows = ({data}: {data: PenaltyRecord[]}) => (
           <td className='flex h-12.25 items-center justify-center py-[8.5px]'>
             <span
               className={clsx(
-                'text-body-m-sb shadow-default flex h-full w-18.75 items-center justify-center rounded-[10px] text-white',
+                'text-body-m-sb flex h-full w-18.75 items-center justify-center rounded-[10px] text-white',
                 status?.className
               )}>
               {status?.label}
