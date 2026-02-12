@@ -60,9 +60,10 @@ export const useImageUpload = (
         ...images,
         ...newUploadedImages.map((img, idx) => ({
           ...img,
-          order: images.length + idx + 1,
+          order: images.length + idx,
         })),
       ];
+      updateImages(updated);
 
       updateImages(updated);
       if (images.length === 0 && updated.length > 0)
@@ -81,7 +82,7 @@ export const useImageUpload = (
       const newArray = arrayMove(images, oldIndex, newIndex);
       const updated = newArray.map((item, index) => ({
         ...item,
-        order: index + 1,
+        order: index,
       }));
       updateImages(updated);
     }
@@ -93,7 +94,7 @@ export const useImageUpload = (
     const filtered = images.filter((img) => img.id !== id);
     const updated = filtered.map((prev, index) => ({
       ...prev,
-      order: index + 1,
+      order: index,
     }));
     updateImages(updated);
     if (selectedId === id)

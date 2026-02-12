@@ -26,14 +26,22 @@ export const useProjectForm = (
   const mapImageInfos = (
     imageInfos?: ProjectDetail['imageInfos']
   ): ImageInfo[] =>
-    imageInfos?.map((img) => ({
-      id:
-        img?.imageId?.toString() ??
-        `temp-${Math.random().toString(36).substring(2, 11)}`,
-      s3Key: '',
-      publicUrl: img?.imageUrl ?? '',
-      order: img?.imageOrder ?? 0,
-    })) || [];
+    imageInfos?.map((img) => {
+      const fullPath = new URL(img.imageUrl).pathname;
+
+      const s3KeyFromUrl = fullPath.startsWith('/')
+        ? fullPath.substring(1)
+        : fullPath;
+
+      return {
+        id:
+          img?.imageId?.toString() ??
+          `temp-${Math.random().toString(36).substring(2, 11)}`,
+        s3Key: s3KeyFromUrl,
+        publicUrl: img?.imageUrl ?? '',
+        order: img?.imageOrder ?? 0,
+      };
+    }) || [];
 
   const [uploadedImages, setUploadedImages] = useState<ImageInfo[]>(
     mapImageInfos(initialData?.imageInfos)
