@@ -3,37 +3,26 @@
 import {useState, useMemo} from 'react';
 import {Dropdown} from '@/components/dropdown/Dropdown';
 import {
-  MOCK_ATTENDANCE_DATA,
+  MOCK_ATTENDANCE_RECORDS,
   MOCK_PENALTY_DATA,
 } from '@/mocks/mypage-mem/activity-mock';
+import {TabType} from '@/schemas/mypage-mem/activity/mypage-mem-type';
 import {AttendanceRows} from '@/app/(with-header)/mypage/activity/_components/AttendanceRow';
 import {PenaltyRows} from '@/app/(with-header)/mypage/activity/_components/PenaltyRow';
-import {TabType} from '@/schemas/mypage-mem/activity/mypage-mem-type';
 
 export const AttendanceCheckContainer = ({activeTab}: {activeTab: TabType}) => {
   const [selectedMonth, setSelectedMonth] = useState('1월');
   const monthOptions = Array.from({length: 12}, (_, i) => `${i + 1}월`);
 
+  // API 연동 시에는 selectedMonth를 넣어 월별 데이터만 받아올 예정
   const attendanceData = useMemo(() => {
-    const targetMonth = parseInt(selectedMonth.replace('월', ''), 10);
-
-    return MOCK_ATTENDANCE_DATA.attendances.filter((item) => {
-      return new Date(item.sessionDateTime).getUTCMonth() + 1 === targetMonth;
-    });
-  }, [selectedMonth]);
-
-  const penaltyData = useMemo(() => {
-    const targetMonth = parseInt(selectedMonth.replace('월', ''), 10);
-
-    return MOCK_PENALTY_DATA.records.filter((record) => {
-      return new Date(record.sessionDateTime).getUTCMonth() + 1 === targetMonth;
-    });
+    return MOCK_ATTENDANCE_RECORDS.attendances;
   }, [selectedMonth]);
 
   const isAttendance = activeTab === 'attendance';
   const currentDataLength = isAttendance
     ? attendanceData.length
-    : penaltyData.length;
+    : MOCK_PENALTY_DATA.records.length;
 
   return (
     <div className='flex w-full flex-col gap-4'>
@@ -45,7 +34,6 @@ export const AttendanceCheckContainer = ({activeTab}: {activeTab: TabType}) => {
           onSelect={setSelectedMonth}
         />
       </div>
-
       <div className='rounded-[10px] bg-neutral-50 px-15.75 py-7 text-center'>
         <table className='w-full table-fixed border-separate border-spacing-y-2.5'>
           <thead>
@@ -81,7 +69,7 @@ export const AttendanceCheckContainer = ({activeTab}: {activeTab: TabType}) => {
             ) : isAttendance ? (
               <AttendanceRows data={attendanceData} />
             ) : (
-              <PenaltyRows data={penaltyData} />
+              <PenaltyRows data={MOCK_PENALTY_DATA.records} />
             )}
           </tbody>
         </table>

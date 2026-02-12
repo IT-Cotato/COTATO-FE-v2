@@ -7,37 +7,31 @@ import BonusIcon from '@/assets/mypage-mem/activity/bonus.svg';
 import MinusIcon from '@/assets/mypage-mem/activity/minus.svg';
 import BeerIcon from '@/assets/mypage-mem/activity/beer-networking.svg';
 import {
-  PenaltyCardItem,
-  StatusCardItem,
+  StatusCardProps,
+  CardVariant,
 } from '@/schemas/mypage-mem/activity/mypage-mem-type';
+import {FC, SVGProps} from 'react';
 
-type CombinedCardProps = StatusCardItem | PenaltyCardItem;
-
-export const StatusCard = (props: CombinedCardProps) => {
-  const {label, value, variant} = props;
-
-  const IconMap = {
-    // 출석
+export const StatusCard = ({label, value, variant}: StatusCardProps) => {
+  const IconMap: Record<CardVariant, FC<SVGProps<SVGSVGElement>>> = {
     attend: GreenIcon,
     late: BrownIcon,
-    'unauthorized-absent': GrayIcon,
     absent: RedIcon,
-
-    // 벌점
+    'unauthorized-absent': GrayIcon,
     total: TotalIcon,
     bonus: BonusIcon,
     minus: MinusIcon,
     'beer-networking': BeerIcon,
   };
 
-  const SelectedIcon = IconMap[variant as keyof typeof IconMap];
+  const SelectedIcon = IconMap[variant];
 
   return (
-    <div className='text-h4 shadow-mem-card flex h-62.5 flex-1 flex-col items-center gap-2.5 rounded-[10px] px-3.25 py-5 text-neutral-800'>
+    <div className='text-h4 shadow-mem-card flex h-62.5 flex-1 flex-col items-center gap-2.5 rounded-[10px] bg-white px-3.25 py-5 text-neutral-800'>
       <SelectedIcon />
-      <span>{label}</span>
-      <div className='h-12.5 w-full rounded-[10px] bg-neutral-50 py-2.25 text-center'>
-        {value}
+      <span className='whitespace-nowrap'>{label}</span>
+      <div className='h-12.5 w-full rounded-[10px] bg-neutral-50 py-2.25 text-center font-bold'>
+        {value ?? 0}
       </div>
     </div>
   );

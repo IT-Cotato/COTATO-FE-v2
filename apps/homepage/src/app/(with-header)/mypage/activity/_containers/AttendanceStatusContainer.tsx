@@ -1,7 +1,7 @@
 import {StatusCard} from '@/app/(with-header)/mypage/activity/_components/StatusCard';
 import {
-  attendanceCards,
-  penaltyCards,
+  getAttendanceCards,
+  getPenaltyCards,
   TabType,
 } from '@/schemas/mypage-mem/activity/mypage-mem-type';
 
@@ -11,7 +11,7 @@ export const AttendanceStatusContainer = ({
   activeTab: TabType;
 }) => {
   const currentCards =
-    activeTab === 'attendance' ? attendanceCards : penaltyCards;
+    activeTab === 'attendance' ? getAttendanceCards() : getPenaltyCards();
 
   return (
     <div className='flex w-full items-center gap-10'>

@@ -1,46 +1,52 @@
 import {z} from 'zod';
 
 export const AttendanceResultEnum = z.enum([
-  'PRESENT', // 출석
-  'LATE', // 지각
-  'ABSENT', // 결석
-  'UNAUTHORIZED_ABSENT', // 무단결석
+  'PRESENT',
+  'LATE',
+  'ABSENT',
+  'UNAUTHORIZED_ABSENT',
 ]);
 
 export const SessionTypeEnum = z.enum([
-  'OFFLINE', // 대면
-  'NO_ATTEND', // 비대면
+  'ONLINE',
+  'OFFLINE',
+  'ALL',
+  'NO_ATTEND',
 ]);
 
-// 내 출석 통계 대시보드 스키마
+// 내 출석 대시보드 스키마
 export const AttendanceStatisticSchema = z.object({
-  present: z.number(),
-  late: z.number(),
-  absent: z.number(),
-  unauthorizedAbsent: z.number(),
+  present: z.number().nullable(),
+  late: z.number().nullable(),
+  absent: z.number().nullable(),
+  unauthorizedAbsent: z.number().nullable(),
 });
 
-// 개별 출석 기록 스키마
-export const AttendanceRecordSchema = z.object({
-  sessionId: z.number(),
-  attendanceId: z.number(),
-  memberId: z.number(),
-  sessionNumber: z.number(),
-  sessionTitle: z.string(),
-  sessionDateTime: z.iso.datetime(),
-  placeName: z.string(),
-  sessionType: SessionTypeEnum,
-  result: AttendanceResultEnum,
-});
-
-// 내 출석 현황 조회 응답
-export const MyAttendanceResponseSchema = z.object({
+export const MyAttendanceDashboardResponseSchema = z.object({
   generationId: z.number(),
   statistic: AttendanceStatisticSchema,
-  attendances: z.array(AttendanceRecordSchema),
+});
+
+// 내 출석 기록 목록 스키마
+export const MemberAttendResponseSchema = z.object({
+  sessionId: z.number(),
+  sessionNumber: z.number(),
+  placeName: z.string(),
+  sessionType: SessionTypeEnum,
+  result: AttendanceResultEnum.nullable(),
+});
+
+export const MemberAttendanceRecordsResponseSchema = z.object({
+  generationId: z.number(),
+  attendances: z.array(MemberAttendResponseSchema),
 });
 
 export type AttendanceResult = z.infer<typeof AttendanceResultEnum>;
 export type SessionType = z.infer<typeof SessionTypeEnum>;
-export type AttendanceRecord = z.infer<typeof AttendanceRecordSchema>;
-export type MyAttendanceResponse = z.infer<typeof MyAttendanceResponseSchema>;
+export type MemberAttendResponse = z.infer<typeof MemberAttendResponseSchema>;
+export type MyAttendanceDashboardResponse = z.infer<
+  typeof MyAttendanceDashboardResponseSchema
+>;
+export type MemberAttendanceRecordsResponse = z.infer<
+  typeof MemberAttendanceRecordsResponseSchema
+>;
