@@ -1,6 +1,11 @@
+'use client';
+
+import {ROUTES} from '@/constants/routes';
 import {Button} from '@repo/ui/components/buttons/Button';
+import {useRouter} from 'next/navigation';
 
 export const DeleteAccountContainer = () => {
+  const router = useRouter();
   return (
     <div className='flex items-end justify-between self-stretch'>
       <div className='flex h-[94px] w-[718px] flex-col gap-1'>
@@ -17,6 +22,7 @@ export const DeleteAccountContainer = () => {
         textColor='white'
         width={134}
         height={42}
+        onClick={() => router.push(ROUTES.MYPAGE_ACCOUNT_DELETE)}
       />
     </div>
   );

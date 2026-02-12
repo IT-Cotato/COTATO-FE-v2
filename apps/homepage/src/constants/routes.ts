@@ -9,6 +9,7 @@ export const ROUTES = {
   MYPAGE_ACTIVITY: '/mypage/activity',
   MYPAGE_ATTENDANCE: '/mypage/attendance',
   MYPAGE_ACCOUNT: '/mypage/account',
+  MYPAGE_ACCOUNT_DELETE: '/mypage/account/delete',
   MYPAGE_TERMS: '/mypage/terms',
 
   //admin routes
