@@ -122,7 +122,7 @@ export const ApplyFormContainer = () => {
       <div
         ref={pageTopRef}
         style={{scrollMarginTop: HEADER_HEIGHT}}
-        className='flex w-full flex-col items-center bg-neutral-50'>
+        className='flex w-full min-w-360 flex-col items-center bg-neutral-50'>
         {step === 1 && (
           <HeroMainBanner
             heading='COde Together, Arrive TOgether'
