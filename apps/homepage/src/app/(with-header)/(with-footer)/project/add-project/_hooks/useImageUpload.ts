@@ -65,7 +65,6 @@ export const useImageUpload = (
       ];
       updateImages(updated);
 
-      updateImages(updated);
       if (images.length === 0 && updated.length > 0)
         setSelectedId(updated[0].id);
     } catch (error) {

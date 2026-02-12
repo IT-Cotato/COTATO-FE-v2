@@ -27,11 +27,15 @@ export const useProjectForm = (
     imageInfos?: ProjectDetail['imageInfos']
   ): ImageInfo[] =>
     imageInfos?.map((img) => {
-      const fullPath = new URL(img.imageUrl).pathname;
-
-      const s3KeyFromUrl = fullPath.startsWith('/')
-        ? fullPath.substring(1)
-        : fullPath;
+      let s3KeyFromUrl = '';
+      try {
+        const fullPath = new URL(img.imageUrl).pathname;
+        s3KeyFromUrl = fullPath.startsWith('/')
+          ? fullPath.substring(1)
+          : fullPath;
+      } catch {
+        s3KeyFromUrl = img.imageUrl ?? '';
+      }
 
       return {
         id:
