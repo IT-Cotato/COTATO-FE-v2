@@ -6,9 +6,10 @@ import {
   MEMBER_STATUS_OPTIONS,
   MemberStatusKey,
 } from '@/constants/admin/admin-users';
-import {MemberTabType} from '@/schemas/admin/admin-users.schema';
+import {MemberTabType, MemberType} from '@/schemas/admin/admin-users.schema';
 import {MOCK_MEMBERS} from '@/mocks/admin/mock-admin-users';
 import {useRouter, useSearchParams} from 'next/navigation';
+import {useState} from 'react';
 
 // TODO: API 연동 시 제거 또는 서버 요청 파라미터로 변경
 const ITEMS_PER_PAGE = 10;
@@ -36,6 +37,28 @@ export const AdminUsersTableContainer = ({
   const pageParam = searchParams.get('page');
   const currentPage = pageParam ? Number(pageParam) : 1;
   const isLoading = false;
+
+  // TODO: API 연동 시 서버 데이터로 교체
+  const [members, setMembers] = useState<MemberType[]>(MOCK_MEMBERS);
+
+  const handleBatchStatusChange = (status: MemberStatusKey) => {
+    setMembers((prev) =>
+      prev.map((member) =>
+        selectedIds.includes(member.memberId)
+          ? {...member, status}
+          : member
+      )
+    );
+    setSelectedIds([]);
+  };
+
+  const handleStatusChange = (memberId: number, status: MemberStatusKey) => {
+    setMembers((prev) =>
+      prev.map((member) =>
+        member.memberId === memberId ? {...member, status} : member
+      )
+    );
+  };
 
   /**
    * 페이지 변경 핸들러
@@ -69,8 +92,8 @@ export const AdminUsersTableContainer = ({
   // TODO: API 연동 시 서버 사이드 필터링으로 교체 필요
   const baseItems =
     activeTab === 'ACTIVE'
-      ? MOCK_MEMBERS.filter((member) => member.status === 'APPROVED')
-      : MOCK_MEMBERS;
+      ? members.filter((member) => member.status === 'APPROVED')
+      : members;
 
   const filteredItems =
     selectedStatuses.length === 0
@@ -87,13 +110,52 @@ export const AdminUsersTableContainer = ({
     startIndex + ITEMS_PER_PAGE
   );
 
+  // 체크박스 선택 상태
+  const [selectedIds, setSelectedIds] = useState<number[]>([]);
+
+  const handleSelectAll = (checked: boolean) => {
+    if (checked) {
+      setSelectedIds(paginatedItems.map((item) => item.memberId));
+    } else {
+      setSelectedIds([]);
+    }
+  };
+
+  const handleSelect = (id: number, checked: boolean) => {
+    if (checked) {
+      setSelectedIds((prev) => [...prev, id]);
+    } else {
+      setSelectedIds((prev) => prev.filter((selectedId) => selectedId !== id));
+    }
+  };
+
+  const hasSelection = selectedIds.length > 0;
+
   return (
-    <>
+    <div className='flex flex-col gap-3.5'>
+      <div className='flex gap-5 pt-8.5'>
+        <button
+          disabled={!hasSelection}
+          onClick={() => handleBatchStatusChange('RETIRED')}
+          className='rounded-lg bg-neutral-50 px-4.75 py-1.5 font-semibold text-neutral-600 disabled:opacity-50'>
+          수료로 변경
+        </button>
+        <button
+          disabled={!hasSelection}
+          onClick={() => handleBatchStatusChange('APPROVED')}
+          className='text-primary rounded-lg bg-neutral-50 px-4.75 py-1.5 font-semibold disabled:opacity-50'>
+          활동 중으로 변경
+        </button>
+      </div>
       <AdminUsersTableView
         items={paginatedItems}
         activeTab={activeTab}
         selectedStatuses={selectedStatuses}
         onFilterChange={handleFilterChange}
+        selectedIds={selectedIds}
+        onSelectAll={handleSelectAll}
+        onSelect={handleSelect}
+        onStatusChange={handleStatusChange}
       />
       <div className='flex w-full justify-center'>
         <Pagination
@@ -104,6 +166,6 @@ export const AdminUsersTableContainer = ({
           variant='admin'
         />
       </div>
-    </>
+    </div>
   );
 };
