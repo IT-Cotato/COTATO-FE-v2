@@ -43,6 +43,9 @@ export const Header = () => {
   const handleMypageClick = () => {
     router.push(ROUTES.MYPAGE);
   };
+  const isMyPageActive =
+    pathname === ROUTES.MYPAGE || pathname.startsWith(`${ROUTES.MYPAGE}/`);
+
   const menuItems = [...HEADER_ITEMS];
 
   if (user?.role === 'STAFF') {
@@ -119,10 +122,23 @@ export const Header = () => {
                 <button
                   className='group flex w-full flex-row justify-between border-b border-b-neutral-700 pb-2.75'
                   onClick={handleMypageClick}>
-                  <span className='group-hover:text-primary text-neutral-100 duration-300'>
+                  <span
+                    className={clsx(
+                      'duration-300',
+                      isMyPageActive
+                        ? 'text-primary'
+                        : 'group-hover:text-primary text-neutral-100'
+                    )}>
                     마이페이지
                   </span>
-                  <ChevronRight className='group-hover:text-primary h-5 w-5 text-neutral-100 duration-300' />
+                  <ChevronRight
+                    className={clsx(
+                      'h-5 w-5 duration-300',
+                      isMyPageActive
+                        ? 'text-primary'
+                        : 'group-hover:text-primary text-neutral-100'
+                    )}
+                  />
                 </button>
                 <button
                   onClick={handleLogoutClick}

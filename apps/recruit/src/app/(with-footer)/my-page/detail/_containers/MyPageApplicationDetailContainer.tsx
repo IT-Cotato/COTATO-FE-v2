@@ -1,6 +1,6 @@
 'use client';
 
-import {useParams, useRouter, useSearchParams} from 'next/navigation';
+import {useRouter, useSearchParams} from 'next/navigation';
 import {StepIndicator} from '@/components/navigation/StepIndicator';
 import {
   useMyApplicationBasicInfo,
@@ -12,16 +12,24 @@ import {PartQuestionView} from '@/components/application/PartQuestionView';
 import {EtcQuestionView} from '@/components/application/EtcQuestionView';
 import {APPLICATIONS_PART_TABS} from '@/constants/admin/admin-applications';
 import {useAdminApplicationPdfUrl} from '@/hooks/queries/useAdminApplication.query';
+import {useApplicationStore} from '@/store/useApplicationStore';
+import {useEffect} from 'react';
+import {ROUTES} from '@/constants/routes';
 
 export const MyPageApplicationDetailContainer = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const {id} = useParams<{id: string}>();
-  const applicationId = Number(id);
+  const {selectedId: applicationId} = useApplicationStore();
 
-  const {data: basicInfo} = useMyApplicationBasicInfo(applicationId);
-  const {data: partQuestions} = useMyApplicationPartQuestions(applicationId);
-  const {data: etcQuestions} = useMyApplicationEtcQuestions(applicationId);
+  useEffect(() => {
+    if (!applicationId) {
+      router.replace(ROUTES.MYPAGE);
+    }
+  }, [applicationId, router]);
+
+  const {data: basicInfo} = useMyApplicationBasicInfo(applicationId!);
+  const {data: partQuestions} = useMyApplicationPartQuestions(applicationId!);
+  const {data: etcQuestions} = useMyApplicationEtcQuestions(applicationId!);
   const {data: pdfFileKey} = useAdminApplicationPdfUrl(
     partQuestions?.data.pdfFileKey
   );
