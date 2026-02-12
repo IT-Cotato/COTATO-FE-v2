@@ -1,5 +1,5 @@
 import {POINT_STATUS} from '@/constants/mypage-mem/mypage-activity';
-import {PenaltyRecord} from '@/schemas/mypage-mem/penalty.schema';
+import {PenaltyRecord} from '@/schemas/mypage-mem/activity/penalty.schema';
 import clsx from 'clsx';
 
 export const PenaltyRows = ({data}: {data: PenaltyRecord[]}) => (

@@ -6,35 +6,29 @@ import {
   MOCK_ATTENDANCE_DATA,
   MOCK_PENALTY_DATA,
 } from '@/mocks/mypage-mem/activity-mock';
-
-import {TabType} from '@/schemas/mypage-mem/mypage-mem-type';
 import {AttendanceRows} from '@/app/(with-header)/mypage/activity/_components/AttendanceRow';
 import {PenaltyRows} from '@/app/(with-header)/mypage/activity/_components/PenaltyRow';
+import {TabType} from '@/schemas/mypage-mem/activity/mypage-mem-type';
 
 export const AttendanceCheckContainer = ({activeTab}: {activeTab: TabType}) => {
   const [selectedMonth, setSelectedMonth] = useState('1월');
   const monthOptions = Array.from({length: 12}, (_, i) => `${i + 1}월`);
 
-  const filterByMonth = (dateTime: string) => {
+  const attendanceData = useMemo(() => {
     const targetMonth = parseInt(selectedMonth.replace('월', ''), 10);
-    return new Date(dateTime).getUTCMonth() + 1 === targetMonth;
-  };
 
-  const attendanceData = useMemo(
-    () =>
-      MOCK_ATTENDANCE_DATA.attendances.filter((item) =>
-        filterByMonth(item.sessionDateTime)
-      ),
-    [selectedMonth]
-  );
+    return MOCK_ATTENDANCE_DATA.attendances.filter((item) => {
+      return new Date(item.sessionDateTime).getUTCMonth() + 1 === targetMonth;
+    });
+  }, [selectedMonth]);
 
-  const penaltyData = useMemo(
-    () =>
-      MOCK_PENALTY_DATA.records.filter((record) =>
-        filterByMonth(record.sessionDateTime)
-      ),
-    [selectedMonth]
-  );
+  const penaltyData = useMemo(() => {
+    const targetMonth = parseInt(selectedMonth.replace('월', ''), 10);
+
+    return MOCK_PENALTY_DATA.records.filter((record) => {
+      return new Date(record.sessionDateTime).getUTCMonth() + 1 === targetMonth;
+    });
+  }, [selectedMonth]);
 
   const isAttendance = activeTab === 'attendance';
   const currentDataLength = isAttendance

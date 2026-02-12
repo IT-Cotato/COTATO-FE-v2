@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 
 import {ATTENDANCE_STATUS} from '@/constants/mypage-mem/mypage-activity';
-import {AttendanceRecord} from '@/schemas/mypage-mem/attendance.schema';
+import {AttendanceRecord} from '@/schemas/mypage-mem/activity/attendance.schema';
 
 export const AttendanceRows = ({data}: {data: AttendanceRecord[]}) => (
   <>

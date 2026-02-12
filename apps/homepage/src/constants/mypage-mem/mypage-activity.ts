@@ -1,4 +1,4 @@
-import {AttendanceResult} from '@/schemas/mypage-mem/attendance.schema';
+import {AttendanceResult} from '@/schemas/mypage-mem/activity/attendance.schema';
 
 export const ATTENDANCE_LABEL = {
   PRESENT: {label: '출석', className: 'bg-chip'},

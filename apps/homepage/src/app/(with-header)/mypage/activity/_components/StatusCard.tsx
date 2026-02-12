@@ -1,7 +1,3 @@
-import {
-  StatusCardItem,
-  PenaltyCardItem,
-} from '@/schemas/mypage-mem/mypage-mem-type';
 import GreenIcon from '@/assets/mypage-mem/activity/green.svg';
 import BrownIcon from '@/assets/mypage-mem/activity/brown.svg';
 import GrayIcon from '@/assets/mypage-mem/activity/gray.svg';
@@ -10,6 +6,10 @@ import TotalIcon from '@/assets/mypage-mem/activity/total.svg';
 import BonusIcon from '@/assets/mypage-mem/activity/bonus.svg';
 import MinusIcon from '@/assets/mypage-mem/activity/minus.svg';
 import BeerIcon from '@/assets/mypage-mem/activity/beer-networking.svg';
+import {
+  PenaltyCardItem,
+  StatusCardItem,
+} from '@/schemas/mypage-mem/activity/mypage-mem-type';
 
 type CombinedCardProps = StatusCardItem | PenaltyCardItem;
 

@@ -1,5 +1,5 @@
-import {MyAttendanceResponse} from '@/schemas/mypage-mem/attendance.schema';
-import {MyPenaltyResponse} from '@/schemas/mypage-mem/penalty.schema';
+import {MyAttendanceResponse} from '@/schemas/mypage-mem/activity/attendance.schema';
+import {MyPenaltyResponse} from '@/schemas/mypage-mem/activity/penalty.schema';
 
 export const MOCK_ATTENDANCE_DATA: MyAttendanceResponse = {
   generationId: 1,

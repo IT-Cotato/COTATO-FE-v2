@@ -3,7 +3,7 @@ import {
   attendanceCards,
   penaltyCards,
   TabType,
-} from '@/schemas/mypage-mem/mypage-mem-type';
+} from '@/schemas/mypage-mem/activity/mypage-mem-type';
 
 export const AttendanceStatusContainer = ({
   activeTab,

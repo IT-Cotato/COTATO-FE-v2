@@ -3,7 +3,7 @@
 import {AttendanceTab} from '@/app/(with-header)/mypage/activity/_components/AttendanceTab';
 import {AttendanceCheckContainer} from '@/app/(with-header)/mypage/activity/_containers/AttendanceCheckContainer';
 import {AttendanceStatusContainer} from '@/app/(with-header)/mypage/activity/_containers/AttendanceStatusContainer';
-import {TabType} from '@/schemas/mypage-mem/mypage-mem-type';
+import {TabType} from '@/schemas/mypage-mem/activity/mypage-mem-type';
 import {useState} from 'react';
 
 export const AttendanceContainer = () => {

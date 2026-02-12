@@ -1,7 +1,7 @@
 'use client';
 
+import {TabType} from '@/schemas/mypage-mem/activity/mypage-mem-type';
 import clsx from 'clsx';
-import {TabType} from '@/schemas/mypage-mem/mypage-mem-type';
 
 interface AttendanceTabProps {
   activeTab: TabType;
