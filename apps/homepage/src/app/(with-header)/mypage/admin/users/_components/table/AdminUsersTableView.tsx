@@ -12,6 +12,7 @@ import {useRef, useState} from 'react';
 import FinishFilterIcon from '@repo/ui/assets/icons/filter-finish.svg';
 import DefaultFilterIcon from '@repo/ui/assets/icons/filter-default.svg';
 import {CheckboxFilter} from '@repo/ui/components/filter/CheckboxFilter';
+import {Checkbox} from '@repo/ui/components/checkbox/CheckBox';
 import {useClickOutside} from '@repo/ui/hooks/useClickOutside';
 import {StatusDropdown} from '@repo/ui/components/dropdown/StatusDropdown';
 import {MemberActionMenu} from './MemberActionMenu';
@@ -21,13 +22,21 @@ interface AdminUsersTableViewProps {
   activeTab: MemberTabType;
   selectedStatuses: MemberStatusKey[];
   onFilterChange: (labels: MemberStatusKey[]) => void;
+  selectedIds: number[];
+  onSelectAll: (checked: boolean) => void;
+  onSelect: (id: number, checked: boolean) => void;
+  onStatusChange: (memberId: number, status: MemberStatusKey) => void;
 }
 
 export const AdminUsersTableView = ({
-  items,
+  items = [],
   activeTab,
   selectedStatuses,
   onFilterChange,
+  selectedIds,
+  onSelectAll,
+  onSelect,
+  onStatusChange,
 }: AdminUsersTableViewProps) => {
   const isAllTab = activeTab === 'ALL';
   const [isFilterOpen, setIsFilterOpen] = useState(false);
@@ -35,10 +44,21 @@ export const AdminUsersTableView = ({
 
   useClickOutside(filterRef, () => setIsFilterOpen(false));
 
+  const isAllSelected = items.length > 0 && selectedIds.length === items.length;
+
   return (
     <table className='w-full table-fixed border-collapse'>
       <thead className='bg-neutral-200'>
         <tr>
+          {isAllTab && (
+            <th className='w-12 px-3 py-4 text-center'>
+              <Checkbox
+                checked={isAllSelected}
+                onChange={onSelectAll}
+                className='border-0 bg-neutral-50'
+              />
+            </th>
+          )}
           {MEMBER_COLUMNS.map((col) => {
             const isStatusColumn = col.key === 'status';
             return (
@@ -46,9 +66,7 @@ export const AdminUsersTableView = ({
                 key={col.key}
                 className='text-body-l px-3 py-4 text-center align-middle font-semibold text-neutral-600'>
                 <div className='flex items-center justify-center gap-2.5'>
-                  <div>
-                    {isStatusColumn && !isAllTab ? '역할' : col.label}
-                  </div>
+                  <div>{isStatusColumn && !isAllTab ? '역할' : col.label}</div>
                   {isStatusColumn && isAllTab && (
                     <div ref={filterRef} className='relative flex items-center'>
                       <button
@@ -82,10 +100,19 @@ export const AdminUsersTableView = ({
         </tr>
       </thead>
       <tbody>
-        {items?.map((member) => (
+        {items.map((member) => (
           <tr
             key={member.memberId}
             className='text-body-l font-semibold text-neutral-600'>
+            {isAllTab && (
+              <td className='px-3 py-4 text-center'>
+                <Checkbox
+                  checked={selectedIds.includes(member.memberId)}
+                  onChange={(checked) => onSelect(member.memberId, checked)}
+                  className='border-0 bg-neutral-50'
+                />
+              </td>
+            )}
             <td className='truncate px-3 py-4 text-center'>{member.name}</td>
             <td className='truncate px-3 py-4 text-center'>
               {member.generationMemberId}
@@ -107,9 +134,7 @@ export const AdminUsersTableView = ({
                     value={member.status as MemberStatusKey}
                     options={MEMBER_STATUS_OPTIONS}
                     config={MEMBER_STATUS_CONFIG}
-                    onChange={() => {
-                      /** 상태 변경 핸들러 추후 구현 필요 */
-                    }}
+                    onChange={(value) => onStatusChange(member.memberId, value)}
                     disabled={false}
                     ariaLabel='활동여부 선택'
                   />
