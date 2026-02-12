@@ -9,14 +9,17 @@ import {ROUTES} from '@/constants/routes';
 import {ACTIVITY_MAP} from '@/constants/project/project-activity';
 import {useGenerationQuery} from '@/hooks/queries/useGeneration.query';
 import {Spinner} from '@repo/ui/components/spinner/Spinner';
+import {useAuthStore} from '@/store/useAuthStore';
 
 export const ProjectContainer = () => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const {user} = useAuthStore();
 
   const genParam = searchParams.get('gen');
   const actParam = searchParams.get('act') || 'demoday';
+  const isAdmin = user?.isAdmin === true;
 
   const {data: generations = [], isLoading} = useGenerationQuery();
 
@@ -83,13 +86,15 @@ export const ProjectContainer = () => {
             }}
           />
         </div>
-        <Button
-          label='추가하기'
-          labelTypo='body_l'
-          width={127}
-          height={40}
-          onClick={() => router.push(ROUTES.ADD_PROJECT())}
-        />
+        {isAdmin && (
+          <Button
+            label='추가하기'
+            labelTypo='body_l'
+            width={127}
+            height={40}
+            onClick={() => router.push(ROUTES.ADD_PROJECT())}
+          />
+        )}
       </div>
       {sortedGenerations.length === 0 ? (
         <div className='flex min-h-100 w-full items-center justify-center text-neutral-400'>

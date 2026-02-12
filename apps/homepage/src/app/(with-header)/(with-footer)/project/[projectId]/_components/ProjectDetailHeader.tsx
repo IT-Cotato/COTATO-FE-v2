@@ -1,19 +1,24 @@
 'use client';
 
+import {useState} from 'react';
+import {useRouter} from 'next/navigation';
 import {ProjectDetail} from '@/schemas/project/project.schema';
 import LinkIcon from '@/assets/link/link.svg';
 import {Button} from '@repo/ui/components/buttons/Button';
-import {useRouter} from 'next/navigation';
 import {ROUTES} from '@/constants/routes';
 import {useDeleteProjectMutation} from '@/hooks/mutations/useProject.mutation';
-import {useState} from 'react';
 import {ProjectDeleteModal} from '@/app/(with-header)/(with-footer)/project/[projectId]/_components/ProjectDeleteModal';
+import {useAuthStore} from '@/store/useAuthStore';
 
 export const ProjectDetailHeader = ({data}: {data: ProjectDetail}) => {
   const router = useRouter();
+  const {user} = useAuthStore();
+
   const {mutate: deleteProject, isPending: isDeleting} =
     useDeleteProjectMutation();
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const isAdmin = user?.isAdmin === true;
 
   const handleEdit = () => {
     router.push(ROUTES.ADD_PROJECT(data.projectId));
@@ -70,27 +75,29 @@ export const ProjectDetailHeader = ({data}: {data: ProjectDetail}) => {
           )}
         </div>
       </div>
-      <div className='flex gap-3'>
-        <Button
-          variant='outline'
-          label='수정하기'
-          width={127}
-          height={40}
-          textColor='neutral-600'
-          labelTypo='body_l_sb'
-          onClick={handleEdit}
-          borderColor='neutral-200'
-        />
-        <Button
-          variant='primary'
-          label='삭제하기'
-          width={127}
-          height={40}
-          backgroundColor='alert'
-          labelTypo='body_l_sb'
-          onClick={handleDeleteClick}
-        />
-      </div>
+      {isAdmin && (
+        <div className='flex gap-3'>
+          <Button
+            variant='outline'
+            label='수정하기'
+            width={127}
+            height={40}
+            textColor='neutral-600'
+            labelTypo='body_l_sb'
+            onClick={handleEdit}
+            borderColor='neutral-200'
+          />
+          <Button
+            variant='primary'
+            label='삭제하기'
+            width={127}
+            height={40}
+            backgroundColor='alert'
+            labelTypo='body_l_sb'
+            onClick={handleDeleteClick}
+          />
+        </div>
+      )}
       <ProjectDeleteModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
