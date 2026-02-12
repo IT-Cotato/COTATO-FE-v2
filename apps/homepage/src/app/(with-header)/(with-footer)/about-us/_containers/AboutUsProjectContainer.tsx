@@ -8,7 +8,8 @@ import {ROUTES} from '@/constants/routes';
 import {AboutUsDescription} from '@/app/(with-header)/(with-footer)/about-us/_components/AboutUsDescription';
 
 export const AboutUsProjectContainer = () => {
-  const [index, setIndex] = useState<number>(0);
+  const middleIndex = Math.floor(PROJECTS.length / 2);
+  const [index, setIndex] = useState<number>(middleIndex);
   const router = useRouter();
 
   const handleProjectMoreViewClick = () => {

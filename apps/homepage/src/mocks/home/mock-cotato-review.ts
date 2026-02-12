@@ -79,4 +79,31 @@ export const COTATO_REVIEWS_MOCK_DATA = [
     longDescription:
       '동아리원들과의 네트워킹을 통해 시야를 넓힐 수 있었습니다.',
   },
+  {
+    id: 10,
+    generation: '9',
+    part: '기획',
+    name: '임감자',
+    shortDescription: '커뮤니티의 힘',
+    longDescription:
+      '동아리원들과의 네트워킹을 통해 시야를 넓힐 수 있었습니다.',
+  },
+  {
+    id: 11,
+    generation: '9',
+    part: '기획',
+    name: '임감자',
+    shortDescription: '커뮤니티의 힘',
+    longDescription:
+      '동아리원들과의 네트워킹을 통해 시야를 넓힐 수 있었습니다.',
+  },
+  {
+    id: 12,
+    generation: '9',
+    part: '기획',
+    name: '임감자',
+    shortDescription: '커뮤니티의 힘',
+    longDescription:
+      '동아리원들과의 네트워킹을 통해 시야를 넓힐 수 있었습니다.',
+  },
 ];
