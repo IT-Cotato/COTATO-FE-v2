@@ -1,6 +1,7 @@
 'use client';
 
 import {SIDEBAR_NAV_GROUPS, ADMIN_NAV_GROUP} from '@/constants/sidebar';
+import {useLogoutMutation} from '@/hooks/mutations/auth/useAuth.mutations';
 import {FullButton} from '@repo/ui/components/buttons/FullButton';
 import clsx from 'clsx';
 import Link from 'next/link';
@@ -12,12 +13,17 @@ interface SideBarProps {
 
 export const SideBar = ({isAdmin = false}: SideBarProps) => {
   const pathname = usePathname();
+
+  const {mutate: logout} = useLogoutMutation();
+
   const groups = isAdmin
     ? [...SIDEBAR_NAV_GROUPS, ADMIN_NAV_GROUP]
     : SIDEBAR_NAV_GROUPS;
 
   const handleLogout = () => {
-    console.log('로그아웃 처리');
+    if (confirm('로그아웃 하시겠습니까?')) {
+      logout();
+    }
   };
 
   return (

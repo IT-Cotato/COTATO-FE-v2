@@ -3,6 +3,7 @@ import '@/styles/globals.css';
 import '@repo/ui/styles.css';
 import localFont from 'next/font/local';
 import Providers from '@/app/providers';
+import {AuthProvider} from '@/components/providers/AuthProvider';
 
 export const metadata: Metadata = {
   title: 'COTATO',
@@ -50,7 +51,9 @@ export default function RootLayout({
       lang='ko'
       className={`${pretendard.variable} ${sebangGothic.variable} ${roboto.variable} antialiased`}>
       <Providers>
-        <body>{children}</body>
+        <AuthProvider>
+          <body>{children}</body>
+        </AuthProvider>
       </Providers>
     </html>
   );
