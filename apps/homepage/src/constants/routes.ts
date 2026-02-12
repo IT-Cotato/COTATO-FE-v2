@@ -8,7 +8,6 @@ export const ROUTES = {
   //mypage routes
   MYPAGE_ACTIVITY: '/mypage/activity',
   MYPAGE_ATTENDANCE: '/mypage/attendance',
-  MYPAGE_CSQUIZ: '/mypage/csquiz',
   MYPAGE_SECURITY: '/mypage/security',
   MYPAGE_TERMS: '/mypage/terms',
 
