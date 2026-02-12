@@ -1,6 +1,7 @@
 @theme static {
   /* primary */
   --color-primary: #f87d02;
+  --color-primary-30: #fff0bd;
 
   /* secondary */
   --color-secondary: #ffb800;
