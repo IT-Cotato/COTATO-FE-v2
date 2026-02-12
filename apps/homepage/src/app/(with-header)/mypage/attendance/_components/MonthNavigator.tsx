@@ -20,7 +20,8 @@ export const MonthNavigator = ({
       <button
         onClick={onPrev}
         disabled={!hasPrev}
-        className='text-neutral-600 disabled:opacity-30'>
+        className='text-neutral-600 disabled:opacity-30'
+        aria-label='이전 월'>
         <PrevIcon className='h-8 w-8' />
       </button>
       <span className='text-h2 text-center text-neutral-600'>
@@ -29,7 +30,8 @@ export const MonthNavigator = ({
       <button
         onClick={onNext}
         disabled={!hasNext}
-        className='text-neutral-600 disabled:opacity-30'>
+        className='text-neutral-600 disabled:opacity-30'
+        aria-label='다음 월'>
         <PrevIcon className='h-8 w-8 rotate-180' />
       </button>
     </div>

@@ -1,6 +1,6 @@
 'use client';
 
-import {useState, useMemo} from 'react';
+import {useState, useMemo, useEffect} from 'react';
 import Image from 'next/image';
 import PrevIcon from '@/assets/chevrons/chevron-left.svg';
 import clsx from 'clsx';
@@ -33,6 +33,10 @@ export const SessionCard = ({
         : [DEFAULT_IMAGE],
     [session.imageUrls]
   );
+
+  useEffect(() => {
+    setCurrentImgIdx(0);
+  }, [images]);
 
   const {isCompleted, isAvailable} = useMemo(() => {
     return {
