@@ -16,32 +16,34 @@ export const SideBar = ({isAdmin = false}: SideBarProps) => {
     ? [...SIDEBAR_NAV_GROUPS, ADMIN_NAV_GROUP]
     : SIDEBAR_NAV_GROUPS;
 
-  // 로그아웃 핸들러
   const handleLogout = () => {
     console.log('로그아웃 처리');
   };
 
   return (
-    <nav className='z-sidebar no-scrollbar sticky top-30 flex flex-col gap-7.5 overflow-y-auto px-6.25 py-10'>
+    <nav className='z-sidebar no-scrollbar sticky top-30 flex flex-col gap-6 overflow-y-auto px-6.25 py-10'>
       {groups.map(({title, items}) => (
         <div key={title} className='flex flex-col gap-4.75'>
           <h4 className='text-h4 text-neutral-400'>{title}</h4>
           <ul className='flex w-50 flex-col gap-2.5'>
-            {items.map(({label, href, icon: Icon}) => {
+            {items.map(({label, href, icon: Icon, activeIcon: ActiveIcon}) => {
               const isActive =
                 pathname === href || pathname.startsWith(`${href}/`);
+
+              const DisplayIcon = isActive && ActiveIcon ? ActiveIcon : Icon;
+
               return (
                 <li key={href}>
                   <Link
                     href={href}
                     aria-current={isActive ? 'page' : undefined}
                     className={clsx(
-                      'text-h5 flex w-full items-center gap-2 rounded-[5px] px-2 py-2.5 transition-colors',
+                      'text-h5 flex w-full items-center gap-2 rounded-[5px] px-2.5 py-2.25 transition-colors',
                       isActive
                         ? 'bg-neutral-800 text-neutral-100'
                         : 'text-neutral-800'
                     )}>
-                    {Icon && <Icon />}
+                    {DisplayIcon && <DisplayIcon />}
                     {label}
                   </Link>
                 </li>
@@ -59,7 +61,7 @@ export const SideBar = ({isAdmin = false}: SideBarProps) => {
         labelTypo='body_l_sb'
         borderRadius={30}
         onClick={handleLogout}
-        wrapperClassName={clsx(isAdmin ? 'mt-[175px]' : 'mt-[505px]')}
+        wrapperClassName={clsx(isAdmin ? 'mt-[97px]' : 'mt-[481px]')}
       />
     </nav>
   );
