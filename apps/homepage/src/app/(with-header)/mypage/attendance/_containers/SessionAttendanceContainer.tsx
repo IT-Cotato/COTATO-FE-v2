@@ -1,10 +1,10 @@
 'use client';
 
 import {MOCK_SESSION_LIST} from '@/mocks/mypage-mem/attendance/attendance-mock';
-import {MonthNavigator} from '../_components/MonthNavigator';
-import {SessionList} from '../_components/SessionList';
-import {useAttendance} from '../_hooks/useAttendance';
 import {AttendanceModals} from '@/app/(with-header)/mypage/attendance/_components/AttendanceModal';
+import {useAttendance} from '@/app/(with-header)/mypage/attendance/_hooks/useAttendance';
+import {MonthNavigator} from '@/app/(with-header)/mypage/attendance/_components/MonthNavigator';
+import {SessionList} from '@/app/(with-header)/mypage/attendance/_components/SessionList';
 
 export const SessionAttendanceContainer = () => {
   const {

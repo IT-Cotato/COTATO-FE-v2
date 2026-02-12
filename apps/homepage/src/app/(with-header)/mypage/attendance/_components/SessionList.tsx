@@ -1,4 +1,4 @@
-import {SessionCard} from './SessionCard';
+import {SessionCard} from '@/app/(with-header)/mypage/attendance/_components/SessionCard';
 import {SessionAttendance} from '@/schemas/mypage-mem/attendance/attendance.schema';
 
 interface SessionListProps {
