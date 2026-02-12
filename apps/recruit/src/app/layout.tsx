@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     siteName: 'COTATO',
     images: [
       {
-        url: '/images/meta-data/thumbnail.png',
+        url: '/meta-data/thumbnail.png',
         width: 1200,
         height: 630,
         alt: 'COTATO 리쿠르트 페이지 메인 이미지',
@@ -42,7 +42,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'COTATO | RECRUIT',
     description: '코테이토에서 당신의 여정을 함께하세요!',
-    images: ['/images/meta-data/thumbnail.png'],
+    images: ['/meta-data/thumbnail.png'],
   },
   robots: {
     index: true,
