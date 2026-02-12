@@ -1,4 +1,4 @@
-import {SideBar} from '@/components/sidebar/SideBar';
+import {SideBarContainer} from '@/components/sidebar/SideBarContainer';
 
 export default function MyPageLayout({
   children,
@@ -8,7 +8,7 @@ export default function MyPageLayout({
   return (
     <section className='flex min-h-screen w-full min-w-360 flex-row'>
       <aside className='z-sidebar sticky left-0 bg-neutral-50'>
-        <SideBar isAdmin />
+        <SideBarContainer />
       </aside>
       <main className='min-w-0 flex-1'>{children}</main>
     </section>
