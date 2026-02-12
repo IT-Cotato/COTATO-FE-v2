@@ -8,7 +8,7 @@ import {PlusButton} from '@/app/admin/(with-sidebar)/recruitment/_components/add
 import {AddGenerationModal} from './AddGenerationModal';
 import clsx from 'clsx';
 import {useAdminGenerationsQuery} from '@/hooks/queries/useAdminGeneration.query';
-import {Spinner} from '@/components/ui/Spinner';
+import {Spinner} from '@repo/ui/components/spinner/Spinner';
 
 export const AddGenerationContainer = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);

@@ -4,8 +4,18 @@ import Insta from '@repo/ui/assets/footer/insta/insta.svg';
 import Kakao from '@repo/ui/assets/footer/kakao/kakao.svg';
 import NaverCafe from '@repo/ui/assets/footer/naver-cafe/naver-cafe.svg';
 import {SocialLink} from './SocialLink';
+import {TERMS_LINK} from '../../../constants/terms-link';
 
-export const FooterContact = () => {
+interface FooterContactProps {
+  isRecruit: boolean;
+}
+
+export const FooterContact = ({isRecruit}: FooterContactProps) => {
+  const linkHref = isRecruit ? TERMS_LINK.recruit : TERMS_LINK.homepage;
+  const linkText = isRecruit
+    ? '서비스 이용약관 및 개인정보 처리방침'
+    : '서비스 이용약관';
+
   return (
     <section className='flex flex-col items-end'>
       <div className='flex items-center gap-5.25'>
@@ -35,11 +45,15 @@ export const FooterContact = () => {
         </div>
       </div>
 
-      <a href='/terms' className='text-body-s-sb mt-7.5 text-white underline'>
-        이용약관 및 개인정보 처리방침
+      <a
+        href={linkHref}
+        target='_blank'
+        rel='noopener noreferrer'
+        className='text-body-m-sb mt-7.5 text-white underline'>
+        {linkText}
       </a>
 
-      <p className='text-body-s mt-3.5 text-white'>
+      <p className='text-body-m mt-3.5 text-white'>
         Copyright©2026 COTATO, All rights reserved.
       </p>
     </section>

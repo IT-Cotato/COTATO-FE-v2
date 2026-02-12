@@ -15,7 +15,7 @@ import {ROUTES} from '@/constants/routes';
 import HeroBanner from '@/assets/backgrounds/banners/hero-main.webp';
 import {useRecruitmentStatusQuery} from '@/hooks/queries/useRecruitmentStatus.query';
 import {useRecruitmentScheduleQuery} from '@/hooks/queries/useRecruitmentSchedule.query';
-import {Spinner} from '@/components/ui/Spinner';
+import {Spinner} from '@repo/ui/components/spinner/Spinner';
 import {HEADER_HEIGHT} from '@/constants/ui';
 import {RecruitmentInformation} from '@/components/recruitment/RecruitmentInformation';
 import {scheduleSections} from '@/constants/admin/admin-application-questions';
@@ -122,7 +122,7 @@ export const ApplyFormContainer = () => {
       <div
         ref={pageTopRef}
         style={{scrollMarginTop: HEADER_HEIGHT}}
-        className='flex w-full flex-col items-center bg-neutral-50'>
+        className='flex w-full min-w-360 flex-col items-center bg-neutral-50'>
         {step === 1 && (
           <HeroMainBanner
             heading='COde Together, Arrive TOgether'

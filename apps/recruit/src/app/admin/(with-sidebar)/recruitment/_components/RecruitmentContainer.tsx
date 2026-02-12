@@ -5,7 +5,7 @@ import {AddGeneration} from './add-generation/AddGeneration';
 import {ActiveRecruitment} from './active-recruitment/ActiveRecruitment';
 import {ManageMail} from './manage-mail/ManageMail';
 import {useRecruitmentStatusQuery} from '@/hooks/queries/useRecruitmentStatus.query';
-import {Spinner} from '@/components/ui/Spinner';
+import {Spinner} from '@repo/ui/components/spinner/Spinner';
 
 export const RecruitmentContainer = () => {
   const {isLoading} = useRecruitmentStatusQuery();

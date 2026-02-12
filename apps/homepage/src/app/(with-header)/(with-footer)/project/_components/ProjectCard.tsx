@@ -1,3 +1,5 @@
+'use client';
+
 import {ROUTES} from '@/constants/routes';
 import Image from 'next/image';
 import {useRouter} from 'next/navigation';
@@ -8,7 +10,7 @@ interface ProjectCardProps {
   shortDescription: string;
   projectType: string;
   generationId: number;
-  thumbnailUrl: string;
+  thumbnailUrl: string | null;
 }
 
 export const ProjectCard = ({
@@ -21,12 +23,22 @@ export const ProjectCard = ({
 }: ProjectCardProps) => {
   const router = useRouter();
 
+  const hasThumbnail = !!thumbnailUrl && thumbnailUrl.trim() !== '';
+
   return (
     <div
-      className='flex flex-col gap-2.75'
+      className='flex cursor-pointer flex-col gap-2.75'
       onClick={() => router.push(ROUTES.PROJECT_DETAIL(projectId))}>
-      <div className='relative h-50 w-82.5 overflow-hidden rounded-t-[20px] bg-white'>
-        <Image src={thumbnailUrl} alt={name} fill className='object-cover' />
+      <div className='relative h-50 w-82.5 overflow-hidden rounded-t-[20px] bg-neutral-200'>
+        {hasThumbnail && (
+          <Image
+            src={thumbnailUrl}
+            alt={name}
+            fill
+            className='object-cover'
+            sizes='330px'
+          />
+        )}
       </div>
       <div className='flex flex-col gap-2 p-[0_15px_8px_15px]'>
         <div className='flex items-center justify-between'>

@@ -13,7 +13,7 @@ import {
 import {useUploadFile} from '@/hooks/mutations/useApply.mutation';
 import {PartType} from '@/schemas/admin/admin-application-questions.schema';
 import {ApplyFormData} from '@/schemas/apply/apply-schema';
-import {Spinner} from '@/components/ui/Spinner';
+import {Spinner} from '@repo/ui/components/spinner/Spinner';
 import {StepIndicator} from '@/components/navigation/StepIndicator';
 import {PART_TABS} from '@/constants/common/part';
 import {FormFile} from '@repo/ui/components/form/FormFile';
@@ -230,7 +230,10 @@ export const PartQuestion = ({
                         }
                         maxCount={1}
                         maxSize={50 * 1024 * 1024}
-                      />
+                      />  
+                  <p className='text-body-l text-alert'>
+                    * 파트 변경 시 업로드한 파일이 초기화됩니다.
+                  </p>
                     </div>
                   );
                 })()}

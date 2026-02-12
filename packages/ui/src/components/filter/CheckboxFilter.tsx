@@ -1,33 +1,31 @@
-import {RESULT_OPTIONS} from '@/constants/admin/admin-applications';
-
 import {useEffect, useState} from 'react';
-
-import {ApplicationResultType} from '@/schemas/admin/admin-applications.schema';
 import {Checkbox} from '@repo/ui/components/checkbox/CheckBox';
 
-interface AdminApplicationsResultFilterProps {
-  selected: ApplicationResultType[];
-  onChange: (next: ApplicationResultType[]) => void;
+interface CheckboxFilterProps<T extends string> {
+  options: T[];
+  selected: T[];
+  getLabel?: (option: T) => string;
+  onChange: (next: T[]) => void;
   onClose: () => void;
 }
 
-export const AdminApplicationsResultFilter = ({
+export const CheckboxFilter = <T extends string>({
+  options,
   selected,
-
+  getLabel,
   onChange,
   onClose,
-}: AdminApplicationsResultFilterProps) => {
-  const [draftSelected, setDraftSelected] =
-    useState<ApplicationResultType[]>(selected);
+}: CheckboxFilterProps<T>) => {
+  const [draftSelected, setDraftSelected] = useState<T[]>(selected);
 
   useEffect(() => {
     setDraftSelected(selected);
   }, [selected]);
 
-  const handleClick = (value: ApplicationResultType) => {
+  const handleClick = (value: T) => {
     setDraftSelected((prev) => {
       if (prev.length === 0) {
-        return RESULT_OPTIONS.filter((v) => v !== value);
+        return options.filter((v) => v !== value);
       }
       return prev.includes(value)
         ? prev.filter((v) => v !== value)
@@ -49,8 +47,8 @@ export const AdminApplicationsResultFilter = ({
     <div
       className='text-body-s flex flex-col gap-0.75 rounded-sm bg-neutral-700 p-1.25 text-neutral-300'
       role='group'
-      aria-label='합격 여부 필터'>
-      {RESULT_OPTIONS.map((option) => {
+      aria-label='필터'>
+      {options.map((option) => {
         const isAllSelected = draftSelected.length === 0;
         const isChecked = isAllSelected || draftSelected.includes(option);
 
@@ -58,7 +56,7 @@ export const AdminApplicationsResultFilter = ({
           <label
             key={option}
             className='flex w-full cursor-pointer items-center justify-between rounded-sm border-b border-b-neutral-600 px-2 py-1.5'>
-            <span>{option}</span>
+            <span>{getLabel ? getLabel(option) : option}</span>
             <Checkbox
               checked={isChecked}
               onChange={() => handleClick(option)}

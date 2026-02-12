@@ -2,8 +2,9 @@ import {Position} from '@/schemas/project/project.schema';
 import {MemberChip} from './MemberChip';
 import Plus from '@/assets/plus/plus.svg';
 import {TeamSectionProps} from '@/schemas/project/project-type';
+import {POSITION_LABEL} from '@/constants/project/project-detail';
 
-const ROLES: Position[] = ['PM', 'DE', 'FE', 'BE'];
+const ROLES: Position[] = ['PM', 'DESIGN', 'FE', 'BE'];
 
 export const TeamSection = ({
   teamMembers,
@@ -17,8 +18,10 @@ export const TeamSection = ({
       <div className='flex flex-col gap-6'>
         {ROLES.map((role) => (
           <div key={role} className='flex items-center gap-12.5'>
-            <span className='text-h4 w-8.25 text-neutral-400'>{role}</span>
-            <div className='flex flex-wrap items-center gap-2.5'>
+            <span className='text-h4 w-8.25 text-neutral-400'>
+              {POSITION_LABEL[role]}
+            </span>
+            <div className='no-scrollbar flex w-215 items-center gap-2.5 overflow-x-auto whitespace-nowrap'>
               {teamMembers[role].map((name, index) => (
                 <MemberChip
                   key={`${role}-${index}`}
@@ -27,7 +30,7 @@ export const TeamSection = ({
                   onUpdate={(newName) => onUpdate(role, index, newName)}
                 />
               ))}
-              {teamMembers[role].length < 4 && (
+              {teamMembers[role].length < 5 && (
                 <button
                   type='button'
                   onClick={() => onAdd(role)}

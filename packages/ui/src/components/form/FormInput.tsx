@@ -32,6 +32,8 @@ export const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
           spellCheck='false'
           className={clsx(
             formFieldStyles.field,
+            !error && formFieldStyles.fieldFocus,
+            error && formFieldStyles.errorFocus,
             props.readOnly && formFieldStyles.readOnlyForm,
             error ? formFieldStyles.error : 'border-neutral-200',
             className

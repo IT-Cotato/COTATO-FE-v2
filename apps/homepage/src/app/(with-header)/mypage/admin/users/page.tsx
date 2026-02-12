@@ -1,3 +1,15 @@
+import {SuspenseWrapper} from '@/components/wrappers/SuspenseWrapper';
+import {AdminUsersContainer} from './_containers/AdminUsersContainer';
+
 export default function AdminUsersPage() {
-  return <div>회원 관리</div>;
+  return (
+    <section className='flex flex-col p-12.5'>
+      <div className='flex min-w-275 flex-col gap-6.75'>
+        <h1 className='text-h4'>회원 관리</h1>
+        <SuspenseWrapper>
+          <AdminUsersContainer />
+        </SuspenseWrapper>
+      </div>
+    </section>
+  );
 }

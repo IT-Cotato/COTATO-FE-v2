@@ -2,7 +2,7 @@
 
 import {ReactNode} from 'react';
 import {Button} from '@repo/ui/components/buttons/Button';
-import {Modal} from '@/components/modal/Modal';
+import {Modal} from '@repo/ui/components/modal/Modal';
 
 interface MailConfirmModalProps {
   isOpen: boolean;

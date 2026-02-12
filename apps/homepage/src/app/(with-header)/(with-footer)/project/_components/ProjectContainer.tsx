@@ -1,34 +1,62 @@
 'use client';
 
 import {useSearchParams, useRouter, usePathname} from 'next/navigation';
-import {ProjectSection} from '@/app/(with-header)/(with-footer)/project/_components/ProjectSection';
+import {useCallback, useMemo} from 'react';
+import {ProjectSection} from './ProjectSection';
 import {Dropdown} from '@/components/dropdown/Dropdown';
 import {Button} from '@repo/ui/components/buttons/Button';
 import {ROUTES} from '@/constants/routes';
-import {MOCK_GENERATIONS} from '@/mocks/project/mock-project';
 import {ACTIVITY_MAP} from '@/constants/project/project-activity';
+import {useGenerationQuery} from '@/hooks/queries/useGeneration.query';
+import {Spinner} from '@repo/ui/components/spinner/Spinner';
 
 export const ProjectContainer = () => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  const generations = MOCK_GENERATIONS;
-  const activities = Object.values(ACTIVITY_MAP);
-
-  const genParam =
-    searchParams.get('gen') || generations[0].generationId.toString();
+  const genParam = searchParams.get('gen');
   const actParam = searchParams.get('act') || 'demoday';
 
-  const selectedGenLabel = `${genParam}기`;
-  const selectedActLabel = ACTIVITY_MAP[actParam] || '데모데이';
+  const {data: generations = [], isLoading} = useGenerationQuery();
 
-  const updateQuery = (key: 'gen' | 'act', value: string) => {
-    const params = new URLSearchParams(searchParams.toString());
-    params.set(key, value);
-    params.set('page', '1'); // 필터 변경 시 무조건 1페이지로
-    router.push(`${pathname}?${params.toString()}`);
-  };
+  const sortedGenerations = useMemo(() => {
+    return [...generations].sort((a, b) => b.generationId - a.generationId);
+  }, [generations]);
+
+  const currentGen = useMemo(() => {
+    if (
+      genParam &&
+      sortedGenerations.some((g) => g.generationId.toString() === genParam)
+    ) {
+      return genParam;
+    }
+    return sortedGenerations.length > 0
+      ? sortedGenerations[0].generationId.toString()
+      : null;
+  }, [genParam, sortedGenerations]);
+
+  const selectedGenLabel = currentGen ? `${currentGen}기` : '기수 선택';
+  const selectedActLabel = ACTIVITY_MAP[actParam] || '데모데이';
+  const activityLabels = useMemo(() => Object.values(ACTIVITY_MAP), []);
+
+  const updateQuery = useCallback(
+    (key: 'gen' | 'act', value: string) => {
+      const params = new URLSearchParams(searchParams.toString());
+      params.set(key, value);
+      params.set('page', '1');
+      router.push(`${pathname}?${params.toString()}`);
+    },
+    [searchParams, pathname, router]
+  );
+
+  if (isLoading) {
+    return (
+      <div className='flex min-h-100 items-center justify-center'>
+        <Spinner />
+      </div>
+    );
+  }
 
   return (
     <section className='flex w-full min-w-275 flex-col gap-7.5 py-7.5'>
@@ -37,21 +65,21 @@ export const ProjectContainer = () => {
           <Dropdown
             placeholder='기수'
             value={selectedGenLabel}
-            options={generations.map((g) => `${g.generationId}기`)}
+            options={sortedGenerations.map((g) => `${g.generationId}기`)}
             onSelect={(label) => {
-              const id = label.replace('기', '');
-              updateQuery('gen', id);
+              const gen = label.replace('기', '');
+              updateQuery('gen', gen);
             }}
           />
           <Dropdown
             placeholder='활동'
             value={selectedActLabel}
-            options={activities}
+            options={activityLabels}
             onSelect={(label) => {
-              const code = Object.keys(ACTIVITY_MAP).find(
+              const act = Object.keys(ACTIVITY_MAP).find(
                 (key) => ACTIVITY_MAP[key] === label
               );
-              if (code) updateQuery('act', code);
+              if (act) updateQuery('act', act);
             }}
           />
         </div>
@@ -63,7 +91,15 @@ export const ProjectContainer = () => {
           onClick={() => router.push(ROUTES.ADD_PROJECT())}
         />
       </div>
-      <ProjectSection generation={genParam} activity={actParam} />
+      {sortedGenerations.length === 0 ? (
+        <div className='flex min-h-100 w-full items-center justify-center text-neutral-400'>
+          등록된 기수 정보가 없습니다.
+        </div>
+      ) : (
+        currentGen && (
+          <ProjectSection generation={currentGen} activity={actParam} />
+        )
+      )}
     </section>
   );
 };

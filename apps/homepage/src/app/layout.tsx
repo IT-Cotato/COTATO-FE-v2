@@ -2,6 +2,7 @@ import type {Metadata} from 'next';
 import '@/styles/globals.css';
 import '@repo/ui/styles.css';
 import localFont from 'next/font/local';
+import Providers from '@/app/providers';
 
 export const metadata: Metadata = {
   title: 'COTATO',
@@ -48,7 +49,9 @@ export default function RootLayout({
     <html
       lang='ko'
       className={`${pretendard.variable} ${sebangGothic.variable} ${roboto.variable} antialiased`}>
-      <body>{children}</body>
+      <Providers>
+        <body>{children}</body>
+      </Providers>
     </html>
   );
 }
