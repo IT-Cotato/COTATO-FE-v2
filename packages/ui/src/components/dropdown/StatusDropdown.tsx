@@ -1,4 +1,4 @@
-import {useRef, useState} from 'react';
+import {useEffect, useRef, useState} from 'react';
 import clsx from 'clsx';
 import ChevronDown from '@repo/ui/assets/chevrons/chevron-down.svg';
 import {useClickOutside} from '@repo/ui/hooks/useClickOutside';
@@ -27,6 +27,10 @@ export const StatusDropdown = <T extends string>({
 }: StatusDropdownProps<T>) => {
   const [selectedValue, setSelectedValue] = useState<T>(value);
   const [isOpen, setIsOpen] = useState(false);
+
+  useEffect(() => {
+    setSelectedValue(value);
+  }, [value]);
 
   const wrapperRef = useRef<HTMLDivElement>(null);
   const {bg, label} = config[selectedValue];
