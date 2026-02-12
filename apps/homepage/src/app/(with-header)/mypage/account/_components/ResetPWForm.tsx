@@ -119,14 +119,13 @@ export const ResetPWForm = () => {
           </span>
         )}
       </div>
-      <div className='mt-3 flex justify-end'>
+      <div className='mt-6 flex justify-end'>
         <Button
           type='submit'
           label='비밀번호 재설정'
-          variant='primary'
           backgroundColor='primary'
-          width={160}
-          height={48}
+          width={142}
+          height={42}
           labelTypo='body_l_sb'
           disabled={!isValid || resetPasswordMutation.isPending}
         />
