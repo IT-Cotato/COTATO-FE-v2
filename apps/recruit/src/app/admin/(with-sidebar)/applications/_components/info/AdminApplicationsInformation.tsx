@@ -1,6 +1,6 @@
 'use client';
 
-import SearchIcon from '@/assets/icons/search.svg';
+import SearchIcon from '@repo/ui/icons/search.svg';
 import {GenerationDropdown} from '@/components/dropdown/GenerationDropdown';
 import {Spinner} from '@repo/ui/components/spinner/Spinner';
 import {RecruitmentPeriodSchemaType} from '@/schemas/admin/admin-applications.schema';

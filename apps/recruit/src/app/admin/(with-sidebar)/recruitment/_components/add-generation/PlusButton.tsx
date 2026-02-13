@@ -1,4 +1,4 @@
-import PlusIcon from '@/assets/icons/plus-nobackground.svg';
+import PlusIcon from '@repo/ui/assets/icons/plus-nobackground.svg';
 
 export const PlusButton = ({disabled}: {disabled?: boolean}) => {
   return (
