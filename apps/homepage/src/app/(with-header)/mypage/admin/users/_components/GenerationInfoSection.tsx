@@ -1,6 +1,6 @@
 'use client';
 
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import {CustomInput} from './calendar/CustomInput';
@@ -9,19 +9,28 @@ import RightArrow from '@/assets/arrows/arrow-right.svg';
 
 interface GenerationInfoSectionProps {
   selectedGeneration: number;
+  initialStartDate?: Date | null;
+  initialEndDate?: Date | null;
 }
 
 export const GenerationInfoSection = ({
   selectedGeneration,
+  initialStartDate = null,
+  initialEndDate = null,
 }: GenerationInfoSectionProps) => {
   // TODO: API 연동 시 서버 데이터로 교체
-  const [savedStartDate, setSavedStartDate] = useState<Date | null>(null);
-  const [savedEndDate, setSavedEndDate] = useState<Date | null>(null);
-  
+  const [savedStartDate, setSavedStartDate] = useState<Date | null>(initialStartDate);
+  const [savedEndDate, setSavedEndDate] = useState<Date | null>(initialEndDate);
+
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
-  
+
   const [isEditing, setIsEditing] = useState(false);
+
+  useEffect(() => {
+    setSavedStartDate(initialStartDate);
+    setSavedEndDate(initialEndDate);
+  }, [initialStartDate, initialEndDate]);
 
   const handleEdit = () => {
     setStartDate(savedStartDate);
