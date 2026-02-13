@@ -2,7 +2,7 @@
 
 import {useRouter, useSearchParams} from 'next/navigation';
 import {TermsTab} from '@/app/(with-header)/mypage/terms/_components/TermsTab';
-import {TermTabType} from '@/constants/mypage-mem/terms';
+import {TermTabType} from '@/constants/mypage-mem/term/terms';
 import {ServiceTermsContainer} from '@/app/(with-header)/mypage/terms/_containers/ServiceTermsContainer';
 import {PrivacyPolicyContainer} from '@/app/(with-header)/mypage/terms/_containers/PrivacyPolicyContainer';
 import {ClubRulesContainer} from '@/app/(with-header)/mypage/terms/_containers/ClubRulesContainer';

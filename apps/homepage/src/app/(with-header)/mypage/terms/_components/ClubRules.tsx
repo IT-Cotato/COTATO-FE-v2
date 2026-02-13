@@ -1,4 +1,4 @@
-import {CLUB_RULES} from '@/constants/mypage-mem/termsData';
+import {CLUB_RULES} from '@/constants/mypage-mem/term/ClubRulesData';
 
 export const ClubRules = () => {
   return (

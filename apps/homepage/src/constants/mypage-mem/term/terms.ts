@@ -1,8 +1,15 @@
+import {ReactNode} from 'react';
+
 export type TermTabType = 'serviceTerms' | 'privacyPolicy' | 'clubRules';
 
 interface TermMenu {
   id: TermTabType;
   label: string;
+}
+
+export interface TermsSection {
+  title: string;
+  content: ReactNode;
 }
 
 export const TERMS_MENU: TermMenu[] = [

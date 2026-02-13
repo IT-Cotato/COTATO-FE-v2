@@ -1,4 +1,4 @@
-import {SERVICE_TERMS} from '@/constants/mypage-mem/termsData';
+import {SERVICE_TERMS} from '@/constants/mypage-mem/term/ServiceTermsData';
 
 export const ServiceTerms = () => {
   return (
