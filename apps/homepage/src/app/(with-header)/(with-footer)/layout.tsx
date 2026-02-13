@@ -8,7 +8,7 @@ export default function WithFooterLayout({
   return (
     <div>
       <main className='w-full flex-1'>{children}</main>
-      <Footer />
+      <Footer isRecruit={false} />
     </div>
   );
 }

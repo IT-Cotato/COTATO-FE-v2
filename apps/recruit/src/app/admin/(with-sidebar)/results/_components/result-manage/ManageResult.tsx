@@ -3,7 +3,7 @@
 import {useAdminPassStatusQuery} from '@/hooks/queries/useAdminResult.query';
 
 import {GenerationDropdown} from '@/components/dropdown/GenerationDropdown';
-import {Spinner} from '@/components/ui/Spinner';
+import {Spinner} from '@repo/ui/components/spinner/Spinner';
 import {STATUS_LABEL_MAP} from '@/constants/admin/admin-result';
 import {useGenerationStore} from '@/store/useGenerationStore';
 import {ResultTable} from '@/app/admin/(with-sidebar)/results/_components/result-manage/ResultTable';

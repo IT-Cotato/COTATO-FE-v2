@@ -32,7 +32,8 @@ export type ColorKey =
   | 'active'
   | 'disabled'
   | 'alert'
-  | 'white';
+  | 'white'
+  | 'chip';
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: ButtonVariant;

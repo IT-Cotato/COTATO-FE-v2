@@ -8,7 +8,7 @@ import {
   RESULT_VALUE_MAP,
 } from '@/constants/admin/admin-applications';
 import {ApplicantsPageType} from '@/schemas/admin/admin-applications.schema';
-import {Spinner} from '@/components/ui/Spinner';
+import {Spinner} from '@repo/ui/components/spinner/Spinner';
 import {useUpdateApplicationPassStatus} from '@/hooks/mutations/useAdminApplications.mutation';
 import {Pagination} from '@repo/ui/components/pagination/Pagination';
 

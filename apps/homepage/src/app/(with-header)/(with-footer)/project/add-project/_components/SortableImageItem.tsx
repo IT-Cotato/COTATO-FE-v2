@@ -42,7 +42,7 @@ export const SortableImageItem = ({img, onSelect}: SortableImageItemProps) => {
         />
         <div className='pointer-events-none absolute inset-0 z-10 flex items-center justify-center'>
           <div className='flex h-14 w-15.75 items-center justify-center rounded-[10px] bg-[rgba(158,158,158,0.60)]'>
-            <span className='text-h4 text-neutral-50'>{img.order}</span>
+            <span className='text-h4 text-neutral-50'>{img.order + 1}</span>
           </div>
         </div>
       </div>

@@ -7,7 +7,7 @@ import {RecruitmentActive} from '@/app/(home)/_components/RecruitmentActive';
 import {RecruitmentInactive} from '@/app/(home)/_components/RecruitmentInactive';
 import {SubmissionCompleteModal} from '@/components/modal/SubmissionCompleteModal';
 import {SubmissionIncompleteModal} from '@/components/modal/SubmissionIncompleteModal';
-import {Spinner} from '@/components/ui/Spinner';
+import {Spinner} from '@repo/ui/components/spinner/Spinner';
 
 export const HomeClient = () => {
   const searchParams = useSearchParams();

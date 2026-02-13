@@ -7,7 +7,7 @@ import {MailHeader} from './MailHeader';
 import {MailField} from './MailField';
 import {MailSendFooter} from './MailSendFooter';
 import {MailConfirmModal} from '@/components/modal/MailConfirmModal';
-import {Spinner} from '@/components/ui/Spinner';
+import {Spinner} from '@repo/ui/components/spinner/Spinner';
 import {useGenerationStore} from '@/store/useGenerationStore';
 
 interface ManageMailProps {

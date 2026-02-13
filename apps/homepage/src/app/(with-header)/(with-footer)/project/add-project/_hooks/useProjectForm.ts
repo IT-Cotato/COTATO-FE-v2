@@ -6,10 +6,7 @@ export const useProjectForm = (
   teamMembers: TeamState,
   initialData?: ProjectDetail
 ) => {
-  // initialData가 있으면 해당 값을, 없으면 빈 값을 초기값으로 설정
-  const [projectName, setProjectName] = useState(
-    initialData?.projectName || ''
-  );
+  const [name, setName] = useState(initialData?.name || '');
   const [shortDescription, setShortDescription] = useState(
     initialData?.shortDescription || ''
   );
@@ -22,79 +19,104 @@ export const useProjectForm = (
   const [endDate, setEndDate] = useState<Date | null>(
     initialData?.endDate ? new Date(initialData.endDate) : null
   );
-  const [projectIntroduction, setProjectIntroduction] = useState(
-    initialData?.projectIntroduction || ''
-  );
-  const [uploadedImages, setUploadedImages] = useState<ImageInfo[]>(
-    initialData?.imageInfos.map((img) => ({
-      ...img,
-      id: img.s3Key,
-    })) || []
+  const [introduction, setIntroduction] = useState(
+    initialData?.introduction || ''
   );
 
-  // initialData가 바뀔 때 폼의 모든 입력값 동기화
+  const mapImageInfos = (
+    imageInfos?: ProjectDetail['imageInfos']
+  ): ImageInfo[] =>
+    imageInfos?.map((img) => {
+      let s3KeyFromUrl = '';
+      try {
+        const fullPath = new URL(img.imageUrl).pathname;
+        s3KeyFromUrl = fullPath.startsWith('/')
+          ? fullPath.substring(1)
+          : fullPath;
+      } catch {
+        s3KeyFromUrl = img.imageUrl ?? '';
+      }
+
+      return {
+        id:
+          img?.imageId?.toString() ??
+          `temp-${Math.random().toString(36).substring(2, 11)}`,
+        s3Key: s3KeyFromUrl,
+        publicUrl: img?.imageUrl ?? '',
+        order: img?.imageOrder ?? 0,
+      };
+    }) || [];
+
+  const [uploadedImages, setUploadedImages] = useState<ImageInfo[]>(
+    mapImageInfos(initialData?.imageInfos)
+  );
+
   useEffect(() => {
-    setProjectName(initialData?.projectName || '');
-    setShortDescription(initialData?.shortDescription || '');
-    setProjectLink(initialData?.projectLink || '');
-    setStartDate(
-      initialData?.startDate ? new Date(initialData.startDate) : null
-    );
-    setEndDate(initialData?.endDate ? new Date(initialData.endDate) : null);
-    setProjectIntroduction(initialData?.projectIntroduction || '');
-    setUploadedImages(
-      initialData?.imageInfos.map((img) => ({
-        ...img,
-        id: img.s3Key,
-      })) || []
-    );
+    if (initialData) {
+      setName(initialData.name || '');
+      setShortDescription(initialData.shortDescription || '');
+      setProjectLink(initialData.projectLink || '');
+      setStartDate(
+        initialData.startDate ? new Date(initialData.startDate) : null
+      );
+      setEndDate(initialData.endDate ? new Date(initialData.endDate) : null);
+      setIntroduction(initialData.introduction || '');
+      setUploadedImages(mapImageInfos(initialData.imageInfos));
+    }
   }, [initialData]);
 
   const isFormValid = useMemo(() => {
-    const hasBaseInfo =
-      [projectName, shortDescription, projectLink, projectIntroduction].every(
-        (val) => val.trim() !== ''
-      ) &&
+    const hasBaseInfo = [
+      name,
+      shortDescription,
+      projectLink,
+      introduction,
+    ].every((val) => val.trim() !== '');
+
+    const hasRequiredAssets = !!(
       startDate &&
       endDate &&
-      uploadedImages.length > 0;
+      uploadedImages.length > 0
+    );
 
     const teamValues = Object.values(teamMembers);
     const hasValidMembers =
-      teamValues.every((members: string[]) => members.length > 0) &&
+      teamValues.every((members) => members.length > 0) &&
       teamValues
         .flat()
-        .every((name: string) => name.trim() !== '' && name !== '감직이');
+        .every(
+          (memberName) => memberName.trim() !== '' && memberName !== '감직이'
+        );
 
-    return !!(hasBaseInfo && hasValidMembers);
+    return !!(hasBaseInfo && hasRequiredAssets && hasValidMembers);
   }, [
-    projectName,
+    name,
     shortDescription,
     projectLink,
+    introduction,
     startDate,
     endDate,
-    projectIntroduction,
     uploadedImages,
     teamMembers,
   ]);
 
   return {
     states: {
-      projectName,
+      name,
       shortDescription,
       projectLink,
       startDate,
       endDate,
-      projectIntroduction,
+      introduction,
       uploadedImages,
     },
     setters: {
-      setProjectName,
+      setName,
       setShortDescription,
       setProjectLink,
       setStartDate,
       setEndDate,
-      setProjectIntroduction,
+      setIntroduction,
       setUploadedImages,
     },
     isFormValid,

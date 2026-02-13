@@ -15,12 +15,17 @@
     "@dnd-kit/sortable": "^10.0.0",
     "@dnd-kit/utilities": "^3.2.2",
     "@repo/ui": "workspace:*",
+    "@tanstack/react-query": "^5.90.12",
+    "@use-funnel/browser": "^0.0.16",
+    "@use-funnel/next": "^0.0.22",
+    "axios": "^1.13.2",
     "framer-motion": "^12.31.0",
     "next": "16.1.0",
     "react": "^19.2.3",
     "react-datepicker": "^9.1.0",
     "react-dom": "^19.2.3",
-    "zod": "^4.3.2"
+    "zod": "^4.3.2",
+    "zustand": "^5.0.9"
   },
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",

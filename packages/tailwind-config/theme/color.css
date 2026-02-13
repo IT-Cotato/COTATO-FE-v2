@@ -1,6 +1,7 @@
 @theme static {
   /* primary */
   --color-primary: #f87d02;
+  --color-primary-30: #fff0bd;
 
   /* secondary */
   --color-secondary: #ffb800;
@@ -37,6 +38,9 @@
   --color-alert: #e5484d;
 
   --color-white: #ffffff;
+
+  /* chip */
+  --color-chip: #68ca3a;
 
   /* z-index */
   --z-index-header: 102;

@@ -8,7 +8,8 @@ import {ROUTES} from '@/constants/routes';
 import {AboutUsDescription} from '@/app/(with-header)/(with-footer)/about-us/_components/AboutUsDescription';
 
 export const AboutUsProjectContainer = () => {
-  const [index, setIndex] = useState<number>(0);
+  const middleIndex = Math.floor(PROJECTS.length / 2);
+  const [index, setIndex] = useState<number>(middleIndex);
   const router = useRouter();
 
   const handleProjectMoreViewClick = () => {
@@ -104,47 +105,47 @@ export const AboutUsProjectContainer = () => {
 const PROJECTS = [
   {
     id: 1,
-    title: '프로젝트 A',
-    imageSrc: 'https://picsum.photos/400/600?random=1',
+    title: 'timetile',
+    imageSrc: '/images/project/timetile.png',
   },
   {
     id: 2,
-    title: '프로젝트 B',
-    imageSrc: 'https://picsum.photos/400/600?random=2',
+    title: 'StageMate',
+    imageSrc: '/images/project/stagemate.png',
   },
   {
     id: 3,
-    title: '프로젝트 C',
-    imageSrc: 'https://picsum.photos/400/600?random=3',
+    title: 'Troublelog',
+    imageSrc: '/images/project/troublelog.png',
   },
   {
     id: 4,
-    title: '프로젝트 D',
-    imageSrc: 'https://picsum.photos/400/600?random=4',
+    title: 'Kampus',
+    imageSrc: '/images/project/kampus.png',
   },
   {
     id: 5,
-    title: '프로젝트 E',
-    imageSrc: 'https://picsum.photos/400/600?random=5',
+    title: 'T-LINK',
+    imageSrc: '/images/project/t-link.png',
   },
   {
     id: 6,
-    title: '프로젝트 F',
-    imageSrc: 'https://picsum.photos/400/600?random=6',
+    title: 'Ripple',
+    imageSrc: '/images/project/ripple.png',
   },
   {
     id: 7,
-    title: '프로젝트 G',
-    imageSrc: 'https://picsum.photos/400/600?random=7',
+    title: 'o.dit',
+    imageSrc: '/images/project/odit.png',
   },
   {
     id: 8,
-    title: '프로젝트 H',
-    imageSrc: 'https://picsum.photos/400/600?random=8',
+    title: 'Shortcap',
+    imageSrc: '/images/project/shortcap.png',
   },
   {
     id: 9,
-    title: '프로젝트 I',
-    imageSrc: 'https://picsum.photos/400/600?random=9',
+    title: 'syncspot',
+    imageSrc: '/images/project/syncspot.png',
   },
 ];

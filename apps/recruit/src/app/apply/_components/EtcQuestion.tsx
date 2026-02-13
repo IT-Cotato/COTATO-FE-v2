@@ -14,7 +14,7 @@ import {EtcFieldConfig} from '@/schemas/apply/apply-type';
 import {ApplyFormData} from '@/schemas/apply/apply-schema';
 import {useGetEtcQuestionsQuery} from '@/hooks/queries/useApply.query';
 import {StepIndicator} from '@/components/navigation/StepIndicator';
-import {Spinner} from '@/components/ui/Spinner';
+import {Spinner} from '@repo/ui/components/spinner/Spinner';
 import {formFieldStyles} from '@repo/ui/components/form/form.styles';
 
 export const EtcInfo = ({
@@ -121,7 +121,7 @@ export const EtcInfo = ({
             key={name}
             label={label ?? ''}
             placeholder={placeholder}
-            maxLength={maxLength}
+            maxLength={name === 'unavailableInterviewTimes' ? 200 : maxLength}
             readOnly={readOnly}
             defaultValue={defaultValue}
             currentLength={name ? (watch(name as any) || '').length : 0}
@@ -232,9 +232,7 @@ export const EtcInfo = ({
         {etcFields.map((field, idx) => {
           if (field.type === 'row' && 'row' in field) {
             return (
-              <div
-                key={`row-${idx}`}
-                className='flex w-full flex-col gap-4 md:flex-row'>
+              <div key={`row-${idx}`} className='flex w-full flex-row gap-4'>
                 {field.row.map(renderField)}
               </div>
             );
@@ -270,6 +268,9 @@ export const EtcInfo = ({
           type='button'
           onClick={onSave}
         />
+        <p className='text-alert -mt-4.5 text-center'>
+          * 제출 후 마이페이지에서 확인 가능합니다.
+        </p>
         {showSaveSuccess && (
           <p className='text-primary text-center'>저장이 완료되었습니다</p>
         )}

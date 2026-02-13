@@ -193,7 +193,7 @@ export const BasicInfo = ({
                   required
                 />
                 {name === 'part' && (
-                  <p className='text-body-l mt-2 text-neutral-500'>
+                  <p className='text-body-l text-alert mt-2'>
                     * 파트 변경 시 업로드한 파일이 초기화됩니다.
                   </p>
                 )}
@@ -250,6 +250,7 @@ export const BasicInfo = ({
           error={errors[name]?.message ?? ''}
           className='w-full'
           required
+          maxLength={name === 'department' ? 30 : undefined}
         />
       </div>
     );
@@ -265,7 +266,7 @@ export const BasicInfo = ({
           const key =
             'row' in item ? item.row.map((f) => f.name).join('-') : item.name;
           return (
-            <div key={key} className='flex w-full flex-col gap-6 md:flex-row'>
+            <div key={key} className='flex w-full flex-row gap-6'>
               {'row' in item
                 ? item.row.map((field) => renderField(field))
                 : renderField(item)}

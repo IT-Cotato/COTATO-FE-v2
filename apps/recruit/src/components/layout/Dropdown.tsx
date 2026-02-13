@@ -1,6 +1,7 @@
 'use client';
 
 import {useState, useRef, useEffect} from 'react';
+import {usePathname} from 'next/navigation';
 import clsx from 'clsx';
 
 type DropdownProps = {
@@ -12,6 +13,11 @@ type DropdownProps = {
 export const Dropdown = ({trigger, children, className}: DropdownProps) => {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
+  const pathname = usePathname();
+
+  useEffect(() => {
+    setOpen(false);
+  }, [pathname]);
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
@@ -25,7 +31,9 @@ export const Dropdown = ({trigger, children, className}: DropdownProps) => {
 
   return (
     <div className='relative inline-block' ref={ref}>
-      <div onClick={() => setOpen((prev) => !prev)}>{trigger}</div>
+      <div onClick={() => setOpen((prev) => !prev)} className='cursor-pointer'>
+        {trigger}
+      </div>
       {open && (
         <div className={clsx('z-dropdown absolute top-full left-0', className)}>
           {children}

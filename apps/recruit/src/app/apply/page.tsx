@@ -1,5 +1,5 @@
 import {ProtectedRoute} from '@/components/auth/ProtectedRoute';
-import {Spinner} from '@/components/ui/Spinner';
+import {Spinner} from '@repo/ui/components/spinner/Spinner';
 import {SuspenseWrapper} from '@/components/wrappers/SuspenseWrapper';
 import ApplyPageContent from '@/app/apply/_components/ApplyPageContent';
 

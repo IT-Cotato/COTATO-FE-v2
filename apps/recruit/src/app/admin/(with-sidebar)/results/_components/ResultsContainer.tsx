@@ -5,7 +5,7 @@ import {ManageResult} from './result-manage/ManageResult';
 import {ManageResultMail} from './mail-manage/ManageResultMail';
 import {useGenerationStore} from '@/store/useGenerationStore';
 import {useRecruitmentStatusQuery} from '@/hooks/queries/useRecruitmentStatus.query';
-import {Spinner} from '@/components/ui/Spinner';
+import {Spinner} from '@repo/ui/components/spinner/Spinner';
 import {useAdminGenerationsQuery} from '@/hooks/queries/useAdminGeneration.query';
 
 export const ResultsContainer = () => {
