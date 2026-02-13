@@ -70,7 +70,7 @@ export const ResetPWForm = () => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className='flex min-w-[1100px] flex-col gap-[26px]'>
+      className='flex min-w-275 flex-col gap-6.5'>
       <OnboardingFormPassword
         variant='mypage'
         label='현재 비밀번호'

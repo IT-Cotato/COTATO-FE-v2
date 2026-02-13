@@ -27,7 +27,7 @@ export const DeleteCheckbox = ({
         }
       }}
       className={clsx(
-        'flex aspect-square h-6 w-6 shrink-0 flex-col items-center justify-center rounded-[2px] transition-colors select-none',
+        'flex aspect-square h-6 w-6 shrink-0 flex-col items-center justify-center rounded-xs transition-colors select-none',
         {
           'cursor-pointer': !disabled,
           'cursor-default opacity-50': disabled,

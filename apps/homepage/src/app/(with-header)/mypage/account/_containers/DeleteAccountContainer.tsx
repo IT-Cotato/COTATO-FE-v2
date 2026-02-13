@@ -8,7 +8,7 @@ export const DeleteAccountContainer = () => {
   const router = useRouter();
   return (
     <div className='flex items-end justify-between self-stretch'>
-      <div className='flex h-[94px] w-[718px] flex-col gap-1'>
+      <div className='flex h-23.5 w-179.5 flex-col gap-1'>
         <h3 className='text-h3 text-neutral-700'>회원 탈퇴</h3>
         <span className='text-h5 text-neutral-600'>
           탈퇴 신청 시 해당 계정은 30일동안 비활성화 상태로 전환됩니다.

@@ -21,8 +21,8 @@ export const DeleteAccount = () => {
   };
 
   return (
-    <div className='mt-[14px] flex flex-col gap-7.5'>
-      <div className='flex flex-col gap-[39px]'>
+    <div className='mt-3.5 flex flex-col gap-7.5'>
+      <div className='flex flex-col gap-9.75'>
         <div className='flex items-center gap-5'>
           <BackIcon
             className='h-7 w-7 cursor-pointer text-neutral-700'
@@ -30,10 +30,10 @@ export const DeleteAccount = () => {
           />
           <h3 className='text-h3 text-neutral-700'>회원 탈퇴</h3>
         </div>
-        <div className='flex flex-col gap-[45px] rounded-[10px] border-[2px] border-neutral-200 px-10 py-[33px]'>
-          <div className='flex flex-col gap-[21px]'>
+        <div className='flex flex-col gap-11.25 rounded-[10px] border-2 border-neutral-200 px-10 py-8.25'>
+          <div className='flex flex-col gap-5.25'>
             <h4 className='text-h4 text-neutral-700'>탈퇴 안내</h4>
-            <div className='text-h5 flex flex-col gap-[28px] leading-relaxed text-neutral-600'>
+            <div className='text-h5 flex flex-col gap-7 leading-relaxed text-neutral-600'>
               <p>
                 회원님께서 COTATO 동아리 페이지의 회원 탈퇴를 진행하실 경우,
                 아래 사항에 따라 계정이 비활성화되며 30일 후에는 모든 정보가
@@ -82,7 +82,7 @@ export const DeleteAccount = () => {
               </div>
             </div>
           </div>
-          <div className='flex items-center gap-[10px]'>
+          <div className='flex items-center gap-2.5'>
             <DeleteCheckbox checked={isChecked} onChange={setIsChecked} />
             <span className='text-h5 text-neutral-600'>
               안내사항을 모두 확인하였으며, 이에 동의합니다.

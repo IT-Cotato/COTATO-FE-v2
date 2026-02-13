@@ -3,7 +3,7 @@ import {ResetPWContainer} from '@/app/(with-header)/mypage/account/_containers/R
 
 export const AccountContainer = () => {
   return (
-    <div className='flex flex-col gap-[50px]'>
+    <div className='flex flex-col gap-12.5'>
       <ResetPWContainer />
       <DeleteAccountContainer />
     </div>
