@@ -2,7 +2,7 @@ import {CLUB_RULES} from '@/constants/mypage-mem/term/ClubRulesData';
 
 export const ClubRules = () => {
   return (
-    <div className='flex h-full w-full flex-col items-start gap-5 py-[38.5px] pl-[40px] text-neutral-800'>
+    <div className='flex h-full w-full flex-col items-start gap-5 py-[38.5px] pl-10 text-neutral-800'>
       <h4 className='text-h4'>
         IT 연합 동아리 코테이토 회칙
         <br />
@@ -14,7 +14,7 @@ export const ClubRules = () => {
           {section.content}
         </div>
       ))}
-      <div className='h-[38.5px] w-full flex-shrink-0' aria-hidden='true' />
+      <div className='h-[38.5px] w-full shrink-0' aria-hidden='true' />
     </div>
   );
 };

@@ -102,25 +102,25 @@ export const CLUB_RULES: TermsSection[] = [
     content: (
       <div className='text-body-l pl-3'>
         1. 모든 정규 일정에 관하여 다음과 같은 조항이 적용된다. <br />
-        <span className='block pl-[15px]'>
+        <span className='block pl-3.75'>
           a. 결석 1회 시 벌점 7점, 지각 1회 시 벌점 4점이 부과된다.
         </span>
-        <span className='block pl-[15px]'>
+        <span className='block pl-3.75'>
           b. 불성실하게 참여할 시 운영진의 재량으로 벌점 3점을 부과할 수 있다.
         </span>
-        <span className='block pl-[15px]'>
+        <span className='block pl-3.75'>
           c. 벌점 15점 이상 누적 시 동아리에서 퇴출 조치한다.
         </span>
         2. 정규 세션의 출석은 세션시작 10분 전부터 세션 시작 정각까지로 정한다.{' '}
         <br />
-        <span className='block pl-[15px]'>
+        <span className='block pl-3.75'>
           a. 세션 시작 후 10분 사이에 출석할 경우 지각으로 간주한다.
         </span>
-        <span className='block pl-[15px]'>
+        <span className='block pl-3.75'>
           b. 세션 시작 후 10분 이후에는 무단 결석으로 간주하며, 결석 1회로
           처리한다.
         </span>
-        <span className='block pl-[15px]'>
+        <span className='block pl-3.75'>
           c. 별도의 사전 고지 없이 세션에 참석하지 않은 경우 ‘완전 무단
           결석’으로 간주하며, 결석 2회로 처리한다.
         </span>
@@ -128,7 +128,7 @@ export const CLUB_RULES: TermsSection[] = [
         참여하지 않게 된 회원은 퇴출 조치한다. <br />
         4. 다음 항목은 경조사 및 코로나 등 불가피한 사유를 제외하고 반드시
         참석해야 하며, 불참 시 퇴출 조치한다. <br />
-        <span className='block pl-[15px]'>a. OT / b. 해커톤</span>
+        <span className='block pl-3.75'>a. OT / b. 해커톤</span>
         5. 스터디 또는 프로젝트를 중도 탈퇴한 회원에게는 벌점 7점을 부과한다.
         단, 운영진이 해당 팀의 지속이 어렵다고 판단할 경우 내부 투표를 통해
         결정하며 이 경우 벌점은 부과되지 않는다. <br />

@@ -48,15 +48,15 @@ export const PRIVACY_POLICY: TermsSection[] = [
         개인정보를 수집할 때 동의받은 보유·이용기간 내에서 개인정보를
         처리·보유합니다. <br />
         2. 구체적인 보유 기간은 다음과 같습니다. <br />
-        <span className='block pl-[15px]'>
+        <span className='block pl-3.75'>
           - 회원가입 및 동아리 활동 관리: 동아리 활동 종료 또는 회원 탈퇴 시까지
           보유·이용 후 지체 없이 파기
         </span>
-        <span className='block pl-[15px]'>
+        <span className='block pl-3.75'>
           - 서비스 이용 기록, 접속 로그 등: 서비스 안정성 확보 및 이용 통계
           분석을 위하여 수집일로부터 1년간 보관 후 파기
         </span>
-        <span className='block pl-[15px]'>
+        <span className='block pl-3.75'>
           - 실시간 GPS 위치 정보: 출석 확인 목적 달성 후 즉시 파기하며 별도로
           저장하지 않습니다.
         </span>
@@ -71,14 +71,14 @@ export const PRIVACY_POLICY: TermsSection[] = [
         않습니다. <br />
         2. 다만, 다음 각 호의 경우에는 정보주체의 동의를 얻어 개인정보를
         제3자에게 제공할 수 있습니다. <br />
-        <span className='block pl-[15px]'>- 제공받는 자: Mait</span>
-        <span className='block pl-[15px]'>
+        <span className='block pl-3.75'>- 제공받는 자: Mait</span>
+        <span className='block pl-3.75'>
           - 제공 목적: Mait 계정 자동 생성 및 로그인 연동, 퀴즈 서비스 제공
         </span>
-        <span className='block pl-[15px]'>
+        <span className='block pl-3.75'>
           - 제공 항목: 이메일(아이디), 비밀번호(또는 로그인에 필요한 인증정보)
         </span>
-        <span className='block pl-[15px]'>
+        <span className='block pl-3.75'>
           - 보유·이용 기간: 코테이토 회원 탈퇴 시 또는 Mait 서비스 종료 시까지
         </span>
         3. 정보주체는 개인정보 제3자 제공에 대한 동의를 거부할 권리가 있으며,
@@ -103,7 +103,7 @@ export const PRIVACY_POLICY: TermsSection[] = [
       <div className='text-body-l pl-3'>
         1. 정보주체(회원)는 동아리에 대해 언제든지 다음 각 호의 개인정보 보호
         관련 권리를 행사할 수 있습니다. <br />
-        <span className='block pl-[15px]'>
+        <span className='block pl-3.75'>
           a. 개인정보 열람 요구 <br />
           b. 개인정보 정정·삭제 요구 <br />
           c. 개인정보 처리정지 요구
@@ -128,10 +128,10 @@ export const PRIVACY_POLICY: TermsSection[] = [
         2. 파기 절차: 파기 사유가 발생한 개인정보를 선정하고, 개인정보
         보호책임자의 승인을 받아 파기합니다. <br />
         3. 파기 방법 <br />
-        <span className='block pl-[15px]'>
+        <span className='block pl-3.75'>
           - 전자적 파일: 복구·재생이 불가능한 기술적 방법을 사용하여 삭제
         </span>
-        <span className='block pl-[15px]'>- 종이 문서: 파쇄 또는 소각</span>
+        <span className='block pl-3.75'>- 종이 문서: 파쇄 또는 소각</span>
       </div>
     ),
   },
@@ -169,10 +169,10 @@ export const PRIVACY_POLICY: TermsSection[] = [
         1. 동아리는 개인정보 처리에 관한 업무를 총괄하여 책임지고, 개인정보 관련
         문의 및 불만 처리 등을 위하여 개인정보 보호책임자를 지정하고 있습니다.{' '}
         <br />
-        <span className='block pl-[15px]'>
+        <span className='block pl-3.75'>
           - 개인정보 보호책임자: 임준서 (코테이토 회장)
         </span>
-        <span className='block pl-[15px]'>
+        <span className='block pl-3.75'>
           - 연락처: 이메일 itcotato@gmail.com, 코테이토 카카오톡 채널
         </span>
         2. 정보주체는 코테이토의 서비스를 이용하면서 발생한 모든 개인정보 보호
@@ -187,16 +187,16 @@ export const PRIVACY_POLICY: TermsSection[] = [
       <div className='text-body-l pl-3'>
         정보주체는 개인정보침해로 인한 구제를 받기 위하여 아래 기관에 분쟁
         해결이나 상담을 신청할 수 있습니다. <br />
-        <span className='block pl-[15px]'>
+        <span className='block pl-3.75'>
           - 개인정보분쟁조정위원회: 1833-6972 (www.kopico.go.kr)
         </span>
-        <span className='block pl-[15px]'>
+        <span className='block pl-3.75'>
           - 개인정보침해신고센터: (국번없이) 118 (privacy.kisa.or.kr)
         </span>
-        <span className='block pl-[15px]'>
+        <span className='block pl-3.75'>
           - 대검찰청 사이버수사과: (국번없이) 1301 (www.spo.go.kr)
         </span>
-        <span className='block pl-[15px]'>
+        <span className='block pl-3.75'>
           - 경찰청 사이버수사국: (국번없이) 182 (ecrm.cyber.go.kr)
         </span>
       </div>
@@ -211,7 +211,7 @@ export const PRIVACY_POLICY: TermsSection[] = [
         2. 동아리가 개인정보 처리방침을 변경하는 경우, 변경 내용 및 시행일자를
         명시하여 시행 7일 전부터 카카오톡 오픈채팅방 등을 통하여 공지합니다.
         <br />
-        <span className='block pl-[15px]'>
+        <span className='block pl-3.75'>
           다만, 수집하는 개인정보 항목의 변경 등 중요한 내용의 변경인 경우에는
           최소 30일 전에 공지합니다.
         </span>

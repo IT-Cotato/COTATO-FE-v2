@@ -39,13 +39,13 @@ export const SERVICE_TERMS: TermsSection[] = [
         약관을 개정할 수 있습니다. <br />
         3. 동아리가 약관을 개정하는 경우, 개정 내용과 적용일자를 명시하여 적용일
         7일 전까지 이메일 등을 통해 공지합니다. <br />
-        <span className='block pl-[15px]'>
+        <span className='block pl-3.75'>
           다만 회원에게 불리한 변경 또는 중요한 사항의 변경인 경우에는 최소 30일
           전에 공지합니다.
         </span>
         4. 동아리가 변경 약관을 공지하면서 “변경 약관 시행일까지 거부 의사를
         표시하지 않으면 동의한 것으로 본다”는 내용을 명시하였음에도 <br />
-        <span className='block pl-[15px]'>
+        <span className='block pl-3.75'>
           회원이 명시적으로 거부 의사를 표시하지 않은 경우, 회원은 변경 약관에
           동의한 것으로 봅니다.
         </span>
@@ -66,16 +66,16 @@ export const SERVICE_TERMS: TermsSection[] = [
         통지합니다. <br />
         3. 동아리는 다음 각 호에 해당하는 경우 회원가입 신청을 승낙하지 않거나,
         사후에 이용계약을 해지할 수 있습니다. <br />
-        <span className='block pl-[15px]'>
+        <span className='block pl-3.75'>
           a. 가입 신청 시 허위 또는 부정확한 정보를 기재한 경우
         </span>
-        <span className='block pl-[15px]'>
+        <span className='block pl-3.75'>
           b. 동아리의 운영 목적에 부합하지 않거나 선발 과정에서 탈락한 경우
         </span>
-        <span className='block pl-[15px]'>
+        <span className='block pl-3.75'>
           c. 이메일 인증 등 동아리가 정한 인증 절차를 완료하지 않은 경우
         </span>
-        <span className='block pl-[15px]'>
+        <span className='block pl-3.75'>
           d. 기타 관련 법령 또는 동아리의 내부 규정을 위반한 사실이 있는 경우
         </span>
       </div>
@@ -86,19 +86,19 @@ export const SERVICE_TERMS: TermsSection[] = [
     content: (
       <div className='text-body-l pl-3'>
         1. 동아리가 회원에게 제공하는 서비스는 다음 각 호와 같습니다. <br />
-        <span className='block pl-[15px]'>
+        <span className='block pl-3.75'>
           - 동아리 소개 및 리크루팅 정보 제공
         </span>
-        <span className='block pl-[15px]'>
+        <span className='block pl-3.75'>
           - 마이페이지를 통한 활동 내역 및 출석 관리
         </span>
-        <span className='block pl-[15px]'>
+        <span className='block pl-3.75'>
           - Mait 연동을 통한 퀴즈 서비스 제공
         </span>
         2. 회원은 별도의 가입 절차 없이 코테이토 계정 정보를 통해 Mait 서비스를
         이용할 수 있습니다. 이 경우 동아리는 개인정보 처리방침 및 관련 법령에
         따라 회원의 동의를 얻어, <br />
-        <span className='block pl-[15px]'>
+        <span className='block pl-3.75'>
           가입 시 입력한 이메일 및 비밀번호(또는 로그인에 필요한 인증정보)를
           Mait에 제공하여 계정을 생성·연동할 수 있습니다.
         </span>
@@ -115,20 +115,20 @@ export const SERVICE_TERMS: TermsSection[] = [
         또는 일부를 변경할 수 있습니다. <br />
         2. 동아리는 다음 각 호에 해당하는 경우 서비스의 전부 또는 일부를
         일시적으로 중단할 수 있습니다. <br />
-        <span className='block pl-[15px]'>
+        <span className='block pl-3.75'>
           a. 서비스 설비의 보수·점검·교체·고장 등으로 인한 부득이한 경우
         </span>
-        <span className='block pl-[15px]'>
+        <span className='block pl-3.75'>
           b. 전기통신사업자의 서비스 중지 또는 장애 등으로 정상적인 서비스
           제공이 어려운 경우
         </span>
-        <span className='block pl-[15px]'>
+        <span className='block pl-3.75'>
           c. 천재지변, 전쟁, 정전, 국가 비상사태 등 불가항력적인 사유가 발생한
           경우
         </span>
         3. 동아리는 제2항 각 호의 사유로 서비스가 중단되는 경우 가능한 한 사전에
         그 사실과 중단 기간을 공지합니다. <br />
-        <span className='block pl-[15px]'>
+        <span className='block pl-3.75'>
           다만, 부득이한 사유로 사전 공지가 어려운 경우에는 사후에 공지할 수
           있습니다.
         </span>
@@ -142,7 +142,7 @@ export const SERVICE_TERMS: TermsSection[] = [
         1. 동아리는 오프라인 활동 시 부정 출석을 방지하고 출석 확인을 위하여,
         회원의 동의를 얻어 「위치정보의 보호 및 이용 등에 관한 법률」 등 관련
         법령에 따라
-        <span className='block pl-[15px]'>
+        <span className='block pl-3.75'>
           회원의 실시간 GPS 위치 정보(개인위치정보)를 수집·이용할 수 있습니다.
         </span>
         2. 수집된 개인위치정보는 출석 확인 목적 외의 용도로 이용되지 않으며,
@@ -158,20 +158,20 @@ export const SERVICE_TERMS: TermsSection[] = [
       <div className='text-body-l pl-3'>
         1. 회원은 서비스 이용과 관련하여 다음 각 호의 행위를 하여서는 안 됩니다.{' '}
         <br />
-        <span className='block pl-[15px]'>
+        <span className='block pl-3.75'>
           a. 가입 신청 또는 회원정보 변경 시 허위의 정보를 기재하는 행위
         </span>
-        <span className='block pl-[15px]'>
+        <span className='block pl-3.75'>
           b. 타인의 계정 정보를 도용하거나 부정 사용하는 행위
         </span>
-        <span className='block pl-[15px]'>
+        <span className='block pl-3.75'>
           c. 동아리 또는 제3자의 명예를 훼손하거나 권리를 침해하는 행위
         </span>
-        <span className='block pl-[15px]'>
+        <span className='block pl-3.75'>
           d. 서비스 운영을 고의로 방해하거나 허용되지 않은 방식으로 서비스에
           접근·이용하는 행위
         </span>
-        <span className='block pl-[15px]'>
+        <span className='block pl-3.75'>
           e. 관련 법령, 본 약관, 서비스 내 공지사항 및 이용안내를 위반하는 행위
         </span>
         2. 회원은 자신의 아이디 및 비밀번호 등 계정정보를 선량한 관리자의 주의
@@ -195,7 +195,7 @@ export const SERVICE_TERMS: TermsSection[] = [
         3. 회원은 동아리의 홍보, 활동 기록, 서비스 개선 등을 위하여 동아리가
         회원의 게시물 등을 무상으로 이용(복제, 전송, 전시 등)하는 것을
         허락합니다. <br />
-        <span className='block pl-[15px]'>
+        <span className='block pl-3.75'>
           다만, 회원은 언제든지 게시물의 삭제 또는 비공개를 요청할 수 있으며,
           동아리는 관련 법령이 허용하는 범위 내에서 이에 따릅니다.
         </span>
@@ -230,7 +230,7 @@ export const SERVICE_TERMS: TermsSection[] = [
         제한하거나 이용계약을 해지할 수 있습니다. <br />
         3. 이용계약이 해지되는 경우, 동아리는 개인정보 처리방침 및 관련 법령에서
         정한 범위 내에서 회원의 개인정보를 보유·파기하며, <br />
-        <span className='block pl-[15px]'>
+        <span className='block pl-3.75'>
           회원이 작성한 게시물 등의 처리에 관한 사항은 별도로 안내된 정책에
           따릅니다.
         </span>
