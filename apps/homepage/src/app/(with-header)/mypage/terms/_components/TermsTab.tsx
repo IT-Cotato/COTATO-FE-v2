@@ -1,4 +1,4 @@
-import {TERMS_MENU, TermTabType} from '@/constants/mypage-mem//term/terms';
+import {TERMS_MENU, TermTabType} from '@/constants/mypage-mem/term/terms';
 
 interface TermsTabProps {
   activeTab: TermTabType;

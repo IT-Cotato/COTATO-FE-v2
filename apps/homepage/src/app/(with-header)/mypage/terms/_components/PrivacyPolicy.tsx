@@ -1,4 +1,4 @@
-import {PRIVACY_POLICY} from '@/constants/mypage-mem/term/PrivatePolicyData';
+import {PRIVACY_POLICY} from '@/constants/mypage-mem/term/PrivacyPolicyData';
 
 export const PrivacyPolicy = () => {
   return (
