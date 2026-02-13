@@ -16,7 +16,16 @@ export const DeleteCheckbox = ({
 }: DeleteCheckboxProps) => {
   return (
     <div
+      role='checkbox'
+      aria-checked={checked}
+      tabIndex={disabled ? -1 : 0}
       onClick={() => !disabled && onChange(!checked)}
+      onKeyDown={(e) => {
+        if (!disabled && (e.key === ' ' || e.key === 'Enter')) {
+          e.preventDefault();
+          onChange(!checked);
+        }
+      }}
       className={clsx(
         'flex aspect-square h-6 w-6 shrink-0 flex-col items-center justify-center rounded-[2px] transition-colors select-none',
         {
