@@ -1,6 +1,6 @@
 'use client';
 
-import {useState} from 'react';
+import {useRouter, useSearchParams} from 'next/navigation';
 import {TermsTab} from '@/app/(with-header)/mypage/terms/_components/TermsTab';
 import {TermTabType} from '@/constants/mypage-mem/terms';
 import {ServiceTermsContainer} from '@/app/(with-header)/mypage/terms/_containers/ServiceTermsContainer';
@@ -8,7 +8,16 @@ import {PrivacyPolicyContainer} from '@/app/(with-header)/mypage/terms/_containe
 import {ClubRulesContainer} from '@/app/(with-header)/mypage/terms/_containers/ClubRulesContainer';
 
 export const TermsContainer = () => {
-  const [activeTab, setActiveTab] = useState<TermTabType>('serviceTerms');
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const activeTab = (searchParams.get('tab') as TermTabType) || 'serviceTerms';
+
+  const handleTabChange = (tab: TermTabType) => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.set('tab', tab);
+    router.push(`?${params.toString()}`);
+  };
 
   const renderContent = () => {
     switch (activeTab) {
@@ -19,13 +28,13 @@ export const TermsContainer = () => {
       case 'clubRules':
         return <ClubRulesContainer />;
       default:
-        return null;
+        return <ServiceTermsContainer />;
     }
   };
 
   return (
     <div className='flex flex-col gap-[39px]'>
-      <TermsTab activeTab={activeTab} onTabChange={setActiveTab} />
+      <TermsTab activeTab={activeTab} onTabChange={handleTabChange} />
       <div className='w-full'>{renderContent()}</div>
     </div>
   );

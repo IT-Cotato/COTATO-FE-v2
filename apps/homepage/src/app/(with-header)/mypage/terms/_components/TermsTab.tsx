@@ -12,10 +12,8 @@ export const TermsTab = ({activeTab, onTabChange}: TermsTabProps) => {
         <button
           key={tab.id}
           onClick={() => onTabChange(tab.id)}
-          className={`cursor-pointer text-[20px] leading-normal transition-colors ${
-            activeTab === tab.id
-              ? 'font-bold text-neutral-800'
-              : 'font-medium text-neutral-400'
+          className={`text-h3 cursor-pointer transition-colors ${
+            activeTab === tab.id ? 'text-neutral-700' : 'text-neutral-400'
           }`}>
           {tab.label}
         </button>
