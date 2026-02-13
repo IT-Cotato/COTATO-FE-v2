@@ -44,10 +44,10 @@ export const ProjectCard = ({
         <div className='flex items-center justify-between'>
           <h3 className='text-h4 text-neutral-800'>{name}</h3>
           <div className='flex h-6 gap-2.5'>
-            <span className='text-body-s bg-disabled rounded-[5px] px-2.5 py-0.5 text-white'>
+            <span className='text-body-m bg-disabled rounded-[5px] px-2.5 py-0.5 text-white'>
               {generationId}기
             </span>
-            <span className='bg-primary text-body-s shadow-default rounded-[5px] px-2 py-0.5 text-white'>
+            <span className='bg-primary text-body-m shadow-default rounded-[5px] px-2 py-0.5 text-white'>
               {projectType === 'DEMODAY' ? '데모데이' : '해커톤'}
             </span>
           </div>

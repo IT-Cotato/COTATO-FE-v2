@@ -29,10 +29,6 @@
   --text-body-m--line-height: 20px;
   --text-body-m--font-weight: 400;
 
-  --text-body-s: 10px;
-  --text-body-s--line-height: 18px;
-  --text-body-s--font-weight: 400;
-
   /* typography - body (semibold) */
   --text-body-l-sb: 14px;
   --text-body-l-sb--line-height: 22px;
@@ -41,10 +37,6 @@
   --text-body-m-sb: 12px;
   --text-body-m-sb--line-height: 20px;
   --text-body-m-sb--font-weight: 600;
-
-  --text-body-s-sb: 10px;
-  --text-body-s-sb--line-height: 18px;
-  --text-body-s-sb--font-weight: 600;
 }
 
 @media (max-width: 640px) {
@@ -74,10 +66,6 @@
     --text-body-m: 17px;
     --text-body-m--line-height: 21px;
     --text-body-m--font-weight: 400;
-
-    --text-body-s: 14px;
-    --text-body-s--line-height: 18px;
-    --text-body-s--font-weight: 400;
 
     /* caption */
     --text-caption: 12px;

@@ -46,7 +46,7 @@ export const TimePanel = ({
               key={p}
               type='button'
               onClick={() => onPeriodChange(p)}
-              className={`text-body-s flex h-6 w-14.25 items-center justify-center rounded-sm font-medium ${
+              className={`text-body-m flex h-6 w-14.25 items-center justify-center rounded-sm font-medium ${
                 selected ? 'bg-primary text-white' : 'text-black'
               }`}>
               {p}
