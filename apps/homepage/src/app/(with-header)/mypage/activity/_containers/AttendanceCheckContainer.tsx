@@ -55,7 +55,7 @@ export const AttendanceCheckContainer = ({activeTab}: {activeTab: TabType}) => {
               )}
             </tr>
           </thead>
-          <tbody className='text-body-m text-neutral-800'>
+          <tbody className='text-body-l text-neutral-800'>
             {currentDataLength === 0 ? (
               <tr>
                 <td
