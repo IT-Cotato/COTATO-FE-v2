@@ -19,6 +19,7 @@ interface NavItem {
   href: string;
   icon: FC<SVGProps<SVGElement>>;
   activeIcon?: FC<SVGProps<SVGElement>>;
+  isExternal?: boolean; //외부 링크로 이동 여부 (CS Quiz 바로가기용)
 }
 
 interface NavGroup {
@@ -42,9 +43,10 @@ export const SIDEBAR_NAV_GROUPS: NavGroup[] = [
       },
       {
         label: 'CS QUIZ 바로가기',
-        href: ROUTES.MYPAGE_CSQUIZ,
+        href: 'https://mait.kr/',
         icon: CSQuizIcon,
         activeIcon: CSQuizIconActive,
+        isExternal: true,
       },
     ],
   },

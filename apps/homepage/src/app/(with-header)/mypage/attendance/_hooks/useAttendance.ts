@@ -21,7 +21,7 @@ export const useAttendance = (initialData: SessionAttendanceListResponse) => {
     [initialData.availableMonths, currentMonth]
   );
 
-  // 월별 필터링 및 최신순 정렬
+  // 월별 필터링 및 정렬
   const filteredSessions = useMemo(() => {
     return initialData.sessions
       .filter(
@@ -63,7 +63,7 @@ export const useAttendance = (initialData: SessionAttendanceListResponse) => {
 
   const handleAttendance = async (session: SessionAttendance) => {
     const {attendanceId, sessionType} = session;
-    if (!attendanceId) return;
+    if (attendanceId === null) return;
 
     if (sessionType === 'ONLINE') {
       await submitAttendance(attendanceId);

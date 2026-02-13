@@ -5,8 +5,12 @@ import clsx from 'clsx';
 export const PenaltyRows = ({data}: {data: PenaltyRecord[]}) => (
   <>
     {data.map((record) => {
-      const status =
-        POINT_STATUS[record.pointType as keyof typeof POINT_STATUS];
+      const status = POINT_STATUS[
+        record.pointType as keyof typeof POINT_STATUS
+      ] ?? {
+        label: record.pointType,
+        className: 'bg-neutral-400',
+      };
       return (
         <tr key={record.sessionId} className='h-12.25 text-center'>
           <td>{record.week}</td>

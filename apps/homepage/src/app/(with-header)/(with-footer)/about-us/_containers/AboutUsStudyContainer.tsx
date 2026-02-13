@@ -28,66 +28,50 @@ export const AboutUsStudyContainer = () => {
   );
 };
 
-/** TODO: 추후 데이터 조회로 변경 */
 const STUDY_GROUPS = [
   [
     {
-      id: 101,
-      label: 'React 스터디',
-      src: 'https://picsum.photos/400/600?random=11',
+      id: 1,
+      label: '스프링 스터디',
+      src: '/images/study/study-1.png',
     },
     {
-      id: 102,
-      label: 'Next.js 딥다이브',
-      src: 'https://picsum.photos/400/600?random=12',
+      id: 2,
+      label: '알고리즘 스터디',
+      src: '/images/study/study-2.png',
     },
-    {id: 103, label: 'CS 기초', src: 'https://picsum.photos/400/600?random=13'},
+    {id: 3, label: 'React 스터디', src: '/images/study/study-3.png'},
+  ],
+
+  [
     {
-      id: 104,
-      label: '알고리즘',
-      src: 'https://picsum.photos/400/600?random=14',
+      id: 4,
+      label: 'Next.js 스터디',
+      src: '/images/study/study-4.png',
+    },
+    {
+      id: 5,
+      label: 'Node.js 스터디',
+      src: '/images/study/study-5.png',
+    },
+    {
+      id: 6,
+      label: '역기획 스터디',
+      src: '/images/study/study-6.png',
     },
   ],
 
   [
     {
-      id: 201,
-      label: 'UI/UX 디자인',
-      src: 'https://picsum.photos/400/600?random=21',
+      id: 7,
+      label: '이걸 왜 직접 만드나요?',
+      src: '/images/study/study-7.png',
     },
+    {id: 8, label: 'UX 분석 스터디', src: '/images/study/study-8.png'},
     {
-      id: 202,
-      label: 'Nest.js 백엔드',
-      src: 'https://picsum.photos/400/600?random=22',
-    },
-    {
-      id: 203,
-      label: 'Typescript',
-      src: 'https://picsum.photos/400/600?random=23',
-    },
-    {
-      id: 204,
-      label: '자료구조',
-      src: 'https://picsum.photos/400/600?random=24',
-    },
-  ],
-
-  [
-    {
-      id: 301,
-      label: '기획 프로젝트',
-      src: 'https://picsum.photos/400/600?random=31',
-    },
-    {id: 302, label: 'Node.js', src: 'https://picsum.photos/400/600?random=32'},
-    {
-      id: 303,
-      label: 'Figma 마스터',
-      src: 'https://picsum.photos/400/600?random=33',
-    },
-    {
-      id: 304,
-      label: '데이터베이스',
-      src: 'https://picsum.photos/400/600?random=34',
+      id: 9,
+      label: '아티클 스터디',
+      src: '/images/study/study-9.png',
     },
   ],
 ];
