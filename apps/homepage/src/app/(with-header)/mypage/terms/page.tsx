@@ -1,3 +1,9 @@
+import {TermsContainer} from '@/app/(with-header)/mypage/terms/_containers/TermsContainer';
+
 export default function TermsPage() {
-  return <div>운영 규정 및 서비스 약관</div>;
+  return (
+    <section className='flex min-w-250 flex-col px-11.25 py-12.5'>
+      <TermsContainer />
+    </section>
+  );
 }
