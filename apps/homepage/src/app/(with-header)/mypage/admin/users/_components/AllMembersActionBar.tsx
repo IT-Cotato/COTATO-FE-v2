@@ -19,17 +19,17 @@ export const AllMembersActionBar = ({
   isLoading,
 }: AllMembersActionBarProps) => {
   return (
-    <div className='flex gap-5 pt-8.5'>
+    <div className='flex items-end gap-5 pt-7.5'>
       <button
         disabled={!hasSelection}
         onClick={() => onBatchStatusChange('RETIRED')}
-        className='rounded-lg bg-neutral-50 px-4.75 py-1.5 font-semibold text-neutral-600'>
+        className='text-body-m h-8 w-23.25 rounded-lg bg-neutral-50 font-semibold text-neutral-600'>
         수료로 변경
       </button>
       <button
         disabled={!hasSelection}
         onClick={() => onBatchStatusChange('APPROVED')}
-        className='text-primary rounded-lg bg-neutral-50 px-4.75 py-1.5 font-semibold'>
+        className='text-primary text-body-m h-8 w-23.25 rounded-lg bg-neutral-50 font-semibold'>
         활동 중으로 변경
       </button>
       <SearchBar
