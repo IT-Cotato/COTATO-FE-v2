@@ -1,6 +1,8 @@
 'use client';
 
 import {AdminUsersTableView} from '../_components/table/AdminUsersTableView';
+import {AllMembersActionBar} from '../_components/AllMembersActionBar';
+import {ActiveMembersActionBar} from '../_components/ActiveMembersActionBar';
 import {Pagination} from '@repo/ui/components/pagination/Pagination';
 import {
   MEMBER_STATUS_OPTIONS,
@@ -16,10 +18,16 @@ const ITEMS_PER_PAGE = 10;
 
 interface AdminUsersTableContainerProps {
   activeTab: MemberTabType;
+  keyword: string;
+  onKeywordChange: (value: string) => void;
+  onSearch: () => void;
 }
 
 export const AdminUsersTableContainer = ({
   activeTab,
+  keyword,
+  onKeywordChange,
+  onSearch,
 }: AdminUsersTableContainerProps) => {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -44,9 +52,7 @@ export const AdminUsersTableContainer = ({
   const handleBatchStatusChange = (status: MemberStatusKey) => {
     setMembers((prev) =>
       prev.map((member) =>
-        selectedIds.includes(member.memberId)
-          ? {...member, status}
-          : member
+        selectedIds.includes(member.memberId) ? {...member, status} : member
       )
     );
     setSelectedIds([]);
@@ -131,22 +137,37 @@ export const AdminUsersTableContainer = ({
 
   const hasSelection = selectedIds.length > 0;
 
+  // TODO: API 연동 시 서버 데이터로 교체
+  const [generations, setGenerations] = useState<number[]>([10, 11, 12]);
+  const [selectedGeneration, setSelectedGeneration] = useState<number | null>(
+    generations[0] ?? null
+  );
+  const handleAddGeneration = () => {
+    const nextGen = generations.length > 0 ? Math.max(...generations) + 1 : 1;
+    setGenerations((prev) => [...prev, nextGen]);
+    setSelectedGeneration(nextGen);
+  };
+
   return (
     <div className='flex flex-col gap-3.5'>
-      <div className='flex gap-5 pt-8.5'>
-        <button
-          disabled={!hasSelection}
-          onClick={() => handleBatchStatusChange('RETIRED')}
-          className='rounded-lg bg-neutral-50 px-4.75 py-1.5 font-semibold text-neutral-600 disabled:opacity-50'>
-          수료로 변경
-        </button>
-        <button
-          disabled={!hasSelection}
-          onClick={() => handleBatchStatusChange('APPROVED')}
-          className='text-primary rounded-lg bg-neutral-50 px-4.75 py-1.5 font-semibold disabled:opacity-50'>
-          활동 중으로 변경
-        </button>
-      </div>
+      {activeTab === 'ALL' && (
+        <AllMembersActionBar
+          hasSelection={hasSelection}
+          onBatchStatusChange={handleBatchStatusChange}
+          keyword={keyword}
+          onKeywordChange={onKeywordChange}
+          onSearch={onSearch}
+          isLoading={isLoading}
+        />
+      )}
+      {activeTab === 'ACTIVE' && (
+        <ActiveMembersActionBar
+          generations={generations}
+          selectedGeneration={selectedGeneration}
+          onGenerationChange={setSelectedGeneration}
+          onAddGeneration={handleAddGeneration}
+        />
+      )}
       <AdminUsersTableView
         items={paginatedItems}
         activeTab={activeTab}
