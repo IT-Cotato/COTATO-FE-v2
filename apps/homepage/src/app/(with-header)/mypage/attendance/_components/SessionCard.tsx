@@ -34,10 +34,6 @@ export const SessionCard = ({
     [session.imageUrls]
   );
 
-  useEffect(() => {
-    setCurrentImgIdx(0);
-  }, [images]);
-
   const {isCompleted, isAvailable} = useMemo(() => {
     return {
       isCompleted: !!session.myAttendanceResult,
