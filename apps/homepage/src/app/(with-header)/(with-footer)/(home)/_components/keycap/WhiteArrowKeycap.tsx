@@ -23,7 +23,7 @@ export const WhiteArrowKeycap = ({
       tabIndex={0}>
       <Image src='/keycap/white-keycap.svg' alt='' fill />
       <Image
-        src='/keycap/grap-keycap.svg'
+        src='/keycap/gray-keycap.svg'
         alt=''
         fill
         className='absolute top-0 left-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100'
