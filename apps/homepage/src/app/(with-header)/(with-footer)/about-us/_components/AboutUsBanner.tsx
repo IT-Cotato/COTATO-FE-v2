@@ -16,12 +16,11 @@ export const AboutUsBanner = () => {
     <section
       className='relative flex h-screen w-full items-center justify-center overflow-hidden bg-black'
       aria-label='소개 배너'>
-      <div className='relative flex w-full justify-center transition-all duration-500'>
+      <div className='relative flex h-full w-full justify-center transition-all duration-500'>
         <Image
           src='/keycap/background-universe.svg'
           alt=''
-          width={1920}
-          height={600}
+          fill
           className='object-cover'
           priority
         />
