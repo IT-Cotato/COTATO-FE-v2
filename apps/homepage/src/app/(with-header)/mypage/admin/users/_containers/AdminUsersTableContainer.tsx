@@ -2,6 +2,7 @@
 
 import {AdminUsersTableView} from '../_components/table/AdminUsersTableView';
 import {ConfirmDeleteModal} from '../_components/table/ConfirmDeleteModal';
+import {MemberDetailModal} from '../_components/table/MemberDetailModal';
 import {AllMembersActionBar} from '../_components/AllMembersActionBar';
 import {ActiveMembersActionBar} from '../_components/ActiveMembersActionBar';
 import {Pagination} from '@repo/ui/components/pagination/Pagination';
@@ -143,6 +144,11 @@ export const AdminUsersTableContainer = ({
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [memberToDelete, setMemberToDelete] = useState<MemberType | null>(null);
 
+  // 상세/수정 모달 상태
+  const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
+  const [isDetailReadonly, setIsDetailReadonly] = useState(true);
+  const [selectedMember, setSelectedMember] = useState<MemberType | null>(null);
+
   /**
    * 메뉴 액션 핸들러
    * @param action - 수행할 액션
@@ -155,7 +161,21 @@ export const AdminUsersTableContainer = ({
     if (action === 'delete') {
       setMemberToDelete(member);
       setIsDeleteModalOpen(true);
+    } else if (action === 'detail') {
+      setSelectedMember(member);
+      setIsDetailReadonly(true);
+      setIsDetailModalOpen(true);
+    } else if (action === 'edit') {
+      setSelectedMember(member);
+      setIsDetailReadonly(false);
+      setIsDetailModalOpen(true);
     }
+  };
+
+  const handleSaveMember = (updated: MemberType) => {
+    setMembers((prev) =>
+      prev.map((m) => (m.memberId === updated.memberId ? updated : m))
+    );
   };
 
   /**
@@ -233,6 +253,14 @@ export const AdminUsersTableContainer = ({
         onClose={() => setIsDeleteModalOpen(false)}
         onConfirm={handleConfirmDelete}
         itemName={memberToDelete?.name ?? ''}
+      />
+
+      <MemberDetailModal
+        isOpen={isDetailModalOpen}
+        onClose={() => setIsDetailModalOpen(false)}
+        onSave={handleSaveMember}
+        member={selectedMember}
+        readonly={isDetailReadonly}
       />
     </div>
   );
