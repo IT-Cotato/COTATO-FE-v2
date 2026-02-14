@@ -32,6 +32,22 @@ export const MEMBER_ROLE_CONFIG = {
   DEV: {label: '개발팀', bg: 'bg-primary'},
 };
 
+/** 회원 관리 액션 메뉴 상수 */
+export const REGULAR_MEMBER_MENU_ITEMS = [
+  {key: 'detail', label: '상세보기'},
+  {key: 'delete', label: '삭제하기'},
+] as const;
+
+export const ALL_USERS_MENU_ITEMS = [
+  {key: 'exclude', label: '제외하기'},
+  {key: 'edit', label: '수정하기'},
+] as const;
+
+type RegularItem = (typeof REGULAR_MEMBER_MENU_ITEMS)[number];
+type AllUsersItem = (typeof ALL_USERS_MENU_ITEMS)[number];
+
+export type MemberMenuAction = RegularItem['key'] | AllUsersItem['key'];
+
 export type MemberStatusKey = keyof typeof MEMBER_STATUS_CONFIG;
 export type MemberRoleKey = keyof typeof MEMBER_ROLE_CONFIG;
 
