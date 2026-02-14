@@ -43,11 +43,11 @@ export const HomePartSectionContainer = () => {
   return (
     <div className='flex flex-col gap-17.5'>
       <HomeSectionDescription
-        title='4개의 파트로 구성되어 있어요'
+        title='성장의 시작, 코테이토의 4가지 파트'
         descriptions={[
-          '코테이토에는 기획, 디자인, 프론트엔드와 백엔드 개발 총 4개의 파트가 있어요.',
-          '여러 감자들과 함께 스터디와 프로젝트를 진행하며 성장할 수 있어요.',
-          '열정만 있다면 누구나 멋진 회오리 감자로 변신 가능!',
+          '코테이토는 기획, 디자인, 프론트엔드, 백엔드 파트로 이루어져 있어요. ',
+          '다양한 스터디와 프로젝트를 통해 실무 역량을 키울 수 있습니다.',
+          '열정만 있다면 누구나 성장할 수 있습니다!',
         ]}
         align='start'
       />

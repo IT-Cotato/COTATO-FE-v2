@@ -69,9 +69,7 @@ export const HomeCotatoReviewContainer = () => {
       <HomeSectionDescription
         title='찐감자들의 후기'
         descriptions={[
-          '코테이토에는 기획, 디자인, 프론트엔드와 백엔드 개발 총 4개의 파트가 있어요.',
-          '여러 감자들과 함께 스터디와 프로젝트를 진행하며 성장할 수 있어요.',
-          '열정만 있다면 누구나 멋진 회오리 감자로 변신 가능!',
+          '열정 가득한 찐감자들의 생생한 후기를 통해 코테이토를 만나보세요!',
         ]}
         align='end'
       />
