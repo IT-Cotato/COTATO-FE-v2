@@ -17,19 +17,51 @@ export const MEMBER_TABS: {label: string; value: MemberTabType}[] = [
 ];
 
 export const MEMBER_STATUS_CONFIG = {
-  APPROVED: {label: '활동 중', bg: 'bg-primary-30'},
-  RETIRED: {label: '수료', bg: 'bg-[#57B34D]'},
-  NOT_RETIRED: {label: '미수료', bg: 'bg-alert'},
+  APPROVED: {label: '활동 중', className: 'bg-[#FF9000] text-white'},
+  RETIRED: {label: '수료', className: 'bg-[#68CA3A] text-white'},
+  NOT_RETIRED: {label: '미수료', className: 'bg-neutral-600 text-white'},
+  INACTIVE: {label: '비활동', className: 'bg-neutral-400 text-white'},
+  REJECTED: {label: '거절', className: 'bg-neutral-400 text-white'},
+  REQUESTED: {label: '신청 중', className: 'bg-neutral-400 text-white'},
 };
 
-/** 색상 디자인 미정 상황 */
 export const MEMBER_ROLE_CONFIG = {
-  MEMBER: {label: '일반 부원', bg: 'bg-primary'},
-  PR: {label: '홍보팀', bg: 'bg-primary'},
-  PLANNING: {label: '기획팀', bg: 'bg-primary'},
-  EDUCATION: {label: '교육팀', bg: 'bg-primary'},
-  OPERATION: {label: '운영진', bg: 'bg-primary'},
-  DEV: {label: '개발팀', bg: 'bg-primary'},
+  MEMBER: {
+    label: '일반 부원',
+    className: 'bg-white shadow-default',
+    textColor: '#9e9e9e',
+    chevronColor: 'text-text-disabled',
+  },
+  PR: {
+    label: '홍보팀',
+    className: 'bg-white shadow-default',
+    textColor: '#5A4A3A',
+    chevronColor: 'text-text-disabled',
+  },
+  PLANNING: {
+    label: '기획팀',
+    className: 'bg-white shadow-default',
+    textColor: '#68CA3A',
+    chevronColor: 'text-text-disabled',
+  },
+  EDUCATION: {
+    label: '교육팀',
+    className: 'bg-white shadow-default',
+    textColor: '#ffb800',
+    chevronColor: 'text-text-disabled',
+  },
+  OPERATION: {
+    label: '운영진',
+    className: 'bg-white shadow-default',
+    textColor: '#f87d02',
+    chevronColor: 'text-text-disabled',
+  },
+  DEV: {
+    label: '개발팀',
+    className: 'bg-white shadow-default',
+    textColor: '#525252',
+    chevronColor: 'text-text-disabled',
+  },
 };
 
 /** 회원 관리 액션 메뉴 상수 */
