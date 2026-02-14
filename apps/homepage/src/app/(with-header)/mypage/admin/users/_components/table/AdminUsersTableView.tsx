@@ -20,7 +20,9 @@ import {SelectedMemberChip} from './SelectedMemberChip';
 import {
   ALL_USERS_MENU_ITEMS,
   REGULAR_MEMBER_MENU_ITEMS,
+  MEMBER_POSITION_LABEL,
   type MemberMenuAction,
+  type MemberPositionKey,
 } from '@/constants/admin/admin-users';
 
 interface AdminUsersTableViewProps {
@@ -123,10 +125,11 @@ export const AdminUsersTableView = ({
             )}
             <td className='truncate px-3 py-4 text-center'>{member.name}</td>
             <td className='truncate px-3 py-4 text-center'>
-              {member.generationMemberId}
+              {member.generationMemberId}기
             </td>
             <td className='truncate px-3 py-4 text-center'>
-              {member.position}
+              {MEMBER_POSITION_LABEL[member.position as MemberPositionKey] ??
+                member.position}
             </td>
             <td className='truncate px-3 py-4 text-center'>
               {member.university}
