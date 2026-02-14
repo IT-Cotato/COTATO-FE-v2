@@ -21,8 +21,8 @@ export const MEMBER_STATUS_CONFIG = {
   RETIRED: {label: '수료', className: 'bg-[#68CA3A] text-white'},
   NOT_RETIRED: {label: '미수료', className: 'bg-neutral-600 text-white'},
   INACTIVE: {label: '비활동', className: 'bg-neutral-400 text-white'},
-  REJECTED: {label: '거절', className: 'bg-neutral-400 text-white'},
-  REQUESTED: {label: '신청 중', className: 'bg-neutral-400 text-white'},
+  REJECTED: {label: '가입 거절', className: 'bg-neutral-400 text-white'},
+  REQUESTED: {label: '가입 요청', className: 'bg-neutral-400 text-white'},
 };
 
 export const MEMBER_ROLE_CONFIG = {
@@ -66,13 +66,13 @@ export const MEMBER_ROLE_CONFIG = {
 
 /** 회원 관리 액션 메뉴 상수 */
 export const REGULAR_MEMBER_MENU_ITEMS = [
-  {key: 'detail', label: '상세보기'},
-  {key: 'delete', label: '삭제하기'},
+  {key: 'edit', label: '수정하기'},
+  {key: 'exclude', label: '제외하기'},
 ] as const;
 
 export const ALL_USERS_MENU_ITEMS = [
-  {key: 'exclude', label: '제외하기'},
-  {key: 'edit', label: '수정하기'},
+  {key: 'detail', label: '상세보기'},
+  {key: 'delete', label: '삭제하기'},
 ] as const;
 
 type RegularItem = (typeof REGULAR_MEMBER_MENU_ITEMS)[number];
@@ -90,3 +90,29 @@ export const MEMBER_STATUS_OPTIONS = Object.keys(
 export const MEMBER_ROLE_OPTIONS = Object.keys(
   MEMBER_ROLE_CONFIG
 ) as MemberRoleKey[];
+
+export const MEMBER_POSITION_OPTIONS = [
+  'PM',
+  'DE',
+  'FE',
+  'BE',
+  'NONE',
+] as const;
+
+export type MemberPositionKey = (typeof MEMBER_POSITION_OPTIONS)[number];
+
+export const MEMBER_POSITION_LABEL: Record<MemberPositionKey, string> = {
+  PM: '기획',
+  DE: '디자인',
+  FE: '프론트엔드',
+  BE: '백엔드',
+  NONE: '없음',
+};
+
+export const MEMBER_ROLE_LABEL = Object.fromEntries(
+  MEMBER_ROLE_OPTIONS.map((k) => [k, MEMBER_ROLE_CONFIG[k].label])
+) as Record<MemberRoleKey, string>;
+
+export const MEMBER_STATUS_LABEL = Object.fromEntries(
+  MEMBER_STATUS_OPTIONS.map((k) => [k, MEMBER_STATUS_CONFIG[k].label])
+) as Record<MemberStatusKey, string>;
