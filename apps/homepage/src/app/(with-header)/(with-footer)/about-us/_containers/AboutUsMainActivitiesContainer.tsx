@@ -85,8 +85,8 @@ export const AboutUsMainActivitiesContainer = () => {
                 initial={{opacity: 0, y: 20}}
                 animate={{opacity: 1, y: 0}}
                 exit={{opacity: 0}}
-                className='custom-scrollbar flex-1 overflow-y-auto p-10'>
-                <p className='text-h4 whitespace-pre-wrap opacity-90'>
+                className='custom-scrollbar flex-1 overflow-y-auto p-5'>
+                <p className='text-h4 font-semibold whitespace-pre-wrap opacity-90'>
                   {selectedActivity.description}
                 </p>
               </motion.div>
