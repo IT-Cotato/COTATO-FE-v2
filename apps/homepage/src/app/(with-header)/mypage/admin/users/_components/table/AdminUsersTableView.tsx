@@ -5,8 +5,8 @@ import {
   MEMBER_ROLE_OPTIONS,
   MEMBER_STATUS_CONFIG,
   MEMBER_STATUS_OPTIONS,
-  MemberRoleKey,
   MemberStatusKey,
+  type MemberRoleKey,
 } from '@/constants/admin/admin-users';
 import {useRef, useState} from 'react';
 import FinishFilterIcon from '@repo/ui/assets/icons/filter-finish.svg';
@@ -16,6 +16,11 @@ import {Checkbox} from '@repo/ui/components/checkbox/CheckBox';
 import {useClickOutside} from '@repo/ui/hooks/useClickOutside';
 import {StatusDropdown} from '@repo/ui/components/dropdown/StatusDropdown';
 import {MemberActionMenu} from './MemberActionMenu';
+import {
+  ALL_USERS_MENU_ITEMS,
+  REGULAR_MEMBER_MENU_ITEMS,
+  type MemberMenuAction,
+} from '@/constants/admin/admin-users';
 
 interface AdminUsersTableViewProps {
   items?: MemberType[];
@@ -26,6 +31,7 @@ interface AdminUsersTableViewProps {
   onSelectAll: (checked: boolean) => void;
   onSelect: (id: number, checked: boolean) => void;
   onStatusChange: (memberId: number, status: MemberStatusKey) => void;
+  onMenuAction: (action: MemberMenuAction, memberId: number) => void;
 }
 
 export const AdminUsersTableView = ({
@@ -37,6 +43,7 @@ export const AdminUsersTableView = ({
   onSelectAll,
   onSelect,
   onStatusChange,
+  onMenuAction,
 }: AdminUsersTableViewProps) => {
   const isAllTab = activeTab === 'ALL';
   const [isFilterOpen, setIsFilterOpen] = useState(false);
@@ -152,9 +159,10 @@ export const AdminUsersTableView = ({
                   />
                 )}
                 <MemberActionMenu
-                  onAction={(action) => {
-                    /** 액션 핸들러 디자인 완료 시 추후 구현 예정 */
-                  }}
+                  items={
+                    isAllTab ? ALL_USERS_MENU_ITEMS : REGULAR_MEMBER_MENU_ITEMS
+                  }
+                  onAction={(action) => onMenuAction(action, member.memberId)}
                 />
               </div>
             </td>
