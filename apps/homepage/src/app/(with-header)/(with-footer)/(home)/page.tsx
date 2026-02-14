@@ -8,7 +8,7 @@ import {HomeRecruitmentContainer} from '@/app/(with-header)/(with-footer)/(home)
 
 export default function HomePage() {
   return (
-    <section>
+    <section className='min-w-360'>
       <HomeBanner />
       <div className='flex flex-col items-center gap-50 bg-white pt-25 pb-50'>
         <HomeCoreValue />
