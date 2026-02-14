@@ -36,11 +36,11 @@ export const ScheduleKeycap = ({
         <div className='absolute inset-0 bg-black/20' />
       </div>
       <span
-        className={`text-h2 absolute top-16.5 left-16.5 z-10 font-bold transition-colors group-hover:text-white ${titleColor}`}>
+        className={`text-h2 absolute top-16.5 left-16.5 z-10 font-bold transition-colors group-hover:text-white ${titleColor} group-focus-visible:text-white`}>
         {title}
       </span>
       {subTitle && (
-        <span className='text-h4 absolute top-30.5 left-16.5 z-10 text-neutral-100 opacity-0 transition-opacity group-hover:opacity-100'>
+        <span className='text-h4 absolute top-30.5 left-16.5 z-10 text-neutral-100 opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100'>
           {subTitle}
         </span>
       )}
