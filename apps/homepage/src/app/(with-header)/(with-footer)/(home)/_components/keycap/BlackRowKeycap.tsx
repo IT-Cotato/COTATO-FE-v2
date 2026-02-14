@@ -14,7 +14,7 @@ export const BlackRowKeycap = ({
     <div
       role='button'
       tabIndex={0}
-      className='group relative h-72.25 w-150 cursor-pointer overflow-hidden rounded-[50px]'>
+      className='group relative h-67 w-140 cursor-pointer overflow-hidden rounded-[50px]'>
       <Image
         src='/keycap/black-keycap-long.svg'
         alt=''

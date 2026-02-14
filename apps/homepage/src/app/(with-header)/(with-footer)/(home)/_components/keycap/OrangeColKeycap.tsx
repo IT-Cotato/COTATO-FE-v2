@@ -13,7 +13,7 @@ export const OrangeColKeycap = ({
 }: OrangeColKeycapProps) => {
   return (
     <div
-      className='group relative h-146.5 w-72.25 cursor-pointer overflow-hidden rounded-[50px]'
+      className='group relative h-135 w-67 cursor-pointer overflow-hidden rounded-[50px]'
       role='button'
       tabIndex={0}>
       <Image

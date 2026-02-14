@@ -1,5 +1,4 @@
 import Image from 'next/image';
-import WhiteOrangeKeycapEnter from '@/assets/home/keycap/white-orange-enter-keycap.svg';
 
 interface WhiteOrangeKeycapProps {
   imageSrc: string;
@@ -19,8 +18,8 @@ export const WhiteOrangeKeycap = ({
   secondSubTitle,
 }: WhiteOrangeKeycapProps) => {
   return (
-    <div className='relative h-full w-full cursor-pointer overflow-hidden rounded-[50px]'>
-      <WhiteOrangeKeycapEnter className='h-full w-full' />
+    <div className='relative h-135 w-140 cursor-pointer overflow-hidden rounded-[50px]'>
+      <Image src='/keycap/white-orange-enter-keycap.svg' alt='' fill />
 
       <div className='group absolute top-0 left-0 z-30 h-1/2 w-1/2 overflow-hidden rounded-[50px]'>
         <div className='absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100'>
