@@ -5,7 +5,7 @@ import Image from 'next/image';
 export const BlackPlusKeycap = () => {
   return (
     <div
-      className='group relative inline-block h-72.25 w-72.25 rounded-[50px]'
+      className='group relative inline-block h-72.25 w-72.25 cursor-pointer rounded-[50px]'
       role='button'
       tabIndex={0}>
       <Image src='/keycap/black-keycap.svg' alt='' fill />
