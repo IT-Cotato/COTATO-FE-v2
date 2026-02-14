@@ -27,7 +27,7 @@ export const ProjectCard = ({
 
   return (
     <div
-      className='flex cursor-pointer flex-col gap-2.75'
+      className='flex w-82.5 cursor-pointer flex-col gap-2.75'
       onClick={() => router.push(ROUTES.PROJECT_DETAIL(projectId))}>
       <div className='relative h-50 w-82.5 overflow-hidden rounded-t-[20px] bg-neutral-200'>
         {hasThumbnail && (
@@ -42,7 +42,9 @@ export const ProjectCard = ({
       </div>
       <div className='flex flex-col gap-2 p-[0_15px_8px_15px]'>
         <div className='flex items-center justify-between'>
-          <h3 className='text-h4 text-neutral-800'>{name}</h3>
+          <h3 className='text-h4 line-clamp-1 w-45 break-keep text-neutral-800'>
+            {name}
+          </h3>
           <div className='flex h-6 gap-2.5'>
             <span className='text-body-m bg-disabled rounded-[5px] px-2.5 py-0.5 text-white'>
               {generationId}기
@@ -52,7 +54,7 @@ export const ProjectCard = ({
             </span>
           </div>
         </div>
-        <p className='text-body-m line-clamp-1 text-neutral-600'>
+        <p className='text-body-m line-clamp-1 break-keep text-neutral-600'>
           {shortDescription}
         </p>
       </div>
