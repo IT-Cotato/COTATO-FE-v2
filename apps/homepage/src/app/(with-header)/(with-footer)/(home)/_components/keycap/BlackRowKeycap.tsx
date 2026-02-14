@@ -24,7 +24,7 @@ export const BlackRowKeycap = ({
       <span className='text-h2 absolute top-16.5 left-16.5 z-10 font-bold text-white transition-colors'>
         {title}
       </span>
-      <span className='text-h4 absolute top-30.5 left-16.5 z-10 font-medium text-neutral-100 opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100'>
+      <span className='text-h4 absolute top-30.5 left-16.5 z-10 text-neutral-100 opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100'>
         {subTitle}
       </span>
       <div className='absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100'>

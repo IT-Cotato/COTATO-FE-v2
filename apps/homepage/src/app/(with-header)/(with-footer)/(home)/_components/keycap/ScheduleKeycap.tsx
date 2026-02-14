@@ -40,7 +40,7 @@ export const ScheduleKeycap = ({
         {title}
       </span>
       {subTitle && (
-        <span className='text-h4 absolute top-30.5 left-16.5 z-10 font-medium text-neutral-100 opacity-0 transition-opacity group-hover:opacity-100'>
+        <span className='text-h4 absolute top-30.5 left-16.5 z-10 text-neutral-100 opacity-0 transition-opacity group-hover:opacity-100'>
           {subTitle}
         </span>
       )}
