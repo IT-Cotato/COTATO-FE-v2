@@ -19,7 +19,6 @@ import {refreshToken} from '@/services/utils/tokenRefresh';
 const createAxiosInstance = (): AxiosInstance => {
   return axios.create({
     baseURL: API_BASE_URL,
-    adapter: 'fetch',
     headers: {
       'Content-Type': 'application/json',
     },
