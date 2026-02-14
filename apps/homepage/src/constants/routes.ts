@@ -4,6 +4,7 @@ export const ROUTES = {
   PROJECT: '/project',
   MYPAGE: '/mypage',
   ONBOARDING: '/onboarding',
+  RECRUIT: '/recruit',
 
   //mypage routes
   MYPAGE_ACTIVITY: '/mypage/activity',

@@ -1,10 +1,10 @@
 import {HomeCoreValue} from '@/app/(with-header)/(with-footer)/(home)/_components/HomeCoreValue';
-import {HomeFinalSection} from '@/app/(with-header)/(with-footer)/(home)/_components/HomeFinalSection';
 import {HomeBanner} from '@/app/(with-header)/(with-footer)/(home)/_components/HomeBanner';
 import {HomeCotatoReviewContainer} from '@/app/(with-header)/(with-footer)/(home)/_containers/HomeCotatoReviewContainer';
 import {HomePartSectionContainer} from '@/app/(with-header)/(with-footer)/(home)/_containers/HomePartSectionContainer';
 import {HomeMainScheduleContainer} from '@/app/(with-header)/(with-footer)/(home)/_containers/HomeMainScheduleContainer';
 import {SuspenseWrapper} from '@/components/wrappers/SuspenseWrapper';
+import {HomeRecruitmentContainer} from '@/app/(with-header)/(with-footer)/(home)/_containers/HomeRecruitmentContainer';
 
 export default function HomePage() {
   return (
@@ -17,7 +17,7 @@ export default function HomePage() {
           <HomePartSectionContainer />
         </SuspenseWrapper>
         <HomeCotatoReviewContainer />
-        <HomeFinalSection />
+        <HomeRecruitmentContainer />
       </div>
     </section>
   );
