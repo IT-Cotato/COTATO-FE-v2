@@ -27,7 +27,7 @@ export const HomeRecruitmentContainer = () => {
   };
 
   return (
-    <div className='bg-red flex flex-col items-center gap-10'>
+    <div className='flex flex-col items-center gap-10'>
       <div className='flex flex-col items-center gap-6'>
         <p className='text-h4 text-neutral-600'>
           코테이토와 당신의 여정을 함께하세요!
