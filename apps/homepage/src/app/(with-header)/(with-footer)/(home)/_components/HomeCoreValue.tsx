@@ -13,20 +13,20 @@ export const HomeCoreValue = () => {
     {
       defaultIcon: Collaboration,
       hoverIcon: CollaborationHover,
-      title: 'Collaboration',
+      title: 'Code Together',
       desc: '함께 성장하는 협업',
     },
     {
       defaultIcon: Ownership,
       hoverIcon: OwnershipHover,
-      title: 'Ownership',
-      desc: '주도적으로 만들어가는 경험',
+      title: 'Own the Trip',
+      desc: '주도적으로 만들어가는 여정',
     },
     {
       defaultIcon: Growth,
       hoverIcon: GrowthHover,
-      title: 'Growth',
-      desc: '함께 도전하며 도착하는 성장',
+      title: 'Arrive Together',
+      desc: '함께 도전하며 도착하는 경험',
     },
   ];
 

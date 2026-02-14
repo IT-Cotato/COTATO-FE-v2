@@ -1,6 +1,7 @@
 import JikhaengIcon from '@/assets/about-us/sponsor-logo/jikhaeng.svg';
 import CryCheeseBurgerIcon from '@/assets/about-us/sponsor-logo/crycheeseburger.svg';
 import HspaceIcon from '@/assets/about-us/sponsor-logo/hspace.svg';
+import OneTimeIcon from '@/assets/about-us/sponsor-logo/onetime.svg';
 import {AboutUsDescription} from '@/app/(with-header)/(with-footer)/about-us/_components/AboutUsDescription';
 import Link from 'next/link';
 
@@ -24,6 +25,7 @@ export const AboutUsSponsor = () => {
     </div>
   );
 };
+
 const SPONSORS = [
   {id: 'jikhaeng', Icon: JikhaengIcon, link: 'https://zighang.com/'},
   {
@@ -33,8 +35,8 @@ const SPONSORS = [
   },
   {id: 'hspace', Icon: HspaceIcon, link: 'https://hspace.io/'},
   {
-    id: 'crycheese2',
-    Icon: CryCheeseBurgerIcon,
-    link: 'https://www.instagram.com/crycheeseburger.official/',
+    id: 'onetime',
+    Icon: OneTimeIcon,
+    link: 'https://www.onetime-with-members.com/ko/landing',
   },
 ];

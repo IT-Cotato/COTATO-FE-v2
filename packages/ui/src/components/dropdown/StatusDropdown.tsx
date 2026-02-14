@@ -81,7 +81,7 @@ export const StatusDropdown = <T extends string>({
         <ul
           role='listbox'
           aria-label={ariaLabel}
-          className='text-body-s absolute top-full z-10 mt-1 w-full rounded-sm bg-neutral-700 text-neutral-300 shadow-lg'>
+          className='text-body-m absolute top-full z-10 mt-1 w-full rounded-sm bg-neutral-700 text-neutral-300 shadow-lg'>
           {options.map((option) => {
             const isSelected = option === selectedValue;
 

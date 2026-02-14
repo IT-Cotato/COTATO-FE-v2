@@ -1,9 +1,10 @@
 ---
 name: ETC issue template
 about: refactoring or minor updates
-title: ""
-labels: ""
-assignees: ""
+title: ''
+labels: ''
+assignees: ''
+
 ---
 
 ## 개발 유형
@@ -12,7 +13,7 @@ assignees: ""
 
 - [ ] 기존 기능 개선
 - [ ] 성능 개선
-- [ ] (필요시 추가 가능)
+- [ ] UI 구현
 
 <br><br>
 

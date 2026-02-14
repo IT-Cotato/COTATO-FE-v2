@@ -3,7 +3,8 @@ name: Bug report
 about: Create a report to help us improve
 title: "[FIX]"
 labels: "\U0001F41B Bug"
-assignees: ""
+assignees: ''
+
 ---
 
 ## 어떤 버그인가요?

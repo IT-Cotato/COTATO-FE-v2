@@ -8,7 +8,6 @@ export const ROUTES = {
   //mypage routes
   MYPAGE_ACTIVITY: '/mypage/activity',
   MYPAGE_ATTENDANCE: '/mypage/attendance',
-  MYPAGE_CSQUIZ: '/mypage/csquiz',
   MYPAGE_SECURITY: '/mypage/security',
   MYPAGE_TERMS: '/mypage/terms',
 
@@ -18,6 +17,7 @@ export const ROUTES = {
   ADMIN_SESSIONS: '/mypage/admin/sessions',
   ADMIN_ATTENDANCE: '/mypage/admin/attendance',
   ADMIN_PENALTIES: '/mypage/admin/penalties',
+  ADMIN_RECRUIT: '/mypage/admin/recruit',
 
   ADD_PROJECT: (editId?: number | string) =>
     editId !== undefined

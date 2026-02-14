@@ -14,7 +14,7 @@ export const HomeFinalSection = () => {
           코테이토와 당신의 여정을 함께하세요!
         </p>
         <h2 className='text-h2 text-neutral-800'>
-          코테이토에서 함께할 신입 감자들을 찾습니다!
+          코테이토에서 함께할 신입 감자분들을 모집합니다.
         </h2>
       </div>
       <Button

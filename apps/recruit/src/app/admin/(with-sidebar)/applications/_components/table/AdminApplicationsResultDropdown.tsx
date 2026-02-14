@@ -49,7 +49,7 @@ export const AdminApplicationsResultDropdown = ({
         aria-expanded={isOpen}
         className={clsx(
           'text-body-s inline-flex w-full items-center justify-center gap-1 rounded-[10px] py-1.5 text-white',
-          className,
+          className
         )}
         onClick={() => setIsOpen((prev) => !prev)}>
         <span>{label}</span>
@@ -65,7 +65,7 @@ export const AdminApplicationsResultDropdown = ({
         <ul
           role='listbox'
           aria-label='지원 결과 선택'
-          className='text-body-s absolute top-full z-10 mt-1 w-full rounded-sm bg-neutral-700 text-neutral-300 shadow-lg'>
+          className='text-body-m absolute top-full z-10 mt-1 w-full rounded-sm bg-neutral-700 text-neutral-300 shadow-lg'>
           {APPLICATION_RESULT_OPTIONS.map((option) => {
             const isSelected = option === selectedResult;
 
