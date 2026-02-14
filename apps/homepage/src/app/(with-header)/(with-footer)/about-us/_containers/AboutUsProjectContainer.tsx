@@ -119,7 +119,7 @@ const PROJECTS = [
   {
     id: 3,
     title: 'Troublog',
-    imageSrc: '/images/project/troublelog.png',
+    imageSrc: '/images/project/troublog.png',
   },
   {
     id: 4,
