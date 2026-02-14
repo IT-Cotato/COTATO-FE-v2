@@ -41,7 +41,7 @@ export const MemberActionMenu = ({onAction}: MemberActionMenuProps) => {
       {isOpen && (
         <ul
           role='menu'
-          className='text-body-s absolute top-full -right-21.5 z-10 mt-1 w-25 rounded-sm bg-neutral-700 py-1 text-neutral-300 shadow-lg'>
+          className='text-body-m absolute top-full -right-21.5 z-10 mt-1 w-25 rounded-sm bg-neutral-700 py-1 text-neutral-300 shadow-lg'>
           {MENU_ITEMS.map((item) => (
             <li
               key={item.key}

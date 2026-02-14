@@ -45,7 +45,7 @@ export const CheckboxFilter = <T extends string>({
 
   return (
     <div
-      className='text-body-s flex flex-col gap-0.75 rounded-sm bg-neutral-700 p-1.25 text-neutral-300'
+      className='text-body-m flex flex-col gap-0.75 rounded-sm bg-neutral-700 p-1.25 text-neutral-300'
       role='group'
       aria-label='필터'>
       {options.map((option) => {

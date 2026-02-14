@@ -84,7 +84,7 @@ export const Modal = ({
               </div>
             )}
             {warning && (
-              <div className='text-body-s font-normal text-neutral-600'>
+              <div className='text-body-m font-normal text-neutral-600'>
                 {warning}
               </div>
             )}
