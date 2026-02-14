@@ -13,7 +13,7 @@ export const OrangeRowKeycap = ({
 }: OrangeRowKeycapProps) => {
   return (
     <div
-      className='group not-visited: relative col-span-3 col-start-2 row-start-4 h-67 w-205 cursor-pointer overflow-hidden rounded-[50px]'
+      className='group relative col-span-3 col-start-2 row-start-4 h-67 w-205 cursor-pointer overflow-hidden rounded-[50px]'
       role='button'
       tabIndex={0}>
       <Image
