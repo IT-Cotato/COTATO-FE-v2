@@ -1,6 +1,7 @@
 'use client';
 
 import {AdminUsersTableView} from '../_components/table/AdminUsersTableView';
+import {ConfirmDeleteModal} from '../_components/table/ConfirmDeleteModal';
 import {AllMembersActionBar} from '../_components/AllMembersActionBar';
 import {ActiveMembersActionBar} from '../_components/ActiveMembersActionBar';
 import {Pagination} from '@repo/ui/components/pagination/Pagination';
@@ -138,8 +139,41 @@ export const AdminUsersTableContainer = ({
 
   const hasSelection = selectedIds.length > 0;
 
-  // TODO: 액션 핸들러 구현 필요
-  const handleMenuAction = (_action: MemberMenuAction, _memberId: number) => {};
+  // 삭제 모달 상태
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [memberToDelete, setMemberToDelete] = useState<MemberType | null>(null);
+
+  /**
+   * 메뉴 액션 핸들러
+   * @param action - 수행할 액션
+   * @param memberId - 대상 멤버 ID
+   */
+  const handleMenuAction = (action: MemberMenuAction, memberId: number) => {
+    const member = members.find((m) => m.memberId === memberId);
+    if (!member) return;
+
+    if (action === 'delete') {
+      setMemberToDelete(member);
+      setIsDeleteModalOpen(true);
+    }
+  };
+
+  /**
+   * 삭제 확정 핸들러
+   */
+  const handleConfirmDelete = () => {
+    if (!memberToDelete) return;
+
+    // TODO: API 연동 시 서버 요청으로 변경
+    setMembers((prev) =>
+      prev.filter((m) => m.memberId !== memberToDelete.memberId)
+    );
+    setSelectedIds((prev) =>
+      prev.filter((id) => id !== memberToDelete.memberId)
+    );
+    setIsDeleteModalOpen(false);
+    setMemberToDelete(null);
+  };
 
   // TODO: API 연동 시 서버 데이터로 교체
   const [generations, setGenerations] = useState<number[]>([10, 11, 12]);
@@ -193,6 +227,13 @@ export const AdminUsersTableContainer = ({
           variant='admin'
         />
       </div>
+
+      <ConfirmDeleteModal
+        isOpen={isDeleteModalOpen}
+        onClose={() => setIsDeleteModalOpen(false)}
+        onConfirm={handleConfirmDelete}
+        itemName={memberToDelete?.name ?? ''}
+      />
     </div>
   );
 };
