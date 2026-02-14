@@ -57,7 +57,7 @@ export const StatusDropdown = <T extends string>({
         aria-haspopup='listbox'
         aria-expanded={isOpen}
         className={clsx(
-          'text-body-s inline-flex w-full items-center justify-center gap-1 rounded-[10px] py-1.5 text-white',
+          'text-body-m inline-flex w-full items-center justify-center gap-1 rounded-[10px] py-1.5 text-white',
           bg
         )}
         onClick={() => setIsOpen((prev) => !prev)}>
@@ -74,7 +74,7 @@ export const StatusDropdown = <T extends string>({
         <ul
           role='listbox'
           aria-label={ariaLabel}
-          className='text-body-s absolute top-full z-10 mt-1 w-full rounded-sm bg-neutral-700 text-neutral-300 shadow-lg'>
+          className='text-body-m absolute top-full z-10 mt-1 w-full rounded-sm bg-neutral-700 text-neutral-300 shadow-lg'>
           {options.map((option) => {
             const isSelected = option === selectedValue;
 
