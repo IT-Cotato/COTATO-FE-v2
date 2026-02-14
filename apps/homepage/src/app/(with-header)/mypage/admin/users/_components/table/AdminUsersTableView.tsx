@@ -16,6 +16,7 @@ import {Checkbox} from '@repo/ui/components/checkbox/CheckBox';
 import {useClickOutside} from '@repo/ui/hooks/useClickOutside';
 import {StatusDropdown} from '@repo/ui/components/dropdown/StatusDropdown';
 import {MemberActionMenu} from './MemberActionMenu';
+import {SelectedMemberChip} from './SelectedMemberChip';
 import {
   ALL_USERS_MENU_ITEMS,
   REGULAR_MEMBER_MENU_ITEMS,
@@ -24,6 +25,7 @@ import {
 
 interface AdminUsersTableViewProps {
   items?: MemberType[];
+  allItems: MemberType[];
   activeTab: MemberTabType;
   selectedStatuses: MemberStatusKey[];
   onFilterChange: (labels: MemberStatusKey[]) => void;
@@ -36,6 +38,7 @@ interface AdminUsersTableViewProps {
 
 export const AdminUsersTableView = ({
   items = [],
+  allItems,
   activeTab,
   selectedStatuses,
   onFilterChange,
@@ -54,7 +57,7 @@ export const AdminUsersTableView = ({
   const isAllSelected = items.length > 0 && selectedIds.length === items.length;
 
   return (
-    <table className='w-full table-fixed border-collapse'>
+    <table className='min-w-[1110px] border-collapse'>
       <thead className='bg-neutral-200'>
         <tr>
           {isAllTab && (
@@ -108,9 +111,7 @@ export const AdminUsersTableView = ({
       </thead>
       <tbody>
         {items.map((member) => (
-          <tr
-            key={member.memberId}
-            className='text-body-l font-semibold text-neutral-600'>
+          <tr key={member.memberId} className='text-body-l text-neutral-600'>
             {isAllTab && (
               <td className='px-3 py-4 text-center'>
                 <Checkbox
@@ -169,6 +170,30 @@ export const AdminUsersTableView = ({
           </tr>
         ))}
       </tbody>
+      {isAllTab && selectedIds.length > 0 && (
+        <tfoot>
+          <tr>
+            <td
+              colSpan={MEMBER_COLUMNS.length + 2}
+              className='bg-neutral-100 px-12 py-2.75'>
+              <div className='flex flex-wrap items-center gap-5.5'>
+                <span className='text-body-l pr-1.25 text-neutral-600'>
+                  선택 {selectedIds.length}
+                </span>
+                {allItems
+                  .filter((m) => selectedIds.includes(m.memberId))
+                  .map((m) => (
+                    <SelectedMemberChip
+                      key={m.memberId}
+                      name={m.name}
+                      onRemove={() => onSelect(m.memberId, false)}
+                    />
+                  ))}
+              </div>
+            </td>
+          </tr>
+        </tfoot>
+      )}
     </table>
   );
 };

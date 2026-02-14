@@ -6,6 +6,7 @@ import {ActiveMembersActionBar} from '../_components/ActiveMembersActionBar';
 import {Pagination} from '@repo/ui/components/pagination/Pagination';
 import {
   MEMBER_STATUS_OPTIONS,
+  MemberMenuAction,
   MemberStatusKey,
 } from '@/constants/admin/admin-users';
 import {MemberTabType, MemberType} from '@/schemas/admin/admin-users.schema';
@@ -137,6 +138,9 @@ export const AdminUsersTableContainer = ({
 
   const hasSelection = selectedIds.length > 0;
 
+  // TODO: 액션 핸들러 구현 필요
+  const handleMenuAction = (_action: MemberMenuAction, _memberId: number) => {};
+
   // TODO: API 연동 시 서버 데이터로 교체
   const [generations, setGenerations] = useState<number[]>([10, 11, 12]);
   const [selectedGeneration, setSelectedGeneration] = useState<number | null>(
@@ -170,6 +174,7 @@ export const AdminUsersTableContainer = ({
       )}
       <AdminUsersTableView
         items={paginatedItems}
+        allItems={filteredItems}
         activeTab={activeTab}
         selectedStatuses={selectedStatuses}
         onFilterChange={handleFilterChange}
@@ -177,6 +182,7 @@ export const AdminUsersTableContainer = ({
         onSelectAll={handleSelectAll}
         onSelect={handleSelect}
         onStatusChange={handleStatusChange}
+        onMenuAction={handleMenuAction}
       />
       <div className='flex w-full justify-center'>
         <Pagination
