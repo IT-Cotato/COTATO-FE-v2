@@ -26,6 +26,11 @@ export const ENDPOINT = {
     UPDATE_PASSWORD: '/v1/api/members/update/password',
   },
 
+  /** 모집 관련 API */
+  RECRUITMENTS: {
+    STATUS: '/v1/api/recruitments/status',
+  },
+
   /** */
   PROJECT: {
     LIST: '/v1/api/projects',

@@ -17,7 +17,10 @@ export const AboutUsProjectContainer = () => {
   };
 
   return (
-    <div className='flex min-h-175 flex-col items-center gap-25 py-20'>
+    <div
+      className='flex min-h-175 flex-col items-center gap-25 py-20'
+      aria-labelledby='project'
+      id='project'>
       <AboutUsDescription
         title='코테이토의 프로젝트를 소개합니다'
         subTitle='함께 만들어 도착한, COTATO의 프로젝트를 만나보세요'
@@ -115,8 +118,8 @@ const PROJECTS = [
   },
   {
     id: 3,
-    title: 'Troublelog',
-    imageSrc: '/images/project/troublelog.png',
+    title: 'Troublog',
+    imageSrc: '/images/project/troublog.png',
   },
   {
     id: 4,

@@ -18,12 +18,12 @@ export const WhiteArrowKeycap = ({
 
   return (
     <div
-      className='group relative h-72.25 w-72.25 cursor-pointer rounded-[50px]'
+      className='group relative h-67 w-67 cursor-pointer rounded-[50px]'
       role='button'
       tabIndex={0}>
       <Image src='/keycap/white-keycap.svg' alt='' fill />
       <Image
-        src='/keycap/grap-keycap.svg'
+        src='/keycap/gray-keycap.svg'
         alt=''
         fill
         className='absolute top-0 left-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100'
