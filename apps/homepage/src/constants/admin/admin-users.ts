@@ -17,8 +17,8 @@ export const MEMBER_TABS: {label: string; value: MemberTabType}[] = [
 ];
 
 export const MEMBER_STATUS_CONFIG = {
-  APPROVED: {label: '활동 중', className: 'bg-[#FF9000] text-white'},
-  RETIRED: {label: '수료', className: 'bg-[#68CA3A] text-white'},
+  APPROVED: {label: '활동 중', className: 'bg-active text-white'},
+  RETIRED: {label: '수료', className: 'bg-chip text-white'},
   NOT_RETIRED: {label: '미수료', className: 'bg-neutral-600 text-white'},
   INACTIVE: {label: '비활동', className: 'bg-neutral-400 text-white'},
   REJECTED: {label: '가입 거절', className: 'bg-neutral-400 text-white'},
