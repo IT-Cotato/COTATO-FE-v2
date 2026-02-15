@@ -6,8 +6,8 @@ export const PlusButton = ({disabled}: {disabled?: boolean}) => {
       type='button'
       aria-label='기수 추가'
       disabled={disabled}
-      className={`flex h-[27px] w-[27px] shrink-0 items-center justify-center rounded-[20px] bg-neutral-600 transition-all ${disabled ? 'cursor-default opacity-50' : 'cursor-pointer'}`}>
-      <PlusIcon className='h-[13px] w-[13px] text-white' />
+      className={`flex h-6.75 w-6.75 shrink-0 items-center justify-center rounded-[20px] bg-neutral-600 transition-all ${disabled ? 'cursor-default opacity-50' : 'cursor-pointer'}`}>
+      <PlusIcon className='h-3.25 w-3.25 text-white' />
     </button>
   );
 };

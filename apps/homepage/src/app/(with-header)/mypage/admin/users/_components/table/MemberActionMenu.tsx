@@ -4,24 +4,26 @@ import {useRef, useState} from 'react';
 import MoreHorizontalIcon from '@/assets/more-horizontal/more-horizontal.svg';
 import {useClickOutside} from '@repo/ui/hooks/useClickOutside';
 
-const MENU_ITEMS = [
-  {key: 'detail', label: '상세보기'},
-  {key: 'delete', label: '삭제하기'},
-] as const;
-
-type MenuAction = (typeof MENU_ITEMS)[number]['key'];
-
-interface MemberActionMenuProps {
-  onAction: (action: MenuAction) => void;
+interface MenuItem<T extends string> {
+  key: T;
+  label: string;
 }
 
-export const MemberActionMenu = ({onAction}: MemberActionMenuProps) => {
+interface MemberActionMenuProps<T extends string> {
+  items: readonly MenuItem<T>[];
+  onAction: (action: T) => void;
+}
+
+export const MemberActionMenu = <T extends string>({
+  items,
+  onAction,
+}: MemberActionMenuProps<T>) => {
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
   useClickOutside(menuRef, () => setIsOpen(false));
 
-  const handleAction = (action: MenuAction) => {
+  const handleAction = (action: T) => {
     setIsOpen(false);
     onAction(action);
   };
@@ -41,8 +43,8 @@ export const MemberActionMenu = ({onAction}: MemberActionMenuProps) => {
       {isOpen && (
         <ul
           role='menu'
-          className='text-body-m absolute top-full -right-21.5 z-10 mt-1 w-25 rounded-sm bg-neutral-700 py-1 text-neutral-300 shadow-lg'>
-          {MENU_ITEMS.map((item) => (
+          className='text-body-s absolute top-full -right-21.5 z-10 mt-1 w-25 rounded-sm bg-neutral-700 py-1 text-neutral-300 shadow-lg'>
+          {items.map((item) => (
             <li
               key={item.key}
               role='menuitem'

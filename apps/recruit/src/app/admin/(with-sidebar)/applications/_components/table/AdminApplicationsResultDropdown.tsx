@@ -25,7 +25,7 @@ export const AdminApplicationsResultDropdown = ({
   const [isOpen, setIsOpen] = useState(false);
 
   const wrapperRef = useRef<HTMLDivElement>(null);
-  const {bg, label} = APPLICATION_RESULT_CONFIG[selectedResult];
+  const {className, label} = APPLICATION_RESULT_CONFIG[selectedResult];
 
   const handleSelect = (value: ApplicationResultStatus) => {
     if (disabled) return;
@@ -48,8 +48,8 @@ export const AdminApplicationsResultDropdown = ({
         aria-haspopup='listbox'
         aria-expanded={isOpen}
         className={clsx(
-          'text-body-m inline-flex w-full items-center justify-center gap-1 rounded-[10px] py-1.5 text-white',
-          bg
+          'text-body-s inline-flex w-full items-center justify-center gap-1 rounded-[10px] py-1.5 text-white',
+          className
         )}
         onClick={() => setIsOpen((prev) => !prev)}>
         <span>{label}</span>

@@ -71,19 +71,19 @@ export const RESULT_OPTIONS = Object.values(RESULT_LABEL_MAP);
 export const APPLICATION_RESULT_CONFIG = {
   PASS: {
     label: '합격',
-    bg: 'bg-[#68CA3A]',
+    className: 'bg-[#68CA3A] text-white',
   },
   FAIL: {
     label: '불합격',
-    bg: 'bg-alert',
+    className: 'bg-alert text-white',
   },
   WAITLISTED: {
     label: '예비합격',
-    bg: 'bg-hover',
+    className: 'bg-hover text-white',
   },
   PENDING: {
     label: '평가전',
-    bg: 'bg-text-disabled',
+    className: 'bg-text-disabled text-white',
   },
 } as const;
 

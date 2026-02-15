@@ -5,7 +5,9 @@ import {useClickOutside} from '@repo/ui/hooks/useClickOutside';
 
 interface StatusDropdownConfig {
   label: string;
-  bg: string;
+  className: string;
+  textColor?: string;
+  chevronColor?: string;
 }
 
 interface StatusDropdownProps<T extends string> {
@@ -33,7 +35,6 @@ export const StatusDropdown = <T extends string>({
   }, [value]);
 
   const wrapperRef = useRef<HTMLDivElement>(null);
-  const {bg, label} = config[selectedValue];
 
   const handleSelect = (next: T) => {
     if (disabled) return;
@@ -49,6 +50,10 @@ export const StatusDropdown = <T extends string>({
 
   useClickOutside(wrapperRef, () => setIsOpen(false));
 
+  const currentConfig = config[selectedValue];
+  if (!currentConfig) return null;
+  const {className, label, textColor, chevronColor} = currentConfig;
+
   return (
     <div className='relative w-18.75' ref={wrapperRef}>
       <button
@@ -57,14 +62,16 @@ export const StatusDropdown = <T extends string>({
         aria-haspopup='listbox'
         aria-expanded={isOpen}
         className={clsx(
-          'text-body-m inline-flex w-full items-center justify-center gap-1 rounded-[10px] py-1.5 text-white',
-          bg
+          'text-body-s inline-flex w-full items-center justify-center gap-1 rounded-[10px] py-1.5',
+          className
         )}
+        style={textColor ? {color: textColor} : undefined}
         onClick={() => setIsOpen((prev) => !prev)}>
         <span>{label}</span>
         <ChevronDown
           className={clsx(
-            'text-white transition-transform duration-200',
+            chevronColor ?? 'text-white',
+            'transition-transform duration-200',
             isOpen && 'rotate-180'
           )}
         />

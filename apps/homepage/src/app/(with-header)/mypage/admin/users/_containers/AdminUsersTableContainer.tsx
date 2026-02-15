@@ -1,9 +1,14 @@
 'use client';
 
 import {AdminUsersTableView} from '../_components/table/AdminUsersTableView';
+import {ConfirmDeleteModal} from '../_components/table/ConfirmDeleteModal';
+import {MemberDetailModal} from '../_components/table/MemberDetailModal';
+import {AllMembersActionBar} from '../_components/AllMembersActionBar';
+import {ActiveMembersActionBar} from '../_components/ActiveMembersActionBar';
 import {Pagination} from '@repo/ui/components/pagination/Pagination';
 import {
   MEMBER_STATUS_OPTIONS,
+  MemberMenuAction,
   MemberStatusKey,
 } from '@/constants/admin/admin-users';
 import {MemberTabType, MemberType} from '@/schemas/admin/admin-users.schema';
@@ -16,10 +21,16 @@ const ITEMS_PER_PAGE = 10;
 
 interface AdminUsersTableContainerProps {
   activeTab: MemberTabType;
+  keyword: string;
+  onKeywordChange: (value: string) => void;
+  onSearch: () => void;
 }
 
 export const AdminUsersTableContainer = ({
   activeTab,
+  keyword,
+  onKeywordChange,
+  onSearch,
 }: AdminUsersTableContainerProps) => {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -44,9 +55,7 @@ export const AdminUsersTableContainer = ({
   const handleBatchStatusChange = (status: MemberStatusKey) => {
     setMembers((prev) =>
       prev.map((member) =>
-        selectedIds.includes(member.memberId)
-          ? {...member, status}
-          : member
+        selectedIds.includes(member.memberId) ? {...member, status} : member
       )
     );
     setSelectedIds([]);
@@ -131,24 +140,98 @@ export const AdminUsersTableContainer = ({
 
   const hasSelection = selectedIds.length > 0;
 
+  // 삭제 모달 상태
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [memberToDelete, setMemberToDelete] = useState<MemberType | null>(null);
+
+  // 상세/수정 모달 상태
+  const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
+  const [isDetailReadonly, setIsDetailReadonly] = useState(true);
+  const [selectedMember, setSelectedMember] = useState<MemberType | null>(null);
+
+  /**
+   * 메뉴 액션 핸들러
+   * @param action - 수행할 액션
+   * @param memberId - 대상 멤버 ID
+   */
+  const handleMenuAction = (action: MemberMenuAction, memberId: number) => {
+    const member = members.find((m) => m.memberId === memberId);
+    if (!member) return;
+
+    if (action === 'delete') {
+      setMemberToDelete(member);
+      setIsDeleteModalOpen(true);
+    } else if (action === 'detail') {
+      setSelectedMember(member);
+      setIsDetailReadonly(true);
+      setIsDetailModalOpen(true);
+    } else if (action === 'edit') {
+      setSelectedMember(member);
+      setIsDetailReadonly(false);
+      setIsDetailModalOpen(true);
+    }
+  };
+
+  const handleSaveMember = (updated: MemberType) => {
+    setMembers((prev) =>
+      prev.map((m) => (m.memberId === updated.memberId ? updated : m))
+    );
+  };
+
+  /**
+   * 삭제 확정 핸들러
+   */
+  const handleConfirmDelete = () => {
+    if (!memberToDelete) return;
+
+    // TODO: API 연동 시 서버 요청으로 변경
+    setMembers((prev) =>
+      prev.filter((m) => m.memberId !== memberToDelete.memberId)
+    );
+    setSelectedIds((prev) =>
+      prev.filter((id) => id !== memberToDelete.memberId)
+    );
+    setIsDeleteModalOpen(false);
+    setMemberToDelete(null);
+  };
+
+  // TODO: API 연동 시 서버 데이터로 교체
+  const [generations, setGenerations] = useState<number[]>([10, 11, 12]);
+  const [selectedGeneration, setSelectedGeneration] = useState<number | null>(
+    generations[0] ?? null
+  );
+  const handleAddGeneration = (data: {
+    generation: number;
+    startDate: Date;
+    endDate: Date;
+  }) => {
+    setGenerations((prev) => [...prev, data.generation]);
+    setSelectedGeneration(data.generation);
+  };
+
   return (
     <div className='flex flex-col gap-3.5'>
-      <div className='flex gap-5 pt-8.5'>
-        <button
-          disabled={!hasSelection}
-          onClick={() => handleBatchStatusChange('RETIRED')}
-          className='rounded-lg bg-neutral-50 px-4.75 py-1.5 font-semibold text-neutral-600 disabled:opacity-50'>
-          수료로 변경
-        </button>
-        <button
-          disabled={!hasSelection}
-          onClick={() => handleBatchStatusChange('APPROVED')}
-          className='text-primary rounded-lg bg-neutral-50 px-4.75 py-1.5 font-semibold disabled:opacity-50'>
-          활동 중으로 변경
-        </button>
-      </div>
+      {activeTab === 'ALL' && (
+        <AllMembersActionBar
+          hasSelection={hasSelection}
+          onBatchStatusChange={handleBatchStatusChange}
+          keyword={keyword}
+          onKeywordChange={onKeywordChange}
+          onSearch={onSearch}
+          isLoading={isLoading}
+        />
+      )}
+      {activeTab === 'ACTIVE' && (
+        <ActiveMembersActionBar
+          generations={generations}
+          selectedGeneration={selectedGeneration}
+          onGenerationChange={setSelectedGeneration}
+          onAddGeneration={handleAddGeneration}
+        />
+      )}
       <AdminUsersTableView
         items={paginatedItems}
+        allItems={filteredItems}
         activeTab={activeTab}
         selectedStatuses={selectedStatuses}
         onFilterChange={handleFilterChange}
@@ -156,6 +239,7 @@ export const AdminUsersTableContainer = ({
         onSelectAll={handleSelectAll}
         onSelect={handleSelect}
         onStatusChange={handleStatusChange}
+        onMenuAction={handleMenuAction}
       />
       <div className='flex w-full justify-center'>
         <Pagination
@@ -166,6 +250,21 @@ export const AdminUsersTableContainer = ({
           variant='admin'
         />
       </div>
+
+      <ConfirmDeleteModal
+        isOpen={isDeleteModalOpen}
+        onClose={() => setIsDeleteModalOpen(false)}
+        onConfirm={handleConfirmDelete}
+        itemName={memberToDelete?.name ?? ''}
+      />
+
+      <MemberDetailModal
+        isOpen={isDetailModalOpen}
+        onClose={() => setIsDetailModalOpen(false)}
+        onSave={handleSaveMember}
+        member={selectedMember}
+        readonly={isDetailReadonly}
+      />
     </div>
   );
 };
