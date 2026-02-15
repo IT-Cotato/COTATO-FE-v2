@@ -24,7 +24,7 @@ export const HomeMainScheduleContainer = () => {
         <ScheduleKeycap
           imageSrc='/images/main-schedule/ot.png'
           title='OT'
-          subTitle='2026.02.04'
+          subTitle='2026.03.06'
         />
         <BlackPlusKeycap />
         <div className='col-span-2 col-start-3 row-span-2 row-start-1'>
@@ -32,16 +32,16 @@ export const HomeMainScheduleContainer = () => {
             imageSrc='/images/main-schedule/mt.png'
             imageSecondSrc='/images/main-schedule/session.png'
             title='MT'
-            subTitle='2026.02.04'
+            subTitle='2026.03.27'
             secondTitle='정기 세션'
-            secondSubTitle='2026.02.04'
+            secondSubTitle='매주 금요일'
           />
         </div>
         <div className='col-start-1 row-span-2'>
           <OrangeColKeycap
             imageSrc='/images/main-schedule/devtalk.png'
-            title='데브토크'
-            subTitle='2026.02.04'
+            title='데브톡'
+            subTitle='2026.05.08'
           />
         </div>
         <div className='col-start-2 row-start-2'>
@@ -51,7 +51,7 @@ export const HomeMainScheduleContainer = () => {
           <BlackRowKeycap
             imageSrc='/images/main-schedule/cokerthon.png'
             title='코커톤'
-            subTitle='2026.02.04'
+            subTitle='2026.07.24'
           />
         </div>
         <div className='col-start-4 row-start-3'>
@@ -63,8 +63,8 @@ export const HomeMainScheduleContainer = () => {
         <div className='col-span-3 col-start-2 row-start-4'>
           <OrangeRowKeycap
             imageSrc='/images/main-schedule/demoday.png'
-            title='Demo Day'
-            subTitle='2026.02.04'
+            title='데모데이'
+            subTitle='2026.08.21'
           />
         </div>
       </div>

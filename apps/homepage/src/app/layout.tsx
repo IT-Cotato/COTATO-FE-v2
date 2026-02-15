@@ -4,6 +4,7 @@ import '@repo/ui/styles.css';
 import localFont from 'next/font/local';
 import Providers from '@/app/providers';
 import {AuthProvider} from '@/components/providers/AuthProvider';
+import GoogleAnalytics from '@/lib/GoogleAnalytics';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.cotato.kr'),
@@ -98,7 +99,14 @@ export default function RootLayout({
       className={`${pretendard.variable} ${sebangGothic.variable} ${roboto.variable} antialiased`}>
       <Providers>
         <AuthProvider>
-          <body>{children}</body>
+          <body>
+            {process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS ? (
+              <GoogleAnalytics
+                gaId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}
+              />
+            ) : null}
+            <main>{children}</main>
+          </body>
         </AuthProvider>
       </Providers>
     </html>

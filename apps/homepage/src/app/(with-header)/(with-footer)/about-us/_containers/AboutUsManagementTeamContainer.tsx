@@ -5,7 +5,10 @@ import AboutUsBackgroundThird from '@/assets/about-us/background-about-us-third.
 
 export const AboutUsManagementTeamContainer = () => {
   return (
-    <div className='relative flex w-full flex-col items-center gap-25 overflow-hidden py-40'>
+    <div
+      className='relative flex w-full flex-col items-center gap-25 overflow-hidden py-40'
+      aria-labelledby='management-team'
+      id='management-team'>
       <div className='pointer-events-none absolute inset-0 z-0'>
         <AboutUsBackgroundThird />
       </div>

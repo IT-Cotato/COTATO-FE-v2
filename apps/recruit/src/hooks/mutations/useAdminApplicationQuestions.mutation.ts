@@ -2,6 +2,7 @@ import {QUERY_KEYS} from '@/constants/query-keys';
 import {PostApplicationQuestionsRequest} from '@/schemas/admin/admin-application-questions.schema';
 import {postAdminApplicationQuestions} from '@/services/api/admin/admin-application-questions.api';
 import {useMutation, useQueryClient} from '@tanstack/react-query';
+import {AxiosError} from 'axios';
 
 /**
  * 지원서 질문을 생성 또는 수정하는 React Query mutation 훅입니다.
@@ -28,6 +29,9 @@ export const useAdminApplicationQuestionsMutation = () => {
           questionType,
         ],
       });
+    },
+    onError: (error: AxiosError) => {
+      alert(error.message);
     },
   });
 };

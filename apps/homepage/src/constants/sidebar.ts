@@ -53,7 +53,7 @@ export const SIDEBAR_NAV_GROUPS: NavGroup[] = [
   {
     title: '설정',
     items: [
-      {label: '계정 관리', href: ROUTES.MYPAGE_SECURITY, icon: SecurityIcon},
+      {label: '계정 관리', href: ROUTES.MYPAGE_ACCOUNT, icon: SecurityIcon},
       {
         label: '회칙 및 서비스 약관',
         href: ROUTES.MYPAGE_TERMS,

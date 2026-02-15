@@ -37,3 +37,14 @@ export const formatRecruitmentDate = (
   // date only: 2026-03-06 → 월/일만
   return `${month}월 ${day}일 (${weekday})`;
 };
+
+/** 현재 시간을 "YYYY-MM-DDTHH:mm:ss" 형식으로 생성하는 함수**/
+export const getNowISOString = () => {
+  const now = new Date();
+  const offset = now.getTimezoneOffset() * 60000;
+  const localISOTime = new Date(now.getTime() - offset)
+    .toISOString()
+    .split('.')[0];
+
+  return localISOTime;
+};
