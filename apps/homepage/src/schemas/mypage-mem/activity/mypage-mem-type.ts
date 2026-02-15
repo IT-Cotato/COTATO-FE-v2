@@ -1,7 +1,5 @@
-import {
-  MOCK_ATTENDANCE_DASHBOARD,
-  MOCK_PENALTY_DATA,
-} from '@/mocks/mypage-mem/activity-mock';
+import {MyAttendanceDashboardResponse} from './attendance.schema';
+import {MyMinusPointDashboardResponse} from './penalty.schema';
 
 export type TabType = 'attendance' | 'penalty';
 
@@ -21,8 +19,12 @@ export interface StatusCardProps {
   variant: CardVariant;
 }
 
-export const getAttendanceCards = (): StatusCardProps[] => {
-  const {statistic} = MOCK_ATTENDANCE_DASHBOARD;
+/** 출석 카드 데이터 변환 헬퍼 */
+export const getAttendanceCards = (
+  statistic?: MyAttendanceDashboardResponse['statistic']
+): StatusCardProps[] => {
+  if (!statistic) return [];
+
   return [
     {label: '출석', value: statistic.present, variant: 'attend'},
     {label: '지각', value: statistic.late, variant: 'late'},
@@ -35,8 +37,12 @@ export const getAttendanceCards = (): StatusCardProps[] => {
   ];
 };
 
-export const getPenaltyCards = (): StatusCardProps[] => {
-  const {dashboard} = MOCK_PENALTY_DATA;
+/** 상벌점 카드 데이터 변환 헬퍼 */
+export const getPenaltyCards = (
+  dashboard?: MyMinusPointDashboardResponse
+): StatusCardProps[] => {
+  if (!dashboard) return [];
+
   return [
     {label: '총합', value: dashboard.totalPoint, variant: 'total'},
     {label: '상점', value: dashboard.bonusPoint, variant: 'bonus'},

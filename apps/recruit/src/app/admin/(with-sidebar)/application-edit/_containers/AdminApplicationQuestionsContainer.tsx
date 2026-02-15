@@ -12,7 +12,7 @@ import {
   ApplicationQuestionsType,
   PartType,
 } from '@/schemas/admin/admin-application-questions.schema';
-import {useEffect, useState} from 'react';
+import {useState} from 'react';
 
 interface AdminApplicationQuestionsContainerProps {
   generationId: number;
@@ -35,18 +35,8 @@ export const AdminApplicationQuestionsContainer = ({
   });
   const questions = data?.data;
 
-  const {
-    mutateAsync: saveQuestions,
-    isPending,
-    isError,
-    error,
-  } = useAdminApplicationQuestionsMutation();
-
-  useEffect(() => {
-    if (isError) {
-      alert(error.message);
-    }
-  }, [isError, error]);
+  const {mutateAsync: saveQuestions, isPending} =
+    useAdminApplicationQuestionsMutation();
 
   const handleEditStart = () => {
     if (!questions) return;

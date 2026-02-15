@@ -8,10 +8,8 @@ export type ButtonLabelTypo =
   | 'h5'
   | 'body_l'
   | 'body_m'
-  | 'body_s'
   | 'body_l_sb'
-  | 'body_m_sb'
-  | 'body_s_sb';
+  | 'body_m_sb';
 
 export type ColorKey =
   | 'primary'

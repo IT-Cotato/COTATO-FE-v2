@@ -16,7 +16,7 @@ export const CustomHeader = ({
     <button onClick={onPrevMonth}>
       <ChevronLeftIcon className='h-4 w-4 text-[#848A95]' />
     </button>
-    <span className='text-body-s text-neutral-800'>
+    <span className='text-body-m text-neutral-800'>
       {date.toLocaleString('en-US', {
         month: 'long',
         year: 'numeric',

@@ -1,7 +1,7 @@
 'use client';
 
 import {CustomDateTimePicker} from '@/app/admin/(with-sidebar)/application-edit/_components/calendar/CustomDateTimePicker';
-import CalendarIcon from '@/assets/icons/calendar.svg';
+import CalendarIcon from '@repo/ui/assets/icons/calendar.svg';
 import 'react-datepicker/dist/react-datepicker.css';
 import {useMemo, useRef, useState} from 'react';
 import {formatRecruitmentDate} from '@/utils/formatDate';
@@ -43,7 +43,7 @@ export const AdminDatePicker = ({value, onChange}: AdminDatePickerProps) => {
       </button>
 
       {isOpen && (
-        <div className='absolute top-full left-0 z-50 mt-2'>
+        <div className='absolute top-full left-1/2 z-50 mt-2 -translate-x-1/2'>
           <CustomDateTimePicker
             selected={selectedDate}
             onChange={(date: Date | null) => {
