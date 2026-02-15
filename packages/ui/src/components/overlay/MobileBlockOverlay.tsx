@@ -24,10 +24,13 @@ export const MobileBlockOverlay = ({title}: MobileBlockOverlayProps) => {
 
   return (
     <div
+      role='dialog'
+      aria-modal='true'
+      aria-labelledby='mobile-block-title'
       className={`fixed inset-0 z-104 flex flex-col items-center justify-center bg-black p-10 text-center ${isMobile === null ? 'hidden max-lg:flex lg:hidden' : ''}`}>
       <CotatoLogo />
-      <div className='mt-20 flex flex-col gap-10 space-y-4'>
-        <h1 className='text-h2 font-bold text-white'>
+      <div className='mt-20 flex flex-col gap-10'>
+        <h1 id='mobile-block-title' className='text-h2 font-bold text-white'>
           데스크톱 환경에 <br /> 최적화되어 있습니다
         </h1>
         <p className='text-h5 leading-relaxed text-neutral-400'>
