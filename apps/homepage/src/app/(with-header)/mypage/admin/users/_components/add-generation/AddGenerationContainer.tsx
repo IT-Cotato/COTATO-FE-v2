@@ -30,7 +30,6 @@ export const AddGenerationContainer = ({
     endDate: Date;
   }) => {
     // TODO: API 호출로 기수 추가
-    console.log('새 기수 추가:', data);
     setIsModalOpen(false);
     onAddGeneration(data);
   };
@@ -54,7 +53,7 @@ export const AddGenerationContainer = ({
                     'text-body-l flex h-9.5 w-15.75 shrink-0 cursor-pointer items-center justify-center rounded-[5px] font-semibold transition-all',
                     isSelected
                       ? 'bg-neutral-600 text-white'
-                      : 'bg-white text-neutral-600',
+                      : 'bg-white text-neutral-600'
                   )}>
                   {generationId}기
                 </button>

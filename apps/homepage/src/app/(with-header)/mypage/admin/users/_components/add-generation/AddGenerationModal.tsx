@@ -4,7 +4,7 @@ import {useState, useRef} from 'react';
 import DatePicker from 'react-datepicker';
 import Close from '@/assets/modal/close.svg';
 import 'react-datepicker/dist/react-datepicker.css';
-import {formatDate} from '@/utils/formatDate';
+import {formatDate} from '@repo/ui/utils/date';
 import {CustomInput} from '../calendar/CustomInput';
 import {CustomHeader} from '../calendar/CustomHeader';
 import {Button} from '@repo/ui/components/buttons/Button';
@@ -40,6 +40,17 @@ export const AddGenerationModal = ({
 
   if (!isOpen) return null;
 
+  const resetState = () => {
+    setGeneration('');
+    setStartDate(null);
+    setEndDate(null);
+  };
+
+  const handleClose = () => {
+    resetState();
+    onClose();
+  };
+
   const handleSubmit = () => {
     if (!generation || !startDate || !endDate) return;
     onSave({
@@ -47,20 +58,18 @@ export const AddGenerationModal = ({
       startDate,
       endDate,
     });
-    setGeneration('');
-    setStartDate(null);
-    setEndDate(null);
+    resetState();
   };
 
   return (
     <div
       className='fixed inset-0 z-[100] flex items-center justify-center bg-black/50'
-      onClick={onClose}>
+      onClick={handleClose}>
       <div
         className='relative flex w-113.5 flex-col gap-6.5 rounded-[10px] bg-white px-6.5 py-7.5'
         onClick={(e) => e.stopPropagation()}>
         <button
-          onClick={onClose}
+          onClick={handleClose}
           className='absolute top-6.5 right-6.5'
           aria-label='닫기'>
           <Close className='h-6 w-6 cursor-pointer' />
@@ -77,7 +86,7 @@ export const AddGenerationModal = ({
               type='number'
               value={generation}
               onChange={(e) => setGeneration(e.target.value)}
-              className='text-h5 focus:ring-primary h-7.5 w-[76px] [appearance:textfield] rounded-[10px] bg-neutral-50 px-4 text-center font-semibold text-neutral-600 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none'
+              className='text-h5 focus:ring-primary h-7.5 w-19 [appearance:textfield] rounded-[10px] bg-neutral-50 px-4 text-center font-semibold text-neutral-600 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none'
               placeholder='13'
             />
             <span className='text-body-l font-semibold text-neutral-600'>
@@ -91,7 +100,7 @@ export const AddGenerationModal = ({
             시작 날짜
           </label>
           <CustomInput
-            value={formatDate(startDate)}
+            value={formatDate(startDate) ?? ''}
             placeholder='YYYY-MM-DD'
             className='h-10 w-full bg-neutral-50'
             textAlign='left'
@@ -125,7 +134,7 @@ export const AddGenerationModal = ({
             종료 날짜
           </label>
           <CustomInput
-            value={formatDate(endDate)}
+            value={formatDate(endDate) ?? ''}
             placeholder='YYYY-MM-DD'
             className='h-10 w-full bg-neutral-50'
             textAlign='left'
