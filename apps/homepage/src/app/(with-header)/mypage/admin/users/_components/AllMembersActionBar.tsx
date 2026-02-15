@@ -1,5 +1,5 @@
-import {MemberStatusKey} from '@/constants/admin/admin-users';
-import {SearchBar} from './SearchBar';
+import {MemberStatusKey} from '@/constants/admin/admin';
+import {SearchBar} from '../../_components/SearchBar';
 
 interface AllMembersActionBarProps {
   hasSelection: boolean;

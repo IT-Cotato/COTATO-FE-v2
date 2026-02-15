@@ -48,7 +48,7 @@ export const AdminApplicationsResultDropdown = ({
         aria-haspopup='listbox'
         aria-expanded={isOpen}
         className={clsx(
-          'text-body-s inline-flex w-full items-center justify-center gap-1 rounded-[10px] py-1.5 text-white',
+          'text-body-s inline-flex w-full items-center justify-center gap-1 rounded-[10px] py-1.5',
           className
         )}
         onClick={() => setIsOpen((prev) => !prev)}>

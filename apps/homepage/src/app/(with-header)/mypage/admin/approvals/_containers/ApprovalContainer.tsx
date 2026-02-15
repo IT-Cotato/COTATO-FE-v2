@@ -3,58 +3,58 @@
 import {useRouter, useSearchParams} from 'next/navigation';
 import {useState} from 'react';
 import clsx from 'clsx';
-import {MEMBER_TABS} from '@/constants/admin/admin';
-import {MemberTabType} from '@/schemas/admin/admin.schema';
-import {AdminUsersTableContainer} from './AdminUsersTableContainer';
-import {SearchBar} from '@/app/(with-header)/mypage/admin/_components/SearchBar';
+import {APPROVAL_TABS} from '@/constants/admin/admin';
+import {ApprovalTabType} from '@/schemas/admin/admin.schema';
+import {ApprovalTableContainer} from './ApprovalTableContainer';
 
-export const AdminUsersContainer = () => {
+export const ApprovalContainer = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const activeTab = (searchParams.get('tab') as MemberTabType) ?? 'ALL';
+  const activeTab = (searchParams.get('tab') as ApprovalTabType) ?? 'REQUESTED';
 
   // TODO: API 연동 시 검색 로직 구현
   const [keyword, setKeyword] = useState('');
   const handleSearch = () => {};
 
-  const handleTabClick = (tab: MemberTabType) => {
+  const handleTabClick = (tab: ApprovalTabType) => {
     const params = new URLSearchParams(searchParams.toString());
     params.set('tab', tab);
     params.set('page', '1');
-    setKeyword('');
     router.push(`?${params.toString()}`, {scroll: false});
+  };
+
+  // TODO: API 연동 시 실제 카운트로 교체
+  const tabCounts: Record<ApprovalTabType, number> = {
+    REQUESTED: 256,
+    REJECTED: 0,
   };
 
   return (
     <div className='w-full'>
       <div role='tablist' className='flex items-end gap-6'>
-        {MEMBER_TABS.map(({label, value}) => (
+        {APPROVAL_TABS.map(({label, value}) => (
           <button
             key={value}
             role='tab'
             type='button'
             aria-selected={activeTab === value}
             className={clsx(
-              'text-body-l cursor-pointer pb-2 font-semibold transition-colors',
+              'text-body-l-sb cursor-pointer pb-2 transition-colors',
               activeTab === value
-                ? 'border-primary text-primary text-body-l-sb border-b-2 px-3'
-                : 'text-body-l-sb px-3 text-neutral-800'
+                ? 'border-primary text-primary border-b-2 px-3'
+                : 'px-3 text-neutral-800'
             )}
             onClick={() => handleTabClick(value)}>
             {label}
+            <span className='text-body-m ml-2.5 inline-flex h-5.25 min-w-4.75 items-center justify-center rounded-full bg-neutral-500 px-[5.5px] text-white'>
+              {tabCounts[value]}
+            </span>
           </button>
         ))}
-        {activeTab === 'ACTIVE' && (
-          <SearchBar
-            keyword={keyword}
-            onKeywordChange={setKeyword}
-            onSearch={handleSearch}
-          />
-        )}
       </div>
 
-      <AdminUsersTableContainer
+      <ApprovalTableContainer
         activeTab={activeTab}
         keyword={keyword}
         onKeywordChange={setKeyword}

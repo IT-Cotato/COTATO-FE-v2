@@ -12,8 +12,8 @@ import {
   MemberPositionKey,
   MemberRoleKey,
   MemberStatusKey,
-} from '@/constants/admin/admin-users';
-import {MemberType} from '@/schemas/admin/admin-users.schema';
+} from '@/constants/admin/admin';
+import {MemberType} from '@/schemas/admin/admin.schema';
 import {
   TextField,
   fieldClass,
@@ -71,7 +71,9 @@ export const MemberDetailModal = ({
   return (
     <div
       className='z-modal fixed inset-0 flex items-center justify-center bg-black/50'
-      onClick={onClose}>
+      onClick={onClose}
+      role='dialog'
+      aria-modal='true'>
       <div
         className='relative flex w-113.5 flex-col gap-6.5 rounded-[10px] bg-white px-6.5 py-7.5'
         onClick={(e) => e.stopPropagation()}>
