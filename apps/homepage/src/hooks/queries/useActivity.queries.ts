@@ -8,10 +8,11 @@ import {
 } from '@/services/api/activity/activity.api';
 
 /** 내 출석 대시보드 조회 */
-export const useAttendanceDashboardQuery = () => {
+export const useAttendanceDashboardQuery = (options?: {enabled?: boolean}) => {
   return useQuery({
     queryKey: QUERY_KEYS.ATTENDANCE.DASHBOARD,
     queryFn: getMyAttendanceDashboard,
+    ...options,
   });
 };
 
@@ -24,10 +25,11 @@ export const useAttendanceRecordsQuery = (month?: number) => {
 };
 
 /** 내 상벌점 대시보드 조회 */
-export const usePenaltyDashboardQuery = () => {
+export const usePenaltyDashboardQuery = (options?: {enabled?: boolean}) => {
   return useQuery({
     queryKey: QUERY_KEYS.PENALTY.DASHBOARD,
     queryFn: getMyPenaltyDashboard,
+    ...options,
   });
 };
 

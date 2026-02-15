@@ -17,18 +17,25 @@ export const AttendanceStatusContainer = ({
 }: {
   activeTab: TabType;
 }) => {
-  const {data: attendData} = useAttendanceDashboardQuery();
-  const {data: penaltyData} = usePenaltyDashboardQuery();
+  const isAttendance = activeTab === 'attendance';
+
+  // 탭이 attendance일 때만 출석 대시보드 호출
+  const {data: attendData} = useAttendanceDashboardQuery({
+    enabled: isAttendance,
+  });
+
+  // 탭이 penalty일 때만 상벌점 대시보드 호출
+  const {data: penaltyData} = usePenaltyDashboardQuery({
+    enabled: !isAttendance,
+  });
 
   const currentCards = useMemo(() => {
-    if (activeTab === 'attendance') {
+    if (isAttendance) {
       return getAttendanceCards(attendData?.statistic);
-    }
-    if (activeTab === 'penalty') {
+    } else {
       return getPenaltyCards(penaltyData);
     }
-    return [];
-  }, [activeTab, attendData, penaltyData]);
+  }, [isAttendance, attendData, penaltyData]);
 
   return (
     <div className='flex w-full items-center gap-10'>
