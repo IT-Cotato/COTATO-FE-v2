@@ -28,3 +28,17 @@ export const updatePasswordApi = async (password: string) => {
     return handleApiError(error);
   }
 };
+
+/**
+ * 현재 비밀번호 확인 API
+ */
+export const verifyPasswordApi = async (password: string) => {
+  try {
+    const {data} = await privateAxios.post(ENDPOINT.MEMBERS.VERIFY_PASSWORD, {
+      password,
+    });
+    return data;
+  } catch (error) {
+    return handleApiError(error);
+  }
+};
