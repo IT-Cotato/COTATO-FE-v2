@@ -144,7 +144,10 @@ export const MemberDetailModal = ({
             }
             options={positionOptions}
             onSelect={(val) =>
-              setMemberData({...memberData, position: POSITION_REVERSE[val]})
+              setMemberData({
+                ...memberData,
+                position: POSITION_REVERSE[val],
+              })
             }
             readonly={readonly}
           />
