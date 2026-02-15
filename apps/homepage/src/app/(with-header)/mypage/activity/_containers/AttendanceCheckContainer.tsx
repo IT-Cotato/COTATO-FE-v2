@@ -72,7 +72,7 @@ export const AttendanceCheckContainer = ({activeTab}: {activeTab: TabType}) => {
           <tbody className='text-body-l text-neutral-800'>
             {isLoading ? (
               <tr>
-                <td colSpan={5} className='py-10'>
+                <td colSpan={isAttendance ? 4 : 5} className='py-10'>
                   <Spinner />
                 </td>
               </tr>
