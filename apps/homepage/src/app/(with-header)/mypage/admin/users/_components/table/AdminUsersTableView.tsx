@@ -1,4 +1,4 @@
-import {MemberTabType, MemberType} from '@/schemas/admin/admin-users.schema';
+import {MemberTabType, MemberType} from '@/schemas/admin/admin.schema';
 import {
   MEMBER_COLUMNS,
   MEMBER_ROLE_CONFIG,
@@ -7,7 +7,7 @@ import {
   MEMBER_STATUS_OPTIONS,
   MemberStatusKey,
   type MemberRoleKey,
-} from '@/constants/admin/admin-users';
+} from '@/constants/admin/admin';
 import {useRef, useState} from 'react';
 import FinishFilterIcon from '@repo/ui/assets/icons/filter-finish.svg';
 import DefaultFilterIcon from '@repo/ui/assets/icons/filter-default.svg';
@@ -16,14 +16,14 @@ import {Checkbox} from '@repo/ui/components/checkbox/CheckBox';
 import {useClickOutside} from '@repo/ui/hooks/useClickOutside';
 import {StatusDropdown} from '@repo/ui/components/dropdown/StatusDropdown';
 import {MemberActionMenu} from './MemberActionMenu';
-import {SelectedMemberChip} from './SelectedMemberChip';
+import {SelectedMemberChip} from '../../../_components/SelectedMemberChip';
 import {
   ALL_USERS_MENU_ITEMS,
   REGULAR_MEMBER_MENU_ITEMS,
   MEMBER_POSITION_LABEL,
   type MemberMenuAction,
   type MemberPositionKey,
-} from '@/constants/admin/admin-users';
+} from '@/constants/admin/admin';
 
 interface AdminUsersTableViewProps {
   items?: MemberType[];

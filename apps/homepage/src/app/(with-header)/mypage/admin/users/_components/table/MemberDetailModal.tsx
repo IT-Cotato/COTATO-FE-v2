@@ -12,8 +12,8 @@ import {
   MemberPositionKey,
   MemberRoleKey,
   MemberStatusKey,
-} from '@/constants/admin/admin-users';
-import {MemberType} from '@/schemas/admin/admin-users.schema';
+} from '@/constants/admin/admin';
+import {MemberType} from '@/schemas/admin/admin.schema';
 import {
   TextField,
   fieldClass,

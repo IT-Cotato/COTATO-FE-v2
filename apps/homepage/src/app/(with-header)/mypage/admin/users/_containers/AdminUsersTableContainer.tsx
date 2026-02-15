@@ -10,8 +10,8 @@ import {
   MEMBER_STATUS_OPTIONS,
   MemberMenuAction,
   MemberStatusKey,
-} from '@/constants/admin/admin-users';
-import {MemberTabType, MemberType} from '@/schemas/admin/admin-users.schema';
+} from '@/constants/admin/admin';
+import {MemberTabType, MemberType} from '@/schemas/admin/admin.schema';
 import {MOCK_MEMBERS} from '@/mocks/admin/mock-admin-users';
 import {useRouter, useSearchParams} from 'next/navigation';
 import {useState} from 'react';
