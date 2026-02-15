@@ -2,7 +2,6 @@
 
 import {useState, useEffect} from 'react';
 import Close from '@/assets/modal/close.svg';
-import {Dropdown} from '@/components/dropdown/Dropdown';
 import {
   MEMBER_POSITION_LABEL,
   MEMBER_POSITION_OPTIONS,
@@ -15,6 +14,11 @@ import {
   MemberStatusKey,
 } from '@/constants/admin/admin-users';
 import {MemberType} from '@/schemas/admin/admin-users.schema';
+import {
+  TextField,
+  fieldClass,
+} from '@/app/(with-header)/mypage/admin/users/_components/table/TextField';
+import {SelectField} from '@/app/(with-header)/mypage/admin/users/_components/table/SelectField';
 
 interface MemberDetailModalProps {
   isOpen: boolean;
@@ -35,64 +39,6 @@ const ROLE_REVERSE = Object.fromEntries(
 const STATUS_REVERSE = Object.fromEntries(
   MEMBER_STATUS_OPTIONS.map((k) => [MEMBER_STATUS_LABEL[k], k])
 ) as Record<string, MemberStatusKey>;
-
-const fieldClass =
-  'w-full rounded-[10px] bg-neutral-50 px-4 py-2.5 text-body-l text-neutral-600 outline-none';
-const dropdownTriggerClass =
-  'justify-between rounded-[10px] bg-neutral-50 px-4 py-2.5 text-body-l text-neutral-600';
-
-const TextField = ({
-  label,
-  value,
-  readonly,
-  onChange,
-  className,
-}: {
-  label: string;
-  value: string;
-  readonly: boolean;
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  className?: string;
-}) => (
-  <div className={`flex flex-col gap-2.5 ${className ?? ''}`}>
-    <label className='text-h5 text-neutral-600'>{label}</label>
-    <input
-      value={value}
-      readOnly={readonly}
-      className={fieldClass}
-      onChange={onChange}
-    />
-  </div>
-);
-
-const SelectField = ({
-  label,
-  displayValue,
-  options,
-  onSelect,
-  readonly,
-}: {
-  label: string;
-  displayValue: string;
-  options: string[];
-  onSelect: (val: string) => void;
-  readonly: boolean;
-}) => (
-  <div className='flex flex-col gap-2.5'>
-    <label className='text-h5 text-neutral-600'>{label}</label>
-    {readonly ? (
-      <input readOnly value={displayValue} className={fieldClass} />
-    ) : (
-      <Dropdown<string>
-        value={displayValue}
-        options={options}
-        onSelect={onSelect}
-        className='w-full'
-        triggerClassName={dropdownTriggerClass}
-      />
-    )}
-  </div>
-);
 
 export const MemberDetailModal = ({
   isOpen,
@@ -165,7 +111,7 @@ export const MemberDetailModal = ({
                     type='number'
                     min={1}
                     value={memberData.generationMemberId}
-                    className={`${fieldClass} pr-8 [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none`}
+                    className={`${fieldClass} [appearance:textfield] pr-8 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none`}
                     onChange={(e) =>
                       setMemberData({
                         ...memberData,

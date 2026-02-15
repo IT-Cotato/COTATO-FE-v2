@@ -37,8 +37,8 @@ export const AdminUsersContainer = () => {
             className={clsx(
               'text-body-l cursor-pointer pb-2 font-semibold transition-colors',
               activeTab === value
-                ? 'border-primary text-primary border-b-2 px-3 font-semibold'
-                : 'px-3 font-semibold text-neutral-800'
+                ? 'border-primary text-primary text-body-l-sb border-b-2 px-3'
+                : 'text-body-l-sb px-3 text-neutral-800'
             )}
             onClick={() => handleTabClick(value)}>
             {label}
