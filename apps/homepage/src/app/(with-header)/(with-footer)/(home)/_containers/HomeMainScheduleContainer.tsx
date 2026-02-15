@@ -22,26 +22,26 @@ export const HomeMainScheduleContainer = () => {
       {/** 그리드 4*4 */}
       <div className='grid grid-cols-[repeat(4,auto)] gap-2'>
         <ScheduleKeycap
-          imageSrc='https://picsum.photos/300/300?random=1'
+          imageSrc='/images/main-schedule/ot.png'
           title='OT'
-          subTitle='2026.02.04'
+          subTitle='2026.03.06'
         />
         <BlackPlusKeycap />
         <div className='col-span-2 col-start-3 row-span-2 row-start-1'>
           <WhiteOrangeKeycap
-            imageSrc='https://picsum.photos/300/300?random=11'
-            imageSecondSrc='https://picsum.photos/600/600?random=12'
+            imageSrc='/images/main-schedule/mt.png'
+            imageSecondSrc='/images/main-schedule/session.png'
             title='MT'
-            subTitle='2026.02.04'
+            subTitle='2026.03.27'
             secondTitle='정기 세션'
-            secondSubTitle='2026.02.04'
+            secondSubTitle='매주 금요일'
           />
         </div>
         <div className='col-start-1 row-span-2'>
           <OrangeColKeycap
-            imageSrc='https://picsum.photos/400/800?random=10'
-            title='데브토크'
-            subTitle='2026.02.04'
+            imageSrc='/images/main-schedule/devtalk.png'
+            title='데브톡'
+            subTitle='2026.05.08'
           />
         </div>
         <div className='col-start-2 row-start-2'>
@@ -49,9 +49,9 @@ export const HomeMainScheduleContainer = () => {
         </div>
         <div className='col-span-2 col-start-2 row-start-3'>
           <BlackRowKeycap
-            imageSrc='https://picsum.photos/600/300?random=3'
+            imageSrc='/images/main-schedule/cokerthon.png'
             title='코커톤'
-            subTitle='2026.02.04'
+            subTitle='2026.07.24'
           />
         </div>
         <div className='col-start-4 row-start-3'>
@@ -62,9 +62,9 @@ export const HomeMainScheduleContainer = () => {
         </div>
         <div className='col-span-3 col-start-2 row-start-4'>
           <OrangeRowKeycap
-            imageSrc='https://picsum.photos/900/300?random=4'
-            title='Demo Day'
-            subTitle='2026.02.04'
+            imageSrc='/images/main-schedule/demoday.png'
+            title='데모데이'
+            subTitle='2026.08.21'
           />
         </div>
       </div>

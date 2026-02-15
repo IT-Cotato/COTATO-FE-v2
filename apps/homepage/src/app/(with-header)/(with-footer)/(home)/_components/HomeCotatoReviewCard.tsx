@@ -43,7 +43,7 @@ export const HomeCotatoReviewCard = ({
           />
         </div>
       </div>
-      <div className='bg-primary text-h5 rounded-[5px] px-7.75 py-2 text-center'>
+      <div className='bg-primary text-h5 rounded-[5px] py-2 text-center'>
         {`"${shortDescription}"`}
       </div>
       <p className='text-body-l'>{longDescription}</p>

@@ -14,52 +14,22 @@ export const CustomDateTimePicker = ({
 }: CustomDateTimePickerProps) => {
   if (!selected) return null;
 
-  const getHour12 = () => {
-    const h = selected.getHours();
-    if (h === 0) return 12;
-    if (h > 12) return h - 12;
-    return h;
-  };
-
-  const getPeriod = () => (selected.getHours() < 12 ? '오전' : '오후');
-
   const updateTime = (
     baseDate: Date,
     {
       hour,
       minute,
-      period,
     }: {
       hour?: number;
       minute?: number;
-      period?: '오전' | '오후';
     }
   ) => {
     const next = new Date(baseDate);
 
-    const getHour12From = (d: Date) => {
-      const h = d.getHours();
-      if (h === 0) return 12;
-      if (h > 12) return h - 12;
-      return h;
-    };
-
-    const getPeriodFrom = (d: Date) => (d.getHours() < 12 ? '오전' : '오후');
-
-    const currentHour12 = hour ?? getHour12From(baseDate);
+    const currentHour = hour ?? baseDate.getHours();
     const currentMinute = minute ?? baseDate.getMinutes();
-    const currentPeriod = period ?? getPeriodFrom(baseDate);
 
-    const h24 =
-      currentPeriod === '오전'
-        ? currentHour12 === 12
-          ? 0
-          : currentHour12
-        : currentHour12 === 12
-          ? 12
-          : currentHour12 + 12;
-
-    next.setHours(h24);
+    next.setHours(currentHour);
     next.setMinutes(currentMinute);
     next.setSeconds(0);
     next.setMilliseconds(0);
@@ -107,13 +77,12 @@ export const CustomDateTimePicker = ({
 
             <div className='flex'>
               <div>{props.children}</div>
+
               <TimePanel
-                hour={getHour12()}
+                hour={selected.getHours()}
                 minute={selected.getMinutes()}
-                period={getPeriod()}
                 onHourChange={(h) => updateTime(selected, {hour: h})}
                 onMinuteChange={(m) => updateTime(selected, {minute: m})}
-                onPeriodChange={(p) => updateTime(selected, {period: p})}
               />
             </div>
           </div>

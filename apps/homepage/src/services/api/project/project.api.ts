@@ -6,7 +6,7 @@ import {
   ProjectDetailResponse,
   ProjectRegistration,
 } from '@/schemas/project/project.schema';
-import {publicAxios} from '@/services/config/axios';
+import {privateAxios, publicAxios} from '@/services/config/axios';
 import {ENDPOINT} from '@/services/constant/endpoint';
 import {handleApiError} from '@/services/utils/apiHelper';
 
@@ -44,7 +44,7 @@ export const updateProject = async (
   data: ProjectRegistration
 ) => {
   try {
-    const response = await publicAxios.patch(
+    const response = await privateAxios.patch(
       ENDPOINT.PROJECT.EDIT(projectId),
       data
     );
@@ -59,7 +59,7 @@ export const updateProject = async (
  */
 export const createProject = async (data: ProjectRegistration) => {
   try {
-    const response = await publicAxios.post(ENDPOINT.PROJECT.CREATE, data);
+    const response = await privateAxios.post(ENDPOINT.PROJECT.CREATE, data);
     return response.data;
   } catch (error) {
     return handleApiError(error);
@@ -74,7 +74,7 @@ export const getPresignedUrl = async (params: {
   contentType: string;
 }) => {
   try {
-    const response = await publicAxios.post(
+    const response = await privateAxios.post(
       ENDPOINT.PROJECT.PRESIGNED_URL,
       params
     );
@@ -112,7 +112,7 @@ export const uploadFileToS3 = async (presignedUrl: string, file: File) => {
  */
 export const deleteProject = async (projectId: number) => {
   try {
-    const response = await publicAxios.delete(
+    const response = await privateAxios.delete(
       ENDPOINT.PROJECT.EDIT(projectId) // edit과 동일한 엔드포인트 사용함
     );
     return response.data;

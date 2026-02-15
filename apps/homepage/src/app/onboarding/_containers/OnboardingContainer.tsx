@@ -38,7 +38,7 @@ export const OnboardingContainer = () => {
   });
   const currentConfig = STEP_CONFIG[funnel.step];
   return (
-    <div className='custom-scrollbar flex max-h-209.25 min-h-164 w-134.75 flex-col gap-11.75 overflow-y-scroll rounded-[40px] bg-neutral-100/30 px-11 py-18.5'>
+    <div className='custom-scrollbar flex h-fit max-h-[90vh] w-134.75 flex-col gap-11.75 overflow-y-auto rounded-[40px] bg-neutral-100/30 px-11 py-18.5'>
       <div className='flex flex-col gap-4'>
         <div className='flex flex-row justify-between'>
           <h2 className='flex flex-row items-center gap-3.5'>

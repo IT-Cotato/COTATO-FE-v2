@@ -1,7 +1,11 @@
-import {MyAttendanceResponse} from '@/schemas/mypage-mem/attendance.schema';
-import {MyPenaltyResponse} from '@/schemas/mypage-mem/penalty.schema';
+import {
+  MemberAttendanceRecordsResponse,
+  MyAttendanceDashboardResponse,
+} from '@/schemas/mypage-mem/activity/attendance.schema';
+import {MyPenaltyResponse} from '@/schemas/mypage-mem/activity/penalty.schema';
 
-export const MOCK_ATTENDANCE_DATA: MyAttendanceResponse = {
+// 출석 대시보드용 목데이터
+export const MOCK_ATTENDANCE_DASHBOARD: MyAttendanceDashboardResponse = {
   generationId: 1,
   statistic: {
     present: 12,
@@ -9,61 +13,39 @@ export const MOCK_ATTENDANCE_DATA: MyAttendanceResponse = {
     absent: 1,
     unauthorizedAbsent: 0,
   },
+};
+
+// 출석 기록 목록
+export const MOCK_ATTENDANCE_RECORDS: MemberAttendanceRecordsResponse = {
+  generationId: 1,
   attendances: [
     {
       sessionId: 105,
-      attendanceId: 5,
-      memberId: 1,
       sessionNumber: 15,
-      sessionTitle: '15주차 정기 세션',
-      sessionDateTime: '2026-02-14T14:00:00.000Z',
       placeName: '공덕 창업허브',
       sessionType: 'OFFLINE',
       result: 'PRESENT',
     },
     {
       sessionId: 104,
-      attendanceId: 4,
-      memberId: 1,
       sessionNumber: 14,
-      sessionTitle: '14주차 온라인 기술 세미나',
-      sessionDateTime: '2026-02-07T14:00:00.000Z',
       placeName: 'ZOOM',
-      sessionType: 'NO_ATTEND',
+      sessionType: 'ONLINE',
       result: 'UNAUTHORIZED_ABSENT',
     },
     {
       sessionId: 103,
-      attendanceId: 3,
-      memberId: 1,
       sessionNumber: 13,
-      sessionTitle: '13주차 정기 세션',
-      sessionDateTime: '2026-01-31T14:00:00.000Z',
       placeName: '공덕 창업허브',
       sessionType: 'OFFLINE',
       result: 'LATE',
     },
     {
       sessionId: 102,
-      attendanceId: 2,
-      memberId: 1,
       sessionNumber: 12,
-      sessionTitle: '12주차 네트워킹 데이',
-      sessionDateTime: '2026-01-24T14:00:00.000Z',
       placeName: '마포청년나래',
-      sessionType: 'OFFLINE',
+      sessionType: 'ALL',
       result: 'ABSENT',
-    },
-    {
-      sessionId: 101,
-      attendanceId: 1,
-      memberId: 1,
-      sessionNumber: 11,
-      sessionTitle: '11주차 온라인 코딩 테스트',
-      sessionDateTime: '2026-01-17T14:00:00.000Z',
-      placeName: '온라인',
-      sessionType: 'NO_ATTEND',
-      result: 'PRESENT',
     },
   ],
 };
@@ -82,7 +64,7 @@ export const MOCK_PENALTY_DATA: MyPenaltyResponse = {
       sessionId: 204,
       week: 15,
       sessionDateTime: '2026-02-14T18:00:00.000Z',
-      content: '비어네트워킹 2회차 참여',
+      content: '비어네트워킹 3회차 참여',
       pointType: 'BONUS',
       point: 5,
       cumulativePoint: -2,
@@ -91,7 +73,7 @@ export const MOCK_PENALTY_DATA: MyPenaltyResponse = {
       sessionId: 203,
       week: 13,
       sessionDateTime: '2026-01-31T14:15:00.000Z',
-      content: '13주차 세션 지각 패널티',
+      content: '13주차 세션 지각',
       pointType: 'MINUS',
       point: 3,
       cumulativePoint: -7,
@@ -100,7 +82,7 @@ export const MOCK_PENALTY_DATA: MyPenaltyResponse = {
       sessionId: 202,
       week: 12,
       sessionDateTime: '2026-01-24T14:00:00.000Z',
-      content: '12주차 세션 무단 결석 패널티',
+      content: '12주차 세션 무단 결석',
       pointType: 'MINUS',
       point: 9,
       cumulativePoint: -4,

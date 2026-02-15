@@ -17,7 +17,10 @@ export const AboutUsProjectContainer = () => {
   };
 
   return (
-    <div className='flex min-h-175 flex-col items-center gap-25 py-20'>
+    <div
+      className='flex min-h-175 flex-col items-center gap-25 py-20'
+      aria-labelledby='project'
+      id='project'>
       <AboutUsDescription
         title='코테이토의 프로젝트를 소개합니다'
         subTitle='함께 만들어 도착한, COTATO의 프로젝트를 만나보세요'
@@ -105,47 +108,47 @@ export const AboutUsProjectContainer = () => {
 const PROJECTS = [
   {
     id: 1,
-    title: '프로젝트 A',
-    imageSrc: 'https://picsum.photos/400/600?random=1',
+    title: 'timetile',
+    imageSrc: '/images/project/timetile.png',
   },
   {
     id: 2,
-    title: '프로젝트 B',
-    imageSrc: 'https://picsum.photos/400/600?random=2',
+    title: 'StageMate',
+    imageSrc: '/images/project/stagemate.png',
   },
   {
     id: 3,
-    title: '프로젝트 C',
-    imageSrc: 'https://picsum.photos/400/600?random=3',
+    title: 'Troublog',
+    imageSrc: '/images/project/troublog.png',
   },
   {
     id: 4,
-    title: '프로젝트 D',
-    imageSrc: 'https://picsum.photos/400/600?random=4',
+    title: 'Kampus',
+    imageSrc: '/images/project/kampus.png',
   },
   {
     id: 5,
-    title: '프로젝트 E',
-    imageSrc: 'https://picsum.photos/400/600?random=5',
+    title: 'T-LINK',
+    imageSrc: '/images/project/t-link.png',
   },
   {
     id: 6,
-    title: '프로젝트 F',
-    imageSrc: 'https://picsum.photos/400/600?random=6',
+    title: 'Ripple',
+    imageSrc: '/images/project/ripple.png',
   },
   {
     id: 7,
-    title: '프로젝트 G',
-    imageSrc: 'https://picsum.photos/400/600?random=7',
+    title: 'o.dit',
+    imageSrc: '/images/project/odit.png',
   },
   {
     id: 8,
-    title: '프로젝트 H',
-    imageSrc: 'https://picsum.photos/400/600?random=8',
+    title: 'Shortcap',
+    imageSrc: '/images/project/shortcap.png',
   },
   {
     id: 9,
-    title: '프로젝트 I',
-    imageSrc: 'https://picsum.photos/400/600?random=9',
+    title: 'syncspot',
+    imageSrc: '/images/project/syncspot.png',
   },
 ];

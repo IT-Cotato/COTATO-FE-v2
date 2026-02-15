@@ -4,12 +4,13 @@ export const ROUTES = {
   PROJECT: '/project',
   MYPAGE: '/mypage',
   ONBOARDING: '/onboarding',
+  RECRUIT: '/recruit',
 
   //mypage routes
   MYPAGE_ACTIVITY: '/mypage/activity',
   MYPAGE_ATTENDANCE: '/mypage/attendance',
-  MYPAGE_CSQUIZ: '/mypage/csquiz',
-  MYPAGE_SECURITY: '/mypage/security',
+  MYPAGE_ACCOUNT: '/mypage/account',
+  MYPAGE_ACCOUNT_DELETE: '/mypage/account/delete',
   MYPAGE_TERMS: '/mypage/terms',
 
   //admin routes
@@ -18,6 +19,7 @@ export const ROUTES = {
   ADMIN_SESSIONS: '/mypage/admin/sessions',
   ADMIN_ATTENDANCE: '/mypage/admin/attendance',
   ADMIN_PENALTIES: '/mypage/admin/penalties',
+  ADMIN_RECRUIT: '/mypage/admin/recruit',
 
   ADD_PROJECT: (editId?: number | string) =>
     editId !== undefined

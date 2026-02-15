@@ -50,11 +50,11 @@ export const useManageMail = (generationId: number, mailType: string) => {
     setIsManualRefreshing(false);
   }, [refetch]);
 
-  // 전송 중 (성공 + 실패 합이 전체 대상자 수보다 적을 때)
+  // 전송 중 (성공 + 실패 합이 0일 때)
   const isCurrentlyProcessing =
     isMutationSending ||
     isManualRefreshing ||
-    (data?.isSent && data.successCount + data.failCount < totalTargetCount) ||
+    (data?.isSent && data.successCount + data.failCount === 0) ||
     (isFetching && !data?.isSent);
 
   const handleSendClick = () => {

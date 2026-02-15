@@ -6,7 +6,6 @@ import {useState, useRef} from 'react';
 import {HomeSectionDescription} from '@/app/(with-header)/(with-footer)/(home)/_components/HomeSectionDescription';
 import Image from 'next/image';
 
-/** 추후 스키마로 변경 */
 const PARTS = ['pm', 'design', 'frontend', 'backend'] as const;
 type PartType = (typeof PARTS)[number];
 
@@ -44,11 +43,11 @@ export const HomePartSectionContainer = () => {
   return (
     <div className='flex flex-col gap-17.5'>
       <HomeSectionDescription
-        title='4개의 파트로 구성되어 있어요'
+        title='성장의 시작, 코테이토의 4가지 파트'
         descriptions={[
-          '코테이토에는 기획, 디자인, 프론트엔드와 백엔드 개발 총 4개의 파트가 있어요.',
-          '여러 감자들과 함께 스터디와 프로젝트를 진행하며 성장할 수 있어요.',
-          '열정만 있다면 누구나 멋진 회오리 감자로 변신 가능!',
+          '코테이토는 기획, 디자인, 프론트엔드, 백엔드 파트로 이루어져 있어요. ',
+          '다양한 스터디와 프로젝트를 통해 실무 역량을 키울 수 있습니다.',
+          '열정만 있다면 누구나 성장할 수 있습니다!',
         ]}
         align='start'
       />
@@ -108,12 +107,13 @@ export const HomePartSectionContainer = () => {
               className='absolute inset-0 h-full w-full overflow-hidden rounded-[40px]'>
               <div className='relative flex h-full w-full items-center justify-center'>
                 <Image
-                  src={`https://picsum.photos/600/300?random=${currentPart}`}
-                  alt={`${currentPart} 이미지`}
+                  src={`/images/part-section/${currentPart}.png`}
+                  alt={`${partData[currentPart].title} 파트 이미지`}
                   fill
+                  priority
                   className='object-cover'
                 />
-                <div className='absolute inset-0 bg-black/20' />
+                <div className='absolute inset-0 bg-black/40' />
 
                 <div className='pointer-events-none absolute inset-0 flex flex-col justify-between p-17.75'>
                   <p className='text-h1 text-neutral-50'>
@@ -135,8 +135,32 @@ export const HomePartSectionContainer = () => {
 };
 
 const partData = {
-  pm: {title: 'Project Manager', desc: ['기획 파트 설명...']},
-  design: {title: 'Team Design', desc: ['디자인 파트 설명...']},
-  frontend: {title: 'Team Frontend', desc: ['프론트엔드 파트 설명...']},
-  backend: {title: 'Team Backend', desc: ['백엔드 파트 설명...']},
+  pm: {
+    title: 'Project Manager',
+    desc: [
+      '서비스의 비전을 기획하고 팀을 리드하는 역할입니다.',
+      '사용자 중심 사고를 바탕으로 문제를 정의하고, 개발·디자인 파트와의 협업을 통해 서비스를 완성합니다.',
+    ],
+  },
+  design: {
+    title: 'Team Design',
+    desc: [
+      '사용자 여정을 설계하고 와이어프레임, 프로토타입,',
+      '디자인 시스템을 구축하며, 팀과 협업하여 서비스의 완성도를 높입니다.',
+    ],
+  },
+  frontend: {
+    title: 'Team Frontend',
+    desc: [
+      'React를 활용하여 UI/UX를 실제로 구현하고,',
+      '백엔드와의 API 통신 및 상태관리, 배포 과정을 통해 서비스를 구현합니다.',
+    ],
+  },
+  backend: {
+    title: 'Team Backend',
+    desc: [
+      'Spring 기반 서버 개발을 중심으로, API 설계부터 데이터베이스 구조 설계, ',
+      '인증 처리와 배포 환경 구성까지 서비스가 안정적으로 동작하고 성장할 수 있는 기반을 만들어갑니다.',
+    ],
+  },
 };
