@@ -77,19 +77,19 @@ export const AboutUsMainActivitiesContainer = () => {
                   className='object-cover'
                 />
                 <div className='absolute inset-0 bg-linear-to-t from-neutral-900 to-transparent' />
-                <motion.h2
+                <motion.h3
                   layoutId={`title-${selectedId}`}
-                  className='text-h2 absolute top-20 left-20'>
+                  className='text-h3 absolute top-10 left-10'>
                   {selectedActivity.title}
-                </motion.h2>
+                </motion.h3>
               </div>
 
               <motion.div
                 initial={{opacity: 0, y: 20}}
                 animate={{opacity: 1, y: 0}}
                 exit={{opacity: 0}}
-                className='custom-scrollbar flex-1 overflow-y-auto p-5'>
-                <p className='text-h4 font-semibold whitespace-pre-wrap opacity-90'>
+                className='custom-scrollbar flex flex-1 flex-col justify-center overflow-y-auto p-5'>
+                <p className='text-h5 font-semibold whitespace-pre-wrap opacity-90'>
                   {selectedActivity.description}
                 </p>
               </motion.div>
@@ -105,8 +105,8 @@ const ACTIVITIES = [
   {
     id: 1,
     title: 'CS 교육',
-    description: `CS 교육은 코테이토 교육팀의 커리큘럼을 기반으로 진행되며 개발에 필요한
-핵심 CS 지식을 단계적으로 학습합니다. 
+    description: `CS 교육은 코테이토 교육팀의 커리큘럼을 기반으로 진행되며
+개발에 필요한 핵심 CS 지식을 단계적으로 학습합니다. 
 기획·디자인 직군 또한 교육에 함께 참여하여, 개발 구조와 기술적 제약을
 이해하고 원활한 협업을 위한 공통된 개발 지식을 습득할 수 있습니다.`,
 
@@ -126,8 +126,9 @@ const ACTIVITIES = [
   {
     id: 3,
     title: '기획 · 디자인 발표',
-    description:
-      '기획과 디자인 관련 다양한 주제를 자유롭게 다루며 이를 통해 개인의 시야를 넓히고 지식을 축적하는 것을 목표로 합니다. 개발 직군 역시 발표 내용을 함께 들으며 서로의 관점을 이해하고 협업의 밀도를 높입니다.',
+    description: `기획과 디자인 관련 다양한 주제를 자유롭게 다루며 
+이를 통해 개인의 시야를 넓히고 지식을 축적하는 것을 목표로 합니다. 
+개발 직군 역시 발표 내용을 함께 들으며 서로의 관점을 이해하고 협업의 밀도를 높입니다.`,
     src: '/images/main-activities/pm-design.png',
     gridClass: 'col-span-12 md:col-span-5',
   },
