@@ -81,7 +81,7 @@ export const Header = () => {
 
                 {/* 출석 활성화 시간일 때  */}
                 <Link
-                  href={'#'}
+                  href={ROUTES.MYPAGE_ATTENDANCE}
                   className='border-primary text-body-l-sb bg-primary/30 rounded-[10px] border px-6 py-1.5 text-white'>
                   출석하기
                 </Link>
