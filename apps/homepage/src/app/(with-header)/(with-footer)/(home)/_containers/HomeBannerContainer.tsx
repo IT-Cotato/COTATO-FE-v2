@@ -2,12 +2,12 @@
 
 import MainArrowIcon from '@/assets/home/main-arrow-icon.svg';
 import Image from 'next/image';
-import {CotatoLogo} from '@/components/logo/CotatoLogo';
 import {useAuthStore} from '@/store/useAuthStore';
 import {useRouter} from 'next/navigation';
 import {ROUTES} from '@/constants/routes';
 import {Button} from '@repo/ui/components/buttons/Button';
 import {motion} from 'framer-motion';
+import {CotatoLogo} from '@repo/ui/components/logo/CotatoLogo';
 
 export const HomeBannerContainer = () => {
   const router = useRouter();
