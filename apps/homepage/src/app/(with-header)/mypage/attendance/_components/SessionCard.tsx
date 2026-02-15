@@ -1,6 +1,6 @@
 'use client';
 
-import {useState, useMemo, useEffect} from 'react';
+import {useState, useMemo} from 'react';
 import Image from 'next/image';
 import PrevIcon from '@/assets/chevrons/chevron-left.svg';
 import clsx from 'clsx';

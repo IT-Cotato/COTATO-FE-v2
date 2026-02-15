@@ -5,7 +5,10 @@ import {AboutUsTickerColumn} from '@/app/(with-header)/(with-footer)/about-us/_c
 
 export const AboutUsStudyContainer = () => {
   return (
-    <section className='flex flex-col items-center gap-25 overflow-hidden py-40'>
+    <div
+      className='flex flex-col items-center gap-25 overflow-hidden py-40'
+      aria-labelledby='study'
+      id='study'>
       <AboutUsDescription
         title='코테이토의 스터디를 소개합니다'
         subTitle='COTATO에는 다양한 스터디가 활발하게 운영되며, 배움과 성장을 목표로 한 구성원들이 모여'
@@ -24,7 +27,7 @@ export const AboutUsStudyContainer = () => {
 
         <AboutUsTickerColumn items={STUDY_GROUPS[2]} duration={30} />
       </div>
-    </section>
+    </div>
   );
 };
 

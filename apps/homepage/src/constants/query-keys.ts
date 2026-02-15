@@ -10,4 +10,7 @@ export const QUERY_KEYS = {
   MEMBERS: {
     INFO: ['members-info'],
   },
+  RECRUITMENTS: {
+    STATUS: ['recruitments-status'],
+  },
 } as const;

@@ -4,11 +4,13 @@ export const ROUTES = {
   PROJECT: '/project',
   MYPAGE: '/mypage',
   ONBOARDING: '/onboarding',
+  RECRUIT: '/recruit',
 
   //mypage routes
   MYPAGE_ACTIVITY: '/mypage/activity',
   MYPAGE_ATTENDANCE: '/mypage/attendance',
-  MYPAGE_SECURITY: '/mypage/security',
+  MYPAGE_ACCOUNT: '/mypage/account',
+  MYPAGE_ACCOUNT_DELETE: '/mypage/account/delete',
   MYPAGE_TERMS: '/mypage/terms',
 
   //admin routes

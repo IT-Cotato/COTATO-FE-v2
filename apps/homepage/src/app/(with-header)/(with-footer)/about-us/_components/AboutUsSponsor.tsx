@@ -28,12 +28,13 @@ export const AboutUsSponsor = () => {
 
 const SPONSORS = [
   {id: 'jikhaeng', Icon: JikhaengIcon, link: 'https://zighang.com/'},
+
+  {id: 'hspace', Icon: HspaceIcon, link: 'https://hspace.io/'},
   {
     id: 'crycheese',
     Icon: CryCheeseBurgerIcon,
     link: 'https://www.instagram.com/crycheeseburger.official/',
   },
-  {id: 'hspace', Icon: HspaceIcon, link: 'https://hspace.io/'},
   {
     id: 'onetime',
     Icon: OneTimeIcon,

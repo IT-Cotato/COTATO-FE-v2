@@ -9,6 +9,7 @@ import {useAdminRecruitmentInformationsQuery} from '@/hooks/queries/useAdminRecr
 import {useAdminRecruitmentInformationsMutation} from '@/hooks/mutations/useAdminRecruitmentInformations.mutation';
 import {RecruitmentInformationType} from '@/schemas/admin/admin-recruitment-information.schema';
 import {RecruitmentInformation} from '@/components/recruitment/RecruitmentInformation';
+import {getNowISOString} from '@/utils/formatDate';
 
 interface AdminRecruitmentInformationContainerProps {
   generations: string[];
@@ -43,7 +44,23 @@ export const AdminRecruitmentInformationContainer = ({
 
   const handleEditStart = () => {
     if (!data) return;
-    setRecruitmentDraft(data);
+
+    const nowTime = getNowISOString();
+
+    const initialDraft: RecruitmentInformationType = {
+      ...data,
+      recruitmentStart: data.recruitmentStart ?? nowTime,
+      recruitmentEnd: data.recruitmentEnd ?? nowTime,
+      documentAnnouncement: data.documentAnnouncement ?? nowTime,
+      interviewStart: data.interviewStart ?? nowTime,
+      interviewEnd: data.interviewEnd ?? nowTime,
+      finalAnnouncement: data.finalAnnouncement ?? nowTime,
+      ot: data.ot ?? nowTime,
+      cokerthon: data.cokerthon ?? nowTime,
+      demoDay: data.demoDay ?? nowTime,
+    };
+
+    setRecruitmentDraft(initialDraft);
     setIsEditing(true);
   };
 

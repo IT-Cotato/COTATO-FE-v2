@@ -43,7 +43,7 @@ export const AdminDatePicker = ({value, onChange}: AdminDatePickerProps) => {
       </button>
 
       {isOpen && (
-        <div className='absolute top-full left-0 z-50 mt-3.5'>
+        <div className='absolute top-full left-1/2 z-50 mt-2 -translate-x-1/2'>
           <CustomDateTimePicker
             selected={selectedDate}
             onChange={(date: Date | null) => {
