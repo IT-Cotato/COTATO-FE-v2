@@ -8,7 +8,7 @@ interface MobileBlockOverlayProps {
 }
 
 export const MobileBlockOverlay = ({title}: MobileBlockOverlayProps) => {
-  const [isMobile, setIsMobile] = useState<boolean>(false);
+  const [isMobile, setIsMobile] = useState<boolean | null>(null);
 
   useEffect(() => {
     const checkMobile = () => {
@@ -20,10 +20,11 @@ export const MobileBlockOverlay = ({title}: MobileBlockOverlayProps) => {
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  if (!isMobile) return null;
+  if (isMobile === false) return null;
 
   return (
-    <div className='fixed inset-0 z-104 flex flex-col items-center justify-center bg-black p-10 text-center'>
+    <div
+      className={`fixed inset-0 z-104 flex flex-col items-center justify-center bg-black p-10 text-center ${isMobile === null ? 'hidden max-lg:flex lg:hidden' : ''}`}>
       <CotatoLogo />
       <div className='mt-20 flex flex-col gap-10 space-y-4'>
         <h1 className='text-h2 font-bold text-white'>
