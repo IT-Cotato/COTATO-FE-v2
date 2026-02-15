@@ -14,7 +14,7 @@ export const CustomHeader = ({
 }: CustomHeaderProps) => {
   return (
     <div className='mb-4.75 flex w-full items-center justify-between'>
-      <button type='button' onClick={decreaseMonth}>
+      <button type='button' onClick={decreaseMonth} aria-label='이전 달'>
         <LeftChevron className='h-4 w-4' />
       </button>
       <span className='text-body-l-sb text-black'>
@@ -23,7 +23,7 @@ export const CustomHeader = ({
           year: 'numeric',
         })}
       </span>
-      <button type='button' onClick={increaseMonth}>
+      <button type='button' onClick={increaseMonth} aria-label='다음 달'>
         <RightChevron className='h-4 w-4' />
       </button>
     </div>
