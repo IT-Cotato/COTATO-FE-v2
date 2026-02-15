@@ -19,6 +19,7 @@ interface ModalProps {
   contentWrapperClassName?: string; /** 컨텐츠 영역(제목, 내용, 버튼)을 감싸는 div에 적용할 추가 클래스입니다. (예: gap 조절) */
   noContent?: boolean; /** 컨텐츠 영역이 없는 모달의 경우에 해당합니다. true일 경우 title과 actions 사이 gap이 107px가 됩니다.*/
   containerStyle?: React.CSSProperties; /** 모달 흰색 컨테이너에 적용할 인라인 스타일입니다. */
+  fullHeight?: boolean; /** true일 경우 모달 컨테이너에 h-full을 적용합니다. 상위 컨테이너의 높이가 지정된 경우에 사용하세요. (기본값: false) */
 }
 
 export const Modal = ({
@@ -33,6 +34,7 @@ export const Modal = ({
   contentWrapperClassName,
   noContent = false,
   containerStyle,
+  fullHeight = false,
 }: ModalProps) => {
   if (!isOpen) return null;
 
@@ -48,7 +50,10 @@ export const Modal = ({
           returnFocusOnDeactivate: true,
         }}>
         <div
-          className='relative w-full max-w-126.75 rounded-[20px] bg-white px-10.75 py-15.5'
+          className={clsx(
+            'relative w-full max-w-126.75 rounded-[20px] bg-white px-10.75 py-15.5',
+            fullHeight && 'h-full'
+          )}
           style={containerStyle}
           onClick={(e) => e.stopPropagation()}>
           <button
