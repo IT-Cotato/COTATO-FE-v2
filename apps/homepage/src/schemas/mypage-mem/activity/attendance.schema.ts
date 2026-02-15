@@ -1,5 +1,6 @@
 import {z} from 'zod';
 
+// 출결 결과
 export const AttendanceResultEnum = z.enum([
   'PRESENT',
   'LATE',
@@ -7,27 +8,26 @@ export const AttendanceResultEnum = z.enum([
   'UNAUTHORIZED_ABSENT',
 ]);
 
+// 세션 타입
 export const SessionTypeEnum = z.enum([
+  'NO_ATTEND',
   'ONLINE',
   'OFFLINE',
   'ALL',
-  'NO_ATTEND',
 ]);
 
-// 내 출석 대시보드 스키마
-export const AttendanceStatisticSchema = z.object({
-  present: z.number().nullable(),
-  late: z.number().nullable(),
-  absent: z.number().nullable(),
-  unauthorizedAbsent: z.number().nullable(),
-});
-
+/** 내 출석 대시보드 조회 응답 */
 export const MyAttendanceDashboardResponseSchema = z.object({
   generationId: z.number(),
-  statistic: AttendanceStatisticSchema,
+  statistic: z.object({
+    present: z.number().nullable(),
+    late: z.number().nullable(),
+    absent: z.number().nullable(),
+    unauthorizedAbsent: z.number().nullable(),
+  }),
 });
 
-// 내 출석 기록 목록 스키마
+/** 내 출석 기록 개별 항목 */
 export const MemberAttendResponseSchema = z.object({
   sessionId: z.number(),
   sessionNumber: z.number(),
@@ -36,6 +36,7 @@ export const MemberAttendResponseSchema = z.object({
   result: AttendanceResultEnum.nullable(),
 });
 
+/** 내 출석 기록 목록 조회 응답 */
 export const MemberAttendanceRecordsResponseSchema = z.object({
   generationId: z.number(),
   attendances: z.array(MemberAttendResponseSchema),
@@ -43,10 +44,10 @@ export const MemberAttendanceRecordsResponseSchema = z.object({
 
 export type AttendanceResult = z.infer<typeof AttendanceResultEnum>;
 export type SessionType = z.infer<typeof SessionTypeEnum>;
-export type MemberAttendResponse = z.infer<typeof MemberAttendResponseSchema>;
 export type MyAttendanceDashboardResponse = z.infer<
   typeof MyAttendanceDashboardResponseSchema
 >;
+export type MemberAttendResponse = z.infer<typeof MemberAttendResponseSchema>;
 export type MemberAttendanceRecordsResponse = z.infer<
   typeof MemberAttendanceRecordsResponseSchema
 >;
