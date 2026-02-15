@@ -14,14 +14,16 @@ interface RecruitmentLayoutProps {
   isRecruiting: boolean;
   bgColor?: bgColorKey;
   bgImage?: StaticImageData;
-  bottomBannerBgImage?: StaticImageData;
+  bottomBannerImage?: StaticImageData;
+  limitBottomBannerWidth?: boolean;
 }
 
 export default function RecruitmentLayout({
   isRecruiting,
   bgColor,
   bgImage,
-  bottomBannerBgImage,
+  bottomBannerImage,
+  limitBottomBannerWidth = false,
 }: RecruitmentLayoutProps) {
   const router = useRouter();
 
@@ -43,7 +45,7 @@ export default function RecruitmentLayout({
       <div
         className={clsx(
           'relative flex w-360 flex-col items-center justify-center',
-          bottomBannerBgImage && 'mb-[16.6vw]'
+          bottomBannerImage && 'mb-[16.6vw]'
         )}>
         <h1
           className='text-h1 mb-7.5 bg-clip-text text-center text-transparent'
@@ -86,11 +88,11 @@ export default function RecruitmentLayout({
         )}
       </div>
 
-      {/* 하단 배경 이미지 (props로 받은 bottomBannerBgImage 사용) */}
-      {bottomBannerBgImage && (
+      {/* 하단 배경 이미지 (props로 받은 bottomBannerImage 사용) */}
+      {bottomBannerImage && (
         <div className='absolute bottom-0 w-full'>
           <Image
-            src={bottomBannerBgImage}
+            src={bottomBannerImage}
             alt=''
             aria-hidden={true}
             draggable={false}

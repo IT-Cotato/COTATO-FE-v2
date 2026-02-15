@@ -10,7 +10,7 @@ export const RecruitmentInactive = () => {
     <RecruitmentLayout
       isRecruiting={isRecruiting}
       bgColor='bg-neutral-50'
-      bottomBannerBgImage={bottomBannerBg}
+      bottomBannerImage={bottomBannerBg}
     />
   );
 };
