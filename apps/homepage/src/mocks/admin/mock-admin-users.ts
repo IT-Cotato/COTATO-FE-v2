@@ -1,4 +1,4 @@
-import {MemberType} from '@/schemas/admin/admin-users.schema';
+import {MemberType} from '@/schemas/admin/admin.schema';
 
 export const MOCK_MEMBERS: MemberType[] = [
   {
