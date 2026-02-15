@@ -1,6 +1,6 @@
 import {OnboardingContainer} from '@/app/onboarding/_containers/OnboardingContainer';
 import OnboardingBackground from '@/assets/onboarding/onboarding-background.svg';
-import {CotatoLogo} from '@/components/logo/CotatoLogo';
+import {CotatoLogo} from '@repo/ui/components/logo/CotatoLogo';
 
 export default function OnboardingPage() {
   return (
