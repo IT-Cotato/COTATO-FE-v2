@@ -1,4 +1,4 @@
-import {MemberTabType} from '@/schemas/admin/admin-users.schema';
+import {ApprovalTabType, MemberTabType} from '@/schemas/admin/admin.schema';
 
 /** 회원 관리 테이블 컬럼 상수 */
 export const MEMBER_COLUMNS = [
@@ -116,3 +116,18 @@ export const MEMBER_ROLE_LABEL = Object.fromEntries(
 export const MEMBER_STATUS_LABEL = Object.fromEntries(
   MEMBER_STATUS_OPTIONS.map((k) => [k, MEMBER_STATUS_CONFIG[k].label])
 ) as Record<MemberStatusKey, string>;
+
+/** 가입 승인 탭 상수 */
+export const APPROVAL_TABS: {label: string; value: ApprovalTabType}[] = [
+  {label: '가입 요청', value: 'REQUESTED'},
+  {label: '거절 항목', value: 'REJECTED'},
+];
+
+/** 가입 승인 테이블 컬럼 상수 */
+export const APPROVAL_COLUMNS = [
+  {key: 'name', label: '이름'},
+  {key: 'applicationDate', label: '가입신청일'},
+  {key: 'generation', label: '기수'},
+  {key: 'part', label: '파트'},
+  {key: 'phone', label: '전화번호'},
+] as const;
