@@ -48,7 +48,8 @@ export const AdminUsersTableContainer = ({
   const pageParam = searchParams.get('page');
   const currentPage = pageParam ? Number(pageParam) : 1;
   const isLoading = false;
-
+  // 체크박스 선택 상태
+  const [selectedIds, setSelectedIds] = useState<number[]>([]);
   // TODO: API 연동 시 서버 데이터로 교체
   const [members, setMembers] = useState<MemberType[]>(MOCK_MEMBERS);
 
@@ -118,9 +119,6 @@ export const AdminUsersTableContainer = ({
     startIndex,
     startIndex + ITEMS_PER_PAGE
   );
-
-  // 체크박스 선택 상태
-  const [selectedIds, setSelectedIds] = useState<number[]>([]);
 
   const handleSelectAll = (checked: boolean) => {
     if (checked) {

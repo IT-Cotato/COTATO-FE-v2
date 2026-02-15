@@ -6,7 +6,12 @@ import {
   MEMBER_STATUS_CONFIG,
   MEMBER_STATUS_OPTIONS,
   MemberStatusKey,
+  ALL_USERS_MENU_ITEMS,
+  REGULAR_MEMBER_MENU_ITEMS,
+  MEMBER_POSITION_LABEL,
   type MemberRoleKey,
+  type MemberMenuAction,
+  type MemberPositionKey,
 } from '@/constants/admin/admin';
 import {useRef, useState} from 'react';
 import FinishFilterIcon from '@repo/ui/assets/icons/filter-finish.svg';
@@ -17,13 +22,6 @@ import {useClickOutside} from '@repo/ui/hooks/useClickOutside';
 import {StatusDropdown} from '@repo/ui/components/dropdown/StatusDropdown';
 import {MemberActionMenu} from './MemberActionMenu';
 import {SelectedMemberChip} from '../../../_components/SelectedMemberChip';
-import {
-  ALL_USERS_MENU_ITEMS,
-  REGULAR_MEMBER_MENU_ITEMS,
-  MEMBER_POSITION_LABEL,
-  type MemberMenuAction,
-  type MemberPositionKey,
-} from '@/constants/admin/admin';
 
 interface AdminUsersTableViewProps {
   items?: MemberType[];
@@ -56,10 +54,12 @@ export const AdminUsersTableView = ({
 
   useClickOutside(filterRef, () => setIsFilterOpen(false));
 
-  const isAllSelected = items.length > 0 && selectedIds.length === items.length;
+  const isAllSelected =
+    items.length > 0 &&
+    items.every((item) => selectedIds.includes(item.memberId));
 
   return (
-    <table className='min-w-[1110px] border-collapse'>
+    <table className='min-w-277.5 border-collapse'>
       <thead className='bg-neutral-200'>
         <tr>
           {isAllTab && (
@@ -177,7 +177,7 @@ export const AdminUsersTableView = ({
         <tfoot>
           <tr>
             <td
-              colSpan={MEMBER_COLUMNS.length + 2}
+              colSpan={MEMBER_COLUMNS.length + 1}
               className='bg-neutral-100 px-12 py-2.75'>
               <div className='flex flex-wrap items-center gap-5.5'>
                 <span className='text-body-l pr-1.25 text-neutral-600'>

@@ -22,6 +22,7 @@ export const AdminUsersContainer = () => {
     const params = new URLSearchParams(searchParams.toString());
     params.set('tab', tab);
     params.set('page', '1');
+    setKeyword('');
     router.push(`?${params.toString()}`, {scroll: false});
   };
 
