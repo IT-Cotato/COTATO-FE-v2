@@ -4,16 +4,17 @@ import {useState} from 'react';
 import {useForm} from 'react-hook-form';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {Button} from '@repo/ui/components/buttons/Button';
-import {
-  usePasswordMutation,
-  useLogoutMutation,
-} from '@/hooks/mutations/auth/useAuth.mutations';
+import {useLogoutMutation} from '@/hooks/mutations/auth/useAuth.mutations';
 import {SuccessModal} from './SuccessModal';
 import {
   MyPageResetPasswordSchema,
   MyPageResetPasswordType,
 } from '@/schemas/mypage-mem/account/account.schema';
-import {OnboardingFormPassword} from '@/app/onboarding/_components/OnboardingFormPassword';
+import {OnboardingFormPassword} from '@/components/password-form/OnboardingFormPassword';
+import {
+  useUpdatePasswordMutation,
+  useVerifyPasswordMutation,
+} from '@/hooks/mutations/useMembers.mutation';
 
 export const ResetPWForm = () => {
   const [showPws, setShowPws] = useState({
@@ -23,7 +24,10 @@ export const ResetPWForm = () => {
   });
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const {resetPasswordMutation} = usePasswordMutation();
+  const {mutate: verifyPassword, isPending: isVerifyPending} =
+    useVerifyPasswordMutation();
+  const {mutate: updatePassword, isPending: isUpdatePending} =
+    useUpdatePasswordMutation();
   const {mutate: logout} = useLogoutMutation();
 
   const {
@@ -55,9 +59,13 @@ export const ResetPWForm = () => {
       return;
     }
 
-    resetPasswordMutation.mutate(data.password, {
+    verifyPassword(data.currentPassword, {
       onSuccess: () => {
-        setIsModalOpen(true);
+        updatePassword(data.password, {
+          onSuccess: () => {
+            setIsModalOpen(true);
+          },
+        });
       },
       onError: () => {
         setError('currentPassword', {
@@ -127,7 +135,7 @@ export const ResetPWForm = () => {
           width={142}
           height={42}
           labelTypo='body_l_sb'
-          disabled={!isValid || resetPasswordMutation.isPending}
+          disabled={!isValid || isVerifyPending || isUpdatePending}
         />
       </div>
       <SuccessModal

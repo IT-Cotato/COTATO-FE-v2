@@ -24,6 +24,8 @@ export const ENDPOINT = {
   MEMBERS: {
     INFO: '/v1/api/members/info',
     UPDATE_PASSWORD: '/v1/api/members/update/password',
+    VERIFY_PASSWORD: '/v1/api/members/verify/password',
+    DEACTIVATE: (memberId: number) => `/v1/api/members/${memberId}/deactivate`,
   },
 
   /** 모집 관련 API */

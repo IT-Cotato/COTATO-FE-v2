@@ -28,3 +28,37 @@ export const updatePasswordApi = async (password: string) => {
     return handleApiError(error);
   }
 };
+
+/**
+ * 현재 비밀번호 확인 API
+ */
+export const verifyPasswordApi = async (password: string) => {
+  try {
+    const {data} = await privateAxios.post(ENDPOINT.MEMBERS.VERIFY_PASSWORD, {
+      password,
+    });
+    return data;
+  } catch (error) {
+    return handleApiError(error);
+  }
+};
+
+/**
+ * 회원 탈퇴 API
+ * @param memberId 회원 고유 ID
+ * @param leavingPolicyAgreed 탈퇴 정책 동의 여부
+ */
+export const deactivateMemberApi = async (
+  memberId: number,
+  leavingPolicyAgreed: boolean
+) => {
+  try {
+    const {data} = await privateAxios.post(
+      ENDPOINT.MEMBERS.DEACTIVATE(memberId),
+      {leavingPolicyAgreed}
+    );
+    return data;
+  } catch (error) {
+    return handleApiError(error);
+  }
+};

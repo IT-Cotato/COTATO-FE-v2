@@ -8,12 +8,33 @@ import BackIcon from '@/assets/chevrons/chevron-left-strict.svg';
 import {FullButton} from '@repo/ui/components/buttons/FullButton';
 import {useLogoutMutation} from '@/hooks/mutations/auth/useAuth.mutations';
 import {DeleteCheckbox} from '@/app/(with-header)/mypage/account/delete/_components/DeleteCheckbox';
+import {useDeactivateMemberMutation} from '@/hooks/mutations/useMembers.mutation';
+import {useMemberInfoQuery} from '@/hooks/queries/useMembers.query';
 
 export const DeleteAccount = () => {
   const router = useRouter();
   const [isChecked, setIsChecked] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const {data: memberInfo} = useMemberInfoQuery(true);
   const {mutate: logout} = useLogoutMutation();
+  const {mutate: deactivate, isPending} = useDeactivateMemberMutation();
+
+  const handleDeactivateClick = () => {
+    const memberId = memberInfo?.memberId;
+    if (!memberId) {
+      alert('회원 정보를 불러오는 중입니다. 잠시 후 다시 시도해주세요.');
+      return;
+    }
+
+    deactivate(
+      {memberId, leavingPolicyAgreed: isChecked},
+      {
+        onSuccess: () => {
+          setIsModalOpen(true);
+        },
+      }
+    );
+  };
 
   const handleDeleteConfirm = () => {
     setIsModalOpen(false);
@@ -97,8 +118,8 @@ export const DeleteAccount = () => {
           height={56}
           labelTypo='body_l_sb'
           borderRadius={15}
-          disabled={!isChecked}
-          onClick={() => setIsModalOpen(true)}
+          disabled={!isChecked || isPending}
+          onClick={handleDeactivateClick}
         />
       </div>
       <Modal

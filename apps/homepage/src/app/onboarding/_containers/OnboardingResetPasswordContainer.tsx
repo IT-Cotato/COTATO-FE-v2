@@ -1,4 +1,4 @@
-import {OnboardingFormPassword} from '@/app/onboarding/_components/OnboardingFormPassword';
+import {OnboardingFormPassword} from '@/components/password-form/OnboardingFormPassword';
 import {usePasswordMutation} from '@/hooks/mutations/auth/useAuth.mutations';
 import {ResetPasswordSchema} from '@/schemas/members/members.schema';
 import {clearAuthState} from '@/services/utils/tokenManager';
