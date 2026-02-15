@@ -3,10 +3,10 @@
 import {useRouter, useSearchParams} from 'next/navigation';
 import {useState} from 'react';
 import clsx from 'clsx';
-import {MEMBER_TABS} from '@/constants/admin/admin-users';
-import {MemberTabType} from '@/schemas/admin/admin-users.schema';
+import {MEMBER_TABS} from '@/constants/admin/admin';
+import {MemberTabType} from '@/schemas/admin/admin.schema';
 import {AdminUsersTableContainer} from './AdminUsersTableContainer';
-import {SearchBar} from '@/app/(with-header)/mypage/admin/users/_components/SearchBar';
+import {SearchBar} from '@/app/(with-header)/mypage/admin/_components/SearchBar';
 
 export const AdminUsersContainer = () => {
   const router = useRouter();
