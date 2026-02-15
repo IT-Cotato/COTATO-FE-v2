@@ -22,6 +22,25 @@ export const SessionAttendanceContainer = () => {
 
   const {data, isLoading} = useAttendanceSessionsQuery(currentMonth);
 
+  const handlePrevMonth = () => {
+    if (!data) return;
+    const prevMonth = [...data.availableMonths]
+      .sort((a, b) => a - b)
+      .reverse()
+      .find((m) => m < data.currentMonth);
+
+    if (prevMonth) handleMonthChange(prevMonth);
+  };
+
+  const handleNextMonth = () => {
+    if (!data) return;
+    const nextMonth = [...data.availableMonths]
+      .sort((a, b) => a - b)
+      .find((m) => m > data.currentMonth);
+
+    if (nextMonth) handleMonthChange(nextMonth);
+  };
+
   if (isLoading)
     return (
       <div className='flex justify-center'>
@@ -36,19 +55,8 @@ export const SessionAttendanceContainer = () => {
         currentMonth={data.currentMonth}
         hasPrev={data.hasPreviousMonth}
         hasNext={data.hasNextMonth}
-        onPrev={() => {
-          const prevMonth = [...data.availableMonths]
-            .sort((a, b) => a - b)
-            .reverse()
-            .find((m) => m < data.currentMonth);
-          if (prevMonth) handleMonthChange(prevMonth);
-        }}
-        onNext={() => {
-          const nextMonth = [...data.availableMonths]
-            .sort((a, b) => a - b)
-            .find((m) => m > data.currentMonth);
-          if (nextMonth) handleMonthChange(nextMonth);
-        }}
+        onPrev={handlePrevMonth}
+        onNext={handleNextMonth}
       />
       <SessionList
         sessions={data.sessions}
