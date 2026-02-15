@@ -13,7 +13,11 @@ interface ActiveMembersActionBarProps {
   generations: number[];
   selectedGeneration: number | null;
   onGenerationChange: (id: number) => void;
-  onAddGeneration: () => void;
+  onAddGeneration: (data: {
+    generation: number;
+    startDate: Date;
+    endDate: Date;
+  }) => void;
 }
 
 export const ActiveMembersActionBar = ({
@@ -38,7 +42,7 @@ export const ActiveMembersActionBar = ({
         endDate: data.endDate,
       },
     }));
-    onAddGeneration();
+    onAddGeneration(data);
   };
 
   const currentDates = selectedGeneration

@@ -200,10 +200,13 @@ export const AdminUsersTableContainer = ({
   const [selectedGeneration, setSelectedGeneration] = useState<number | null>(
     generations[0] ?? null
   );
-  const handleAddGeneration = () => {
-    const nextGen = generations.length > 0 ? Math.max(...generations) + 1 : 1;
-    setGenerations((prev) => [...prev, nextGen]);
-    setSelectedGeneration(nextGen);
+  const handleAddGeneration = (data: {
+    generation: number;
+    startDate: Date;
+    endDate: Date;
+  }) => {
+    setGenerations((prev) => [...prev, data.generation]);
+    setSelectedGeneration(data.generation);
   };
 
   return (
