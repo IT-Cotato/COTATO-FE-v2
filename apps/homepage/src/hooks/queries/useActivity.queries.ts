@@ -1,0 +1,40 @@
+import {useQuery} from '@tanstack/react-query';
+import {QUERY_KEYS} from '@/constants/query-keys';
+import {
+  getMyAttendanceDashboard,
+  getMyAttendanceRecords,
+  getMyPenaltyDashboard,
+  getMyPenaltyRecords,
+} from '@/services/api/activity/activity.api';
+
+/** 내 출석 대시보드 조회 */
+export const useAttendanceDashboardQuery = () => {
+  return useQuery({
+    queryKey: QUERY_KEYS.ATTENDANCE.DASHBOARD,
+    queryFn: getMyAttendanceDashboard,
+  });
+};
+
+/** 내 출석 기록 조회 */
+export const useAttendanceRecordsQuery = (month?: number) => {
+  return useQuery({
+    queryKey: QUERY_KEYS.ATTENDANCE.RECORDS(month),
+    queryFn: () => getMyAttendanceRecords(month),
+  });
+};
+
+/** 내 상벌점 대시보드 조회 */
+export const usePenaltyDashboardQuery = () => {
+  return useQuery({
+    queryKey: QUERY_KEYS.PENALTY.DASHBOARD,
+    queryFn: getMyPenaltyDashboard,
+  });
+};
+
+/** 내 상벌점 기록 조회 */
+export const usePenaltyRecordsQuery = (month?: number) => {
+  return useQuery({
+    queryKey: QUERY_KEYS.PENALTY.RECORDS(month),
+    queryFn: () => getMyPenaltyRecords(month),
+  });
+};
