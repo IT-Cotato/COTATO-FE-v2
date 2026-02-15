@@ -48,9 +48,7 @@ export const HomeBannerContainer = () => {
         <CotatoLogo />
       </div>
 
-      <div
-        className='absolute bottom-60 left-1/2 -translate-x-1/2 opacity-0 transition-all duration-300 group-hover:opacity-100'
-        aria-hidden='true'>
+      <div className='absolute bottom-60 left-1/2 -translate-x-1/2 opacity-0 transition-all duration-300 group-hover:opacity-100'>
         {isInitialized &&
           (isAuthenticated ? (
             <button
