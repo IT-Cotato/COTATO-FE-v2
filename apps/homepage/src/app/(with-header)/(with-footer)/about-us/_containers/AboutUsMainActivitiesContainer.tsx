@@ -68,18 +68,18 @@ export const AboutUsMainActivitiesContainer = () => {
             <motion.div
               onClick={() => setSelectedId(null)}
               layoutId={`card-${selectedId}`}
-              className='relative z-50 flex h-full max-h-[70%] w-full max-w-[40%] flex-col items-center justify-center overflow-hidden rounded-[26px] bg-neutral-600 text-white'>
-              <div className='relative h-[40%] min-h-62.5 w-full md:h-[60%]'>
+              className='relative z-50 flex h-auto max-h-[85vh] w-[90%] max-w-150 flex-col overflow-hidden rounded-[26px] bg-neutral-600 text-white shadow-2xl md:w-full'>
+              <div className='relative h-60 w-full shrink-0 md:h-80'>
                 <Image
                   src={selectedActivity.src}
                   alt={selectedActivity.title}
                   fill
                   className='object-cover'
                 />
-                <div className='absolute inset-0 bg-linear-to-t from-neutral-900 to-transparent' />
+                <div className='absolute inset-0 bg-linear-to-t from-neutral-900/80 to-transparent' />
                 <motion.h3
                   layoutId={`title-${selectedId}`}
-                  className='text-h3 absolute top-10 left-10'>
+                  className='text-h3 absolute top-10 left-10 z-10 font-bold'>
                   {selectedActivity.title}
                 </motion.h3>
               </div>
@@ -88,8 +88,8 @@ export const AboutUsMainActivitiesContainer = () => {
                 initial={{opacity: 0, y: 20}}
                 animate={{opacity: 1, y: 0}}
                 exit={{opacity: 0}}
-                className='custom-scrollbar flex flex-1 flex-col justify-center overflow-y-auto p-5'>
-                <p className='text-h5 font-semibold whitespace-pre-wrap opacity-90'>
+                className='custom-scrollbar flex flex-1 flex-col justify-center p-8 md:p-10'>
+                <p className='text-h5 leading-relaxed font-medium whitespace-pre-wrap opacity-90'>
                   {selectedActivity.description}
                 </p>
               </motion.div>
@@ -128,7 +128,8 @@ const ACTIVITIES = [
     title: '기획 · 디자인 발표',
     description: `기획과 디자인 관련 다양한 주제를 자유롭게 다루며 
 이를 통해 개인의 시야를 넓히고 지식을 축적하는 것을 목표로 합니다. 
-개발 직군 역시 발표 내용을 함께 들으며 서로의 관점을 이해하고 협업의 밀도를 높입니다.`,
+개발 직군 역시 발표 내용을 함께 들으며 서로의 관점을 이해하고 
+협업의 밀도를 높입니다.`,
     src: '/images/main-activities/pm-design.png',
     gridClass: 'col-span-12 md:col-span-5',
   },
@@ -137,7 +138,8 @@ const ACTIVITIES = [
     title: '네트워킹',
     description: `파트별로 모여 관련된 내용을 배우고 과제를 공유하며 피드백을 나눕니다. 
 또한 통합 네트워킹을 통해 다른 파트의 작업 방식과 관점을 익힐 수 있습니다. 
-이 과정을 통해 자신의 작업을 점검하고, 이후 학습과 프로젝트에 필요한 방향성을 정리하게 됩니다.`,
+이 과정을 통해 자신의 작업을 점검하고,
+이후 학습과 프로젝트에 필요한 방향성을 정리하게 됩니다.`,
     src: '/images/main-activities/networking.png',
     gridClass: 'col-span-12 md:col-span-7',
   },
