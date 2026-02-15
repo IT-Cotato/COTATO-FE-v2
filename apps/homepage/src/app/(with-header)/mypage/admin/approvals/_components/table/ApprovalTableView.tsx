@@ -26,7 +26,9 @@ export const ApprovalTableView = ({
   onApprove,
   onReject,
 }: ApprovalTableViewProps) => {
-  const isAllSelected = items.length > 0 && selectedIds.length === items.length;
+  const isAllSelected =
+    items.length > 0 &&
+    items.every((item) => selectedIds.includes(item.memberId));
 
   return (
     <table className='min-w-[1110px] border-collapse'>
@@ -42,11 +44,11 @@ export const ApprovalTableView = ({
           {APPROVAL_COLUMNS.map((col) => (
             <th
               key={col.key}
-              className='text-body-l px-3 py-4 text-center align-middle font-semibold text-neutral-600'>
+              className='text-body-l-sb px-3 py-4 text-center align-middle text-neutral-600'>
               {col.label}
             </th>
           ))}
-          <th className='text-body-l px-3 py-4 text-center align-middle font-semibold text-neutral-600' />
+          <th className='text-body-l-sb px-3 py-4 text-center align-middle text-neutral-600' />
         </tr>
       </thead>
       <tbody>
