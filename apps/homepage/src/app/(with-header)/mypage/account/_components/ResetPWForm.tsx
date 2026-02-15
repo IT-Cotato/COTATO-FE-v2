@@ -10,7 +10,7 @@ import {
   MyPageResetPasswordSchema,
   MyPageResetPasswordType,
 } from '@/schemas/mypage-mem/account/account.schema';
-import {OnboardingFormPassword} from '@/app/onboarding/_components/OnboardingFormPassword';
+import {OnboardingFormPassword} from '@/components/password-form/OnboardingFormPassword';
 import {
   useUpdatePasswordMutation,
   useVerifyPasswordMutation,

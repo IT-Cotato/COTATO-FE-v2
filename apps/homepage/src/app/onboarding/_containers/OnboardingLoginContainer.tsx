@@ -4,7 +4,7 @@ import {FullButton} from '@repo/ui/components/buttons/FullButton';
 
 import {useState} from 'react';
 import {OnboardingFormInput} from '@/app/onboarding/_components/OnboardingFormInput';
-import {OnboardingFormPassword} from '@/app/onboarding/_components/OnboardingFormPassword';
+import {OnboardingFormPassword} from '@/components/password-form/OnboardingFormPassword';
 import {useLoginMutation} from '@/hooks/mutations/auth/useAuth.mutations';
 import {LoginSchema} from '@/schemas/auth/auth.schema';
 
