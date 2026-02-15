@@ -17,12 +17,21 @@ export const AttendanceCheckContainer = ({activeTab}: {activeTab: TabType}) => {
   const [selectedMonth, setSelectedMonth] = useState('1월');
   const monthOptions = Array.from({length: 12}, (_, i) => `${i + 1}월`);
   const monthNumber = parseInt(selectedMonth.replace('월', ''));
-  const {data: attendRecords, isLoading: isAttendLoading} =
-    useAttendanceRecordsQuery(monthNumber);
-  const {data: penaltyRecords, isLoading: isPenaltyLoading} =
-    usePenaltyRecordsQuery(monthNumber);
 
   const isAttendance = activeTab === 'attendance';
+
+  // 탭이 attendance일 때만 호출
+  const {data: attendRecords, isLoading: isAttendLoading} =
+    useAttendanceRecordsQuery(monthNumber, {
+      enabled: isAttendance,
+    });
+
+  // 탭이 penalty일 때만 호출
+  const {data: penaltyRecords, isLoading: isPenaltyLoading} =
+    usePenaltyRecordsQuery(monthNumber, {
+      enabled: !isAttendance,
+    });
+
   const isLoading = isAttendance ? isAttendLoading : isPenaltyLoading;
 
   const currentRecords = isAttendance

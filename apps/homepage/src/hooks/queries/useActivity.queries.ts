@@ -17,10 +17,14 @@ export const useAttendanceDashboardQuery = (options?: {enabled?: boolean}) => {
 };
 
 /** 내 출석 기록 조회 */
-export const useAttendanceRecordsQuery = (month?: number) => {
+export const useAttendanceRecordsQuery = (
+  month?: number,
+  options?: {enabled?: boolean}
+) => {
   return useQuery({
     queryKey: QUERY_KEYS.ATTENDANCE.RECORDS(month),
     queryFn: () => getMyAttendanceRecords(month),
+    ...options,
   });
 };
 
@@ -34,9 +38,13 @@ export const usePenaltyDashboardQuery = (options?: {enabled?: boolean}) => {
 };
 
 /** 내 상벌점 기록 조회 */
-export const usePenaltyRecordsQuery = (month?: number) => {
+export const usePenaltyRecordsQuery = (
+  month?: number,
+  options?: {enabled?: boolean}
+) => {
   return useQuery({
     queryKey: QUERY_KEYS.PENALTY.RECORDS(month),
     queryFn: () => getMyPenaltyRecords(month),
+    ...options,
   });
 };
