@@ -8,12 +8,13 @@ export type MemberStatus =
 
 export type MemberTabType = 'ALL' | 'ACTIVE';
 export type ApprovalTabType = 'REQUESTED' | 'REJECTED';
+export type PositionType = 'PM' | 'DE' | 'FE' | 'BE' | 'NONE';
 
 export type MemberType = {
   memberId: number;
   name: string;
   generationMemberId: number;
-  position: 'PM' | 'DE' | 'FE' | 'BE' | 'NONE';
+  position: PositionType;
   university: string;
   phoneNumber: string;
   role: 'MEMBER' | 'PR' | 'PLANNING' | 'EDUCATION' | 'OPERATION' | 'DEV';
@@ -25,7 +26,7 @@ export type ApprovalMemberType = {
   name: string;
   appliedAt: string;
   passedGenerationNumber: number;
-  position: 'PM' | 'DE' | 'FE' | 'BE' | 'NONE';
+  position: PositionType;
   phoneNumber: string;
   status: MemberStatus;
 };
