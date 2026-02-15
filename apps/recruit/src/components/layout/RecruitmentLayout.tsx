@@ -29,7 +29,10 @@ export default function RecruitmentLayout({
 
   return (
     <div
-      className={clsx('relative flex w-full min-w-360 justify-center', bgColor)}
+      className={clsx(
+        'relative flex min-h-fit w-full min-w-360 flex-col items-center justify-center',
+        bgColor
+      )}
       style={{height: `calc(100vh - ${HEADER_HEIGHT}px)`}}>
       {bgImage && (
         <Image
@@ -42,11 +45,7 @@ export default function RecruitmentLayout({
         />
       )}
 
-      <div
-        className={clsx(
-          'relative flex w-360 flex-col items-center justify-center',
-          bottomBannerImage && 'mb-[16.6vw]'
-        )}>
+      <div className='relative flex min-h-fit min-w-360 flex-1 flex-col items-center justify-center'>
         <h1
           className='text-h1 mb-7.5 bg-clip-text text-center text-transparent'
           style={{backgroundImage: 'var(--branding-gradient)'}}>
@@ -88,9 +87,8 @@ export default function RecruitmentLayout({
         )}
       </div>
 
-      {/* 하단 배경 이미지 (props로 받은 bottomBannerImage 사용) */}
       {bottomBannerImage && (
-        <div className='absolute bottom-0 w-full'>
+        <div className={limitBottomBannerWidth ? 'w-360' : 'w-full'}>
           <Image
             src={bottomBannerImage}
             alt=''
