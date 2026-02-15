@@ -11,7 +11,7 @@ export const RecruitmentActionSection = () => {
 
   if (isLoading) {
     return (
-      <div className='flex h-screen w-full items-center justify-center bg-black'>
+      <div className='flex h-screen w-full items-center justify-center bg-[#010101]'>
         <Spinner />
       </div>
     );
@@ -21,18 +21,14 @@ export const RecruitmentActionSection = () => {
     <>
       {isRecruiting ? (
         <RecruitmentLayout
-          statusText='코테이토 모집이 시작되었습니다!'
-          descriptionText='지금 바로 지원하고 코테이토와 당신의 여정을 함께하세요!'
-          activateApplyButton={true}
-          bgColor='bg-black'
+          isRecruiting={isRecruiting}
+          bgColor='bg-[#010101]'
           bgImage={RecruitmentNoticeBg}
         />
       ) : (
         <RecruitmentLayout
-          statusText='코테이토 모집이 마감되었습니다!'
-          descriptionText='모집 안내 예약 신청을 해주시면 누구보다 먼저 코테이토에 지원하실 수 있어요.'
-          activateNotifyInput={true}
-          bgColor='bg-black'
+          isRecruiting={isRecruiting}
+          bgColor='bg-[#010101]'
           bgImage={RecruitmentNoticeBg}
         />
       )}

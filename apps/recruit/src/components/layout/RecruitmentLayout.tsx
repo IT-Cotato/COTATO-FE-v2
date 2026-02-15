@@ -1,38 +1,29 @@
 'use client';
 
-import Image, {StaticImageData} from 'next/image';
-import CountdownTimer from '@/components/layout/CountdownTimer';
 import clsx from 'clsx';
+import Image, {StaticImageData} from 'next/image';
+import {useRouter} from 'next/navigation';
 import {HEADER_HEIGHT} from '@/constants/ui';
+import CountdownTimer from '@/components/layout/CountdownTimer';
 import {NotifyInput} from '@/components/layout/NotifyInput';
 import {Button} from '@repo/ui/components/buttons/Button';
-import {useRecruitmentStatusQuery} from '@/hooks/queries/useRecruitmentStatus.query';
-import {useRouter} from 'next/navigation';
 
-type bgColorKey = 'bg-transparent' | 'bg-neutral-50' | 'bg-black';
+type bgColorKey = 'bg-transparent' | 'bg-neutral-50' | 'bg-[#010101]';
 
 interface RecruitmentLayoutProps {
-  statusText: string;
-  descriptionText: string;
-  activateNotifyInput?: boolean;
-  activateApplyButton?: boolean;
+  isRecruiting: boolean;
   bgColor?: bgColorKey;
   bgImage?: StaticImageData;
   bottomBannerBgImage?: StaticImageData;
 }
 
 export default function RecruitmentLayout({
-  statusText,
-  descriptionText,
-  activateNotifyInput = false,
-  activateApplyButton = false,
-  bgColor = 'bg-transparent',
+  isRecruiting,
+  bgColor,
   bgImage,
   bottomBannerBgImage,
 }: RecruitmentLayoutProps) {
   const router = useRouter();
-  const {data: recruitmentStatus} = useRecruitmentStatusQuery();
-  const isRecruiting = recruitmentStatus?.isActive ?? false;
 
   return (
     <div
@@ -62,14 +53,18 @@ export default function RecruitmentLayout({
 
         <p
           className={`text-body-l text-primary mb-1.25 text-center font-semibold`}>
-          {statusText}
+          {isRecruiting
+            ? recruitmentText.isInProgressRecruiting.statusText
+            : recruitmentText.isDoneRecruiting.statusText}
         </p>
 
         <p className='text-body-l mb-9 text-center whitespace-pre-line text-neutral-300'>
-          {descriptionText}
+          {isRecruiting
+            ? recruitmentText.isInProgressRecruiting.descriptionText
+            : recruitmentText.isDoneRecruiting.descriptionText}
         </p>
 
-        {activateNotifyInput && (
+        {isRecruiting! && (
           <div className='mb-15.25'>
             <NotifyInput />
           </div>
@@ -79,7 +74,7 @@ export default function RecruitmentLayout({
           <CountdownTimer highlightUnits={isRecruiting} />
         </div>
 
-        {activateApplyButton && (
+        {isRecruiting && (
           <div className='mb-6.75'>
             <Button
               label='지원하러 가기'
@@ -107,3 +102,15 @@ export default function RecruitmentLayout({
     </div>
   );
 }
+
+const recruitmentText = {
+  isInProgressRecruiting: {
+    statusText: '코테이토 모집이 시작되었습니다!',
+    descriptionText: '지금 바로 지원하고 코테이토와 당신의 여정을 함께하세요!',
+  },
+  isDoneRecruiting: {
+    statusText: '코테이토 모집이 마감되었습니다!',
+    descriptionText:
+      '모집 안내 예약 신청을 해주시면 누구보다 먼저 코테이토에 지원하실 수 있어요.',
+  },
+};
