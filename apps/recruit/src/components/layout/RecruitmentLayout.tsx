@@ -64,7 +64,7 @@ export default function RecruitmentLayout({
             : recruitmentText.isDoneRecruiting.descriptionText}
         </p>
 
-        {isRecruiting! && (
+        {!isRecruiting && (
           <div className='mb-15.25'>
             <NotifyInput />
           </div>
