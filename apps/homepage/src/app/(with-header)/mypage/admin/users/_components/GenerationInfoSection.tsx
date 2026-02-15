@@ -19,7 +19,9 @@ export const GenerationInfoSection = ({
   initialEndDate = null,
 }: GenerationInfoSectionProps) => {
   // TODO: API 연동 시 서버 데이터로 교체
-  const [savedStartDate, setSavedStartDate] = useState<Date | null>(initialStartDate);
+  const [savedStartDate, setSavedStartDate] = useState<Date | null>(
+    initialStartDate
+  );
   const [savedEndDate, setSavedEndDate] = useState<Date | null>(initialEndDate);
 
   const [startDate, setStartDate] = useState<Date | null>(null);
@@ -30,6 +32,7 @@ export const GenerationInfoSection = ({
   useEffect(() => {
     setSavedStartDate(initialStartDate);
     setSavedEndDate(initialEndDate);
+    setIsEditing(false);
   }, [initialStartDate, initialEndDate]);
 
   const handleEdit = () => {
@@ -61,7 +64,7 @@ export const GenerationInfoSection = ({
           <span className='text-body-l font-medium text-neutral-600'>
             기수 정보
           </span>
-          <div className='flex h-8 w-17 items-center justify-center rounded-[8px] bg-white text-body-m font-semibold text-neutral-700 shadow-[0_6px_15px_0_rgba(0,0,0,0.10)]'>
+          <div className='text-body-m flex h-8 w-17 items-center justify-center rounded-[8px] bg-white font-semibold text-neutral-700 shadow-[0_6px_15px_0_rgba(0,0,0,0.10)]'>
             {selectedGeneration}기
           </div>
         </div>
@@ -87,7 +90,9 @@ export const GenerationInfoSection = ({
                     placeholderText='시작 일자'
                     customInput={<CustomInput />}
                     popperPlacement='bottom-start'
-                    formatWeekDay={(nameOfDay: string) => nameOfDay.toLowerCase().slice(0, 3)}
+                    formatWeekDay={(nameOfDay: string) =>
+                      nameOfDay.toLowerCase().slice(0, 3)
+                    }
                     renderCustomHeader={(props) => <CustomHeader {...props} />}
                   />
                 </div>
@@ -103,7 +108,9 @@ export const GenerationInfoSection = ({
                     placeholderText='종료 일자'
                     customInput={<CustomInput />}
                     popperPlacement='bottom-start'
-                    formatWeekDay={(nameOfDay: string) => nameOfDay.toLowerCase().slice(0, 3)}
+                    formatWeekDay={(nameOfDay: string) =>
+                      nameOfDay.toLowerCase().slice(0, 3)
+                    }
                     renderCustomHeader={(props) => <CustomHeader {...props} />}
                   />
                 </div>
@@ -111,7 +118,11 @@ export const GenerationInfoSection = ({
             ) : (
               <>
                 <CustomInput
-                  value={savedStartDate ? savedStartDate.toLocaleDateString('ko-KR') : undefined}
+                  value={
+                    savedStartDate
+                      ? savedStartDate.toLocaleDateString('sv-SE')
+                      : undefined
+                  }
                   placeholder='시작 일자'
                   disabled
                   hideIcon
@@ -120,7 +131,11 @@ export const GenerationInfoSection = ({
                   <RightArrow className='h-4 w-4 text-neutral-400' />
                 </div>
                 <CustomInput
-                  value={savedEndDate ? savedEndDate.toLocaleDateString('ko-KR') : undefined}
+                  value={
+                    savedEndDate
+                      ? savedEndDate.toLocaleDateString('sv-SE')
+                      : undefined
+                  }
                   placeholder='종료 일자'
                   disabled
                   hideIcon
@@ -137,13 +152,13 @@ export const GenerationInfoSection = ({
               <button
                 type='button'
                 onClick={handleCancel}
-                className='rounded-lg bg-white px-5 py-2 text-body-m font-semibold text-neutral-600 transition-colors hover:bg-neutral-300'>
+                className='text-body-m rounded-lg bg-white px-5 py-2 font-semibold text-neutral-600 transition-colors hover:bg-neutral-300'>
                 취소
               </button>
               <button
                 type='button'
                 onClick={handleSave}
-                className='rounded-lg bg-primary px-5 py-2 text-body-m font-semibold text-white transition-colors hover:bg-active'>
+                className='bg-primary text-body-m hover:bg-active rounded-lg px-5 py-2 font-semibold text-white transition-colors'>
                 저장
               </button>
             </>
@@ -151,7 +166,7 @@ export const GenerationInfoSection = ({
             <button
               type='button'
               onClick={handleEdit}
-              className='rounded-lg bg-neutral-600 text-white px-5 py-2 text-body-m font-semibold text-white transition-colors hover:bg-active'>
+              className='text-body-m hover:bg-active rounded-lg bg-neutral-600 px-5 py-2 font-semibold text-white transition-colors'>
               수정하기
             </button>
           )}

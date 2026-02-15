@@ -32,7 +32,7 @@ export const CustomInput = forwardRef<HTMLButtonElement, CustomInputProps>(
         onClick={onClick}
         disabled={disabled}
         className={clsx(
-          'text-body-l flex h-9 items-center justify-between gap-2 rounded-[5px] px-2.5 text-neutral-800',
+          'text-body-l flex items-center justify-between gap-2 rounded-[5px] px-2.5 text-neutral-800',
           !className?.includes('w-') && 'w-38.25', // 기본 너비
           !className?.includes('h-') && 'h-9', // 기본 높이
           !className?.includes('bg-') && 'bg-white', // 기본 배경색
