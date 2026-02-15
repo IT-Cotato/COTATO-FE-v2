@@ -1,12 +1,14 @@
 'use client';
 
-import {useState} from 'react';
+import {useState, useRef} from 'react';
 import DatePicker from 'react-datepicker';
 import Close from '@/assets/modal/close.svg';
 import 'react-datepicker/dist/react-datepicker.css';
+import {formatDate} from '@/utils/formatDate';
 import {CustomInput} from '../calendar/CustomInput';
 import {CustomHeader} from '../calendar/CustomHeader';
 import {Button} from '@repo/ui/components/buttons/Button';
+import {useClickOutside} from '@repo/ui/hooks/useClickOutside';
 
 interface AddGenerationModalProps {
   isOpen: boolean;
@@ -26,6 +28,16 @@ export const AddGenerationModal = ({
     null
   );
 
+  const startCalendarRef = useRef<HTMLDivElement>(null);
+  const endCalendarRef = useRef<HTMLDivElement>(null);
+
+  useClickOutside(startCalendarRef, () => {
+    if (openCalendar === 'start') setOpenCalendar(null);
+  });
+  useClickOutside(endCalendarRef, () => {
+    if (openCalendar === 'end') setOpenCalendar(null);
+  });
+
   if (!isOpen) return null;
 
   const handleSubmit = () => {
@@ -39,11 +51,6 @@ export const AddGenerationModal = ({
     setStartDate(null);
     setEndDate(null);
   };
-
-  const formatDate = (date: Date | null) =>
-    date
-      ? `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`
-      : '';
 
   return (
     <div
@@ -79,7 +86,7 @@ export const AddGenerationModal = ({
           </div>
         </div>
 
-        <div className='relative flex flex-col gap-2.5'>
+        <div ref={startCalendarRef} className='relative flex flex-col gap-2.5'>
           <label className='text-h5 font-semibold text-neutral-800'>
             시작 날짜
           </label>
@@ -104,7 +111,6 @@ export const AddGenerationModal = ({
                   setOpenCalendar(null);
                 }}
                 inline
-                dayClassName={() => '!bg-transparent !font-normal'}
                 formatWeekDay={(nameOfDay: string) =>
                   nameOfDay.toLowerCase().slice(0, 3)
                 }
@@ -114,7 +120,7 @@ export const AddGenerationModal = ({
           )}
         </div>
 
-        <div className='relative flex flex-col gap-2.5'>
+        <div ref={endCalendarRef} className='relative flex flex-col gap-2.5'>
           <label className='text-h5 font-semibold text-neutral-800'>
             종료 날짜
           </label>
@@ -137,7 +143,6 @@ export const AddGenerationModal = ({
                 }}
                 minDate={startDate ?? undefined}
                 inline
-                dayClassName={() => '!bg-transparent !font-normal'}
                 formatWeekDay={(nameOfDay: string) =>
                   nameOfDay.toLowerCase().slice(0, 3)
                 }
