@@ -1,39 +1,58 @@
 'use client';
 
-import {MOCK_SESSION_LIST} from '@/mocks/mypage-mem/attendance/attendance-mock';
 import {AttendanceModals} from '@/app/(with-header)/mypage/attendance/_components/AttendanceModal';
-import {useAttendance} from '@/app/(with-header)/mypage/attendance/_hooks/useAttendance';
 import {MonthNavigator} from '@/app/(with-header)/mypage/attendance/_components/MonthNavigator';
 import {SessionList} from '@/app/(with-header)/mypage/attendance/_components/SessionList';
+import {useAttendance} from '@/app/(with-header)/mypage/attendance/_hooks/useAttendance';
+import {useAttendanceSessionsQuery} from '@/hooks/queries/useAttendance.queries';
+import {Spinner} from '@repo/ui/components/spinner/Spinner';
 
 export const SessionAttendanceContainer = () => {
   const {
     currentMonth,
-    filteredSessions,
     expandedSessionId,
     isSuccessModalOpen,
     isErrorModalOpen,
-    hasPrevMonth,
-    hasNextMonth,
     setExpandedSessionId,
     setIsSuccessModalOpen,
     setIsErrorModalOpen,
     handleMonthChange,
     handleAttendance,
-  } = useAttendance(MOCK_SESSION_LIST);
+  } = useAttendance();
+
+  const {data, isLoading} = useAttendanceSessionsQuery(currentMonth);
+
+  if (isLoading)
+    return (
+      <div className='flex justify-center'>
+        <Spinner />
+      </div>
+    );
+  if (!data) return null;
 
   return (
     <div className='flex w-full flex-col gap-13'>
       <MonthNavigator
-        currentMonth={currentMonth}
-        hasPrev={hasPrevMonth}
-        hasNext={hasNextMonth}
-        onPrev={() => handleMonthChange('prev')}
-        onNext={() => handleMonthChange('next')}
+        currentMonth={data.currentMonth}
+        hasPrev={data.hasPreviousMonth}
+        hasNext={data.hasNextMonth}
+        onPrev={() => {
+          const prevMonth = [...data.availableMonths]
+            .sort((a, b) => a - b)
+            .reverse()
+            .find((m) => m < data.currentMonth);
+          if (prevMonth) handleMonthChange(prevMonth);
+        }}
+        onNext={() => {
+          const nextMonth = [...data.availableMonths]
+            .sort((a, b) => a - b)
+            .find((m) => m > data.currentMonth);
+          if (nextMonth) handleMonthChange(nextMonth);
+        }}
       />
       <SessionList
-        sessions={filteredSessions}
-        generationId={MOCK_SESSION_LIST.generationId}
+        sessions={data.sessions}
+        generationId={data.generationId}
         expandedSessionId={expandedSessionId}
         onToggle={(id) =>
           setExpandedSessionId(expandedSessionId === id ? null : id)
