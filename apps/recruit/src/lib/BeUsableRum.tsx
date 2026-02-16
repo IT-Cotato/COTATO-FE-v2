@@ -1,6 +1,6 @@
 import Script from 'next/script';
 
-export default function BeUsableRum() {
+export const BeUsableRum = () => {
   return (
     <>
       <Script
@@ -16,10 +16,10 @@ export default function BeUsableRum() {
                           d.getElementsByTagName("head")[0].appendChild(b);
                       }
                   };w.__beusablerumclient__.load(a + "?url=" + encodeURIComponent(d.URL));
-              })(window, document, "//rum.beusable.net/load/b260216e005628u880");
+              })(window, document, "//rum.beusable.net/load/b260216e212709u009");
             `,
         }}
       />
     </>
   );
-}
+};

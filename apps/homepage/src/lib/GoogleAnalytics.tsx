@@ -1,6 +1,6 @@
 import Script from 'next/script';
 
-export default function GoogleAnalytics({gaId}: {gaId: string}) {
+export const GoogleAnalytics = ({gaId}: {gaId: string}) => {
   return (
     <>
       <Script
@@ -21,4 +21,4 @@ export default function GoogleAnalytics({gaId}: {gaId: string}) {
       />
     </>
   );
-}
+};

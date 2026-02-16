@@ -2,26 +2,14 @@
 
 import MainArrowIcon from '@/assets/home/main-arrow-icon.svg';
 import Image from 'next/image';
-import {useAuthStore} from '@/store/useAuthStore';
-import {useRouter} from 'next/navigation';
-import {ROUTES} from '@/constants/routes';
-import {Button} from '@repo/ui/components/buttons/Button';
-import {motion} from 'framer-motion';
 import {CotatoLogo} from '@repo/ui/components/logo/CotatoLogo';
 
 export const HomeBannerContainer = () => {
-  const router = useRouter();
-  const {isAuthenticated, isInitialized} = useAuthStore();
-
   const scrollToNextSection = () => {
     const nextSection = document.getElementById('core-value');
     if (nextSection) {
       nextSection.scrollIntoView({behavior: 'smooth'});
     }
-  };
-
-  const handleJoinUsClick = () => {
-    router.push(ROUTES.ONBOARDING);
   };
 
   return (
@@ -49,40 +37,12 @@ export const HomeBannerContainer = () => {
       </div>
 
       <div className='absolute bottom-60 left-1/2 -translate-x-1/2 opacity-0 transition-all duration-300 group-hover:opacity-100'>
-        {isInitialized &&
-          (isAuthenticated ? (
-            <button
-              onClick={scrollToNextSection}
-              className='animate-bounce cursor-pointer'
-              aria-label='핵심 가치 섹션으로 이동'>
-              <MainArrowIcon />
-            </button>
-          ) : (
-            <motion.div
-              animate={{
-                filter: [
-                  'drop-shadow(0 0 0px rgba(255, 255, 255, 0))',
-                  'drop-shadow(0 4px 20px rgba(255, 255, 255, 0.6))',
-                  'drop-shadow(0 0 0px rgba(255, 255, 255, 0))',
-                ],
-              }}
-              transition={{
-                duration: 3,
-                repeat: Infinity,
-                ease: 'easeInOut',
-              }}>
-              <Button
-                label='JOIN US'
-                width={185}
-                height={55}
-                backgroundColor='neutral-100'
-                textColor='neutral-800'
-                labelTypo='h5'
-                onClick={handleJoinUsClick}
-                className='transition-shadow duration-300 hover:shadow-[0_4px_40px_0_rgba(255,255,255,0.80)]'
-              />
-            </motion.div>
-          ))}
+        <button
+          onClick={scrollToNextSection}
+          className='animate-bounce cursor-pointer'
+          aria-label='핵심 가치 섹션으로 이동'>
+          <MainArrowIcon />
+        </button>
       </div>
     </section>
   );

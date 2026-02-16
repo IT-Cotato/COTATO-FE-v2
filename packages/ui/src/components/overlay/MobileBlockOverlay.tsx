@@ -40,7 +40,7 @@ export const MobileBlockOverlay = ({title}: MobileBlockOverlayProps) => {
         </p>
       </div>
       <div className='text-body-m mt-20 text-neutral-500'>
-        COMING SOON : MOBILE APP
+        COMING SOON : MOBILE OPTIMIZATION
       </div>
     </div>
   );
