@@ -7,11 +7,12 @@ import {
   MyMinusPointDashboardResponse,
   MyMinusPointRecordsResponse,
 } from '@/schemas/mypage-mem/activity/penalty.schema';
+import {ENDPOINT} from '@/services/constant/endpoint';
 
 /** 출석 대시보드 조회 */
 export const getMyAttendanceDashboard =
   async (): Promise<MyAttendanceDashboardResponse> => {
-    const {data} = await privateAxios.get('/v1/api/attendances/my/dashboard');
+    const {data} = await privateAxios.get(ENDPOINT.ATTENDANCE.MY_DASHBOARD);
     return data;
   };
 
@@ -19,7 +20,7 @@ export const getMyAttendanceDashboard =
 export const getMyAttendanceRecords = async (
   month?: number
 ): Promise<MemberAttendanceRecordsResponse> => {
-  const {data} = await privateAxios.get('/v1/api/attendances/my', {
+  const {data} = await privateAxios.get(ENDPOINT.ATTENDANCE.MY_RECORDS, {
     params: {month},
   });
   return data;
@@ -28,7 +29,7 @@ export const getMyAttendanceRecords = async (
 /** 상벌점 대시보드 조회 */
 export const getMyPenaltyDashboard =
   async (): Promise<MyMinusPointDashboardResponse> => {
-    const {data} = await privateAxios.get('/v1/api/minus-points/my/dashboard');
+    const {data} = await privateAxios.get(ENDPOINT.PENALTY.MY_DASHBOARD);
     return data;
   };
 
@@ -36,7 +37,7 @@ export const getMyPenaltyDashboard =
 export const getMyPenaltyRecords = async (
   month?: number
 ): Promise<MyMinusPointRecordsResponse> => {
-  const {data} = await privateAxios.get('/v1/api/minus-points/my', {
+  const {data} = await privateAxios.get(ENDPOINT.PENALTY.MY_RECORDS, {
     params: {month},
   });
   return data;

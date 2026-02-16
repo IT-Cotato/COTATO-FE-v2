@@ -16,6 +16,7 @@ export const QUERY_KEYS = {
   ATTENDANCE: {
     DASHBOARD: ['attendance', 'dashboard'],
     RECORDS: (month?: number) => ['attendance', 'records', {month}],
+    SESSIONS: (month?: number) => ['attendance', 'sessions', {month}],
   },
   PENALTY: {
     DASHBOARD: ['penalty', 'dashboard'],
