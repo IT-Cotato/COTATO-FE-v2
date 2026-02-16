@@ -5,9 +5,9 @@ import '@/styles/globals.css';
 import localFont from 'next/font/local';
 import Providers from '@/app/providers';
 import {ConditionalAuthProvider} from '@/components/providers/ConditionalAuthProvider';
-import GoogleAnalytics from '@/lib/GoogleAnalytics';
+import {GoogleAnalytics} from '@/lib/GoogleAnalytics';
 import {MobileBlockOverlay} from '@repo/ui/components/overlay/MobileBlockOverlay';
-import BeUsableRum from '@/lib/BeUsableRum';
+import {BeUsableRum} from '@/lib/BeUsableRum';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://recruit.cotato.kr'),

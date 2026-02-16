@@ -1,6 +1,6 @@
 import Script from 'next/script';
 
-export default function BeUsableRum() {
+export const BeUsableRum = () => {
   return (
     <>
       <Script
@@ -22,4 +22,4 @@ export default function BeUsableRum() {
       />
     </>
   );
-}
+};
