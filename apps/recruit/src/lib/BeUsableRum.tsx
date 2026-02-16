@@ -16,7 +16,7 @@ export const BeUsableRum = () => {
                           d.getElementsByTagName("head")[0].appendChild(b);
                       }
                   };w.__beusablerumclient__.load(a + "?url=" + encodeURIComponent(d.URL));
-              })(window, document, "//rum.beusable.net/load/b260216e005628u880");
+              })(window, document, "//rum.beusable.net/load/b260216e212709u009");
             `,
         }}
       />

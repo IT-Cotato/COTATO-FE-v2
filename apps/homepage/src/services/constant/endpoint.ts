@@ -31,9 +31,10 @@ export const ENDPOINT = {
   /** 모집 관련 API */
   RECRUITMENTS: {
     STATUS: '/v1/api/recruitments/status',
+    TOGGLE: '/v1/api/admin/recruitments/toggle',
   },
 
-  /** */
+  /** 프로젝트 API */
   PROJECT: {
     LIST: '/v1/api/projects',
     DETAIL: (projectId: number) => `/v1/api/projects/${projectId}`,
@@ -41,5 +42,20 @@ export const ENDPOINT = {
     EDIT: (projectId: number) => `/v1/api/admin/projects/${projectId}`,
     PRESIGNED_URL: '/v1/api/admin/projects/presigned-url',
   },
+
+  /** 출석 API */
+  ATTENDANCE: {
+    RECORDS: '/v1/api/attendances/records',
+    SESSIONS: '/v1/api/attendances/sessions',
+    MY_DASHBOARD: '/v1/api/attendances/my/dashboard',
+    MY_RECORDS: '/v1/api/attendances/my',
+  },
+
+  /** 상벌점 API */
+  PENALTY: {
+    MY_DASHBOARD: '/v1/api/minus-points/my/dashboard',
+    MY_RECORDS: '/v1/api/minus-points/my',
+  },
+
   GENERATIONS: '/v1/api/generations',
 } as const;

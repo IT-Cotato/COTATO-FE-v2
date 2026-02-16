@@ -1,5 +1,5 @@
 import {RecruitmentsStatusType} from '@/schemas/recruitments/recruitments.schema';
-import {publicAxios} from '@/services/config/axios';
+import {privateAxios, publicAxios} from '@/services/config/axios';
 import {ENDPOINT} from '@/services/constant/endpoint';
 import {handleApiError} from '@/services/utils/apiHelper';
 
@@ -14,3 +14,11 @@ export const getRecruitmentsStatus =
       return handleApiError(error);
     }
   };
+
+export const toggleRecruitmentsStatus = async (): Promise<void> => {
+  try {
+    await privateAxios.patch(ENDPOINT.RECRUITMENTS.TOGGLE);
+  } catch (error) {
+    return handleApiError(error);
+  }
+};
