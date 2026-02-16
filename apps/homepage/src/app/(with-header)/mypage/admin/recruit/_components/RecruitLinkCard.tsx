@@ -1,6 +1,12 @@
+'use client';
+
+import {useRecruitmentsStatus} from '@/hooks/queries/useRecruitments.query';
 import {ToggleSwitch} from './ToggleSwitch';
+import {useToggleRecruitmentsStatusMutation} from '@/hooks/mutations/useRecruitments.mutation';
 
 export const RecruitLinkCard = () => {
+  const {data} = useRecruitmentsStatus();
+  const {mutate: toggle} = useToggleRecruitmentsStatusMutation();
   return (
     <div
       role='group'
@@ -21,7 +27,10 @@ export const RecruitLinkCard = () => {
             현재 홈페이지 외부 recruit 사이트로 연결됩니다
           </p>
         </div>
-        <ToggleSwitch />
+        <ToggleSwitch
+          isChecked={data?.active ?? false}
+          onChange={() => toggle()}
+        />
       </div>
     </div>
   );
