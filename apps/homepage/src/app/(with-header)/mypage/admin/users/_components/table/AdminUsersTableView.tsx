@@ -20,7 +20,7 @@ import {CheckboxFilter} from '@repo/ui/components/filter/CheckboxFilter';
 import {Checkbox} from '@repo/ui/components/checkbox/CheckBox';
 import {useClickOutside} from '@repo/ui/hooks/useClickOutside';
 import {StatusDropdown} from '@repo/ui/components/dropdown/StatusDropdown';
-import {MemberActionMenu} from './MemberActionMenu';
+import {ActionMenu} from '@/app/(with-header)/mypage/admin/_components/ActionMenu';
 import {SelectedMemberChip} from '../../../_components/SelectedMemberChip';
 
 interface AdminUsersTableViewProps {
@@ -162,7 +162,7 @@ export const AdminUsersTableView = ({
                     ariaLabel='역할 선택'
                   />
                 )}
-                <MemberActionMenu
+                <ActionMenu
                   items={
                     isAllTab ? ALL_USERS_MENU_ITEMS : REGULAR_MEMBER_MENU_ITEMS
                   }
