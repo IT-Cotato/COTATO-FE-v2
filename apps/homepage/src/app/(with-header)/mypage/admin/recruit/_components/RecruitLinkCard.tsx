@@ -21,7 +21,7 @@ export const RecruitLinkCard = () => {
       <div className='flex items-center justify-between bg-white px-5.5 py-6'>
         <div>
           <h3 className='text-h4 text-neutral-600'>
-            외부 링크(cotato.recruit.kr)
+            외부 링크(cotato.kr/recruit)
           </h3>
           <p className='text-h5 text-neutral-400'>
             현재 홈페이지 외부 recruit 사이트로 연결됩니다
