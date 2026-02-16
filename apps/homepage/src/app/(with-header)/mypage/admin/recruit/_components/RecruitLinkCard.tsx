@@ -6,7 +6,7 @@ import {useToggleRecruitmentsStatusMutation} from '@/hooks/mutations/useRecruitm
 
 export const RecruitLinkCard = () => {
   const {data} = useRecruitmentsStatus();
-  const {mutate: toggle} = useToggleRecruitmentsStatusMutation();
+  const {mutate: toggle, isPending} = useToggleRecruitmentsStatusMutation();
   return (
     <div
       role='group'
@@ -29,7 +29,7 @@ export const RecruitLinkCard = () => {
         </div>
         <ToggleSwitch
           isChecked={data?.active ?? false}
-          onChange={() => toggle()}
+          onChange={() => !isPending && toggle()}
         />
       </div>
     </div>
