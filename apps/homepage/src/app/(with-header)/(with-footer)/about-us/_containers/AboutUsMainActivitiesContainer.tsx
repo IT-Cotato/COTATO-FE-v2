@@ -13,7 +13,6 @@ export const AboutUsMainActivitiesContainer = () => {
   return (
     <div
       className='relative flex w-full flex-col items-center gap-25 overflow-hidden bg-[linear-gradient(180deg,#010101_13.94%,rgba(1,1,1,0)_100%)] py-20 md:gap-25 md:py-40'
-      aria-labelledby='main-activities'
       id='main-activities'>
       <div className='pointer-events-none absolute inset-0 z-0'>
         <AboutUsBackgroundSecond className='absolute -right-20 h-full w-auto opacity-50 md:-right-100 md:opacity-100' />
@@ -26,72 +25,85 @@ export const AboutUsMainActivitiesContainer = () => {
         subTitleColor='text-neutral-300'
       />
 
-      {/* Grid Container: 12컬럼 시스템 */}
       <div className='z-10 grid w-full max-w-310 grid-cols-12 gap-4 px-6 md:gap-7.5'>
         {ACTIVITIES.map((activity) => (
           <motion.div
             key={activity.id}
             layoutId={`card-${activity.id}`}
             onClick={() => setSelectedId(activity.id)}
-            className={`group relative cursor-pointer overflow-hidden rounded-[20px] shadow-lg ${activity.gridClass} aspect-auto h-121.75`}>
-            <motion.div className='relative h-full w-full'>
+            style={{borderRadius: '20px'}}
+            className={`group relative cursor-pointer overflow-hidden bg-neutral-600 shadow-lg ${activity.gridClass} h-121.75`}>
+            <motion.div
+              layoutId={`image-container-${activity.id}`}
+              className='relative h-full w-full'>
               <Image
                 src={activity.src}
                 alt={activity.title}
                 fill
-                sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 700px'
                 className='object-cover transition-transform duration-500 group-hover:scale-105'
               />
-              <div className='absolute inset-0 z-10 bg-linear-to-t from-black/80 via-black/20 to-transparent' />
+              <div className='absolute inset-0 z-10 bg-black/40' />
               <motion.h3
                 layoutId={`title-${activity.id}`}
                 className='text-h3 absolute top-10 left-10 z-20 font-bold text-white'>
                 {activity.title}
               </motion.h3>
             </motion.div>
+
+            <motion.div
+              layoutId={`content-${activity.id}`}
+              className='h-0 overflow-hidden opacity-0'>
+              <p>{activity.description}</p>
+            </motion.div>
           </motion.div>
         ))}
       </div>
 
-      {/* --- App Store 스타일 모달 --- */}
       <AnimatePresence>
         {selectedId && selectedActivity && (
-          <div className='fixed inset-0 z-50 flex items-center justify-center p-10'>
+          <div className='fixed inset-0 z-50 flex items-center justify-center p-4 md:p-10'>
             <motion.div
               initial={{opacity: 0}}
               animate={{opacity: 1}}
               exit={{opacity: 0}}
               onClick={() => setSelectedId(null)}
-              className='absolute inset-0 bg-black/80 backdrop-blur-md'
+              className='absolute inset-0 bg-black/60 backdrop-blur-md'
             />
 
             <motion.div
-              onClick={() => setSelectedId(null)}
               layoutId={`card-${selectedId}`}
-              className='relative z-50 flex h-auto max-h-[85vh] w-[90%] max-w-150 flex-col overflow-hidden rounded-[26px] bg-neutral-600 text-white shadow-2xl md:w-full'>
-              <div className='relative h-60 w-full shrink-0 md:h-80'>
+              style={{borderRadius: '30px'}}
+              onClick={() => setSelectedId(null)}
+              className='relative z-50 flex h-auto max-h-[90vh] w-full max-w-150 flex-col overflow-hidden bg-neutral-600 shadow-2xl'>
+              <motion.div
+                layoutId={`image-container-${selectedId}`}
+                className='relative h-80 w-full shrink-0 overflow-hidden'>
                 <Image
                   src={selectedActivity.src}
                   alt={selectedActivity.title}
                   fill
                   className='object-cover'
                 />
-                <div className='absolute inset-0 bg-linear-to-t from-neutral-900/80 to-transparent' />
+                <div className='absolute inset-0 bg-black/30' />
                 <motion.h3
                   layoutId={`title-${selectedId}`}
-                  className='text-h3 absolute top-10 left-10 z-10 font-bold'>
+                  className='text-h2 absolute top-10 left-10 z-10 font-bold text-white'>
                   {selectedActivity.title}
                 </motion.h3>
-              </div>
+              </motion.div>
 
               <motion.div
-                initial={{opacity: 0, y: 20}}
-                animate={{opacity: 1, y: 0}}
-                exit={{opacity: 0}}
-                className='custom-scrollbar flex flex-1 flex-col justify-center p-8 md:p-10'>
-                <p className='text-h5 leading-relaxed font-medium whitespace-pre-wrap opacity-90'>
-                  {selectedActivity.description}
-                </p>
+                layoutId={`content-${selectedId}`}
+                layout='position'
+                className='custom-scrollbar flex-1 overflow-y-auto p-8 md:p-12'>
+                <motion.div
+                  initial={{opacity: 0}}
+                  animate={{opacity: 1}}
+                  transition={{duration: 0.2, delay: 0.2}}>
+                  <p className='text-h5 leading-relaxed font-medium whitespace-pre-wrap text-white/90'>
+                    {selectedActivity.description}
+                  </p>
+                </motion.div>
               </motion.div>
             </motion.div>
           </div>
