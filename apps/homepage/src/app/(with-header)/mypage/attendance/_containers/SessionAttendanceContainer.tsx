@@ -1,11 +1,14 @@
 'use client';
 
+import {AxiosError} from 'axios';
 import {AttendanceModals} from '@/app/(with-header)/mypage/attendance/_components/AttendanceModal';
 import {MonthNavigator} from '@/app/(with-header)/mypage/attendance/_components/MonthNavigator';
 import {SessionList} from '@/app/(with-header)/mypage/attendance/_components/SessionList';
 import {useAttendance} from '@/app/(with-header)/mypage/attendance/_hooks/useAttendance';
 import {useAttendanceSessionsQuery} from '@/hooks/queries/useAttendance.queries';
 import {Spinner} from '@repo/ui/components/spinner/Spinner';
+import {ErrorResponse} from '@/schemas/common/common-schema';
+import {NotActiveMemberView} from '@/app/(with-header)/mypage/activity/_components/NotActiveMemberView';
 
 export const SessionAttendanceContainer = () => {
   const {
@@ -20,7 +23,9 @@ export const SessionAttendanceContainer = () => {
     handleAttendance,
   } = useAttendance();
 
-  const {data, isLoading} = useAttendanceSessionsQuery(currentMonth);
+  const {data, isLoading, error} = useAttendanceSessionsQuery(currentMonth);
+  const currentError = error as AxiosError<ErrorResponse> | null;
+  const isNotActiveMember = currentError?.response?.data?.code === 'NP-002';
 
   const handlePrevMonth = () => {
     if (!data) return;
@@ -47,6 +52,13 @@ export const SessionAttendanceContainer = () => {
         <Spinner />
       </div>
     );
+
+  // 활동 회원이 아닐 경우
+  if (isNotActiveMember) {
+    return <NotActiveMemberView />;
+  }
+
+  // 데이터가 없고 에러도 아닐 때
   if (!data) return null;
 
   return (
