@@ -41,6 +41,7 @@ export const SortableThumbnail = ({
         src={image.imageUrl}
         alt={`썸네일 ${index + 1}`}
         fill
+        sizes='80px'
         className='object-cover'
       />
     </button>

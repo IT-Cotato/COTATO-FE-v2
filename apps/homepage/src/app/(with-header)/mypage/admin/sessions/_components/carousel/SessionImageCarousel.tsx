@@ -94,12 +94,16 @@ export const SessionImageCarousel = (props: SessionImageCarouselProps) => {
     const {active, over} = event;
     if (!over || active.id === over.id) return;
 
-    const oldIndex = images.findIndex((img) => img.imageId === active.id);
-    const newIndex = images.findIndex((img) => img.imageId === over.id);
-
-    (props as SessionImageCarouselEditProps).onChange((prev) =>
-      arrayMove(prev, oldIndex, newIndex).map((img, i) => ({...img, order: i}))
-    );
+    (props as SessionImageCarouselEditProps).onChange((prev) => {
+      const oldIdx = prev.findIndex((img) => img.imageId === active.id);
+      const newIdx = prev.findIndex((img) => img.imageId === over.id);
+      if (oldIdx === -1 || newIdx === -1) return prev;
+      return arrayMove(prev, oldIdx, newIdx).map((img, i) => ({
+        ...img,
+        order: i,
+      }));
+    });
+    const newIndex = images.findIndex((img) => img.imageId === active.id);
     setCurrentIndex(newIndex);
   };
 
@@ -115,6 +119,7 @@ export const SessionImageCarousel = (props: SessionImageCarouselProps) => {
               src={currentImage.imageUrl}
               alt={`세션 이미지 ${safeIndex + 1}`}
               fill
+              sizes='350px'
               className='object-cover'
             />
 
