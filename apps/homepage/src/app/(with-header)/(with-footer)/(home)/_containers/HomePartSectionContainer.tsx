@@ -136,7 +136,7 @@ export const HomePartSectionContainer = () => {
 
 const partData = {
   pm: {
-    title: 'Project Manager',
+    title: 'Product Manager',
     desc: [
       '서비스의 비전을 기획하고 팀을 리드하는 역할입니다.',
       '사용자 중심 사고를 바탕으로 문제를 정의하고, 개발·디자인 파트와의 협업을 통해 서비스를 완성합니다.',
