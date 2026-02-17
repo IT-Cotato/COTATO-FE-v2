@@ -25,7 +25,7 @@ export const AboutUsBanner = () => {
           priority
         />
       </div>
-      <div className='absolute top-1/2 left-1/6 z-10 flex h-[50%] -translate-y-1/2 flex-col items-center justify-between'>
+      <div className='absolute top-1/2 left-1/6 z-10 flex h-[40%] -translate-y-1/2 flex-col items-center justify-between'>
         <CotatoLogo />
         <button
           onClick={scrollToNextSection}
