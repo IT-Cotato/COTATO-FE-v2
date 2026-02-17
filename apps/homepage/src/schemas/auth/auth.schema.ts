@@ -58,6 +58,10 @@ export const JoinRequestSchema = z.object({
     })
     .or(z.literal('')),
   position: z.enum(['NONE', 'PM', 'DE', 'FE', 'BE']),
+  generationNumber: z
+    .number()
+    .min(1, '기수를 입력해 주세요.')
+    .or(z.literal('')),
 });
 
 export const JoinResponseSchema = z.object({
