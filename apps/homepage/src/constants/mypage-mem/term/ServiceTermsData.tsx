@@ -37,18 +37,29 @@ export const SERVICE_TERMS: TermsSection[] = [
   {
     title: '제2조 (용어의 정의)',
     content: (
-      <p className='text-body-l pl-3'>
-        1. “회원”이라 함은 본 약관에 동의하고 서비스 이용에 필요한 정보를
-        제공하여 가입을 완료한 자를 말합니다. <br />
-        2. “아이디(ID)”라 함은 회원의 식별과 서비스 이용을 위하여 회원이
-        설정하고 동아리가 승인한 이메일 주소를 말합니다. <br />
-        3. “비밀번호”라 함은 회원의 아이디와 일치되는지를 확인하고 회원의
-        개인정보를 보호하기 위하여 회원이 정한 문자열을 말합니다. <br />
-        4. “Mait”라 함은 코테이토와 연동되어 CS 퀴즈 서비스를 제공하는 외부
-        플랫폼을 말합니다. <br />
+      <div className='text-body-l pl-3'>
+        <span className='flex'>
+          1. <div className='text-body-l-sb pl-1'>“회원”</div>이라 함은 본
+          약관에 동의하고 서비스 이용에 필요한 정보를 제공하여 가입을 완료한
+          자를 말합니다.
+        </span>
+        <span className='flex'>
+          2. <div className='text-body-l-sb pl-1'>“아이디(ID)”</div>라 함은
+          회원의 식별과 서비스 이용을 위하여 회원이 설정하고 동아리가 승인한
+          이메일 주소를 말합니다.
+        </span>
+        <span className='flex'>
+          3. <div className='text-body-l-sb pl-1'>“비밀번호”</div>라 함은 회원의
+          아이디와 일치되는지를 확인하고 회원의 개인정보를 보호하기 위하여
+          회원이 정한 문자열을 말합니다.
+        </span>
+        <span className='flex'>
+          4. <div className='text-body-l-sb pl-1'>“Mait”</div>라 함은 코테이토와
+          연동되어 CS 퀴즈 서비스를 제공하는 외부 플랫폼을 말합니다.
+        </span>
         5. 이 약관에서 정의되지 않은 용어는 관련 법령 및 서비스 안내에서 정하는
         바에 따르며, 그 외에는 일반 관례에 따릅니다.
-      </p>
+      </div>
     ),
   },
   {
@@ -247,8 +258,8 @@ export const SERVICE_TERMS: TermsSection[] = [
         2. 동아리는 서비스 품질 향상 및 이용 행태 분석을 위해 다음과 같이
         개인정보 처리 업무를 위탁하거나 분석 도구를 운영합니다.
         <span className='block pl-3.75'>
-          - Google Analytics 4(GA4): 서비스 통계 분석 및 이용 기록 관리
-          <br />- Beusable(뷰저블): 사용자 행동 분석 및 UI/UX 개선
+          • Google Analytics 4(GA4): 서비스 통계 분석 및 이용 기록 관리
+          <br />• Beusable(뷰저블): 사용자 행동 분석 및 UI/UX 개선
         </span>
         3. 위 분석 도구는 쿠키(Cookie)를 통해 비식별 데이터를 수집할 수 있으며,
         회원은 브라우저 설정 등을 통해 쿠키 수집을 거부할 권리가 있습니다.
