@@ -4,9 +4,9 @@ import clsx from 'clsx';
 import Image, {StaticImageData} from 'next/image';
 import {useRouter} from 'next/navigation';
 import {HEADER_HEIGHT} from '@repo/ui/constants/ui';
-import CountdownTimer from '@/components/layout/CountdownTimer';
-import {NotifyInput} from '@/components/layout/NotifyInput';
 import {Button} from '@repo/ui/components/buttons/Button';
+import {CountdownTimer} from '@/components/layout/CountdownTimer';
+import {NotifyInput} from '@/components/layout/NotifyInput';
 
 type bgColorKey = 'bg-transparent' | 'bg-neutral-50' | 'bg-[#010101]';
 
