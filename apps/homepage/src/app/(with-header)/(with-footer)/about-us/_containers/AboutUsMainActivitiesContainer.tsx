@@ -78,13 +78,22 @@ export const AboutUsMainActivitiesContainer = () => {
               <motion.div
                 layoutId={`image-container-${selectedId}`}
                 className='relative h-80 w-full shrink-0 overflow-hidden'>
-                <Image
-                  src={selectedActivity.src}
-                  alt={selectedActivity.title}
-                  fill
-                  className='object-cover'
-                />
-                <div className='absolute inset-0 bg-black/30' />
+                <motion.div
+                  initial={{scale: 1.4}}
+                  animate={{scale: 1.4}}
+                  exit={{scale: 1}}
+                  transition={{duration: 0.6, ease: [0.16, 1, 0.3, 1]}}
+                  className='relative h-full w-full'>
+                  <Image
+                    src={selectedActivity.src}
+                    alt={selectedActivity.title}
+                    fill
+                    className='object-cover'
+                  />
+                </motion.div>
+
+                <div className='absolute inset-0 bg-black/40' />
+
                 <motion.h3
                   layoutId={`title-${selectedId}`}
                   className='text-h2 absolute top-10 left-10 z-10 font-bold text-white'>
@@ -99,6 +108,7 @@ export const AboutUsMainActivitiesContainer = () => {
                 <motion.div
                   initial={{opacity: 0}}
                   animate={{opacity: 1}}
+                  exit={{opacity: 0, transition: {duration: 0.1}}}
                   transition={{duration: 0.2, delay: 0.2}}>
                   <p className='text-h5 leading-relaxed font-medium whitespace-pre-wrap text-white/90'>
                     {selectedActivity.description}
