@@ -2,12 +2,26 @@
 
 import {useRef, useState} from 'react';
 import Image from 'next/image';
+import {
+  DndContext,
+  DragEndEvent,
+  PointerSensor,
+  closestCenter,
+  useSensor,
+  useSensors,
+} from '@dnd-kit/core';
+import {
+  SortableContext,
+  arrayMove,
+  horizontalListSortingStrategy,
+} from '@dnd-kit/sortable';
 import ChevronLeftIcon from '@/assets/chevrons/chevron-left.svg';
 import ChevronRightIcon from '@/assets/chevrons/chevron-right.svg';
 import PlusIcon from '@repo/ui/assets/icons/plus-nobackground.svg';
 import ThumbnailImage from '@/assets/thumbnail/thumbnail.svg';
 import XIcon from '@/assets/cancel/cancel.svg';
 import {SessionImage} from '@/schemas/admin/session.schema';
+import {SortableThumbnail} from '@/app/(with-header)/mypage/admin/sessions/_components/carousel/SortableThumbnail';
 
 const MAX_IMAGES = 5;
 
@@ -34,8 +48,16 @@ export const SessionImageCarousel = (props: SessionImageCarouselProps) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   // currentIndex가 images 범위를 벗어나지 않도록 보정
-  const safeIndex = Math.min(currentIndex, images.length - 1);
-  const currentImage = images[safeIndex] ?? null;
+  const safeIndex =
+    images.length === 0 ? -1 : Math.min(currentIndex, images.length - 1);
+  const currentImage = safeIndex >= 0 ? images[safeIndex] : null;
+
+  const sensors = useSensors(
+    useSensor(PointerSensor, {
+      // 클릭과 드래그 구분: 5px 이상 움직여야 드래그로 인식
+      activationConstraint: {distance: 5},
+    })
+  );
 
   const handlePrev = () => setCurrentIndex((prev) => Math.max(0, prev - 1));
   const handleNext = () =>
@@ -60,7 +82,7 @@ export const SessionImageCarousel = (props: SessionImageCarouselProps) => {
   };
 
   const handleDelete = () => {
-    if (!isEdit) return;
+    if (!isEdit || safeIndex < 0) return;
     (props as SessionImageCarouselEditProps).onChange((prev) =>
       prev
         .filter((_, i) => i !== safeIndex)
@@ -69,10 +91,25 @@ export const SessionImageCarousel = (props: SessionImageCarouselProps) => {
     setCurrentIndex((prev) => Math.max(0, prev - 1));
   };
 
+  const handleDragEnd = (event: DragEndEvent) => {
+    if (!isEdit) return;
+    const {active, over} = event;
+    if (!over || active.id === over.id) return;
+
+    const oldIndex = images.findIndex((img) => img.imageId === active.id);
+    const newIndex = images.findIndex((img) => img.imageId === over.id);
+
+    (props as SessionImageCarouselEditProps).onChange((prev) =>
+      arrayMove(prev, oldIndex, newIndex).map((img, i) => ({...img, order: i}))
+    );
+    setCurrentIndex(newIndex);
+  };
+
   const canAddMore = images.length < MAX_IMAGES;
 
   return (
     <div className='flex flex-col'>
+      {/* 큰 미리보기 영역 */}
       <div className='relative h-57.5 w-87.5 overflow-hidden rounded-[10px] bg-neutral-200'>
         {currentImage ? (
           <>
@@ -83,6 +120,7 @@ export const SessionImageCarousel = (props: SessionImageCarouselProps) => {
               className='object-cover'
             />
 
+            {/* X 삭제 버튼 */}
             {isEdit && (
               <button
                 type='button'
@@ -93,6 +131,7 @@ export const SessionImageCarousel = (props: SessionImageCarouselProps) => {
               </button>
             )}
 
+            {/* 좌우 chevron */}
             {images.length > 1 && (
               <>
                 <button
@@ -115,36 +154,37 @@ export const SessionImageCarousel = (props: SessionImageCarouselProps) => {
             )}
           </>
         ) : (
-          // 이미지 없을 때 썸네일 표시
+          // 이미지 없을 때 빈 상태
           <div className='flex h-full w-full items-center justify-center'>
             <ThumbnailImage />
           </div>
         )}
       </div>
 
-      {/* 썸네일 목록 */}
+      {/* 썸네일 목록 - edit 모드에서만 표시 */}
       {isEdit && (
         <div className='mt-[13px] flex gap-[9px]'>
-          {/* 썸네일들 */}
-          {images.map((image, index) => (
-            <button
-              key={image.imageId}
-              type='button'
-              onClick={() => handleThumbnailClick(index)}
-              className={`relative h-20 w-20 shrink-0 overflow-hidden rounded-lg border-2 ${
-                index === safeIndex ? 'border-primary' : 'border-transparent'
-              }`}
-              aria-label={`${index + 1}번째 이미지`}>
-              <Image
-                src={image.imageUrl}
-                alt={`썸네일 ${index + 1}`}
-                fill
-                className='object-cover'
-              />
-            </button>
-          ))}
+          <DndContext
+            sensors={sensors}
+            collisionDetection={closestCenter}
+            onDragEnd={handleDragEnd}>
+            <SortableContext
+              items={images.map((img) => img.imageId)}
+              strategy={horizontalListSortingStrategy}>
+              {images.map((image, index) => (
+                <SortableThumbnail
+                  key={image.imageId}
+                  image={image}
+                  index={index}
+                  isSelected={index === safeIndex}
+                  onClick={() => handleThumbnailClick(index)}
+                />
+              ))}
+            </SortableContext>
+          </DndContext>
 
-          {isEdit && canAddMore && (
+          {/* 추가 버튼 - 5개 미만일 때만 */}
+          {canAddMore && (
             <button
               type='button'
               onClick={() => fileInputRef.current?.click()}
@@ -155,19 +195,18 @@ export const SessionImageCarousel = (props: SessionImageCarouselProps) => {
             </button>
           )}
 
-          {isEdit && (
-            <input
-              ref={fileInputRef}
-              type='file'
-              accept='image/*'
-              className='hidden'
-              onChange={(e) => {
-                const file = e.target.files?.[0];
-                if (file) handleAdd(file);
-                e.target.value = '';
-              }}
-            />
-          )}
+          {/* 숨겨진 파일 input */}
+          <input
+            ref={fileInputRef}
+            type='file'
+            accept='image/*'
+            className='hidden'
+            onChange={(e) => {
+              const file = e.target.files?.[0];
+              if (file) handleAdd(file);
+              e.target.value = ''; // 같은 파일 재선택 가능하게 초기화
+            }}
+          />
         </div>
       )}
     </div>
