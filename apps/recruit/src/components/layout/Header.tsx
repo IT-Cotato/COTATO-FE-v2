@@ -68,7 +68,7 @@ export const Header = () => {
     <>
       <header
         style={{height: `${HEADER_HEIGHT}px`}}
-        className='z-header sticky top-0 flex w-full min-w-360 items-center justify-between bg-black pr-26.25 pl-6.25'>
+        className='z-header sticky top-0 flex w-full min-w-360 shrink-0 items-center justify-between bg-black pr-26.25 pl-6.25'>
         <div>
           <Link href={ROUTES.HOME}>
             <MainLogo className='w-36.5' />
