@@ -1,5 +1,6 @@
-import {SessionData} from '@/schemas/admin/session.schema';
-import {SessionDetail} from './SessionDetail';
+import {SessionData, SessionImage} from '@/schemas/admin/session.schema';
+import {SessionDetail} from '@/app/(with-header)/mypage/admin/sessions/_components/SessionDetail';
+import {SessionImageCarousel} from '@/app/(with-header)/mypage/admin/sessions/_components/carousel/SessionImageCarousel';
 
 interface SessionExpandedContentViewProps {
   mode: 'view';
@@ -17,16 +18,29 @@ type SessionExpandedContentProps =
   | SessionExpandedContentEditProps;
 
 export const SessionExpandedContent = (props: SessionExpandedContentProps) => {
+  if (props.mode === 'edit') {
+    const {form, onChange} = props;
+
+    const handleImagesChange = (
+      updater: (prev: SessionImage[]) => SessionImage[]
+    ) => onChange((prev) => ({...prev, images: updater(prev.images)}));
+
+    return (
+      <div className='flex gap-7'>
+        <SessionImageCarousel
+          mode='edit'
+          images={form.images}
+          onChange={handleImagesChange}
+        />
+        <SessionDetail mode='edit' form={form} onChange={onChange} />
+      </div>
+    );
+  }
+
   return (
     <div className='flex gap-7'>
-      <div className='relative h-57.5 w-87.5 shrink-0 overflow-hidden rounded-[10px] bg-neutral-200'>
-        {/* TODO: SessionImageCarousel */}
-      </div>
-      {props.mode === 'edit' ? (
-        <SessionDetail mode='edit' form={props.form} onChange={props.onChange} />
-      ) : (
-        <SessionDetail mode='view' session={props.session} />
-      )}
+      <SessionImageCarousel mode='view' images={props.session.images} />
+      <SessionDetail mode='view' session={props.session} />
     </div>
   );
 };

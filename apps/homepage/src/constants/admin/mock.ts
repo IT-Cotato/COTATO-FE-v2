@@ -19,6 +19,7 @@ export const MOCK_SESSIONS: SessionData[] = [
     isOffline: true,
     isOnline: false,
     content: 'CS교육 및 파트별 네트워킹',
+    images: [],
   },
   {
     sessionId: 2,
@@ -37,6 +38,7 @@ export const MOCK_SESSIONS: SessionData[] = [
     isOffline: true,
     isOnline: false,
     content: 'CS교육 및 파트별 네트워킹',
+    images: [],
   },
   {
     sessionId: 3,
@@ -55,5 +57,6 @@ export const MOCK_SESSIONS: SessionData[] = [
     isOffline: false,
     isOnline: true,
     content: 'OT 및 파트 소개',
+    images: [],
   },
 ];

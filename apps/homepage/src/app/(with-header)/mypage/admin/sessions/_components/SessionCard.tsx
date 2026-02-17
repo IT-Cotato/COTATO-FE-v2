@@ -87,12 +87,13 @@ export const SessionCard = ({
         <div onClick={(e) => e.stopPropagation()}>
           {isEditing ? (
             <SessionExpandedContent
+              key='edit'
               mode='edit'
               form={form}
               onChange={setForm}
             />
           ) : (
-            <SessionExpandedContent mode='view' session={session} />
+            <SessionExpandedContent key='view' mode='view' session={session} />
           )}
         </div>
       )}
