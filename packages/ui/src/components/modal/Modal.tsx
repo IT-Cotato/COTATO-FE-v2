@@ -1,9 +1,9 @@
 'use client';
 
 import React, {ReactNode} from 'react';
-import Close from '@repo/ui/assets/modal/close.svg';
 import clsx from 'clsx';
 import {FocusTrap} from 'focus-trap-react';
+import XIcon from '@repo/ui/assets/icons/cancel.svg';
 
 interface ModalProps {
   isOpen: boolean; /** 모달의 열림/닫힘 상태를 제어합니다. */
@@ -58,9 +58,9 @@ export const Modal = ({
           onClick={(e) => e.stopPropagation()}>
           <button
             onClick={onClose}
-            className='absolute top-4 right-5'
+            className='absolute top-5 right-5'
             aria-label='닫기'>
-            <Close className='h-5.25 w-5.25 cursor-pointer' />
+            <XIcon className='h-3 w-3 cursor-pointer text-[#21272A]' />
           </button>
           <div
             className={clsx(

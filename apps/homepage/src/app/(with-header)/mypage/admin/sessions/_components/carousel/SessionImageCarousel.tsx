@@ -19,7 +19,7 @@ import ChevronLeftIcon from '@/assets/chevrons/chevron-left.svg';
 import ChevronRightIcon from '@/assets/chevrons/chevron-right.svg';
 import PlusIcon from '@repo/ui/assets/icons/plus-nobackground.svg';
 import ThumbnailImage from '@/assets/thumbnail/thumbnail.svg';
-import XIcon from '@/assets/cancel/cancel.svg';
+import XIcon from '@repo/ui/assets/icons/cancel.svg';
 import {SessionImage} from '@/schemas/admin/session.schema';
 import {SortableThumbnail} from '@/app/(with-header)/mypage/admin/sessions/_components/carousel/SortableThumbnail';
 
@@ -130,7 +130,7 @@ export const SessionImageCarousel = (props: SessionImageCarouselProps) => {
                 onClick={handleDelete}
                 className='absolute top-3.5 right-3.5 flex h-5 w-5 cursor-pointer items-center justify-center'
                 aria-label='이미지 삭제'>
-                <XIcon className='h-3 w-3' />
+                <XIcon className='h-3 w-3 text-white' />
               </button>
             )}
 

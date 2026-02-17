@@ -1,6 +1,5 @@
 import {useState, useEffect} from 'react';
-import XIcon from '@/assets/cancel/cancel.svg';
-import {POSITION_LABEL} from '@/constants/project/project-detail';
+import XIcon from '@repo/ui/assets/icons/cancel.svg';
 
 export const MemberChip = ({
   name,
@@ -56,7 +55,7 @@ export const MemberChip = ({
       <button
         onClick={onDelete}
         className='absolute right-5 hidden group-hover:block'>
-        <XIcon className='h-3 w-3' />
+        <XIcon className='h-3 w-3 text-white' />
       </button>
     </div>
   );

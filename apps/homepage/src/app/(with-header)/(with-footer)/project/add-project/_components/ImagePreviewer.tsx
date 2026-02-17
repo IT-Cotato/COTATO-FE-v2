@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import XIcon from '@/assets/cancel/cancel.svg';
+import XIcon from '@repo/ui/assets/icons/cancel.svg';
 import PlusIcon from '@/assets/plus/plus.svg';
 import {ImageInfo} from '@/schemas/project/project-type';
 
