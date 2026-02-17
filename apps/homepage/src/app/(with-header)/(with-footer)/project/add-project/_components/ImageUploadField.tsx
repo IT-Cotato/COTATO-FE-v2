@@ -54,14 +54,18 @@ export const ImageUploadField = ({
           backgroundColor='neutral-400'
           textColor='neutral-50'
           onClick={() => fileInputRef.current?.click()}
+          aria-haspopup='false'
+          aria-controls='project-image-input'
         />
         <input
+          id='project-image-input'
           type='file'
           ref={fileInputRef}
           className='hidden'
           accept='.jpg,.png,.jpeg'
           multiple
           onChange={handleFileChange}
+          aria-label='이미지 파일 선택'
         />
       </div>
       <ImageSortableList

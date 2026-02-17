@@ -27,10 +27,15 @@ export const ImageSortableList = ({
   const dndContextId = useId();
 
   return (
-    <div className='project-scrollbar h-70 flex-1 overflow-y-auto rounded-[5px] pr-1.5'>
+    <div
+      className='project-scrollbar h-70 flex-1 overflow-y-auto rounded-[5px] pr-1.5'
+      role='region'
+      aria-label='업로드된 이미지 목록 (순서 변경 가능)'>
       <div className='min-h-full w-170 rounded-[5px] bg-[rgba(189,189,189,0.2)] px-2.25 py-4'>
         {images.length === 0 ? (
-          <div className='text-body-l flex h-57 items-center justify-center text-neutral-400'>
+          <div
+            className='text-body-l flex h-57 items-center justify-center text-neutral-400'
+            role='status'>
             업로드한 이미지가 없습니다.
           </div>
         ) : (
