@@ -47,14 +47,12 @@ export const SessionImageCarousel = (props: SessionImageCarouselProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  // currentIndex가 images 범위를 벗어나지 않도록 보정
   const safeIndex =
     images.length === 0 ? -1 : Math.min(currentIndex, images.length - 1);
   const currentImage = safeIndex >= 0 ? images[safeIndex] : null;
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
-      // 클릭과 드래그 구분: 5px 이상 움직여야 드래그로 인식
       activationConstraint: {distance: 5},
     })
   );
@@ -163,50 +161,55 @@ export const SessionImageCarousel = (props: SessionImageCarouselProps) => {
 
       {/* 썸네일 목록 - edit 모드에서만 표시 */}
       {isEdit && (
-        <div className='mt-[13px] flex gap-[9px]'>
-          <DndContext
-            sensors={sensors}
-            collisionDetection={closestCenter}
-            onDragEnd={handleDragEnd}>
-            <SortableContext
-              items={images.map((img) => img.imageId)}
-              strategy={horizontalListSortingStrategy}>
-              {images.map((image, index) => (
-                <SortableThumbnail
-                  key={image.imageId}
-                  image={image}
-                  index={index}
-                  isSelected={index === safeIndex}
-                  onClick={() => handleThumbnailClick(index)}
-                />
-              ))}
-            </SortableContext>
-          </DndContext>
+        <div className='mt-3.25 flex flex-col gap-3'>
+          <div className='flex gap-2.25'>
+            <DndContext
+              sensors={sensors}
+              collisionDetection={closestCenter}
+              onDragEnd={handleDragEnd}>
+              <SortableContext
+                items={images.map((img) => img.imageId)}
+                strategy={horizontalListSortingStrategy}>
+                {images.map((image, index) => (
+                  <SortableThumbnail
+                    key={image.imageId}
+                    image={image}
+                    index={index}
+                    isSelected={index === safeIndex}
+                    onClick={() => handleThumbnailClick(index)}
+                  />
+                ))}
+              </SortableContext>
+            </DndContext>
 
-          {/* 추가 버튼 - 5개 미만일 때만 */}
-          {canAddMore && (
-            <button
-              type='button'
-              onClick={() => fileInputRef.current?.click()}
-              className='flex h-20 w-20 shrink-0 cursor-pointer flex-col items-center justify-center gap-1 rounded-lg border border-dashed border-neutral-300 bg-neutral-50'
-              aria-label='이미지 추가'>
-              <PlusIcon className='h-5 w-5 text-neutral-600' />
-              <span className='text-body-s text-neutral-600'>추가</span>
-            </button>
-          )}
+            {/* 추가 버튼 - 5개 미만일 때만 */}
+            {canAddMore && (
+              <button
+                type='button'
+                onClick={() => fileInputRef.current?.click()}
+                className='flex h-20 w-20 shrink-0 cursor-pointer flex-col items-center justify-center gap-1 rounded-lg border border-dashed border-neutral-300 bg-neutral-50'
+                aria-label='이미지 추가'>
+                <PlusIcon className='h-5 w-5 text-neutral-600' />
+                <span className='text-body-s text-neutral-600'>추가</span>
+              </button>
+            )}
 
-          {/* 숨겨진 파일 input */}
-          <input
-            ref={fileInputRef}
-            type='file'
-            accept='image/*'
-            className='hidden'
-            onChange={(e) => {
-              const file = e.target.files?.[0];
-              if (file) handleAdd(file);
-              e.target.value = ''; // 같은 파일 재선택 가능하게 초기화
-            }}
-          />
+            {/* 숨겨진 파일 input */}
+            <input
+              ref={fileInputRef}
+              type='file'
+              accept='image/*'
+              className='hidden'
+              onChange={(e) => {
+                const file = e.target.files?.[0];
+                if (file) handleAdd(file);
+                e.target.value = '';
+              }}
+            />
+          </div>
+          <p className='text-body-l text-center text-neutral-600'>
+            드래그로 순서를 변경하세요.
+          </p>
         </div>
       )}
     </div>

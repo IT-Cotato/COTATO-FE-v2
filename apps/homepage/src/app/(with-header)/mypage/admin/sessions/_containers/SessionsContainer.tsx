@@ -22,6 +22,7 @@ const NEW_SESSION_TEMPLATE: NewSessionData = {
   isOffline: true,
   isOnline: false,
   content: '',
+  images: [],
 };
 
 export const SessionsContainer = () => {
