@@ -1,4 +1,26 @@
-import {TermsSection} from '@/constants/mypage-mem/term/terms';
+import {
+  TermsSection,
+  TermsSectionIntro,
+} from '@/constants/mypage-mem/term/terms';
+
+export const SERVICE_TERMS_INTRO: TermsSectionIntro = {
+  content: (
+    <>
+      <span>
+        코테이토(COTATO)(이하 “동아리”)는 제공하는 웹 서비스 및 관련 제반
+        서비스를 이용함에 있어 동아리와 회원 간의 권리·의무 및 책임 사항을
+        규정하기 위하여 본 이용약관을 제정합니다.
+      </span>
+      <span>
+        동아리는 「약관의 규제에 관한 법률」, 「정보통신망 이용촉진 및 정보보호
+        등에 관한 법률」, 「개인정보 보호법」 등 관련 법령을 준수합니다.
+      </span>
+      <span className='pt-4'>
+        ○ 이 이용약관은 2026년 2월 20일부터 적용됩니다.
+      </span>
+    </>
+  ),
+};
 
 export const SERVICE_TERMS: TermsSection[] = [
   {

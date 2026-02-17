@@ -1,4 +1,25 @@
-import {TermsSection} from '@/constants/mypage-mem/term/terms';
+import {
+  TermsSection,
+  TermsSectionIntro,
+} from '@/constants/mypage-mem/term/terms';
+
+export const PRIVACY_POLICY_INTRO: TermsSectionIntro = {
+  content: (
+    <>
+      <span>
+        코테이토(COTATO)(이하 “동아리”라 합니다)는 「개인정보 보호법」 제30조 및
+        관련 법령에 따라 회원의 개인정보를 보호하고,
+      </span>
+      <span>
+        개인정보와 관련한 고충을 원활하게 처리하기 위하여 다음과 같이 개인정보
+        처리방침을 수립·공개합니다.
+      </span>
+      <span className='pt-4'>
+        ○ 이 개인정보 처리방침은 2026년 2월 20일부터 적용됩니다.
+      </span>
+    </>
+  ),
+};
 
 export const PRIVACY_POLICY: TermsSection[] = [
   {
