@@ -3,7 +3,7 @@
 import clsx from 'clsx';
 import Image, {StaticImageData} from 'next/image';
 import {useRouter} from 'next/navigation';
-import {HEADER_HEIGHT} from '@/constants/ui';
+import {HEADER_HEIGHT} from '@repo/ui/constants/ui';
 import CountdownTimer from '@/components/layout/CountdownTimer';
 import {NotifyInput} from '@/components/layout/NotifyInput';
 import {Button} from '@repo/ui/components/buttons/Button';
