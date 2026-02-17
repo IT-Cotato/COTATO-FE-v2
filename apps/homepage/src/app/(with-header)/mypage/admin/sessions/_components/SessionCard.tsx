@@ -5,6 +5,8 @@ import {SessionData} from '@/schemas/admin/session.schema';
 import {ActionMenu} from '@/app/(with-header)/mypage/admin/_components/ActionMenu';
 import {ActionButtons} from '@/app/(with-header)/mypage/admin/_components/ActionButtons';
 import {SessionExpandedContent} from './SessionExpandedContent';
+import {Modal} from '@repo/ui/components/modal/Modal';
+import {FullButton} from '@repo/ui/components/buttons/FullButton';
 
 const SESSION_MENU_ITEMS = [
   {key: 'edit', label: '수정하기'},
@@ -29,6 +31,7 @@ export const SessionCard = ({
   onUpdate,
 }: SessionCardProps) => {
   const [isEditing, setIsEditing] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [form, setForm] = useState<SessionData>(session);
 
   useEffect(() => {
@@ -41,7 +44,7 @@ export const SessionCard = ({
       setIsEditing(true);
       if (!isExpanded) onToggle();
     } else if (action === 'delete') {
-      onDelete(session.sessionId);
+      setIsDeleteModalOpen(true);
     }
   };
 
@@ -83,6 +86,24 @@ export const SessionCard = ({
           )}
         </div>
       </div>
+      <Modal
+        isOpen={isDeleteModalOpen}
+        onClose={() => setIsDeleteModalOpen(false)}
+        title={`${session.title}을 삭제하시겠습니까?`}
+        noContent={true}
+        contentWrapperClassName='gap-18'
+        actions={
+          <FullButton
+            variant='primary'
+            label='확인'
+            onClick={() => {
+              onDelete(session.sessionId);
+              setIsDeleteModalOpen(false);
+            }}
+          />
+        }
+      />
+
       {isExpanded && (
         <div onClick={(e) => e.stopPropagation()}>
           {isEditing ? (
