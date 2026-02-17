@@ -13,7 +13,6 @@ import {createSuccessResponseSchema} from '@/schemas/common/common-schema';
 
 /**
  * OAuth 로그인
- * 인증 / 세션 관련 API에만 명시적으로 no-store를 추가합니다.
  */
 export const oauthLogin = async (
   request: OAuthLoginRequest
@@ -22,12 +21,7 @@ export const oauthLogin = async (
   const validatedRequest = oAuthLoginRequestSchema.parse(request);
   const response: AxiosResponse = await publicAxios.post(
     ENDPOINT.AUTH.LOGIN_GOOGLE,
-    validatedRequest,
-    {
-      fetchOptions: {
-        cache: 'no-store',
-      },
-    }
+    validatedRequest
   );
 
   // 응답 스키마 생성 및 검증
@@ -40,26 +34,16 @@ export const oauthLogin = async (
 
 /**
  * 로그아웃
- * 인증 / 세션 관련 API에만 명시적으로 no-store를 추가합니다.
  */
 export const logout = async (): Promise<void> => {
-  await privateAxios.post(ENDPOINT.AUTH.LOGOUT, undefined, {
-    fetchOptions: {
-      cache: 'no-store',
-    },
-  });
+  await privateAxios.post(ENDPOINT.AUTH.LOGOUT);
 };
 
 /**
  * 현재 사용자 정보 조회
- * 인증 / 세션 관련 API에만 명시적으로 no-store를 추가합니다.
  */
 export const getMe = async (): Promise<GetMeResponse> => {
-  const response: AxiosResponse = await privateAxios.get(ENDPOINT.AUTH.ME, {
-    fetchOptions: {
-      cache: 'no-store',
-    },
-  });
+  const response: AxiosResponse = await privateAxios.get(ENDPOINT.AUTH.ME);
 
   const responseSchema = createSuccessResponseSchema(getMeResponseSchema);
   const validatedResponse = responseSchema.parse(response.data);
