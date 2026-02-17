@@ -85,7 +85,7 @@ export const PartQuestionFieldsSchema = z.object({
 });
 
 export const EtcQuestionFieldsSchema = z.object({
-  discovery: z.string().min(1, '필수 항목입니다'),
+  discovery: z.string({message: '필수 항목입니다'}).min(1, '필수 항목입니다'),
   sessionAgree: z.enum(['agree'], {message: '필수 동의 항목입니다'}),
   otAgree: z.enum(['agree'], {message: '필수 동의 항목입니다'}),
   privacyAgree: z.enum(['agree'], {message: '필수 동의 항목입니다'}),
