@@ -13,6 +13,7 @@ interface DropdownProps<T extends string> {
   disabled?: boolean;
   className?: string;
   width?: number;
+  triggerClassName?: string; // 트리거 버튼의 스타일 클래스를 완전히 교체할 때 사용
 }
 
 export const Dropdown = <T extends string>({
@@ -23,6 +24,7 @@ export const Dropdown = <T extends string>({
   disabled,
   className,
   width,
+  triggerClassName,
 }: DropdownProps<T>) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
@@ -52,13 +54,17 @@ export const Dropdown = <T extends string>({
         onClick={handleToggle}
         disabled={disabled}
         className={clsx(
-          'flex h-10 items-center justify-center gap-2.5 self-stretch px-2.5 py-2.5',
-          'rounded-[20px] border border-neutral-200 bg-white',
-          'text-body-l w-full shrink-0 transition-all',
-          disabled
-            ? 'cursor-not-allowed bg-neutral-100 text-neutral-400'
-            : 'bg-white text-neutral-600',
-          !width && 'min-w-27.5'
+          'flex w-full shrink-0 items-center gap-2.5 self-stretch transition-all',
+          !triggerClassName && 'justify-center',
+          disabled ? 'cursor-not-allowed' : 'cursor-pointer',
+          triggerClassName ??
+            clsx(
+              'text-body-l h-10 rounded-[20px] border border-neutral-200 px-2.5 py-2.5',
+              disabled
+                ? 'bg-neutral-100 text-neutral-400'
+                : 'bg-white text-neutral-600',
+              !width && 'min-w-27.5'
+            )
         )}
         style={{width: dropdownWidth}}
         aria-expanded={isOpen}
@@ -66,8 +72,8 @@ export const Dropdown = <T extends string>({
         <span>{value || placeholder}</span>
         <ChevronDown
           className={clsx(
-            'text-primary transition-transform duration-200',
-            'h-5 w-5',
+            'h-5 w-5 transition-transform duration-200',
+            triggerClassName ? 'text-current' : 'text-primary',
             isOpen ? 'rotate-180' : 'rotate-0'
           )}
         />

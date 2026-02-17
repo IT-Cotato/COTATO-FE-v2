@@ -13,4 +13,13 @@ export const QUERY_KEYS = {
   RECRUITMENTS: {
     STATUS: ['recruitments-status'],
   },
+  ATTENDANCE: {
+    DASHBOARD: ['attendance', 'dashboard'],
+    RECORDS: (month?: number) => ['attendance', 'records', {month}],
+    SESSIONS: (month?: number) => ['attendance', 'sessions', {month}],
+  },
+  PENALTY: {
+    DASHBOARD: ['penalty', 'dashboard'],
+    RECORDS: (month?: number) => ['penalty', 'records', {month}],
+  },
 } as const;

@@ -1,13 +1,18 @@
-import {MemberTabType, MemberType} from '@/schemas/admin/admin-users.schema';
+import {MemberTabType, MemberType} from '@/schemas/admin/admin.schema';
 import {
   MEMBER_COLUMNS,
   MEMBER_ROLE_CONFIG,
   MEMBER_ROLE_OPTIONS,
   MEMBER_STATUS_CONFIG,
   MEMBER_STATUS_OPTIONS,
-  MemberRoleKey,
   MemberStatusKey,
-} from '@/constants/admin/admin-users';
+  ALL_USERS_MENU_ITEMS,
+  REGULAR_MEMBER_MENU_ITEMS,
+  MEMBER_POSITION_LABEL,
+  type MemberRoleKey,
+  type MemberMenuAction,
+  type MemberPositionKey,
+} from '@/constants/admin/admin';
 import {useRef, useState} from 'react';
 import FinishFilterIcon from '@repo/ui/assets/icons/filter-finish.svg';
 import DefaultFilterIcon from '@repo/ui/assets/icons/filter-default.svg';
@@ -16,9 +21,11 @@ import {Checkbox} from '@repo/ui/components/checkbox/CheckBox';
 import {useClickOutside} from '@repo/ui/hooks/useClickOutside';
 import {StatusDropdown} from '@repo/ui/components/dropdown/StatusDropdown';
 import {MemberActionMenu} from './MemberActionMenu';
+import {SelectedMemberChip} from '../../../_components/SelectedMemberChip';
 
 interface AdminUsersTableViewProps {
   items?: MemberType[];
+  allItems: MemberType[];
   activeTab: MemberTabType;
   selectedStatuses: MemberStatusKey[];
   onFilterChange: (labels: MemberStatusKey[]) => void;
@@ -26,10 +33,12 @@ interface AdminUsersTableViewProps {
   onSelectAll: (checked: boolean) => void;
   onSelect: (id: number, checked: boolean) => void;
   onStatusChange: (memberId: number, status: MemberStatusKey) => void;
+  onMenuAction: (action: MemberMenuAction, memberId: number) => void;
 }
 
 export const AdminUsersTableView = ({
   items = [],
+  allItems,
   activeTab,
   selectedStatuses,
   onFilterChange,
@@ -37,6 +46,7 @@ export const AdminUsersTableView = ({
   onSelectAll,
   onSelect,
   onStatusChange,
+  onMenuAction,
 }: AdminUsersTableViewProps) => {
   const isAllTab = activeTab === 'ALL';
   const [isFilterOpen, setIsFilterOpen] = useState(false);
@@ -44,10 +54,12 @@ export const AdminUsersTableView = ({
 
   useClickOutside(filterRef, () => setIsFilterOpen(false));
 
-  const isAllSelected = items.length > 0 && selectedIds.length === items.length;
+  const isAllSelected =
+    items.length > 0 &&
+    items.every((item) => selectedIds.includes(item.memberId));
 
   return (
-    <table className='w-full table-fixed border-collapse'>
+    <table className='min-w-277.5 border-collapse'>
       <thead className='bg-neutral-200'>
         <tr>
           {isAllTab && (
@@ -101,9 +113,7 @@ export const AdminUsersTableView = ({
       </thead>
       <tbody>
         {items.map((member) => (
-          <tr
-            key={member.memberId}
-            className='text-body-l font-semibold text-neutral-600'>
+          <tr key={member.memberId} className='text-body-l text-neutral-600'>
             {isAllTab && (
               <td className='px-3 py-4 text-center'>
                 <Checkbox
@@ -115,10 +125,11 @@ export const AdminUsersTableView = ({
             )}
             <td className='truncate px-3 py-4 text-center'>{member.name}</td>
             <td className='truncate px-3 py-4 text-center'>
-              {member.generationMemberId}
+              {member.generationMemberId}기
             </td>
             <td className='truncate px-3 py-4 text-center'>
-              {member.position}
+              {MEMBER_POSITION_LABEL[member.position as MemberPositionKey] ??
+                member.position}
             </td>
             <td className='truncate px-3 py-4 text-center'>
               {member.university}
@@ -152,15 +163,40 @@ export const AdminUsersTableView = ({
                   />
                 )}
                 <MemberActionMenu
-                  onAction={(action) => {
-                    /** 액션 핸들러 디자인 완료 시 추후 구현 예정 */
-                  }}
+                  items={
+                    isAllTab ? ALL_USERS_MENU_ITEMS : REGULAR_MEMBER_MENU_ITEMS
+                  }
+                  onAction={(action) => onMenuAction(action, member.memberId)}
                 />
               </div>
             </td>
           </tr>
         ))}
       </tbody>
+      {isAllTab && selectedIds.length > 0 && (
+        <tfoot>
+          <tr>
+            <td
+              colSpan={MEMBER_COLUMNS.length + 1}
+              className='bg-neutral-100 px-12 py-2.75'>
+              <div className='flex flex-wrap items-center gap-5.5'>
+                <span className='text-body-l pr-1.25 text-neutral-600'>
+                  선택 {selectedIds.length}
+                </span>
+                {allItems
+                  .filter((m) => selectedIds.includes(m.memberId))
+                  .map((m) => (
+                    <SelectedMemberChip
+                      key={m.memberId}
+                      name={m.name}
+                      onRemove={() => onSelect(m.memberId, false)}
+                    />
+                  ))}
+              </div>
+            </td>
+          </tr>
+        </tfoot>
+      )}
     </table>
   );
 };

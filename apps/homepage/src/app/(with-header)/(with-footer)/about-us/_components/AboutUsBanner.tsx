@@ -1,8 +1,8 @@
 'use client';
 
-import {CotatoLogo} from '@/components/logo/CotatoLogo';
 import Image from 'next/image';
 import MainArrowIcon from '@/assets/home/main-arrow-icon.svg';
+import {CotatoLogo} from '@repo/ui/components/logo/CotatoLogo';
 
 export const AboutUsBanner = () => {
   const scrollToNextSection = () => {

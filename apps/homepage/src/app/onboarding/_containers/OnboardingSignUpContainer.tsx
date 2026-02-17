@@ -2,11 +2,11 @@
 
 import {OnboardingFormCode} from '@/app/onboarding/_components/OnboardingFormCode';
 import {OnboardingFormInput} from '@/app/onboarding/_components/OnboardingFormInput';
-import {OnboardingFormPassword} from '@/app/onboarding/_components/OnboardingFormPassword';
 import {Button} from '@repo/ui/components/buttons/Button';
 import {useState} from 'react';
 import {JoinRequestSchema, JoinRequestType} from '@/schemas/auth/auth.schema';
 import {useAuthMutation} from '@/hooks/mutations/auth/useAuth.mutations';
+import {OnboardingFormPassword} from '@/components/password-form/OnboardingFormPassword';
 
 interface OnboardingSignUpContainerProps {
   onNext: (data: {email: string; password: string; name: string}) => void;

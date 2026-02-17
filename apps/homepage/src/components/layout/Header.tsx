@@ -8,16 +8,24 @@ import {ROUTES} from '@/constants/routes';
 import {useAuthStore} from '@/store/useAuthStore';
 import {useShallow} from 'zustand/shallow';
 import {useMemberInfoQuery} from '@/hooks/queries/useMembers.query';
+import {useRecruitmentsStatus} from '@/hooks/queries/useRecruitments.query';
 import {useEffect} from 'react';
-
-const NAV_ITEMS = [
-  {label: 'ABOUT US', href: ROUTES.ABOUTUS},
-  {label: 'PROJECT', href: ROUTES.PROJECT},
-  {label: 'RECRUIT', href: 'https://recruit.cotato.kr/', external: true},
-];
 
 export const Header = () => {
   const pathname = usePathname();
+  const {data: recruitStatus} = useRecruitmentsStatus();
+
+  const navItems = [
+    {label: 'ABOUT US', href: ROUTES.ABOUTUS},
+    {label: 'PROJECT', href: ROUTES.PROJECT},
+    {
+      label: 'RECRUIT',
+      href: recruitStatus?.active
+        ? 'https://recruit.cotato.kr/'
+        : ROUTES.RECRUIT,
+      external: recruitStatus?.active,
+    },
+  ];
 
   const {user, isAuthenticated, isInitialized, setUser} = useAuthStore(
     useShallow((state) => ({
@@ -44,7 +52,7 @@ export const Header = () => {
         </Link>
       </div>
       <nav className='flex items-center gap-5'>
-        {NAV_ITEMS.map(({label, href, external}) => {
+        {navItems.map(({label, href, external}) => {
           const isActive = !external && pathname === href;
           const baseClasses =
             'text-body-l-sb px-4.25 py-6 transition-colors duration-300 hover:text-white';
@@ -81,7 +89,7 @@ export const Header = () => {
 
                 {/* 출석 활성화 시간일 때  */}
                 <Link
-                  href={'#'}
+                  href={ROUTES.MYPAGE_ATTENDANCE}
                   className='border-primary text-body-l-sb bg-primary/30 rounded-[10px] border px-6 py-1.5 text-white'>
                   출석하기
                 </Link>

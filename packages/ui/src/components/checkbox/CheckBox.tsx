@@ -8,10 +8,18 @@ interface CheckboxProps {
   className?: string;
 }
 
-export const Checkbox = ({checked, onChange, disabled, className}: CheckboxProps) => {
+export const Checkbox = ({
+  checked,
+  onChange,
+  disabled,
+  className,
+}: CheckboxProps) => {
   return (
     <div
-      onClick={() => !disabled && onChange(!checked)}
+      onClick={(e) => {
+        e.stopPropagation();
+        if (!disabled) onChange(!checked);
+      }}
       className={clsx(
         'flex h-4 w-4 shrink-0 items-center justify-center transition-colors select-none',
         !className && 'border',

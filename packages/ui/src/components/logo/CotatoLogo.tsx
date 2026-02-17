@@ -1,4 +1,4 @@
-import MainLogo from '@/assets/main-logo/main-logo.svg';
+import MainLogo from '../../assets/main-logo/main-logo.svg';
 
 export const CotatoLogo = () => {
   return (

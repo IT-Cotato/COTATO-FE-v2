@@ -1,28 +1,42 @@
 'use client';
 
-import {useState, useMemo} from 'react';
+import {useState} from 'react';
 import {Dropdown} from '@/components/dropdown/Dropdown';
-import {
-  MOCK_ATTENDANCE_RECORDS,
-  MOCK_PENALTY_DATA,
-} from '@/mocks/mypage-mem/activity-mock';
 import {TabType} from '@/schemas/mypage-mem/activity/mypage-mem-type';
+import {
+  useAttendanceRecordsQuery,
+  usePenaltyRecordsQuery,
+} from '@/hooks/queries/useActivity.queries';
+import {Spinner} from '@repo/ui/components/spinner/Spinner';
 import {AttendanceRows} from '@/app/(with-header)/mypage/activity/_components/AttendanceRow';
 import {PenaltyRows} from '@/app/(with-header)/mypage/activity/_components/PenaltyRow';
+import {MemberAttendResponse} from '@/schemas/mypage-mem/activity/attendance.schema';
+import {PenaltyRecord} from '@/schemas/mypage-mem/activity/penalty.schema';
 
 export const AttendanceCheckContainer = ({activeTab}: {activeTab: TabType}) => {
   const [selectedMonth, setSelectedMonth] = useState('1월');
   const monthOptions = Array.from({length: 12}, (_, i) => `${i + 1}월`);
-
-  // API 연동 시에는 selectedMonth를 넣어 월별 데이터만 받아올 예정
-  const attendanceData = useMemo(() => {
-    return MOCK_ATTENDANCE_RECORDS.attendances;
-  }, [selectedMonth]);
+  const monthNumber = parseInt(selectedMonth.replace('월', ''));
 
   const isAttendance = activeTab === 'attendance';
-  const currentDataLength = isAttendance
-    ? attendanceData.length
-    : MOCK_PENALTY_DATA.records.length;
+
+  // 탭이 attendance일 때만 호출
+  const {data: attendRecords, isLoading: isAttendLoading} =
+    useAttendanceRecordsQuery(monthNumber, {
+      enabled: isAttendance,
+    });
+
+  // 탭이 penalty일 때만 호출
+  const {data: penaltyRecords, isLoading: isPenaltyLoading} =
+    usePenaltyRecordsQuery(monthNumber, {
+      enabled: !isAttendance,
+    });
+
+  const isLoading = isAttendance ? isAttendLoading : isPenaltyLoading;
+
+  const currentRecords = isAttendance
+    ? attendRecords?.attendances || []
+    : penaltyRecords?.records || [];
 
   return (
     <div className='flex w-full flex-col gap-4'>
@@ -56,7 +70,13 @@ export const AttendanceCheckContainer = ({activeTab}: {activeTab: TabType}) => {
             </tr>
           </thead>
           <tbody className='text-body-l text-neutral-800'>
-            {currentDataLength === 0 ? (
+            {isLoading ? (
+              <tr>
+                <td colSpan={isAttendance ? 4 : 5} className='py-10'>
+                  <Spinner />
+                </td>
+              </tr>
+            ) : currentRecords.length === 0 ? (
               <tr>
                 <td
                   colSpan={isAttendance ? 4 : 5}
@@ -67,9 +87,9 @@ export const AttendanceCheckContainer = ({activeTab}: {activeTab: TabType}) => {
                 </td>
               </tr>
             ) : isAttendance ? (
-              <AttendanceRows data={attendanceData} />
+              <AttendanceRows data={currentRecords as MemberAttendResponse[]} />
             ) : (
-              <PenaltyRows data={MOCK_PENALTY_DATA.records} />
+              <PenaltyRows data={currentRecords as PenaltyRecord[]} />
             )}
           </tbody>
         </table>

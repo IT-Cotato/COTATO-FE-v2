@@ -9,8 +9,7 @@ export const HomeRecruitmentContainer = () => {
   const router = useRouter();
   const {data} = useRecruitmentsStatus();
 
-  const isRecruiting =
-    data?.isRecruitingActive || data?.isAdditionalRecruitmentActive;
+  const isRecruiting = data?.active;
 
   const handleButtonClick = () => {
     if (isRecruiting) {
