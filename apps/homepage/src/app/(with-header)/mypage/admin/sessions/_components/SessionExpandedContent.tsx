@@ -1,4 +1,4 @@
-import {SessionData} from '@/constants/admin/mock';
+import {SessionData} from '@/schemas/admin/session.schema';
 import {SessionDetail} from './SessionDetail';
 
 interface SessionExpandedContentViewProps {
@@ -9,10 +9,7 @@ interface SessionExpandedContentViewProps {
 interface SessionExpandedContentEditProps {
   mode: 'edit';
   form: SessionData;
-  onChange: (
-    field: keyof Omit<SessionData, 'sessionId'>,
-    value: string
-  ) => void;
+  onChange: (updater: (prev: SessionData) => SessionData) => void;
 }
 
 type SessionExpandedContentProps =
@@ -26,11 +23,7 @@ export const SessionExpandedContent = (props: SessionExpandedContentProps) => {
         {/* TODO: SessionImageCarousel */}
       </div>
       {props.mode === 'edit' ? (
-        <SessionDetail
-          mode='edit'
-          form={props.form}
-          onChange={props.onChange}
-        />
+        <SessionDetail mode='edit' form={props.form} onChange={props.onChange} />
       ) : (
         <SessionDetail mode='view' session={props.session} />
       )}

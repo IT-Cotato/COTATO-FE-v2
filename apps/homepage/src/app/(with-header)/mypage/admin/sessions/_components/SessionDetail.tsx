@@ -1,7 +1,7 @@
 import TrashIcon from '@/assets/trash/trash.svg';
 import SearchIcon from '@repo/ui/assets/icons/search.svg';
 import ClockIcon from '@/assets/clock/clock.svg';
-import {SessionData} from '@/constants/admin/mock';
+import {SessionData} from '@/schemas/admin/session.schema';
 
 interface SessionDetailViewProps {
   mode: 'view';
@@ -11,10 +11,7 @@ interface SessionDetailViewProps {
 interface SessionDetailEditProps {
   mode: 'edit';
   form: SessionData;
-  onChange: (
-    field: keyof Omit<SessionData, 'sessionId'>,
-    value: string
-  ) => void;
+  onChange: (updater: (prev: SessionData) => SessionData) => void;
 }
 
 type SessionDetailProps = SessionDetailViewProps | SessionDetailEditProps;
@@ -22,9 +19,24 @@ type SessionDetailProps = SessionDetailViewProps | SessionDetailEditProps;
 const INPUT_BASE =
   'rounded-lg border border-neutral-200 placeholder:text-neutral-600 outline-none bg-neutral-50';
 
+const RADIO_BASE =
+  'checked:after:bg-active relative h-6.5 w-6.5 appearance-none rounded-full border-2 border-neutral-300 after:absolute after:top-1/2 after:left-1/2 after:h-4 after:w-4 after:-translate-x-1/2 after:-translate-y-1/2 after:rounded-full after:content-[""] focus:outline-none';
+
 export const SessionDetail = (props: SessionDetailProps) => {
   if (props.mode === 'edit') {
     const {form, onChange} = props;
+
+    const set = (field: keyof SessionData, value: string) =>
+      onChange((prev) => ({...prev, [field]: value}));
+
+    const setAttendTime = (
+      field: keyof SessionData['attendTime'],
+      value: string,
+    ) =>
+      onChange((prev) => ({
+        ...prev,
+        attendTime: {...prev.attendTime, [field]: value},
+      }));
 
     return (
       <div className='flex w-full flex-col gap-3.75 rounded-[10px] bg-white px-8.5 py-9'>
@@ -33,7 +45,7 @@ export const SessionDetail = (props: SessionDetailProps) => {
           <input
             type='text'
             value={form.title}
-            onChange={(e) => onChange('title', e.target.value)}
+            onChange={(e) => set('title', e.target.value)}
             placeholder='9회차 세션'
             className={`text-h3 ${INPUT_BASE} px-4 py-3`}
           />
@@ -47,8 +59,8 @@ export const SessionDetail = (props: SessionDetailProps) => {
               <SearchIcon className='h-4.5 w-4.5 shrink-0 text-neutral-600' />
               <input
                 type='text'
-                value={form.place}
-                onChange={(e) => onChange('place', e.target.value)}
+                value={form.placeName}
+                onChange={(e) => set('placeName', e.target.value)}
                 placeholder='장소 검색'
                 className='text-body-m w-full bg-transparent outline-none placeholder:text-neutral-600'
               />
@@ -58,12 +70,13 @@ export const SessionDetail = (props: SessionDetailProps) => {
               <SearchIcon className='h-4.5 w-4.5 shrink-0 text-neutral-600' />
               <input
                 type='text'
-                value={form.placeDetail}
-                onChange={(e) => onChange('placeDetail', e.target.value)}
-                placeholder='상세 주소'
+                value={form.roadNameAddress}
+                onChange={(e) => set('roadNameAddress', e.target.value)}
+                placeholder='도로명 주소'
                 className='text-body-m w-full bg-transparent outline-none placeholder:text-neutral-600'
               />
             </div>
+            {/* TODO: 장소 삭제 핸들러 연결 */}
             <button
               type='button'
               aria-label='장소 삭제'
@@ -79,9 +92,15 @@ export const SessionDetail = (props: SessionDetailProps) => {
                 type='radio'
                 name={`attendanceType-${form.sessionId}`}
                 value='offline'
-                checked={form.attendanceType === 'offline'}
-                onChange={() => onChange('attendanceType', 'offline')}
-                className='checked:after:bg-active relative h-6.5 w-6.5 appearance-none rounded-full border-2 border-neutral-300 after:absolute after:top-1/2 after:left-1/2 after:h-4 after:w-4 after:-translate-x-1/2 after:-translate-y-1/2 after:rounded-full after:content-[""] focus:outline-none'
+                checked={form.isOffline}
+                onChange={() =>
+                  onChange((prev) => ({
+                    ...prev,
+                    isOffline: true,
+                    isOnline: false,
+                  }))
+                }
+                className={RADIO_BASE}
               />
               <span className='text-body-m text-neutral-600'>대면</span>
             </label>
@@ -90,9 +109,15 @@ export const SessionDetail = (props: SessionDetailProps) => {
                 type='radio'
                 name={`attendanceType-${form.sessionId}`}
                 value='online'
-                checked={form.attendanceType === 'online'}
-                onChange={() => onChange('attendanceType', 'online')}
-                className='checked:after:bg-active relative h-6.5 w-6.5 appearance-none rounded-full border-2 border-neutral-300 after:absolute after:top-1/2 after:left-1/2 after:h-4 after:w-4 after:-translate-x-1/2 after:-translate-y-1/2 after:rounded-full after:content-[""] focus:outline-none'
+                checked={form.isOnline}
+                onChange={() =>
+                  onChange((prev) => ({
+                    ...prev,
+                    isOffline: false,
+                    isOnline: true,
+                  }))
+                }
+                className={RADIO_BASE}
               />
               <span className='text-body-m text-neutral-600'>비대면</span>
             </label>
@@ -106,9 +131,7 @@ export const SessionDetail = (props: SessionDetailProps) => {
               <input
                 type='text'
                 value={form.attendanceStartTime}
-                onChange={(e) =>
-                  onChange('attendanceStartTime', e.target.value)
-                }
+                onChange={(e) => set('attendanceStartTime', e.target.value)}
                 placeholder='18:50'
                 className='text-body-m w-full bg-transparent outline-none placeholder:text-neutral-600'
               />
@@ -118,8 +141,8 @@ export const SessionDetail = (props: SessionDetailProps) => {
               <ClockIcon className='h-4.5 w-4.5 shrink-0 text-neutral-600' />
               <input
                 type='text'
-                value={form.attendanceEndTime}
-                onChange={(e) => onChange('attendanceEndTime', e.target.value)}
+                value={form.attendTime.attendanceEndTime}
+                onChange={(e) => setAttendTime('attendanceEndTime', e.target.value)}
                 placeholder='19:00'
                 className='text-body-m w-full bg-transparent outline-none placeholder:text-neutral-600'
               />
@@ -133,31 +156,29 @@ export const SessionDetail = (props: SessionDetailProps) => {
               <ClockIcon className='h-4.5 w-4.5 shrink-0 text-neutral-600' />
               <input
                 type='text'
-                value={form.lateStartTime}
-                onChange={(e) => onChange('lateStartTime', e.target.value)}
-                placeholder='19:00'
-                className='text-body-m w-full bg-transparent outline-none placeholder:text-neutral-600'
-              />
-            </div>
-            <div
-              className={`flex items-center ${INPUT_BASE} h-8 w-27.5 gap-2.5 px-1.5 py-1.25`}>
-              <ClockIcon className='h-4.5 w-4.5 shrink-0 text-neutral-600' />
-              <input
-                type='text'
-                value={form.lateEndTime}
-                onChange={(e) => onChange('lateEndTime', e.target.value)}
+                value={form.attendTime.lateEndTime}
+                onChange={(e) => setAttendTime('lateEndTime', e.target.value)}
                 placeholder='19:20'
                 className='text-body-m w-full bg-transparent outline-none placeholder:text-neutral-600'
               />
             </div>
           </div>
 
+          <p className='text-h5 text-neutral-600'>세션 설명</p>
+          <input
+            type='text'
+            value={form.description}
+            onChange={(e) => set('description', e.target.value)}
+            placeholder='세션 설명을 입력해주세요.'
+            className={`text-body-m ${INPUT_BASE} h-8 px-2`}
+          />
+
           <p className='text-h5 self-start pt-1.5 text-neutral-600'>
             세션 내용
           </p>
           <textarea
-            value={form.description}
-            onChange={(e) => onChange('description', e.target.value)}
+            value={form.content}
+            onChange={(e) => set('content', e.target.value)}
             placeholder='세션 내용을 입력해주세요.'
             rows={2}
             className={`text-body-m resize-none ${INPUT_BASE} px-2 py-1.5`}
@@ -184,7 +205,7 @@ export const SessionDetail = (props: SessionDetailProps) => {
         <div className='flex flex-col gap-1'>
           <p className='text-h5 text-neutral-400'>세션 장소</p>
           <p className='text-h4 text-neutral-600'>
-            {session.place} {session.placeDetail}
+            {session.placeName} {session.roadNameAddress}
           </p>
         </div>
       </div>
