@@ -1,22 +1,27 @@
 'use client';
 
 import {useState} from 'react';
-import {MOCK_SESSIONS, SessionData} from '@/constants/admin/mock';
+import {MOCK_SESSIONS} from '@/constants/admin/mock';
+import {NewSessionData, SessionData} from '@/schemas/admin/session.schema';
 import {AddSessionButton} from '../_components/AddSessionButton';
 import {SessionCard} from '../_components/SessionCard';
 
-const NEW_SESSION_TEMPLATE: Omit<SessionData, 'sessionId'> = {
+const NEW_SESSION_TEMPLATE: NewSessionData = {
   date: '',
   title: '',
   generation: '코테이토 13기',
-  place: '',
-  placeDetail: '',
-  attendanceType: 'offline',
-  attendanceStartTime: '',
-  attendanceEndTime: '',
-  lateStartTime: '',
-  lateEndTime: '',
   description: '',
+  attendanceStartTime: '',
+  placeName: '',
+  roadNameAddress: '',
+  location: {latitude: 0, longitude: 0},
+  attendTime: {
+    attendanceEndTime: '',
+    lateEndTime: '',
+  },
+  isOffline: true,
+  isOnline: false,
+  content: '',
 };
 
 export const SessionsContainer = () => {

@@ -1,7 +1,7 @@
 'use client';
 
-import {useState} from 'react';
-import {SessionData} from '@/constants/admin/mock';
+import {useEffect, useState} from 'react';
+import {SessionData} from '@/schemas/admin/session.schema';
 import {ActionMenu} from '@/app/(with-header)/mypage/admin/_components/ActionMenu';
 import {ActionButtons} from '@/app/(with-header)/mypage/admin/_components/ActionButtons';
 import {SessionExpandedContent} from './SessionExpandedContent';
@@ -31,6 +31,10 @@ export const SessionCard = ({
   const [isEditing, setIsEditing] = useState(false);
   const [form, setForm] = useState<SessionData>(session);
 
+  useEffect(() => {
+    if (!isExpanded) setIsEditing(false);
+  }, [isExpanded]);
+
   const handleMenuAction = (action: SessionMenuAction) => {
     if (action === 'edit') {
       setForm(session);
@@ -44,16 +48,6 @@ export const SessionCard = ({
   const handleConfirm = () => {
     onUpdate(form);
     setIsEditing(false);
-  };
-
-  const handleFormChange = (
-    field: keyof Omit<SessionData, 'sessionId'>,
-    value: string
-  ) => {
-    setForm((prevForm) => ({
-      ...prevForm,
-      [field]: value,
-    }));
   };
 
   return (
@@ -91,7 +85,7 @@ export const SessionCard = ({
             <SessionExpandedContent
               mode='edit'
               form={form}
-              onChange={handleFormChange}
+              onChange={setForm}
             />
           ) : (
             <SessionExpandedContent mode='view' session={session} />
