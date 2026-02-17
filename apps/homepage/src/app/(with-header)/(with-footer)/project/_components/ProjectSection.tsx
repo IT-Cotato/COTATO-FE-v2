@@ -8,8 +8,8 @@ import {ProjectType} from '@/schemas/project/project-type';
 import {Spinner} from '@repo/ui/components/spinner/Spinner';
 
 interface ProjectSectionProps {
-  generation: string;
-  activity: string;
+  generation?: string;
+  activity?: string;
 }
 
 const ITEMS_PER_PAGE = 9;
@@ -21,8 +21,8 @@ export const ProjectSection = ({generation, activity}: ProjectSectionProps) => {
   const currentPage = Number(searchParams.get('page')) || 1;
 
   const {data: projects = [], isLoading} = useProjectListQuery({
-    generationId: Number(generation),
-    projectType: activity.toUpperCase() as ProjectType,
+    generationId: generation ? Number(generation) : undefined,
+    projectType: activity ? (activity.toUpperCase() as ProjectType) : undefined,
   });
 
   const totalPages = Math.ceil(projects.length / ITEMS_PER_PAGE);
@@ -48,22 +48,22 @@ export const ProjectSection = ({generation, activity}: ProjectSectionProps) => {
   return (
     <div className='flex w-full flex-col items-center gap-10'>
       {currentItems.length > 0 ? (
-        <div className='grid grid-cols-3 gap-x-13.75 gap-y-7.5'>
-          {currentItems.map((project) => (
-            <ProjectCard key={project.projectId} {...project} />
-          ))}
-        </div>
+        <>
+          <div className='grid grid-cols-3 gap-x-13.75 gap-y-7.5'>
+            {currentItems.map((project) => (
+              <ProjectCard key={project.projectId} {...project} />
+            ))}
+          </div>
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={handlePageChange}
+          />
+        </>
       ) : (
         <div className='flex min-h-100 w-full items-center justify-center text-neutral-400'>
           조건에 맞는 프로젝트가 없습니다.
         </div>
-      )}
-      {projects.length > 0 && (
-        <Pagination
-          currentPage={currentPage}
-          totalPages={totalPages}
-          onPageChange={handlePageChange}
-        />
       )}
     </div>
   );

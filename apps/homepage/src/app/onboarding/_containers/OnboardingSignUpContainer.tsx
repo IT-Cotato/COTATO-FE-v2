@@ -29,6 +29,7 @@ export const OnboardingSignUpContainer = ({
   const [showPasswordConfirm, setShowPasswordConfirm] =
     useState<boolean>(false);
   const {sendCodeMutation, verifyCodeMutation} = useAuthMutation();
+  const isSendingCode = sendCodeMutation.isPending;
 
   const result = JoinRequestSchema.safeParse({
     ...formData,
@@ -36,6 +37,7 @@ export const OnboardingSignUpContainer = ({
     phoneNumber: '01012345678',
     termsOfServiceAgreed: true,
     privacyPolicyAgreed: true,
+    generationNumber: 13,
     gender: 'MALE',
     university: 'OO대학교',
     position: 'NONE',
@@ -86,12 +88,14 @@ export const OnboardingSignUpContainer = ({
         error={errors?.email?._errors[0]}
         onButtonClick={handleSendCode}
         buttonColor={
-          sendCodeMutation.isSuccess ? 'bg-text-muted' : 'bg-primary'
+          isSendingCode || sendCodeMutation.isSuccess
+            ? 'bg-text-muted'
+            : 'bg-primary'
         }
         buttonLabel={
           sendCodeMutation.isSuccess ? '코드 발송 완료' : '인증코드 발송'
         }
-        disabled={sendCodeMutation.isSuccess}
+        disabled={isSendingCode || sendCodeMutation.isSuccess}
       />
 
       <OnboardingFormCode

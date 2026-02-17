@@ -50,4 +50,8 @@
   .shadow-mem-card {
     box-shadow: 0 0 40px 0 rgba(0, 0, 0, 0.08);
   }
+
+  .shadow-project-card {
+    box-shadow: 0 6px 15px 0 rgba(0, 0, 0, 0.2);
+  }
 }
