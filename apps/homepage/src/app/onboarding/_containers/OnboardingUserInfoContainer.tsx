@@ -10,6 +10,7 @@ import {useRouter} from 'next/navigation';
 import {ROUTES} from '@/constants/routes';
 import {Modal} from '@repo/ui/components/modal/Modal';
 import {FullButton} from '@repo/ui/components/buttons/FullButton';
+import {formatPhoneNumber} from '@/utils/formatPhoneNumber';
 
 interface OnboardingUserInfoContainerProps {
   onPrev: () => void;
@@ -26,7 +27,7 @@ export const OnboardingUserInfoContainer = ({
     gender: '',
     phoneNumber: '',
     university: '',
-    generation: '',
+    generationNumber: '',
     position: '',
     termsOfServiceAgreed: false,
     privacyPolicyAgreed: false,
@@ -34,6 +35,7 @@ export const OnboardingUserInfoContainer = ({
 
   const {mutate: join} = useJoinMutation();
 
+  const pureGeneration = userInfo.generationNumber.replace(/[^0-9]/g, '');
   const purePhoneNumber = userInfo.phoneNumber.replace(/-/g, '');
 
   const isAllAgreed =
@@ -56,10 +58,14 @@ export const OnboardingUserInfoContainer = ({
     position: POSITION_MAP[userInfo.position],
     termsOfServiceAgreed: userInfo.termsOfServiceAgreed,
     privacyPolicyAgreed: userInfo.privacyPolicyAgreed,
+    generationNumber:
+      pureGeneration !== ''
+        ? Number(pureGeneration)
+        : userInfo.generationNumber,
   });
 
   const errors = !result.success ? result.error.format() : null;
-  const isValid = result.success && userInfo.generation && isAllAgreed;
+  const isValid = result.success && pureGeneration && isAllAgreed;
 
   const handleJoinSubmit = () => {
     if (!result.success) return;
@@ -98,7 +104,10 @@ export const OnboardingUserInfoContainer = ({
           type='phone'
           placeholder='010-0000-0000'
           value={userInfo.phoneNumber}
-          onChange={(val) => setUserInfo({...userInfo, phoneNumber: val})}
+          onChange={(val) => {
+            const formatted = formatPhoneNumber(val);
+            setUserInfo({...userInfo, phoneNumber: formatted});
+          }}
           error={errors?.phoneNumber?._errors[0]}
         />
       </div>
@@ -116,9 +125,15 @@ export const OnboardingUserInfoContainer = ({
           className='w-44.5'
           label='기수'
           type='string'
-          placeholder='OO기 '
-          value={userInfo.generation}
-          onChange={(val) => setUserInfo({...userInfo, generation: val})}
+          placeholder='OO기'
+          value={userInfo.generationNumber}
+          onChange={(val) =>
+            setUserInfo({
+              ...userInfo,
+              generationNumber: val.replace(/[^0-9]/g, ''),
+            })
+          }
+          error={errors?.generationNumber?._errors[0]}
         />
         <OnboardingFormDropdown
           className='flex-1'
