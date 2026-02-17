@@ -18,20 +18,10 @@ export const RecruitmentActionSection = () => {
   }
 
   return (
-    <>
-      {isRecruiting ? (
-        <RecruitmentLayout
-          isRecruiting={isRecruiting}
-          bgColor='bg-[#010101]'
-          bgImage={RecruitmentNoticeBg}
-        />
-      ) : (
-        <RecruitmentLayout
-          isRecruiting={isRecruiting}
-          bgColor='bg-[#010101]'
-          bgImage={RecruitmentNoticeBg}
-        />
-      )}
-    </>
+    <RecruitmentLayout
+      isRecruiting={isRecruiting}
+      bgColor='bg-[#010101]'
+      bgImage={RecruitmentNoticeBg}
+    />
   );
 };
