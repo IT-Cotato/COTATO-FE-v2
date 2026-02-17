@@ -9,15 +9,19 @@ interface MenuItem<T extends string> {
   label: string;
 }
 
-interface MemberActionMenuProps<T extends string> {
+interface ActionMenuProps<T extends string> {
   items: readonly MenuItem<T>[];
   onAction: (action: T) => void;
+  iconClassName?: string;
+  align?: 'left' | 'right';
 }
 
-export const MemberActionMenu = <T extends string>({
+export const ActionMenu = <T extends string>({
   items,
   onAction,
-}: MemberActionMenuProps<T>) => {
+  iconClassName,
+  align = 'left',
+}: ActionMenuProps<T>) => {
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -35,15 +39,15 @@ export const MemberActionMenu = <T extends string>({
         aria-label='더보기'
         aria-haspopup='menu'
         aria-expanded={isOpen}
-        className='cursor-pointer'
+        className='cursor-pointer p-2'
         onClick={() => setIsOpen((prev) => !prev)}>
-        <MoreHorizontalIcon />
+        <MoreHorizontalIcon className={iconClassName} />
       </button>
 
       {isOpen && (
         <ul
           role='menu'
-          className='text-body-s absolute top-full -right-21.5 z-10 mt-1 w-25 rounded-sm bg-neutral-700 py-1 text-neutral-300 shadow-lg'>
+          className={`text-body-s absolute top-full z-10 mt-1 w-25 rounded-sm bg-neutral-700 py-1 text-neutral-300 shadow-lg ${align === 'right' ? 'right-0' : '-right-21.5'}`}>
           {items.map((item) => (
             <li
               key={item.key}
