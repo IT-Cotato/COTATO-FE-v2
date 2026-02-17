@@ -46,7 +46,11 @@ export const SessionCard = ({
   };
 
   const handleConfirm = () => {
-    onUpdate(form);
+    try {
+      onUpdate(form);
+    } catch (error) {
+      alert('세션 업데이트 중 오류가 발생했습니다.');
+    }
     setIsEditing(false);
   };
 

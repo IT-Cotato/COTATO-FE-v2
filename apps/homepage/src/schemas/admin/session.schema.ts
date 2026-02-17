@@ -8,8 +8,6 @@ export interface SessionAttendTime {
   lateEndTime: string;
 }
 
-export type NewSessionData = Omit<SessionData, 'sessionId'>;
-
 export interface SessionData {
   sessionId: number;
   date: string;
@@ -25,3 +23,5 @@ export interface SessionData {
   isOnline: boolean;
   content: string;
 }
+
+export type NewSessionData = Omit<SessionData, 'sessionId'>;
