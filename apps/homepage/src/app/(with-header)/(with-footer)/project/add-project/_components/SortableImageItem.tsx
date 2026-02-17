@@ -37,6 +37,7 @@ export const SortableImageItem = ({img, onSelect}: SortableImageItemProps) => {
       aria-description='엔터나 스페이스를 눌러 선택하거나, 화살표 키로 드래그하여 순서를 변경할 수 있습니다.'
       onKeyDown={(e) => {
         if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
           onSelect();
         }
       }}>

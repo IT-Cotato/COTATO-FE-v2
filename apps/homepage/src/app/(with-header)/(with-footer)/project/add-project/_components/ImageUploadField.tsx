@@ -54,8 +54,7 @@ export const ImageUploadField = ({
           backgroundColor='neutral-400'
           textColor='neutral-50'
           onClick={() => fileInputRef.current?.click()}
-          aria-haspopup='false'
-          aria-controls='project-image-input'
+          aria-haspopup='dialog'
         />
         <input
           id='project-image-input'

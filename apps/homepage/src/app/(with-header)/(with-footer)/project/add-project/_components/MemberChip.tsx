@@ -39,7 +39,9 @@ export const MemberChip = ({
 
   return (
     <div
-      className={`group relative flex h-8 items-center rounded-[20px] px-5.75 py-1.25 text-white transition-all hover:pr-12 ${bgColor}`}
+      className={`group relative flex h-8 items-center rounded-[20px] px-5.75 py-1.25 text-white transition-all ${bgColor} ${
+        isEditing ? 'pr-12' : 'focus-within:pr-12 hover:pr-12'
+      }`}
       role='group'
       aria-label={`팀원 ${name}`}>
       {isEditing ? (
@@ -58,14 +60,25 @@ export const MemberChip = ({
           role='button'
           tabIndex={0}
           aria-label={`${name}, 수정하려면 엔터를 누르세요`}
-          onClick={() => setIsEditing(true)}>
+          onClick={() => setIsEditing(true)}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              e.preventDefault();
+              setIsEditing(true);
+            }
+          }}>
           {name}
         </span>
       )}
       <button
+        type='button'
         onClick={onDelete}
-        className='absolute right-5 hidden group-hover:block'
-        aria-label={`${name} 삭제`}>
+        aria-label={`${name} 삭제`}
+        className={`absolute right-5 ${
+          isEditing
+            ? 'block'
+            : 'hidden group-focus-within:block group-hover:block'
+        }`}>
         <XIcon className='h-3 w-3' aria-hidden='true' />
       </button>
     </div>

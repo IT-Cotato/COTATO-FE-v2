@@ -17,7 +17,9 @@ export function CustomInput({
   placeholder,
   ref,
 }: CustomInputProps) {
-  const label = value ? `선택된 날짜: ${value}` : `${placeholder} 선택하기`;
+  const label = value
+    ? `선택된 날짜: ${value}`
+    : `${placeholder ?? '날짜'} 선택하기`;
 
   return (
     <button
