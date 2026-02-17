@@ -2,6 +2,7 @@ import {
   TermsSection,
   TermsSectionIntro,
 } from '@/constants/mypage-mem/term/terms';
+import Link from 'next/link';
 
 export const SERVICE_TERMS_INTRO: TermsSectionIntro = {
   content: (
@@ -24,7 +25,7 @@ export const SERVICE_TERMS_INTRO: TermsSectionIntro = {
 
 export const SERVICE_TERMS: TermsSection[] = [
   {
-    title: '제1조 목적',
+    title: '제1조 (목적)',
     content: (
       <p className='text-body-l pl-3'>
         이 약관은 동아리가 제공하는 웹 서비스 및 관련 제반 서비스(이하
@@ -34,7 +35,7 @@ export const SERVICE_TERMS: TermsSection[] = [
     ),
   },
   {
-    title: '제2조 용어의 정의',
+    title: '제2조 (용어의 정의)',
     content: (
       <p className='text-body-l pl-3'>
         1. “회원”이라 함은 본 약관에 동의하고 서비스 이용에 필요한 정보를
@@ -51,7 +52,7 @@ export const SERVICE_TERMS: TermsSection[] = [
     ),
   },
   {
-    title: '제3조 약관의 효력 및 변경',
+    title: '제3조 (약관의 효력 및 변경)',
     content: (
       <div className='text-body-l pl-3'>
         1. 이 약관은 회원이 서비스 가입 화면에서 본 약관에 동의하고 회원가입을
@@ -77,7 +78,7 @@ export const SERVICE_TERMS: TermsSection[] = [
     ),
   },
   {
-    title: '제4조 회원가입 및 승인',
+    title: '제4조 (회원가입 및 승인)',
     content: (
       <div className='text-body-l pl-3'>
         1. 서비스 이용을 희망하는 자는 동아리가 정한 가입 양식에 따라 필수
@@ -104,18 +105,21 @@ export const SERVICE_TERMS: TermsSection[] = [
     ),
   },
   {
-    title: '제5조 서비스의 내용 및 연동',
+    title: '제5조 (서비스의 내용 및 연동)',
     content: (
       <div className='text-body-l pl-3'>
         1. 동아리가 회원에게 제공하는 서비스는 다음 각 호와 같습니다. <br />
         <span className='block pl-3.75'>
-          - 동아리 소개 및 리크루팅 정보 제공
+          a. 동아리 소개 및 리크루팅 정보 제공
         </span>
         <span className='block pl-3.75'>
-          - 마이페이지를 통한 활동 내역 및 출석 관리
+          b. 마이페이지를 통한 활동 내역 및 출석 관리
         </span>
         <span className='block pl-3.75'>
-          - Mait 연동을 통한 퀴즈 서비스 제공
+          c. Mait 연동을 통한 퀴즈 서비스 제공
+        </span>
+        <span className='block pl-3.75'>
+          d. 서비스 최적화 및 사용자 경험 개선을 위한 이용 행태 분석 서비스
         </span>
         2. 회원은 별도의 가입 절차 없이 코테이토 계정 정보를 통해 Mait 서비스를
         이용할 수 있습니다. 이 경우 동아리는 개인정보 처리방침 및 관련 법령에
@@ -124,13 +128,19 @@ export const SERVICE_TERMS: TermsSection[] = [
           가입 시 입력한 이메일 및 비밀번호(또는 로그인에 필요한 인증정보)를
           Mait에 제공하여 계정을 생성·연동할 수 있습니다.
         </span>
-        3. Mait 서비스의 이용에 관하여는 Mait가 정한 이용약관 및 개인정보
+        <span>
+          3. 동아리는 원활한 서비스 분석을 위해 Google Analytics 4(GA4) 및
+          Beusable(뷰저블) 등 외부 분석 도구를 활용할 수 있으며, 이에 관한
+          구체적인 사항은 제10조 및
+          <span className='block pl-3.75'>개인정보 처리방침에 따릅니다.</span>
+        </span>
+        4. Mait 서비스의 이용에 관하여는 Mait가 정한 이용약관 및 개인정보
         처리방침이 별도로 적용될 수 있습니다.
       </div>
     ),
   },
   {
-    title: '제6조 서비스의 변경 및 중단',
+    title: '제6조 (서비스의 변경 및 중단)',
     content: (
       <div className='text-body-l pl-3'>
         1. 동아리는 운영상 또는 기술상의 필요에 따라 제공 중인 서비스의 전부
@@ -149,7 +159,7 @@ export const SERVICE_TERMS: TermsSection[] = [
           경우
         </span>
         3. 동아리는 제2항 각 호의 사유로 서비스가 중단되는 경우 가능한 한 사전에
-        그 사실과 중단 기간을 공지합니다. <br />
+        그 사실과 중단 기간을 공지합니다.
         <span className='block pl-3.75'>
           다만, 부득이한 사유로 사전 공지가 어려운 경우에는 사후에 공지할 수
           있습니다.
@@ -158,7 +168,7 @@ export const SERVICE_TERMS: TermsSection[] = [
     ),
   },
   {
-    title: '제7조 출석 관리 및 위치 정보',
+    title: '제7조 (출석 관리 및 위치 정보)',
     content: (
       <div className='text-body-l pl-3'>
         1. 동아리는 오프라인 활동 시 부정 출석을 방지하고 출석 확인을 위하여,
@@ -175,10 +185,10 @@ export const SERVICE_TERMS: TermsSection[] = [
     ),
   },
   {
-    title: '제8조 회원의 의무',
+    title: '제8조 (회원의 의무)',
     content: (
       <div className='text-body-l pl-3'>
-        1. 회원은 서비스 이용과 관련하여 다음 각 호의 행위를 하여서는 안 됩니다.{' '}
+        1. 회원은 서비스 이용과 관련하여 다음 각 호의 행위를 하여서는 안 됩니다.
         <br />
         <span className='block pl-3.75'>
           a. 가입 신청 또는 회원정보 변경 시 허위의 정보를 기재하는 행위
@@ -197,7 +207,7 @@ export const SERVICE_TERMS: TermsSection[] = [
           e. 관련 법령, 본 약관, 서비스 내 공지사항 및 이용안내를 위반하는 행위
         </span>
         2. 회원은 자신의 아이디 및 비밀번호 등 계정정보를 선량한 관리자의 주의
-        의무로 관리하여야 하며, 이를 제3자에게 양도·대여·공개하여서는 안 됩니다.{' '}
+        의무로 관리하여야 하며, 이를 제3자에게 양도·대여·공개하여서는 안 됩니다.
         <br />
         3. 회원은 서비스 이용 중 개인정보(이메일, 연락처 등)에 변경이 있는 경우
         이를 지체 없이 수정하여야 하며, 이를 게을리하여 발생하는 불이익에 대하여
@@ -206,11 +216,11 @@ export const SERVICE_TERMS: TermsSection[] = [
     ),
   },
   {
-    title: '제9조 게시물의 저작권 및 이용',
+    title: '제9조 (게시물의 저작권 및 이용)',
     content: (
       <div className='text-body-l pl-3'>
         1. 서비스 내 회원이 작성한 게시물 및 프로젝트 결과물(이하 “게시물 등”)에
-        대한 저작권은 원칙적으로 해당 게시물 등을 작성한 회원에게 귀속됩니다.{' '}
+        대한 저작권은 원칙적으로 해당 게시물 등을 작성한 회원에게 귀속됩니다.
         <br />
         2. 동아리 활동 중 공동으로 제작된 결과물의 저작권은 별도의 합의가 없는
         한 참여자 공동 소유로 합니다. <br />
@@ -223,31 +233,45 @@ export const SERVICE_TERMS: TermsSection[] = [
         </span>
         4. 회원이 타인의 저작권 또는 기타 권리를 침해하여 발생하는 모든 분쟁에
         대한 책임은 회원 본인에게 있으며, 동아리는 고의 또는 중대한 과실이 없는
-        한 이에 대하여 책임을 부담하지 않습니다.
+        한 이에 대하여 책임을
+        <span className='block pl-3.75'>부담하지 않습니다.</span>
       </div>
     ),
   },
   {
-    title: '제10조 개인정보의 보호',
+    title: '제10조 (개인정보의 보호)',
     content: (
       <div className='text-body-l pl-3'>
         1. 동아리는 「개인정보 보호법」 및 관련 법령이 정하는 바에 따라 회원의
         개인정보를 보호하기 위하여 노력합니다. <br />
-        2. 개인정보의 구체적인 처리 목적, 수집 항목, 보유기간, 제3자 제공,
-        처리위탁, 정보주체의 권리 행사 방법 등은 동아리가 별도로 수립·공개하는
-        개인정보 처리방침에 따릅니다. <br />
-        3. 개인정보 처리방침이 변경되는 경우 동아리는 관련 법령 및 내부 기준에
+        2. 동아리는 서비스 품질 향상 및 이용 행태 분석을 위해 다음과 같이
+        개인정보 처리 업무를 위탁하거나 분석 도구를 운영합니다.
+        <span className='block pl-3.75'>
+          - Google Analytics 4(GA4): 서비스 통계 분석 및 이용 기록 관리
+          <br />- Beusable(뷰저블): 사용자 행동 분석 및 UI/UX 개선
+        </span>
+        3. 위 분석 도구는 쿠키(Cookie)를 통해 비식별 데이터를 수집할 수 있으며,
+        회원은 브라우저 설정 등을 통해 쿠키 수집을 거부할 권리가 있습니다.
+        <br />
+        4. 개인정보의 구체적인 처리 목적, 수집 항목, 보유기간, 제3자 제공,
+        처리위탁, 정보주체의 권리 행사 방법 등은 동아리가 별도로 수립·공개하는{' '}
+        <Link href='/mypage/terms?tab=privacyPolicy' className='underline'>
+          개인정보 처리방침
+        </Link>
+        에 따릅니다. <br />
+        5. 개인정보 처리방침이 변경되는 경우 동아리는 관련 법령 및 내부 기준에
         따라 서비스 내 공지사항 등을 통하여 공지합니다.
       </div>
     ),
   },
   {
-    title: '제11조 이용계약의 해지 및 회원 탈퇴',
+    title: '제11조 (이용계약의 해지 및 회원 탈퇴)',
     content: (
       <div className='text-body-l pl-3'>
         1. 회원은 언제든지 서비스 내 제공되는 기능 또는 동아리가 정한 절차에
         따라 이용계약 해지(회원 탈퇴)를 요청할 수 있으며, 동아리는 관련 법령이
-        정하는 바에 따라 지체 없이 이를 처리합니다. <br />
+        정하는 바에 따라 지체 없이 이를
+        <span className='block pl-3.75'>처리합니다.</span>
         2. 동아리는 회원이 본 약관 또는 관련 법령을 위반한 경우, 서비스 이용을
         제한하거나 이용계약을 해지할 수 있습니다. <br />
         3. 이용계약이 해지되는 경우, 동아리는 개인정보 처리방침 및 관련 법령에서
@@ -260,7 +284,7 @@ export const SERVICE_TERMS: TermsSection[] = [
     ),
   },
   {
-    title: '제12조 면책조항',
+    title: '제12조 (면책조항)',
     content: (
       <div className='text-body-l pl-3'>
         1. 동아리는 천재지변, 전쟁, 정전, 해킹, 전염병, 정부 규제,
@@ -275,7 +299,7 @@ export const SERVICE_TERMS: TermsSection[] = [
     ),
   },
   {
-    title: '제13조 준거법 및 관할법원',
+    title: '제13조 (준거법 및 관할법원)',
     content: (
       <div className='text-body-l pl-3'>
         1. 이 약관의 해석 및 적용에는 대한민국 법령이 적용됩니다. <br />
