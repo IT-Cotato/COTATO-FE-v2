@@ -109,7 +109,7 @@ export const PRIVACY_POLICY: TermsSection[] = [
     ),
   },
   {
-    title: '제4조 개인정보의 제3자 제공',
+    title: '제4조 (개인정보의 제3자 제공)',
     content: (
       <div className='text-body-l pl-3'>
         <div>
