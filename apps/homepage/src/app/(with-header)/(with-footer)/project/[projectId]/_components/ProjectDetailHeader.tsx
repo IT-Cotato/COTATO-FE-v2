@@ -52,11 +52,16 @@ export const ProjectDetailHeader = ({data}: {data: ProjectDetail}) => {
 
   return (
     <header className='flex w-full flex-col gap-2.5'>
-      <div className='flex gap-4.5'>
+      <div
+        className='flex gap-4.5'
+        role='group'
+        aria-label='프로젝트 분류 정보'>
         <span className='bg-disabled text-body-m flex h-7.5 w-17.75 items-center justify-center rounded-[5px] text-white'>
+          <span className='sr-only'>기수: </span>
           {data.generationId}기
         </span>
         <span className='bg-primary text-body-m flex h-7.5 w-17.75 items-center justify-center rounded-[5px] text-white'>
+          <span className='sr-only'>활동: </span>
           {data.projectType === 'DEMODAY' ? '데모데이' : '해커톤'}
         </span>
       </div>
@@ -68,14 +73,17 @@ export const ProjectDetailHeader = ({data}: {data: ProjectDetail}) => {
               href={normalizedLink}
               target='_blank'
               rel='noopener noreferrer'
-              className='shadow-default flex items-center gap-2.5 rounded-[10px] px-3.75 py-2.25 text-neutral-400'>
-              <span className='text-h5 font-bold'>LINK</span>
-              <LinkIcon className='h-5 w-5' />
+              className='shadow-default flex items-center gap-2.5 rounded-[10px] px-3.75 py-2.25 text-neutral-400'
+              aria-label={`${data.name} 프로젝트 외부 링크 바로가기`}>
+              <span className='text-h5 font-bold' aria-hidden='true'>
+                LINK
+              </span>
+              <LinkIcon className='h-5 w-5' aria-hidden='true' />
             </a>
           )}
         </div>
         {isAdmin && (
-          <div className='flex gap-2.5'>
+          <nav className='flex gap-2.5' aria-label='프로젝트 관리'>
             <Button
               variant='outline'
               label='수정하기'
@@ -95,7 +103,7 @@ export const ProjectDetailHeader = ({data}: {data: ProjectDetail}) => {
               labelTypo='body_l_sb'
               onClick={handleDeleteClick}
             />
-          </div>
+          </nav>
         )}
       </div>
       <ProjectDeleteModal
