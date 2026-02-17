@@ -46,12 +46,13 @@ export const SessionAttendanceContainer = () => {
     if (nextMonth) handleMonthChange(nextMonth);
   };
 
-  if (isLoading)
+  if (isLoading) {
     return (
-      <div className='flex justify-center'>
+      <div className='flex min-h-screen w-full items-center justify-center'>
         <Spinner />
       </div>
     );
+  }
 
   // 활동 회원이 아닐 경우
   if (isNotActiveMember) {

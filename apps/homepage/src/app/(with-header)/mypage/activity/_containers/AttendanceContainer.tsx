@@ -12,35 +12,41 @@ import {
 } from '@/hooks/queries/useActivity.queries';
 import {ErrorResponse} from '@/schemas/common/common-schema';
 import {NotActiveMemberView} from '@/app/(with-header)/mypage/activity/_components/NotActiveMemberView';
+import {Spinner} from '@repo/ui/components/spinner/Spinner';
 
 export const AttendanceContainer = () => {
   const [activeTab, setActiveTab] = useState<TabType>('attendance');
   const isAttendance = activeTab === 'attendance';
 
-  // 하나라도 NP-002면 활동 회원이 아닌 것으로 판단함
-  const {error: attendError} = useAttendanceDashboardQuery({
-    enabled: isAttendance,
-  });
-  const {error: penaltyError} = usePenaltyDashboardQuery({
-    enabled: !isAttendance,
-  });
+  const {error: attendError, isLoading: isAttendLoading} =
+    useAttendanceDashboardQuery({enabled: isAttendance});
 
+  const {error: penaltyError, isLoading: isPenaltyLoading} =
+    usePenaltyDashboardQuery({enabled: !isAttendance});
+
+  const isLoading = isAttendance ? isAttendLoading : isPenaltyLoading;
   const currentError = (
     isAttendance ? attendError : penaltyError
   ) as AxiosError<ErrorResponse> | null;
   const isNotActiveMember = currentError?.response?.data?.code === 'NP-002';
 
+  if (isLoading) {
+    return (
+      <div className='flex min-h-screen w-full items-center justify-center'>
+        <Spinner />
+      </div>
+    );
+  }
+
+  if (isNotActiveMember) {
+    return <NotActiveMemberView />;
+  }
+
   return (
     <div className='flex w-full flex-col items-center gap-7.5'>
-      {!isNotActiveMember ? (
-        <>
-          <AttendanceTab activeTab={activeTab} onTabChange={setActiveTab} />
-          <AttendanceStatusContainer activeTab={activeTab} />
-          <AttendanceCheckContainer activeTab={activeTab} />
-        </>
-      ) : (
-        <NotActiveMemberView />
-      )}
+      <AttendanceTab activeTab={activeTab} onTabChange={setActiveTab} />
+      <AttendanceStatusContainer activeTab={activeTab} />
+      <AttendanceCheckContainer activeTab={activeTab} />
     </div>
   );
 };
