@@ -1,6 +1,6 @@
 import {SessionData, SessionImage} from '@/schemas/admin/session.schema';
-import {SessionDetail} from './SessionDetail';
-import {SessionImageCarousel} from './SessionImageCarousel';
+import {SessionDetail} from '@/app/(with-header)/mypage/admin/sessions/_components/SessionDetail';
+import {SessionImageCarousel} from '@/app/(with-header)/mypage/admin/sessions/_components/carousel/SessionImageCarousel';
 
 interface SessionExpandedContentViewProps {
   mode: 'view';
@@ -21,8 +21,9 @@ export const SessionExpandedContent = (props: SessionExpandedContentProps) => {
   if (props.mode === 'edit') {
     const {form, onChange} = props;
 
-    const handleImagesChange = (updater: (prev: SessionImage[]) => SessionImage[]) =>
-      onChange((prev) => ({...prev, images: updater(prev.images)}));
+    const handleImagesChange = (
+      updater: (prev: SessionImage[]) => SessionImage[]
+    ) => onChange((prev) => ({...prev, images: updater(prev.images)}));
 
     return (
       <div className='flex gap-7'>
