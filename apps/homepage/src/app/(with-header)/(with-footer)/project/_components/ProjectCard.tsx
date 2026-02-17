@@ -27,7 +27,7 @@ export const ProjectCard = ({
 
   return (
     <div
-      className='flex w-82.5 cursor-pointer flex-col gap-2.75'
+      className='shadow-project-card flex w-82.5 cursor-pointer flex-col gap-2.75 rounded-[20px]'
       onClick={() => router.push(ROUTES.PROJECT_DETAIL(projectId))}>
       <div className='relative h-50 w-82.5 overflow-hidden rounded-t-[20px] bg-neutral-200'>
         {hasThumbnail && (

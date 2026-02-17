@@ -10,7 +10,6 @@ export const useProjectListQuery = (params: ProjectListParams) => {
   return useQuery({
     queryKey: QUERY_KEYS.PROJECT.LIST(params),
     queryFn: () => getProjects(params),
-    enabled: !!params.generationId,
   });
 };
 
