@@ -39,7 +39,7 @@ export const ActionMenu = <T extends string>({
         aria-label='더보기'
         aria-haspopup='menu'
         aria-expanded={isOpen}
-        className='cursor-pointer'
+        className='cursor-pointer p-2'
         onClick={() => setIsOpen((prev) => !prev)}>
         <MoreHorizontalIcon className={iconClassName} />
       </button>
