@@ -30,19 +30,23 @@ export const AboutUsManagementTeamCard = ({
         />
       </div>
 
-      <div className='absolute inset-0 flex flex-col items-center justify-between p-10'>
+      <div className='absolute inset-0 flex flex-col items-center justify-between p-8'>
         <div className='flex flex-col items-center gap-2'>
           <SmallLogo className='group-hover:text-primary h-6.25 w-6.25 text-white transition-colors duration-300' />
           <span className='text-h3 text-white'>{title}</span>
         </div>
 
         <div className='flex flex-col gap-4.25 opacity-0 transition-opacity duration-300 group-hover:opacity-100'>
-          {description.map((line, index) => (
-            <div key={index} className='flex items-start gap-2'>
-              <span className='mt-2 h-1 w-1 shrink-0 rounded-full bg-white' />
-              <p className='text-body-l text-white'>{line}</p>
-            </div>
-          ))}
+          <div className='flex flex-col gap-5 opacity-0 transition-opacity duration-300 group-hover:opacity-100'>
+            {description.map((line, index) => (
+              <div key={index} className='flex items-start gap-2.5'>
+                <span className='mt-2.5 h-1 w-1 shrink-0 rounded-full bg-white opacity-80' />
+                <p className='text-body-l leading-relaxed tracking-tight break-keep text-white'>
+                  {line}
+                </p>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>
