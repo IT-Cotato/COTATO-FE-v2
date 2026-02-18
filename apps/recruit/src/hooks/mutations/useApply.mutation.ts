@@ -52,6 +52,9 @@ export const useSaveBasicInfo = (applicationId: number | null) => {
         queryKey: QUERY_KEYS.APPLY.BASIC_INFO(applicationId),
       });
     },
+    onError: (error: Error) => {
+      console.error('기본 인적사항 저장에 실패했습니다.', error);
+    },
   });
 };
 
@@ -71,6 +74,9 @@ export const useSavePartQuestions = (applicationId: number | null) => {
       queryClient.invalidateQueries({
         queryKey: QUERY_KEYS.APPLY.PART_QUESTIONS(applicationId),
       });
+    },
+    onError: (error: Error) => {
+      console.error('파트별 질문 저장에 실패했습니다.', error);
     },
   });
 };
@@ -106,14 +112,13 @@ export const useSubmitApplication = (applicationId: number | null) => {
 
   return useMutation({
     mutationFn: () => {
-      if (!applicationId) throw new Error('지원서 ID가 없습니다.');
+      if (applicationId === null) throw new Error('지원서 ID가 없습니다.');
       return submitApplication(applicationId);
     },
     onSuccess: () => {
-      if (!applicationId) return;
-      queryClient.setQueryData(QUERY_KEYS.APPLY.STATUS, {
-        applicationId,
-        isSubmitted: true,
+      if (applicationId === null) return;
+      queryClient.invalidateQueries({
+        queryKey: QUERY_KEYS.APPLY.STATUS,
       });
     },
     onError: (error: AxiosError) => {

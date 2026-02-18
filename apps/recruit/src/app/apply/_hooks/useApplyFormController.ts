@@ -77,6 +77,8 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
     await saveForm(step, methods);
   };
 
+  const SUBMIT_STEP=3;
+
   const {
     isConfirmModalOpen,
     openConfirmModal,
@@ -85,7 +87,7 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
     handleConfirmSubmit,
   } = useApplySubmitHandler({
     applicationId: numericApplicationId,
-    onSave: () => saveForm(3, methods, false),
+    onSave: () => saveForm(SUBMIT_STEP, methods, false),
     onValidate: () => validateStep(3, methods),
   });
 

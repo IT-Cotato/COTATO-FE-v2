@@ -84,10 +84,10 @@ export const useApplySubmitHandler = ({
 
       await onSave();
       await submitApplication();
-      router.push('/?submitted=true');
+      router.push(`${ROUTES.HOME}?submitted=true`);
     } catch {
       alert('제출에 실패했습니다. 잠시 후 다시 시도해주세요.');
-      router.push('/?submitted=false');
+      router.push(`${ROUTES.HOME}?submitted=false`);
     }
   };
 

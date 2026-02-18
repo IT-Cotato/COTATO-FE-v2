@@ -33,6 +33,7 @@ export const useApplyStep = () => {
    */
   const goToPrevStep = () => {
     const params = new URLSearchParams(searchParams.toString());
+    if (step <= 1) return;
     params.set('step', String(step - 1));
     if (step === 2) {
       params.delete('part');

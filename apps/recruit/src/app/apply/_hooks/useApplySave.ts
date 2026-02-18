@@ -63,7 +63,7 @@ export const useApplySave = (
     methods: UseFormReturn<ApplyFormData>,
     showToast: boolean = true
   ) => {
-    if (!applicationId) {
+    if (applicationId === null) {
       const errorMessage = '지원서 ID가 없습니다. 저장 작업을 중단합니다.';
       console.error(errorMessage);
       throw new Error(errorMessage);

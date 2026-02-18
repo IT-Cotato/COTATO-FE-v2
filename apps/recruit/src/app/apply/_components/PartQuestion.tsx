@@ -1,6 +1,6 @@
 'use client';
 
-import {useFormContext} from 'react-hook-form';
+import {useFormContext, useWatch} from 'react-hook-form';
 import {FormTextarea} from '@repo/ui/components/form/FormTextarea';
 import {FullButton} from '@repo/ui/components/buttons/FullButton';
 import {ApplyFormData} from '@/schemas/apply/apply-schema';
@@ -26,7 +26,6 @@ export const PartQuestion = ({
 }: PartQuestionProps) => {
   const {
     register,
-    watch,
     formState: {errors},
   } = useFormContext<ApplyFormData>();
 
@@ -42,22 +41,25 @@ export const PartQuestion = ({
     handleFileChange,
   } = usePartQuestionForm();
 
-  const allValues = watch();
+  // 성능 최적화: 필요한 필드만 선별적으로 감시
+  const watchedFields = useWatch({
+    name: [
+      ...textQuestions.map((q) => `ans_${q.questionId}` as const),
+      `ans_${lastQuestion?.questionId}` as const,
+      'pdfFileName',
+    ],
+  });
 
-  const allTextAnswered = textQuestions.every((q) => {
-    const answer = allValues[`ans_${q.questionId}` as keyof ApplyFormData] as
-      | string
-      | undefined;
+  const allTextAnswered = textQuestions.every((q, index) => {
+    const answer = watchedFields[index] as string | undefined;
     return answer && answer.trim().length > 0;
   });
 
+  // 기획: 기획(PM) 파트는 링크 선택, 나머지 파트는 링크 필수
+  // 파일 업로드는 전 파트 자유이므로 필수 검사에서 제외
   const lastAnswered =
     activePart && activePart !== 'PM'
-      ? !!(
-          allValues[
-            `ans_${lastQuestion?.questionId}` as keyof ApplyFormData
-          ] as string | undefined
-        )?.trim()
+      ? !!(watchedFields[textQuestions.length] as string | undefined)?.trim()
       : true;
 
   const isAllRequiredAnswersFilled = allTextAnswered && lastAnswered;
@@ -84,17 +86,13 @@ export const PartQuestion = ({
             {questionsData?.questionsWithAnswers &&
             questionsData.questionsWithAnswers.length > 0 ? (
               <>
-                {textQuestions.map((q) => (
+                {textQuestions.map((q, index) => (
                   <FormTextarea
                     key={q.questionId}
                     label={`${q.sequence}. ${q.content}`}
                     maxLength={q.maxLength}
                     currentLength={
-                      (
-                        (allValues[
-                          `ans_${q.questionId}` as keyof ApplyFormData
-                        ] as string) || ''
-                      ).length
+                      ((watchedFields[index] as string) || '').length
                     }
                     placeholder='내용을 입력해주세요'
                     error={
@@ -121,7 +119,7 @@ export const PartQuestion = ({
                     content={lastQuestion.content}
                     activePart={activePart}
                     isUploadingFile={isUploadingFile}
-                    pdfFileName={allValues['pdfFileName']}
+                    pdfFileName={watchedFields[textQuestions.length + 1] as string}
                     onFileChange={handleFileChange}
                   />
                 )}

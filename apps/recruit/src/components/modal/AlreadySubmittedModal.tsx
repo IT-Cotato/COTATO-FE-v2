@@ -15,7 +15,7 @@ export const AlreadySubmittedModal = ({
       isOpen={isOpen}
       title={'이미 제출된 지원서입니다.'}
       titleStyle='text-h4 text-neutral-800'
-      noContent={true}
+      noContent
       contentWrapperClassName='gap-18'
       actionsAlign='stretch'
       actions={

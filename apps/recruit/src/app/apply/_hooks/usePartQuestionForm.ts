@@ -32,8 +32,7 @@ export const usePartQuestionForm = () => {
   const {data: pdfFileUrlData} = useGetFileUrlQuery(questionsData?.pdfFileKey);
   const {mutate: uploadFile, isPending: isUploadingFile} = useUploadFile();
 
-  const textQuestions =
-    questionsData?.questionsWithAnswers?.slice(0, -1) ?? [];
+  const textQuestions = questionsData?.questionsWithAnswers?.slice(0, -1) ?? [];
   const lastQuestion = questionsData?.questionsWithAnswers?.at(-1);
 
   const hasInitializedRef = useRef(false);

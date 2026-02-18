@@ -40,6 +40,8 @@ const validateStep2 = (
 
   const textQuestions = questions.slice(0, -1);
   const lastQuestion = questions.at(-1);
+  // 서버에서 반환되는 질문 목록의 마지막 항목이 포트폴리오 링크 질문이라고 가정합니다.
+  // 질문 순서가 변경되면 이 로직을 함께 수정해야 합니다.
 
   textQuestions.forEach((q) => {
     const fieldName = `ans_${q.questionId}`;
