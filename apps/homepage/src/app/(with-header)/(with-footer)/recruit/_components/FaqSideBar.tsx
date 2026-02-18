@@ -16,6 +16,14 @@ export const FaqSideBar = ({activatedMenu, onActive}: FaqSideBarProps) => {
         {FAQ_NAV_ITEMS.map(({label, dataKey}) => {
           return (
             <li
+              role='button'
+              tabIndex={0}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  onActive(dataKey as faqParametersType);
+                }
+              }}
               key={label}
               onClick={() => onActive(dataKey as faqParametersType)}>
               <p
