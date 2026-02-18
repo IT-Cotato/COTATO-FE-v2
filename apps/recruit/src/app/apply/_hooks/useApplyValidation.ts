@@ -28,15 +28,20 @@ const validateStep1 = async (
 /**
  * Step 2 검증: 파트별 질문
  * 동적 ans_* 필드는 스키마에 정의 불가 → 수동 검증
+ * 링크 필드는 zodResolver와 충돌로 setError가 클리어되므로 검증만 수행
  */
 const validateStep2 = (
   methods: UseFormReturn<ApplyFormData>,
-  questions: Array<{questionId: number; content: string}>
+  questions: Array<{questionId: number; content: string}>,
+  part: string
 ): boolean => {
   const allValues = methods.getValues();
-  const invalidFields: string[] = [];
+  let isValid = true;
 
   const textQuestions = questions.slice(0, -1);
+  const lastQuestion = questions.at(-1);
+  // 서버에서 반환되는 질문 목록의 마지막 항목이 포트폴리오 링크 질문이라고 가정합니다.
+  // 질문 순서가 변경되면 이 로직을 함께 수정해야 합니다.
 
   textQuestions.forEach((q) => {
     const fieldName = `ans_${q.questionId}`;
@@ -45,7 +50,7 @@ const validateStep2 = (
       | undefined;
 
     if (!value || value.trim().length === 0) {
-      invalidFields.push(fieldName);
+      isValid = false;
       methods.setError(fieldName as any, {
         type: 'manual',
         message: '답변을 작성해주세요',
@@ -53,7 +58,19 @@ const validateStep2 = (
     }
   });
 
-  return invalidFields.length === 0;
+  // 링크 필드 검증 (PM 제외) - 버튼 색상으로 시각적 피드백 제공
+  if (lastQuestion && part !== 'PM') {
+    const fieldName = `ans_${lastQuestion.questionId}`;
+    const value = allValues[fieldName as keyof ApplyFormData] as
+      | string
+      | undefined;
+
+    if (!value || value.trim().length === 0) {
+      isValid = false;
+    }
+  }
+
+  return isValid;
 };
 
 /**
@@ -74,15 +91,16 @@ const validateStep = async (
   methods: UseFormReturn<ApplyFormData>,
   partQuestionsData?: {
     questionsWithAnswers: Array<{questionId: number; content: string}>;
-  }
+  },
+  part?: string
 ): Promise<boolean> => {
   if (step === 1) {
     return validateStep1(methods);
   } else if (step === 2) {
-    if (!partQuestionsData?.questionsWithAnswers) {
+    if (!partQuestionsData?.questionsWithAnswers || !part) {
       return false;
     }
-    return validateStep2(methods, partQuestionsData.questionsWithAnswers);
+    return validateStep2(methods, partQuestionsData.questionsWithAnswers, part);
   } else if (step === 3) {
     return validateStep3(methods);
   }
