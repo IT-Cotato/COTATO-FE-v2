@@ -51,6 +51,7 @@ export const ProjectCard = ({
             fill
             className='object-cover'
             sizes='330px'
+            unoptimized={true}
           />
         )}
       </div>

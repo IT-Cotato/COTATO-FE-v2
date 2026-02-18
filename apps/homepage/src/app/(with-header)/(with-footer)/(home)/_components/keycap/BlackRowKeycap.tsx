@@ -19,6 +19,7 @@ export const BlackRowKeycap = ({
         src='/keycap/black-keycap-long.svg'
         alt=''
         fill
+        unoptimized={true}
         className='h-full w-full transition-opacity duration-300 group-hover:opacity-0 group-focus-visible:opacity-0'
       />
       <span className='text-h2 absolute top-16.5 left-16.5 z-10 font-bold text-white transition-colors'>
@@ -28,7 +29,13 @@ export const BlackRowKeycap = ({
         {subTitle}
       </span>
       <div className='absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100'>
-        <Image src={imageSrc} alt={title} fill className='object-cover' />
+        <Image
+          src={imageSrc}
+          alt={title}
+          fill
+          className='object-cover'
+          unoptimized={true}
+        />
         <div className='absolute inset-0 bg-black/20' />
       </div>
     </div>
