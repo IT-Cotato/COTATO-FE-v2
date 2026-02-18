@@ -5,7 +5,7 @@ import {MyPageSubmittedApplicationsContainer} from '@/app/(with-footer)/my-page/
 
 export default function Mypage() {
   return (
-    <section>
+    <section className='flex w-full min-w-360 flex-col items-center bg-white'>
       <HeroMainBanner
         heading='COde Together, Arrive TOgether'
         headingStyle='bg-linear-to-r from-[#F89202] from-0% via-[#F89202] via-10% to-[#9E9E9E] to-100% bg-clip-text text-transparent'
