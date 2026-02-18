@@ -32,15 +32,33 @@ export const CountdownTimer = ({
 
     const targetDate = new Date(noticeData.endDate).getTime();
 
-    const tick = () => {
-      setTimeLeft(calculateTimeLeft(targetDate));
-    };
+    const initial = calculateTimeLeft(targetDate);
+    setTimeLeft(initial);
 
-    tick();
-    const timerId = setInterval(tick, 1000);
+    if (
+      initial.d === '0' &&
+      initial.h === '0' &&
+      initial.m === '0' &&
+      initial.s === '0'
+    ) {
+      return;
+    }
+
+    const timerId = setInterval(() => {
+      const remaining = calculateTimeLeft(targetDate);
+      setTimeLeft(remaining);
+      if (
+        remaining.d === '0' &&
+        remaining.h === '0' &&
+        remaining.m === '0' &&
+        remaining.s === '0'
+      ) {
+        clearInterval(timerId);
+      }
+    }, 1000);
 
     return () => clearInterval(timerId);
-  }, [noticeData]);
+  }, []);
 
   const textColor = highlightUnits ? 'text-primary' : 'text-neutral-400';
 
