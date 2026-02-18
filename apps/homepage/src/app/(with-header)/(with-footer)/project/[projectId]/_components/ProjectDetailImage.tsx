@@ -15,6 +15,7 @@ export const ProjectDetailImage = ({data}: {data: ProjectDetail}) => {
           height={0}
           sizes='1100px'
           style={{width: '100%', height: 'auto'}}
+          unoptimized={true}
         />
       ))}
     </section>
