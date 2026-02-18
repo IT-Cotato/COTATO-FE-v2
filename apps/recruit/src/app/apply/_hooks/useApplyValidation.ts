@@ -33,7 +33,7 @@ const validateStep1 = async (
 const validateStep2 = (
   methods: UseFormReturn<ApplyFormData>,
   questions: Array<{questionId: number; content: string}>,
-  part?: string
+  part: string
 ): boolean => {
   const allValues = methods.getValues();
   let isValid = true;
@@ -59,7 +59,7 @@ const validateStep2 = (
   });
 
   // 링크 필드 검증 (PM 제외) - 버튼 색상으로 시각적 피드백 제공
-  if (lastQuestion && part && part !== 'PM') {
+  if (lastQuestion && part !== 'PM') {
     const fieldName = `ans_${lastQuestion.questionId}`;
     const value = allValues[fieldName as keyof ApplyFormData] as
       | string
@@ -97,7 +97,7 @@ const validateStep = async (
   if (step === 1) {
     return validateStep1(methods);
   } else if (step === 2) {
-    if (!partQuestionsData?.questionsWithAnswers) {
+    if (!partQuestionsData?.questionsWithAnswers || !part) {
       return false;
     }
     return validateStep2(methods, partQuestionsData.questionsWithAnswers, part);
