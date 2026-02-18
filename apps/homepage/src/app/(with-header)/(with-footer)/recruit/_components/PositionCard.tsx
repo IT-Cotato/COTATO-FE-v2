@@ -19,9 +19,8 @@ export const PositionCard = ({item}: PositionCardProps) => {
         src='/images/position-card/position-card-bg.webp'
         alt=''
         fill={true}
-        objectFit='cover'
         draggable={false}
-        className='opacity-100 transition-opacity duration-300 group-hover:opacity-0'
+        className='object-contain object-center opacity-100 transition-opacity duration-300 group-hover:opacity-0'
       />
 
       <div className='flex flex-col gap-2.5'>

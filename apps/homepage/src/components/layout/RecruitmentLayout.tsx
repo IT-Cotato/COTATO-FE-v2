@@ -38,7 +38,7 @@ export default function RecruitmentLayout({
           fill={true}
           aria-hidden={true}
           draggable={false}
-          objectFit='cover'
+          className='object-contain object-center'
         />
       )}
 
