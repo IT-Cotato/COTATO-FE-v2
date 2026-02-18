@@ -1,20 +1,7 @@
-import OTBg from '@/assets/backgrounds/activity-card/ot-bg.webp';
-import SessionBg from '@/assets/backgrounds/activity-card/session-bg.webp';
-import MTBg from '@/assets/backgrounds/activity-card/mt-bg.webp';
-import DevTalkBg from '@/assets/backgrounds/activity-card/dev-talk-bg.webp';
-import CokerthonBg from '@/assets/backgrounds/activity-card/cokerthon-bg.webp';
-import DemodayBg from '@/assets/backgrounds/activity-card/demoday-bg.webp';
-import OTPic from '@/assets/backgrounds/activity-card/ot-photo.webp';
-import SessionPic from '@/assets/backgrounds/activity-card/session-photo.webp';
-import MTPic from '@/assets/backgrounds/activity-card/mt-photo.webp';
-import DevTalkPic from '@/assets/backgrounds/activity-card/dev-talk-photo.webp';
-import CokerthonPic from '@/assets/backgrounds/activity-card/cokerthon-photo.webp';
-import DemodayPic from '@/assets/backgrounds/activity-card/demoday-photo.webp';
 import {
   ActivityCategoryType,
   PositionType,
 } from '@/schemas/recruit/recruit.schema';
-import {StaticImageData} from 'next/image';
 
 export const QUALIFICATIONS_CARD_ITEMS = [
   {
@@ -45,38 +32,38 @@ export const ACTIVITY_CARD_STYLES: Record<
   ActivityCategoryType,
   {
     style: string;
-    coverImageUrl: StaticImageData;
-    photoImageUrl: StaticImageData;
+    coverImageUrl: string;
+    photoImageUrl: string;
   }
 > = {
   OT: {
     style: 'opacity-100',
-    coverImageUrl: OTBg,
-    photoImageUrl: OTPic,
+    coverImageUrl: '/images/activity-card/ot-bg.webp',
+    photoImageUrl: '/images/activity-card/ot-photo.webp',
   },
   SESSION: {
     style: 'opacity-40',
-    coverImageUrl: SessionBg,
-    photoImageUrl: SessionPic,
+    coverImageUrl: '/images/activity-card/session-bg.webp',
+    photoImageUrl: '/images/activity-card/session-photo.webp',
   },
   MT: {
     style: 'opacity-40',
-    coverImageUrl: MTBg,
-    photoImageUrl: MTPic,
+    coverImageUrl: '/images/activity-card/mt-bg.webp',
+    photoImageUrl: '/images/activity-card/mt-photo.webp',
   },
   DEVTALK: {
     style: 'opacity-80',
-    coverImageUrl: DevTalkBg,
-    photoImageUrl: DevTalkPic,
+    coverImageUrl: '/images/activity-card/dev-talk-bg.webp',
+    photoImageUrl: '/images/activity-card/dev-talk-photo.webp',
   },
   COKERTHON: {
     style: 'opacity-70',
-    coverImageUrl: CokerthonBg,
-    photoImageUrl: CokerthonPic,
+    coverImageUrl: '/images/activity-card/cokerthon-bg.webp',
+    photoImageUrl: '/images/activity-card/cokerthon-photo.webp',
   },
   DEMODAY: {
     style: 'opacity-40',
-    coverImageUrl: DemodayBg,
-    photoImageUrl: DemodayPic,
+    coverImageUrl: '/images/activity-card/demoday-bg.webp',
+    photoImageUrl: '/images/activity-card/demoday-photo.webp',
   },
 };
