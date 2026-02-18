@@ -63,6 +63,8 @@ export const ApplicationEtcQuestionsSchema = z.object({
   interviewStartDate: z.string(),
   interviewEndDate: z.string(),
   otDate: z.string(),
+  cokerthonDate: z.string(),
+  demoDayDate: z.string(),
 });
 
 export const GetApplicationEtcQuestionsResponseSchema =
