@@ -10,10 +10,6 @@ export const faqSchema = z.object({
   answer: z.string(),
 });
 
-/** faq 조회 response */
-export const faqResponseSchema = z.array(faqSchema);
-
 /** 타입 추출 */
 export type faqParametersType = z.infer<typeof faqParametersSchema>;
 export type faqType = z.infer<typeof faqSchema>;
-export type faqResponseType = z.infer<typeof faqResponseSchema>;

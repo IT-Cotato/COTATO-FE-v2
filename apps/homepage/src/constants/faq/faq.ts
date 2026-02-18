@@ -1,18 +1,12 @@
-export const FAQ_NAV_ITEMS = [
-  {label: '공통 질문', searchParams: 'common'},
-  {label: 'Product Manager', searchParams: 'product-manager'},
-  {label: 'Design', searchParams: 'design'},
-  {label: 'FrontEnd', searchParams: 'frontend'},
-  {label: 'BackEnd', searchParams: 'backend'},
-];
+import {faqParametersType} from '@/schemas/faq/faq.schema';
 
-export const FAQ_TYPE_MAP = {
-  common: 'COMMON',
-  'product-manager': 'PM',
-  design: 'DE',
-  frontend: 'FE',
-  backend: 'BE',
-} as const;
+export const FAQ_NAV_ITEMS = [
+  {label: '공통 질문', dataKey: 'COMMON'},
+  {label: 'Product Manager', dataKey: 'PM'},
+  {label: 'Design', dataKey: 'DE'},
+  {label: 'FrontEnd', dataKey: 'FE'},
+  {label: 'BackEnd', dataKey: 'BE'},
+];
 
 export const FAQ_COMMON = [
   {
@@ -140,3 +134,11 @@ export const FAQ_BE = [
       '지원 시 필수로 요구하는 기술 수준은 높지 않습니다. \n\nREST API에 대한 이해와 Git을 활용한 기본적인 협업 개념을 갖추고 있다면 충분합니다. \n\n무엇보다 모르는 것을 스스로 찾아보고 질문할 수 있는 태도를 중요하게 봅니다.',
   },
 ];
+
+export const FAQ_BY_TYPE: Record<faqParametersType, typeof FAQ_COMMON> = {
+  COMMON: FAQ_COMMON,
+  PM: FAQ_PM,
+  DE: FAQ_DE,
+  FE: FAQ_FE,
+  BE: FAQ_BE,
+};
