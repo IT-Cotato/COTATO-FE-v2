@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import BrandLogo from '@/assets/brand-logo/brand-logo.svg';
+import SmallLogo from '@/assets/small-logo/small-logo.svg';
 import clsx from 'clsx';
 import {POSITION_CARD_STYLES} from '@/constants/recruit/recruit-components';
 import {PositionCardType} from '@/schemas/recruit/recruit.schema';
@@ -25,7 +25,7 @@ export const PositionCard = ({item}: PositionCardProps) => {
       />
 
       <div className='flex flex-col gap-2.5'>
-        <BrandLogo className='z-10 h-5 w-5 fill-neutral-50 transition-colors duration-300 group-hover:fill-neutral-800' />
+        <SmallLogo className='z-10 h-5 w-5 fill-neutral-50 transition-colors duration-300 group-hover:fill-neutral-800' />
         <p className='text-h3 z-10 text-neutral-50 transition-colors duration-300 group-hover:text-neutral-800'>
           {item.name}
         </p>
