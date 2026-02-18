@@ -73,16 +73,27 @@ export const ProjectContainer = () => {
 
   if (isLoading) {
     return (
-      <div className='flex min-h-100 items-center justify-center'>
+      <div
+        className='flex min-h-100 items-center justify-center'
+        aria-live='polite'
+        aria-busy='true'>
         <Spinner />
       </div>
     );
   }
 
   return (
-    <section className='flex w-full min-w-275 flex-col gap-7.5 py-7.5'>
-      <div className='flex justify-between'>
-        <div className='flex gap-6 px-6'>
+    <section
+      className='flex w-full min-w-275 flex-col gap-7.5 py-7.5'
+      aria-labelledby='project-list-title'>
+      <h2 id='project-list-title' className='sr-only'>
+        프로젝트 목록 및 필터
+      </h2>
+      <div className='flex items-center justify-between'>
+        <div
+          className='flex gap-6 px-6'
+          role='group'
+          aria-label='프로젝트 필터링'>
           <Dropdown
             placeholder='기수'
             value={selectedGenLabel}

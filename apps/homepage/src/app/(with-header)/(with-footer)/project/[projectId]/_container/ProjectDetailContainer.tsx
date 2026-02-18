@@ -16,15 +16,22 @@ export const ProjectDetailContainer = () => {
 
   if (isLoading) {
     return (
-      <div className='flex min-h-100 items-center justify-center'>
+      <div
+        className='flex min-h-100 items-center justify-center'
+        role='status'
+        aria-live='polite'
+        aria-busy='true'>
         <Spinner />
+        <span className='sr-only'>프로젝트 상세 정보를 불러오는 중입니다.</span>
       </div>
     );
   }
 
   if (isError || !data) {
     return (
-      <div className='flex min-h-100 items-center justify-center text-neutral-400'>
+      <div
+        className='flex min-h-100 items-center justify-center text-neutral-400'
+        role='alert'>
         정보를 불러올 수 없습니다.
       </div>
     );

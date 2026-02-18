@@ -58,24 +58,36 @@ export const AddProjectFormContainer = () => {
 
   if (isGenLoading || (editId && isDetailLoading)) {
     return (
-      <div className='flex min-h-100 items-center justify-center'>
+      <div
+        className='flex min-h-100 items-center justify-center'
+        role='status'
+        aria-live='polite'
+        aria-busy='true'>
         <Spinner />
+        <span className='sr-only'>데이터를 불러오는 중입니다.</span>
       </div>
     );
   }
 
   if (isGenError || (editId && isError)) {
     return (
-      <div className='flex min-h-100 items-center justify-center text-neutral-400'>
+      <div
+        className='flex min-h-100 items-center justify-center text-neutral-400'
+        role='alert'>
         데이터를 불러오는 중 문제가 발생했습니다.
       </div>
     );
   }
 
   return (
-    <section className='flex w-full flex-col gap-8.5 py-7.5'>
+    <section
+      className='flex w-full flex-col gap-8.5 py-7.5'
+      aria-labelledby='add-project-heading'>
+      <h2 id='add-project-heading' className='sr-only'>
+        {editId ? '프로젝트 수정' : '프로젝트 추가'} 설정
+      </h2>
       <div className='flex justify-between'>
-        <div className='flex gap-6.25'>
+        <div className='flex gap-6.25' role='group' aria-label='기본 정보 설정'>
           <Dropdown
             placeholder='기수'
             value={selectedGeneration}
@@ -90,11 +102,13 @@ export const AddProjectFormContainer = () => {
           />
         </div>
       </div>
-      <AddProjectForm
-        generationId={getGenerationId(selectedGeneration)}
-        projectType={getProjectType(selectedActivity)}
-        initialData={editData}
-      />
+      <div role='region' aria-label='프로젝트 상세 정보 입력 폼'>
+        <AddProjectForm
+          generationId={getGenerationId(selectedGeneration)}
+          projectType={getProjectType(selectedActivity)}
+          initialData={editData}
+        />
+      </div>
     </section>
   );
 };

@@ -1,16 +1,20 @@
+import Link from 'next/link';
 import {FullButton} from '@repo/ui/components/buttons/FullButton';
 import {Modal} from '@repo/ui/components/modal/Modal';
+import {ROUTES} from '@/constants/routes';
 
 interface SubmissionCompleteModalProps {
   isOpen: boolean;
   onClose: () => void;
   onConfirm: () => void;
+  announcementDate?: string;
 }
 
 export const SubmissionCompleteModal = ({
   isOpen,
   onClose,
   onConfirm,
+  announcementDate,
 }: SubmissionCompleteModalProps) => {
   return (
     <Modal
@@ -21,8 +25,19 @@ export const SubmissionCompleteModal = ({
       content={
         <p>
           합격 발표 여부는
-          <span className='text-primary'>2월 28일 (토) 오후 12시</span>에<br />
-          작성해주신 이메일로 개별적으로 전달드립니다. <br />
+          {announcementDate ? (
+            <span className='text-primary'> {announcementDate}</span>
+          ) : (
+            ' 추후'
+          )}
+          에<br />
+          가입하신 이메일로 개별적으로 전달드립니다. <br />
+          제출하신 내용은&nbsp;
+          <Link href={ROUTES.MYPAGE} className='underline'>
+            마이페이지
+          </Link>
+          에서 확인하실 수 있습니다. <br />
+          코테이토에 지원해 주셔서 감사합니다!
         </p>
       }
       actionsAlign='stretch'

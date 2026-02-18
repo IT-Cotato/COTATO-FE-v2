@@ -62,7 +62,8 @@ export const AddProjectForm = ({
     initialData
   );
 
-  const handleSubmit = () => {
+  const handleSubmit = (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
     if (!isFormValid) return;
 
     const requestBody = {
@@ -98,23 +99,29 @@ export const AddProjectForm = ({
   };
 
   return (
-    <section className='flex flex-col items-end gap-5 self-stretch'>
-      <FormField label='프로젝트 명'>
+    <form
+      onSubmit={handleSubmit}
+      className='flex flex-col items-end gap-5 self-stretch'
+      aria-label={isEdit ? '프로젝트 수정 폼' : '프로젝트 추가 폼'}>
+      <FormField label='프로젝트 명' id='project-name'>
         <FormInput
+          id='project-name'
           value={states.name}
           onChange={(e) => setters.setName(e.target.value)}
           placeholder='프로젝트 명을 작성해주세요.'
         />
       </FormField>
-      <FormField label='한줄 소개'>
+      <FormField label='한줄 소개' id='short-desc'>
         <FormInput
+          id='short-desc'
           value={states.shortDescription}
           onChange={(e) => setters.setShortDescription(e.target.value)}
           placeholder='한줄 소개를 작성해주세요.'
         />
       </FormField>
-      <FormField label='링크'>
+      <FormField label='링크' id='project-link'>
         <FormLink
+          id='project-link'
           value={[states.projectLink]}
           onChange={(links) => setters.setProjectLink(links[0] || '')}
           placeholder='링크를 첨부해주세요.'
@@ -135,8 +142,9 @@ export const AddProjectForm = ({
         onDelete={removeMember}
         onUpdate={updateMemberName}
       />
-      <FormField variant='column' label='프로젝트 설명'>
+      <FormField variant='column' label='프로젝트 설명' id='project-intro'>
         <FormTextarea
+          id='project-intro'
           value={states.introduction}
           onChange={(e) => setters.setIntroduction(e.target.value)}
           isProject
@@ -152,13 +160,13 @@ export const AddProjectForm = ({
         </FormField>
       </div>
       <Button
+        type='submit'
         label={isEdit ? '수정하기' : '추가하기'}
         width={127}
         height={40}
         disabled={!isFormValid}
-        onClick={handleSubmit}
         borderRadius={10}
       />
-    </section>
+    </form>
   );
 };
