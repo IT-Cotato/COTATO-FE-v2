@@ -77,7 +77,7 @@ export const ContentContainer = () => {
 
       <Button
         label='알림 신청하러 가기'
-        onClick={() => router.push(ROUTES.APPLY)}
+        onClick={() => router.push(ROUTES.HOME)}
       />
     </div>
   );
