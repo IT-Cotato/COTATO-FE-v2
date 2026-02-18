@@ -1,3 +1,5 @@
+'use client';
+
 import Image from 'next/image';
 import {QUALIFICATIONS_CARD_ITEMS} from '@/constants/recruitment/recruitment-components';
 import {QualificationsCard} from '@/app/(with-header)/(with-footer)/recruit/_components/QualificationsCard';
@@ -7,6 +9,7 @@ import {
   POSITION_CARD_DATA,
   ACTIVITY_CARD_DATA,
 } from '@/constants/recruitment/recruitment-notice';
+import {Button} from '@repo/ui/components/buttons/Button';
 
 export const ContentContainer = () => {
   return (
@@ -82,6 +85,27 @@ export const ContentContainer = () => {
             {ACTIVITY_CARD_DATA.map((item) => (
               <ActivityCard key={item.id} item={item} />
             ))}
+          </div>
+        </div>
+
+        <div className='flex flex-col gap-30'>
+          <div>faq</div>
+
+          <div>
+            <p className='text-h4 mb-4 text-center text-neutral-600'>
+              더 자세한 궁금한 내용이 있다면?
+            </p>
+            <Button
+              label='카카오톡 채널 문의하기'
+              labelTypo='h3'
+              width={393}
+              height={74}
+              backgroundColor='primary'
+              textColor='neutral-50'
+              onClick={() =>
+                window.open('https://pf.kakao.com/_LQLyG', '_blank')
+              }
+            />
           </div>
         </div>
       </div>
