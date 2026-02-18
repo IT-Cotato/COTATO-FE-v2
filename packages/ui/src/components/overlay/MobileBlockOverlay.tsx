@@ -12,7 +12,7 @@ export const MobileBlockOverlay = ({title}: MobileBlockOverlayProps) => {
 
   useEffect(() => {
     const checkMobile = () => {
-      setIsMobile(window.innerWidth < 1024);
+      setIsMobile(window.innerWidth < 720);
     };
 
     checkMobile();
