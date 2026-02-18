@@ -13,6 +13,7 @@ export const ActivityCard = ({item}: ActivityCardProps) => {
       <Image
         src={ACTIVITY_CARD_STYLES[item.short].coverImageUrl}
         alt=''
+        aria-hidden={true}
         fill={true}
         draggable={false}
         className={clsx(
@@ -22,8 +23,8 @@ export const ActivityCard = ({item}: ActivityCardProps) => {
       />
       <Image
         src={ACTIVITY_CARD_STYLES[item.short].photoImageUrl}
-        aria-hidden={true}
         alt=''
+        aria-hidden={true}
         fill={true}
         draggable={false}
         className='object-cover object-center opacity-0 transition-opacity duration-300 group-hover:opacity-100'

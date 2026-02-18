@@ -18,6 +18,7 @@ export const PositionCard = ({item}: PositionCardProps) => {
       <Image
         src='/images/position-card/position-card-bg.webp'
         alt=''
+        aria-hidden={true}
         fill={true}
         draggable={false}
         className='object-contain object-center opacity-100 transition-opacity duration-300 group-hover:opacity-0'
