@@ -2,15 +2,11 @@
 
 import RecruitmentLayout from '@/components/layout/RecruitmentLayout';
 import {Spinner} from '@repo/ui/components/spinner/Spinner';
-// import {useRecruitmentStatusQuery} from '@/hooks/queries/useRecruitmentStatus.query';
-
-// mock
-const isLoading = false;
-const isRecruiting = true;
+import {useRecruitmentsStatus} from '@/hooks/queries/useRecruitments.query';
 
 export const ActionContainer = () => {
-  // const {data: recruitmentStatus, isLoading} = useRecruitmentStatusQuery();
-  // const isRecruiting = recruitmentStatus?.isActive ?? false;
+  const {data, isLoading} = useRecruitmentsStatus();
+  const isRecruiting = data?.active ?? false;
 
   if (isLoading) {
     return (
