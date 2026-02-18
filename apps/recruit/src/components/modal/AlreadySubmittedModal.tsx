@@ -15,6 +15,8 @@ export const AlreadySubmittedModal = ({
       isOpen={isOpen}
       title={'이미 제출된 지원서입니다.'}
       titleStyle='text-h4 text-neutral-800'
+      noContent={true}
+      contentWrapperClassName='gap-18'
       actionsAlign='stretch'
       actions={
         <FullButton
@@ -25,7 +27,6 @@ export const AlreadySubmittedModal = ({
           labelTypo='body_l'
         />
       }
-      contentWrapperClassName='gap-[37px]'
     />
   );
 };
