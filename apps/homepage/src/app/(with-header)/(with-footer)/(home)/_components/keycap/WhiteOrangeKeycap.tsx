@@ -19,14 +19,25 @@ export const WhiteOrangeKeycap = ({
 }: WhiteOrangeKeycapProps) => {
   return (
     <div className='relative h-135 w-140 cursor-pointer overflow-hidden rounded-[50px]'>
-      <Image src='/keycap/white-orange-enter-keycap.svg' alt='' fill />
+      <Image
+        src='/keycap/white-orange-enter-keycap.svg'
+        alt=''
+        fill
+        unoptimized={true}
+      />
 
       <div
         className='group absolute top-0 left-0 z-30 h-1/2 w-1/2 overflow-hidden rounded-[50px]'
         role='button'
         tabIndex={0}>
         <div className='absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100'>
-          <Image src={imageSrc} alt={title} fill className='object-cover' />
+          <Image
+            src={imageSrc}
+            alt={title}
+            fill
+            className='object-cover'
+            unoptimized={true}
+          />
           <div className='absolute inset-0 bg-black/20' />
         </div>
 
@@ -65,6 +76,7 @@ export const WhiteOrangeKeycap = ({
               alt={secondTitle}
               fill
               className='object-cover'
+              unoptimized={true}
             />
             <div className='absolute inset-0 bg-black/30' />
           </div>
