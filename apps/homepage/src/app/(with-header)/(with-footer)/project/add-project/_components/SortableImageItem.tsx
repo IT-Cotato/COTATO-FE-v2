@@ -19,7 +19,7 @@ export const SortableImageItem = ({img, onSelect}: SortableImageItemProps) => {
     transform: CSS.Transform.toString(transform),
     transition,
     zIndex: isDragging ? 50 : 1,
-    touchAction: 'none', // 모바일에서 드래그 충돌 방지
+    touchAction: 'none',
   };
 
   return (
@@ -30,19 +30,31 @@ export const SortableImageItem = ({img, onSelect}: SortableImageItemProps) => {
       onClick={(e) => {
         e.stopPropagation();
         onSelect();
+      }}
+      role='button'
+      tabIndex={0}
+      aria-label={`${img.order + 1}번 이미지`}
+      aria-description='엔터나 스페이스를 눌러 선택하거나, 화살표 키로 드래그하여 순서를 변경할 수 있습니다.'
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          onSelect();
+        }
       }}>
       <div className='relative h-full w-full' {...attributes} {...listeners}>
         <Image
           src={img.publicUrl}
-          alt={`upload-${img.order}`}
+          alt=''
           fill
           sizes='204px'
           className='object-cover'
-          priority={img.order <= 4} // 첫 4개 이미지 우선 로딩 -> LCP 최적화
+          priority={img.order <= 4}
         />
         <div className='pointer-events-none absolute inset-0 z-10 flex items-center justify-center'>
           <div className='flex h-14 w-15.75 items-center justify-center rounded-[10px] bg-[rgba(158,158,158,0.60)]'>
-            <span className='text-h4 text-neutral-50'>{img.order + 1}</span>
+            <span className='text-h4 text-neutral-50' aria-hidden='true'>
+              {img.order + 1}
+            </span>
           </div>
         </div>
       </div>

@@ -17,8 +17,8 @@ export const ProjectContainer = () => {
   const searchParams = useSearchParams();
   const {user} = useAuthStore();
 
-  const genParam = searchParams.get('gen');
-  const actParam = searchParams.get('act') || 'demoday';
+  const genParam = searchParams.get('gen'); // null이면 전체
+  const actParam = searchParams.get('act'); // null이면 전체
   const isAdmin = user?.isAdmin === true;
 
   const {data: generations = [], isLoading} = useGenerationQuery();
@@ -27,50 +27,79 @@ export const ProjectContainer = () => {
     return [...generations].sort((a, b) => b.generationId - a.generationId);
   }, [generations]);
 
-  const currentGen = useMemo(() => {
-    if (
-      genParam &&
-      sortedGenerations.some((g) => g.generationId.toString() === genParam)
-    ) {
-      return genParam;
-    }
-    return sortedGenerations.length > 0
-      ? sortedGenerations[0].generationId.toString()
-      : null;
-  }, [genParam, sortedGenerations]);
+  const selectedGenLabel = genParam ? `${genParam}기` : '전체';
+  const selectedActLabel = actParam ? ACTIVITY_MAP[actParam] || '전체' : '전체';
+  const activityLabels = useMemo(() => {
+    return ['전체', ...Object.values(ACTIVITY_MAP)];
+  }, []);
 
-  const selectedGenLabel = currentGen ? `${currentGen}기` : '기수 선택';
-  const selectedActLabel = ACTIVITY_MAP[actParam] || '데모데이';
-  const activityLabels = useMemo(() => Object.values(ACTIVITY_MAP), []);
+  const genOptions = useMemo(() => {
+    return ['전체', ...sortedGenerations.map((g) => `${g.generationId}기`)];
+  }, [sortedGenerations]);
 
   const updateQuery = useCallback(
     (key: 'gen' | 'act', value: string) => {
       const params = new URLSearchParams(searchParams.toString());
-      params.set(key, value);
+
+      if (value === 'all') {
+        params.delete(key);
+      } else {
+        params.set(key, value);
+      }
+
       params.set('page', '1');
       router.push(`${pathname}?${params.toString()}`);
     },
     [searchParams, pathname, router]
   );
 
+  const handleActSelect = useCallback(
+    (label: string) => {
+      if (label === '전체') {
+        updateQuery('act', 'all');
+        return;
+      }
+
+      const actKey = Object.keys(ACTIVITY_MAP).find(
+        (key) => ACTIVITY_MAP[key] === label
+      );
+
+      if (actKey) {
+        updateQuery('act', actKey);
+      }
+    },
+    [updateQuery]
+  );
+
   if (isLoading) {
     return (
-      <div className='flex min-h-100 items-center justify-center'>
+      <div
+        className='flex min-h-100 items-center justify-center'
+        aria-live='polite'
+        aria-busy='true'>
         <Spinner />
       </div>
     );
   }
 
   return (
-    <section className='flex w-full min-w-275 flex-col gap-7.5 py-7.5'>
-      <div className='flex justify-between'>
-        <div className='flex gap-6 px-6'>
+    <section
+      className='flex w-full min-w-275 flex-col gap-7.5 py-7.5'
+      aria-labelledby='project-list-title'>
+      <h2 id='project-list-title' className='sr-only'>
+        프로젝트 목록 및 필터
+      </h2>
+      <div className='flex items-center justify-between'>
+        <div
+          className='flex gap-6 px-6'
+          role='group'
+          aria-label='프로젝트 필터링'>
           <Dropdown
             placeholder='기수'
             value={selectedGenLabel}
-            options={sortedGenerations.map((g) => `${g.generationId}기`)}
+            options={genOptions}
             onSelect={(label) => {
-              const gen = label.replace('기', '');
+              const gen = label === '전체' ? 'all' : label.replace('기', '');
               updateQuery('gen', gen);
             }}
           />
@@ -78,12 +107,7 @@ export const ProjectContainer = () => {
             placeholder='활동'
             value={selectedActLabel}
             options={activityLabels}
-            onSelect={(label) => {
-              const act = Object.keys(ACTIVITY_MAP).find(
-                (key) => ACTIVITY_MAP[key] === label
-              );
-              if (act) updateQuery('act', act);
-            }}
+            onSelect={handleActSelect}
           />
         </div>
         {isAdmin && (
@@ -96,15 +120,10 @@ export const ProjectContainer = () => {
           />
         )}
       </div>
-      {sortedGenerations.length === 0 ? (
-        <div className='flex min-h-100 w-full items-center justify-center text-neutral-400'>
-          등록된 기수 정보가 없습니다.
-        </div>
-      ) : (
-        currentGen && (
-          <ProjectSection generation={currentGen} activity={actParam} />
-        )
-      )}
+      <ProjectSection
+        generation={genParam ?? undefined}
+        activity={actParam ?? undefined}
+      />
     </section>
   );
 };

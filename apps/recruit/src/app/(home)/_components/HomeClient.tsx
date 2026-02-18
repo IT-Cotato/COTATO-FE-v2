@@ -3,6 +3,8 @@
 import {useState} from 'react';
 import {useSearchParams, useRouter} from 'next/navigation';
 import {useRecruitmentStatusQuery} from '@/hooks/queries/useRecruitmentStatus.query';
+import {useRecruitmentScheduleQuery} from '@/hooks/queries/useRecruitmentSchedule.query';
+import {formatKoreanDateTime} from '@/utils/formatDate';
 import {RecruitmentActive} from '@/app/(home)/_components/RecruitmentActive';
 import {RecruitmentInactive} from '@/app/(home)/_components/RecruitmentInactive';
 import {SubmissionCompleteModal} from '@/components/modal/SubmissionCompleteModal';
@@ -14,6 +16,7 @@ export const HomeClient = () => {
   const router = useRouter();
 
   const {data: recruitmentStatus, isLoading} = useRecruitmentStatusQuery();
+  const {data: schedule} = useRecruitmentScheduleQuery();
   const isRecruiting = recruitmentStatus?.isActive ?? false;
 
   const submittedParam = searchParams.get('submitted');
@@ -50,6 +53,9 @@ export const HomeClient = () => {
         isOpen={isSubmissionCompleteModalOpen}
         onClose={closeSubmissionCompleteModal}
         onConfirm={closeSubmissionCompleteModal}
+        announcementDate={
+          formatKoreanDateTime(schedule?.documentAnnouncement) || undefined
+        }
       />
       <SubmissionIncompleteModal
         isOpen={isSubmissionIncompleteModalOpen}

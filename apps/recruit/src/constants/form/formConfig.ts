@@ -107,6 +107,8 @@ export interface EtcFieldDates {
   interviewStartDate: string;
   interviewEndDate: string;
   otDate: string;
+  cokerthonDate: string;
+  demoDayDate: string;
 }
 
 export const getEtcFields = (
@@ -116,6 +118,8 @@ export const getEtcFields = (
   const interviewStart = dates?.interviewStartDate ?? '';
   const interviewEnd = dates?.interviewEndDate ?? '';
   const otDateLabel = dates?.otDate ?? '';
+  const cokerthonLabel = dates?.cokerthonDate ?? '';
+  const demoDayLabel = dates?.demoDayDate ?? '';
 
   const normalizedDiscoveryOptions = (
     discoveryOptions && discoveryOptions.length > 0
@@ -166,7 +170,7 @@ export const getEtcFields = (
     },
     {
       name: 'otAgree',
-      label: `최종 합격 시 대면 OT(${otDateLabel})는 필수 참여입니다. `,
+      label: `최종 합격 시 대면 OT(${otDateLabel}), 코커톤(${cokerthonLabel}), 데모데이(${demoDayLabel})는 필수 참여입니다. `,
       type: 'radio',
       options: [{label: '네, 참석 가능합니다.', value: 'agree'}],
       required: true,

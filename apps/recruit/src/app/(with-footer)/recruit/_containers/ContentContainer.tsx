@@ -8,6 +8,7 @@ import {PositionCard} from '@/app/(with-footer)/recruit/_components/PositionCard
 import {ActivityCard} from '@/app/(with-footer)/recruit/_components/ActivityCard';
 import {Button} from '@repo/ui/components/buttons/Button';
 import {useRouter} from 'next/navigation';
+import {ROUTES} from '@/constants/routes';
 
 export const ContentContainer = () => {
   const {data} = useRecruitmentNoticeQuery();
@@ -34,11 +35,11 @@ export const ContentContainer = () => {
 
       <div className='mb-30'>
         <p className='text-h4 mb-2.5 text-center text-neutral-600'>
-          나는 그냥 말하는 감자인데.. 사망년이라니.. 취준을 하라니.. 프로젝트
-          경험을 쓰라고요?
+          막연함이 확신으로 변하는 시간, 함께 도달하는 성장의 종착지.
         </p>
         <p className='text-h4 mb-7.5 text-center text-neutral-600'>
-          발등에 불 떨어져 군감자가 되어가는 감자들을 모집합니다.
+          코테이토에서, &apos;말하는 감자&apos;에서 &apos;행동하는 감자&apos;로
+          도약할 당신을 기다립니다.
         </p>
         <div className='flex justify-center gap-20'>
           {QUALIFICATIONS_CARD_ITEMS.map((item) => (
@@ -74,7 +75,10 @@ export const ContentContainer = () => {
         </div>
       </div>
 
-      <Button label='알림 신청하러 가기' onClick={() => router.push('/')} />
+      <Button
+        label='알림 신청하러 가기'
+        onClick={() => router.push(ROUTES.APPLY)}
+      />
     </div>
   );
 };

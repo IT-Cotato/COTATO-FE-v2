@@ -7,6 +7,10 @@ interface TermMenu {
   label: string;
 }
 
+export interface TermsSectionIntro {
+  content: ReactNode;
+}
+
 export interface TermsSection {
   title: string;
   content: ReactNode;

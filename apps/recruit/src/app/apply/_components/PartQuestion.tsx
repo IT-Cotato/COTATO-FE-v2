@@ -203,10 +203,25 @@ export const PartQuestion = ({
                     <div className='flex flex-col gap-2.5'>
                       <label className='text-h5 text-neutral-800'>
                         {lastQuestion.sequence}. {lastQuestion.content}
+                        {activePart !== 'PM' && (
+                          <span className='text-alert ml-1'>*</span>
+                        )}
                       </label>
                       <Controller
                         control={control}
                         name={`ans_${lastQuestion.questionId}` as any}
+                        rules={
+                          activePart !== 'PM'
+                            ? {
+                                validate: (value) => {
+                                  if (!value || value.trim().length === 0) {
+                                    return '링크를 입력해주세요';
+                                  }
+                                  return true;
+                                },
+                              }
+                            : undefined
+                        }
                         render={({
                           field: {onChange, value},
                           fieldState: {error},
@@ -230,10 +245,10 @@ export const PartQuestion = ({
                         }
                         maxCount={1}
                         maxSize={50 * 1024 * 1024}
-                      />  
-                  <p className='text-body-l text-alert'>
-                    * 파트 변경 시 업로드한 파일이 초기화됩니다.
-                  </p>
+                      />
+                      <p className='text-body-l text-alert'>
+                        * 파트 변경 시 업로드한 파일이 초기화됩니다.
+                      </p>
                     </div>
                   );
                 })()}
