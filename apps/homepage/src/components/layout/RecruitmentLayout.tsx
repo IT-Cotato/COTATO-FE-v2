@@ -1,7 +1,7 @@
 'use client';
 
 import clsx from 'clsx';
-import Image, {StaticImageData} from 'next/image';
+import Image from 'next/image';
 import {useRouter} from 'next/navigation';
 import {HEADER_HEIGHT} from '@repo/ui/constants/ui';
 import {Button} from '@repo/ui/components/buttons/Button';
@@ -13,8 +13,8 @@ type bgColorKey = 'bg-transparent' | 'bg-neutral-50' | 'bg-[#010101]';
 interface RecruitmentLayoutProps {
   isRecruiting: boolean;
   bgColor?: bgColorKey;
-  bgImage?: StaticImageData;
-  bottomBannerImage?: StaticImageData;
+  bgImage?: string;
+  bottomBannerImage?: string;
   limitBottomBannerWidth?: boolean;
 }
 
@@ -41,7 +41,7 @@ export default function RecruitmentLayout({
           fill={true}
           aria-hidden={true}
           draggable={false}
-          className='object-cover object-center'
+          objectFit='cover'
         />
       )}
 
@@ -94,8 +94,8 @@ export default function RecruitmentLayout({
             alt=''
             aria-hidden={true}
             draggable={false}
-            className='h-auto w-full'
-            sizes='100vw'
+            width={7680}
+            height={240}
           />
         </div>
       )}
