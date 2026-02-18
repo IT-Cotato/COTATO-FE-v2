@@ -1,5 +1,4 @@
 import RecruitmentLayout from '@/components/layout/RecruitmentLayout';
-import bottomBannerBg from '@/assets/backgrounds/recruitment-layout/visual-strip-bg.webp';
 import {useRecruitmentStatusQuery} from '@/hooks/queries/useRecruitmentStatus.query';
 
 export const RecruitmentInactive = () => {
@@ -10,7 +9,7 @@ export const RecruitmentInactive = () => {
     <RecruitmentLayout
       isRecruiting={isRecruiting}
       bgColor='bg-neutral-50'
-      bottomBannerImage={bottomBannerBg}
+      bottomBannerImage='/images/visual/recruitment-visual-strip-white.webp'
     />
   );
 };

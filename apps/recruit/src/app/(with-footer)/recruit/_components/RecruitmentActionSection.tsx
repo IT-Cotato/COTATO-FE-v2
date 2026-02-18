@@ -3,7 +3,6 @@
 import RecruitmentLayout from '@/components/layout/RecruitmentLayout';
 import {Spinner} from '@repo/ui/components/spinner/Spinner';
 import {useRecruitmentStatusQuery} from '@/hooks/queries/useRecruitmentStatus.query';
-import RecruitmentNoticeBg from '@/assets/backgrounds/recruitment-layout/recruitment-notice-bg.webp';
 
 export const RecruitmentActionSection = () => {
   const {data: recruitmentStatus, isLoading} = useRecruitmentStatusQuery();
@@ -21,7 +20,7 @@ export const RecruitmentActionSection = () => {
     <RecruitmentLayout
       isRecruiting={isRecruiting}
       bgColor='bg-[#010101]'
-      bgImage={RecruitmentNoticeBg}
+      bgImage='/images/background/recruitment-background-keycaps.webp'
     />
   );
 };
