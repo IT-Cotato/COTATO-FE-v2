@@ -12,7 +12,7 @@ export const MobileBlockOverlay = ({title}: MobileBlockOverlayProps) => {
 
   useEffect(() => {
     const checkMobile = () => {
-      setIsMobile(window.innerWidth < 720);
+      setIsMobile(window.innerWidth < 1024);
     };
 
     checkMobile();
@@ -27,7 +27,7 @@ export const MobileBlockOverlay = ({title}: MobileBlockOverlayProps) => {
       role='dialog'
       aria-modal='true'
       aria-labelledby='mobile-block-title'
-      className={`... ${isMobile === null ? 'hidden max-[720px]:flex min-[720px]:hidden' : ''}`}>
+      className={`fixed inset-0 z-104 flex flex-col items-center justify-center bg-black p-10 text-center ${isMobile === null ? 'hidden max-lg:flex lg:hidden' : ''}`}>
       <CotatoLogo />
       <div className='mt-20 flex flex-col gap-10'>
         <h1 id='mobile-block-title' className='text-h2 font-bold text-white'>
