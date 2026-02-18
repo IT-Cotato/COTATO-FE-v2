@@ -1,5 +1,4 @@
 import Image from 'next/image';
-import DefaultBg from '@/assets/backgrounds/recruitment-position/default-bg.webp';
 import BrandLogo from '@/assets/brand-logo/brand-logo.svg';
 import clsx from 'clsx';
 import {POSITION_CARD_STYLES} from '@/constants/recruit/recruit-components';
@@ -17,11 +16,12 @@ export const PositionCard = ({item}: PositionCardProps) => {
         POSITION_CARD_STYLES[item.short]
       )}>
       <Image
-        src={DefaultBg}
-        alt='RecruitmentPosition Background'
+        src='/images/position-card/position-card-bg.webp'
+        alt=''
         fill={true}
+        objectFit='cover'
         draggable={false}
-        className='object-cover object-center opacity-100 transition-opacity duration-300 group-hover:opacity-0'
+        className='opacity-100 transition-opacity duration-300 group-hover:opacity-0'
       />
 
       <div className='flex flex-col gap-2.5'>
