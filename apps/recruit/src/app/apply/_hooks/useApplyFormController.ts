@@ -90,7 +90,12 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
   });
 
   const handleNext = async () => {
-    const isValid = await validateStep(step, methods, partQuestionsData);
+    const isValid = await validateStep(
+      step,
+      methods,
+      partQuestionsData,
+      basicInfo?.applicationPartType
+    );
     if (!isValid) return;
 
     try {
