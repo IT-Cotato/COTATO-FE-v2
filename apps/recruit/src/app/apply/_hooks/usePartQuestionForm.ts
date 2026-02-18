@@ -104,6 +104,11 @@ export const usePartQuestionForm = () => {
         setValue('pdfFileKey', pdfFileKey);
         setValue('pdfFileName', file.name);
       },
+      onError: (error: any) => {
+        alert('파일 업로드에 실패했습니다. 잠시 후 다시 시도해주세요.');
+        setValue('pdfFileKey', undefined);
+        setValue('pdfFileName', undefined);
+      },
     });
   };
 
