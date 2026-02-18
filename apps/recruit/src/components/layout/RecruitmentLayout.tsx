@@ -109,7 +109,7 @@ const recruitmentText = {
     descriptionText: '지금 바로 지원하고 코테이토와 당신의 여정을 함께하세요!',
   },
   isDoneRecruiting: {
-    statusText: '코테이토 모집이 마감되었습니다!',
+    statusText: '코테이토 모집이 곧 시작됩니다!',
     descriptionText:
       '모집 안내 예약 신청을 해주시면 누구보다 먼저 코테이토에 지원하실 수 있어요.',
   },
