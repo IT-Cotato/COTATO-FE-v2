@@ -35,8 +35,7 @@ export const AboutUsManagementTeamCard = ({
           <SmallLogo className='group-hover:text-primary h-6.25 w-6.25 text-white transition-colors duration-300' />
           <span className='text-h3 text-white'>{title}</span>
         </div>
-
-        <div className='flex flex-col gap-4.25 opacity-0 transition-opacity duration-300 group-hover:opacity-100'>
+        <div className='flex flex-col gap-5'>
           <div className='flex flex-col gap-5 opacity-0 transition-opacity duration-300 group-hover:opacity-100'>
             {description.map((line, index) => (
               <div key={index} className='flex items-start gap-2.5'>

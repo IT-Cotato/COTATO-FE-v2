@@ -83,7 +83,7 @@ const STUDY_GROUPS = [
     {
       id: 8,
       label: '이걸 왜 직접 만드나요?',
-      src: '/images/study/craft-study.png',
+      src: '/images/study/crafting-study.png',
     },
     {id: 9, label: 'UX 분석 스터디', src: '/images/study/ux-study.png'},
     {
