@@ -2,6 +2,7 @@ import {useState} from 'react';
 import {useRouter} from 'next/navigation';
 import {useQueryClient} from '@tanstack/react-query';
 import {useSubmitApplication} from '@/hooks/mutations/useApply.mutation';
+import {getApplicationStatus} from '@/services/api/apply/apply.api';
 import {getRecruitmentStatus} from '@/services/api/recruitment/recruitment.api';
 import {QUERY_KEYS} from '@/constants/query-keys';
 import {ROUTES} from '@/constants/routes';
@@ -86,6 +87,20 @@ export const useApplySubmitHandler = ({
       await submitApplication();
       router.push(`${ROUTES.HOME}?submitted=true`);
     } catch {
+      try {
+        const latestStatus = await queryClient.fetchQuery({
+          queryKey: QUERY_KEYS.APPLY.STATUS,
+          queryFn: getApplicationStatus,
+          staleTime: 0,
+        });
+
+        if (latestStatus?.isSubmitted) {
+          return;
+        }
+      } catch (e) {
+        console.error('제출 상태 확인 실패', e);
+      }
+
       alert('제출에 실패했습니다. 잠시 후 다시 시도해주세요.');
       router.push(`${ROUTES.HOME}?submitted=false`);
     }
