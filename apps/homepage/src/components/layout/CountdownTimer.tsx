@@ -7,7 +7,7 @@ import {Spinner} from '@repo/ui/components/spinner/Spinner';
 
 // mock
 const noticeData = {
-  endDate: '2026-02-24T23:59',
+  endDate: '2026-02-24T00:00',
 };
 const isLoading = false;
 
