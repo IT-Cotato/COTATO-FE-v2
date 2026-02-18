@@ -74,7 +74,7 @@ export const ContentContainer = () => {
         </div>
       </div>
 
-      <Button label='지원하러 가기' onClick={() => router.push('/apply')} />
+      <Button label='알림 신청하러 가기' onClick={() => router.push('/')} />
     </div>
   );
 };
