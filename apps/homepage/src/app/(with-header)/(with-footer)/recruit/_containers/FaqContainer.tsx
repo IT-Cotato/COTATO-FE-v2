@@ -36,7 +36,13 @@ export const FaqContainer = () => {
           height={74}
           backgroundColor='primary'
           textColor='neutral-50'
-          onClick={() => window.open('https://pf.kakao.com/_LQLyG', '_blank')}
+          onClick={() =>
+            window.open(
+              'https://pf.kakao.com/_LQLyG',
+              '_blank',
+              'noopener,noreferrer'
+            )
+          }
         />
       </div>
     </div>

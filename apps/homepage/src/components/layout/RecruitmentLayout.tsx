@@ -78,7 +78,13 @@ export default function RecruitmentLayout({
               label='지원하러 가기'
               width={240}
               height={48}
-              onClick={() => window.open('https://recruit.cotato.kr', '_blank')}
+              onClick={() =>
+                window.open(
+                  'https://recruit.cotato.kr',
+                  '_blank',
+                  'noopener,noreferrer'
+                )
+              }
             />
           </div>
         )}
