@@ -39,7 +39,10 @@ export const ProjectSection = ({generation, activity}: ProjectSectionProps) => {
 
   if (isLoading) {
     return (
-      <div className='flex min-h-100 items-center justify-center'>
+      <div
+        className='flex min-h-100 items-center justify-center'
+        aria-live='polite'
+        aria-busy='true'>
         <Spinner />
       </div>
     );
@@ -49,19 +52,26 @@ export const ProjectSection = ({generation, activity}: ProjectSectionProps) => {
     <div className='flex w-full flex-col items-center gap-10'>
       {currentItems.length > 0 ? (
         <>
-          <div className='grid grid-cols-3 gap-x-13.75 gap-y-7.5'>
+          <ul className='grid list-none grid-cols-3 gap-x-13.75 gap-y-7.5 p-0'>
             {currentItems.map((project) => (
-              <ProjectCard key={project.projectId} {...project} />
+              <li key={project.projectId}>
+                <ProjectCard {...project} />
+              </li>
             ))}
-          </div>
-          <Pagination
-            currentPage={currentPage}
-            totalPages={totalPages}
-            onPageChange={handlePageChange}
-          />
+          </ul>
+          <nav aria-label='프로젝트 목록 페이지네이션'>
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={handlePageChange}
+            />
+          </nav>
         </>
       ) : (
-        <div className='flex min-h-100 w-full items-center justify-center text-neutral-400'>
+        <div
+          className='flex min-h-100 w-full items-center justify-center text-neutral-400'
+          role='status'
+          aria-live='polite'>
           조건에 맞는 프로젝트가 없습니다.
         </div>
       )}
