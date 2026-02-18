@@ -36,10 +36,7 @@ export const HomeCoreValue = () => {
           const DefaultIcon = item.defaultIcon;
 
           return (
-            <li
-              key={idx}
-              className='flex flex-col items-center outline-none'
-              tabIndex={0}>
+            <li key={idx} className='flex flex-col items-center'>
               <div className='relative h-auto w-auto'>
                 <DefaultIcon />
               </div>
