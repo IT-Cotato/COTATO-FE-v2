@@ -34,7 +34,7 @@ export const ContentArea = () => {
 
       <div className='mb-30'>
         <p className='text-h4 mb-2.5 text-center text-neutral-600'>
-          나는 그냥 말하는 감자인데.. 사망년이라니.. 취준을 하라니..프로젝트
+          나는 그냥 말하는 감자인데.. 사망년이라니.. 취준을 하라니.. 프로젝트
           경험을 쓰라고요?
         </p>
         <p className='text-h4 mb-7.5 text-center text-neutral-600'>
@@ -61,8 +61,8 @@ export const ContentArea = () => {
           주요 활동 일정
         </p>
         <p className='text-h5 mb-1 text-center text-neutral-600'>
-          정기 세션은 <span className='text-primary'>매주 금요일 19시</span>에{' '}
-          <span className='text-primary'>오프라인</span>으로 진행됩니다
+          정기 세션은 <span className='text-primary'>매주 금요일 19시</span>
+          에&nbsp;<span className='text-primary'>오프라인</span>으로 진행됩니다
         </p>
         <p className='text-body-l mb-7.5 text-center text-neutral-500'>
           세부 일정은 추후 변경될 수 있습니다.
