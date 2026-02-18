@@ -30,9 +30,16 @@ export const ScheduleKeycap = ({
         alt=''
         fill
         className='transition-opacity duration-300 group-hover:opacity-0 group-focus-visible:opacity-0'
+        unoptimized={true}
       />
       <div className='absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100'>
-        <Image src={imageSrc} alt={title} fill className='object-cover' />
+        <Image
+          src={imageSrc}
+          alt={title}
+          fill
+          className='object-cover'
+          unoptimized={true}
+        />
         <div className='absolute inset-0 bg-black/20' />
       </div>
       <span

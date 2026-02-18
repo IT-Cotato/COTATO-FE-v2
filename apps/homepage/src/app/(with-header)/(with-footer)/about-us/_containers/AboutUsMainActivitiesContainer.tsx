@@ -40,6 +40,7 @@ export const AboutUsMainActivitiesContainer = () => {
                 src={activity.src}
                 alt={activity.title}
                 fill
+                unoptimized={true}
                 className='object-cover transition-transform duration-500 group-hover:scale-105'
               />
               <div className='absolute inset-0 z-10 bg-black/40' />
@@ -88,6 +89,7 @@ export const AboutUsMainActivitiesContainer = () => {
                     src={selectedActivity.src}
                     alt={selectedActivity.title}
                     fill
+                    unoptimized={true}
                     className='object-cover'
                   />
                 </motion.div>
