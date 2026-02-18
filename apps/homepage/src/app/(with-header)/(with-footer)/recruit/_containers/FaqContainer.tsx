@@ -1,3 +1,5 @@
+'use client';
+
 import {useState} from 'react';
 import {FaqSideBar} from '@/app/(with-header)/(with-footer)/recruit/_components/FaqSideBar';
 import {FaqAccordion} from '@/app/(with-header)/(with-footer)/recruit/_components/FaqAccordion';
