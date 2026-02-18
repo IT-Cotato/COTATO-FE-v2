@@ -2,7 +2,6 @@
 
 import clsx from 'clsx';
 import Image from 'next/image';
-import {useRouter} from 'next/navigation';
 import {HEADER_HEIGHT} from '@repo/ui/constants/ui';
 import {Button} from '@repo/ui/components/buttons/Button';
 import {CountdownTimer} from '@/components/layout/CountdownTimer';
@@ -25,8 +24,6 @@ export default function RecruitmentLayout({
   visualStripSrc,
   limitVisualStripWidth = false,
 }: RecruitmentLayoutProps) {
-  const router = useRouter();
-
   return (
     <div
       className={clsx(
@@ -81,7 +78,7 @@ export default function RecruitmentLayout({
               label='지원하러 가기'
               width={240}
               height={48}
-              onClick={() => router.push('/apply')}
+              onClick={() => window.open('https://recruit.cotato.kr', '_blank')}
             />
           </div>
         )}
