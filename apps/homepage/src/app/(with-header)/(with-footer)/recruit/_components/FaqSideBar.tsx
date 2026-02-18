@@ -5,11 +5,11 @@ import {FAQ_NAV_ITEMS} from '@/constants/faq/faq';
 import {faqParametersType} from '@/schemas/faq/faq.schema';
 
 interface FaqSideBarProps {
-  ActivatedMenu: faqParametersType;
+  activatedMenu: faqParametersType;
   onActive: (faqParameters: faqParametersType) => void;
 }
 
-export const FaqSideBar = ({ActivatedMenu, onActive}: FaqSideBarProps) => {
+export const FaqSideBar = ({activatedMenu, onActive}: FaqSideBarProps) => {
   return (
     <nav>
       <ul className='flex flex-col gap-2.5'>
@@ -21,7 +21,7 @@ export const FaqSideBar = ({ActivatedMenu, onActive}: FaqSideBarProps) => {
               <p
                 className={clsx(
                   'text-h5 w-45.25 cursor-pointer rounded-[5px] px-2 py-1.25 transition-colors duration-300',
-                  dataKey === ActivatedMenu
+                  dataKey === activatedMenu
                     ? 'bg-neutral-800 text-neutral-100'
                     : 'text-neutral-800'
                 )}>

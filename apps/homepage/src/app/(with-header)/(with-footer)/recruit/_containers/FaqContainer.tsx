@@ -16,7 +16,7 @@ export const FaqContainer = () => {
       <div className='flex flex-col gap-17.5'>
         <p className='text-h2 text-center text-neutral-800'>FAQ</p>
         <div className='flex gap-22 px-8.75'>
-          <FaqSideBar ActivatedMenu={isActive} onActive={setIsActive} />
+          <FaqSideBar activatedMenu={isActive} onActive={setIsActive} />
           <div className='flex flex-1 flex-col gap-6.25'>
             {faqData.map((item) => (
               <FaqAccordion key={item.id} item={item} />
