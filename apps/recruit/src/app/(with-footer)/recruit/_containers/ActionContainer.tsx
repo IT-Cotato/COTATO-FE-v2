@@ -4,7 +4,7 @@ import RecruitmentLayout from '@/components/layout/RecruitmentLayout';
 import {Spinner} from '@repo/ui/components/spinner/Spinner';
 import {useRecruitmentStatusQuery} from '@/hooks/queries/useRecruitmentStatus.query';
 
-export const RecruitmentActionSection = () => {
+export const ActionContainer = () => {
   const {data: recruitmentStatus, isLoading} = useRecruitmentStatusQuery();
   const isRecruiting = recruitmentStatus?.isActive ?? false;
 

@@ -9,7 +9,7 @@ import {ActivityCard} from '@/app/(with-footer)/recruit/_components/ActivityCard
 import {Button} from '@repo/ui/components/buttons/Button';
 import {useRouter} from 'next/navigation';
 
-export const ContentArea = () => {
+export const ContentContainer = () => {
   const {data} = useRecruitmentNoticeQuery();
   const router = useRouter();
 
