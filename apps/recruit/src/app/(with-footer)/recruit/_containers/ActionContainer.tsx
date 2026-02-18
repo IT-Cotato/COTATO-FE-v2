@@ -19,8 +19,8 @@ export const ActionContainer = () => {
   return (
     <RecruitmentLayout
       isRecruiting={isRecruiting}
-      bgColor='bg-[#010101]'
-      bgImage='/images/background/recruitment-background-keycaps.webp'
+      backgroundColor='bg-[#010101]'
+      backgroundSrc='/images/background/recruitment-background-keycaps.webp'
     />
   );
 };

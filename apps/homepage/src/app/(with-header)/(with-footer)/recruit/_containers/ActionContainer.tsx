@@ -23,9 +23,9 @@ export const ActionContainer = () => {
   return (
     <RecruitmentLayout
       isRecruiting={isRecruiting}
-      bgColor='bg-[#010101]'
-      bottomBannerImage='/images/visual/recruitment-visual-strip-black.webp'
-      limitBottomBannerWidth={true}
+      backgroundColor='bg-[#010101]'
+      visualStripSrc='/images/visual/recruitment-visual-strip-black.webp'
+      limitVisualStripWidth={true}
     />
   );
 };

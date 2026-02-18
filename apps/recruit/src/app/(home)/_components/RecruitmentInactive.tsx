@@ -8,8 +8,8 @@ export const RecruitmentInactive = () => {
   return (
     <RecruitmentLayout
       isRecruiting={isRecruiting}
-      bgColor='bg-neutral-50'
-      bottomBannerImage='/images/visual/recruitment-visual-strip-white.webp'
+      backgroundColor='bg-neutral-50'
+      visualStripSrc='/images/visual/recruitment-visual-strip-white.webp'
     />
   );
 };

@@ -12,18 +12,18 @@ type bgColorKey = 'bg-transparent' | 'bg-neutral-50' | 'bg-[#010101]';
 
 interface RecruitmentLayoutProps {
   isRecruiting: boolean;
-  bgColor?: bgColorKey;
-  bgImage?: string;
-  bottomBannerImage?: string;
-  limitBottomBannerWidth?: boolean;
+  backgroundColor?: bgColorKey;
+  backgroundSrc?: string;
+  visualStripSrc?: string;
+  limitVisualStripWidth?: boolean;
 }
 
 export default function RecruitmentLayout({
   isRecruiting,
-  bgColor,
-  bgImage,
-  bottomBannerImage,
-  limitBottomBannerWidth = false,
+  backgroundColor,
+  backgroundSrc,
+  visualStripSrc,
+  limitVisualStripWidth = false,
 }: RecruitmentLayoutProps) {
   const router = useRouter();
 
@@ -31,12 +31,12 @@ export default function RecruitmentLayout({
     <div
       className={clsx(
         'relative flex min-h-fit w-full min-w-360 flex-col items-center justify-center',
-        bgColor
+        backgroundColor
       )}
       style={{height: `calc(100vh - ${HEADER_HEIGHT}px)`}}>
-      {bgImage && (
+      {backgroundSrc && (
         <Image
-          src={bgImage}
+          src={backgroundSrc}
           alt=''
           fill={true}
           aria-hidden={true}
@@ -87,10 +87,10 @@ export default function RecruitmentLayout({
         )}
       </div>
 
-      {bottomBannerImage && (
-        <div className={limitBottomBannerWidth ? 'w-360' : 'w-full'}>
+      {visualStripSrc && (
+        <div className={limitVisualStripWidth ? 'w-360' : 'w-full'}>
           <Image
-            src={bottomBannerImage}
+            src={visualStripSrc}
             alt=''
             aria-hidden={true}
             draggable={false}
