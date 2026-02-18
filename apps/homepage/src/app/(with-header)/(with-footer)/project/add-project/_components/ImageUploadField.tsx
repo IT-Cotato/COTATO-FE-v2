@@ -47,6 +47,7 @@ export const ImageUploadField = ({
       <div className='flex flex-col gap-4.75'>
         <ImagePreviewer selectedImage={selectedImage} onRemove={handleRemove} />
         <FullButton
+          type='button'
           label='이미지 업로드'
           labelTypo='body_l_sb'
           height={46}
