@@ -36,45 +36,70 @@ const STUDY_GROUPS = [
     {
       id: 1,
       label: '스프링 스터디',
-      src: '/images/study/study-1.png',
+      src: '/images/study/spring-study.png',
     },
     {
       id: 2,
-      label: '알고리즘 스터디',
-      src: '/images/study/study-2.png',
+      label: '리액트 공식문서 읽기 스터디',
+      src: '/images/study/react-study.png',
     },
-    {id: 3, label: 'React 스터디', src: '/images/study/study-3.png'},
-  ],
-
-  [
+    {id: 3, label: 'React 스터디', src: '/images/study/react-study-2.png'},
     {
       id: 4,
-      label: 'Next.js 스터디',
-      src: '/images/study/study-4.png',
+      label: '역기획 스터디',
+      src: '/images/study/pm-study-2.png',
     },
     {
       id: 5,
-      label: 'Node.js 스터디',
-      src: '/images/study/study-5.png',
-    },
-    {
-      id: 6,
-      label: '역기획 스터디',
-      src: '/images/study/study-6.png',
+      label: '아키텍쳐 스터디',
+      src: '/images/study/architecture-study.png',
     },
   ],
 
   [
     {
-      id: 7,
-      label: '이걸 왜 직접 만드나요?',
-      src: '/images/study/study-7.png',
+      id: 6,
+      label: 'Next.js 스터디',
+      src: '/images/study/nextjs-study.png',
     },
-    {id: 8, label: 'UX 분석 스터디', src: '/images/study/study-8.png'},
+    {
+      id: 7,
+      label: '테크 블로그 스터디',
+      src: '/images/study/tech-study.png',
+    },
+    {
+      id: 8,
+      label: '기획 스터디',
+      src: '/images/study/pm-study.png',
+    },
     {
       id: 9,
+      label: '스프링 스터디',
+      src: '/images/study/spring-study-2.png',
+    },
+  ],
+
+  [
+    {
+      id: 8,
+      label: '이걸 왜 직접 만드나요?',
+      src: '/images/study/crafting-study.png',
+    },
+    {id: 9, label: 'UX 분석 스터디', src: '/images/study/ux-study.png'},
+    {
+      id: 10,
       label: '아티클 스터디',
-      src: '/images/study/study-9.png',
+      src: '/images/study/article-study.png',
+    },
+    {
+      id: 11,
+      label: '아티클 스터디',
+      src: '/images/study/article-study-2.png',
+    },
+    {
+      id: 12,
+      label: '코틀린 스터디',
+      src: '/images/study/kotlin-study.png',
     },
   ],
 ];

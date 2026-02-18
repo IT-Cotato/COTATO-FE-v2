@@ -11,6 +11,7 @@ export const HomeCotatoReviewContainer = () => {
   const controls = useAnimationControls();
   const [displayIndex, setDisplayIndex] = useState<number>(1);
   const [isTransitioning, setIsTransitioning] = useState<boolean>(false);
+  const [isPaused, setIsPaused] = useState<boolean>(false);
 
   const cardWidth = 339;
   const gap = 20;
@@ -58,11 +59,13 @@ export const HomeCotatoReviewContainer = () => {
   };
 
   useEffect(() => {
+    if (isPaused) return;
+
     const timer = setInterval(() => {
       handleNext();
     }, 5000);
     return () => clearInterval(timer);
-  }, [handleNext]);
+  }, [handleNext, isPaused]);
 
   return (
     <div className='flex flex-col gap-10 py-10'>
@@ -76,7 +79,9 @@ export const HomeCotatoReviewContainer = () => {
 
       <div
         className='relative mx-auto overflow-hidden'
-        style={{width: `${cardWidth * 3 + gap * 2}px`}}>
+        style={{width: `${cardWidth * 3 + gap * 2}px`}}
+        onMouseEnter={() => setIsPaused(true)}
+        onMouseLeave={() => setIsPaused(false)}>
         <motion.div
           className='flex'
           style={{gap: `${gap}px`}}

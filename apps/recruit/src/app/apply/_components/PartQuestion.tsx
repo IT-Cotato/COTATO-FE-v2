@@ -1,23 +1,13 @@
 'use client';
 
-import {useEffect, useRef} from 'react';
-import {useSearchParams} from 'next/navigation';
-import {useFormContext, Controller} from 'react-hook-form';
+import {useFormContext, useWatch} from 'react-hook-form';
 import {FormTextarea} from '@repo/ui/components/form/FormTextarea';
 import {FullButton} from '@repo/ui/components/buttons/FullButton';
-import {
-  useGetPartQuestionsQuery,
-  useGetBasicInfoQuery,
-  useGetFileUrlQuery,
-} from '@/hooks/queries/useApply.query';
-import {useUploadFile} from '@/hooks/mutations/useApply.mutation';
-import {PartType} from '@/schemas/admin/admin-application-questions.schema';
 import {ApplyFormData} from '@/schemas/apply/apply-schema';
 import {Spinner} from '@repo/ui/components/spinner/Spinner';
 import {StepIndicator} from '@/components/navigation/StepIndicator';
-import {PART_TABS} from '@/constants/common/part';
-import {FormFile} from '@repo/ui/components/form/FormFile';
-import {FormLink} from '@repo/ui/components/form/FormLink';
+import {PortfolioField} from '@/app/apply/_components/PortfolioField';
+import {usePartQuestionForm} from '@/app/apply/_hooks/usePartQuestionForm';
 
 interface PartQuestionProps {
   step: number;
@@ -34,113 +24,45 @@ export const PartQuestion = ({
   onSave,
   showSaveSuccess,
 }: PartQuestionProps) => {
-  const searchParams = useSearchParams();
   const {
     register,
-    watch,
-    setValue,
-    control,
     formState: {errors},
   } = useFormContext<ApplyFormData>();
 
-  const applicationId = searchParams.get('id')
-    ? Number(searchParams.get('id'))
-    : null;
+  const {
+    activePart,
+    activePartLabel,
+    questionsData,
+    textQuestions,
+    lastQuestion,
+    isQuestionsLoading,
+    isBasicInfoLoading,
+    isUploadingFile,
+    handleFileChange,
+  } = usePartQuestionForm();
 
-  const {data: basicInfo, isLoading: isBasicInfoLoading} =
-    useGetBasicInfoQuery(applicationId);
-  const activePart = basicInfo?.applicationPartType as PartType | undefined;
+  // 성능 최적화: 필요한 필드만 선별적으로 감시
+  const watchedFields = useWatch({
+    name: [
+      ...textQuestions.map((q) => `ans_${q.questionId}` as const),
+      `ans_${lastQuestion?.questionId}` as const,
+      'pdfFileName',
+    ],
+  });
 
-  const activePartLabel = PART_TABS.find(
-    (tab) => tab.value === activePart
-  )?.label;
+  const allTextAnswered = textQuestions.every((q, index) => {
+    const answer = watchedFields[index] as string | undefined;
+    return answer && answer.trim().length > 0;
+  });
 
-  const {data: questionsData, isLoading: isQuestionsLoading} =
-    useGetPartQuestionsQuery(applicationId);
+  // 기획: 기획(PM) 파트는 링크 선택, 나머지 파트는 링크 필수
+  // 파일 업로드는 전 파트 자유이므로 필수 검사에서 제외
+  const lastAnswered =
+    activePart && activePart !== 'PM'
+      ? !!(watchedFields[textQuestions.length] as string | undefined)?.trim()
+      : true;
 
-  const {data: pdfFileUrlData} = useGetFileUrlQuery(questionsData?.pdfFileKey);
-  const {mutate: uploadFile, isPending: isUploadingFile} = useUploadFile();
-
-  const isAllRequiredAnswersFilled = (() => {
-    if (!questionsData?.questionsWithAnswers) return false;
-    const textQuestions = questionsData.questionsWithAnswers.slice(0, -1);
-    return textQuestions.every((q) => {
-      const answer = watch(`ans_${q.questionId}` as any) as string | undefined;
-      return answer && answer.trim().length > 0;
-    });
-  })();
-
-  const hasInitializedRef = useRef(false);
-  const previousPartRef = useRef<PartType | undefined>(undefined);
-
-  useEffect(() => {
-    register('pdfFileKey');
-    register('pdfFileUrl');
-    register('pdfFileName');
-  }, [register]);
-
-  useEffect(() => {
-    if (previousPartRef.current && previousPartRef.current !== activePart) {
-      hasInitializedRef.current = false;
-      setValue('pdfFileKey', undefined);
-      setValue('pdfFileName', undefined);
-      setValue('pdfFileUrl', undefined);
-    }
-    previousPartRef.current = activePart;
-  }, [activePart, setValue]);
-
-  useEffect(() => {
-    if (questionsData && !hasInitializedRef.current && activePart) {
-      const responsePart = questionsData.questionsWithAnswers[0]?.partType;
-      const isMatchingPart = responsePart === activePart;
-
-      if (isMatchingPart) {
-        questionsData.questionsWithAnswers.forEach((q) => {
-          if (q.savedAnswer?.content) {
-            setValue(`ans_${q.questionId}` as any, q.savedAnswer.content);
-          }
-        });
-
-        if (questionsData.pdfFileKey) {
-          setValue('pdfFileKey', questionsData.pdfFileKey);
-          const fileName =
-            questionsData.pdfFileKey.split('/').pop() ||
-            questionsData.pdfFileKey;
-          setValue('pdfFileName', fileName);
-        } else {
-          setValue('pdfFileKey', undefined);
-          setValue('pdfFileName', undefined);
-        }
-
-        // 마지막 질문(포트폴리오 링크)의 답변을 pdfFileUrl에도 설정
-        const lastQuestion = questionsData.questionsWithAnswers.at(-1);
-        if (lastQuestion?.savedAnswer?.content) {
-          setValue('pdfFileUrl', lastQuestion.savedAnswer.content);
-        } else {
-          setValue('pdfFileUrl', undefined);
-        }
-
-        hasInitializedRef.current = true;
-      }
-    }
-  }, [questionsData, setValue, activePart]);
-
-  const handleFileChange = (files: File[]) => {
-    if (files.length === 0) {
-      setValue('pdfFileKey', undefined);
-      setValue('pdfFileName', undefined);
-      return;
-    }
-
-    const file = files[0];
-
-    uploadFile(file, {
-      onSuccess: ({pdfFileKey}) => {
-        setValue('pdfFileKey', pdfFileKey);
-        setValue('pdfFileName', file.name);
-      },
-    });
-  };
+  const isAllRequiredAnswersFilled = allTextAnswered && lastAnswered;
 
   return (
     <div className='flex w-full flex-col gap-7.5'>
@@ -164,14 +86,13 @@ export const PartQuestion = ({
             {questionsData?.questionsWithAnswers &&
             questionsData.questionsWithAnswers.length > 0 ? (
               <>
-                {questionsData.questionsWithAnswers.slice(0, -1).map((q) => (
+                {textQuestions.map((q, index) => (
                   <FormTextarea
                     key={q.questionId}
                     label={`${q.sequence}. ${q.content}`}
                     maxLength={q.maxLength}
                     currentLength={
-                      ((watch(`ans_${q.questionId}` as any) as string) || '')
-                        .length
+                      ((watchedFields[index] as string) || '').length
                     }
                     placeholder='내용을 입력해주세요'
                     error={
@@ -180,12 +101,9 @@ export const PartQuestion = ({
                     }
                     required
                     {...register(`ans_${q.questionId}` as any, {
-                      validate: (value) => {
-                        if (!value || value.trim().length === 0) {
-                          return '답변을 작성해주세요';
-                        }
-                        return true;
-                      },
+                      validate: (value) =>
+                        (value && value.trim().length > 0) ||
+                        '답변을 작성해주세요',
                       maxLength: {
                         value: q.maxLength,
                         message: '글자수를 초과했습니다',
@@ -194,64 +112,19 @@ export const PartQuestion = ({
                   />
                 ))}
 
-                {(() => {
-                  const lastQuestion =
-                    questionsData.questionsWithAnswers.at(-1);
-                  if (!lastQuestion) return null;
-                  const currentPdfFileName = watch('pdfFileName');
-                  return (
-                    <div className='flex flex-col gap-2.5'>
-                      <label className='text-h5 text-neutral-800'>
-                        {lastQuestion.sequence}. {lastQuestion.content}
-                        {activePart !== 'PM' && (
-                          <span className='text-alert ml-1'>*</span>
-                        )}
-                      </label>
-                      <Controller
-                        control={control}
-                        name={`ans_${lastQuestion.questionId}` as any}
-                        rules={
-                          activePart !== 'PM'
-                            ? {
-                                validate: (value) => {
-                                  if (!value || value.trim().length === 0) {
-                                    return '링크를 입력해주세요';
-                                  }
-                                  return true;
-                                },
-                              }
-                            : undefined
-                        }
-                        render={({
-                          field: {onChange, value},
-                          fieldState: {error},
-                        }) => (
-                          <FormLink
-                            value={value ? [value] : ['']}
-                            onChange={(links) => {
-                              onChange(links[0]);
-                              setValue('pdfFileUrl', links[0] || undefined);
-                            }}
-                            error={error?.message}
-                          />
-                        )}
-                      />
-                      <FormFile
-                        placeholder={'파일 업로드하기'}
-                        isUploading={isUploadingFile}
-                        onFilesChange={handleFileChange}
-                        value={
-                          currentPdfFileName ? [currentPdfFileName] : undefined
-                        }
-                        maxCount={1}
-                        maxSize={50 * 1024 * 1024}
-                      />
-                      <p className='text-body-l text-alert'>
-                        * 파트 변경 시 업로드한 파일이 초기화됩니다.
-                      </p>
-                    </div>
-                  );
-                })()}
+                {lastQuestion && activePart && (
+                  <PortfolioField
+                    questionId={lastQuestion.questionId}
+                    sequence={lastQuestion.sequence}
+                    content={lastQuestion.content}
+                    activePart={activePart}
+                    isUploadingFile={isUploadingFile}
+                    pdfFileName={
+                      watchedFields[textQuestions.length + 1] as string
+                    }
+                    onFileChange={handleFileChange}
+                  />
+                )}
               </>
             ) : (
               <div className='flex h-full w-full items-center justify-center'>

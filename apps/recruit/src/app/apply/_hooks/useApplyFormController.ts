@@ -1,23 +1,24 @@
-import {useState, useEffect} from 'react';
-import {useForm, UseFormReturn} from 'react-hook-form';
-import {zodResolver} from '@hookform/resolvers/zod';
-import {ApplyFormSchema, ApplyFormData} from '@/schemas/apply/apply-schema';
-import {useRouter, useSearchParams} from 'next/navigation';
-import {useRecruitmentStore} from '@/store/useRecruitmentStore';
+import {useSearchParams} from 'next/navigation';
+import {UseFormReturn} from 'react-hook-form';
+import {useQueryClient} from '@tanstack/react-query';
+import {ApplyFormData} from '@/schemas/apply/apply-schema';
 import {
   useGetEtcQuestionsQuery,
   useGetBasicInfoQuery,
   useGetPartQuestionsQuery,
 } from '@/hooks/queries/useApply.query';
-import {useSubmitApplication} from '@/hooks/mutations/useApply.mutation';
-import {useQueryClient} from '@tanstack/react-query';
-import {QUERY_KEYS} from '@/constants/query-keys';
-import {getRecruitmentStatus} from '@/services/api/recruitment/recruitment.api';
-import {ROUTES} from '@/constants/routes';
 import {useApplyValidation} from './useApplyValidation';
 import {useApplySave} from './useApplySave';
 import {useApplyStepGuard} from './useApplyStepGuard';
 import {usePreventNavigation} from './usePreventNavigation';
+import {useApplyStep} from './useApplyStep';
+import {useApplyForm} from './useApplyForm';
+import {useApplyURLSync} from './useApplyURLSync';
+import {useApplySubmitHandler} from './useApplySubmitHandler';
+import {useAuthStore} from '@/store/useAuthStore';
+import {useApplicationStatusQuery} from '@/hooks/queries/useApply.query';
+import {QUERY_KEYS} from '@/constants/query-keys';
+import {getApplicationStatus} from '@/services/api/apply/apply.api';
 
 interface UseApplyFormControllerReturn {
   step: number;
@@ -35,195 +36,101 @@ interface UseApplyFormControllerReturn {
 
 export const useApplyFormController = (): UseApplyFormControllerReturn => {
   const searchParams = useSearchParams();
-  const router = useRouter();
-
   const applicationId = searchParams.get('id');
-  const urlStep = parseInt(searchParams.get('step') || '1');
-  const [step, setStep] = useState(urlStep);
+  const numericApplicationId = applicationId ? Number(applicationId) : null;
 
-  useEffect(() => {
-    setStep(urlStep);
-  }, [urlStep]);
-
-  const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
-  const {isRecruiting} = useRecruitmentStore();
   const queryClient = useQueryClient();
+  const {isAuthenticated} = useAuthStore();
 
-  const methods = useForm<ApplyFormData>({
-    mode: 'onChange',
-    resolver: zodResolver(ApplyFormSchema),
-    defaultValues: {
-      name: '',
-      gender: undefined,
-      contact: '',
-      birthDate: '',
-      school: '',
-      isCollegeStudent: undefined,
-      department: '',
-      completedSemesters: undefined,
-      isPrevActivity: undefined,
-      part: undefined,
-    },
-  });
-  const {getValues} = methods;
+  // 1. 폼 및 스텝 관리
+  const methods = useApplyForm();
+  const {step, goToNextStep, goToPrevStep} = useApplyStep();
 
-  // 서버에 저장된 파트 정보 조회
-  const {data: basicInfo, isFetched: isBasicInfoFetched} = useGetBasicInfoQuery(
-    applicationId ? Number(applicationId) : null
-  );
-
-  useEffect(() => {
-    const urlPart = searchParams.get('part');
-    const savedPart = basicInfo?.applicationPartType;
-
-    // step 1: part 파라미터가 있으면 제거
-    if (step === 1 && urlPart) {
-      const newParams = new URLSearchParams(searchParams.toString());
-      newParams.delete('part');
-      router.replace(`/apply?${newParams.toString()}`);
-      return;
-    }
-
-    // step 2, 3: 서버 저장 파트와 URL이 다르면 동기화
-    if ((step === 2 || step === 3) && savedPart && urlPart !== savedPart) {
-      const newParams = new URLSearchParams(searchParams.toString());
-      newParams.set('part', savedPart);
-      router.replace(`/apply?${newParams.toString()}`);
-    }
-  }, [step, searchParams, basicInfo?.applicationPartType, router]);
-
-  useGetEtcQuestionsQuery(applicationId ? Number(applicationId) : null);
-
+  // 2. 데이터 페칭
+  const {data: basicInfo, isFetched: isBasicInfoFetched} =
+    useGetBasicInfoQuery(numericApplicationId);
   const {data: partQuestionsData, isFetched: isPartQuestionsFetched} =
-    useGetPartQuestionsQuery(applicationId ? Number(applicationId) : null);
+    useGetPartQuestionsQuery(numericApplicationId);
+  useGetEtcQuestionsQuery(numericApplicationId);
 
-  // 폼 수정 중 이탈 방지
+  // 3. 가드 및 동기화
   usePreventNavigation(methods.formState.isDirty);
-
-  // Step 건너뛰기 방지 가드 훅
   useApplyStepGuard({
     step,
-    applicationId: applicationId,
+    applicationId,
     basicInfo,
     isBasicInfoFetched,
     partQuestionsData,
     isPartQuestionsFetched,
   });
+  useApplyURLSync({step, basicInfo});
 
-  const {mutateAsync: submitApplication} = useSubmitApplication(
-    Number(applicationId)
-  );
-
-  // 저장 로직 훅
+  // 4. 핵심 로직 훅
+  const {validateStep} = useApplyValidation();
   const {handleSave: saveForm, showSaveSuccess} = useApplySave(
-    Number(applicationId),
+    numericApplicationId,
     basicInfo?.applicationPartType
   );
 
-  // 검증 로직 훅
-  const {validateStep} = useApplyValidation();
-
-  const openConfirmModal = () => setIsConfirmModalOpen(true);
-  const closeConfirmModal = () => setIsConfirmModalOpen(false);
-
-  const ensureRecruitmentIsActive = async () => {
-    try {
-      const latest = await queryClient.fetchQuery({
-        queryKey: [QUERY_KEYS.RECRUITMENT_STATUS],
-        queryFn: getRecruitmentStatus,
-        staleTime: 0, // 항상 서버에서 최신 데이터 가져오기
-      });
-
-      if (!latest.isActive) {
-        alert('모집 기간이 종료되었습니다.');
-        router.push(ROUTES.HOME);
-        return false;
-      }
-      return true;
-    } catch {
-      if (!isRecruiting) {
-        alert('모집 기간이 종료되었습니다.');
-        router.push(ROUTES.HOME);
-        return false;
-      }
-      return true;
-    }
-  };
-
+  // 5. 이벤트 핸들러
   const handleSave = async () => {
-    if (!applicationId) return;
     await saveForm(step, methods);
   };
 
+  const SUBMIT_STEP = 3;
+
+  const {
+    isConfirmModalOpen,
+    openConfirmModal,
+    closeConfirmModal,
+    handleFinalSubmit,
+    handleConfirmSubmit,
+  } = useApplySubmitHandler({
+    applicationId: numericApplicationId,
+    onSave: () => saveForm(SUBMIT_STEP, methods, false),
+    onValidate: () => validateStep(3, methods),
+  });
+
   const handleNext = async () => {
-    const isValid = await validateStep(step, methods, partQuestionsData);
-
-    if (isValid) {
-      if (!applicationId) return;
-      try {
-        await saveForm(step, methods, false);
-      } catch {
-        alert('저장에 실패했습니다. 잠시 후 다시 시도해주세요.');
-        return;
-      }
-
-      const params = new URLSearchParams(searchParams.toString());
-      params.set('step', String(step + 1));
-
-      if (step === 1) {
-        // step 1 → 2: part 포함
-        params.set('part', getValues('part'));
-      }
-
-      router.push(`/apply?${params.toString()}`);
-    }
-  };
-
-  const handlePrev = () => {
-    const params = new URLSearchParams(searchParams.toString());
-    params.set('step', String(step - 1));
-
-    if (step === 2) {
-      params.delete('part');
-    }
-
-    router.push(`/apply?${params.toString()}`);
-  };
-
-  const handleConfirmSubmit = async () => {
-    closeConfirmModal();
+    const isValid = await validateStep(
+      step,
+      methods,
+      partQuestionsData,
+      basicInfo?.applicationPartType
+    );
+    if (!isValid) return;
 
     try {
-      const ok = await ensureRecruitmentIsActive();
-      if (!ok) return;
+      await saveForm(step, methods, false);
+    } catch (error) {
+      console.error(error);
 
-      await handleSave();
-      await submitApplication();
-      router.push('/?submitted=true');
-    } catch {
-      alert('제출에 실패했습니다. 잠시 후 다시 시도해주세요.');
-      router.push('/?submitted=false');
-    }
-  };
+      // 저장 실패 시 제출 여부를 서버에서 재확인
+      // 다른 탭에서 이미 제출한 경우 applicationStatus를 갱신하면
+      // ApplyFormContainer의 AlreadySubmittedModal이 자동으로 렌더링됨
+      try {
+        const latestStatus = await queryClient.fetchQuery({
+          queryKey: QUERY_KEYS.APPLY.STATUS,
+          queryFn: getApplicationStatus,
+          staleTime: 0,
+        });
+        if (latestStatus?.isSubmitted) {
+          // 이미 제출된 상태 → alert 없이 return (AlreadySubmittedModal이 뜸)
+          return;
+        }
+      } catch {
+        // 상태 조회 실패 시 무시하고 일반 에러 처리로 진행
+      }
 
-  /**
-   * 최종 제출은 step 이동 과정에서 이미 각 step별 validation을 거치므로
-   * 여기서는 zodResolver 전체 검증을 타지 않게 처리합니다.
-   * (검증 실패 시 아무 반응 없이 submit이 막혀 "버튼이 안 눌리는" UX가 발생할 수 있음)
-   */
-  const handleFinalSubmit = async (e?: React.BaseSyntheticEvent) => {
-    e?.preventDefault();
-
-    // Step 3 필수 필드 검증
-    const isValid = await validateStep(3, methods);
-
-    if (!isValid) {
+      alert('저장에 실패했습니다. 잠시 후 다시 시도해주세요.');
       return;
     }
 
-    const ok = await ensureRecruitmentIsActive();
-    if (!ok) return;
-    openConfirmModal();
+    goToNextStep(step === 1 ? methods.getValues('part') : undefined);
+  };
+
+  const handlePrev = () => {
+    goToPrevStep();
   };
 
   return {
@@ -232,11 +139,11 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
     handleNext,
     handlePrev,
     handleSave,
-    handleFinalSubmit,
+    showSaveSuccess,
     isConfirmModalOpen,
     openConfirmModal,
     closeConfirmModal,
+    handleFinalSubmit,
     handleConfirmSubmit,
-    showSaveSuccess,
   };
 };

@@ -40,6 +40,7 @@ export const AboutUsTickerColumn = ({
               src={item.src}
               alt={item.label}
               fill
+              unoptimized={true}
               className='object-cover'
               sizes='(max-width: 768px) 100vw, 300px'
             />
