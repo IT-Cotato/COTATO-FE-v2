@@ -38,6 +38,28 @@ export const formatRecruitmentDate = (
   return `${month}월 ${day}일 (${weekday})`;
 };
 
+/** "2월 28일 (토) 오후 12시" 형식의 한글 날짜+시간 포맷 함수 */
+export const formatKoreanDateTime = (value?: string | null) => {
+  if (!value) return '';
+
+  const date = new Date(value);
+  const month = date.getMonth() + 1;
+  const day = date.getDate();
+
+  const DAYS = ['일', '월', '화', '수', '목', '금', '토'];
+  const weekday = DAYS[date.getDay()];
+
+  if (!value.includes('T')) {
+    return `${month}월 ${day}일 (${weekday})`;
+  }
+
+  const hours = date.getHours();
+  const period = hours < 12 ? '오전' : '오후';
+  const displayHour = hours === 0 ? 12 : hours > 12 ? hours - 12 : hours;
+
+  return `${month}월 ${day}일 (${weekday}) ${period} ${displayHour}시`;
+};
+
 /** 현재 시간을 "YYYY-MM-DDTHH:mm:ss" 형식으로 생성하는 함수**/
 export const getNowISOString = () => {
   const now = new Date();

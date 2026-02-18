@@ -85,7 +85,7 @@ export const PartQuestionFieldsSchema = z.object({
 });
 
 export const EtcQuestionFieldsSchema = z.object({
-  discovery: z.string().min(1, '필수 항목입니다'),
+  discovery: z.string({message: '필수 항목입니다'}).min(1, '필수 항목입니다'),
   sessionAgree: z.enum(['agree'], {message: '필수 동의 항목입니다'}),
   otAgree: z.enum(['agree'], {message: '필수 동의 항목입니다'}),
   privacyAgree: z.enum(['agree'], {message: '필수 동의 항목입니다'}),
@@ -192,9 +192,9 @@ export const EtcQuestionResponseSchema = z.object({
   }),
   parallelActivities: z.string().nullable(),
   unavailableInterviewTimes: z.string().nullable(),
-  sessionAttendance: z.boolean(),
-  mandatoryEvents: z.boolean(),
-  privacyPolicy: z.boolean(),
+  sessionAttendance: z.boolean().nullable(),
+  mandatoryEvents: z.boolean().nullable(),
+  privacyPolicy: z.boolean().nullable(),
   interviewStartDate: z.string(),
   interviewEndDate: z.string(),
   otDate: z.string(),
