@@ -1,10 +1,5 @@
 import type {NextConfig} from 'next';
 import svgrConfig from '@repo/svgr-config';
-import bundleAnalyzer from '@next/bundle-analyzer';
-
-const withBundleAnalyzer = bundleAnalyzer({
-  enabled: process.env.ANALYZE === 'true',
-});
 
 const nextConfig: NextConfig = {
   webpack: svgrConfig.webpack,
@@ -34,4 +29,4 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default withBundleAnalyzer(nextConfig);
+export default nextConfig;
