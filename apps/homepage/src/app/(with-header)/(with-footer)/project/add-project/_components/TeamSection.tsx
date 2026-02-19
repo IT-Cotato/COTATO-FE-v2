@@ -1,6 +1,6 @@
 import {Position} from '@/schemas/project/project.schema';
 import {MemberChip} from './MemberChip';
-import Plus from '@/assets/plus/plus.svg';
+import Plus from '@repo/ui/assets/icons/plus-nobackground.svg';
 import {TeamSectionProps} from '@/schemas/project/project-type';
 import {POSITION_LABEL} from '@/constants/project/project-detail';
 
