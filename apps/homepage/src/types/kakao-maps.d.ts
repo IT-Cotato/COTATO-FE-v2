@@ -31,11 +31,21 @@ declare namespace kakao.maps {
       distance: string;
     }
 
+    export interface PlacesSearchOptions {
+      category_group_code?: string;
+      location?: kakao.maps.LatLng;
+      radius?: number;
+      rect?: string;
+      size?: number;
+      page?: number;
+      sort?: 'accuracy' | 'distance'
+    }
+
     export type PlacesSearchResult = Place[];
 
     export class Places {
-      constructor(map?: Map);
-      setMap(map: Map | null): void;
+      constructor(map?: kakao.maps.Map);
+      setMap(map: kakao.maps.Map | null): void;
       keywordSearch(
         keyword: string,
         callback: (
@@ -43,7 +53,7 @@ declare namespace kakao.maps {
           status: Status,
           pagination: Pagination
         ) => void,
-        options?: any
+        options?: PlaceSearchOptions
       ): void;
     }
 

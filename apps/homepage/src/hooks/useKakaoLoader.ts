@@ -15,9 +15,16 @@ const notifyListeners = (status: KakaoLoadStatus) => {
 const loadKakaoSDK = () => {
   if (typeof window === 'undefined') return;
 
-  if (cachedStatus === 'ready' || cachedStatus === 'loading') return;
+  const existingScript = document.getElementById('kakao-map-sdk');
 
-  // 이미 로드 완료된 경우
+  if (existingScript) {
+    if (cachedStatus === 'error') {
+      existingScript.remove();
+    } else {
+      return;
+    }
+  }
+
   if (window.kakao?.maps?.services) {
     notifyListeners('ready');
     return;
