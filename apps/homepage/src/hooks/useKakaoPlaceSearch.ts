@@ -4,6 +4,7 @@ import {useState, useCallback} from 'react';
 import {useKakaoLoader} from './useKakaoLoader';
 
 export interface Place {
+  id: string;
   placeName: string;
   address: string;
   roadAddress: string;
@@ -31,10 +32,11 @@ export const useKakaoPlaceSearch = () => {
       setError(null);
       const ps = new window.kakao.maps.services.Places();
 
-      ps.keywordSearch(keyword, (data, status) => {
-        if (status === window.kakao.maps.services.Status.OK) {
+      ps.keywordSearch(keyword, (data, searchStatus) => {
+        if (searchStatus === window.kakao.maps.services.Status.OK) {
           setResults(
             data.map((place) => ({
+              id: place.id,
               placeName: place.place_name,
               address: place.address_name,
               roadAddress: place.road_address_name,
@@ -42,7 +44,9 @@ export const useKakaoPlaceSearch = () => {
               y: place.y,
             }))
           );
-        } else if (status === window.kakao.maps.services.Status.ZERO_RESULT) {
+        } else if (
+          searchStatus === window.kakao.maps.services.Status.ZERO_RESULT
+        ) {
           setResults([]);
         } else {
           setError('검색 중 오류가 발생했습니다.');
