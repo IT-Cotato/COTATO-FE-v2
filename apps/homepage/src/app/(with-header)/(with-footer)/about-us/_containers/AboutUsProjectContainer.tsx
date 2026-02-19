@@ -109,47 +109,42 @@ export const AboutUsProjectContainer = () => {
 const PROJECTS = [
   {
     id: 1,
+    title: '온길',
+    imageSrc: '/images/project/ongil.png',
+  },
+  {
+    id: 2,
+    title: '냉잔고',
+    imageSrc: '/images/project/naengjango.png',
+  },
+  {
+    id: 3,
+    title: 'SIMTALK',
+    imageSrc: '/images/project/simtalk.png',
+  },
+  {
+    id: 4,
+    title: 'COOKEEP',
+    imageSrc: '/images/project/cookeep.png',
+  },
+  {
+    id: 5,
+    title: 'FinSight',
+    imageSrc: '/images/project/finsight.png',
+  },
+  {
+    id: 6,
     title: 'timetile',
     imageSrc: '/images/project/timetile.png',
   },
   {
-    id: 2,
+    id: 7,
     title: 'StageMate',
     imageSrc: '/images/project/stagemate.png',
   },
   {
-    id: 3,
+    id: 8,
     title: 'Troublog',
     imageSrc: '/images/project/troublog.png',
-  },
-  {
-    id: 4,
-    title: 'Kampus',
-    imageSrc: '/images/project/kampus.png',
-  },
-  {
-    id: 5,
-    title: 'T-LINK',
-    imageSrc: '/images/project/t-link.png',
-  },
-  {
-    id: 6,
-    title: 'Ripple',
-    imageSrc: '/images/project/ripple.png',
-  },
-  {
-    id: 7,
-    title: 'o.dit',
-    imageSrc: '/images/project/odit.png',
-  },
-  {
-    id: 8,
-    title: 'Shortcap',
-    imageSrc: '/images/project/shortcap.png',
-  },
-  {
-    id: 9,
-    title: 'syncspot',
-    imageSrc: '/images/project/syncspot.png',
   },
 ];
