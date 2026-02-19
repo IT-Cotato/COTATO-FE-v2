@@ -36,6 +36,7 @@ export default function RecruitmentLayout({
           src={backgroundSrc}
           alt=''
           fill={true}
+          sizes='100vw'
           aria-hidden={true}
           draggable={false}
           className='object-contain object-center'

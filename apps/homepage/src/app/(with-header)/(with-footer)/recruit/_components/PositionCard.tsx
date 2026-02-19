@@ -20,6 +20,7 @@ export const PositionCard = ({item}: PositionCardProps) => {
         alt=''
         aria-hidden={true}
         fill={true}
+        sizes='285px'
         draggable={false}
         className='object-contain object-center opacity-100 transition-opacity duration-300 group-hover:opacity-0'
       />
