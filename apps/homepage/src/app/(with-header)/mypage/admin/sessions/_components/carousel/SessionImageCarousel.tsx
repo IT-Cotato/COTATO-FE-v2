@@ -98,13 +98,15 @@ export const SessionImageCarousel = (props: SessionImageCarouselProps) => {
       const oldIdx = prev.findIndex((img) => img.imageId === active.id);
       const newIdx = prev.findIndex((img) => img.imageId === over.id);
       if (oldIdx === -1 || newIdx === -1) return prev;
-      return arrayMove(prev, oldIdx, newIdx).map((img, i) => ({
+      
+      const newImages = arrayMove(prev, oldIdx, newIdx).map((img, i) => ({
         ...img,
         order: i,
       }));
+      
+      setTimeout(() => setCurrentIndex(newIdx), 0);
+      return newImages;
     });
-    const newIndex = images.findIndex((img) => img.imageId === active.id);
-    setCurrentIndex(newIndex);
   };
 
   const canAddMore = images.length < MAX_IMAGES;
