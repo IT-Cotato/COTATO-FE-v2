@@ -1,5 +1,10 @@
 import type {NextConfig} from 'next';
 import svgrConfig from '@repo/svgr-config';
+import bundleAnalyzer from '@next/bundle-analyzer';
+
+const withBundleAnalyzer = bundleAnalyzer({
+  enabled: process.env.ANALYZE === 'true',
+});
 
 const nextConfig: NextConfig = {
   webpack: svgrConfig.webpack,
@@ -20,7 +25,7 @@ const nextConfig: NextConfig = {
         pathname: '/**',
       },
       {
-        //S3 호스트
+        // S3 호스트
         protocol: 'https',
         hostname: process.env.NEXT_PUBLIC_S3_HOSTNAME || '',
         pathname: '/**',
@@ -29,4 +34,4 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default nextConfig;
+export default withBundleAnalyzer(nextConfig);
