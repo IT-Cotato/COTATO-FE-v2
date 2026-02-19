@@ -22,4 +22,7 @@ export const QUERY_KEYS = {
     DASHBOARD: ['penalty', 'dashboard'],
     RECORDS: (month?: number) => ['penalty', 'records', {month}],
   },
+  SESSIONS: {
+    ADMIN_LIST: (generationId?: number) => ['sessions', 'admin', {generationId}],
+  },
 } as const;
