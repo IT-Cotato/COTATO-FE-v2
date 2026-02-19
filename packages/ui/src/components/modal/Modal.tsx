@@ -58,9 +58,9 @@ export const Modal = ({
           onClick={(e) => e.stopPropagation()}>
           <button
             onClick={onClose}
-            className='absolute top-5 right-5'
+            className='absolute top-3.5 right-3.5 p-1.5'
             aria-label='닫기'>
-            <XIcon className='h-3 w-3 cursor-pointer text-[#21272A]' />
+            <XIcon className='h-3 w-3 cursor-pointer text-neutral-800' />
           </button>
           <div
             className={clsx(
