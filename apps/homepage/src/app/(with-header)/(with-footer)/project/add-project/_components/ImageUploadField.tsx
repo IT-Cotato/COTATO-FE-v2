@@ -47,6 +47,7 @@ export const ImageUploadField = ({
       <div className='flex flex-col gap-4.75'>
         <ImagePreviewer selectedImage={selectedImage} onRemove={handleRemove} />
         <FullButton
+          type='button'
           label='이미지 업로드'
           labelTypo='body_l_sb'
           height={46}
@@ -54,14 +55,17 @@ export const ImageUploadField = ({
           backgroundColor='neutral-400'
           textColor='neutral-50'
           onClick={() => fileInputRef.current?.click()}
+          aria-haspopup='dialog'
         />
         <input
+          id='project-image-input'
           type='file'
           ref={fileInputRef}
           className='hidden'
           accept='.jpg,.png,.jpeg'
           multiple
           onChange={handleFileChange}
+          aria-label='이미지 파일 선택'
         />
       </div>
       <ImageSortableList

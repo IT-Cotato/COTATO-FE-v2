@@ -38,15 +38,22 @@ export const useStartApplicationMutation = () => {
 /**
  * 기본 인적사항 저장
  */
-export const useSaveBasicInfo = (applicationId: number) => {
+export const useSaveBasicInfo = (applicationId: number | null) => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (data: BasicInfoRequest) => saveBasicInfo(applicationId, data),
+    mutationFn: (data: BasicInfoRequest) => {
+      if (!applicationId) throw new Error('지원서 ID가 없습니다.');
+      return saveBasicInfo(applicationId, data);
+    },
     onSuccess: () => {
+      if (!applicationId) return;
       queryClient.invalidateQueries({
         queryKey: QUERY_KEYS.APPLY.BASIC_INFO(applicationId),
       });
+    },
+    onError: (error: Error) => {
+      console.error('기본 인적사항 저장에 실패했습니다.', error);
     },
   });
 };
@@ -54,16 +61,22 @@ export const useSaveBasicInfo = (applicationId: number) => {
 /**
  * 파트별 질문 저장
  */
-export const useSavePartQuestions = (applicationId: number) => {
+export const useSavePartQuestions = (applicationId: number | null) => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (data: PartQuestionRequest) =>
-      savePartQuestions(applicationId, data),
+    mutationFn: (data: PartQuestionRequest) => {
+      if (!applicationId) throw new Error('지원서 ID가 없습니다.');
+      return savePartQuestions(applicationId, data);
+    },
     onSuccess: () => {
+      if (!applicationId) return;
       queryClient.invalidateQueries({
         queryKey: QUERY_KEYS.APPLY.PART_QUESTIONS(applicationId),
       });
+    },
+    onError: (error: Error) => {
+      console.error('파트별 질문 저장에 실패했습니다.', error);
     },
   });
 };
@@ -71,13 +84,16 @@ export const useSavePartQuestions = (applicationId: number) => {
 /**
  * 기타 질문 저장
  */
-export const useSaveEtcQuestions = (applicationId: number) => {
+export const useSaveEtcQuestions = (applicationId: number | null) => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (data: EtcQuestionRequest) =>
-      saveEtcQuestions(applicationId, data),
+    mutationFn: (data: EtcQuestionRequest) => {
+      if (!applicationId) throw new Error('지원서 ID가 없습니다.');
+      return saveEtcQuestions(applicationId, data);
+    },
     onSuccess: () => {
+      if (!applicationId) return;
       queryClient.invalidateQueries({
         queryKey: QUERY_KEYS.APPLY.ETC_QUESTIONS(applicationId),
       });
@@ -91,15 +107,18 @@ export const useSaveEtcQuestions = (applicationId: number) => {
 /**
  * 지원서 최종 제출
  */
-export const useSubmitApplication = (applicationId: number) => {
+export const useSubmitApplication = (applicationId: number | null) => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: () => submitApplication(applicationId),
+    mutationFn: () => {
+      if (applicationId === null) throw new Error('지원서 ID가 없습니다.');
+      return submitApplication(applicationId);
+    },
     onSuccess: () => {
-      queryClient.setQueryData(QUERY_KEYS.APPLY.STATUS, {
-        applicationId,
-        isSubmitted: true,
+      if (applicationId === null) return;
+      queryClient.invalidateQueries({
+        queryKey: QUERY_KEYS.APPLY.STATUS,
       });
     },
     onError: (error: AxiosError) => {

@@ -1,30 +1,24 @@
 'use client';
 
 import Collaboration from '@/assets/home/core-value/collaboration.svg';
-import CollaborationHover from '@/assets/home/core-value/collaboration-hover.svg';
 import Ownership from '@/assets/home/core-value/ownership.svg';
-import OwnershipHover from '@/assets/home/core-value/ownership-hover.svg';
 import Growth from '@/assets/home/core-value/growth.svg';
-import GrowthHover from '@/assets/home/core-value/growth-hover.svg';
 import {HomeSectionHeader} from '@/app/(with-header)/(with-footer)/(home)/_components/HomeSectionHeader';
 
 export const HomeCoreValue = () => {
   const items = [
     {
       defaultIcon: Collaboration,
-      hoverIcon: CollaborationHover,
       title: 'Code Together',
       desc: '함께 성장하는 협업',
     },
     {
       defaultIcon: Ownership,
-      hoverIcon: OwnershipHover,
       title: 'Own the Trip',
       desc: '주도적으로 만들어가는 여정',
     },
     {
       defaultIcon: Growth,
-      hoverIcon: GrowthHover,
       title: 'Arrive Together',
       desc: '함께 도전하며 도착하는 경험',
     },
@@ -40,18 +34,12 @@ export const HomeCoreValue = () => {
       <ul className='flex flex-row gap-7.5' role='list'>
         {items.map((item, idx) => {
           const DefaultIcon = item.defaultIcon;
-          const HoverIcon = item.hoverIcon;
 
           return (
-            <li
-              key={idx}
-              className='group flex flex-col items-center outline-none'
-              tabIndex={0}>
+            <li key={idx} className='flex flex-col items-center'>
               <div className='relative h-auto w-auto'>
-                <DefaultIcon className='transition-opacity duration-200 group-hover:opacity-0 group-focus:opacity-0' />
-                <HoverIcon className='absolute top-0 left-0 opacity-0 transition-opacity duration-200 group-hover:opacity-100 group-focus:opacity-100' />
+                <DefaultIcon />
               </div>
-
               <div className='mt-3 flex flex-col items-center gap-3'>
                 <strong className='text-h3 font-bold text-neutral-600'>
                   {item.title}

@@ -13,6 +13,8 @@ import {getEtcFields} from '@/constants/form/formConfig';
 import {EtcFieldConfig} from '@/schemas/apply/apply-type';
 import {ApplyFormData} from '@/schemas/apply/apply-schema';
 import {useGetEtcQuestionsQuery} from '@/hooks/queries/useApply.query';
+import {useRecruitmentScheduleQuery} from '@/hooks/queries/useRecruitmentSchedule.query';
+import {formatRecruitmentDate} from '@/utils/formatDate';
 import {StepIndicator} from '@/components/navigation/StepIndicator';
 import {Spinner} from '@repo/ui/components/spinner/Spinner';
 import {formFieldStyles} from '@repo/ui/components/form/form.styles';
@@ -54,11 +56,15 @@ export const EtcInfo = ({
   const {data: etcQuestions, isLoading} =
     useGetEtcQuestionsQuery(applicationId);
 
+  const {data: schedule} = useRecruitmentScheduleQuery();
+
   const etcDates = etcQuestions
     ? {
         interviewStartDate: etcQuestions.interviewStartDate,
         interviewEndDate: etcQuestions.interviewEndDate,
-        otDate: etcQuestions.otDate,
+        otDate: formatRecruitmentDate(schedule?.ot, false),
+        cokerthonDate: formatRecruitmentDate(schedule?.cokerthon, false),
+        demoDayDate: formatRecruitmentDate(schedule?.demoDay, false),
       }
     : undefined;
 

@@ -36,6 +36,8 @@ export const FormTextarea = forwardRef<HTMLTextAreaElement, FormTextareaProps>(
       props.onChange?.(e);
     };
 
+    const showCountInside = !isProject && maxLength;
+
     return (
       <div className={formFieldStyles.wrapper}>
         {!isProject && label && (
@@ -46,30 +48,27 @@ export const FormTextarea = forwardRef<HTMLTextAreaElement, FormTextareaProps>(
             )}
           </label>
         )}
-        <div className='relative w-full'>
-          <textarea
-            ref={ref}
-            id={inputId}
-            spellCheck='false'
+        {showCountInside ? (
+          <div
             className={clsx(
-              'w-full resize-none transition-all',
-              formFieldStyles.field,
-              'read-only:cursor-default read-only:focus:ring-0',
-              isProject
-                ? 'h-24 min-h-24 px-4 py-3.5'
-                : 'min-h-54.5 px-4.75 py-4.5',
-              error && formFieldStyles.error,
-              error && formFieldStyles.errorFocus,
-              props.readOnly && formFieldStyles.readOnlyTextarea,
-              isProject && 'text-h5 placeholder:text-neutral-400',
-              className
-            )}
-            maxLength={maxLength}
-            {...props}
-            onChange={handleChange}
-          />
-          {maxLength && (
-            <div className='text-h5 absolute right-4 bottom-4 text-neutral-400'>
+              'flex min-h-54.5 flex-col rounded-[10px] border border-neutral-200 bg-white',
+              error && formFieldStyles.error
+            )}>
+            <textarea
+              ref={ref}
+              id={inputId}
+              spellCheck='false'
+              className={clsx(
+                'placeholder-body-l min-h-0 w-full flex-1 resize-none bg-transparent px-4.75 pt-4.5 placeholder:text-neutral-400 focus:outline-none',
+                'read-only:cursor-default read-only:focus:ring-0',
+                props.readOnly && formFieldStyles.readOnlyTextarea,
+                className
+              )}
+              maxLength={maxLength}
+              {...props}
+              onChange={handleChange}
+            />
+            <div className='text-h5 shrink-0 px-4 pb-3 text-right text-neutral-400'>
               <span
                 className={clsx(
                   currentLength > maxLength ? 'text-alert' : 'text-black'
@@ -78,8 +77,32 @@ export const FormTextarea = forwardRef<HTMLTextAreaElement, FormTextareaProps>(
               </span>
               / {maxLength} 자
             </div>
-          )}
-        </div>
+          </div>
+        ) : (
+          <div className='relative w-full'>
+            <textarea
+              ref={ref}
+              id={inputId}
+              spellCheck='false'
+              className={clsx(
+                'w-full resize-none transition-all',
+                formFieldStyles.field,
+                'read-only:cursor-default read-only:focus:ring-0',
+                isProject
+                  ? 'h-24 min-h-24 px-4 py-3.5'
+                  : 'min-h-54.5 px-4.75 py-4.5',
+                error && formFieldStyles.error,
+                error && formFieldStyles.errorFocus,
+                props.readOnly && formFieldStyles.readOnlyTextarea,
+                isProject && 'text-h5 placeholder:text-neutral-400',
+                className
+              )}
+              maxLength={maxLength}
+              {...props}
+              onChange={handleChange}
+            />
+          </div>
+        )}
         {error && <span className={formFieldStyles.errorMessage}>{error}</span>}
       </div>
     );

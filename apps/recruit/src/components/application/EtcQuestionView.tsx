@@ -61,9 +61,9 @@ export const EtcQuestionView = ({
       </div>
       <div className='flex flex-col gap-4'>
         <label className='text-h5 text-neutral-800'>
-          최종 합격 시 대면 OT({etcQuestions.otDate ?? '-'}), 코커톤(0월 0일),
-          데모데이(0월 0일)는 필수 참여입니다.
-          {/** TODO: 추후 코커톤, 데모데이 서버 응답으로 변경 */}
+          최종 합격 시 대면 OT({etcQuestions.otDate ?? '-'}), 코커톤(
+          {etcQuestions.cokerthonDate}), 데모데이(
+          {etcQuestions.demoDayDate})는 필수 참여입니다.
         </label>
         <FormRadio
           label={ETC_QUESTION_LABELS.mandatoryEvents_answer}

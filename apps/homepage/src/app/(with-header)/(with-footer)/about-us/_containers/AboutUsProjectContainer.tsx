@@ -67,6 +67,7 @@ export const AboutUsProjectContainer = () => {
                     fill
                     className='object-cover'
                     priority={isActive}
+                    unoptimized={true}
                   />
 
                   {!isActive && (

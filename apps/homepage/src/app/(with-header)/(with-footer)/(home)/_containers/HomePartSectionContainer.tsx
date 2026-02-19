@@ -112,6 +112,7 @@ export const HomePartSectionContainer = () => {
                   fill
                   priority
                   className='object-cover'
+                  unoptimized={true}
                 />
                 <div className='absolute inset-0 bg-black/40' />
 

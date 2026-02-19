@@ -19,12 +19,9 @@ export const AttendanceStatusContainer = ({
 }) => {
   const isAttendance = activeTab === 'attendance';
 
-  // 탭이 attendance일 때만 출석 대시보드 호출
   const {data: attendData} = useAttendanceDashboardQuery({
     enabled: isAttendance,
   });
-
-  // 탭이 penalty일 때만 상벌점 대시보드 호출
   const {data: penaltyData} = usePenaltyDashboardQuery({
     enabled: !isAttendance,
   });

@@ -20,13 +20,11 @@ export const AttendanceCheckContainer = ({activeTab}: {activeTab: TabType}) => {
 
   const isAttendance = activeTab === 'attendance';
 
-  // 탭이 attendance일 때만 호출
   const {data: attendRecords, isLoading: isAttendLoading} =
     useAttendanceRecordsQuery(monthNumber, {
       enabled: isAttendance,
     });
 
-  // 탭이 penalty일 때만 호출
   const {data: penaltyRecords, isLoading: isPenaltyLoading} =
     usePenaltyRecordsQuery(monthNumber, {
       enabled: !isAttendance,
