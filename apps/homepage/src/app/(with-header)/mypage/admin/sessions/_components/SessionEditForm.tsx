@@ -21,12 +21,12 @@ const RADIO_BASE =
 export const SessionEditForm = ({form, onChange}: SessionEditFormProps) => {
   const [isLocationModalOpen, setIsLocationModalOpen] = useState(false);
 
-  const set = (field: keyof SessionData, value: string) =>
+  const set = <K extends keyof SessionData>(field: K, value: SessionData[K]) =>
     onChange((prev) => ({...prev, [field]: value}));
 
   const setAttendTime = (
     field: keyof SessionData['attendTime'],
-    value: string,
+    value: string
   ) =>
     onChange((prev) => ({
       ...prev,
@@ -65,14 +65,15 @@ export const SessionEditForm = ({form, onChange}: SessionEditFormProps) => {
               onClick={() => setIsLocationModalOpen(true)}
               className={`flex cursor-pointer items-center ${INPUT_BASE} h-8 w-27.5 gap-2.5 px-1.5 py-1.25`}>
               <SearchIcon className='h-4.5 w-4.5 shrink-0 text-neutral-600' />
-              <span className={`text-body-m truncate ${form.placeName ? 'text-neutral-800' : 'text-neutral-600'}`}>
+              <span
+                className={`text-body-m truncate ${form.placeName ? 'text-neutral-800' : 'text-neutral-600'}`}>
                 {form.placeName || '장소 검색'}
               </span>
             </div>
             <input
               type='text'
-              value={form.roadNameAddress}
-              onChange={(e) => set('roadNameAddress', e.target.value)}
+              value={form.detailAddress}
+              onChange={(e) => set('detailAddress', e.target.value)}
               placeholder='상세 장소 (예: 세미나실 1)'
               className={`text-body-m ${INPUT_BASE} h-8 w-27.5 px-1.5 py-1.25 placeholder:text-neutral-600`}
             />
@@ -80,14 +81,16 @@ export const SessionEditForm = ({form, onChange}: SessionEditFormProps) => {
               type='button'
               aria-label='장소 삭제'
               onClick={() => {
-                set('placeName', '');
-                set('roadNameAddress', '');
+                onChange((prev) => ({
+                  ...prev,
+                  placeName: '',
+                  detailAddress: '',
+                }));
               }}
               className='shrink-0 cursor-pointer'>
               <TrashIcon className='h-6 w-6' />
             </button>
           </div>
-
 
           <p className='text-h5 text-neutral-600'>대면 여부</p>
           <div className='flex gap-4'>
@@ -146,7 +149,9 @@ export const SessionEditForm = ({form, onChange}: SessionEditFormProps) => {
               <input
                 type='text'
                 value={form.attendTime.attendanceEndTime}
-                onChange={(e) => setAttendTime('attendanceEndTime', e.target.value)}
+                onChange={(e) =>
+                  setAttendTime('attendanceEndTime', e.target.value)
+                }
                 placeholder='19:00'
                 className='text-body-m w-full bg-transparent outline-none placeholder:text-neutral-600'
               />
