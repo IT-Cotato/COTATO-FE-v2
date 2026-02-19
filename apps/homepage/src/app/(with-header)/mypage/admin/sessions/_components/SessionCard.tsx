@@ -7,6 +7,7 @@ import {ActionButtons} from '@/app/(with-header)/mypage/admin/_components/Action
 import {SessionExpandedContent} from './SessionExpandedContent';
 import {Modal} from '@repo/ui/components/modal/Modal';
 import {FullButton} from '@repo/ui/components/buttons/FullButton';
+import {getJosa} from '@/utils/getJosa';
 
 const SESSION_MENU_ITEMS = [
   {key: 'edit', label: '수정하기'},
@@ -89,7 +90,7 @@ export const SessionCard = ({
       <Modal
         isOpen={isDeleteModalOpen}
         onClose={() => setIsDeleteModalOpen(false)}
-        title={`${session.title}을 삭제하시겠습니까?`}
+        title={`${session.title}${getJosa(session.title, '을/를')} 삭제하시겠습니까?`}
         noContent={true}
         contentWrapperClassName='gap-18'
         actions={
