@@ -20,7 +20,7 @@ export const SessionDetailView = ({session}: SessionDetailViewProps) => {
         <div className='flex flex-col gap-1'>
           <p className='text-h5 text-neutral-400'>세션 장소</p>
           <p className='text-h4 text-neutral-600'>
-            {session.placeName} {session.roadNameAddress}
+            {session.placeName} {session.detailAddress}
           </p>
         </div>
       </div>

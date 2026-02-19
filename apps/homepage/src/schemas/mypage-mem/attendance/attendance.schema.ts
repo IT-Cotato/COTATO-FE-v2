@@ -28,7 +28,7 @@ export const SessionAttendanceSchema = z.object({
   sessionDateTime: z.string(),
   content: z.string().optional(),
   placeName: z.string().optional(),
-  roadNameAddress: z.string().optional(),
+  detailAddress: z.string().optional(),
   sessionType: SessionTypeEnum,
   imageUrls: z.array(z.string()),
   attendanceId: z.number().nullable(),
