@@ -1,7 +1,10 @@
-import {useRef, useState} from 'react';
+'use client';
+
+import {useRef, useState, useEffect} from 'react';
 import SearchIcon from '@repo/ui/assets/icons/search.svg';
-import XIcon from '@repo/ui/assets/icons/cancel.svg'
+import XIcon from '@repo/ui/assets/icons/cancel.svg';
 import {useKakaoPlaceSearch, Place} from '@/hooks/useKakaoPlaceSearch';
+import clsx from 'clsx';
 
 interface LocationSearchModalProps {
   isOpen: boolean;
@@ -16,17 +19,29 @@ export const LocationSearchModal = ({
 }: LocationSearchModalProps) => {
   const {search, results, status, error} = useKakaoPlaceSearch();
   const [query, setQuery] = useState('');
-  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+  const [selectedId, setSelectedId] = useState<string | null>(null);
   const [isPending, setIsPending] = useState(false);
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    if (!isOpen && debounceRef.current) {
+      clearTimeout(debounceRef.current);
+      debounceRef.current = null;
+    }
+    return () => {
+      if (debounceRef.current) {
+        clearTimeout(debounceRef.current);
+        debounceRef.current = null;
+      }
+    };
+  }, [isOpen]);
 
   if (!isOpen) return null;
 
   const handleSearch = (value: string) => {
     setQuery(value);
-    setSelectedIndex(null);
+    setSelectedId(null);
     setIsPending(true);
-
     if (debounceRef.current) clearTimeout(debounceRef.current);
     debounceRef.current = setTimeout(() => {
       setIsPending(false);
@@ -34,9 +49,9 @@ export const LocationSearchModal = ({
     }, 300);
   };
 
-  const handleSelect = (index: number) => {
-    setSelectedIndex(index);
-    onSelect(results[index]);
+  const handleSelect = (id: string, result: Place) => {
+    setSelectedId(id);
+    onSelect(result);
   };
 
   return (
@@ -44,15 +59,12 @@ export const LocationSearchModal = ({
       className='z-modal fixed inset-0 flex items-center justify-center bg-black/50 backdrop-blur-sm'
       onClick={onClose}>
       <div
-        className='flex flex-col w-full max-w-152 h-[660px] rounded-[20px] bg-white px-9.75 py-6.5'
+        className='flex h-165 w-full max-w-152 flex-col rounded-[20px] bg-white px-9.75 py-6.5'
         onClick={(e) => e.stopPropagation()}>
-        <button
-          onClick={onClose}
-          className='self-end'
-          aria-label='닫기'>
+        <button onClick={onClose} className='self-end' aria-label='닫기'>
           <XIcon className='h-4 w-4 cursor-pointer text-black' />
         </button>
-        <div className='flex flex-col gap-9 flex-1 min-h-0'>
+        <div className='flex min-h-0 flex-1 flex-col gap-9'>
           <div className='flex flex-col gap-1.75'>
             <h4 className='text-h3 text-center text-neutral-800'>
               세션 장소 검색
@@ -71,7 +83,7 @@ export const LocationSearchModal = ({
             </div>
           </div>
 
-          <div className='modal-scrollbar flex flex-col gap-1.75 flex-1 min-h-0 overflow-y-auto pr-[10px]'>
+          <div className='modal-scrollbar flex min-h-0 flex-1 flex-col gap-1.75 overflow-y-auto pr-2.5'>
             {status === 'loading' && query && (
               <p className='text-body-m items-center justify-center text-neutral-400'>
                 검색 중...
@@ -82,15 +94,18 @@ export const LocationSearchModal = ({
 
             {results.length > 0 && (
               <ul className='flex flex-col gap-2'>
-                {results.map((result, index) => (
+                {results.map((result) => (
                   <li
-                    key={index}
-                    onClick={() => handleSelect(index)}
-                    className={`cursor-pointer flex flex-col justify-center h-17.5 rounded-[10px] border px-[17px] py-[8.5px] transition-all duration-200 ${
-                      selectedIndex === index
-                        ? 'border-primary bg-primary/20'
-                        : 'border-neutral-200 bg-neutral-50 hover:bg-primary/20 hover:border-primary hover:shadow-sm'
-                    }`}>
+                    key={result.id}
+                    onClick={() => handleSelect(result.id, result)}
+                    className={clsx(
+                      'flex h-17.5 cursor-pointer flex-col justify-center rounded-[10px] border px-4.25 py-[8.5px] transition-all duration-200',
+                      {
+                        'border-primary bg-primary/20': selectedId === result.id,
+                        'hover:bg-primary/20 hover:border-primary border-neutral-200 bg-neutral-50 hover:shadow-sm':
+                          selectedId !== result.id,
+                      }
+                    )}>
                     <p className='text-h4 text-neutral-800'>
                       {result.placeName}
                     </p>
@@ -102,11 +117,15 @@ export const LocationSearchModal = ({
               </ul>
             )}
 
-            {status === 'ready' && query && results.length === 0 && !error && !isPending && (
-              <p className='text-h4 items-center justify-center text-neutral-300'>
-                검색 결과가 없습니다.
-              </p>
-            )}
+            {status === 'ready' &&
+              query &&
+              results.length === 0 &&
+              !error &&
+              !isPending && (
+                <p className='text-h4 items-center justify-center text-neutral-300'>
+                  검색 결과가 없습니다.
+                </p>
+              )}
           </div>
         </div>
       </div>
