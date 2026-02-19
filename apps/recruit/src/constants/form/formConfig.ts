@@ -62,7 +62,7 @@ export const BASIC_INFO_FIELDS: BasicInfoFormItem[] = [
         type: 'radio',
         options: [
           {label: '재학', value: 'enrolled'},
-          {label: '휴학 · 졸업 · 유예', value: 'other'},
+          {label: '휴학 · 유예', value: 'other'},
         ],
       },
     ],

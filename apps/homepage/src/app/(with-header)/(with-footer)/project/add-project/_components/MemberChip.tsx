@@ -1,5 +1,6 @@
 import {useState, useEffect} from 'react';
-import XIcon from '@/assets/cancel/cancel.svg';
+import XIcon from '@repo/ui/assets/icons/cancel.svg';
+
 
 export const MemberChip = ({
   name,
@@ -79,7 +80,7 @@ export const MemberChip = ({
             ? 'block'
             : 'hidden group-focus-within:block group-hover:block'
         }`}>
-        <XIcon className='h-3 w-3' aria-hidden='true' />
+        <XIcon className='h-3 w-3 text-white' aria-hidden='true'/>
       </button>
     </div>
   );

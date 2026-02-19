@@ -29,7 +29,7 @@ export interface SessionData {
   description: string;
   attendanceStartTime: string;
   placeName: string;
-  roadNameAddress: string;
+  detailAddress: string;
   location: SessionLocation;
   attendTime: SessionAttendTime;
   isOffline: boolean;
