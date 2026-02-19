@@ -1,7 +1,7 @@
 'use client';
 
 import {useEffect, useState} from 'react';
-import {SessionData} from '@/schemas/admin/session.schema';
+import {AdminSession, SessionData} from '@/schemas/admin/session.schema';
 import {ActionMenu} from '@/app/(with-header)/mypage/admin/_components/ActionMenu';
 import {ActionButtons} from '@/app/(with-header)/mypage/admin/_components/ActionButtons';
 import {SessionExpandedContent} from './SessionExpandedContent';
@@ -17,7 +17,7 @@ const SESSION_MENU_ITEMS = [
 type SessionMenuAction = (typeof SESSION_MENU_ITEMS)[number]['key'];
 
 interface SessionCardProps {
-  session: SessionData;
+  session: AdminSession;
   isExpanded: boolean;
   onToggle: () => void;
   onDelete: (sessionId: number) => void;
@@ -33,7 +33,30 @@ export const SessionCard = ({
 }: SessionCardProps) => {
   const [isEditing, setIsEditing] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const [form, setForm] = useState<SessionData>(session);
+  
+  // AdminSession 데이터를 SessionData 구조로 안전하게 매핑
+  const sessionData: SessionData = {
+    sessionId: session.sessionId,
+    title: session.title,
+    description: session.description,
+    content: session.content,
+    placeName: session.placeName,
+    date: session.sessionDateTime,
+    generation: '', // 목록 정보에 없음
+    attendanceStartTime: '', // 목록 정보에 없음
+    images: session.imageInfos || [],
+    detailAddress: '', // 상세 데이터 없음
+    location: {latitude: 0, longitude: 0},
+    attendTime: {
+      attendanceEndTime: '',
+      lateEndTime: '',
+    },
+    isOffline: true,
+    isOnline: false,
+  };
+
+  const [form, setForm] = useState<SessionData>(sessionData);
+
 
   useEffect(() => {
     if (!isExpanded) setIsEditing(false);
@@ -41,7 +64,7 @@ export const SessionCard = ({
 
   const handleMenuAction = (action: SessionMenuAction) => {
     if (action === 'edit') {
-      setForm(session);
+      setForm(sessionData);
       setIsEditing(true);
       if (!isExpanded) onToggle();
     } else if (action === 'delete') {
@@ -64,7 +87,7 @@ export const SessionCard = ({
       onClick={onToggle}>
       <div className='flex items-center justify-between'>
         <div className='flex flex-col'>
-          <p className='text-h5 text-neutral-400'>{session.date}</p>
+          <p className='text-h5 text-neutral-400'>{session.sessionDateTime}</p>
           <p className='text-h3 text-neutral-800'>{session.title}</p>
         </div>
         <div
@@ -115,10 +138,15 @@ export const SessionCard = ({
               onChange={setForm}
             />
           ) : (
-            <SessionExpandedContent key='view' mode='view' session={session} />
+            <SessionExpandedContent
+              key='view'
+              mode='view'
+              session={sessionData}
+            />
           )}
         </div>
       )}
     </div>
   );
 };
+

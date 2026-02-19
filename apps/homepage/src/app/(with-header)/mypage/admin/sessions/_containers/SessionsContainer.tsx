@@ -1,10 +1,10 @@
 'use client';
 
 import {useState} from 'react';
-import {MOCK_SESSIONS} from '@/constants/admin/mock';
 import {NewSessionData, SessionData} from '@/schemas/admin/session.schema';
 import {AddSessionButton} from '../_components/AddSessionButton';
 import {SessionCard} from '../_components/SessionCard';
+import {useAdminSessionsQuery} from '@/hooks/queries/useSession.query';
 
 const NEW_SESSION_TEMPLATE: NewSessionData = {
   date: '',
@@ -26,46 +26,52 @@ const NEW_SESSION_TEMPLATE: NewSessionData = {
 };
 
 export const SessionsContainer = () => {
-  const [sessions, setSessions] = useState<SessionData[]>(MOCK_SESSIONS);
   const [expandedCardId, setExpandedCardId] = useState<number | null>(null);
+  const [selectedGenerationId] = useState<number | undefined>(undefined);
+
+  const {data: adminSessions = [], isLoading} =
+    useAdminSessionsQuery(selectedGenerationId);
 
   const handleToggle = (sessionId: number) => {
     setExpandedCardId((prev) => (prev === sessionId ? null : sessionId));
   };
 
   const handleAdd = () => {
+    // TODO: POST /v1/api/admin/sessions 연동
     const newId = Date.now();
-    setSessions((prev) => [
-      {...NEW_SESSION_TEMPLATE, sessionId: newId},
-      ...prev,
-    ]);
     setExpandedCardId(newId);
   };
 
   const handleDelete = (sessionId: number) => {
-    setSessions((prev) => prev.filter((s) => s.sessionId !== sessionId));
+    // TODO: DELETE /v1/api/admin/sessions/{id} 연동
     setExpandedCardId((prev) => (prev === sessionId ? null : prev));
   };
 
   const handleUpdate = (updated: SessionData) => {
-    setSessions((prev) =>
-      prev.map((s) => (s.sessionId === updated.sessionId ? updated : s))
-    );
+    // TODO: PATCH /v1/api/admin/sessions/{id} 연동
   };
 
+  if (isLoading) return <div className='py-20 text-center'>로딩 중...</div>;
+
   return (
-    <div className='flex flex-col gap-2.5'>
+    <div className='flex min-h-[500px] flex-col gap-2.5'>
       <AddSessionButton onClick={handleAdd} />
-      {sessions.map((session) => (
-        <SessionCard
-          key={session.sessionId}
-          session={session}
-          isExpanded={expandedCardId === session.sessionId}
-          onToggle={() => handleToggle(session.sessionId)}
-          onDelete={handleDelete}
-          onUpdate={handleUpdate}
-        />
-      ))}
+      {adminSessions.length > 0 ? (
+        adminSessions.map((adminSession) => (
+          <SessionCard
+            key={adminSession.sessionId}
+            session={adminSession}
+            isExpanded={expandedCardId === adminSession.sessionId}
+            onToggle={() => handleToggle(adminSession.sessionId)}
+            onDelete={handleDelete}
+            onUpdate={handleUpdate}
+          />
+        ))
+      ) : (
+        <div className='flex flex-1 items-center justify-center text-center text-neutral-400'>
+          아직 등록된 세션이 없습니다.
+        </div>
+      )}
     </div>
   );
 };
