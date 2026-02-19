@@ -38,4 +38,20 @@ export interface SessionData {
   images: SessionImage[];
 }
 
+export interface AdminSession {
+  sessionId: number;
+  sessionNumber: number;
+  title: string;
+  imageInfos: SessionImage[];
+  description: string;
+  generationId: number;
+  placeName: string;
+  sessionDateTime: string;
+  content: string;
+}
+
 export type NewSessionData = Omit<SessionData, 'sessionId'>;
+
+/** 상세 조회 응답 타입 (공용 API와 Admin UI 호환) */
+export interface AdminSessionDetail extends SessionData {}
+
