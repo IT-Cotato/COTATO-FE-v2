@@ -56,12 +56,14 @@ export const Modal = ({
           )}
           style={containerStyle}
           onClick={(e) => e.stopPropagation()}>
-          <button
-            onClick={onClose}
-            className='absolute top-3.5 right-3.5 p-1.5'
-            aria-label='닫기'>
-            <XIcon className='h-3 w-3 cursor-pointer text-neutral-800' />
-          </button>
+          {onClose && (
+            <button
+              onClick={onClose}
+              className='absolute top-3.5 right-3.5 p-1.5'
+              aria-label='닫기'>
+              <XIcon className='h-3 w-3 cursor-pointer text-neutral-800' />
+            </button>
+          )}
           <div
             className={clsx(
               'flex h-full flex-col items-center text-center',

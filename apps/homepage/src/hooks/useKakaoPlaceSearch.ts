@@ -1,6 +1,6 @@
 'use client';
 
-import {useState, useCallback} from 'react';
+import {useState, useCallback, useRef} from 'react';
 import {useKakaoLoader} from './useKakaoLoader';
 
 export interface Place {
@@ -16,11 +16,17 @@ export const useKakaoPlaceSearch = () => {
   const status = useKakaoLoader();
   const [results, setResults] = useState<Place[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const searchCountRef = useRef(0)
 
   const search = useCallback(
     (keyword: string) => {
       if (!keyword.trim()) {
         setResults([]);
+        return;
+      }
+
+      if (status=== 'error') {
+        setError('지도 서비스를 불러오지 못했습니다. 페이지를 새로고침 해주세요.');
         return;
       }
 
@@ -31,8 +37,11 @@ export const useKakaoPlaceSearch = () => {
 
       setError(null);
       const ps = new window.kakao.maps.services.Places();
+      const currentCount = ++searchCountRef.current;
 
       ps.keywordSearch(keyword, (data, searchStatus) => {
+        if (currentCount !== searchCountRef.current) return;
+        
         if (searchStatus === window.kakao.maps.services.Status.OK) {
           setResults(
             data.map((place) => ({
