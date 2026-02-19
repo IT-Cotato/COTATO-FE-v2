@@ -50,7 +50,7 @@ export const LocationSearchModal = ({
           onClick={onClose}
           className='self-end'
           aria-label='닫기'>
-          <XIcon className='h-4 w-4 cursor-pointer text' />
+          <XIcon className='h-4 w-4 cursor-pointer text-black' />
         </button>
         <div className='flex flex-col gap-9 flex-1 min-h-0'>
           <div className='flex flex-col gap-1.75'>
@@ -86,10 +86,10 @@ export const LocationSearchModal = ({
                   <li
                     key={index}
                     onClick={() => handleSelect(index)}
-                    className={`cursor-pointer h-17.5 rounded-[10px] border px-[17px] py-[8.5px] transition-colors ${
+                    className={`cursor-pointer flex flex-col justify-center h-17.5 rounded-[10px] border px-[17px] py-[8.5px] transition-all duration-200 ${
                       selectedIndex === index
-                        ? 'border-primary bg-primary/20 hover:bg-primary/30'
-                        : 'border-neutral-200 bg-neutral-50'
+                        ? 'border-primary bg-primary/20'
+                        : 'border-neutral-200 bg-neutral-50 hover:bg-primary/20 hover:border-primary hover:shadow-sm'
                     }`}>
                     <p className='text-h4 text-neutral-800'>
                       {result.placeName}
