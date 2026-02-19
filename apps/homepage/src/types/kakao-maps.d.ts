@@ -38,7 +38,7 @@ declare namespace kakao.maps {
       rect?: string;
       size?: number;
       page?: number;
-      sort?: 'accuracy' | 'distance'
+      sort?: 'accuracy' | 'distance';
     }
 
     export type PlacesSearchResult = Place[];

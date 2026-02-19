@@ -8,7 +8,12 @@ interface CheckboxProps {
   className?: string;
 }
 
-export const Checkbox = ({checked, onChange, disabled, className}: CheckboxProps) => {
+export const Checkbox = ({
+  checked,
+  onChange,
+  disabled,
+  className,
+}: CheckboxProps) => {
   return (
     <div
       onClick={(e) => {

@@ -19,7 +19,11 @@ export const SessionDetailView = ({session}: SessionDetailViewProps) => {
         </div>
         <div className='flex flex-col gap-1'>
           <p className='text-h5 text-neutral-400'>세션 장소</p>
-          <p className='text-h4 text-neutral-600'>{session.placeName? `${session.placeName}${session.detailAddress ? ` ${session.detailAddress}` : ''}`: '온라인 세션'}</p>
+          <p className='text-h4 text-neutral-600'>
+            {session.placeName
+              ? `${session.placeName}${session.detailAddress ? ` ${session.detailAddress}` : ''}`
+              : '온라인 세션'}
+          </p>
         </div>
       </div>
     </div>

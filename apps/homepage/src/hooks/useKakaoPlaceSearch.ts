@@ -16,7 +16,7 @@ export const useKakaoPlaceSearch = () => {
   const status = useKakaoLoader();
   const [results, setResults] = useState<Place[]>([]);
   const [error, setError] = useState<string | null>(null);
-  const searchCountRef = useRef(0)
+  const searchCountRef = useRef(0);
 
   const search = useCallback(
     (keyword: string) => {
@@ -25,8 +25,10 @@ export const useKakaoPlaceSearch = () => {
         return;
       }
 
-      if (status=== 'error') {
-        setError('지도 서비스를 불러오지 못했습니다. 페이지를 새로고침 해주세요.');
+      if (status === 'error') {
+        setError(
+          '지도 서비스를 불러오지 못했습니다. 페이지를 새로고침 해주세요.'
+        );
         return;
       }
 
@@ -41,7 +43,7 @@ export const useKakaoPlaceSearch = () => {
 
       ps.keywordSearch(keyword, (data, searchStatus) => {
         if (currentCount !== searchCountRef.current) return;
-        
+
         if (searchStatus === window.kakao.maps.services.Status.OK) {
           setResults(
             data.map((place) => ({

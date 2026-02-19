@@ -9,32 +9,9 @@ interface CountdownTimerProps {
   highlightUnits?: boolean;
 }
 
-const calculateTimeLeft = (targetTimestamp: number) => {
-  const now = Date.now();
-  const difference = targetTimestamp - now;
-
-  if (difference <= 0) {
-    return {d: '0', h: '0', m: '0', s: '0'};
-  }
-
-  const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-  const hours = Math.floor(
-    (difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-  );
-  const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-  const seconds = Math.floor((difference % (1000 * 60)) / 1000);
-
-  return {
-    d: String(days),
-    h: String(hours),
-    m: String(minutes),
-    s: String(seconds),
-  };
-};
-
-export default function CountdownTimer({
+export const CountdownTimer = ({
   highlightUnits = false,
-}: CountdownTimerProps) {
+}: CountdownTimerProps) => {
   const {data: noticeData, isLoading} = useRecruitmentNoticeQuery();
   const [timeLeft, setTimeLeft] = useState(() => ({
     d: '0',
@@ -48,12 +25,30 @@ export default function CountdownTimer({
 
     const targetDate = new Date(noticeData.endDate).getTime();
 
-    const tick = () => {
-      setTimeLeft(calculateTimeLeft(targetDate));
-    };
+    const initial = calculateTimeLeft(targetDate);
+    setTimeLeft(initial);
 
-    tick();
-    const timerId = setInterval(tick, 1000);
+    if (
+      initial.d === '0' &&
+      initial.h === '0' &&
+      initial.m === '0' &&
+      initial.s === '0'
+    ) {
+      return;
+    }
+
+    const timerId = setInterval(() => {
+      const remaining = calculateTimeLeft(targetDate);
+      setTimeLeft(remaining);
+      if (
+        remaining.d === '0' &&
+        remaining.h === '0' &&
+        remaining.m === '0' &&
+        remaining.s === '0'
+      ) {
+        clearInterval(timerId);
+      }
+    }, 1000);
 
     return () => clearInterval(timerId);
   }, [noticeData]);
@@ -99,4 +94,27 @@ export default function CountdownTimer({
       </div>
     </div>
   );
-}
+};
+
+const calculateTimeLeft = (targetTimestamp: number) => {
+  const now = Date.now();
+  const difference = targetTimestamp - now;
+
+  if (difference <= 0) {
+    return {d: '0', h: '0', m: '0', s: '0'};
+  }
+
+  const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+  const hours = Math.floor(
+    (difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+  );
+  const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+  const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+  return {
+    d: String(days),
+    h: String(hours),
+    m: String(minutes),
+    s: String(seconds),
+  };
+};
