@@ -10,7 +10,7 @@ export const MOCK_SESSIONS: SessionData[] = [
     description: 'CS교육 및 파트별 네트워킹',
     attendanceStartTime: '18:50',
     placeName: '감자대학교',
-    roadNameAddress: '서울시 마포구 감자로 202',
+    detailAddress: '서울시 마포구 감자로 202',
     location: {latitude: 37.5665, longitude: 126.978},
     attendTime: {
       attendanceEndTime: '19:00',
@@ -29,7 +29,7 @@ export const MOCK_SESSIONS: SessionData[] = [
     description: 'CS교육 및 파트별 네트워킹',
     attendanceStartTime: '18:50',
     placeName: '감자대학교',
-    roadNameAddress: '서울시 마포구 감자로 202',
+    detailAddress: '서울시 마포구 감자로 202',
     location: {latitude: 37.5665, longitude: 126.978},
     attendTime: {
       attendanceEndTime: '19:00',
@@ -48,7 +48,7 @@ export const MOCK_SESSIONS: SessionData[] = [
     description: 'OT 및 파트 소개',
     attendanceStartTime: '18:50',
     placeName: '',
-    roadNameAddress: '',
+    detailAddress: '',
     location: {latitude: 0, longitude: 0},
     attendTime: {
       attendanceEndTime: '19:00',

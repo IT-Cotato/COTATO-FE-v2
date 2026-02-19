@@ -19,7 +19,7 @@ import ChevronLeftIcon from '@/assets/chevrons/chevron-left.svg';
 import ChevronRightIcon from '@/assets/chevrons/chevron-right.svg';
 import PlusIcon from '@repo/ui/assets/icons/plus-nobackground.svg';
 import ThumbnailImage from '@/assets/thumbnail/thumbnail.svg';
-import XIcon from '@/assets/cancel/cancel.svg';
+import XIcon from '@repo/ui/assets/icons/cancel.svg';
 import {SessionImage} from '@/schemas/admin/session.schema';
 import {SortableThumbnail} from '@/app/(with-header)/mypage/admin/sessions/_components/carousel/SortableThumbnail';
 
@@ -98,13 +98,15 @@ export const SessionImageCarousel = (props: SessionImageCarouselProps) => {
       const oldIdx = prev.findIndex((img) => img.imageId === active.id);
       const newIdx = prev.findIndex((img) => img.imageId === over.id);
       if (oldIdx === -1 || newIdx === -1) return prev;
-      return arrayMove(prev, oldIdx, newIdx).map((img, i) => ({
+
+      const newImages = arrayMove(prev, oldIdx, newIdx).map((img, i) => ({
         ...img,
         order: i,
       }));
+
+      setTimeout(() => setCurrentIndex(newIdx), 0);
+      return newImages;
     });
-    const newIndex = images.findIndex((img) => img.imageId === active.id);
-    setCurrentIndex(newIndex);
   };
 
   const canAddMore = images.length < MAX_IMAGES;
@@ -130,7 +132,7 @@ export const SessionImageCarousel = (props: SessionImageCarouselProps) => {
                 onClick={handleDelete}
                 className='absolute top-3.5 right-3.5 flex h-5 w-5 cursor-pointer items-center justify-center'
                 aria-label='이미지 삭제'>
-                <XIcon className='h-3 w-3' />
+                <XIcon className='h-3 w-3 text-white' />
               </button>
             )}
 

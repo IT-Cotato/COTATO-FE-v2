@@ -13,7 +13,7 @@ const NEW_SESSION_TEMPLATE: NewSessionData = {
   description: '',
   attendanceStartTime: '',
   placeName: '',
-  roadNameAddress: '',
+  detailAddress: '',
   location: {latitude: 0, longitude: 0},
   attendTime: {
     attendanceEndTime: '',
