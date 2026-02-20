@@ -55,3 +55,39 @@ export type NewSessionData = Omit<SessionData, 'sessionId'>;
 /** 상세 조회 응답 타입 (공용 API와 Admin UI 호환) */
 export interface AdminSessionDetail extends SessionData {}
 
+export interface CreateSessionRequest {
+  generationId: number;
+  imageInfos?: SessionImageUpload[];
+  title: string;
+  description: string;
+  latitude?: number;
+  longitude?: number;
+  placeName?: string;
+  roadNameAddress?: string;
+  attendanceStartTime: string;
+  isOffline?: boolean;
+  isOnline?: boolean;
+  attendanceEndTime?: string;
+  lateEndTime?: string;
+  content?: string;
+}
+
+export interface CreateSessionResponse {
+  sessionId: number;
+  sessionNumber: number;
+  sessionType: string;
+}
+
+export interface UpdateSessionRequest {
+  sessionId: number;
+  title?: string;
+  description?: string;
+  attendanceStartTime: string;
+  placeName?: string;
+  roadNameAddress?: string;
+  location?: SessionLocation;
+  attendTime?: SessionAttendTime;
+  isOffline?: boolean;
+  isOnline?: boolean;
+  content?: string;
+}

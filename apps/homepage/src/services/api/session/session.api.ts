@@ -1,4 +1,4 @@
-import {AdminSession, AdminSessionDetail} from '@/schemas/admin/session.schema';
+import {AdminSession, AdminSessionDetail, CreateSessionRequest, CreateSessionResponse, UpdateSessionRequest} from '@/schemas/admin/session.schema';
 import {privateAxios, publicAxios} from '@/services/config/axios';
 import {ENDPOINT} from '@/services/constant/endpoint';
 
@@ -18,4 +18,19 @@ export const getSessionDetail = async (
 ): Promise<AdminSessionDetail> => {
   const {data} = await publicAxios.get(ENDPOINT.SESSIONS.DETAIL(sessionId));
   return data;
+};
+
+/** 세션 추가 API */
+export const createSession = async (
+  request: CreateSessionRequest
+): Promise<CreateSessionResponse> => {
+  const {data} = await privateAxios.post(ENDPOINT.SESSIONS.ADMIN_LIST, request);
+  return data;
+};
+
+/** 세션 수정 API */
+export const updateSession = async (
+  request: UpdateSessionRequest
+): Promise<void> => {
+  await privateAxios.patch(ENDPOINT.SESSIONS.ADMIN_LIST, request);
 };
