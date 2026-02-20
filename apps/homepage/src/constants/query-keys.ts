@@ -24,5 +24,6 @@ export const QUERY_KEYS = {
   },
   SESSIONS: {
     ADMIN_LIST: (generationId?: number) => ['sessions', 'admin', {generationId}],
+    DETAIL: (sessionId: number) => ['sessions', 'detail', sessionId],
   },
 } as const;

@@ -26,9 +26,12 @@ export const useUpdateSession = () => {
 
   return useMutation({
     mutationFn: updateSession,
-    onSuccess: () => {
+    onSuccess: (_, variables) => {
       queryClient.invalidateQueries({
         queryKey: QUERY_KEYS.SESSIONS.ADMIN_LIST(),
+      });
+      queryClient.invalidateQueries({
+        queryKey: QUERY_KEYS.SESSIONS.DETAIL(variables.sessionId),
       });
     },
     onError: (error) => {
