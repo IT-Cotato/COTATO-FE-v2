@@ -1,6 +1,6 @@
 'use client';
 
-import {useEffect, useState} from 'react';
+import {useEffect, useState, useMemo} from 'react';
 import {AdminSession, SessionData} from '@/schemas/admin/session.schema';
 import {ActionMenu} from '@/app/(with-header)/mypage/admin/_components/ActionMenu';
 import {ActionButtons} from '@/app/(with-header)/mypage/admin/_components/ActionButtons';
@@ -8,6 +8,8 @@ import {SessionExpandedContent} from './SessionExpandedContent';
 import {Modal} from '@repo/ui/components/modal/Modal';
 import {FullButton} from '@repo/ui/components/buttons/FullButton';
 import {getJosa} from '@/utils/getJosa';
+import { formatDateToDot } from '@repo/ui/utils/date';
+import { useSessionDetailQuery } from '@/hooks/queries/useSession.query';
 
 const SESSION_MENU_ITEMS = [
   {key: 'edit', label: '수정하기'},
@@ -34,18 +36,19 @@ export const SessionCard = ({
   const [isEditing, setIsEditing] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   
-  // AdminSession 데이터를 SessionData 구조로 안전하게 매핑
-  const sessionData: SessionData = {
+  const { data: sessionDetail } = useSessionDetailQuery(session.sessionId, isExpanded || isEditing);
+
+  const fallbackSessionData: SessionData = useMemo(() => ({
     sessionId: session.sessionId,
     title: session.title,
     description: session.description,
     content: session.content,
     placeName: session.placeName,
-    date: session.sessionDateTime,
-    generation: '', // 목록 정보에 없음
-    attendanceStartTime: '', // 목록 정보에 없음
+    date: session.sessionDateTime ? session.sessionDateTime.split('T')[0] : '',
+    generation: session.generationId ? `코테이토 ${session.generationId}기` : '',
+    attendanceStartTime: session.sessionDateTime ? session.sessionDateTime.split('T')[1]?.slice(0, 5) : '', 
     images: session.imageInfos || [],
-    detailAddress: '', // 상세 데이터 없음
+    detailAddress: '',
     location: {latitude: 0, longitude: 0},
     attendTime: {
       attendanceEndTime: '',
@@ -53,18 +56,35 @@ export const SessionCard = ({
     },
     isOffline: true,
     isOnline: false,
-  };
+  }), [session]);
 
-  const [form, setForm] = useState<SessionData>(sessionData);
-
+  const activeSessionData = sessionDetail ?? fallbackSessionData;
+  const [form, setForm] = useState<SessionData>(activeSessionData);
 
   useEffect(() => {
-    if (!isExpanded) setIsEditing(false);
-  }, [isExpanded]);
+    if (sessionDetail) {
+      setForm(sessionDetail);
+    }
+  }, [sessionDetail]);
+
+  useEffect(() => {
+    if (session.sessionId === -1) {
+      setIsEditing(true);
+    } else if (!isExpanded) {
+      setIsEditing(false);
+      setForm(activeSessionData); 
+    }
+  }, [isExpanded, session.sessionId, activeSessionData]);
+
+  const handleToggleClick = () => {
+    // 임시 카드(-1)일 때는 사용자가 마음대로 접을 수 없도록 막음 (수정 또는 취소 버튼으로만 동작)
+    if (session.sessionId === -1) return;
+    onToggle();
+  };
 
   const handleMenuAction = (action: SessionMenuAction) => {
     if (action === 'edit') {
-      setForm(sessionData);
+      setForm(activeSessionData);
       setIsEditing(true);
       if (!isExpanded) onToggle();
     } else if (action === 'delete') {
@@ -84,10 +104,10 @@ export const SessionCard = ({
   return (
     <div
       className='flex cursor-pointer flex-col gap-5 rounded-[10px] bg-neutral-50 px-5.5 py-6'
-      onClick={onToggle}>
+      onClick={handleToggleClick}>
       <div className='flex items-center justify-between'>
         <div className='flex flex-col'>
-          <p className='text-h5 text-neutral-400'>{session.sessionDateTime}</p>
+          <p className='text-h5 text-neutral-400'>{formatDateToDot(form.date)}</p>
           <p className='text-h3 text-neutral-800'>{session.title}</p>
         </div>
         <div
@@ -95,7 +115,13 @@ export const SessionCard = ({
           onClick={(e) => e.stopPropagation()}>
           {isEditing ? (
             <ActionButtons
-              onCancel={() => setIsEditing(false)}
+              onCancel={() => {
+                if (session.sessionId === -1) {
+                  onDelete(session.sessionId);
+                } else {
+                  setIsEditing(false);
+                }
+              }}
               onConfirm={handleConfirm}
               confirmLabel='등록'
               cancelVariant='dark'
@@ -141,7 +167,7 @@ export const SessionCard = ({
             <SessionExpandedContent
               key='view'
               mode='view'
-              session={sessionData}
+              session={activeSessionData}
             />
           )}
         </div>
