@@ -58,4 +58,10 @@ export const ENDPOINT = {
   },
 
   GENERATIONS: '/v1/api/generations',
+
+  /** 세션 관련 API */
+  SESSIONS: {
+    ADMIN_LIST: '/v1/api/admin/sessions',
+    DETAIL: (sessionId: number) => `/v1/api/sessions/${sessionId}`,
+  },
 } as const;

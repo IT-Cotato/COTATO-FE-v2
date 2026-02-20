@@ -16,7 +16,7 @@ import HeroBanner from '@/assets/backgrounds/banners/hero-main.webp';
 import {useRecruitmentStatusQuery} from '@/hooks/queries/useRecruitmentStatus.query';
 import {useRecruitmentScheduleQuery} from '@/hooks/queries/useRecruitmentSchedule.query';
 import {Spinner} from '@repo/ui/components/spinner/Spinner';
-import {HEADER_HEIGHT} from '@/constants/ui';
+import {HEADER_HEIGHT} from '@repo/ui/constants/ui';
 import {RecruitmentInformation} from '@/components/recruitment/RecruitmentInformation';
 import {scheduleSections} from '@/constants/admin/admin-application-questions';
 import HeroMainBanner from '@repo/ui/components/banner/HeroMainBanner';

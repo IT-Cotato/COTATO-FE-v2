@@ -38,4 +38,74 @@ export interface SessionData {
   images: SessionImage[];
 }
 
+export interface AdminSession {
+  sessionId: number;
+  sessionNumber: number;
+  title: string;
+  imageInfos: SessionImage[];
+  description: string;
+  generationId: number;
+  placeName: string;
+  sessionDateTime: string;
+  content: string;
+}
+
 export type NewSessionData = Omit<SessionData, 'sessionId'>;
+
+export interface AdminSessionDetailResponse {
+  sessionId: number;
+  sessionNumber: number;
+  title: string;
+  sessionImages: SessionImage[];
+  description: string;
+  generationId: number;
+  placeName: string;
+  roadNameAddress: string;
+  sessionDateTime: string;
+  content: string;
+  isOffline: boolean;
+  isOnline: boolean;
+  attendance?: {
+    sessionId: number;
+    attendanceDeadLine: string;
+    lateDeadLine: string;
+    location: SessionLocation;
+  };
+}
+
+export interface CreateSessionRequest {
+  generationId: number;
+  imageInfos?: SessionImageUpload[];
+  title: string;
+  description: string;
+  latitude?: number;
+  longitude?: number;
+  placeName?: string;
+  roadNameAddress?: string;
+  attendanceStartTime: string;
+  isOffline?: boolean;
+  isOnline?: boolean;
+  attendanceEndTime?: string;
+  lateEndTime?: string;
+  content?: string;
+}
+
+export interface CreateSessionResponse {
+  sessionId: number;
+  sessionNumber: number;
+  sessionType: string;
+}
+
+export interface UpdateSessionRequest {
+  sessionId: number;
+  title?: string;
+  description?: string;
+  attendanceStartTime: string;
+  placeName?: string;
+  roadNameAddress?: string;
+  location?: SessionLocation;
+  attendTime?: SessionAttendTime;
+  isOffline?: boolean;
+  isOnline?: boolean;
+  content?: string;
+}

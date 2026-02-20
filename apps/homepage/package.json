@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "next dev --port 3001",
     "build": "next build",
+    "build:analyze": "next experimental-analyze",
     "start": "next start",
     "lint": "eslint"
   },
