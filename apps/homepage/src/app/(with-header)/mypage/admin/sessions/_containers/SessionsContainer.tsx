@@ -1,7 +1,11 @@
 'use client';
 
 import {useState} from 'react';
-import {SessionData} from '@/schemas/admin/session.schema';
+import {
+  CreateSessionRequest,
+  SessionData,
+  UpdateSessionRequest,
+} from '@/schemas/admin/session.schema';
 import {AddSessionButton} from '../_components/AddSessionButton';
 import {SessionCard} from '../_components/SessionCard';
 import {useAdminSessionsQuery} from '@/hooks/queries/useSession.query';
@@ -92,7 +96,7 @@ export const SessionsContainer = () => {
     if (updated.sessionId === -1) {
       // 새로운 세션 생성
 
-      const requestPayload: any = {
+      const requestPayload: Partial<CreateSessionRequest> = {
         generationId: activeGenerationId,
         title: updated.title,
         description: updated.description,
@@ -127,7 +131,7 @@ export const SessionsContainer = () => {
         }));
       }
 
-      createSession(requestPayload, {
+      createSession(requestPayload as CreateSessionRequest, {
         onSuccess: () => {
           setIsAddingMode(false);
           setExpandedCardId(null);
@@ -140,7 +144,7 @@ export const SessionsContainer = () => {
       return true;
     } else {
       // 기존 세션 수정
-      const updatePayload: any = {
+      const updatePayload: Partial<UpdateSessionRequest> = {
         sessionId: updated.sessionId,
         title: updated.title,
         description: updated.description,
@@ -157,17 +161,17 @@ export const SessionsContainer = () => {
         updated.attendTime?.attendanceEndTime ||
         updated.attendTime?.lateEndTime
       ) {
-        updatePayload.attendTime = {};
-        if (updated.attendTime.attendanceEndTime)
-          updatePayload.attendTime.attendanceEndTime = formatDateTimeToIso(
-            updated.date,
-            updated.attendTime.attendanceEndTime
-          );
-        if (updated.attendTime.lateEndTime)
-          updatePayload.attendTime.lateEndTime = formatDateTimeToIso(
-            updated.date,
-            updated.attendTime.lateEndTime
-          );
+        updatePayload.attendTime = {
+          attendanceEndTime: updated.attendTime.attendanceEndTime
+            ? formatDateTimeToIso(
+                updated.date,
+                updated.attendTime.attendanceEndTime
+              )
+            : '',
+          lateEndTime: updated.attendTime.lateEndTime
+            ? formatDateTimeToIso(updated.date, updated.attendTime.lateEndTime)
+            : '',
+        };
       }
 
       if (
@@ -184,7 +188,7 @@ export const SessionsContainer = () => {
       if (updated.detailAddress)
         updatePayload.roadNameAddress = updated.detailAddress;
 
-      updateSession(updatePayload, {
+      updateSession(updatePayload as UpdateSessionRequest, {
         onSuccess: () => {
           setExpandedCardId(null);
         },
@@ -202,7 +206,7 @@ export const SessionsContainer = () => {
     : sortedSessions;
 
   return (
-    <div className='flex min-h-[500px] flex-col gap-2.5'>
+    <div className='flex min-h-125 flex-col gap-2.5'>
       {!isAddingMode && <AddSessionButton onClick={handleAdd} />}
       {displaySessions.length > 0 ? (
         displaySessions.map((adminSession) => (
