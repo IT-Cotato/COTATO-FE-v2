@@ -8,7 +8,7 @@ import {SessionExpandedContent} from './SessionExpandedContent';
 import {Modal} from '@repo/ui/components/modal/Modal';
 import {FullButton} from '@repo/ui/components/buttons/FullButton';
 import {getJosa} from '@/utils/getJosa';
-import { formatDateToDot } from '@repo/ui/utils/date';
+import { formatDateToDot, formatDate } from '@repo/ui/utils/date';
 import { useSessionDetailQuery } from '@/hooks/queries/useSession.query';
 
 const SESSION_MENU_ITEMS = [
@@ -23,7 +23,7 @@ interface SessionCardProps {
   isExpanded: boolean;
   onToggle: () => void;
   onDelete: (sessionId: number) => void;
-  onUpdate: (updated: SessionData) => void;
+  onUpdate: (updated: SessionData) => Promise<boolean>;
 }
 
 export const SessionCard = ({
@@ -44,7 +44,7 @@ export const SessionCard = ({
     description: session.description,
     content: session.content,
     placeName: session.placeName,
-    date: session.sessionDateTime ? session.sessionDateTime.split('T')[0] : '',
+    date: session.sessionDateTime ? session.sessionDateTime.split('T')[0] : (formatDate(new Date()) ?? ''),
     generation: session.generationId ? `코테이토 ${session.generationId}기` : '',
     attendanceStartTime: session.sessionDateTime ? session.sessionDateTime.split('T')[1]?.slice(0, 5) : '', 
     images: session.imageInfos || [],
@@ -70,10 +70,14 @@ export const SessionCard = ({
   useEffect(() => {
     if (session.sessionId === -1) {
       setIsEditing(true);
-    } else if (!isExpanded) {
+    } else if (!isExpanded && !isEditing) {
+      setForm(activeSessionData);
+    } else if (!isExpanded && isEditing) {
       setIsEditing(false);
-      setForm(activeSessionData); 
+      setForm(activeSessionData);
     }
+  // isEditing은 의도적으로 제외 - 수정 중에 isExpanded 변화로 form이 리셋되는 것을 방지
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isExpanded, session.sessionId, activeSessionData]);
 
   const handleToggleClick = () => {
@@ -84,7 +88,8 @@ export const SessionCard = ({
 
   const handleMenuAction = (action: SessionMenuAction) => {
     if (action === 'edit') {
-      setForm(activeSessionData);
+      // sessionDetail이 캐시에 있으면 즉시 사용, 없으면 fallback (쿼리 결과 오면 useEffect에서 업데이트됨)
+      setForm(sessionDetail ?? fallbackSessionData);
       setIsEditing(true);
       if (!isExpanded) onToggle();
     } else if (action === 'delete') {
@@ -92,13 +97,11 @@ export const SessionCard = ({
     }
   };
 
-  const handleConfirm = () => {
-    try {
-      onUpdate(form);
-    } catch (error) {
-      alert('세션 업데이트 중 오류가 발생했습니다.');
+  const handleConfirm = async () => {
+    const success = await onUpdate(form);
+    if (success) {
+      setIsEditing(false);
     }
-    setIsEditing(false);
   };
 
   return (
