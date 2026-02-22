@@ -51,8 +51,8 @@ export const SessionsContainer = () => {
     currentGeneration?.generationId ??
     12;
 
-  const {mutate: createSession} = useCreateSession();
-  const {mutate: updateSession} = useUpdateSession();
+  const {mutateAsync: createSession} = useCreateSession();
+  const {mutateAsync: updateSession} = useUpdateSession();
 
   const handleToggle = (sessionId: number) => {
     setExpandedCardId((prev) => (prev === sessionId ? null : sessionId));
@@ -71,7 +71,7 @@ export const SessionsContainer = () => {
     setExpandedCardId((prev) => (prev === sessionId ? null : prev));
   };
 
-  const handleUpdate = (updated: SessionData): boolean => {
+  const handleUpdate = async (updated: SessionData): Promise<boolean> => {
     if (!updated.title.trim()) {
       alert('세션 제목을 입력해주세요.');
       return false;
@@ -95,7 +95,6 @@ export const SessionsContainer = () => {
 
     if (updated.sessionId === -1) {
       // 새로운 세션 생성
-
       const requestPayload: Partial<CreateSessionRequest> = {
         generationId: activeGenerationId,
         title: updated.title,
@@ -131,17 +130,14 @@ export const SessionsContainer = () => {
         }));
       }
 
-      createSession(requestPayload as CreateSessionRequest, {
-        onSuccess: () => {
-          setIsAddingMode(false);
-          setExpandedCardId(null);
-        },
-        onError: () => {
-          setIsAddingMode(false);
-          setExpandedCardId(null);
-        },
-      });
-      return true;
+      try {
+        await createSession(requestPayload as CreateSessionRequest);
+        setIsAddingMode(false);
+        setExpandedCardId(null);
+        return true;
+      } catch {
+        return false;
+      }
     } else {
       // 기존 세션 수정
       const updatePayload: Partial<UpdateSessionRequest> = {
@@ -158,23 +154,6 @@ export const SessionsContainer = () => {
       };
 
       if (
-        updated.attendTime?.attendanceEndTime ||
-        updated.attendTime?.lateEndTime
-      ) {
-        updatePayload.attendTime = {
-          attendanceEndTime: updated.attendTime.attendanceEndTime
-            ? formatDateTimeToIso(
-                updated.date,
-                updated.attendTime.attendanceEndTime
-              )
-            : '',
-          lateEndTime: updated.attendTime.lateEndTime
-            ? formatDateTimeToIso(updated.date, updated.attendTime.lateEndTime)
-            : '',
-        };
-      }
-
-      if (
         updated.location &&
         (updated.location.latitude != null ||
           updated.location.longitude != null)
@@ -188,12 +167,13 @@ export const SessionsContainer = () => {
       if (updated.detailAddress)
         updatePayload.roadNameAddress = updated.detailAddress;
 
-      updateSession(updatePayload as UpdateSessionRequest, {
-        onSuccess: () => {
-          setExpandedCardId(null);
-        },
-      });
-      return true;
+      try {
+        await updateSession(updatePayload as UpdateSessionRequest);
+        setExpandedCardId(null);
+        return true;
+      } catch {
+        return false;
+      }
     }
   };
 

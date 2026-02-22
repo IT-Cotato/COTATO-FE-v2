@@ -23,7 +23,7 @@ interface SessionCardProps {
   isExpanded: boolean;
   onToggle: () => void;
   onDelete: (sessionId: number) => void;
-  onUpdate: (updated: SessionData) => boolean;
+  onUpdate: (updated: SessionData) => Promise<boolean>;
 }
 
 export const SessionCard = ({
@@ -97,8 +97,8 @@ export const SessionCard = ({
     }
   };
 
-  const handleConfirm = () => {
-    const success = onUpdate(form);
+  const handleConfirm = async () => {
+    const success = await onUpdate(form);
     if (success) {
       setIsEditing(false);
     }
