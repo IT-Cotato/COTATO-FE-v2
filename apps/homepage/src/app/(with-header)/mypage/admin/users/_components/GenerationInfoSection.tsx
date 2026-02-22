@@ -6,34 +6,32 @@ import 'react-datepicker/dist/react-datepicker.css';
 import {CustomInput} from './calendar/CustomInput';
 import {CustomHeader} from './calendar/CustomHeader';
 import RightArrow from '@/assets/arrows/arrow-right.svg';
+import {useGenerationDetailQuery} from '@/hooks/queries/useGeneration.query';
+import {useUpdateGenerationMutation} from '@/hooks/mutations/useGeneration.mutation';
 
 interface GenerationInfoSectionProps {
   selectedGeneration: number;
-  initialStartDate?: Date | null;
-  initialEndDate?: Date | null;
 }
 
 export const GenerationInfoSection = ({
   selectedGeneration,
-  initialStartDate = null,
-  initialEndDate = null,
 }: GenerationInfoSectionProps) => {
-  // TODO: API 연동 시 서버 데이터로 교체
-  const [savedStartDate, setSavedStartDate] = useState<Date | null>(
-    initialStartDate
-  );
-  const [savedEndDate, setSavedEndDate] = useState<Date | null>(initialEndDate);
-
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
-
+  const [savedStartDate, setSavedStartDate] = useState<Date | null>(null);
+  const [savedEndDate, setSavedEndDate] = useState<Date | null>(null);
   const [isEditing, setIsEditing] = useState(false);
 
+  const {data: generationDetail} = useGenerationDetailQuery(selectedGeneration);
+  const {mutate: updateGen} = useUpdateGenerationMutation();
+
   useEffect(() => {
-    setSavedStartDate(initialStartDate);
-    setSavedEndDate(initialEndDate);
-    setIsEditing(false);
-  }, [initialStartDate, initialEndDate]);
+    if (generationDetail) {
+      setSavedStartDate(new Date(generationDetail.startDate));
+      setSavedEndDate(new Date(generationDetail.endDate));
+      setIsEditing(false);
+    }
+  }, [generationDetail]);
 
   const handleEdit = () => {
     setStartDate(savedStartDate);
@@ -42,10 +40,30 @@ export const GenerationInfoSection = ({
   };
 
   const handleSave = () => {
-    // TODO: API 연동 시 저장 로직 구현
-    setSavedStartDate(startDate);
-    setSavedEndDate(endDate);
-    setIsEditing(false);
+    if (!startDate || !endDate) {
+      alert('시작 일자와 종료 일자를 모두 입력해주세요.');
+      return;
+    }
+    if (startDate > endDate) {
+      alert('시작 일자는 종료 일자보다 이전이어야 합니다.');
+      return;
+    }
+    updateGen(
+      {
+        generationId: selectedGeneration,
+        data: {
+          startDate: startDate.toLocaleDateString('sv-SE'),
+          endDate: endDate.toLocaleDateString('sv-SE'),
+        },
+      },
+      {
+        onSuccess: () => {
+          setSavedStartDate(startDate);
+          setSavedEndDate(endDate);
+          setIsEditing(false);
+        },
+      }
+    );
   };
 
   const handleCancel = () => {
@@ -55,7 +73,7 @@ export const GenerationInfoSection = ({
   };
 
   return (
-    <div className='flex flex-col gap-[5px] rounded-[10px] bg-neutral-100 px-[21px] py-[13px]'>
+    <div className='flex flex-col gap-[5px] rounded-[10px] bg-neutral-100 px-5.25 py-4.25'>
       <p className='text-body-l font-semibold text-neutral-800'>활동정보</p>
 
       <div className='flex items-end gap-3'>

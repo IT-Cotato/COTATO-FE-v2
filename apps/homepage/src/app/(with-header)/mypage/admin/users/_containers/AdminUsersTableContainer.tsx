@@ -15,6 +15,7 @@ import {MemberTabType, MemberType} from '@/schemas/admin/admin.schema';
 import {MOCK_MEMBERS} from '@/mocks/admin/mock-admin-users';
 import {useRouter, useSearchParams} from 'next/navigation';
 import {useState} from 'react';
+import {useGenerationQuery} from '@/hooks/queries/useGeneration.query';
 
 // TODO: API 연동 시 제거 또는 서버 요청 파라미터로 변경
 const ITEMS_PER_PAGE = 10;
@@ -193,18 +194,13 @@ export const AdminUsersTableContainer = ({
     setMemberToDelete(null);
   };
 
-  // TODO: API 연동 시 서버 데이터로 교체
-  const [generations, setGenerations] = useState<number[]>([10, 11, 12]);
+  const {data: generationList} = useGenerationQuery();
+  const generations = generationList?.map((g) => g.generationId) ?? [];
   const [selectedGeneration, setSelectedGeneration] = useState<number | null>(
     generations[0] ?? null
   );
-  const handleAddGeneration = (data: {
-    generation: number;
-    startDate: Date;
-    endDate: Date;
-  }) => {
-    setGenerations((prev) => [...prev, data.generation]);
-    setSelectedGeneration(data.generation);
+  const handleAddGeneration = (generationId: number) => {
+    setSelectedGeneration(generationId);
   };
 
   return (

@@ -4,16 +4,13 @@ import {useState} from 'react';
 import {PlusButton} from './PlusButton';
 import {AddGenerationModal} from './AddGenerationModal';
 import clsx from 'clsx';
+import {useCreateGenerationMutation} from '@/hooks/mutations/useGeneration.mutation';
 
 interface AddGenerationContainerProps {
   generations: number[];
   selectedGeneration: number | null;
   onGenerationChange: (id: number) => void;
-  onAddGeneration: (data: {
-    generation: number;
-    startDate: Date;
-    endDate: Date;
-  }) => void;
+  onAddGeneration: (generationId: number) => void;
 }
 
 export const AddGenerationContainer = ({
@@ -24,14 +21,26 @@ export const AddGenerationContainer = ({
 }: AddGenerationContainerProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const {mutate: createGeneration} = useCreateGenerationMutation();
+
   const handleSave = (data: {
     generation: number;
     startDate: Date;
     endDate: Date;
   }) => {
-    // TODO: API 호출로 기수 추가
-    setIsModalOpen(false);
-    onAddGeneration(data);
+    createGeneration(
+      {
+        generationNumber: data.generation,
+        startDate: data.startDate.toLocaleDateString('sv-SE'),
+        endDate: data.endDate.toLocaleDateString('sv-SE'),
+      },
+      {
+        onSuccess: () => {
+          setIsModalOpen(false);
+          onAddGeneration(data.generation);
+        },
+      }
+    );
   };
 
   return (
