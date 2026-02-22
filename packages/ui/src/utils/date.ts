@@ -34,27 +34,16 @@ export const extractISOTime = (dateString?: string | null): string => {
 
 export const formatDateTimeToIso = (dateStr: string, timeStr?: string): string => {
   try {
-    if (!timeStr) return '';
-    
-    const baseDate = new Date();
-    if (isNaN(baseDate.getTime())) return ''; 
-    
+    if (!dateStr || !timeStr) return '';
+
     // 이미 ISO 포맷에 가까우면 그대로 쓰거나 Z, 밀리초 제거합니다.
     if (timeStr.includes('T')) {
       const timePart = timeStr.split('.')[0];
-      return timePart ? timePart.replace('Z', '') : ''; 
+      return timePart ? timePart.replace('Z', '') : '';
     }
 
-    const [hours = 0, minutes = 0] = timeStr.split(':').map(Number);
-    
-    const pad = (n: number) => String(n).padStart(2, '0');
-    const year = baseDate.getFullYear();
-    const month = pad(baseDate.getMonth() + 1);
-    const date = pad(baseDate.getDate());
-    const hh = pad(hours);
-    const mm = pad(minutes);
-    
-    return `${year}-${month}-${date}T${hh}:${mm}:00`;
+    const [hh = '00', mm = '00', ss = '00'] = timeStr.split(':');
+    return `${dateStr}T${hh.padStart(2, '0')}:${mm.padStart(2, '0')}:${ss.padStart(2, '0')}`;
   } catch {
     return '';
   }
