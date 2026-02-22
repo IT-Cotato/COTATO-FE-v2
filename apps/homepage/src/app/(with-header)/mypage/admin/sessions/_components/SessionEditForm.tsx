@@ -42,11 +42,10 @@ export const SessionEditForm = ({form, onChange}: SessionEditFormProps) => {
           onChange((prev) => ({
             ...prev,
             placeName: place.placeName,
-            detailAddress: '',
             location: {
               latitude: Number(place.y),
-              longitude: Number(place.x)
-            }
+              longitude: Number(place.x),
+            },
           }));
           setIsLocationModalOpen(false);
         }}
