@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {motion, AnimatePresence} from 'framer-motion';
 import AboutUsBackgroundSecond from '@/assets/about-us/background-about-us-second.webp';
 import {AboutUsDescription} from '@/app/(with-header)/(with-footer)/about-us/_components/AboutUsDescription';
@@ -9,6 +9,14 @@ import {AboutUsDescription} from '@/app/(with-header)/(with-footer)/about-us/_co
 export const AboutUsMainActivitiesContainer = () => {
   const [selectedId, setSelectedId] = useState<number | null>(null);
   const selectedActivity = ACTIVITIES.find((a) => a.id === selectedId);
+
+  useEffect(() => {
+    const handleEsc = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setSelectedId(null);
+    };
+    if (selectedId) window.addEventListener('keydown', handleEsc);
+    return () => window.removeEventListener('keydown', handleEsc);
+  }, [selectedId]);
 
   return (
     <section
@@ -34,7 +42,14 @@ export const AboutUsMainActivitiesContainer = () => {
         {ACTIVITIES.map((activity) => (
           <motion.div
             key={activity.id}
+            role='button'
             layoutId={`card-${activity.id}`}
+            tabIndex={0}
+            aria-haspopup='dialog'
+            aria-expanded={selectedId === activity.id}
+            onKeyDown={(e) =>
+              (e.key === 'Enter' || e.key === ' ') && setSelectedId(activity.id)
+            }
             onClick={() => setSelectedId(activity.id)}
             style={{borderRadius: '20px'}}
             className={`group relative cursor-pointer overflow-hidden bg-neutral-600 shadow-lg ${activity.gridClass} h-121.75`}>
@@ -43,7 +58,8 @@ export const AboutUsMainActivitiesContainer = () => {
               className='relative h-full w-full'>
               <Image
                 src={activity.src}
-                alt={activity.title}
+                alt=''
+                aria-hidden='true'
                 fill
                 unoptimized={true}
                 className='object-cover transition-transform duration-500 group-hover:scale-105'
@@ -68,6 +84,9 @@ export const AboutUsMainActivitiesContainer = () => {
         {selectedId && selectedActivity && (
           <div className='fixed inset-0 z-50 flex items-center justify-center p-4 md:p-10'>
             <motion.div
+              role='dialog'
+              aria-modal='true'
+              aria-labelledby={`modal-title-${selectedId}`}
               initial={{opacity: 0}}
               animate={{opacity: 1}}
               exit={{opacity: 0}}
@@ -102,6 +121,7 @@ export const AboutUsMainActivitiesContainer = () => {
 
                 <motion.h3
                   layoutId={`title-${selectedId}`}
+                  id={`modal-title-${selectedId}`}
                   className='text-h2 absolute top-10 left-10 z-10 font-bold text-white'>
                   {selectedActivity.title}
                 </motion.h3>

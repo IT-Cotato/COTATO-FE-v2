@@ -20,6 +20,7 @@ export const AboutUsBanner = () => {
         <Image
           src='/keycap/background-universe.svg'
           alt=''
+          aria-hidden='true'
           fill
           className='object-cover'
           priority

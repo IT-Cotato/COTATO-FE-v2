@@ -13,7 +13,7 @@ export const AboutUsManagementTeamContainer = () => {
       <Image
         src={AboutUsBackgroundThird}
         alt=''
-        aria-hidden={true}
+        aria-hidden='true'
         width={1920}
         height={1737}
         unoptimized={true}
@@ -28,15 +28,16 @@ export const AboutUsManagementTeamContainer = () => {
         subTitle='COTATO의 운영진은 네 팀으로 이루어져있으며,'
         subTitleOption='운영팀, 교육팀, 기획팀, 홍보팀으로 구성되어있어요.'
       />
-      <div className='flex flex-row gap-10'>
+      <ul className='z-10 flex flex-row gap-10' role='list'>
         {MANAGEMENT_TEAMS.map((team) => (
-          <AboutUsManagementTeamCard
-            key={team.title}
-            title={team.title}
-            description={team.description}
-          />
+          <li key={team.title}>
+            <AboutUsManagementTeamCard
+              title={team.title}
+              description={team.description}
+            />
+          </li>
         ))}
-      </div>
+      </ul>
       <AboutUsSponsor />
     </section>
   );

@@ -39,6 +39,16 @@ export const AboutUsProjectContainer = () => {
               <motion.div
                 key={project.id}
                 initial={false}
+                role='button'
+                tabIndex={isActive ? 0 : -1}
+                aria-label={`${project.title} 프로젝트 상세보기`}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') setIndex(i);
+                  if (e.key === 'ArrowRight')
+                    setIndex((prev) => Math.min(prev + 1, PROJECTS.length - 1));
+                  if (e.key === 'ArrowLeft')
+                    setIndex((prev) => Math.max(prev - 1, 0));
+                }}
                 animate={{
                   x: offset * 300,
                   z: isActive ? 0 : -150,
@@ -59,11 +69,13 @@ export const AboutUsProjectContainer = () => {
                   zIndex: 10 - absOffset,
                   cursor: 'pointer',
                 }}
+                aria-hidden={!isActive && absOffset > 1}
                 className='overflow-hidden rounded-[20px] bg-white shadow-2xl'>
                 <div className='relative h-full w-full'>
                   <Image
                     src={project.imageSrc}
-                    alt={project.title}
+                    alt=''
+                    aria-hidden='true'
                     fill
                     className='object-cover'
                     priority={isActive}
@@ -99,7 +111,8 @@ export const AboutUsProjectContainer = () => {
       </div>
       <button
         className='text-h5 text-neutral-600'
-        onClick={handleProjectMoreViewClick}>
+        onClick={handleProjectMoreViewClick}
+        aria-label='코테이토 전체 프로젝트 목록 페이지로 이동'>
         프로젝트 더보기
       </button>
     </section>
