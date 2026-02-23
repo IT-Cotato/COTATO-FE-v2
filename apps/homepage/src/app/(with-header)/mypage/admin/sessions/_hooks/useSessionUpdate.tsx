@@ -99,7 +99,7 @@ export const useSessionUpdate = ({
         requestPayload.longitude = updated.location.longitude;
       if (updated.images && updated.images.length > 0) {
         requestPayload.imageInfos = updated.images.map((img) => ({
-          s3Key: img.imageUrl,
+          s3Key: img.s3Key ?? img.imageUrl,
           order: img.order,
         }));
       }
@@ -139,12 +139,12 @@ export const useSessionUpdate = ({
 
       if (
         updated.location &&
-        updated.location.latitude != null &&
-        updated.location.longitude != null
+        updated.location.latitude !== 0 &&
+        updated.location.longitude !== 0
       ) {
         updatePayload.location = {
-          latitude: updated.location?.latitude,
-          longitude: updated.location?.longitude,
+          latitude: updated.location.latitude,
+          longitude: updated.location.longitude,
         };
       }
       if (updated.placeName) updatePayload.placeName = updated.placeName;
