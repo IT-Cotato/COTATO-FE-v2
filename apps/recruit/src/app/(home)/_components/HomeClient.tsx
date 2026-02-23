@@ -53,7 +53,9 @@ export const HomeClient = () => {
         isOpen={isSubmissionCompleteModalOpen}
         onClose={closeSubmissionCompleteModal}
         onConfirm={closeSubmissionCompleteModal}
-        announcementDate={formatKoreanDateTime(schedule?.documentAnnouncement) || undefined}
+        announcementDate={
+          formatKoreanDateTime(schedule?.documentAnnouncement) || undefined
+        }
       />
       <SubmissionIncompleteModal
         isOpen={isSubmissionIncompleteModalOpen}

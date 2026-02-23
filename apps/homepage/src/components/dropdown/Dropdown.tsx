@@ -59,7 +59,7 @@ export const Dropdown = <T extends string>({
           disabled ? 'cursor-not-allowed' : 'cursor-pointer',
           triggerClassName ??
             clsx(
-              'h-10 rounded-[20px] border border-neutral-200 px-2.5 py-2.5 text-body-l',
+              'text-body-l h-10 rounded-[20px] border border-neutral-200 px-2.5 py-2.5',
               disabled
                 ? 'bg-neutral-100 text-neutral-400'
                 : 'bg-white text-neutral-600',

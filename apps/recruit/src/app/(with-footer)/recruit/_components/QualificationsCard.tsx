@@ -12,6 +12,8 @@ export const QualificationsCard = ({item}: QualificationsCardProps) => {
         src={item.illustrationSrc}
         alt='QualificationsCard'
         draggable={false}
+        width={134}
+        height={134}
       />
       <p className='text-h5 text-center wrap-anywhere whitespace-pre-line text-neutral-800'>
         {item.description}

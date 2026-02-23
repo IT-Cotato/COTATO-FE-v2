@@ -63,7 +63,7 @@ export const SessionCard = ({
             {session.sessionDateTime.split('T')[0].replaceAll('-', '.')}
           </span>
           <h3 className='text-h3 text-neutral-800'>
-            {session.sessionNumber}회차 세션
+            {session.title}
           </h3>
         </div>
         <div

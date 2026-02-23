@@ -101,7 +101,8 @@ export const LocationSearchModal = ({
                     className={clsx(
                       'flex h-17.5 cursor-pointer flex-col justify-center rounded-[10px] border px-4.25 py-[8.5px] transition-all duration-200',
                       {
-                        'border-primary bg-primary/20': selectedId === result.id,
+                        'border-primary bg-primary/20':
+                          selectedId === result.id,
                         'hover:bg-primary/20 hover:border-primary border-neutral-200 bg-neutral-50 hover:shadow-sm':
                           selectedId !== result.id,
                       }

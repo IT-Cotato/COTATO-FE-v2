@@ -39,9 +39,10 @@ const loadKakaoSDK = () => {
 
   script.onload = () => {
     try {
-    window.kakao.maps.load(() => {
-      notifyListeners('ready');
-    });} catch {
+      window.kakao.maps.load(() => {
+        notifyListeners('ready');
+      });
+    } catch {
       notifyListeners('error');
     }
   };

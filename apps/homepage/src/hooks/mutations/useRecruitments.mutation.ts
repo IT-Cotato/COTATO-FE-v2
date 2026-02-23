@@ -13,11 +13,11 @@ export const useToggleRecruitmentsStatusMutation = () => {
         queryKey: QUERY_KEYS.RECRUITMENTS.STATUS,
       });
       const previous = queryClient.getQueryData<RecruitmentsStatusType>(
-        QUERY_KEYS.RECRUITMENTS.STATUS,
+        QUERY_KEYS.RECRUITMENTS.STATUS
       );
       queryClient.setQueryData<RecruitmentsStatusType>(
         QUERY_KEYS.RECRUITMENTS.STATUS,
-        (old) => ({...old, active: !old?.active}),
+        (old) => ({...old, active: !old?.active})
       );
       return {previous};
     },
@@ -29,7 +29,10 @@ export const useToggleRecruitmentsStatusMutation = () => {
     },
     onError: (_err, _vars, context) => {
       if (context?.previous) {
-        queryClient.setQueryData(QUERY_KEYS.RECRUITMENTS.STATUS, context.previous);
+        queryClient.setQueryData(
+          QUERY_KEYS.RECRUITMENTS.STATUS,
+          context.previous
+        );
       }
       alert('모집 상태 변경에 실패했습니다. 다시 시도해주세요.');
     },

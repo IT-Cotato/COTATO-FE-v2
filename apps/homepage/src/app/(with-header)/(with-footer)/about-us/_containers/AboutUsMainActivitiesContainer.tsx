@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import {useState} from 'react';
 import {motion, AnimatePresence} from 'framer-motion';
-import AboutUsBackgroundSecond from '@/assets/about-us/background-about-us-second.svg';
+import AboutUsBackgroundSecond from '@/assets/about-us/background-about-us-second.webp';
 import {AboutUsDescription} from '@/app/(with-header)/(with-footer)/about-us/_components/AboutUsDescription';
 
 export const AboutUsMainActivitiesContainer = () => {
@@ -14,9 +14,20 @@ export const AboutUsMainActivitiesContainer = () => {
     <div
       className='relative flex w-full flex-col items-center gap-25 overflow-hidden bg-[linear-gradient(180deg,#010101_13.94%,rgba(1,1,1,0)_100%)] py-20 md:gap-25 md:py-40'
       id='main-activities'>
-      <div className='pointer-events-none absolute inset-0 z-0'>
+      {/* <div className='pointer-events-none absolute inset-0 z-0'>
         <AboutUsBackgroundSecond className='absolute -right-20 h-full w-auto opacity-50 md:-right-100 md:opacity-100' />
-      </div>
+      </div> */}
+
+      <Image
+        src={AboutUsBackgroundSecond}
+        alt=''
+        aria-hidden={true}
+        width={956}
+        height={1080}
+        unoptimized={true}
+        draggable={false}
+        className='pointer-events-none absolute top-0 right-0 md:opacity-100'
+      />
 
       <AboutUsDescription
         title='코테이토의 활동을 소개합니다'

@@ -10,7 +10,13 @@ interface CustomInputProps {
   ref?: React.Ref<HTMLButtonElement>;
 }
 
-export function CustomInput({value, onClick, disabled, placeholder, ref}: CustomInputProps) {
+export function CustomInput({
+  value,
+  onClick,
+  disabled,
+  placeholder,
+  ref,
+}: CustomInputProps) {
   return (
     <button
       type='button'

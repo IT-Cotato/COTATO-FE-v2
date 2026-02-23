@@ -57,7 +57,15 @@ export const ENDPOINT = {
     MY_RECORDS: '/v1/api/minus-points/my',
   },
 
-  GENERATIONS: '/v1/api/generations',
+  /** 기수 관련 API */
+  GENERATIONS: {
+    LIST: '/v1/api/generations',
+    CREATE: '/v1/api/admin/generations',
+    DETAIL: (generationId: number) =>
+      `/v1/api/admin/generations/${generationId}`,
+    UPDATE: (generationId: number) =>
+      `/v1/api/admin/generations/${generationId}`,
+  },
 
   /** 세션 관련 API */
   SESSIONS: {
