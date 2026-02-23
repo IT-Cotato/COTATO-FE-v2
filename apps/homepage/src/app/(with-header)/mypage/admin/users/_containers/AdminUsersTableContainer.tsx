@@ -1,10 +1,10 @@
 'use client';
 
-import {AdminUsersTableView} from '../_components/table/AdminUsersTableView';
-import {ConfirmDeleteModal} from '../_components/table/ConfirmDeleteModal';
-import {MemberDetailModal} from '../_components/table/MemberDetailModal';
-import {AllMembersActionBar} from '../_components/AllMembersActionBar';
-import {ActiveMembersActionBar} from '../_components/ActiveMembersActionBar';
+import {AdminUsersTableView} from '@/app/(with-header)/mypage/admin/users/_components/table/AdminUsersTableView';
+import {ConfirmDeleteModal} from '@/app/(with-header)/mypage/admin/users/_components/table/ConfirmDeleteModal';
+import {MemberDetailModal} from '@/app/(with-header)/mypage/admin/users/_components/table/MemberDetailModal';
+import {AllMembersActionBar} from '@/app/(with-header)/mypage/admin/users/_components/AllMembersActionBar';
+import {ActiveMembersActionBar} from '@/app/(with-header)/mypage/admin/users/_components/ActiveMembersActionBar';
 import {Pagination} from '@repo/ui/components/pagination/Pagination';
 import {
   MEMBER_STATUS_OPTIONS,
@@ -14,7 +14,8 @@ import {
 import {MemberTabType, MemberType} from '@/schemas/admin/admin.schema';
 import {MOCK_MEMBERS} from '@/mocks/admin/mock-admin-users';
 import {useRouter, useSearchParams} from 'next/navigation';
-import {useState} from 'react';
+import {useEffect, useMemo, useState} from 'react';
+import {useGenerationQuery} from '@/hooks/queries/useGeneration.query';
 
 // TODO: API 연동 시 제거 또는 서버 요청 파라미터로 변경
 const ITEMS_PER_PAGE = 10;
@@ -193,18 +194,23 @@ export const AdminUsersTableContainer = ({
     setMemberToDelete(null);
   };
 
-  // TODO: API 연동 시 서버 데이터로 교체
-  const [generations, setGenerations] = useState<number[]>([10, 11, 12]);
-  const [selectedGeneration, setSelectedGeneration] = useState<number | null>(
-    generations[0] ?? null
+  const {data: generationList} = useGenerationQuery();
+  const generations = useMemo(
+    () => generationList?.map((g) => g.generationId) ?? [],
+    [generationList]
   );
-  const handleAddGeneration = (data: {
-    generation: number;
-    startDate: Date;
-    endDate: Date;
-  }) => {
-    setGenerations((prev) => [...prev, data.generation]);
-    setSelectedGeneration(data.generation);
+  const [selectedGeneration, setSelectedGeneration] = useState<number | null>(
+    null
+  );
+
+  useEffect(() => {
+    if (generations.length > 0 && selectedGeneration === null) {
+      setSelectedGeneration(generations[0]);
+    }
+  }, [generations, selectedGeneration]);
+
+  const handleAddGeneration = (generationId: number) => {
+    setSelectedGeneration(generationId);
   };
 
   return (
