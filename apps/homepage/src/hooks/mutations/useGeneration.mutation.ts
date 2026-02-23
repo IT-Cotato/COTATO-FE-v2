@@ -18,8 +18,7 @@ export const useCreateGenerationMutation = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({queryKey: QUERY_KEYS.GENERATIONS});
     },
-    onError: (error) => {
-      console.error('기수 추가 실패:', error);
+    onError: () => {
       alert('기수 추가에 실패했습니다. 다시 시도해 주세요.');
     },
   });

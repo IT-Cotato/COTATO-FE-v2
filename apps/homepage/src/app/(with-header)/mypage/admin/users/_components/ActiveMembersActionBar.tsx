@@ -16,17 +16,13 @@ export const ActiveMembersActionBar = ({
   onGenerationChange,
   onAddGeneration,
 }: ActiveMembersActionBarProps) => {
-  const handleAddGeneration = (generationId: number) => {
-    onAddGeneration(generationId);
-  };
-
   return (
     <div className='mt-2.5 flex flex-col gap-3.5'>
       <AddGenerationContainer
         generations={generations}
         selectedGeneration={selectedGeneration}
         onGenerationChange={onGenerationChange}
-        onAddGeneration={handleAddGeneration}
+        onAddGeneration={onAddGeneration}
       />
       {selectedGeneration && (
         <GenerationInfoSection selectedGeneration={selectedGeneration} />
