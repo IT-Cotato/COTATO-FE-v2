@@ -13,6 +13,7 @@ export interface SessionImage {
   imageId: number;
   imageUrl: string;
   order: number;
+  s3Key?: string;
 }
 
 // 업로드 시 서버로 보내는 이미지 정보
@@ -108,4 +109,37 @@ export interface UpdateSessionRequest {
   isOffline?: boolean;
   isOnline?: boolean;
   content?: string;
+}
+
+export interface PresignedUrlRequest {
+  fileName: string;
+  contentType: string;
+}
+
+export interface PresignedUrlResponse {
+  presignedUrl: string;
+  s3Key: string;
+  expireAt: string;
+}
+
+export interface CompleteImageUploadRequest {
+  sessionId: number;
+  s3Key: string;
+  order: number;
+}
+
+export interface CompleteImageUploadResponse {
+  imageId: number;
+  imageUrl: string;
+  order: number;
+  s3Key?: string; // 새 세션 생성 시 임시 저장용 (서버 응답에는 없음)
+}
+
+export interface ChangeImageOrderRequest {
+  sessionId: number;
+  orderInfos: {imageId: number; order: number}[];
+}
+
+export interface DeleteSessionImageRequest {
+  imageId: number;
 }
