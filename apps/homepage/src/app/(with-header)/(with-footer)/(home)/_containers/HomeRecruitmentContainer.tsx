@@ -25,7 +25,9 @@ export const HomeRecruitmentContainer = () => {
   };
 
   return (
-    <section className='flex flex-col items-center gap-10'>
+    <section
+      className='flex flex-col items-center gap-10'
+      aria-labelledby='recruitment-title'>
       <motion.div
         className='flex flex-col items-center gap-6'
         variants={containerVariants}
@@ -35,7 +37,10 @@ export const HomeRecruitmentContainer = () => {
         <motion.p variants={itemVariants} className='text-h4 text-neutral-600'>
           코테이토와 당신의 여정을 함께하세요!
         </motion.p>
-        <motion.h2 variants={itemVariants} className='text-h2 text-neutral-800'>
+        <motion.h2
+          variants={itemVariants}
+          className='text-h2 text-neutral-800'
+          id='recruitment-title'>
           코테이토에서 함께할 신입 감자분들을 모집합니다.
         </motion.h2>
 
@@ -47,6 +52,11 @@ export const HomeRecruitmentContainer = () => {
               labelTypo='h3'
               onClick={handleButtonClick}
               className='transition-all duration-300 hover:shadow-[0_4px_40px_0_rgba(255,255,255,0.80)]'
+              aria-label={
+                isRecruiting
+                  ? '코테이토 지원서 작성 외부 사이트로 이동'
+                  : '알림 신청 페이지로 이동'
+              }
             />
           </motion.div>
         </motion.div>

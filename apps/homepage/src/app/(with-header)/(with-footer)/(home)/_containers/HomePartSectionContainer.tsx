@@ -68,7 +68,12 @@ export const HomePartSectionContainer = () => {
           ))}
         </div>
         {/** TabPanel */}
-        <div className='relative h-150 w-full overflow-hidden rounded-[40px] bg-neutral-900'>
+        <div
+          className='relative h-140 w-full overflow-hidden rounded-[40px] bg-neutral-900'
+          id={`tabpanel-${currentPart}`}
+          role='tabpanel'
+          aria-labelledby={`tab-${currentPart}`}
+          tabIndex={0}>
           <AnimatePresence mode='popLayout' custom={direction}>
             <motion.div
               key={currentPart}
