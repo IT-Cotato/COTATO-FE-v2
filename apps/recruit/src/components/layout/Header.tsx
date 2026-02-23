@@ -14,7 +14,7 @@ import {LoginModal} from '@/components/modal/LoginModal';
 import {useState} from 'react';
 import {ROUTES} from '@/constants/routes';
 import {useApplicationStatusQuery} from '@/hooks/queries/useApply.query';
-import {HEADER_HEIGHT} from '@/constants/ui';
+import {HEADER_HEIGHT} from '@repo/ui/constants/ui';
 import ChevronRight from '@/assets/chevrons/chevron-right.svg';
 
 export const Header = () => {

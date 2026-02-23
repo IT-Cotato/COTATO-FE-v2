@@ -119,7 +119,9 @@ export const PartQuestion = ({
                     content={lastQuestion.content}
                     activePart={activePart}
                     isUploadingFile={isUploadingFile}
-                    pdfFileName={watchedFields[textQuestions.length + 1] as string}
+                    pdfFileName={
+                      watchedFields[textQuestions.length + 1] as string
+                    }
                     onFileChange={handleFileChange}
                   />
                 )}
@@ -151,7 +153,9 @@ export const PartQuestion = ({
             labelTypo='h4'
             type='button'
             onClick={onNext}
-            backgroundColor={isAllRequiredAnswersFilled ? 'primary' : 'text-disabled'}
+            backgroundColor={
+              isAllRequiredAnswersFilled ? 'primary' : 'text-disabled'
+            }
           />
         </div>
 

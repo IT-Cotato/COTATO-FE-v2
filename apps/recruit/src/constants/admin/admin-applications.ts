@@ -104,7 +104,7 @@ export const BASIC_INFO_LABELS = {
   phoneNumber: '연락처',
   school: '학교',
   enrollmentStatus: '재학',
-  otherStatus: '휴학 · 졸업 · 유예',
+  otherStatus: '휴학 · 유예',
   major: '학과',
   completedSemesters: '수료한 학기 수',
   isPrevActivity: '이전 기수 활동 여부',

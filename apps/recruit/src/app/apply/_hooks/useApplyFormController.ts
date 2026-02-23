@@ -77,7 +77,7 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
     await saveForm(step, methods);
   };
 
-  const SUBMIT_STEP=3;
+  const SUBMIT_STEP = 3;
 
   const {
     isConfirmModalOpen,

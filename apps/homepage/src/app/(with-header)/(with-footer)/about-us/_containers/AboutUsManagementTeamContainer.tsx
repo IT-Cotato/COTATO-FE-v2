@@ -1,7 +1,8 @@
+import Image from 'next/image';
 import {AboutUsDescription} from '@/app/(with-header)/(with-footer)/about-us/_components/AboutUsDescription';
 import {AboutUsManagementTeamCard} from '@/app/(with-header)/(with-footer)/about-us/_components/AboutUsManagementTeamCard';
 import {AboutUsSponsor} from '@/app/(with-header)/(with-footer)/about-us/_components/AboutUsSponsor';
-import AboutUsBackgroundThird from '@/assets/about-us/background-about-us-third.svg';
+import AboutUsBackgroundThird from '@/assets/about-us/background-about-us-third.webp';
 
 export const AboutUsManagementTeamContainer = () => {
   return (
@@ -9,9 +10,17 @@ export const AboutUsManagementTeamContainer = () => {
       className='relative flex w-full flex-col items-center gap-25 overflow-hidden py-40'
       aria-labelledby='management-team'
       id='management-team'>
-      <div className='pointer-events-none absolute inset-0 z-0'>
-        <AboutUsBackgroundThird />
-      </div>
+      <Image
+        src={AboutUsBackgroundThird}
+        alt=''
+        aria-hidden={true}
+        width={1920}
+        height={1737}
+        unoptimized={true}
+        draggable={false}
+        className='pointer-events-none absolute inset-0 z-0'
+      />
+
       <AboutUsDescription
         title='코테이토를 이끌어나가는 운영진을 소개합니다'
         titleColor='text-neutral-800'
