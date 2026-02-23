@@ -26,14 +26,9 @@ export const SessionsContainer = () => {
 
   const {data: generations} = useGenerationQuery();
   const currentGeneration = generations?.[0];
+  const activeGenerationId = currentGeneration?.generationId ?? 12; // 기수 관리 api 연동 pr 머지 전까지는 12기 고정
 
-  const {data: adminSessions = [], isLoading} = useAdminSessionsQuery();
-
-  // 현재 보여지는 세션들이 소속된 기수(generationId)를 최우선으로 추론, 없으면 전체 기수 목록 중 첫번째 기수 사용
-  const fallbackGenerationId =
-    adminSessions.length > 0 ? adminSessions[0].generationId : undefined;
-  const activeGenerationId =
-    fallbackGenerationId ?? currentGeneration?.generationId ?? 12; // 기수 관리 api 연동 pr 머지 전까지는 12기 고정
+  const {data: adminSessions = [], isLoading} = useAdminSessionsQuery(activeGenerationId);
 
   const {handleUpdate} = useSessionUpdate({
     activeGenerationId,
