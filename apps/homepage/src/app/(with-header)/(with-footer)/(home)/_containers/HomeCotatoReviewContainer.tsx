@@ -68,7 +68,7 @@ export const HomeCotatoReviewContainer = () => {
   }, [handleNext, isPaused]);
 
   return (
-    <div className='flex flex-col gap-10 py-10'>
+    <section className='flex flex-col gap-10 py-10'>
       <HomeSectionDescription
         title='찐감자들의 후기'
         descriptions={[
@@ -117,7 +117,7 @@ export const HomeCotatoReviewContainer = () => {
           );
         })}
       </div>
-    </div>
+    </section>
   );
 };
 

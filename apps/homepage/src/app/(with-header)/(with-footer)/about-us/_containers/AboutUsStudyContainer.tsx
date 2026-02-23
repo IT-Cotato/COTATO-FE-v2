@@ -5,7 +5,7 @@ import {AboutUsTickerColumn} from '@/app/(with-header)/(with-footer)/about-us/_c
 
 export const AboutUsStudyContainer = () => {
   return (
-    <div
+    <section
       className='flex flex-col items-center gap-25 overflow-hidden py-40'
       aria-labelledby='study'
       id='study'>
@@ -27,7 +27,7 @@ export const AboutUsStudyContainer = () => {
 
         <AboutUsTickerColumn items={STUDY_GROUPS[2]} duration={30} />
       </div>
-    </div>
+    </section>
   );
 };
 

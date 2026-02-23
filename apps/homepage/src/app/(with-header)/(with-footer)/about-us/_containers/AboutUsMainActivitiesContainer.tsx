@@ -11,13 +11,9 @@ export const AboutUsMainActivitiesContainer = () => {
   const selectedActivity = ACTIVITIES.find((a) => a.id === selectedId);
 
   return (
-    <div
+    <section
       className='relative flex w-full flex-col items-center gap-25 overflow-hidden bg-[linear-gradient(180deg,#010101_13.94%,rgba(1,1,1,0)_100%)] py-20 md:gap-25 md:py-40'
       id='main-activities'>
-      {/* <div className='pointer-events-none absolute inset-0 z-0'>
-        <AboutUsBackgroundSecond className='absolute -right-20 h-full w-auto opacity-50 md:-right-100 md:opacity-100' />
-      </div> */}
-
       <Image
         src={AboutUsBackgroundSecond}
         alt=''
@@ -28,14 +24,12 @@ export const AboutUsMainActivitiesContainer = () => {
         draggable={false}
         className='pointer-events-none absolute top-0 right-0 md:opacity-100'
       />
-
       <AboutUsDescription
         title='코테이토의 활동을 소개합니다'
         subTitle='다양한 활동을 통해 직군별 역량과 협업 경험을 동시에 쌓습니다.'
         titleColor='text-white'
         subTitleColor='text-neutral-300'
       />
-
       <div className='z-10 grid w-full max-w-310 grid-cols-12 gap-4 px-6 md:gap-7.5'>
         {ACTIVITIES.map((activity) => (
           <motion.div
@@ -70,7 +64,6 @@ export const AboutUsMainActivitiesContainer = () => {
           </motion.div>
         ))}
       </div>
-
       <AnimatePresence>
         {selectedId && selectedActivity && (
           <div className='fixed inset-0 z-50 flex items-center justify-center p-4 md:p-10'>
@@ -132,7 +125,7 @@ export const AboutUsMainActivitiesContainer = () => {
           </div>
         )}
       </AnimatePresence>
-    </div>
+    </section>
   );
 };
 

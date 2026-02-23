@@ -1,12 +1,13 @@
 'use client';
 
 import {Button} from '@repo/ui/components/buttons/Button';
-import {motion, AnimatePresence} from 'framer-motion';
+import {motion, AnimatePresence, Variants} from 'framer-motion';
 import {useState, useRef} from 'react';
 import {HomeSectionDescription} from '@/app/(with-header)/(with-footer)/(home)/_components/HomeSectionDescription';
 import Image from 'next/image';
 
 const PARTS = ['pm', 'design', 'frontend', 'backend'] as const;
+
 type PartType = (typeof PARTS)[number];
 
 export const HomePartSectionContainer = () => {
@@ -17,31 +18,13 @@ export const HomePartSectionContainer = () => {
   const currentIndex = PARTS.indexOf(currentPart);
   const direction = currentIndex > prevIndexRef.current ? 1 : -1;
 
-  const variants = {
-    enter: (direction: number) => ({
-      x: direction > 0 ? 200 : -200,
-      opacity: 0,
-      filter: 'blur(4px)',
-    }),
-    center: {
-      x: 0,
-      opacity: 1,
-      filter: 'blur(0px)',
-    },
-    exit: (direction: number) => ({
-      x: direction > 0 ? -200 : 200,
-      opacity: 0,
-      filter: 'blur(4px)',
-    }),
-  };
-
   const handlePartClick = (part: PartType) => {
     prevIndexRef.current = currentIndex;
     setCurrentPart(part);
   };
 
   return (
-    <div className='flex flex-col gap-17.5'>
+    <section className='flex flex-col gap-17.5'>
       <HomeSectionDescription
         title='성장의 시작, 코테이토의 4가지 파트'
         descriptions={[
@@ -54,87 +37,89 @@ export const HomePartSectionContainer = () => {
 
       <div className='flex flex-col gap-7.5'>
         {/* TabList */}
-        <div
-          className='flex flex-row gap-6'
-          role='tablist'
-          aria-label='파트 선택'>
+        <div className='flex flex-row gap-6' role='tablist'>
           {PARTS.map((partKey) => (
-            <Button
-              key={partKey}
-              id={`tab-${partKey}`}
-              role='tab'
-              aria-selected={currentPart === partKey}
-              aria-controls={`tabpanel-${partKey}`}
-              label={
-                partKey === 'pm'
-                  ? '기획'
-                  : partKey === 'design'
-                    ? '디자인'
-                    : partKey === 'frontend'
-                      ? '프론트엔드'
-                      : '백엔드'
-              }
-              width={220}
-              labelTypo='h3'
-              textColor='neutral-50'
-              backgroundColor={
-                currentPart === partKey ? 'primary' : 'text-disabled'
-              }
-              onClick={() => handlePartClick(partKey)}
-              className='transition-all duration-500 ease-in-out'
-            />
+            <div key={partKey} className='relative'>
+              <Button
+                key={partKey}
+                id={`tab-${partKey}`}
+                role='tab'
+                aria-selected={currentPart === partKey}
+                aria-controls={`tabpanel-${partKey}`}
+                label={
+                  partKey === 'pm'
+                    ? '기획'
+                    : partKey === 'design'
+                      ? '디자인'
+                      : partKey === 'frontend'
+                        ? '프론트엔드'
+                        : '백엔드'
+                }
+                width={220}
+                labelTypo='h3'
+                textColor='neutral-50'
+                backgroundColor={
+                  currentPart === partKey ? 'primary' : 'text-disabled'
+                }
+                onClick={() => handlePartClick(partKey)}
+                className='relative z-10 transition-colors duration-300'
+              />
+            </div>
           ))}
         </div>
         {/** TabPanel */}
-        <div className='relative h-150 w-full overflow-hidden rounded-[40px]'>
-          <AnimatePresence mode='popLayout' custom={direction} initial={false}>
+        <div className='relative h-150 w-full overflow-hidden rounded-[40px] bg-neutral-900'>
+          <AnimatePresence mode='popLayout' custom={direction}>
             <motion.div
               key={currentPart}
-              id={`tabpanel-${currentPart}`}
-              role='tabpanel'
-              aria-labelledby={`tab-${currentPart}`}
-              tabIndex={0}
               custom={direction}
               variants={variants}
               initial='enter'
               animate='center'
               exit='exit'
-              transition={{
-                x: {type: 'spring', stiffness: 70, damping: 20},
-                opacity: {duration: 0.5},
-                filter: {duration: 0.5},
-              }}
-              className='absolute inset-0 h-full w-full overflow-hidden rounded-[40px]'>
-              <div className='relative flex h-full w-full items-center justify-center'>
-                <Image
-                  src={`/images/part-section/${currentPart}.png`}
-                  alt={`${partData[currentPart].title} 파트 이미지`}
-                  fill
-                  priority
-                  className='object-cover'
-                  unoptimized={true}
-                />
-                <div className='absolute inset-0 bg-black/40' />
+              className='absolute inset-0 h-full w-full'>
+              <div className='relative h-full w-full overflow-hidden'>
+                <motion.div
+                  key={`${currentPart}-bg`}
+                  custom={direction}
+                  variants={imageVariants}
+                  initial='enter'
+                  animate='center'
+                  exit='exit'
+                  className='absolute inset-0'>
+                  <Image
+                    src={`/images/part-section/${currentPart}.webp`}
+                    alt={partData[currentPart].title}
+                    fill
+                    priority
+                    className='object-cover'
+                  />
+                  <div className='absolute inset-0 bg-black/50' />
+                </motion.div>
 
-                <div className='pointer-events-none absolute inset-0 flex flex-col justify-between p-17.75'>
-                  <p className='text-h1 text-neutral-50'>
+                <div className='absolute inset-0 flex flex-col justify-between p-17.75'>
+                  <motion.p
+                    variants={textVariants}
+                    className='text-h1 text-neutral-50'>
                     {partData[currentPart].title}
-                  </p>
-                  <div className='text-h4 text-neutral-100'>
+                  </motion.p>
+
+                  <motion.div
+                    variants={textVariants}
+                    className='text-h4 text-neutral-100'>
                     {partData[currentPart].desc.map((line, idx) => (
                       <p key={idx}>{line}</p>
                     ))}
-                  </div>
+                  </motion.div>
                 </div>
               </div>
             </motion.div>
           </AnimatePresence>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
-
 const partData = {
   pm: {
     title: 'Product Manager',
@@ -164,4 +149,61 @@ const partData = {
       '인증 처리와 배포 환경 구성까지 서비스가 안정적으로 동작하고 성장할 수 있는 기반을 만들어갑니다.',
     ],
   },
+};
+
+const variants: Variants = {
+  enter: (direction: number) => ({
+    x: direction > 0 ? 100 : -100,
+    opacity: 0,
+    scale: 0.95,
+    filter: 'blur(8px)',
+  }),
+  center: {
+    x: 0,
+    opacity: 1,
+    scale: 1,
+    filter: 'blur(0px)',
+    transition: {
+      duration: 0.6,
+      ease: [0.16, 1, 0.3, 1],
+      when: 'beforeChildren',
+      staggerChildren: 0.1,
+    },
+  },
+  exit: (direction: number) => ({
+    x: direction > 0 ? -100 : 100,
+    opacity: 0,
+    scale: 1.05,
+    filter: 'blur(8px)',
+    transition: {
+      duration: 0.4,
+    },
+  }),
+};
+
+const imageVariants: Variants = {
+  enter: (direction: number) => ({
+    x: direction > 0 ? '10%' : '-10%',
+    opacity: 0,
+  }),
+  center: {
+    x: 0,
+    opacity: 1,
+    transition: {
+      duration: 0.8,
+      ease: [0.16, 1, 0.3, 1],
+    },
+  },
+  exit: (direction: number) => ({
+    x: direction > 0 ? '-10%' : '10%',
+    opacity: 0,
+    transition: {
+      duration: 0.4,
+    },
+  }),
+};
+
+const textVariants = {
+  enter: {opacity: 0, y: 20},
+  center: {opacity: 1, y: 0},
 };

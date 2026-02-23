@@ -17,7 +17,7 @@ export const AboutUsProjectContainer = () => {
   };
 
   return (
-    <div
+    <section
       className='flex min-h-175 flex-col items-center gap-25 py-20'
       aria-labelledby='project'
       id='project'>
@@ -102,7 +102,7 @@ export const AboutUsProjectContainer = () => {
         onClick={handleProjectMoreViewClick}>
         프로젝트 더보기
       </button>
-    </div>
+    </section>
   );
 };
 
