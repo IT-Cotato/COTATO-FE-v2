@@ -1,21 +1,12 @@
 'use client';
 
 import {useState} from 'react';
-import {
-  CreateSessionRequest,
-  SessionData,
-  UpdateSessionRequest,
-} from '@/schemas/admin/session.schema';
 import {AddSessionButton} from '../_components/AddSessionButton';
 import {SessionCard} from '../_components/SessionCard';
 import {useAdminSessionsQuery} from '@/hooks/queries/useSession.query';
 import {useGenerationQuery} from '@/hooks/queries/useGeneration.query';
-import {
-  useCreateSession,
-  useUpdateSession,
-} from '@/hooks/mutations/useSession.mutation';
 import {AdminSession} from '@/schemas/admin/session.schema';
-import {formatDateTimeToIso} from '@repo/ui/utils/date';
+import {useSessionUpdate} from '@/app/(with-header)/mypage/admin/sessions/_hooks/useSessionUpdate';
 
 const NEW_SESSION_TEMPLATE: AdminSession = {
   sessionId: -1, // 임시 ID
@@ -34,25 +25,21 @@ export const SessionsContainer = () => {
   const [expandedCardId, setExpandedCardId] = useState<number | null>(null);
 
   const {data: generations} = useGenerationQuery();
-  const currentGeneration = generations?.[0]; // 기본으로 가장 최신/첫번째 기수 사용
-  const [selectedGenerationId, setSelectedGenerationId] = useState<
-    number | undefined
-  >(undefined);
+  const currentGeneration = generations?.[0];
 
-  const {data: adminSessions = [], isLoading} =
-    useAdminSessionsQuery(selectedGenerationId);
+  const {data: adminSessions = [], isLoading} = useAdminSessionsQuery();
 
   // 현재 보여지는 세션들이 소속된 기수(generationId)를 최우선으로 추론, 없으면 전체 기수 목록 중 첫번째 기수 사용
   const fallbackGenerationId =
     adminSessions.length > 0 ? adminSessions[0].generationId : undefined;
   const activeGenerationId =
-    selectedGenerationId ??
-    fallbackGenerationId ??
-    currentGeneration?.generationId ??
-    12;
+    fallbackGenerationId ?? currentGeneration?.generationId ?? 12; // 기수 관리 api 연동 pr 머지 전까지는 12기 고정
 
-  const {mutateAsync: createSession} = useCreateSession();
-  const {mutateAsync: updateSession} = useUpdateSession();
+  const {handleUpdate} = useSessionUpdate({
+    activeGenerationId,
+    setIsAddingMode,
+    setExpandedCardId,
+  });
 
   const handleToggle = (sessionId: number) => {
     setExpandedCardId((prev) => (prev === sessionId ? null : sessionId));
@@ -69,112 +56,6 @@ export const SessionsContainer = () => {
       setIsAddingMode(false);
     }
     setExpandedCardId((prev) => (prev === sessionId ? null : prev));
-  };
-
-  const handleUpdate = async (updated: SessionData): Promise<boolean> => {
-    if (!updated.title.trim()) {
-      alert('세션 제목을 입력해주세요.');
-      return false;
-    }
-    if (!updated.attendanceStartTime.trim()) {
-      alert('출석 인정 시작 시간을 입력해주세요. (예: 18:00)');
-      return false;
-    }
-    if (!updated.attendTime?.attendanceEndTime?.trim()) {
-      alert('출석 인정 종료 시간을 입력해주세요. (예: 19:00)');
-      return false;
-    }
-    if (!updated.attendTime?.lateEndTime?.trim()) {
-      alert('지각 인정 종료 시간을 입력해주세요. (예: 19:20)');
-      return false;
-    }
-    if (updated.isOffline && !updated.placeName?.trim()) {
-      alert('대면 세션은 세션 장소를 입력해주세요.');
-      return false;
-    }
-
-    if (updated.sessionId === -1) {
-      // 새로운 세션 생성
-      const requestPayload: Partial<CreateSessionRequest> = {
-        generationId: activeGenerationId,
-        title: updated.title,
-        description: updated.description,
-        attendanceStartTime: formatDateTimeToIso(
-          updated.date,
-          updated.attendanceStartTime
-        ),
-        attendanceEndTime: formatDateTimeToIso(
-          updated.date,
-          updated.attendTime.attendanceEndTime
-        ),
-        lateEndTime: formatDateTimeToIso(
-          updated.date,
-          updated.attendTime.lateEndTime
-        ),
-        isOffline: updated.isOffline,
-        isOnline: updated.isOnline,
-        content: updated.content,
-      };
-
-      if (updated.placeName) requestPayload.placeName = updated.placeName;
-      if (updated.detailAddress)
-        requestPayload.roadNameAddress = updated.detailAddress;
-      if (updated.location?.latitude != null)
-        requestPayload.latitude = updated.location.latitude;
-      if (updated.location?.longitude != null)
-        requestPayload.longitude = updated.location.longitude;
-      if (updated.images && updated.images.length > 0) {
-        requestPayload.imageInfos = updated.images.map((img) => ({
-          s3Key: img.imageUrl,
-          order: img.order,
-        }));
-      }
-
-      try {
-        await createSession(requestPayload as CreateSessionRequest);
-        setIsAddingMode(false);
-        setExpandedCardId(null);
-        return true;
-      } catch {
-        return false;
-      }
-    } else {
-      // 기존 세션 수정
-      const updatePayload: Partial<UpdateSessionRequest> = {
-        sessionId: updated.sessionId,
-        title: updated.title,
-        description: updated.description,
-        attendanceStartTime: formatDateTimeToIso(
-          updated.date,
-          updated.attendanceStartTime
-        ),
-        isOffline: updated.isOffline,
-        isOnline: updated.isOnline,
-        content: updated.content,
-      };
-
-      if (
-        updated.location &&
-        (updated.location.latitude != null ||
-          updated.location.longitude != null)
-      ) {
-        updatePayload.location = {
-          latitude: updated.location?.latitude ?? 0,
-          longitude: updated.location?.longitude ?? 0,
-        };
-      }
-      if (updated.placeName) updatePayload.placeName = updated.placeName;
-      if (updated.detailAddress)
-        updatePayload.roadNameAddress = updated.detailAddress;
-
-      try {
-        await updateSession(updatePayload as UpdateSessionRequest);
-        setExpandedCardId(null);
-        return true;
-      } catch {
-        return false;
-      }
-    }
   };
 
   if (isLoading) return <div className='py-20 text-center'>로딩 중...</div>;

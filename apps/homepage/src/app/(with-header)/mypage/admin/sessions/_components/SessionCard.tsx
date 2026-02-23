@@ -1,6 +1,6 @@
 'use client';
 
-import {useEffect, useState, useMemo} from 'react';
+import {useState} from 'react';
 import {AdminSession, SessionData} from '@/schemas/admin/session.schema';
 import {ActionMenu} from '@/app/(with-header)/mypage/admin/_components/ActionMenu';
 import {ActionButtons} from '@/app/(with-header)/mypage/admin/_components/ActionButtons';
@@ -8,8 +8,8 @@ import {SessionExpandedContent} from './SessionExpandedContent';
 import {Modal} from '@repo/ui/components/modal/Modal';
 import {FullButton} from '@repo/ui/components/buttons/FullButton';
 import {getJosa} from '@/utils/getJosa';
-import { formatDateToDot, formatDate } from '@repo/ui/utils/date';
-import { useSessionDetailQuery } from '@/hooks/queries/useSession.query';
+import {formatDateToDot} from '@repo/ui/utils/date';
+import {useSessionForm} from '@/app/(with-header)/mypage/admin/sessions/_hooks/useSessionForm';
 
 const SESSION_MENU_ITEMS = [
   {key: 'edit', label: '수정하기'},
@@ -33,52 +33,10 @@ export const SessionCard = ({
   onDelete,
   onUpdate,
 }: SessionCardProps) => {
-  const [isEditing, setIsEditing] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  
-  const { data: sessionDetail } = useSessionDetailQuery(session.sessionId, isExpanded || isEditing);
 
-  const fallbackSessionData: SessionData = useMemo(() => ({
-    sessionId: session.sessionId,
-    title: session.title,
-    description: session.description,
-    content: session.content,
-    placeName: session.placeName,
-    date: session.sessionDateTime ? session.sessionDateTime.split('T')[0] : (formatDate(new Date()) ?? ''),
-    generation: session.generationId ? `코테이토 ${session.generationId}기` : '',
-    attendanceStartTime: session.sessionDateTime ? session.sessionDateTime.split('T')[1]?.slice(0, 5) : '', 
-    images: session.imageInfos || [],
-    detailAddress: '',
-    location: {latitude: 0, longitude: 0},
-    attendTime: {
-      attendanceEndTime: '',
-      lateEndTime: '',
-    },
-    isOffline: true,
-    isOnline: false,
-  }), [session]);
-
-  const activeSessionData = sessionDetail ?? fallbackSessionData;
-  const [form, setForm] = useState<SessionData>(activeSessionData);
-
-  useEffect(() => {
-    if (sessionDetail) {
-      setForm(sessionDetail);
-    }
-  }, [sessionDetail]);
-
-  useEffect(() => {
-    if (session.sessionId === -1) {
-      setIsEditing(true);
-    } else if (!isExpanded && !isEditing) {
-      setForm(activeSessionData);
-    } else if (!isExpanded && isEditing) {
-      setIsEditing(false);
-      setForm(activeSessionData);
-    }
-  // isEditing은 의도적으로 제외 - 수정 중에 isExpanded 변화로 form이 리셋되는 것을 방지
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isExpanded, session.sessionId, activeSessionData]);
+  const {isEditing, setIsEditing, form, setForm, activeSessionData} =
+    useSessionForm(session, isExpanded);
 
   const handleToggleClick = () => {
     // 임시 카드(-1)일 때는 사용자가 마음대로 접을 수 없도록 막음 (수정 또는 취소 버튼으로만 동작)
@@ -88,8 +46,7 @@ export const SessionCard = ({
 
   const handleMenuAction = (action: SessionMenuAction) => {
     if (action === 'edit') {
-      // sessionDetail이 캐시에 있으면 즉시 사용, 없으면 fallback (쿼리 결과 오면 useEffect에서 업데이트됨)
-      setForm(sessionDetail ?? fallbackSessionData);
+      setForm(activeSessionData);
       setIsEditing(true);
       if (!isExpanded) onToggle();
     } else if (action === 'delete') {
@@ -110,7 +67,9 @@ export const SessionCard = ({
       onClick={handleToggleClick}>
       <div className='flex items-center justify-between'>
         <div className='flex flex-col'>
-          <p className='text-h5 text-neutral-400'>{formatDateToDot(form.date)}</p>
+          <p className='text-h5 text-neutral-400'>
+            {formatDateToDot(form.date)}
+          </p>
           <p className='text-h3 text-neutral-800'>{session.title}</p>
         </div>
         <div
@@ -178,4 +137,3 @@ export const SessionCard = ({
     </div>
   );
 };
-
