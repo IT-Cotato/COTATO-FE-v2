@@ -12,7 +12,7 @@ import {formatDateTimeToIso} from '@repo/ui/utils/date';
 interface UseSessionUpdateParams {
   activeGenerationId: number;
   setIsAddingMode: (v: boolean) => void;
-  setExpandedCardId: (v: null) => void;
+  setExpandedCardId: (v: number | null) => void;
 }
 
 export const useSessionUpdate = ({
@@ -53,18 +53,23 @@ export const useSessionUpdate = ({
       alert('대면 세션은 세션 장소를 입력해주세요.');
       return false;
     }
-    if (startTime >= endTime) {
+    const toMinutes = (t: string) => {
+      const [h = '0', m = '0'] = t.split(':');
+      return parseInt(h, 10) * 60 + parseInt(m, 10);
+    };
+
+    if (toMinutes(startTime) >= toMinutes(endTime)) {
       alert('출석 인정 시작 시간은 종료 시간보다 이전이어야 합니다.');
       return false;
     }
-    if (endTime >= lateTime) {
+    if (toMinutes(endTime) >= toMinutes(lateTime)) {
       alert('지각 인정 종료 시간은 출석 인정 종료 시간보다 이후여야 합니다.');
       return false;
     }
 
     if (updated.sessionId === -1) {
       // 새로운 세션 생성
-      const requestPayload: Partial<CreateSessionRequest> = {
+      const requestPayload: CreateSessionRequest = {
         generationId: activeGenerationId,
         title: updated.title,
         description: updated.description,
@@ -100,7 +105,7 @@ export const useSessionUpdate = ({
       }
 
       try {
-        await createSession(requestPayload as CreateSessionRequest);
+        await createSession(requestPayload);
         setIsAddingMode(false);
         setExpandedCardId(null);
         return true;
@@ -109,7 +114,7 @@ export const useSessionUpdate = ({
       }
     } else {
       // 기존 세션 수정
-      const updatePayload: Partial<UpdateSessionRequest> = {
+      const updatePayload: UpdateSessionRequest = {
         sessionId: updated.sessionId,
         title: updated.title,
         description: updated.description,
@@ -117,6 +122,16 @@ export const useSessionUpdate = ({
           updated.date,
           updated.attendanceStartTime
         ),
+        attendTime: {
+          attendanceEndTime: formatDateTimeToIso(
+            updated.date,
+            updated.attendTime.attendanceEndTime
+          ),
+          lateEndTime: formatDateTimeToIso(
+            updated.date,
+            updated.attendTime.lateEndTime
+          ),
+        },
         isOffline: updated.isOffline,
         isOnline: updated.isOnline,
         content: updated.content,
@@ -124,12 +139,12 @@ export const useSessionUpdate = ({
 
       if (
         updated.location &&
-        (updated.location.latitude != null ||
-          updated.location.longitude != null)
+        updated.location.latitude != null &&
+        updated.location.longitude != null
       ) {
         updatePayload.location = {
-          latitude: updated.location?.latitude ?? 0,
-          longitude: updated.location?.longitude ?? 0,
+          latitude: updated.location?.latitude,
+          longitude: updated.location?.longitude,
         };
       }
       if (updated.placeName) updatePayload.placeName = updated.placeName;
@@ -137,7 +152,7 @@ export const useSessionUpdate = ({
         updatePayload.roadNameAddress = updated.detailAddress;
 
       try {
-        await updateSession(updatePayload as UpdateSessionRequest);
+        await updateSession(updatePayload);
         setExpandedCardId(null);
         return true;
       } catch {
