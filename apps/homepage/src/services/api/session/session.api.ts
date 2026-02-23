@@ -1,4 +1,11 @@
-import {AdminSession, SessionData, AdminSessionDetailResponse, CreateSessionRequest, CreateSessionResponse, UpdateSessionRequest} from '@/schemas/admin/session.schema';
+import {
+  AdminSession,
+  SessionData,
+  AdminSessionDetailResponse,
+  CreateSessionRequest,
+  CreateSessionResponse,
+  UpdateSessionRequest,
+} from '@/schemas/admin/session.schema';
 import {privateAxios} from '@/services/config/axios';
 import {extractISODate, extractISOTime} from '@repo/ui/utils/date';
 import {ENDPOINT} from '@/services/constant/endpoint';
@@ -7,9 +14,12 @@ import {ENDPOINT} from '@/services/constant/endpoint';
 export const getAdminSessions = async (
   generationId?: number
 ): Promise<AdminSession[]> => {
-  const {data} = await privateAxios.get(ENDPOINT.SESSIONS.ADMIN_LIST, {
-    params: {generationId},
-  });
+  const {data} = await privateAxios.get<AdminSession[]>(
+    ENDPOINT.SESSIONS.ADMIN_LIST,
+    {
+      params: {generationId},
+    }
+  );
   return data;
 };
 
@@ -17,8 +27,10 @@ export const getAdminSessions = async (
 export const getSessionDetail = async (
   sessionId: number
 ): Promise<SessionData> => {
-  const {data} = await privateAxios.get<AdminSessionDetailResponse>(ENDPOINT.SESSIONS.DETAIL(sessionId));
-  
+  const {data} = await privateAxios.get<AdminSessionDetailResponse>(
+    ENDPOINT.SESSIONS.DETAIL(sessionId)
+  );
+
   return {
     sessionId: data.sessionId,
     title: data.title,
@@ -44,7 +56,10 @@ export const getSessionDetail = async (
 export const createSession = async (
   request: CreateSessionRequest
 ): Promise<CreateSessionResponse> => {
-  const {data} = await privateAxios.post(ENDPOINT.SESSIONS.ADMIN_LIST, request);
+  const {data} = await privateAxios.post<CreateSessionResponse>(
+    ENDPOINT.SESSIONS.ADMIN_LIST,
+    request
+  );
   return data;
 };
 

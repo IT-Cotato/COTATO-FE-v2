@@ -1,21 +1,19 @@
 'use client';
 
 import {useState} from 'react';
-import {NewSessionData, SessionData} from '@/schemas/admin/session.schema';
 import {AddSessionButton} from '../_components/AddSessionButton';
 import {SessionCard} from '../_components/SessionCard';
 import {useAdminSessionsQuery} from '@/hooks/queries/useSession.query';
 import {useGenerationQuery} from '@/hooks/queries/useGeneration.query';
-import { useCreateSession, useUpdateSession } from '@/hooks/mutations/useSession.mutation';
 import {AdminSession} from '@/schemas/admin/session.schema';
-import {formatDateTimeToIso} from '@repo/ui/utils/date';
+import {useSessionUpdate} from '@/app/(with-header)/mypage/admin/sessions/_hooks/useSessionUpdate';
 
 const NEW_SESSION_TEMPLATE: AdminSession = {
   sessionId: -1, // 임시 ID
   sessionNumber: 0,
   title: '',
   description: '',
-  generationId: 0, 
+  generationId: 0,
   placeName: '',
   sessionDateTime: '',
   content: '',
@@ -27,18 +25,16 @@ export const SessionsContainer = () => {
   const [expandedCardId, setExpandedCardId] = useState<number | null>(null);
 
   const {data: generations} = useGenerationQuery();
-  const currentGeneration = generations?.[0]; // 기본으로 가장 최신/첫번째 기수 사용
-  const [selectedGenerationId, setSelectedGenerationId] = useState<number | undefined>(undefined);
+  const currentGeneration = generations?.[0];
+  const activeGenerationId = currentGeneration?.generationId ?? 12; // 기수 관리 api 연동 pr 머지 전까지는 12기 고정
 
-  const {data: adminSessions = [], isLoading} =
-    useAdminSessionsQuery(selectedGenerationId);
+  const {data: adminSessions = [], isLoading} = useAdminSessionsQuery(activeGenerationId);
 
-  // 현재 보여지는 세션들이 소속된 기수(generationId)를 최우선으로 추론, 없으면 전체 기수 목록 중 첫번째 기수 사용
-  const fallbackGenerationId = adminSessions.length > 0 ? adminSessions[0].generationId : undefined;
-  const activeGenerationId = selectedGenerationId ?? fallbackGenerationId ?? currentGeneration?.generationId ?? 12;
-
-  const { mutate: createSession } = useCreateSession();
-  const { mutate: updateSession } = useUpdateSession();
+  const {handleUpdate} = useSessionUpdate({
+    activeGenerationId,
+    setIsAddingMode,
+    setExpandedCardId,
+  });
 
   const handleToggle = (sessionId: number) => {
     setExpandedCardId((prev) => (prev === sessionId ? null : sessionId));
@@ -57,96 +53,16 @@ export const SessionsContainer = () => {
     setExpandedCardId((prev) => (prev === sessionId ? null : prev));
   };
 
-  const handleUpdate = (updated: SessionData) => {
-    if (!updated.title.trim()) {
-      alert('세션 제목을 입력해주세요.');
-      return;
-    }
-    if (!updated.attendanceStartTime.trim()) {
-      alert('출석 인정 시간을 입력해주세요. (예: 18:00)');
-      return;
-    }
-
-    if (updated.sessionId === -1) {
-      // 새로운 세션 생성
-      
-      const requestPayload: any = {
-        generationId: activeGenerationId, 
-        title: updated.title,
-        description: updated.description,
-        attendanceStartTime: formatDateTimeToIso(updated.date, updated.attendanceStartTime),
-        isOffline: updated.isOffline,
-        isOnline: updated.isOnline,
-        content: updated.content,
-      };
-
-      if (updated.attendTime?.attendanceEndTime || updated.attendTime?.lateEndTime) {
-        requestPayload.attendanceEndTime = formatDateTimeToIso(updated.date, updated.attendTime?.attendanceEndTime);
-        requestPayload.lateEndTime = formatDateTimeToIso(updated.date, updated.attendTime?.lateEndTime);
-      }
-
-      if (updated.placeName) requestPayload.placeName = updated.placeName;
-      if (updated.detailAddress) requestPayload.roadNameAddress = updated.detailAddress;
-      if (updated.location?.latitude) requestPayload.latitude = updated.location.latitude;
-      if (updated.location?.longitude) requestPayload.longitude = updated.location.longitude;
-      if (updated.images && updated.images.length > 0) {
-        requestPayload.imageInfos = updated.images.map(img => ({
-          s3Key: img.imageUrl,
-          order: img.order
-        }));
-      }
-
-      createSession(requestPayload, {
-        onSuccess: () => {
-          setIsAddingMode(false);
-          setExpandedCardId(null);
-        }
-      });
-    } else {
-      // 기존 세션 수정
-      const updatePayload: any = {
-        sessionId: updated.sessionId,
-        title: updated.title,
-        description: updated.description,
-        attendanceStartTime: formatDateTimeToIso(updated.date, updated.attendanceStartTime),
-        isOffline: updated.isOffline,
-        isOnline: updated.isOnline,
-        content: updated.content,
-      };
-
-      if (updated.attendTime?.attendanceEndTime || updated.attendTime?.lateEndTime) {
-        updatePayload.attendTime = {};
-        if (updated.attendTime.attendanceEndTime) updatePayload.attendTime.attendanceEndTime = formatDateTimeToIso(updated.date, updated.attendTime.attendanceEndTime);
-        if (updated.attendTime.lateEndTime) updatePayload.attendTime.lateEndTime = formatDateTimeToIso(updated.date, updated.attendTime.lateEndTime);
-      }
-
-      if (updated.location?.latitude || updated.location?.longitude) {
-        updatePayload.location = {
-          latitude: updated.location?.latitude || 0,
-          longitude: updated.location?.longitude || 0,
-        };
-      }
-      if (updated.placeName) updatePayload.placeName = updated.placeName;
-      if (updated.detailAddress) updatePayload.roadNameAddress = updated.detailAddress;
-
-      updateSession(updatePayload, {
-        onSuccess: () => {
-          setExpandedCardId(null);
-        }
-      });
-    }
-  };
-
   if (isLoading) return <div className='py-20 text-center'>로딩 중...</div>;
 
   const sortedSessions = [...adminSessions].reverse();
 
-  const displaySessions = isAddingMode 
+  const displaySessions = isAddingMode
     ? [NEW_SESSION_TEMPLATE, ...sortedSessions]
     : sortedSessions;
 
   return (
-    <div className='flex min-h-[500px] flex-col gap-2.5'>
+    <div className='flex min-h-125 flex-col gap-2.5'>
       {!isAddingMode && <AddSessionButton onClick={handleAdd} />}
       {displaySessions.length > 0 ? (
         displaySessions.map((adminSession) => (
