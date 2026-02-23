@@ -3,11 +3,12 @@
 import {useEffect, useState} from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import {CustomInput} from './calendar/CustomInput';
-import {CustomHeader} from './calendar/CustomHeader';
+import {CustomInput} from '@/app/(with-header)/mypage/admin/users/_components/calendar/CustomInput';
+import {CustomHeader} from '@/app/(with-header)/mypage/admin/users/_components/calendar/CustomHeader';
 import RightArrow from '@/assets/arrows/arrow-right.svg';
 import {useGenerationDetailQuery} from '@/hooks/queries/useGeneration.query';
 import {useUpdateGenerationMutation} from '@/hooks/mutations/useGeneration.mutation';
+import {Spinner} from '@repo/ui/components/spinner/Spinner';
 
 interface GenerationInfoSectionProps {
   selectedGeneration: number;
@@ -22,15 +23,22 @@ export const GenerationInfoSection = ({
   const [savedEndDate, setSavedEndDate] = useState<Date | null>(null);
   const [isEditing, setIsEditing] = useState(false);
 
-  const {data: generationDetail} = useGenerationDetailQuery(selectedGeneration);
+  const {
+    data: generationDetail,
+    isLoading,
+    isError,
+  } = useGenerationDetailQuery(selectedGeneration);
   const {mutate: updateGen} = useUpdateGenerationMutation();
 
   useEffect(() => {
     if (generationDetail) {
-      setSavedStartDate(new Date(generationDetail.startDate));
-      setSavedEndDate(new Date(generationDetail.endDate));
-      setIsEditing(false);
+      setSavedStartDate(new Date(`${generationDetail.startDate}T00:00:00`));
+      setSavedEndDate(new Date(`${generationDetail.endDate}T00:00:00`));
+    } else {
+      setSavedStartDate(null);
+      setSavedEndDate(null);
     }
+    setIsEditing(false);
   }, [generationDetail]);
 
   const handleEdit = () => {
@@ -72,6 +80,24 @@ export const GenerationInfoSection = ({
     setIsEditing(false);
   };
 
+  if (isLoading) {
+    return (
+      <div className='flex justify-center'>
+        <Spinner />
+      </div>
+    );
+  }
+
+  if (isError || !generationDetail) {
+    return (
+      <div className='flex justify-center'>
+        <p className='text-body-m text-neutral-500'>
+          데이터를 불러오는 데 실패했습니다.
+        </p>
+      </div>
+    );
+  }
+
   return (
     <div className='flex flex-col gap-[5px] rounded-[10px] bg-neutral-100 px-5.25 py-4.25'>
       <p className='text-body-l font-semibold text-neutral-800'>활동정보</p>
@@ -82,7 +108,7 @@ export const GenerationInfoSection = ({
           <span className='text-body-l font-medium text-neutral-600'>
             기수 정보
           </span>
-          <div className='text-body-m flex h-8 w-17 items-center justify-center rounded-[8px] bg-white font-semibold text-neutral-700 shadow-[0_6px_15px_0_rgba(0,0,0,0.10)]'>
+          <div className='text-body-m flex h-8 w-17 items-center justify-center rounded-lg bg-white font-semibold text-neutral-700 shadow-[0_6px_15px_0_rgba(0,0,0,0.10)]'>
             {selectedGeneration}기
           </div>
         </div>
