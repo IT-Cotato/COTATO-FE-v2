@@ -8,9 +8,7 @@ export const useSubmitAttendanceMutation = () => {
   return useMutation({
     mutationFn: postAttendanceRecord,
     onSuccess: () => {
-      queryClient.invalidateQueries({queryKey: ['attendance', 'sessions']});
-      queryClient.invalidateQueries({queryKey: ['attendance', 'dashboard']});
-      queryClient.invalidateQueries({queryKey: ['attendance', 'records']});
+      queryClient.invalidateQueries({queryKey: ['attendance']});
     },
   });
 };
