@@ -60,7 +60,10 @@ export const useSessionImageCarousel = ({
               order: newImage.order,
             },
           ]);
-          setCurrentIndex(images.length);
+          onChange((prev) => {
+            setCurrentIndex(prev.length - 1);
+            return prev;
+          });
         },
       }
     );
@@ -111,7 +114,7 @@ export const useSessionImageCarousel = ({
     }));
 
     onChange(() => newImages);
-    setTimeout(() => setCurrentIndex(newIdx), 0);
+    setCurrentIndex(newIdx);
 
     if (sessionId !== -1) {
       changeOrder({

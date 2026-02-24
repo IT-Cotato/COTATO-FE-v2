@@ -109,10 +109,12 @@ export const useSessionUpdate = ({
       if (updated.location?.longitude != null)
         requestPayload.longitude = updated.location.longitude;
       if (updated.images && updated.images.length > 0) {
-        requestPayload.imageInfos = updated.images.map((img) => ({
-          s3Key: img.s3Key ?? img.imageUrl,
-          order: img.order,
-        }));
+        requestPayload.imageInfos = updated.images
+          .filter((img) => img.s3Key && !img.s3Key.startsWith('blob:'))
+          .map((img) => ({
+            s3Key: img.s3Key!,
+            order: img.order,
+          }));
       }
 
       try {

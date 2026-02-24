@@ -28,7 +28,7 @@ const mapToSessionData = (data: AdminSessionDetailResponse): SessionData => ({
   generation: data.generationId ? `코테이토 ${data.generationId}기` : '',
   attendanceStartTime: extractISOTime(data.sessionDateTime),
   images: data.sessionImages?.slice().sort((a, b) => a.order - b.order) || [],
-  location: data.attendance?.location || {latitude: 0, longitude: 0},
+  location: data.attendance?.location,
   attendTime: {
     attendanceEndTime: extractISOTime(data.attendance?.attendanceDeadLine),
     lateEndTime: extractISOTime(data.attendance?.lateDeadLine),
@@ -111,10 +111,11 @@ export const getPresignedUrl = async (
 
 /** S3에 직접 업로드 */
 export const uploadImageToS3 = async (presignedUrl: string, file: File) => {
+  const contentType = file.type || 'application/octet-stream';
   const response = await fetch(presignedUrl, {
     method: 'PUT',
     body: file,
-    headers: {'Content-Type': file.type},
+    headers: {'Content-Type': contentType},
   });
 
   if (!response.ok) {

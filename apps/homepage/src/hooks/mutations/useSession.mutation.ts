@@ -66,9 +66,10 @@ export const useUploadSessionImage = () => {
       file: File;
       order: number;
     }) => {
+      const contentType = file.type || 'application/octet-stream';
       const {presignedUrl, s3Key} = await getPresignedUrl({
         fileName: file.name,
-        contentType: file.type,
+        contentType,
       });
       await uploadImageToS3(presignedUrl, file);
 
@@ -84,6 +85,9 @@ export const useUploadSessionImage = () => {
       return completeImageUpload({sessionId, s3Key, order});
     },
     onSuccess: (_, {sessionId}) => {
+      queryClient.invalidateQueries({
+        queryKey: QUERY_KEYS.SESSIONS.ADMIN_BASE,
+      });
       if (sessionId !== -1) {
         queryClient.invalidateQueries({
           queryKey: QUERY_KEYS.SESSIONS.DETAIL(sessionId),

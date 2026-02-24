@@ -31,7 +31,7 @@ export interface SessionData {
   attendanceStartTime: string;
   placeName: string;
   detailAddress: string;
-  location: SessionLocation;
+  location?: SessionLocation;
   attendTime: SessionAttendTime;
   isOffline: boolean;
   isOnline: boolean;

@@ -26,8 +26,10 @@ export const SessionsContainer = () => {
   const [expandedCardId, setExpandedCardId] = useState<number | null>(null);
 
   const {data: generations} = useGenerationQuery();
-  const currentGeneration = generations?.[0];
-  const activeGenerationId = currentGeneration?.generationId;
+  const today = new Date().toLocaleDateString('sv-SE');
+  const activeGenerationId = generations?.find(
+    (g) => g.startDate <= today && today <= g.endDate
+  )?.generationId || generations?.[0]?.generationId;
 
   const {data: adminSessions = [], isLoading} =
     useAdminSessionsQuery(activeGenerationId);
