@@ -143,7 +143,7 @@ export const DISCOVERY_PATH_LABEL_MAP = Object.fromEntries(
 
 export const PRIVACY_POLICY = `코테이토(이하 '동아리')는 지원자의 개인정보를 소중히 다루며, 「개인정보 보호법」 등 관련 법령을 준수하기 위하여 다음과 같이 통합 약관 및 개인정보 처리방침을 수립·공개합니다.
 
-○ 이 이용약관은 2026년 2월 20일부터 적용됩니다.
+○ 이 이용약관은 2026년 2월 19일부터 적용됩니다.
 
 제1부: 개인정보 처리방침
 
