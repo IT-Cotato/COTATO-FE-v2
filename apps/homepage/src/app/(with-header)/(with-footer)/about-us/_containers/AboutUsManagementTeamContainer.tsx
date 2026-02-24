@@ -8,7 +8,7 @@ export const AboutUsManagementTeamContainer = () => {
   return (
     <section
       className='relative flex w-full flex-col items-center gap-25 overflow-hidden py-40'
-      aria-labelledby='management-team'
+      aria-label='코테이토 운영진 소개'
       id='management-team'>
       <Image
         src={AboutUsBackgroundThird}
