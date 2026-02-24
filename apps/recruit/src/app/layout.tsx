@@ -6,7 +6,6 @@ import localFont from 'next/font/local';
 import Providers from '@/app/providers';
 import {ConditionalAuthProvider} from '@/components/providers/ConditionalAuthProvider';
 import {GoogleAnalytics} from '@/lib/GoogleAnalytics';
-import {MobileBlockOverlay} from '@repo/ui/components/overlay/MobileBlockOverlay';
 import {BeUsableRum} from '@/lib/BeUsableRum';
 
 export const metadata: Metadata = {
@@ -97,7 +96,6 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
       lang='ko'
       className={`${pretendard.variable} ${sebangGothic.variable} ${roboto.variable} antialiased`}>
       <body className='flex min-h-screen w-full flex-col bg-black'>
-        <MobileBlockOverlay title='코테이토 리쿠르팅 페이지' />
         <Providers>
           <ConditionalAuthProvider>
             {process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS ? (
