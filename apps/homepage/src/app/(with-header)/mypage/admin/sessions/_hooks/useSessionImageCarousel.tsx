@@ -82,39 +82,38 @@ export const useSessionImageCarousel = ({
       return;
     }
 
-    deleteImage(imageToDelete.imageId, {
-      onSuccess: () => {
-        onChange((prev) =>
-          prev
-            .filter((img) => img.imageId !== imageToDelete.imageId)
-            .map((img, i) => ({...img, order: i}))
-        );
-        setCurrentIndex((prev) => Math.max(0, prev - 1));
-      },
-    });
+    deleteImage(
+      {imageId: imageToDelete.imageId, sessionId},
+      {
+        onSuccess: () => {
+          onChange((prev) =>
+            prev
+              .filter((img) => img.imageId !== imageToDelete.imageId)
+              .map((img, i) => ({...img, order: i}))
+          );
+          setCurrentIndex((prev) => Math.max(0, prev - 1));
+        },
+      }
+    );
   };
 
   const handleDragEnd = (event: DragEndEvent) => {
     const {active, over} = event;
     if (!over || active.id === over.id) return;
 
-    let newImages: SessionImage[] = [];
+    const oldIdx = images.findIndex((img) => img.imageId === active.id);
+    const newIdx = images.findIndex((img) => img.imageId === over.id);
+    if (oldIdx === -1 || newIdx === -1) return;
 
-    onChange((prev) => {
-      const oldIdx = prev.findIndex((img) => img.imageId === active.id);
-      const newIdx = prev.findIndex((img) => img.imageId === over.id);
-      if (oldIdx === -1 || newIdx === -1) return prev;
+    const newImages = arrayMove(images, oldIdx, newIdx).map((img, i) => ({
+      ...img,
+      order: i,
+    }));
 
-      newImages = arrayMove(prev, oldIdx, newIdx).map((img, i) => ({
-        ...img,
-        order: i,
-      }));
+    onChange(() => newImages);
+    setTimeout(() => setCurrentIndex(newIdx), 0);
 
-      setTimeout(() => setCurrentIndex(newIdx), 0);
-      return newImages;
-    });
-
-    if (sessionId !== -1 && newImages.length > 0) {
+    if (sessionId !== -1) {
       changeOrder({
         sessionId,
         orderInfos: newImages.map((img) => ({

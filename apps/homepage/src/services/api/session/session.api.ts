@@ -27,7 +27,7 @@ const mapToSessionData = (data: AdminSessionDetailResponse): SessionData => ({
   date: extractISODate(data.sessionDateTime),
   generation: data.generationId ? `코테이토 ${data.generationId}기` : '',
   attendanceStartTime: extractISOTime(data.sessionDateTime),
-  images: data.sessionImages || [],
+  images: data.sessionImages?.slice().sort((a, b) => a.order - b.order) || [],
   location: data.attendance?.location || {latitude: 0, longitude: 0},
   attendTime: {
     attendanceEndTime: extractISOTime(data.attendance?.attendanceDeadLine),

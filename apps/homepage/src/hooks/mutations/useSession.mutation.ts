@@ -12,15 +12,18 @@ import {
 import {useMutation, useQueryClient} from '@tanstack/react-query';
 
 // 세션 생성
-export const useCreateSession = () => {
+export const useCreateSession = (options?: {
+  onSuccess?: (sessionId: number) => void;
+}) => {
   const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: createSession,
-    onSuccess: () => {
+    onSuccess: (data) => {
       queryClient.invalidateQueries({
         queryKey: QUERY_KEYS.SESSIONS.ADMIN_BASE,
       });
+      options?.onSuccess?.(data.sessionId);
     },
     onError: (error) => {
       console.error('세션 생성 실패:', error);
@@ -51,6 +54,8 @@ export const useUpdateSession = () => {
 };
 
 export const useUploadSessionImage = () => {
+  const queryClient = useQueryClient();
+
   return useMutation({
     mutationFn: async ({
       sessionId,
@@ -78,6 +83,13 @@ export const useUploadSessionImage = () => {
 
       return completeImageUpload({sessionId, s3Key, order});
     },
+    onSuccess: (_, {sessionId}) => {
+      if (sessionId !== -1) {
+        queryClient.invalidateQueries({
+          queryKey: QUERY_KEYS.SESSIONS.DETAIL(sessionId),
+        });
+      }
+    },
     onError: () => {
       alert('이미지 업로드에 실패했습니다. 다시 시도해 주세요.');
     },
@@ -85,6 +97,8 @@ export const useUploadSessionImage = () => {
 };
 
 export const useChangeSessionImageOrder = () => {
+  const queryClient = useQueryClient();
+
   return useMutation({
     mutationFn: async ({
       sessionId,
@@ -95,6 +109,11 @@ export const useChangeSessionImageOrder = () => {
     }) => {
       await changeImageOrder({sessionId, orderInfos});
     },
+    onSuccess: (_, {sessionId}) => {
+      queryClient.invalidateQueries({
+        queryKey: QUERY_KEYS.SESSIONS.DETAIL(sessionId),
+      });
+    },
     onError: () => {
       alert('이미지 순서 변경에 실패했습니다. 다시 시도해 주세요.');
     },
@@ -102,8 +121,16 @@ export const useChangeSessionImageOrder = () => {
 };
 
 export const useDeleteSessionImage = () => {
+  const queryClient = useQueryClient();
+
   return useMutation({
-    mutationFn: (imageId: number) => deleteSessionImage({imageId}),
+    mutationFn: ({imageId}: {imageId: number; sessionId: number}) =>
+      deleteSessionImage({imageId}),
+    onSuccess: (_, {sessionId}) => {
+      queryClient.invalidateQueries({
+        queryKey: QUERY_KEYS.SESSIONS.DETAIL(sessionId),
+      });
+    },
     onError: () => {
       alert('이미지 삭제에 실패했습니다. 다시 시도해 주세요.');
     },
@@ -120,7 +147,7 @@ export const useDeleteSession = () => {
       queryClient.invalidateQueries({
         queryKey: QUERY_KEYS.SESSIONS.ADMIN_BASE,
       });
-      queryClient.invalidateQueries({
+      queryClient.removeQueries({
         queryKey: QUERY_KEYS.SESSIONS.DETAIL(sessionId),
       });
     },
