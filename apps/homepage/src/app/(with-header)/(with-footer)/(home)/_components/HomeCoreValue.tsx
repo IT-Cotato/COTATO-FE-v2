@@ -32,23 +32,19 @@ export const HomeCoreValue = () => {
       <HomeSectionHeader mainHeading='Core Value' subHeading='핵심 가치' />
 
       <ul className='flex flex-row gap-7.5' role='list'>
-        {items.map((item, idx) => {
-          const DefaultIcon = item.defaultIcon;
-
-          return (
-            <li key={idx} className='flex flex-col items-center'>
-              <div className='relative h-auto w-auto'>
-                <DefaultIcon />
-              </div>
-              <div className='mt-3 flex flex-col items-center gap-3'>
-                <strong className='text-h3 font-bold text-neutral-600'>
-                  {item.title}
-                </strong>
-                <p className='text-h5 text-neutral-400'>{item.desc}</p>
-              </div>
-            </li>
-          );
-        })}
+        {items.map((item, idx) => (
+          <li key={idx} className='flex flex-col items-center'>
+            <div className='relative h-auto w-auto' aria-hidden='true'>
+              <item.defaultIcon />
+            </div>
+            <div className='mt-3 flex flex-col items-center gap-3'>
+              <h3 className='text-h3 font-bold text-neutral-600'>
+                {item.title}
+              </h3>
+              <p className='text-h5 text-neutral-400'>{item.desc}</p>
+            </div>
+          </li>
+        ))}
       </ul>
     </section>
   );
