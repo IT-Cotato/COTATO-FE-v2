@@ -79,12 +79,7 @@ export const useSessionUpdate = ({
 
     if (updated.sessionId === -1) {
       // 새로운 세션 생성
-      if (!activeGenerationId) {
-        alert(
-          '현재 기수 정보를 불러올 수 없습니다. 잠시 후 다시 시도해 주세요.'
-        );
-        return false;
-      }
+      if (!activeGenerationId) return false;
       const requestPayload: CreateSessionRequest = {
         generationId: activeGenerationId,
         title: updated.title,
@@ -114,10 +109,12 @@ export const useSessionUpdate = ({
       if (updated.location?.longitude != null)
         requestPayload.longitude = updated.location.longitude;
       if (updated.images && updated.images.length > 0) {
-        requestPayload.imageInfos = updated.images.map((img) => ({
-          s3Key: img.imageUrl,
-          order: img.order,
-        }));
+        requestPayload.imageInfos = updated.images
+          .filter((img) => img.s3Key && !img.s3Key.startsWith('blob:'))
+          .map((img) => ({
+            s3Key: img.s3Key!,
+            order: img.order,
+          }));
       }
 
       try {
@@ -155,12 +152,12 @@ export const useSessionUpdate = ({
 
       if (
         updated.location &&
-        updated.location.latitude != null &&
-        updated.location.longitude != null
+        updated.location.latitude !== 0 &&
+        updated.location.longitude !== 0
       ) {
         updatePayload.location = {
-          latitude: updated.location?.latitude,
-          longitude: updated.location?.longitude,
+          latitude: updated.location.latitude,
+          longitude: updated.location.longitude,
         };
       }
       if (updated.placeName) updatePayload.placeName = updated.placeName;

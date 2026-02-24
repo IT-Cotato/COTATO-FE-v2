@@ -71,6 +71,12 @@ export const ENDPOINT = {
   SESSIONS: {
     ADMIN_LIST: '/v1/api/admin/sessions',
     DETAIL: (sessionId: number) => `/v1/api/sessions/${sessionId}`,
+    IMAGE: {
+      PRESIGNED_URL: '/v1/api/admin/sessions/presigned-url',
+      COMPLETE: '/v1/api/admin/sessions/image/complete',
+      ORDER: '/v1/api/admin/sessions/image/order',
+      DELETE: '/v1/api/admin/sessions/image',
+    },
     DELETE: (sessionId: number) => `/v1/api/admin/sessions/${sessionId}`,
   },
 } as const;
