@@ -10,10 +10,12 @@ import {useShallow} from 'zustand/shallow';
 import {useMemberInfoQuery} from '@/hooks/queries/useMembers.query';
 import {useRecruitmentsStatus} from '@/hooks/queries/useRecruitments.query';
 import {useEffect} from 'react';
+import {useAttendanceStatusQuery} from '@/hooks/queries/useAttendanceStatus.query';
 
 export const Header = () => {
   const pathname = usePathname();
   const {data: recruitStatus} = useRecruitmentsStatus();
+  const {data: attendanceStatus} = useAttendanceStatusQuery();
 
   const navItems = [
     {label: 'ABOUT US', href: ROUTES.ABOUTUS},
@@ -86,13 +88,14 @@ export const Header = () => {
                   <SmallLogo className='h-4 w-4 text-white' />
                   {user?.name || '사용자'}
                 </Link>
-
                 {/* 출석 활성화 시간일 때  */}
-                <Link
-                  href={ROUTES.MYPAGE_ATTENDANCE}
-                  className='border-primary text-body-l-sb bg-primary/30 rounded-[10px] border px-6 py-1.5 text-white'>
-                  출석하기
-                </Link>
+                {attendanceStatus?.openStatus === 'OPEN' && (
+                  <Link
+                    href={ROUTES.MYPAGE_ATTENDANCE}
+                    className='border-primary text-body-l-sb bg-primary/30 animate-pulse rounded-[10px] border px-6 py-1.5 text-white'>
+                    출석하기
+                  </Link>
+                )}
               </>
             )}
           </>
