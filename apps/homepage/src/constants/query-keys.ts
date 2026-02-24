@@ -23,6 +23,7 @@ export const QUERY_KEYS = {
     RECORDS: (month?: number) => ['penalty', 'records', {month}],
   },
   SESSIONS: {
+    ADMIN_BASE: ['sessions', 'admin'],
     ADMIN_LIST: (generationId?: number) => ['sessions', 'admin', {generationId}],
     DETAIL: (sessionId: number) => ['sessions', 'detail', sessionId],
   },

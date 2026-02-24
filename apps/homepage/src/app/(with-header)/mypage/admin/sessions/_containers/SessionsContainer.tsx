@@ -7,6 +7,7 @@ import {useAdminSessionsQuery} from '@/hooks/queries/useSession.query';
 import {useGenerationQuery} from '@/hooks/queries/useGeneration.query';
 import {AdminSession} from '@/schemas/admin/session.schema';
 import {useSessionUpdate} from '@/app/(with-header)/mypage/admin/sessions/_hooks/useSessionUpdate';
+import {useDeleteSession} from '@/hooks/mutations/useSession.mutation';
 
 const NEW_SESSION_TEMPLATE: AdminSession = {
   sessionId: -1, // 임시 ID
@@ -26,9 +27,10 @@ export const SessionsContainer = () => {
 
   const {data: generations} = useGenerationQuery();
   const currentGeneration = generations?.[0];
-  const activeGenerationId = currentGeneration?.generationId ?? 12; // 기수 관리 api 연동 pr 머지 전까지는 12기 고정
+  const activeGenerationId = currentGeneration?.generationId;
 
-  const {data: adminSessions = [], isLoading} = useAdminSessionsQuery(activeGenerationId);
+  const {data: adminSessions = [], isLoading} =
+    useAdminSessionsQuery(activeGenerationId);
 
   const {handleUpdate} = useSessionUpdate({
     activeGenerationId,
@@ -46,9 +48,13 @@ export const SessionsContainer = () => {
     setExpandedCardId(-1); // 새로운 세션 카드 열기
   };
 
+  const {mutate: deleteSession, isPending: isDeleting} = useDeleteSession();
+
   const handleDelete = (sessionId: number) => {
     if (sessionId === -1) {
       setIsAddingMode(false);
+    } else {
+      deleteSession(sessionId);
     }
     setExpandedCardId((prev) => (prev === sessionId ? null : prev));
   };

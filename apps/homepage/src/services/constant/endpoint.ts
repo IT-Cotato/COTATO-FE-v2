@@ -71,5 +71,6 @@ export const ENDPOINT = {
   SESSIONS: {
     ADMIN_LIST: '/v1/api/admin/sessions',
     DETAIL: (sessionId: number) => `/v1/api/sessions/${sessionId}`,
+    DELETE: (sessionId: number) => `/v1/api/admin/sessions/${sessionId}`,
   },
 } as const;

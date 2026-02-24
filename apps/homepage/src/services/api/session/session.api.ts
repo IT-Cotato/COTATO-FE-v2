@@ -69,3 +69,8 @@ export const updateSession = async (
 ): Promise<void> => {
   await privateAxios.patch(ENDPOINT.SESSIONS.ADMIN_LIST, request);
 };
+
+/** 세션 삭제 API */
+export const deleteSession = async (sessionId: number): Promise<void> => {
+  await privateAxios.delete(ENDPOINT.SESSIONS.DELETE(sessionId));
+};
