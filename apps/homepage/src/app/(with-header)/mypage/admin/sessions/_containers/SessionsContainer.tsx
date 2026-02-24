@@ -27,7 +27,7 @@ export const SessionsContainer = () => {
 
   const {data: generations} = useGenerationQuery();
   const currentGeneration = generations?.[0];
-  const activeGenerationId = currentGeneration?.generationId ?? 12; // 기수 관리 api 연동 pr 머지 전까지는 12기 고정
+  const activeGenerationId = currentGeneration?.generationId;
 
   const {data: adminSessions = [], isLoading} =
     useAdminSessionsQuery(activeGenerationId);
@@ -48,7 +48,7 @@ export const SessionsContainer = () => {
     setExpandedCardId(-1); // 새로운 세션 카드 열기
   };
 
-  const {mutate: deleteSession} = useDeleteSession();
+  const {mutate: deleteSession, isPending: isDeleting} = useDeleteSession();
 
   const handleDelete = (sessionId: number) => {
     if (sessionId === -1) {
