@@ -5,7 +5,6 @@ import localFont from 'next/font/local';
 import Providers from '@/app/providers';
 import {AuthProvider} from '@/components/providers/AuthProvider';
 import {GoogleAnalytics} from '@/lib/GoogleAnalytics';
-import {MobileBlockOverlay} from '@repo/ui/components/overlay/MobileBlockOverlay';
 import {BeUsableRum} from '@/lib/BeUsableRum';
 
 export const metadata: Metadata = {
@@ -102,7 +101,6 @@ export default function RootLayout({
       <Providers>
         <AuthProvider>
           <body>
-            <MobileBlockOverlay title='코테이토 공식 홈페이지' />
             {process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS ? (
               <GoogleAnalytics
                 gaId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}

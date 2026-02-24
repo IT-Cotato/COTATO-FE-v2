@@ -14,16 +14,23 @@ export const QUERY_KEYS = {
     STATUS: ['recruitments-status'],
   },
   ATTENDANCE: {
+    BASE: 'attendance',
     DASHBOARD: ['attendance', 'dashboard'],
     RECORDS: (month?: number) => ['attendance', 'records', {month}],
     SESSIONS: (month?: number) => ['attendance', 'sessions', {month}],
   },
   PENALTY: {
+    BASE: 'penalty',
     DASHBOARD: ['penalty', 'dashboard'],
     RECORDS: (month?: number) => ['penalty', 'records', {month}],
   },
   SESSIONS: {
-    ADMIN_LIST: (generationId?: number) => ['sessions', 'admin', {generationId}],
+    ADMIN_BASE: ['sessions', 'admin'],
+    ADMIN_LIST: (generationId?: number) => [
+      'sessions',
+      'admin',
+      {generationId},
+    ],
     DETAIL: (sessionId: number) => ['sessions', 'detail', sessionId],
   },
 } as const;

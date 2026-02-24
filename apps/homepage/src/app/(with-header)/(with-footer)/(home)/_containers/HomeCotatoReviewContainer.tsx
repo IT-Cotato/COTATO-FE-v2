@@ -68,7 +68,9 @@ export const HomeCotatoReviewContainer = () => {
   }, [handleNext, isPaused]);
 
   return (
-    <div className='flex flex-col gap-10 py-10'>
+    <section
+      className='flex flex-col gap-10 py-10'
+      aria-label='찐감자들의 후기'>
       <HomeSectionDescription
         title='찐감자들의 후기'
         descriptions={[
@@ -107,7 +109,7 @@ export const HomeCotatoReviewContainer = () => {
               onClick={() => handleDotClick(index)}
               role='tab'
               aria-selected={isActive}
-              aria-label={`${index + 1}번 리뷰 그룹 보기`}
+              aria-label={`${totalPages}개 리뷰 그룹 중 ${index + 1}번째 그룹 보기`}
               className={`h-1.5 w-1.5 cursor-pointer rounded-full transition-all duration-300 ${
                 isActive
                   ? 'bg-neutral-600'
@@ -117,7 +119,7 @@ export const HomeCotatoReviewContainer = () => {
           );
         })}
       </div>
-    </div>
+    </section>
   );
 };
 
