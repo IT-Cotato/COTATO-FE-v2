@@ -14,7 +14,8 @@ import {MemberAttendResponse} from '@/schemas/mypage-mem/activity/attendance.sch
 import {PenaltyRecord} from '@/schemas/mypage-mem/activity/penalty.schema';
 
 export const AttendanceCheckContainer = ({activeTab}: {activeTab: TabType}) => {
-  const [selectedMonth, setSelectedMonth] = useState('1월');
+  const currentMonth = `${new Date().getMonth() + 1}월`;
+  const [selectedMonth, setSelectedMonth] = useState(currentMonth);
   const monthOptions = Array.from({length: 12}, (_, i) => `${i + 1}월`);
   const monthNumber = parseInt(selectedMonth.replace('월', ''));
 
