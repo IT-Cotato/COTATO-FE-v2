@@ -31,7 +31,7 @@ export const HomeCoreValue = () => {
       id='core-value'>
       <HomeSectionHeader mainHeading='Core Value' subHeading='핵심 가치' />
 
-      <ul className='flex flex-row gap-7.5'>
+      <ul className='flex flex-row gap-7.5' role='list'>
         {items.map((item, idx) => (
           <li key={idx} className='flex flex-col items-center'>
             <div className='relative h-auto w-auto' aria-hidden='true'>

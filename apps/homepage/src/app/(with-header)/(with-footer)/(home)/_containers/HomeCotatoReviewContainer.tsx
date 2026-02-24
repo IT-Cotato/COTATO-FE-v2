@@ -68,7 +68,9 @@ export const HomeCotatoReviewContainer = () => {
   }, [handleNext, isPaused]);
 
   return (
-    <section className='flex flex-col gap-10 py-10'>
+    <section
+      className='flex flex-col gap-10 py-10'
+      aria-label='찐감자들의 후기'>
       <HomeSectionDescription
         title='찐감자들의 후기'
         descriptions={[

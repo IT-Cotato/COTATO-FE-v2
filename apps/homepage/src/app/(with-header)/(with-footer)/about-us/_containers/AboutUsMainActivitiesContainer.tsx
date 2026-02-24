@@ -46,10 +46,12 @@ export const AboutUsMainActivitiesContainer = () => {
             layoutId={`card-${activity.id}`}
             tabIndex={0}
             aria-haspopup='dialog'
-            aria-expanded={selectedId === activity.id}
-            onKeyDown={(e) =>
-              (e.key === 'Enter' || e.key === ' ') && setSelectedId(activity.id)
-            }
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                setSelectedId(activity.id);
+              }
+            }}
             onClick={() => setSelectedId(activity.id)}
             style={{borderRadius: '20px'}}
             className={`group relative cursor-pointer overflow-hidden bg-neutral-600 shadow-lg ${activity.gridClass} h-121.75`}>

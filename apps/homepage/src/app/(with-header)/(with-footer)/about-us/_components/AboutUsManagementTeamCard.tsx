@@ -19,7 +19,8 @@ export const AboutUsManagementTeamCard = ({
         <div className='absolute inset-0 [backface-visibility:hidden]'>
           <Image
             src='/keycap/management-background.svg'
-            alt='background'
+            alt=''
+            aria-hidden='true'
             fill
             className='object-cover'
           />
@@ -34,7 +35,8 @@ export const AboutUsManagementTeamCard = ({
         <div className='absolute inset-0 h-full w-full [transform:rotateY(180deg)] overflow-hidden [backface-visibility:hidden]'>
           <Image
             src='/keycap/management-background-hover.svg'
-            alt='background hover'
+            alt=''
+            aria-hidden='true'
             fill
             className='object-cover'
           />
