@@ -53,7 +53,7 @@
   <tr>
     <td align="center" width="200">
       <a href="https://github.com/choyeon2e">
-        <img src="https://avatars.githubusercontent.com/u/101445030?v=4" width="120" height="120" style="border-radius: 50%;" alt="김초연"/>
+        <img src="https://avatars.githubusercontent.com/u/46335139?v=4" width="120" height="120" style="border-radius: 50%;" alt="김초연"/>
       </a>
       <br />
       <a href="https://github.com/choyeon2e"><strong>김초연</strong></a>
