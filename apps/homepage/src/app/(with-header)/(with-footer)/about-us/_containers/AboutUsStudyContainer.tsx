@@ -5,9 +5,9 @@ import {AboutUsTickerColumn} from '@/app/(with-header)/(with-footer)/about-us/_c
 
 export const AboutUsStudyContainer = () => {
   return (
-    <div
+    <section
       className='flex flex-col items-center gap-25 overflow-hidden py-40'
-      aria-labelledby='study'
+      aria-label='코테이토 스터디 소개'
       id='study'>
       <AboutUsDescription
         title='코테이토의 스터디를 소개합니다'
@@ -27,7 +27,7 @@ export const AboutUsStudyContainer = () => {
 
         <AboutUsTickerColumn items={STUDY_GROUPS[2]} duration={30} />
       </div>
-    </div>
+    </section>
   );
 };
 

@@ -14,7 +14,7 @@ import {OrangeRowKeycap} from '@/app/(with-header)/(with-footer)/(home)/_compone
 
 export const HomeMainScheduleContainer = () => {
   return (
-    <div className='flex flex-col items-center gap-10 py-20'>
+    <section className='flex flex-col items-center gap-10 py-20'>
       <HomeSectionHeader
         mainHeading='Main Schedule'
         subHeading='주요 활동일정'
@@ -68,6 +68,6 @@ export const HomeMainScheduleContainer = () => {
           />
         </div>
       </div>
-    </div>
+    </section>
   );
 };

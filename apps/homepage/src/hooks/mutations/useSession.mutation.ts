@@ -19,11 +19,15 @@ export const useCreateSession = (options?: {
 
   return useMutation({
     mutationFn: createSession,
-    onSuccess: (data) => {
-      queryClient.invalidateQueries({
-        queryKey: QUERY_KEYS.SESSIONS.ADMIN_BASE,
-      });
-      options?.onSuccess?.(data.sessionId);
+    onSuccess: async () => {
+      await Promise.all([
+        queryClient.invalidateQueries({
+          queryKey: QUERY_KEYS.SESSIONS.ADMIN_BASE,
+          exact: false,
+        }),
+        queryClient.invalidateQueries({queryKey: [QUERY_KEYS.ATTENDANCE.BASE]}),
+        queryClient.invalidateQueries({queryKey: [QUERY_KEYS.PENALTY.BASE]}),
+      ]);
     },
     onError: (error) => {
       console.error('세션 생성 실패:', error);
@@ -38,13 +42,17 @@ export const useUpdateSession = () => {
 
   return useMutation({
     mutationFn: updateSession,
-    onSuccess: (_, variables) => {
-      queryClient.invalidateQueries({
-        queryKey: QUERY_KEYS.SESSIONS.ADMIN_BASE,
-      });
-      queryClient.invalidateQueries({
-        queryKey: QUERY_KEYS.SESSIONS.DETAIL(variables.sessionId),
-      });
+    onSuccess: async (_, variables) => {
+      await Promise.all([
+        queryClient.invalidateQueries({
+          queryKey: QUERY_KEYS.SESSIONS.ADMIN_BASE,
+        }),
+        queryClient.invalidateQueries({
+          queryKey: QUERY_KEYS.SESSIONS.DETAIL(variables.sessionId),
+        }),
+        queryClient.invalidateQueries({queryKey: [QUERY_KEYS.ATTENDANCE.BASE]}),
+        queryClient.invalidateQueries({queryKey: [QUERY_KEYS.PENALTY.BASE]}),
+      ]);
     },
     onError: (error) => {
       console.error('세션 수정 실패:', error);
@@ -147,13 +155,17 @@ export const useDeleteSession = () => {
 
   return useMutation({
     mutationFn: deleteSession,
-    onSuccess: (_, sessionId) => {
-      queryClient.invalidateQueries({
-        queryKey: QUERY_KEYS.SESSIONS.ADMIN_BASE,
-      });
-      queryClient.removeQueries({
-        queryKey: QUERY_KEYS.SESSIONS.DETAIL(sessionId),
-      });
+    onSuccess: async (_, sessionId) => {
+      await Promise.all([
+        queryClient.invalidateQueries({
+          queryKey: QUERY_KEYS.SESSIONS.ADMIN_BASE,
+        }),
+        queryClient.removeQueries({
+          queryKey: QUERY_KEYS.SESSIONS.DETAIL(sessionId),
+        }),
+        queryClient.invalidateQueries({queryKey: [QUERY_KEYS.ATTENDANCE.BASE]}),
+        queryClient.invalidateQueries({queryKey: [QUERY_KEYS.PENALTY.BASE]}),
+      ]);
     },
     onError: (error) => {
       console.error('세션 삭제 실패:', error);

@@ -9,7 +9,7 @@ import {HomeBannerContainer} from '@/app/(with-header)/(with-footer)/(home)/_con
 
 export default function HomePage() {
   return (
-    <section className='min-w-360'>
+    <div className='min-w-360'>
       <HomeBannerContainer />
       <div className='flex flex-col items-center gap-50 bg-white pt-25 pb-50'>
         <HomeCoreValue />
@@ -20,6 +20,6 @@ export default function HomePage() {
         <HomeCotatoReviewContainer />
         <HomeRecruitmentContainer />
       </div>
-    </section>
+    </div>
   );
 }

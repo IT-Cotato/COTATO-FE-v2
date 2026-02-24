@@ -161,7 +161,7 @@ export const AddProjectForm = ({
       </div>
       <Button
         type='submit'
-        label={isEdit ? '수정하기' : '추가하기'}
+        label={isEdit ? '저장하기' : '추가하기'}
         width={127}
         height={40}
         disabled={!isFormValid}

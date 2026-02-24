@@ -18,12 +18,12 @@ export const metadata: Metadata = {
 
 export default function AboutUsPage() {
   return (
-    <section className='mx-auto flex w-full min-w-360 flex-col items-center justify-center overflow-x-hidden'>
+    <div className='mx-auto flex w-full min-w-360 flex-col items-center justify-center overflow-x-hidden'>
       <AboutUsBanner />
       <AboutUsMainActivitiesContainer />
       <AboutUsStudyContainer />
       <AboutUsProjectContainer />
       <AboutUsManagementTeamContainer />
-    </section>
+    </div>
   );
 }
