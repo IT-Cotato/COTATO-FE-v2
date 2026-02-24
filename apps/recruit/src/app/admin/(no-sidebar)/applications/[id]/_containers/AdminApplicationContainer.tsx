@@ -33,13 +33,14 @@ export const AdminApplicationContainer = () => {
 
   const rawStep = Number(searchParams.get('step') ?? 1);
   const step = Math.min(Math.max(rawStep, 1), 3);
+  const evaluator = searchParams.get('evaluator');
 
   useEffect(() => {
     const applicantName = basicInfo?.data?.name;
     if (applicantName) {
       document.title = `${applicantName} 지원서`;
     }
-  }, [basicInfo?.data?.name, step]);
+  }, [basicInfo?.data?.name, step, evaluator]);
 
   const handleNext = () => {
     if (step < 3) {
