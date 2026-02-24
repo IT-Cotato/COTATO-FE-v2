@@ -79,7 +79,12 @@ export const useSessionUpdate = ({
 
     if (updated.sessionId === -1) {
       // 새로운 세션 생성
-      if (!activeGenerationId) return false;
+      if (!activeGenerationId) {
+        alert(
+          '현재 기수 정보를 불러올 수 없습니다. 잠시 후 다시 시도해 주세요.'
+        );
+        return false;
+      }
       const requestPayload: CreateSessionRequest = {
         generationId: activeGenerationId,
         title: updated.title,
