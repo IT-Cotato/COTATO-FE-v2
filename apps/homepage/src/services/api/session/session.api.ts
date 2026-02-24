@@ -162,3 +162,8 @@ export const deleteSessionImage = async (
     return handleApiError(error);
   }
 };
+
+/** 세션 삭제 API */
+export const deleteSession = async (sessionId: number): Promise<void> => {
+  await privateAxios.delete(ENDPOINT.SESSIONS.DELETE(sessionId));
+};

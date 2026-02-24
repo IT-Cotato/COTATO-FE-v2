@@ -6,6 +6,7 @@ export const useAdminSessionsQuery = (generationId?: number) => {
   return useQuery({
     queryKey: QUERY_KEYS.SESSIONS.ADMIN_LIST(generationId),
     queryFn: () => getAdminSessions(generationId),
+    enabled: generationId !== undefined,
   });
 };
 

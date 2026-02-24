@@ -53,6 +53,16 @@ export const useSessionUpdate = ({
       alert('대면 세션은 세션 장소를 입력해주세요.');
       return false;
     }
+    const TIME_REGEX = /^\d{2}:\d{2}$/;
+    if (
+      !TIME_REGEX.test(startTime) ||
+      !TIME_REGEX.test(endTime) ||
+      !TIME_REGEX.test(lateTime)
+    ) {
+      alert('시간은 HH:MM 형식으로 입력해주세요. (예: 18:00)');
+      return false;
+    }
+
     const toMinutes = (t: string) => {
       const [h = '0', m = '0'] = t.split(':');
       return parseInt(h, 10) * 60 + parseInt(m, 10);

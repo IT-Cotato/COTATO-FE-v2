@@ -3,6 +3,7 @@ import {
   changeImageOrder,
   completeImageUpload,
   createSession,
+  deleteSession,
   deleteSessionImage,
   getPresignedUrl,
   updateSession,
@@ -18,7 +19,7 @@ export const useCreateSession = () => {
     mutationFn: createSession,
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ['sessions', 'admin'],
+        queryKey: QUERY_KEYS.SESSIONS.ADMIN_BASE,
       });
     },
     onError: (error) => {
@@ -36,7 +37,7 @@ export const useUpdateSession = () => {
     mutationFn: updateSession,
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({
-        queryKey: ['sessions', 'admin'],
+        queryKey: QUERY_KEYS.SESSIONS.ADMIN_BASE,
       });
       queryClient.invalidateQueries({
         queryKey: QUERY_KEYS.SESSIONS.DETAIL(variables.sessionId),
@@ -67,10 +68,9 @@ export const useUploadSessionImage = () => {
       await uploadImageToS3(presignedUrl, file);
 
       if (sessionId === -1) {
-        // 새 세션: complete API 없이 임시 데이터 반환
         return {
-          imageId: -Date.now(), // 임시 음수 ID
-          imageUrl: URL.createObjectURL(file), // 로컬 미리보기 URL
+          imageId: -Date.now(),
+          imageUrl: URL.createObjectURL(file),
           s3Key,
           order,
         };
@@ -106,6 +106,27 @@ export const useDeleteSessionImage = () => {
     mutationFn: (imageId: number) => deleteSessionImage({imageId}),
     onError: () => {
       alert('이미지 삭제에 실패했습니다. 다시 시도해 주세요.');
+    },
+  });
+};
+
+// 세션 삭제
+export const useDeleteSession = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: deleteSession,
+    onSuccess: (_, sessionId) => {
+      queryClient.invalidateQueries({
+        queryKey: QUERY_KEYS.SESSIONS.ADMIN_BASE,
+      });
+      queryClient.invalidateQueries({
+        queryKey: QUERY_KEYS.SESSIONS.DETAIL(sessionId),
+      });
+    },
+    onError: (error) => {
+      console.error('세션 삭제 실패:', error);
+      alert('세션 삭제에 실패했습니다. 다시 시도해 주세요.');
     },
   });
 };
