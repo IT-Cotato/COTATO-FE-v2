@@ -14,7 +14,7 @@ export const useCreateSession = () => {
     mutationFn: createSession,
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ['sessions', 'admin'],
+        queryKey: QUERY_KEYS.SESSIONS.ADMIN_BASE,
       });
     },
     onError: (error) => {
@@ -32,7 +32,7 @@ export const useUpdateSession = () => {
     mutationFn: updateSession,
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({
-        queryKey: ['sessions', 'admin'],
+        queryKey: QUERY_KEYS.SESSIONS.ADMIN_BASE,
       });
       queryClient.invalidateQueries({
         queryKey: QUERY_KEYS.SESSIONS.DETAIL(variables.sessionId),
@@ -51,9 +51,12 @@ export const useDeleteSession = () => {
 
   return useMutation({
     mutationFn: deleteSession,
-    onSuccess: () => {
+    onSuccess: (_, sessionId) => {
       queryClient.invalidateQueries({
-        queryKey: ['sessions', 'admin'],
+        queryKey: QUERY_KEYS.SESSIONS.ADMIN_BASE,
+      });
+      queryClient.invalidateQueries({
+        queryKey: QUERY_KEYS.SESSIONS.DETAIL(sessionId),
       });
     },
     onError: (error) => {
