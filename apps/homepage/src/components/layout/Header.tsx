@@ -15,7 +15,6 @@ import {useAttendanceStatusQuery} from '@/hooks/queries/useAttendanceStatus.quer
 export const Header = () => {
   const pathname = usePathname();
   const {data: recruitStatus} = useRecruitmentsStatus();
-  const {data: attendanceStatus} = useAttendanceStatusQuery();
 
   const navItems = [
     {label: 'ABOUT US', href: ROUTES.ABOUTUS},
@@ -37,7 +36,7 @@ export const Header = () => {
       setUser: state.setUser,
     }))
   );
-
+  const {data: attendanceStatus} = useAttendanceStatusQuery(isAuthenticated);
   const {data: memberInfo} = useMemberInfoQuery(isAuthenticated);
 
   useEffect(() => {
@@ -92,7 +91,7 @@ export const Header = () => {
                 {attendanceStatus?.openStatus === 'OPEN' && (
                   <Link
                     href={ROUTES.MYPAGE_ATTENDANCE}
-                    className='border-primary text-body-l-sb bg-primary/30 animate-pulse rounded-[10px] border px-6 py-1.5 text-white'>
+                    className='border-primary text-body-l-sb bg-primary/30 rounded-[10px] border px-6 py-1.5 text-white'>
                     출석하기
                   </Link>
                 )}
