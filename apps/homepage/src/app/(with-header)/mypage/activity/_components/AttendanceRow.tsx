@@ -9,7 +9,7 @@ export const AttendanceRows = ({data}: {data: MemberAttendResponse[]}) => (
       return (
         <tr key={item.sessionId} className='text-center'>
           <td>{item.sessionNumber}</td>
-          <td>{item.placeName}</td>
+          <td>{item.placeName || '-'}</td>
           <td>
             {item.sessionType === 'OFFLINE' && '대면'}
             {item.sessionType === 'ONLINE' && '비대면'}

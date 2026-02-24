@@ -13,9 +13,9 @@ export const useCreateSession = () => {
   return useMutation({
     mutationFn: createSession,
     onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: QUERY_KEYS.SESSIONS.ADMIN_BASE,
-      });
+      queryClient.invalidateQueries({queryKey: QUERY_KEYS.SESSIONS.ADMIN_BASE});
+      queryClient.invalidateQueries({queryKey: ['attendance']});
+      queryClient.invalidateQueries({queryKey: ['penalty']});
     },
     onError: (error) => {
       console.error('세션 생성 실패:', error);
@@ -31,12 +31,12 @@ export const useUpdateSession = () => {
   return useMutation({
     mutationFn: updateSession,
     onSuccess: (_, variables) => {
-      queryClient.invalidateQueries({
-        queryKey: QUERY_KEYS.SESSIONS.ADMIN_BASE,
-      });
+      queryClient.invalidateQueries({queryKey: QUERY_KEYS.SESSIONS.ADMIN_BASE});
       queryClient.invalidateQueries({
         queryKey: QUERY_KEYS.SESSIONS.DETAIL(variables.sessionId),
       });
+      queryClient.invalidateQueries({queryKey: ['attendance']});
+      queryClient.invalidateQueries({queryKey: ['penalty']});
     },
     onError: (error) => {
       console.error('세션 수정 실패:', error);
@@ -52,12 +52,12 @@ export const useDeleteSession = () => {
   return useMutation({
     mutationFn: deleteSession,
     onSuccess: (_, sessionId) => {
-      queryClient.invalidateQueries({
-        queryKey: QUERY_KEYS.SESSIONS.ADMIN_BASE,
-      });
+      queryClient.invalidateQueries({queryKey: QUERY_KEYS.SESSIONS.ADMIN_BASE});
       queryClient.invalidateQueries({
         queryKey: QUERY_KEYS.SESSIONS.DETAIL(sessionId),
       });
+      queryClient.invalidateQueries({queryKey: ['attendance']});
+      queryClient.invalidateQueries({queryKey: ['penalty']});
     },
     onError: (error) => {
       console.error('세션 삭제 실패:', error);
