@@ -10,7 +10,7 @@ import {
 import {formatDateTimeToIso} from '@repo/ui/utils/date';
 
 interface UseSessionUpdateParams {
-  activeGenerationId: number;
+  activeGenerationId: number | undefined;
   setIsAddingMode: (v: boolean) => void;
   setExpandedCardId: (v: number | null) => void;
 }
@@ -69,6 +69,7 @@ export const useSessionUpdate = ({
 
     if (updated.sessionId === -1) {
       // 새로운 세션 생성
+      if (!activeGenerationId) return false;
       const requestPayload: CreateSessionRequest = {
         generationId: activeGenerationId,
         title: updated.title,

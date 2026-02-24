@@ -25,8 +25,10 @@ export const SessionsContainer = () => {
   const [expandedCardId, setExpandedCardId] = useState<number | null>(null);
 
   const {data: generations} = useGenerationQuery();
-  const currentGeneration = generations?.[0];
-  const activeGenerationId = currentGeneration?.generationId ?? 12; // 기수 관리 api 연동 pr 머지 전까지는 12기 고정
+  const today = new Date().toISOString().split('T')[0] ?? '';
+  const activeGenerationId = generations?.find(
+    (g) => g.startDate <= today && today <= g.endDate
+  )?.generationId;
 
   const {data: adminSessions = [], isLoading} = useAdminSessionsQuery(activeGenerationId);
 
