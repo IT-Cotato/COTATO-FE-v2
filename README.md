@@ -316,4 +316,4 @@ pnpm dev
 [recruit-shield]: https://img.shields.io/badge/-recruit.cotato.kr-F5A9A9?style=for-the-badge
 
 [cotato-url]: https://www.cotato.kr
-[recruit-url]: https://www.recruit.cotato.kr
+[recruit-url]: https://recruit.cotato.kr
