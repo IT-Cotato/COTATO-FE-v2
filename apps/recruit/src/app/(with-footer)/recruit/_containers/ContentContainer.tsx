@@ -81,7 +81,7 @@ export const ContentContainer = () => {
       <Button
         label={isRecruiting ? '지원하러 가기' : '알림 신청 바로가기'}
         onClick={() => {
-          router.push(isRecruiting ? '/apply' : ROUTES.HOME);
+          router.push(isRecruiting ? ROUTES.APPLY : ROUTES.HOME);
         }}
       />
     </div>
