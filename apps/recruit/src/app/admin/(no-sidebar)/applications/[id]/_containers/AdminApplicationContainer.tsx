@@ -14,6 +14,7 @@ import {APPLICATIONS_PART_TABS} from '@/constants/admin/admin-applications';
 import {BasicInfoView} from '@/components/application/BasicInfoView';
 import {PartQuestionView} from '@/components/application/PartQuestionView';
 import {EtcQuestionView} from '@/components/application/EtcQuestionView';
+import {useEffect} from 'react';
 
 export const AdminApplicationContainer = () => {
   const searchParams = useSearchParams();
@@ -32,6 +33,13 @@ export const AdminApplicationContainer = () => {
 
   const rawStep = Number(searchParams.get('step') ?? 1);
   const step = Math.min(Math.max(rawStep, 1), 3);
+
+  useEffect(() => {
+    const applicantName = basicInfo?.data?.name;
+    if (applicantName) {
+      document.title = `${applicantName} 지원서`;
+    }
+  }, [basicInfo?.data?.name, step]);
 
   const handleNext = () => {
     if (step < 3) {
