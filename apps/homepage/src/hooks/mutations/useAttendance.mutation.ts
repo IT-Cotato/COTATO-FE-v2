@@ -1,3 +1,4 @@
+import {QUERY_KEYS} from '@/constants/query-keys';
 import {postAttendanceRecord} from '@/services/api/attendance/attendance.api';
 import {useMutation, useQueryClient} from '@tanstack/react-query';
 
@@ -7,8 +8,10 @@ export const useSubmitAttendanceMutation = () => {
 
   return useMutation({
     mutationFn: postAttendanceRecord,
-    onSuccess: () => {
-      queryClient.invalidateQueries({queryKey: ['attendance']});
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.ATTENDANCE.BASE],
+      });
     },
   });
 };
