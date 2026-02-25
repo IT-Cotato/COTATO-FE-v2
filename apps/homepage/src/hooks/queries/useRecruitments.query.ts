@@ -15,7 +15,7 @@ export const useRecruitmentsStatus = () => {
 
 export const useRecruitmentNoticeQuery = () => {
   return useQuery({
-    queryKey: [QUERY_KEYS.RECRUITMENTS.NOTICE],
+    queryKey: QUERY_KEYS.RECRUITMENTS.NOTICE,
     queryFn: getRecruitmentNotice,
   });
 };
