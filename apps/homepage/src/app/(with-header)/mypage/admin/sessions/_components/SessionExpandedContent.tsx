@@ -29,6 +29,7 @@ export const SessionExpandedContent = (props: SessionExpandedContentProps) => {
       <div className='flex gap-7'>
         <SessionImageCarousel
           mode='edit'
+          sessionId={form.sessionId}
           images={form.images}
           onChange={handleImagesChange}
         />

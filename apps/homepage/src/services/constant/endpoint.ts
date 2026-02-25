@@ -51,6 +51,7 @@ export const ENDPOINT = {
     SESSIONS: '/v1/api/attendances/sessions',
     MY_DASHBOARD: '/v1/api/attendances/my/dashboard',
     MY_RECORDS: '/v1/api/attendances/my',
+    STATUS: '/v1/api/events/attendances', //출결 상태 조회
   },
 
   /** 상벌점 API */
@@ -62,5 +63,26 @@ export const ENDPOINT = {
   /** fap API */
   FAQ: 'v1/api/faq',
 
-  GENERATIONS: '/v1/api/generations',
+  /** 기수 관련 API */
+  GENERATIONS: {
+    LIST: '/v1/api/generations',
+    CREATE: '/v1/api/admin/generations',
+    DETAIL: (generationId: number) =>
+      `/v1/api/admin/generations/${generationId}`,
+    UPDATE: (generationId: number) =>
+      `/v1/api/admin/generations/${generationId}`,
+  },
+
+  /** 세션 관련 API */
+  SESSIONS: {
+    ADMIN_LIST: '/v1/api/admin/sessions',
+    DETAIL: (sessionId: number) => `/v1/api/sessions/${sessionId}`,
+    IMAGE: {
+      PRESIGNED_URL: '/v1/api/admin/sessions/presigned-url',
+      COMPLETE: '/v1/api/admin/sessions/image/complete',
+      ORDER: '/v1/api/admin/sessions/image/order',
+      DELETE: '/v1/api/admin/sessions/image',
+    },
+    DELETE: (sessionId: number) => `/v1/api/admin/sessions/${sessionId}`,
+  },
 } as const;

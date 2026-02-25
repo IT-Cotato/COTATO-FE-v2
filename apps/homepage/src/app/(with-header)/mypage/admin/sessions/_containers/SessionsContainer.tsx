@@ -1,71 +1,93 @@
 'use client';
 
 import {useState} from 'react';
-import {MOCK_SESSIONS} from '@/constants/admin/mock';
-import {NewSessionData, SessionData} from '@/schemas/admin/session.schema';
 import {AddSessionButton} from '../_components/AddSessionButton';
 import {SessionCard} from '../_components/SessionCard';
+import {useAdminSessionsQuery} from '@/hooks/queries/useSession.query';
+import {useGenerationQuery} from '@/hooks/queries/useGeneration.query';
+import {AdminSession} from '@/schemas/admin/session.schema';
+import {useSessionUpdate} from '@/app/(with-header)/mypage/admin/sessions/_hooks/useSessionUpdate';
+import {useDeleteSession} from '@/hooks/mutations/useSession.mutation';
 
-const NEW_SESSION_TEMPLATE: NewSessionData = {
-  date: '',
+const NEW_SESSION_TEMPLATE: AdminSession = {
+  sessionId: -1, // 임시 ID
+  sessionNumber: 0,
   title: '',
-  generation: '코테이토 13기',
   description: '',
-  attendanceStartTime: '',
+  generationId: 0,
   placeName: '',
-  detailAddress: '',
-  location: {latitude: 0, longitude: 0},
-  attendTime: {
-    attendanceEndTime: '',
-    lateEndTime: '',
-  },
-  isOffline: true,
-  isOnline: false,
+  sessionDateTime: '',
   content: '',
-  images: [],
+  imageInfos: [],
 };
 
 export const SessionsContainer = () => {
-  const [sessions, setSessions] = useState<SessionData[]>(MOCK_SESSIONS);
+  const [isAddingMode, setIsAddingMode] = useState(false);
   const [expandedCardId, setExpandedCardId] = useState<number | null>(null);
+
+  const {data: generations} = useGenerationQuery();
+  const today = new Date().toLocaleDateString('sv-SE');
+  const activeGenerationId =
+    generations?.find((g) => g.startDate <= today && today <= g.endDate)
+      ?.generationId || generations?.[0]?.generationId;
+
+  const {data: adminSessions = [], isLoading} =
+    useAdminSessionsQuery(activeGenerationId);
+
+  const {handleUpdate} = useSessionUpdate({
+    activeGenerationId,
+    setIsAddingMode,
+    setExpandedCardId,
+  });
 
   const handleToggle = (sessionId: number) => {
     setExpandedCardId((prev) => (prev === sessionId ? null : sessionId));
   };
 
   const handleAdd = () => {
-    const newId = Date.now();
-    setSessions((prev) => [
-      {...NEW_SESSION_TEMPLATE, sessionId: newId},
-      ...prev,
-    ]);
-    setExpandedCardId(newId);
+    if (isAddingMode) return;
+    setIsAddingMode(true);
+    setExpandedCardId(-1); // 새로운 세션 카드 열기
   };
 
+  const {mutate: deleteSession, isPending: isDeleting} = useDeleteSession();
+
   const handleDelete = (sessionId: number) => {
-    setSessions((prev) => prev.filter((s) => s.sessionId !== sessionId));
+    if (sessionId === -1) {
+      setIsAddingMode(false);
+    } else {
+      deleteSession(sessionId);
+    }
     setExpandedCardId((prev) => (prev === sessionId ? null : prev));
   };
 
-  const handleUpdate = (updated: SessionData) => {
-    setSessions((prev) =>
-      prev.map((s) => (s.sessionId === updated.sessionId ? updated : s))
-    );
-  };
+  if (isLoading) return <div className='py-20 text-center'>로딩 중...</div>;
+
+  const sortedSessions = [...adminSessions].reverse();
+
+  const displaySessions = isAddingMode
+    ? [NEW_SESSION_TEMPLATE, ...sortedSessions]
+    : sortedSessions;
 
   return (
-    <div className='flex flex-col gap-2.5'>
-      <AddSessionButton onClick={handleAdd} />
-      {sessions.map((session) => (
-        <SessionCard
-          key={session.sessionId}
-          session={session}
-          isExpanded={expandedCardId === session.sessionId}
-          onToggle={() => handleToggle(session.sessionId)}
-          onDelete={handleDelete}
-          onUpdate={handleUpdate}
-        />
-      ))}
+    <div className='flex min-h-125 flex-col gap-2.5'>
+      {!isAddingMode && <AddSessionButton onClick={handleAdd} />}
+      {displaySessions.length > 0 ? (
+        displaySessions.map((adminSession) => (
+          <SessionCard
+            key={adminSession.sessionId === -1 ? 'new' : adminSession.sessionId}
+            session={adminSession}
+            isExpanded={expandedCardId === adminSession.sessionId}
+            onToggle={() => handleToggle(adminSession.sessionId)}
+            onDelete={handleDelete}
+            onUpdate={handleUpdate}
+          />
+        ))
+      ) : (
+        <div className='flex flex-1 items-center justify-center text-center text-neutral-400'>
+          아직 등록된 세션이 없습니다.
+        </div>
+      )}
     </div>
   );
 };

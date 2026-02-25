@@ -1,13 +1,15 @@
 'use client';
 
-import {useEffect, useState} from 'react';
-import {SessionData} from '@/schemas/admin/session.schema';
+import {useState} from 'react';
+import {AdminSession, SessionData} from '@/schemas/admin/session.schema';
 import {ActionMenu} from '@/app/(with-header)/mypage/admin/_components/ActionMenu';
 import {ActionButtons} from '@/app/(with-header)/mypage/admin/_components/ActionButtons';
 import {SessionExpandedContent} from './SessionExpandedContent';
 import {Modal} from '@repo/ui/components/modal/Modal';
 import {FullButton} from '@repo/ui/components/buttons/FullButton';
 import {getJosa} from '@/utils/getJosa';
+import {formatDateToDot} from '@repo/ui/utils/date';
+import {useSessionForm} from '@/app/(with-header)/mypage/admin/sessions/_hooks/useSessionForm';
 
 const SESSION_MENU_ITEMS = [
   {key: 'edit', label: '수정하기'},
@@ -17,11 +19,11 @@ const SESSION_MENU_ITEMS = [
 type SessionMenuAction = (typeof SESSION_MENU_ITEMS)[number]['key'];
 
 interface SessionCardProps {
-  session: SessionData;
+  session: AdminSession;
   isExpanded: boolean;
   onToggle: () => void;
   onDelete: (sessionId: number) => void;
-  onUpdate: (updated: SessionData) => void;
+  onUpdate: (updated: SessionData) => Promise<boolean>;
 }
 
 export const SessionCard = ({
@@ -31,17 +33,20 @@ export const SessionCard = ({
   onDelete,
   onUpdate,
 }: SessionCardProps) => {
-  const [isEditing, setIsEditing] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const [form, setForm] = useState<SessionData>(session);
 
-  useEffect(() => {
-    if (!isExpanded) setIsEditing(false);
-  }, [isExpanded]);
+  const {isEditing, setIsEditing, form, setForm, activeSessionData} =
+    useSessionForm(session, isExpanded);
+
+  const handleToggleClick = () => {
+    // 임시 카드(-1)일 때는 사용자가 마음대로 접을 수 없도록 막음 (수정 또는 취소 버튼으로만 동작)
+    if (session.sessionId === -1) return;
+    onToggle();
+  };
 
   const handleMenuAction = (action: SessionMenuAction) => {
     if (action === 'edit') {
-      setForm(session);
+      setForm(activeSessionData);
       setIsEditing(true);
       if (!isExpanded) onToggle();
     } else if (action === 'delete') {
@@ -49,22 +54,22 @@ export const SessionCard = ({
     }
   };
 
-  const handleConfirm = () => {
-    try {
-      onUpdate(form);
-    } catch (error) {
-      alert('세션 업데이트 중 오류가 발생했습니다.');
+  const handleConfirm = async () => {
+    const success = await onUpdate(form);
+    if (success) {
+      setIsEditing(false);
     }
-    setIsEditing(false);
   };
 
   return (
     <div
       className='flex cursor-pointer flex-col gap-5 rounded-[10px] bg-neutral-50 px-5.5 py-6'
-      onClick={onToggle}>
+      onClick={handleToggleClick}>
       <div className='flex items-center justify-between'>
         <div className='flex flex-col'>
-          <p className='text-h5 text-neutral-400'>{session.date}</p>
+          <p className='text-h5 text-neutral-400'>
+            {formatDateToDot(form.date)}
+          </p>
           <p className='text-h3 text-neutral-800'>{session.title}</p>
         </div>
         <div
@@ -72,7 +77,13 @@ export const SessionCard = ({
           onClick={(e) => e.stopPropagation()}>
           {isEditing ? (
             <ActionButtons
-              onCancel={() => setIsEditing(false)}
+              onCancel={() => {
+                if (session.sessionId === -1) {
+                  onDelete(session.sessionId);
+                } else {
+                  setIsEditing(false);
+                }
+              }}
               onConfirm={handleConfirm}
               confirmLabel='등록'
               cancelVariant='dark'
@@ -115,7 +126,11 @@ export const SessionCard = ({
               onChange={setForm}
             />
           ) : (
-            <SessionExpandedContent key='view' mode='view' session={session} />
+            <SessionExpandedContent
+              key='view'
+              mode='view'
+              session={activeSessionData}
+            />
           )}
         </div>
       )}

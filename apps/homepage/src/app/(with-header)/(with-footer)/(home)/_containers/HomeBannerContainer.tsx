@@ -24,6 +24,7 @@ export const HomeBannerContainer = () => {
           height={600}
           className='object-cover'
           priority
+          aria-hidden='true'
         />
       </div>
 
@@ -32,7 +33,7 @@ export const HomeBannerContainer = () => {
         aria-hidden='true'
       />
 
-      <div className='absolute top-1/3 left-1/2 flex -translate-x-1/2 -translate-y-2/3 flex-col items-center opacity-0 transition-opacity duration-300 group-hover:opacity-100'>
+      <div className='absolute top-1/3 left-1/2 flex -translate-x-1/2 -translate-y-2/3 flex-col items-center opacity-0 transition-opacity duration-300 group-focus-within:opacity-100 group-hover:opacity-100'>
         <CotatoLogo />
       </div>
 

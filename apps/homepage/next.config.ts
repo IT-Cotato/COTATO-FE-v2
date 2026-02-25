@@ -20,9 +20,15 @@ const nextConfig: NextConfig = {
         pathname: '/**',
       },
       {
-        //S3 호스트
+        // S3 호스트
         protocol: 'https',
         hostname: process.env.NEXT_PUBLIC_S3_HOSTNAME || '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'placehold.co',
+        port: '',
         pathname: '/**',
       },
     ],

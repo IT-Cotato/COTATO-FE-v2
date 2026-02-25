@@ -38,10 +38,14 @@ export const SessionEditForm = ({form, onChange}: SessionEditFormProps) => {
       <LocationSearchModal
         isOpen={isLocationModalOpen}
         onClose={() => setIsLocationModalOpen(false)}
-        onSelect={({placeName}) => {
+        onSelect={(place) => {
           onChange((prev) => ({
             ...prev,
-            placeName,
+            placeName: place.placeName,
+            location: {
+              latitude: Number(place.y),
+              longitude: Number(place.x),
+            },
           }));
           setIsLocationModalOpen(false);
         }}
