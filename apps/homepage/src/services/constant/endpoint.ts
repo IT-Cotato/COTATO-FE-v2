@@ -59,5 +59,8 @@ export const ENDPOINT = {
     MY_RECORDS: '/v1/api/minus-points/my',
   },
 
+  /** fap API */
+  FAQ: 'v1/api/faq',
+
   GENERATIONS: '/v1/api/generations',
 } as const;
