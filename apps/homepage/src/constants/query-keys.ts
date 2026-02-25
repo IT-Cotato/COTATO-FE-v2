@@ -23,4 +23,5 @@ export const QUERY_KEYS = {
     DASHBOARD: ['penalty', 'dashboard'],
     RECORDS: (month?: number) => ['penalty', 'records', {month}],
   },
+  FAQ: (type: string) => ['faq', type],
 } as const;
