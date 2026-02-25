@@ -3,12 +3,21 @@
 import {useState} from 'react';
 import {Button} from '@repo/ui/components/buttons/Button';
 import {RecruitmentNotificationModal} from '@/components/modal/RecruitmentNotificationModal';
-// import {useSubscribeRecruitmentNotify} from '@/hooks/mutations/useRecruitment.mutation';
+import {useMutation} from '@tanstack/react-query';
+import {subscribeEmail} from '@/services/api/recruitments/recruitments.api';
 
 export const NotifyInput = () => {
   const [email, setEmail] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
-  // const {mutate} = useSubscribeRecruitmentNotify();
+  const subscribeEmailMutation = useMutation({
+    mutationFn: (email: string) => subscribeEmail({email}),
+    onSuccess: () => {
+      setIsModalOpen(true);
+    },
+    onError: () => {
+      alert('이메일 등록에 실패했습니다. 다시 시도해주세요.');
+    },
+  });
 
   const isValidEmail =
     email.length > 0 && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -16,8 +25,7 @@ export const NotifyInput = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (isValidEmail) {
-      // mutate({email});
-      setIsModalOpen(true);
+      subscribeEmailMutation.mutate(email);
     }
   };
 

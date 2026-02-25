@@ -32,6 +32,7 @@ export const ENDPOINT = {
   RECRUITMENTS: {
     STATUS: '/v1/api/recruitments/status',
     TOGGLE: '/v1/api/admin/recruitments/toggle',
+    SUBSCRIBE: '/v1/api/recruitments/subscribe',
   },
 
   /** 프로젝트 API */
