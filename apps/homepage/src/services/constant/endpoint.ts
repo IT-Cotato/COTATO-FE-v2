@@ -60,8 +60,8 @@ export const ENDPOINT = {
     MY_RECORDS: '/v1/api/minus-points/my',
   },
 
-  /** fap API */
-  FAQ: 'v1/api/faq',
+  /** faq API */
+  FAQ: '/v1/api/faq',
 
   /** 기수 관련 API */
   GENERATIONS: {
