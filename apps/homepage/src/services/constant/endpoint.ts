@@ -49,6 +49,7 @@ export const ENDPOINT = {
     SESSIONS: '/v1/api/attendances/sessions',
     MY_DASHBOARD: '/v1/api/attendances/my/dashboard',
     MY_RECORDS: '/v1/api/attendances/my',
+    STATUS: '/v1/api/events/attendances', //출결 상태 조회
   },
 
   /** 상벌점 API */

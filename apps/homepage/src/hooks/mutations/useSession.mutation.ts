@@ -12,9 +12,7 @@ import {
 import {useMutation, useQueryClient} from '@tanstack/react-query';
 
 // 세션 생성
-export const useCreateSession = (options?: {
-  onSuccess?: (sessionId: number) => void;
-}) => {
+export const useCreateSession = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
