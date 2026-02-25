@@ -1,10 +1,14 @@
+import {createSuccessResponseSchema} from '@/schemas/common/common-schema';
 import {
+  RecruitmentNoticeSchema,
+  RecruitmentNoticeType,
   RecruitmentsStatusType,
   SubscribeEmailType,
 } from '@/schemas/recruitments/recruitments.schema';
 import {privateAxios, publicAxios} from '@/services/config/axios';
 import {ENDPOINT} from '@/services/constant/endpoint';
 import {handleApiError} from '@/services/utils/apiHelper';
+import {AxiosResponse} from 'axios';
 
 export const getRecruitmentsStatus =
   async (): Promise<RecruitmentsStatusType> => {
@@ -35,3 +39,18 @@ export const subscribeEmail = async (
     return handleApiError(error);
   }
 };
+
+export const getRecruitmentNotice =
+  async (): Promise<RecruitmentNoticeType> => {
+    try {
+      const response: AxiosResponse = await publicAxios.get(
+        ENDPOINT.RECRUITMENTS.NOTICES
+      );
+
+      const validatedResponse = RecruitmentNoticeSchema.parse(response.data);
+
+      return validatedResponse;
+    } catch (error) {
+      return handleApiError(error);
+    }
+  };

@@ -12,6 +12,7 @@ export const QUERY_KEYS = {
   },
   RECRUITMENTS: {
     STATUS: ['recruitments-status'],
+    NOTICE: ['recruitments-notice'],
   },
   ATTENDANCE: {
     DASHBOARD: ['attendance', 'dashboard'],
