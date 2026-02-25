@@ -1,4 +1,3 @@
-import {createSuccessResponseSchema} from '@/schemas/common/common-schema';
 import {
   RecruitmentNoticeSchema,
   RecruitmentNoticeType,
