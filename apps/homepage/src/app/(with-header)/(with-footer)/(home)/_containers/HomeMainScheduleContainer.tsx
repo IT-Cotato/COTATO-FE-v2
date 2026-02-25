@@ -22,15 +22,15 @@ export const HomeMainScheduleContainer = () => {
       {/** 그리드 4*4 */}
       <div className='grid grid-cols-[repeat(4,auto)] gap-2'>
         <ScheduleKeycap
-          imageSrc='/images/main-schedule/ot.png'
+          imageSrc='/images/main-schedule/ot.webp'
           title='OT'
           subTitle='2026.03.06'
         />
         <BlackPlusKeycap />
         <div className='col-span-2 col-start-3 row-span-2 row-start-1'>
           <WhiteOrangeKeycap
-            imageSrc='/images/main-schedule/mt.png'
-            imageSecondSrc='/images/main-schedule/session.png'
+            imageSrc='/images/main-schedule/mt.webp'
+            imageSecondSrc='/images/main-schedule/session.webp'
             title='MT'
             subTitle='2026.03.27'
             secondTitle='정기 세션'
@@ -39,7 +39,7 @@ export const HomeMainScheduleContainer = () => {
         </div>
         <div className='col-start-1 row-span-2'>
           <OrangeColKeycap
-            imageSrc='/images/main-schedule/devtalk.png'
+            imageSrc='/images/main-schedule/devtalk.webp'
             title='데브톡'
             subTitle='2026.05.08'
           />
@@ -49,7 +49,7 @@ export const HomeMainScheduleContainer = () => {
         </div>
         <div className='col-span-2 col-start-2 row-start-3'>
           <BlackRowKeycap
-            imageSrc='/images/main-schedule/cokerthon.png'
+            imageSrc='/images/main-schedule/cokerthon.webp'
             title='코커톤'
             subTitle='2026.07.24'
           />
@@ -62,7 +62,7 @@ export const HomeMainScheduleContainer = () => {
         </div>
         <div className='col-span-3 col-start-2 row-start-4'>
           <OrangeRowKeycap
-            imageSrc='/images/main-schedule/demoday.png'
+            imageSrc='/images/main-schedule/demoday.webp'
             title='데모데이'
             subTitle='2026.08.21'
           />
