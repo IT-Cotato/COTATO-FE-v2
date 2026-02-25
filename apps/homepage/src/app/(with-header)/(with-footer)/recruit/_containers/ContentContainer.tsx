@@ -1,10 +1,17 @@
+'use client';
+
 import Image from 'next/image';
 import {QualificationList} from '@/app/(with-header)/(with-footer)/recruit/_components/QualificationList';
 import {PositionList} from '@/app/(with-header)/(with-footer)/recruit/_components/PositionList';
 import {ActivityList} from '@/app/(with-header)/(with-footer)/recruit/_components/ActivityList';
 import {FaqContainer} from '@/app/(with-header)/(with-footer)/recruit/_containers/FaqContainer';
+import {useRecruitmentNoticeQuery} from '@/hooks/queries/useRecruitments.query';
 
 export const ContentContainer = () => {
+  const {data} = useRecruitmentNoticeQuery();
+
+  const dataPosition = data?.parts;
+
   return (
     <div className='relative min-w-360 overflow-hidden'>
       {/* dimd */}
@@ -33,7 +40,7 @@ export const ContentContainer = () => {
       {/* content */}
       <div className='relative z-1 m-auto flex w-360 flex-col gap-45 px-30.25 pt-73 pb-23'>
         <QualificationList />
-        <PositionList />
+        <PositionList parts={dataPosition} />
         <ActivityList />
         <FaqContainer />
       </div>
