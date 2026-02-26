@@ -77,7 +77,7 @@ export const AdminApplicationContainer = () => {
 
       <div className='flex w-full flex-col gap-5'>
         {step === 1 && (
-          <div className='flex flex-col'>
+          <div className='flex flex-col gap-5'>
             <div className='flex justify-center'>
               <StepIndicator currentStep={step} totalSteps={3} />
             </div>
@@ -86,8 +86,8 @@ export const AdminApplicationContainer = () => {
         )}
 
         {step === 2 && (
-          <div className='flex flex-col gap-4'>
-            <label className='text-h3 text-primary font-bold'>
+          <div className='flex flex-col gap-5'>
+            <label className='sm:text-h3 text-h5-b text-primary font-bold'>
               {APPLICATIONS_PART_TABS.find(
                 (tab) => tab.value === basicInfo.data.applicationPartType
               )?.label ?? '-'}{' '}
@@ -107,8 +107,8 @@ export const AdminApplicationContainer = () => {
         )}
 
         {step === 3 && (
-          <div className='flex flex-col gap-4'>
-            <label className='text-h3 font-bold text-neutral-800'>
+          <div className='flex flex-col gap-5'>
+            <label className='sm:text-h3 text-body-s font-bold text-neutral-800'>
               기타 질문
             </label>
             <div className='flex justify-center'>

@@ -43,14 +43,13 @@ export const EtcQuestionView = ({
       <div>
         <FormInput
           readOnly
-          label={`${etcQuestions.interviewStartDate}부터 ${etcQuestions.interviewEndDate}까지 면접이 진행됩니다. 참여가 불가능한 시간이 있다면 모두 작성해
-          주세요.`}
+          label={`${etcQuestions.interviewStartDate}부터 ${etcQuestions.interviewEndDate}까지 면접이 진행됩니다. 참여가 불가능한 시간이 있다면 모두 작성해 주세요.`}
           value={etcQuestions.unavailableInterviewTimes ?? '-'}
         />
       </div>
 
       <div className='flex flex-col gap-4'>
-        <label className='text-h5 text-neutral-800'>
+        <label className='sm:text-h5 text-body-xs text-neutral-800'>
           {ETC_QUESTION_LABELS.sessionAttendance}
         </label>
         <FormRadio
@@ -60,7 +59,7 @@ export const EtcQuestionView = ({
         />
       </div>
       <div className='flex flex-col gap-4'>
-        <label className='text-h5 text-neutral-800'>
+        <label className='sm:text-h5 text-body-xs text-neutral-800'>
           최종 합격 시 대면 OT({etcQuestions.otDate ?? '-'}), 코커톤(
           {etcQuestions.cokerthonDate}), 데모데이(
           {etcQuestions.demoDayDate})는 필수 참여입니다.
@@ -89,11 +88,10 @@ export const EtcQuestionView = ({
 
       <FullButton
         label='이전'
-        labelTypo='h4'
         onClick={onPrev}
         backgroundColor='neutral-600'
         height={54}
-        className='mt-9.5'
+        className='sm:text-h4 text-body-s'
       />
     </div>
   );
