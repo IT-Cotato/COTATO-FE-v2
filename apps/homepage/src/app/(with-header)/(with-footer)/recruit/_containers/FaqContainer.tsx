@@ -5,17 +5,11 @@ import {FaqSideBar} from '@/app/(with-header)/(with-footer)/recruit/_components/
 import {FaqAccordion} from '@/app/(with-header)/(with-footer)/recruit/_components/FaqAccordion';
 import {Button} from '@repo/ui/components/buttons/Button';
 import {faqParametersType} from '@/schemas/faq/faq.schema';
-import {useQuery} from '@tanstack/react-query';
-import {getFaq} from '@/services/api/faq/faq.api';
-import {QUERY_KEYS} from '@/constants/query-keys';
+import {useFaqQuery} from '@/hooks/queries/useFaq.query';
 
 export const FaqContainer = () => {
   const [isActive, setIsActive] = useState<faqParametersType>('COMMON');
-
-  const {data} = useQuery({
-    queryKey: QUERY_KEYS.FAQ(isActive),
-    queryFn: () => getFaq(isActive),
-  });
+  const {data} = useFaqQuery(isActive);
 
   return (
     <div className='flex flex-col gap-30'>
