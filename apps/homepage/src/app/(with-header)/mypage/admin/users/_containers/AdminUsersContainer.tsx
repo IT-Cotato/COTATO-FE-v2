@@ -14,9 +14,17 @@ export const AdminUsersContainer = () => {
 
   const activeTab = (searchParams.get('tab') as MemberTabType) ?? 'ALL';
 
-  // TODO: API 연동 시 검색 로직 구현
   const [keyword, setKeyword] = useState('');
-  const handleSearch = () => {};
+  const handleSearch = () => {
+    const params = new URLSearchParams(searchParams.toString());
+    if (keyword) {
+      params.set('search', keyword);
+    } else {
+      params.delete('search');
+    }
+    params.set('page', '1');
+    router.push(`?${params.toString()}`, {scroll: false});
+  };
 
   const handleTabClick = (tab: MemberTabType) => {
     const params = new URLSearchParams(searchParams.toString());
