@@ -1,145 +1,185 @@
-export interface SessionLocation {
-  latitude: number;
-  longitude: number;
-}
+import {z} from 'zod';
 
-export interface SessionAttendTime {
-  attendanceEndTime: string;
-  lateEndTime: string;
-}
+const NullableStringToEmptySchema = z
+  .string()
+  .nullable()
+  .optional()
+  .transform((value) => value ?? '');
 
-// 조회 시 서버에서 받는 이미지 정보
-export interface SessionImage {
-  imageId: number;
-  imageUrl: string;
-  order: number;
-  s3Key?: string;
-}
+export const SessionLocationSchema = z.object({
+  latitude: z.number(),
+  longitude: z.number(),
+});
 
-// 업로드 시 서버로 보내는 이미지 정보
-export interface SessionImageUpload {
-  s3Key: string;
-  order: number;
-}
+export const SessionAttendTimeSchema = z.object({
+  attendanceEndTime: z.string(),
+  lateEndTime: z.string(),
+});
 
-export interface SessionData {
-  sessionId: number;
-  date: string;
-  generation: string;
-  title: string;
-  description: string;
-  attendanceStartTime: string;
-  placeName: string;
-  detailAddress: string;
-  location?: SessionLocation;
-  attendTime: SessionAttendTime;
-  isOffline: boolean;
-  isOnline: boolean;
-  content: string;
-  images: SessionImage[];
-}
+export const SessionImageSchema = z.object({
+  imageId: z.number(),
+  imageUrl: z.string(),
+  s3Key: z.string().optional(),
+  order: z.number().optional().default(0),
+});
 
-export interface AdminSession {
-  sessionId: number;
-  sessionNumber: number;
-  title: string;
-  imageInfos: SessionImage[];
-  description: string;
-  generationId: number;
-  placeName: string;
-  sessionDateTime: string;
-  content: string;
-}
+export const SessionImageUploadSchema = z.object({
+  s3Key: z.string(),
+  order: z.number(),
+});
 
+export const SessionDataSchema = z.object({
+  sessionId: z.number(),
+  date: z.string(),
+  generation: z.string(),
+  title: z.string(),
+  description: z.string(),
+  attendanceStartTime: z.string(),
+  placeName: z.string(),
+  detailAddress: z.string(),
+  location: SessionLocationSchema,
+  attendTime: SessionAttendTimeSchema,
+  isOffline: z.boolean(),
+  isOnline: z.boolean(),
+  content: z.string(),
+  images: z.array(SessionImageSchema),
+});
+
+export const AdminSessionSchema = z.object({
+  sessionId: z.number(),
+  sessionNumber: z.number(),
+  title: NullableStringToEmptySchema,
+  imageInfos: z.array(SessionImageSchema).nullable().optional().default([]),
+  description: NullableStringToEmptySchema,
+  generationId: z.number(),
+  placeName: NullableStringToEmptySchema,
+  sessionDateTime: NullableStringToEmptySchema,
+  content: NullableStringToEmptySchema,
+});
+
+export const AdminSessionDetailResponseSchema = z.object({
+  sessionId: z.number(),
+  sessionNumber: z.number(),
+  title: NullableStringToEmptySchema,
+  sessionImages: z.array(SessionImageSchema).nullable().optional().default([]),
+  description: NullableStringToEmptySchema,
+  generationId: z.number(),
+  placeName: NullableStringToEmptySchema,
+  roadNameAddress: NullableStringToEmptySchema,
+  sessionDateTime: NullableStringToEmptySchema,
+  content: NullableStringToEmptySchema,
+  isOffline: z.boolean(),
+  isOnline: z.boolean(),
+  attendance: z
+    .object({
+      sessionId: z.number(),
+      attendanceDeadLine: NullableStringToEmptySchema,
+      lateDeadLine: NullableStringToEmptySchema,
+      location: SessionLocationSchema.nullish().transform(
+        (value) => value ?? {latitude: 0, longitude: 0}
+      ),
+    })
+    .nullish(),
+});
+
+export const CreateSessionRequestSchema = z.object({
+  generationId: z.number(),
+  imageInfos: z.array(SessionImageUploadSchema).optional(),
+  title: z.string(),
+  description: z.string(),
+  latitude: z.number().optional(),
+  longitude: z.number().optional(),
+  placeName: z.string().optional(),
+  roadNameAddress: z.string().optional(),
+  attendanceStartTime: z.string(),
+  isOffline: z.boolean().optional(),
+  isOnline: z.boolean().optional(),
+  attendanceEndTime: z.string().optional(),
+  lateEndTime: z.string().optional(),
+  content: z.string().optional(),
+});
+
+export const CreateSessionResponseSchema = z.object({
+  sessionId: z.number(),
+  sessionNumber: z.number(),
+  sessionType: z.string(),
+});
+
+export const UpdateSessionRequestSchema = z.object({
+  sessionId: z.number(),
+  title: z.string().optional(),
+  description: z.string().optional(),
+  attendanceStartTime: z.string(),
+  placeName: z.string().optional(),
+  roadNameAddress: z.string().optional(),
+  location: SessionLocationSchema.optional(),
+  attendTime: SessionAttendTimeSchema.optional(),
+  isOffline: z.boolean().optional(),
+  isOnline: z.boolean().optional(),
+  content: z.string().optional(),
+});
+
+export const PresignedUrlRequestSchema = z.object({
+  fileName: z.string(),
+  contentType: z.string(),
+});
+
+export const PresignedUrlResponseSchema = z.object({
+  presignedUrl: z.string(),
+  s3Key: z.string(),
+});
+
+export const CompleteImageUploadRequestSchema = z.object({
+  sessionId: z.number(),
+  s3Key: z.string(),
+  order: z.number(),
+});
+
+export const CompleteImageUploadResponseSchema = z.object({
+  imageId: z.number(),
+  imageUrl: z.string(),
+  s3Key: z.string(),
+  order: z.number(),
+});
+
+export const ChangeImageOrderRequestSchema = z.object({
+  sessionId: z.number(),
+  orderInfos: z.array(
+    z.object({
+      imageId: z.number(),
+      order: z.number(),
+    })
+  ),
+});
+
+export const DeleteSessionImageRequestSchema = z.object({
+  imageId: z.number(),
+});
+
+export type SessionLocation = z.infer<typeof SessionLocationSchema>;
+export type SessionAttendTime = z.infer<typeof SessionAttendTimeSchema>;
+export type SessionImage = z.infer<typeof SessionImageSchema>;
+export type SessionImageUpload = z.infer<typeof SessionImageUploadSchema>;
+export type SessionData = z.infer<typeof SessionDataSchema>;
+export type AdminSession = z.infer<typeof AdminSessionSchema>;
 export type NewSessionData = Omit<SessionData, 'sessionId'>;
-
-export interface AdminSessionDetailResponse {
-  sessionId: number;
-  sessionNumber: number;
-  title: string;
-  sessionImages: SessionImage[];
-  description: string;
-  generationId: number;
-  placeName: string;
-  roadNameAddress: string;
-  sessionDateTime: string;
-  content: string;
-  isOffline: boolean;
-  isOnline: boolean;
-  attendance?: {
-    sessionId: number;
-    attendanceDeadLine: string;
-    lateDeadLine: string;
-    location: SessionLocation;
-  };
-}
-
-export interface CreateSessionRequest {
-  generationId: number;
-  imageInfos?: SessionImageUpload[];
-  title: string;
-  description: string;
-  latitude?: number;
-  longitude?: number;
-  placeName?: string;
-  roadNameAddress?: string;
-  attendanceStartTime: string;
-  isOffline?: boolean;
-  isOnline?: boolean;
-  attendanceEndTime?: string;
-  lateEndTime?: string;
-  content?: string;
-}
-
-export interface CreateSessionResponse {
-  sessionId: number;
-  sessionNumber: number;
-  sessionType: string;
-}
-
-export interface UpdateSessionRequest {
-  sessionId: number;
-  title?: string;
-  description?: string;
-  attendanceStartTime: string;
-  placeName?: string;
-  roadNameAddress?: string;
-  location?: SessionLocation;
-  attendTime?: SessionAttendTime;
-  isOffline?: boolean;
-  isOnline?: boolean;
-  content?: string;
-}
-
-export interface PresignedUrlRequest {
-  fileName: string;
-  contentType: string;
-}
-
-export interface PresignedUrlResponse {
-  presignedUrl: string;
-  s3Key: string;
-  expireAt: string;
-}
-
-export interface CompleteImageUploadRequest {
-  sessionId: number;
-  s3Key: string;
-  order: number;
-}
-
-export interface CompleteImageUploadResponse {
-  imageId: number;
-  imageUrl: string;
-  order: number;
-  s3Key?: string; // 새 세션 생성 시 임시 저장용 (서버 응답에는 없음)
-}
-
-export interface ChangeImageOrderRequest {
-  sessionId: number;
-  orderInfos: {imageId: number; order: number}[];
-}
-
-export interface DeleteSessionImageRequest {
-  imageId: number;
-}
+export type AdminSessionDetailResponse = z.infer<
+  typeof AdminSessionDetailResponseSchema
+>;
+export type CreateSessionRequest = z.infer<typeof CreateSessionRequestSchema>;
+export type CreateSessionResponse = z.infer<typeof CreateSessionResponseSchema>;
+export type UpdateSessionRequest = z.infer<typeof UpdateSessionRequestSchema>;
+export type PresignedUrlRequest = z.infer<typeof PresignedUrlRequestSchema>;
+export type PresignedUrlResponse = z.infer<typeof PresignedUrlResponseSchema>;
+export type CompleteImageUploadRequest = z.infer<
+  typeof CompleteImageUploadRequestSchema
+>;
+export type CompleteImageUploadResponse = z.infer<
+  typeof CompleteImageUploadResponseSchema
+>;
+export type ChangeImageOrderRequest = z.infer<
+  typeof ChangeImageOrderRequestSchema
+>;
+export type DeleteSessionImageRequest = z.infer<
+  typeof DeleteSessionImageRequestSchema
+>;
