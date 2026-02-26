@@ -3,7 +3,10 @@
 import {useRef} from 'react';
 import Image from 'next/image';
 import {DndContext, closestCenter} from '@dnd-kit/core';
-import {SortableContext, horizontalListSortingStrategy} from '@dnd-kit/sortable';
+import {
+  SortableContext,
+  horizontalListSortingStrategy,
+} from '@dnd-kit/sortable';
 import ChevronLeftIcon from '@/assets/chevrons/chevron-left.svg';
 import ChevronRightIcon from '@/assets/chevrons/chevron-right.svg';
 import PlusIcon from '@repo/ui/assets/icons/plus-nobackground.svg';

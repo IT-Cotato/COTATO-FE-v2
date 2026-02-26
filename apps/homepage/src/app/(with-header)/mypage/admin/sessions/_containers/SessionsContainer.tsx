@@ -27,9 +27,9 @@ export const SessionsContainer = () => {
 
   const {data: generations} = useGenerationQuery();
   const today = new Date().toLocaleDateString('sv-SE');
-  const activeGenerationId = generations?.find(
-    (g) => g.startDate <= today && today <= g.endDate
-  )?.generationId || generations?.[0]?.generationId;
+  const activeGenerationId =
+    generations?.find((g) => g.startDate <= today && today <= g.endDate)
+      ?.generationId || generations?.[0]?.generationId;
 
   const {data: adminSessions = [], isLoading} =
     useAdminSessionsQuery(activeGenerationId);

@@ -12,6 +12,7 @@ export const QUERY_KEYS = {
   },
   RECRUITMENTS: {
     STATUS: ['recruitments-status'],
+    NOTICE: ['recruitments-notice'],
   },
   ATTENDANCE: {
     BASE: 'attendance',
@@ -25,6 +26,7 @@ export const QUERY_KEYS = {
     DASHBOARD: ['penalty', 'dashboard'],
     RECORDS: (month?: number) => ['penalty', 'records', {month}],
   },
+  FAQ: (type: string) => ['faq', type],
   SESSIONS: {
     ADMIN_BASE: ['sessions', 'admin'],
     ADMIN_LIST: (generationId?: number) => [

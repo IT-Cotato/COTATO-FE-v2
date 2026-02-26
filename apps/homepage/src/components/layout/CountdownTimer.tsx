@@ -3,13 +3,7 @@
 import clsx from 'clsx';
 import {useState, useEffect} from 'react';
 import {Spinner} from '@repo/ui/components/spinner/Spinner';
-// import {useRecruitmentNoticeQuery} from '@/hooks/queries/useRecruitmentNotice.query';
-
-// mock
-const noticeData = {
-  endDate: '2026-02-24T23:59',
-};
-const isLoading = false;
+import {useRecruitmentNoticeQuery} from '@/hooks/queries/useRecruitments.query';
 
 interface CountdownTimerProps {
   highlightUnits?: boolean;
@@ -18,7 +12,7 @@ interface CountdownTimerProps {
 export const CountdownTimer = ({
   highlightUnits = false,
 }: CountdownTimerProps) => {
-  // const {data: noticeData, isLoading} = useRecruitmentNoticeQuery();
+  const {data: noticeData, isLoading} = useRecruitmentNoticeQuery();
 
   const [timeLeft, setTimeLeft] = useState(() => ({
     d: '0',
@@ -58,7 +52,7 @@ export const CountdownTimer = ({
     }, 1000);
 
     return () => clearInterval(timerId);
-  }, []);
+  }, [noticeData]);
 
   const textColor = highlightUnits ? 'text-primary' : 'text-neutral-400';
 
