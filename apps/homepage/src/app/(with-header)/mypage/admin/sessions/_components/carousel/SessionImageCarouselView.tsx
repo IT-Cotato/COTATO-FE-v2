@@ -5,7 +5,7 @@ import Image from 'next/image';
 import ChevronLeftIcon from '@/assets/chevrons/chevron-left.svg';
 import ChevronRightIcon from '@/assets/chevrons/chevron-right.svg';
 import ThumbnailImage from '@/assets/thumbnail/thumbnail.svg';
-import {SessionImage} from '@/schemas/admin/session.schema';
+import {SessionImage} from '@/schemas/admin/admin-sessions.schema';
 
 interface SessionImageCarouselViewProps {
   images: SessionImage[];

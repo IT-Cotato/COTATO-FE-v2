@@ -13,7 +13,7 @@ import {
   MemberRoleKey,
   MemberStatusKey,
 } from '@/constants/admin/admin';
-import {MemberType} from '@/schemas/admin/admin.schema';
+import {MemberType} from '@/schemas/admin/admin-members.schema';
 import {
   TextField,
   fieldClass,
@@ -104,7 +104,7 @@ export const MemberDetailModal = ({
               {readonly ? (
                 <input
                   readOnly
-                  value={`${memberData.generationMemberId}기`}
+                  value={`${memberData.passedGenerationNumber}기`}
                   className={fieldClass}
                 />
               ) : (
@@ -112,12 +112,12 @@ export const MemberDetailModal = ({
                   <input
                     type='number'
                     min={1}
-                    value={memberData.generationMemberId}
+                    value={memberData.passedGenerationNumber}
                     className={`${fieldClass} [appearance:textfield] pr-8 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none`}
                     onChange={(e) =>
                       setMemberData({
                         ...memberData,
-                        generationMemberId: Number(e.target.value),
+                        passedGenerationNumber: Number(e.target.value),
                       })
                     }
                   />

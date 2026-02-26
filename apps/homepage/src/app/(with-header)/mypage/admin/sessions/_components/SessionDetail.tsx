@@ -1,6 +1,6 @@
 'use client';
 
-import {SessionData} from '@/schemas/admin/session.schema';
+import {SessionData} from '@/schemas/admin/admin-sessions.schema';
 import {SessionDetailView} from './SessionDetailView';
 import {SessionEditForm} from './SessionEditForm';
 

@@ -11,7 +11,8 @@ import {
   MemberMenuAction,
   MemberStatusKey,
 } from '@/constants/admin/admin';
-import {MemberTabType, MemberType} from '@/schemas/admin/admin.schema';
+import {MemberTabType} from '@/schemas/admin/admin.type';
+import {MemberType} from '@/schemas/admin/admin-members.schema';
 import {MOCK_MEMBERS} from '@/mocks/admin/mock-admin-users';
 import {useRouter, useSearchParams} from 'next/navigation';
 import {useEffect, useMemo, useState} from 'react';

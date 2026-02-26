@@ -1,10 +1,12 @@
-import {MemberType} from '@/schemas/admin/admin.schema';
+import {MemberType} from '@/schemas/admin/admin-members.schema';
 
 export const MOCK_MEMBERS: MemberType[] = [
   {
     memberId: 1,
     name: '지원감자1',
-    generationMemberId: 11,
+    gender: 'MALE',
+    passedGenerationNumber: 11,
+    latestGenerationNumber: 11,
     position: 'PM',
     university: '코타토 대학교',
     phoneNumber: '010-1234-5678',
@@ -14,7 +16,9 @@ export const MOCK_MEMBERS: MemberType[] = [
   {
     memberId: 2,
     name: '지원감자2',
-    generationMemberId: 11,
+    gender: 'FEMALE',
+    passedGenerationNumber: 11,
+    latestGenerationNumber: 11,
     position: 'DE',
     university: '코타토 대학교',
     phoneNumber: '010-1234-5678',
@@ -24,7 +28,9 @@ export const MOCK_MEMBERS: MemberType[] = [
   {
     memberId: 3,
     name: '지원감자3',
-    generationMemberId: 11,
+    gender: 'MALE',
+    passedGenerationNumber: 11,
+    latestGenerationNumber: 11,
     position: 'FE',
     university: '코타토 대학교',
     phoneNumber: '010-1234-5678',
@@ -34,7 +40,9 @@ export const MOCK_MEMBERS: MemberType[] = [
   {
     memberId: 4,
     name: '지원감자4',
-    generationMemberId: 11,
+    gender: 'FEMALE',
+    passedGenerationNumber: 11,
+    latestGenerationNumber: 11,
     position: 'BE',
     university: '코타토 대학교',
     phoneNumber: '010-1234-5678',
@@ -44,7 +52,9 @@ export const MOCK_MEMBERS: MemberType[] = [
   {
     memberId: 5,
     name: '지원감자5',
-    generationMemberId: 11,
+    gender: 'MALE',
+    passedGenerationNumber: 11,
+    latestGenerationNumber: 11,
     position: 'PM',
     university: '코타토 대학교',
     phoneNumber: '010-1234-5678',
@@ -54,7 +64,9 @@ export const MOCK_MEMBERS: MemberType[] = [
   {
     memberId: 6,
     name: '지원감자6',
-    generationMemberId: 11,
+    gender: 'FEMALE',
+    passedGenerationNumber: 11,
+    latestGenerationNumber: 11,
     position: 'PM',
     university: '코타토 대학교',
     phoneNumber: '010-1234-5678',
@@ -64,7 +76,9 @@ export const MOCK_MEMBERS: MemberType[] = [
   {
     memberId: 7,
     name: '지원감자7',
-    generationMemberId: 11,
+    gender: 'MALE',
+    passedGenerationNumber: 11,
+    latestGenerationNumber: 11,
     position: 'PM',
     university: '코타토 대학교',
     phoneNumber: '010-1234-5678',
@@ -74,7 +88,9 @@ export const MOCK_MEMBERS: MemberType[] = [
   {
     memberId: 8,
     name: '지원감자8',
-    generationMemberId: 11,
+    gender: 'FEMALE',
+    passedGenerationNumber: 11,
+    latestGenerationNumber: 11,
     position: 'PM',
     university: '코타토 대학교',
     phoneNumber: '010-1234-5678',
@@ -84,7 +100,9 @@ export const MOCK_MEMBERS: MemberType[] = [
   {
     memberId: 9,
     name: '지원감자9',
-    generationMemberId: 11,
+    gender: 'MALE',
+    passedGenerationNumber: 11,
+    latestGenerationNumber: 11,
     position: 'PM',
     university: '코타토 대학교',
     phoneNumber: '010-1234-5678',
@@ -94,7 +112,9 @@ export const MOCK_MEMBERS: MemberType[] = [
   {
     memberId: 10,
     name: '지원감자10',
-    generationMemberId: 11,
+    gender: 'FEMALE',
+    passedGenerationNumber: 11,
+    latestGenerationNumber: 11,
     position: 'PM',
     university: '코타토 대학교',
     phoneNumber: '010-1234-5678',
@@ -104,7 +124,9 @@ export const MOCK_MEMBERS: MemberType[] = [
   {
     memberId: 11,
     name: '지원감자11',
-    generationMemberId: 11,
+    gender: 'MALE',
+    passedGenerationNumber: 11,
+    latestGenerationNumber: 11,
     position: 'PM',
     university: '코타토 대학교',
     phoneNumber: '010-1234-5678',

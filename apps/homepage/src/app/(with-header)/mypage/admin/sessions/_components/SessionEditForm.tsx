@@ -4,7 +4,7 @@ import {useState} from 'react';
 import TrashIcon from '@/assets/trash/trash.svg';
 import SearchIcon from '@repo/ui/assets/icons/search.svg';
 import ClockIcon from '@/assets/clock/clock.svg';
-import {SessionData} from '@/schemas/admin/session.schema';
+import {SessionData} from '@/schemas/admin/admin-sessions.schema';
 import {LocationSearchModal} from './LocationSearchModal';
 
 interface SessionEditFormProps {

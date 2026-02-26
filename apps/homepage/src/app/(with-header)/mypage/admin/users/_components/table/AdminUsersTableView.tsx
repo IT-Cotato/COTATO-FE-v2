@@ -1,4 +1,5 @@
-import {MemberTabType, MemberType} from '@/schemas/admin/admin.schema';
+import {MemberTabType} from '@/schemas/admin/admin.type';
+import {MemberType} from '@/schemas/admin/admin-members.schema';
 import {
   MEMBER_COLUMNS,
   MEMBER_ROLE_CONFIG,
@@ -125,7 +126,7 @@ export const AdminUsersTableView = ({
             )}
             <td className='truncate px-3 py-4 text-center'>{member.name}</td>
             <td className='truncate px-3 py-4 text-center'>
-              {member.generationMemberId}기
+              {member.passedGenerationNumber}기
             </td>
             <td className='truncate px-3 py-4 text-center'>
               {MEMBER_POSITION_LABEL[member.position as MemberPositionKey] ??

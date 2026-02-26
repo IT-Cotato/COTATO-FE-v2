@@ -1,4 +1,4 @@
-import {ApprovalTabType, MemberTabType} from '@/schemas/admin/admin.schema';
+import {ApprovalTabType, MemberTabType} from '@/schemas/admin/admin.type';
 
 /** 회원 관리 테이블 컬럼 상수 */
 export const MEMBER_COLUMNS = [

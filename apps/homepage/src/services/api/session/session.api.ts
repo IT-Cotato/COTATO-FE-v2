@@ -11,7 +11,7 @@ import {
   CompleteImageUploadResponse,
   ChangeImageOrderRequest,
   DeleteSessionImageRequest,
-} from '@/schemas/admin/session.schema';
+} from '@/schemas/admin/admin-sessions.schema';
 import {privateAxios} from '@/services/config/axios';
 import {extractISODate, extractISOTime} from '@repo/ui/utils/date';
 import {ENDPOINT} from '@/services/constant/endpoint';

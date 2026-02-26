@@ -1,4 +1,4 @@
-import {ApprovalMemberType} from '@/schemas/admin/admin.schema';
+import {ApprovalMemberType} from '@/schemas/admin/admin-members.schema';
 import {
   APPROVAL_COLUMNS,
   MEMBER_POSITION_LABEL,

@@ -1,7 +1,7 @@
 'use client';
 
 import {useState} from 'react';
-import {AdminSession, SessionData} from '@/schemas/admin/session.schema';
+import {AdminSession, SessionData} from '@/schemas/admin/admin-sessions.schema';
 import {ActionMenu} from '@/app/(with-header)/mypage/admin/_components/ActionMenu';
 import {ActionButtons} from '@/app/(with-header)/mypage/admin/_components/ActionButtons';
 import {SessionExpandedContent} from './SessionExpandedContent';

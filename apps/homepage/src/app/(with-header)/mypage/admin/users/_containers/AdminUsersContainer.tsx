@@ -4,7 +4,7 @@ import {useRouter, useSearchParams} from 'next/navigation';
 import {useState} from 'react';
 import clsx from 'clsx';
 import {MEMBER_TABS} from '@/constants/admin/admin';
-import {MemberTabType} from '@/schemas/admin/admin.schema';
+import {MemberTabType} from '@/schemas/admin/admin.type';
 import {AdminUsersTableContainer} from './AdminUsersTableContainer';
 import {SearchBar} from '@/app/(with-header)/mypage/admin/_components/SearchBar';
 
