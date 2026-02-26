@@ -26,44 +26,44 @@ export const SessionImageCarouselView = ({
 
   return (
     <div className='flex flex-col'>
-    <div className='relative h-57.5 w-87.5 overflow-hidden rounded-[10px] bg-neutral-200'>
-      {currentImage ? (
-        <>
-          <Image
-            src={currentImage.imageUrl}
-            alt={`세션 이미지 ${safeIndex + 1}`}
-            fill
-            sizes='350px'
-            className='object-cover'
-          />
+      <div className='relative h-57.5 w-87.5 overflow-hidden rounded-[10px] bg-neutral-200'>
+        {currentImage ? (
+          <>
+            <Image
+              src={currentImage.imageUrl}
+              alt={`세션 이미지 ${safeIndex + 1}`}
+              fill
+              sizes='350px'
+              className='object-cover'
+            />
 
-          {images.length > 1 && (
-            <>
-              <button
-                type='button'
-                onClick={handlePrev}
-                disabled={safeIndex === 0}
-                className='absolute top-1/2 left-3 -translate-y-1/2 cursor-pointer disabled:opacity-30'
-                aria-label='이전 이미지'>
-                <ChevronLeftIcon className='h-6 w-6 text-white' />
-              </button>
-              <button
-                type='button'
-                onClick={handleNext}
-                disabled={safeIndex === images.length - 1}
-                className='absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer disabled:opacity-30'
-                aria-label='다음 이미지'>
-                <ChevronRightIcon className='h-6 w-6 text-white' />
-              </button>
-            </>
-          )}
-        </>
-      ) : (
-        <div className='flex h-full w-full items-center justify-center'>
-          <ThumbnailImage />
-        </div>
-      )}
-    </div>
+            {images.length > 1 && (
+              <>
+                <button
+                  type='button'
+                  onClick={handlePrev}
+                  disabled={safeIndex === 0}
+                  className='absolute top-1/2 left-3 -translate-y-1/2 cursor-pointer disabled:opacity-30'
+                  aria-label='이전 이미지'>
+                  <ChevronLeftIcon className='h-6 w-6 text-white' />
+                </button>
+                <button
+                  type='button'
+                  onClick={handleNext}
+                  disabled={safeIndex === images.length - 1}
+                  className='absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer disabled:opacity-30'
+                  aria-label='다음 이미지'>
+                  <ChevronRightIcon className='h-6 w-6 text-white' />
+                </button>
+              </>
+            )}
+          </>
+        ) : (
+          <div className='flex h-full w-full items-center justify-center'>
+            <ThumbnailImage />
+          </div>
+        )}
+      </div>
     </div>
   );
 };

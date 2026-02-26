@@ -18,12 +18,14 @@ export const AboutUsBanner = () => {
       aria-label='소개 배너'>
       <div className='relative flex h-full w-full justify-center transition-all duration-500'>
         <Image
-          src='/keycap/background-universe.svg'
+          src='/keycap/background-universe.webp'
           alt=''
           aria-hidden='true'
           fill
           className='object-cover'
           priority
+          fetchPriority='high'
+          quality={75}
         />
       </div>
       <div className='absolute top-1/2 left-1/6 z-10 flex h-[40%] -translate-y-1/2 flex-col items-center justify-between'>

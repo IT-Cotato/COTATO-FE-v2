@@ -62,9 +62,7 @@ export const SessionCard = ({
           <span className='text-h5 text-neutral-400'>
             {session.sessionDateTime.split('T')[0].replaceAll('-', '.')}
           </span>
-          <h3 className='text-h3 text-neutral-800'>
-            {session.title}
-          </h3>
+          <h3 className='text-h3 text-neutral-800'>{session.title}</h3>
         </div>
         <div
           className='flex items-center gap-4'

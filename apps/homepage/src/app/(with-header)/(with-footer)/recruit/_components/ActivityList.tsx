@@ -1,7 +1,11 @@
 import {ActivityCard} from '@/app/(with-header)/(with-footer)/recruit/_components/ActivityCard';
-import {ACTIVITY_CARD_DATA} from '@/constants/recruitment/recruitment-notice';
+import {ActivityCardType} from '@/schemas/recruitments/recruitments.schema';
 
-export const ActivityList = () => {
+interface ActivityListProps {
+  activities?: ActivityCardType[];
+}
+
+export const ActivityList = ({activities}: ActivityListProps) => {
   return (
     <div className='flex flex-col gap-12.5'>
       <div className='flex flex-col'>
@@ -18,7 +22,7 @@ export const ActivityList = () => {
       </div>
 
       <div className='flex flex-wrap justify-center gap-x-5 gap-y-6'>
-        {ACTIVITY_CARD_DATA.map((item) => (
+        {activities?.map((item) => (
           <ActivityCard key={item.id} item={item} />
         ))}
       </div>

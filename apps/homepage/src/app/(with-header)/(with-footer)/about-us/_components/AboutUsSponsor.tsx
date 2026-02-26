@@ -7,7 +7,7 @@ import Link from 'next/link';
 
 export const AboutUsSponsor = () => {
   return (
-    <div className='flex flex-col gap-25'>
+    <div className='flex flex-col gap-25 py-40'>
       <AboutUsDescription
         title='Sponsored by'
         titleColor='text-neutral-800'
