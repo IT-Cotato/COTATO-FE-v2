@@ -2,7 +2,7 @@
 
 import {Button} from '@repo/ui/components/buttons/Button';
 import {motion, AnimatePresence, Variants} from 'framer-motion';
-import {useState, useRef} from 'react';
+import {useState, useRef, useEffect} from 'react';
 import {HomeSectionDescription} from '@/app/(with-header)/(with-footer)/(home)/_components/HomeSectionDescription';
 import Image from 'next/image';
 
@@ -17,6 +17,13 @@ export const HomePartSectionContainer = () => {
 
   const currentIndex = PARTS.indexOf(currentPart);
   const direction = currentIndex > prevIndexRef.current ? 1 : -1;
+
+  useEffect(() => {
+    PARTS.forEach((part) => {
+      const img = new window.Image();
+      img.src = `/images/part-section/${part}.webp`;
+    });
+  }, []);
 
   const handlePartClick = (part: PartType) => {
     prevIndexRef.current = currentIndex;

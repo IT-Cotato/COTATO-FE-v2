@@ -36,23 +36,23 @@ const STUDY_GROUPS = [
     {
       id: 1,
       label: '스프링 스터디',
-      src: '/images/study/spring-study.png',
+      src: '/images/study/spring-study.webp',
     },
     {
       id: 2,
       label: '리액트 공식문서 읽기 스터디',
-      src: '/images/study/react-study.png',
+      src: '/images/study/react-study.webp',
     },
-    {id: 3, label: 'React 스터디', src: '/images/study/react-study-2.png'},
+    {id: 3, label: 'React 스터디', src: '/images/study/react-study-2.webp'},
     {
       id: 4,
       label: '역기획 스터디',
-      src: '/images/study/pm-study-2.png',
+      src: '/images/study/pm-study-2.webp',
     },
     {
       id: 5,
       label: '아키텍쳐 스터디',
-      src: '/images/study/architecture-study.png',
+      src: '/images/study/architecture-study.webp',
     },
   ],
 
@@ -60,22 +60,22 @@ const STUDY_GROUPS = [
     {
       id: 6,
       label: 'Next.js 스터디',
-      src: '/images/study/nextjs-study.png',
+      src: '/images/study/nextjs-study.webp',
     },
     {
       id: 7,
       label: '테크 블로그 스터디',
-      src: '/images/study/tech-study.png',
+      src: '/images/study/tech-study.webp',
     },
     {
       id: 8,
       label: '기획 스터디',
-      src: '/images/study/pm-study.png',
+      src: '/images/study/pm-study.webp',
     },
     {
       id: 9,
       label: '스프링 스터디',
-      src: '/images/study/spring-study-2.png',
+      src: '/images/study/spring-study-2.webp',
     },
   ],
 
@@ -83,23 +83,23 @@ const STUDY_GROUPS = [
     {
       id: 8,
       label: '이걸 왜 직접 만드나요?',
-      src: '/images/study/crafting-study.png',
+      src: '/images/study/crafting-study.webp',
     },
-    {id: 9, label: 'UX 분석 스터디', src: '/images/study/ux-study.png'},
+    {id: 9, label: 'UX 분석 스터디', src: '/images/study/ux-study.webp'},
     {
       id: 10,
       label: '아티클 스터디',
-      src: '/images/study/article-study.png',
+      src: '/images/study/article-study.webp',
     },
     {
       id: 11,
       label: '아티클 스터디',
-      src: '/images/study/article-study-2.png',
+      src: '/images/study/article-study-2.webp',
     },
     {
       id: 12,
       label: '코틀린 스터디',
-      src: '/images/study/kotlin-study.png',
+      src: '/images/study/kotlin-study.webp',
     },
   ],
 ];

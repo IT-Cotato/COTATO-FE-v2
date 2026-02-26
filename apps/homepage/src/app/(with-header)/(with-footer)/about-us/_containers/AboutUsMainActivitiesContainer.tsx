@@ -63,6 +63,7 @@ export const AboutUsMainActivitiesContainer = () => {
                 alt=''
                 aria-hidden='true'
                 fill
+                sizes='(max-width: 768px) 100vw, (max-width: 1240px) 50vw, 600px'
                 unoptimized={true}
                 className='object-cover transition-transform duration-500 group-hover:scale-105'
               />
@@ -114,6 +115,7 @@ export const AboutUsMainActivitiesContainer = () => {
                     src={selectedActivity.src}
                     alt={selectedActivity.title}
                     fill
+                    sizes='(max-width: 768px) 90vw, 600px'
                     unoptimized={true}
                     className='object-cover'
                   />
@@ -160,7 +162,7 @@ const ACTIVITIES = [
 기획·디자인 직군 또한 교육에 함께 참여하여, 개발 구조와 기술적 제약을
 이해하고 원활한 협업을 위한 공통된 개발 지식을 습득할 수 있습니다.`,
 
-    src: '/images/main-activities/cs-education.png',
+    src: '/images/main-activities/cs-education.webp',
     gridClass: 'col-span-12 md:col-span-7',
   },
   {
@@ -170,7 +172,7 @@ const ACTIVITIES = [
 우수한 성적을 거두거나 성실하게 참여한 분들께는 소정의 상품이 제공됩니다. 
 모든 퀴즈는 교육 내용을 기반으로 출제되어, 기획·디자인 직군도 부담 없이
 개발 지식을 복습하고 재미있게 익힐 수 있습니다.`,
-    src: '/images/main-activities/cs-quiz.png',
+    src: '/images/main-activities/cs-quiz.webp',
     gridClass: 'col-span-12 md:col-span-5',
   },
   {
@@ -180,7 +182,7 @@ const ACTIVITIES = [
 이를 통해 개인의 시야를 넓히고 지식을 축적하는 것을 목표로 합니다. 
 개발 직군 역시 발표 내용을 함께 들으며 서로의 관점을 이해하고 
 협업의 밀도를 높입니다.`,
-    src: '/images/main-activities/pm-design.png',
+    src: '/images/main-activities/pm-design.webp',
     gridClass: 'col-span-12 md:col-span-5',
   },
   {
@@ -190,7 +192,7 @@ const ACTIVITIES = [
 또한 통합 네트워킹을 통해 다른 파트의 작업 방식과 관점을 익힐 수 있습니다. 
 이 과정을 통해 자신의 작업을 점검하고,
 이후 학습과 프로젝트에 필요한 방향성을 정리하게 됩니다.`,
-    src: '/images/main-activities/networking.png',
+    src: '/images/main-activities/networking.webp',
     gridClass: 'col-span-12 md:col-span-7',
   },
 ];
