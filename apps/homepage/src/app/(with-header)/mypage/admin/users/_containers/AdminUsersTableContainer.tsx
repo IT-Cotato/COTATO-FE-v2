@@ -12,14 +12,15 @@ import {
   MemberStatusKey,
 } from '@/constants/admin/admin';
 import {MemberTabType} from '@/schemas/admin/admin.type';
-import {MemberType} from '@/schemas/admin/admin-members.schema';
-import {MOCK_MEMBERS} from '@/mocks/admin/mock-admin-users';
+import {AdminMemberType} from '@/schemas/admin/admin-members.schema';
 import {useRouter, useSearchParams} from 'next/navigation';
 import {useEffect, useMemo, useState} from 'react';
 import {useGenerationQuery} from '@/hooks/queries/useGeneration.query';
-
-// TODO: API 연동 시 제거 또는 서버 요청 파라미터로 변경
-const ITEMS_PER_PAGE = 10;
+import {useAdminMembersQuery} from '@/hooks/queries/useAdminMembers.query';
+import {
+  useDeleteAdminMembers,
+  usePatchAdminMembersStatus,
+} from '@/hooks/mutations/useAdminMembers.mutation';
 
 interface AdminUsersTableContainerProps {
   activeTab: MemberTabType;
@@ -37,7 +38,7 @@ export const AdminUsersTableContainer = ({
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  // URL에서 필터 상태 가져오기
+  // URL에서 필터/페이지/검색어 상태 가져오기
   const statusParams = searchParams.getAll('status');
   const selectedStatuses: MemberStatusKey[] =
     statusParams.length === 0 || statusParams.includes('ALL')
@@ -46,35 +47,42 @@ export const AdminUsersTableContainer = ({
           MEMBER_STATUS_OPTIONS.includes(s as MemberStatusKey)
         ) as MemberStatusKey[]);
 
-  // URL에서 페이지 상태 가져오기
   const pageParam = searchParams.get('page');
   const currentPage = pageParam ? Number(pageParam) : 1;
-  const isLoading = false;
+  const searchParam = searchParams.get('search') ?? undefined;
+
   // 체크박스 선택 상태
   const [selectedIds, setSelectedIds] = useState<number[]>([]);
-  // TODO: API 연동 시 서버 데이터로 교체
-  const [members, setMembers] = useState<MemberType[]>(MOCK_MEMBERS);
+
+  const {data, isLoading} = useAdminMembersQuery({
+    search: searchParam,
+    statuses:
+      activeTab === 'ACTIVE'
+        ? ['APPROVED']
+        : selectedStatuses.length > 0
+          ? selectedStatuses
+          : undefined,
+    page: currentPage - 1,
+    size: 10,
+  });
+
+  const members = data?.content ?? [];
+  const totalPages = data?.totalPages ?? 1;
+
+  const {mutate: patchStatus} = usePatchAdminMembersStatus();
+  const {mutate: deleteMember} = useDeleteAdminMembers();
 
   const handleBatchStatusChange = (status: MemberStatusKey) => {
-    setMembers((prev) =>
-      prev.map((member) =>
-        selectedIds.includes(member.memberId) ? {...member, status} : member
-      )
-    );
+    patchStatus({memberIds: selectedIds, status});
     setSelectedIds([]);
   };
 
   const handleStatusChange = (memberId: number, status: MemberStatusKey) => {
-    setMembers((prev) =>
-      prev.map((member) =>
-        member.memberId === memberId ? {...member, status} : member
-      )
-    );
+    patchStatus({memberIds: [memberId], status});
   };
 
   /**
    * 페이지 변경 핸들러
-   * @param page - 이동할 페이지 번호
    */
   const handleUpdatePage = (page: number) => {
     const params = new URLSearchParams(searchParams.toString());
@@ -84,7 +92,6 @@ export const AdminUsersTableContainer = ({
 
   /**
    * 멤버 상태 필터 변경 핸들러
-   * @param labels - 선택된 상태 라벨 배열
    */
   const handleFilterChange = (labels: MemberStatusKey[]) => {
     const params = new URLSearchParams(searchParams.toString());
@@ -97,34 +104,13 @@ export const AdminUsersTableContainer = ({
         params.append('status', label);
       });
     }
-    params.set('page', '1'); // 필터 변경 시 1페이지로 초기화
+    params.set('page', '1');
     router.push(`?${params.toString()}`, {scroll: false});
   };
 
-  // TODO: API 연동 시 서버 사이드 필터링으로 교체 필요
-  const baseItems =
-    activeTab === 'ACTIVE'
-      ? members.filter((member) => member.status === 'APPROVED')
-      : members;
-
-  const filteredItems =
-    selectedStatuses.length === 0
-      ? baseItems
-      : baseItems.filter((member) =>
-          selectedStatuses.includes(member.status as MemberStatusKey)
-        );
-
-  // TODO: API 연동 시 응답 데이터의 totalPages 사용 및 slice 로직 제거
-  const totalPages = Math.ceil(filteredItems.length / ITEMS_PER_PAGE) || 1;
-  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-  const paginatedItems = filteredItems.slice(
-    startIndex,
-    startIndex + ITEMS_PER_PAGE
-  );
-
   const handleSelectAll = (checked: boolean) => {
     if (checked) {
-      setSelectedIds(paginatedItems.map((item) => item.memberId));
+      setSelectedIds(members.map((item) => item.memberId));
     } else {
       setSelectedIds([]);
     }
@@ -142,17 +128,19 @@ export const AdminUsersTableContainer = ({
 
   // 삭제 모달 상태
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const [memberToDelete, setMemberToDelete] = useState<MemberType | null>(null);
+  const [memberToDelete, setMemberToDelete] = useState<AdminMemberType | null>(
+    null
+  );
 
   // 상세/수정 모달 상태
   const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
   const [isDetailReadonly, setIsDetailReadonly] = useState(true);
-  const [selectedMember, setSelectedMember] = useState<MemberType | null>(null);
+  const [selectedMember, setSelectedMember] = useState<AdminMemberType | null>(
+    null
+  );
 
   /**
    * 메뉴 액션 핸들러
-   * @param action - 수행할 액션
-   * @param memberId - 대상 멤버 ID
    */
   const handleMenuAction = (action: MemberMenuAction, memberId: number) => {
     const member = members.find((m) => m.memberId === memberId);
@@ -172,10 +160,9 @@ export const AdminUsersTableContainer = ({
     }
   };
 
-  const handleSaveMember = (updated: MemberType) => {
-    setMembers((prev) =>
-      prev.map((m) => (m.memberId === updated.memberId ? updated : m))
-    );
+  const handleSaveMember = () => {
+    // TODO: 회원 정보 수정 API 연동 시 구현
+    setIsDetailModalOpen(false);
   };
 
   /**
@@ -184,15 +171,18 @@ export const AdminUsersTableContainer = ({
   const handleConfirmDelete = () => {
     if (!memberToDelete) return;
 
-    // TODO: API 연동 시 서버 요청으로 변경
-    setMembers((prev) =>
-      prev.filter((m) => m.memberId !== memberToDelete.memberId)
+    deleteMember(
+      {memberIds: [memberToDelete.memberId]},
+      {
+        onSuccess: () => {
+          setSelectedIds((prev) =>
+            prev.filter((id) => id !== memberToDelete.memberId)
+          );
+          setIsDeleteModalOpen(false);
+          setMemberToDelete(null);
+        },
+      }
     );
-    setSelectedIds((prev) =>
-      prev.filter((id) => id !== memberToDelete.memberId)
-    );
-    setIsDeleteModalOpen(false);
-    setMemberToDelete(null);
   };
 
   const {data: generationList} = useGenerationQuery();
@@ -235,8 +225,8 @@ export const AdminUsersTableContainer = ({
         />
       )}
       <AdminUsersTableView
-        items={paginatedItems}
-        allItems={filteredItems}
+        items={members}
+        allItems={members}
         activeTab={activeTab}
         selectedStatuses={selectedStatuses}
         onFilterChange={handleFilterChange}
