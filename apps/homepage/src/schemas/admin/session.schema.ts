@@ -94,8 +94,8 @@ export const CreateSessionRequestSchema = z.object({
   attendanceStartTime: z.string(),
   isOffline: z.boolean().optional(),
   isOnline: z.boolean().optional(),
-  attendanceEndTime: z.string().optional(),
-  lateEndTime: z.string().optional(),
+  attendanceEndTime: z.string().min(1),
+  lateEndTime: z.string().min(1),
   content: z.string().optional(),
 });
 
