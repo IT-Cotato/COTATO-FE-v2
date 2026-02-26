@@ -3,29 +3,24 @@
 import {useState} from 'react';
 import {Button} from '@repo/ui/components/buttons/Button';
 import {RecruitmentNotificationModal} from '@/components/modal/RecruitmentNotificationModal';
-import {useMutation} from '@tanstack/react-query';
-import {subscribeEmail} from '@/services/api/recruitments/recruitments.api';
+import {useSubscribeRecruitmentNotify} from '@/hooks/mutations/useRecruitments.mutation';
 
 export const NotifyInput = () => {
   const [email, setEmail] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const subscribeEmailMutation = useMutation({
-    mutationFn: (email: string) => subscribeEmail({email: email.trim()}),
-    onSuccess: () => {
-      setIsModalOpen(true);
-    },
-    onError: () => {
-      alert('이메일 등록에 실패했습니다. 다시 시도해주세요.');
-    },
-  });
+  const {mutate, isPending} = useSubscribeRecruitmentNotify();
 
   const isValidEmail =
     email.length > 0 && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (isValidEmail && !subscribeEmailMutation.isPending) {
-      subscribeEmailMutation.mutate(email);
+    if (isValidEmail && !isPending) {
+      mutate(email, {
+        onSuccess: () => {
+          setIsModalOpen(true);
+        },
+      });
     }
   };
 
@@ -45,7 +40,7 @@ export const NotifyInput = () => {
         <input
           type='email'
           value={email}
-          disabled={subscribeEmailMutation.isPending}
+          disabled={isPending}
           onChange={(e) => setEmail(e.target.value)}
           placeholder='메일을 입력해주세요!'
           className='text-body-m flex-1 text-neutral-800 outline-none placeholder:text-neutral-400'
@@ -59,7 +54,7 @@ export const NotifyInput = () => {
           className='px-4.75 py-1.25'
           backgroundColor='primary'
           disabledBackgroundColor='neutral-500'
-          disabled={!isValidEmail || subscribeEmailMutation.isPending}
+          disabled={!isValidEmail || isPending}
         />
       </form>
       <RecruitmentNotificationModal

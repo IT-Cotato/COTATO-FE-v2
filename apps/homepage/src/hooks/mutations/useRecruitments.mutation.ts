@@ -1,6 +1,9 @@
 import {QUERY_KEYS} from '@/constants/query-keys';
 import {RecruitmentsStatusType} from '@/schemas/recruitments/recruitments.schema';
-import {toggleRecruitmentsStatus} from '@/services/api/recruitments/recruitments.api';
+import {
+  subscribeEmail,
+  toggleRecruitmentsStatus,
+} from '@/services/api/recruitments/recruitments.api';
 import {useMutation, useQueryClient} from '@tanstack/react-query';
 
 export const useToggleRecruitmentsStatusMutation = () => {
@@ -35,6 +38,15 @@ export const useToggleRecruitmentsStatusMutation = () => {
         );
       }
       alert('모집 상태 변경에 실패했습니다. 다시 시도해주세요.');
+    },
+  });
+};
+
+export const useSubscribeRecruitmentNotify = () => {
+  return useMutation({
+    mutationFn: (email: string) => subscribeEmail({email: email.trim()}),
+    onError: () => {
+      alert('이메일 등록에 실패했습니다. 다시 시도해주세요.');
     },
   });
 };
