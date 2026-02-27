@@ -108,7 +108,7 @@ export const AdminApplicationContainer = () => {
 
         {step === 3 && (
           <div className='flex flex-col gap-5'>
-            <label className='sm:text-h3 text-body-s font-bold text-neutral-800'>
+            <label className='sm:text-h3 text-h5-b font-bold text-neutral-800'>
               기타 질문
             </label>
             <div className='flex justify-center'>
