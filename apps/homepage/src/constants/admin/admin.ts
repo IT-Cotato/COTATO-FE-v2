@@ -1,4 +1,8 @@
-import {ApprovalTabType, MemberTabType} from '@/schemas/admin/admin.schema';
+import {
+  ApprovalTabType,
+  AttendancePartPartType,
+  MemberTabType,
+} from '@/schemas/admin/admin.schema';
 
 /** 회원 관리 테이블 컬럼 상수 */
 export const MEMBER_COLUMNS = [
@@ -131,3 +135,15 @@ export const APPROVAL_COLUMNS = [
   {key: 'part', label: '파트'},
   {key: 'phone', label: '전화번호'},
 ] as const;
+
+/** 출석 파트 탭 상수 */
+export const ATTENDANCE_PART_TAB: {
+  label: string;
+  value: AttendancePartPartType;
+}[] = [
+  {label: '전체 회원', value: 'ALL'},
+  {label: '기획', value: 'PM'},
+  {label: '디자인', value: 'DE'},
+  {label: '프론트엔드', value: 'FE'},
+  {label: '백엔드', value: 'BE'},
+];
