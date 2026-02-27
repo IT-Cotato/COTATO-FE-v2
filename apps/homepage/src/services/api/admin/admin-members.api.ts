@@ -21,11 +21,12 @@ export const getAdminMembers = async (params: GetAdminMembersParams) => {
       paramsSerializer: (p) => {
         const searchParams = new URLSearchParams();
         Object.entries(p).forEach(([key, value]) => {
-          if (value === undefined) return;
-          if (Array.isArray(value)) {
-            value.forEach((v) => searchParams.append(key, v));
-          } else {
-            searchParams.append(key, String(value));
+          if (value !== undefined) {
+            if (Array.isArray(value)) {
+              value.forEach((v) => searchParams.append(key, v));
+            } else {
+              searchParams.append(key, String(value));
+            }
           }
         });
         return searchParams.toString();
