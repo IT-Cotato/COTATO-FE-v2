@@ -1,12 +1,11 @@
 'use client';
 
 import {useRouter, useSearchParams} from 'next/navigation';
-import {useState} from 'react';
 import clsx from 'clsx';
 import {MEMBER_TABS} from '@/constants/admin/admin';
 import {MemberTabType} from '@/schemas/admin/admin.type';
-import {AdminUsersTableContainer} from './AdminUsersTableContainer';
-import {SearchBar} from '@/app/(with-header)/mypage/admin/_components/SearchBar';
+import {AllMembersTableContainer} from '@/app/(with-header)/mypage/admin/users/_containers/AllMembersTableContainer';
+import {ActiveMembersTableContainer} from '@/app/(with-header)/mypage/admin/users/_containers/ActiveMembersTableContainer';
 
 export const AdminUsersContainer = () => {
   const router = useRouter();
@@ -14,23 +13,11 @@ export const AdminUsersContainer = () => {
 
   const activeTab = (searchParams.get('tab') as MemberTabType) ?? 'ALL';
 
-  const [keyword, setKeyword] = useState('');
-  const handleSearch = () => {
-    const params = new URLSearchParams(searchParams.toString());
-    if (keyword) {
-      params.set('search', keyword);
-    } else {
-      params.delete('search');
-    }
-    params.set('page', '1');
-    router.push(`?${params.toString()}`, {scroll: false});
-  };
-
   const handleTabClick = (tab: MemberTabType) => {
     const params = new URLSearchParams(searchParams.toString());
     params.set('tab', tab);
     params.set('page', '1');
-    setKeyword('');
+    params.delete('search');
     router.push(`?${params.toString()}`, {scroll: false});
   };
 
@@ -53,21 +40,13 @@ export const AdminUsersContainer = () => {
             {label}
           </button>
         ))}
-        {activeTab === 'ACTIVE' && (
-          <SearchBar
-            keyword={keyword}
-            onKeywordChange={setKeyword}
-            onSearch={handleSearch}
-          />
-        )}
       </div>
 
-      <AdminUsersTableContainer
-        activeTab={activeTab}
-        keyword={keyword}
-        onKeywordChange={setKeyword}
-        onSearch={handleSearch}
-      />
+      {activeTab === 'ALL' ? (
+        <AllMembersTableContainer />
+      ) : (
+        <ActiveMembersTableContainer />
+      )}
     </div>
   );
 };
