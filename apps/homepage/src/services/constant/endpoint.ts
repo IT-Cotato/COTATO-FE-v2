@@ -79,6 +79,11 @@ export const ENDPOINT = {
     DETAIL: (memberId: number) => `/v1/api/admin/members/${memberId}`,
     PATCH_STATUS: '/v1/api/admin/members/status',
     DELETE: '/v1/api/admin/members',
+    ACTIVE_LIST: '/v1/api/admin/members/active',
+    ACTIVE: (generationMemberId: number) =>
+      `/v1/api/admin/members/active/${generationMemberId}`,
+    ACTIVE_ROLE: (generationMemberId: number) =>
+      `/v1/api/admin/members/active/${generationMemberId}/role`,
   },
 
   /** 어드민 세션 관련 API */
