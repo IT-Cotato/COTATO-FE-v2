@@ -3,24 +3,17 @@
 import {Dropdown} from '@/components/dropdown/Dropdown';
 import {useGenerationQuery} from '@/hooks/queries/useGeneration.query';
 import {useAdminSessionsQuery} from '@/hooks/queries/useSession.query';
-import {Spinner} from '@repo/ui/components/spinner/Spinner';
 import {useEffect, useMemo, useState} from 'react';
 
 export const DropdownContainer = () => {
   const [selectedGeneration, setSelectedGeneration] = useState<string>('');
   const [selectedSession, setSelectedSession] = useState<string>('전체 세션');
 
-  const {
-    data: generationList,
-    isLoading: isGenLoading,
-    isError: isGenError,
-  } = useGenerationQuery();
+  const {data: generationList} = useGenerationQuery();
 
-  const {
-    data: sessionList,
-    isLoading: isSessionLoading,
-    isError: isSessionError,
-  } = useAdminSessionsQuery(Number(selectedGeneration.split('기')[0]));
+  const {data: sessionList} = useAdminSessionsQuery(
+    Number(selectedGeneration.split('기')[0])
+  );
 
   const generations = useMemo(() => {
     if (!generationList) return [];
@@ -65,29 +58,6 @@ export const DropdownContainer = () => {
       );
     }
   }, [selectedSession, sessions]);
-
-  if (isGenLoading || isSessionLoading) {
-    return (
-      <div
-        className='flex min-h-100 items-center justify-center'
-        role='status'
-        aria-live='polite'
-        aria-busy='true'>
-        <Spinner />
-        <span className='sr-only'>데이터를 불러오는 중입니다.</span>
-      </div>
-    );
-  }
-
-  if (isGenError || isSessionError) {
-    return (
-      <div
-        className='flex min-h-100 items-center justify-center text-neutral-400'
-        role='alert'>
-        데이터를 불러오는 중 문제가 발생했습니다.
-      </div>
-    );
-  }
 
   return (
     <div className='flex gap-5'>
