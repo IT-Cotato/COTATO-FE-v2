@@ -11,10 +11,13 @@ import {getAdminMemberDetail} from '@/services/api/admin/admin-members.api';
 
 interface UseActiveMembersModalsProps {
   members: MemberType[];
+  /** 현재 선택된 기수가 실제 활동 기수인지 여부 */
+  isCurrentGeneration: boolean;
 }
 
 export const useActiveMembersModals = ({
   members,
+  isCurrentGeneration,
 }: UseActiveMembersModalsProps) => {
   const queryClient = useQueryClient();
   const {mutate: deleteActiveMemberMutate} = useDeleteActiveMember();
@@ -51,6 +54,10 @@ export const useActiveMembersModals = ({
       setMemberToDelete(member);
       setIsDeleteModalOpen(true);
     } else if (action === 'edit') {
+      if (!isCurrentGeneration) {
+        alert('현재 활동 기수의 회원만 정보를 수정할 수 있습니다.');
+        return;
+      }
       const detail = await queryClient.fetchQuery({
         queryKey: QUERY_KEYS.ADMIN_MEMBERS.DETAIL(memberId),
         queryFn: () => getAdminMemberDetail(memberId),

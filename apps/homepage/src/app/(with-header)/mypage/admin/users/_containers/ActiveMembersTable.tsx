@@ -18,7 +18,11 @@ export const ActiveMembersTable = () => {
   );
 
   const members: MemberType[] = data?.content ?? [];
-  const modals = useActiveMembersModals({members});
+  const isCurrentGeneration =
+    generation.selectedGeneration !== null &&
+    generation.selectedGeneration === generation.defaultGenerationId;
+
+  const modals = useActiveMembersModals({members, isCurrentGeneration});
 
   return {
     members,
