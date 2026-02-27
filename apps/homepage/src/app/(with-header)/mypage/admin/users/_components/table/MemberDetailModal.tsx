@@ -23,7 +23,7 @@ import {SelectField} from '@/app/(with-header)/mypage/admin/users/_components/ta
 interface MemberDetailModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSave: (memberData: MemberType) => void;
+  onSave?: (memberData: MemberType) => void;
   member: MemberType | null;
   readonly?: boolean;
 }
@@ -56,7 +56,7 @@ export const MemberDetailModal = ({
   if (!isOpen || !memberData) return null;
 
   const handleSave = () => {
-    onSave(memberData);
+    onSave?.(memberData);
     onClose();
   };
 
