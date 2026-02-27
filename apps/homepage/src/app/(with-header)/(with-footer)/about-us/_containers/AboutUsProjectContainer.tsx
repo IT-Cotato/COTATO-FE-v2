@@ -18,7 +18,7 @@ export const AboutUsProjectContainer = () => {
 
   return (
     <section
-      className='flex min-h-175 flex-col items-center gap-25 py-20'
+      className='flex min-h-175 flex-col items-center gap-25 py-40'
       aria-label='코테이토 프로젝트 소개'
       id='project'>
       <AboutUsDescription
@@ -77,6 +77,7 @@ export const AboutUsProjectContainer = () => {
                     alt=''
                     aria-hidden='true'
                     fill
+                    sizes='436px'
                     className='object-cover'
                     priority={isActive}
                     unoptimized={true}
@@ -123,41 +124,41 @@ const PROJECTS = [
   {
     id: 1,
     title: '온길',
-    imageSrc: '/images/project/ongil.png',
+    imageSrc: '/images/project/ongil.webp',
   },
   {
     id: 2,
     title: '냉잔고',
-    imageSrc: '/images/project/naengjango.png',
+    imageSrc: '/images/project/naengjango.webp',
   },
   {
     id: 3,
     title: 'SIMTALK',
-    imageSrc: '/images/project/simtalk.png',
+    imageSrc: '/images/project/simtalk.webp',
   },
   {
     id: 4,
     title: 'COOKEEP',
-    imageSrc: '/images/project/cookeep.png',
+    imageSrc: '/images/project/cookeep.webp',
   },
   {
     id: 5,
     title: 'FinSight',
-    imageSrc: '/images/project/finsight.png',
+    imageSrc: '/images/project/finsight.webp',
   },
   {
     id: 6,
     title: 'timetile',
-    imageSrc: '/images/project/timetile.png',
+    imageSrc: '/images/project/timetile.webp',
   },
   {
     id: 7,
     title: 'StageMate',
-    imageSrc: '/images/project/stagemate.png',
+    imageSrc: '/images/project/stagemate.webp',
   },
   {
     id: 8,
     title: 'Troublog',
-    imageSrc: '/images/project/troublog.png',
+    imageSrc: '/images/project/troublog.webp',
   },
 ];

@@ -1,14 +1,14 @@
 export const formFieldStyles = {
   wrapper: 'flex w-full flex-col gap-2.5',
-  label: 'text-h5 text-neutral-800 whitespace-pre-line',
+  label: 'text-body-l-b sm:text-h5 text-neutral-800 whitespace-pre-line',
   required: 'text-alert ml-1',
   field:
-    'placeholder-body-l rounded-[10px] border-[1px] border-neutral-200 px-4 py-2.75 placeholder:text-neutral-400 focus:outline-none bg-white',
+    'placeholder-h5 sm:placeholder-body-l rounded-[10px] border-[1px] border-neutral-200 px-4 py-2.75 placeholder:text-neutral-400 focus:outline-none bg-white',
   fieldFocus: 'focus:ring-2 focus:ring-primary',
   errorFocus: 'focus:ring-0 focus:outline-none',
   error: '!border-alert',
-  errorMessage: 'text-body-l text-alert',
+  errorMessage: 'text-h5 sm:text-body-l text-alert',
   errorContainer: 'min-h-[24px]',
   readOnlyForm: 'text-h5 text-neutral-800 cursor-default font-bold',
-  readOnlyTextarea: 'text-body-l font-normal text-neutral-600',
+  readOnlyTextarea: 'text-h5 sm:text-body-l font-normal text-neutral-600',
 };

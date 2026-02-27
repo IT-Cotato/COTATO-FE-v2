@@ -1,7 +1,7 @@
 import {usePostAdminApplicationEvaluation} from '@/hooks/mutations/useAdminApplication.mutation';
 import {useDebounce} from '@/hooks/useDebounce';
 import {EvaluatorType} from '@/schemas/admin/admin-application.schema';
-import {useEffect, useState} from 'react';
+import {useEffect, useRef, useState} from 'react'; // useRef 추가
 
 interface EvaluationTextAreaProps {
   evaluator: EvaluatorType;
@@ -17,6 +17,22 @@ export const EvaluationTextarea = ({
   const [draft, setDraft] = useState<string | null>(null);
   const debouncedDraft = useDebounce(draft, 500);
   const {mutate} = usePostAdminApplicationEvaluation(applicationId);
+
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  const displayValue = draft ?? evaluation?.data.comment ?? '';
+
+  const handleResizeHeight = () => {
+    const textarea = textareaRef.current;
+    if (textarea) {
+      textarea.style.height = 'auto';
+      textarea.style.height = `${textarea.scrollHeight}px`;
+    }
+  };
+
+  useEffect(() => {
+    handleResizeHeight();
+  }, [displayValue]);
 
   useEffect(() => {
     if (!evaluation) return;
@@ -36,10 +52,11 @@ export const EvaluationTextarea = ({
 
   return (
     <textarea
-      value={draft ?? evaluation?.data.comment ?? ''}
+      ref={textareaRef}
+      value={displayValue}
       onChange={(e) => setDraft(e.target.value)}
       placeholder='면접 질문 및 서류평가에 대해 자유롭게 작성해주세요.'
-      className='text-h5 min-h-35 w-full resize-none rounded-[10px] border-[1.5px] border-neutral-200 bg-white p-5 outline-none placeholder:text-neutral-400'
+      className='sm:text-h5 text-body-l min-h-35 w-full resize-none overflow-hidden rounded-[10px] border-[1.5px] border-neutral-200 bg-white p-5 outline-none placeholder:text-neutral-600'
     />
   );
 };

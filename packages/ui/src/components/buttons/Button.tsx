@@ -144,10 +144,8 @@ export const Button = ({
         }}
         {...props}>
         <span
-          className={buttonLabelTextStyles[variant][labelTypo]}
-          style={{
-            color: resolvedTextColor,
-          }}>
+          className={clsx(buttonLabelTextStyles[variant][labelTypo], className)}
+          style={{color: resolvedTextColor}}>
           {label}
         </span>
       </button>

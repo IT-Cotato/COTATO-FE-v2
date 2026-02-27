@@ -4,6 +4,12 @@ export const RecruitmentsStatusSchema = z.object({
   active: z.boolean(),
 });
 
+/** 일정 타임라인 */
+export const TimelineSchema = z.object({
+  title: z.string(),
+  date: z.string(),
+});
+
 /** 모집 포지션 - 직무 */
 export const PositionSchema = z.enum(['PM', 'DE', 'FE', 'BE']);
 
@@ -37,14 +43,22 @@ export const RecruitmentNoticeSchema = z.object({
   generationId: z.number(),
   startDate: z.string(),
   endDate: z.string(),
+  schedule: z.array(TimelineSchema),
   parts: z.array(PositionCardSchema),
   activities: z.array(ActivityCardSchema),
 });
 
+/** 이메일 구독 */
+export const SubscribeEmail = z.object({
+  email: z.email(),
+});
+
 /** 타입 추출 */
 export type RecruitmentsStatusType = z.infer<typeof RecruitmentsStatusSchema>;
+export type TimelineType = z.infer<typeof TimelineSchema>;
 export type PositionType = z.infer<typeof PositionSchema>;
 export type PositionCardType = z.infer<typeof PositionCardSchema>;
 export type ActivityCategoryType = z.infer<typeof ActivityCategorySchema>;
 export type ActivityCardType = z.infer<typeof ActivityCardSchema>;
 export type RecruitmentNoticeType = z.infer<typeof RecruitmentNoticeSchema>;
+export type SubscribeEmailType = z.infer<typeof SubscribeEmail>;

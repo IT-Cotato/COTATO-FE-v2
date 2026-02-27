@@ -3,21 +3,24 @@
 import {useState} from 'react';
 import {Button} from '@repo/ui/components/buttons/Button';
 import {RecruitmentNotificationModal} from '@/components/modal/RecruitmentNotificationModal';
-// import {useSubscribeRecruitmentNotify} from '@/hooks/mutations/useRecruitment.mutation';
+import {useSubscribeRecruitmentNotify} from '@/hooks/mutations/useRecruitments.mutation';
 
 export const NotifyInput = () => {
   const [email, setEmail] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
-  // const {mutate} = useSubscribeRecruitmentNotify();
+  const {mutate, isPending} = useSubscribeRecruitmentNotify();
 
   const isValidEmail =
     email.length > 0 && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (isValidEmail) {
-      // mutate({email});
-      setIsModalOpen(true);
+    if (isValidEmail && !isPending) {
+      mutate(email, {
+        onSuccess: () => {
+          setIsModalOpen(true);
+        },
+      });
     }
   };
 
@@ -37,6 +40,7 @@ export const NotifyInput = () => {
         <input
           type='email'
           value={email}
+          disabled={isPending}
           onChange={(e) => setEmail(e.target.value)}
           placeholder='메일을 입력해주세요!'
           className='text-body-m flex-1 text-neutral-800 outline-none placeholder:text-neutral-400'
@@ -50,7 +54,7 @@ export const NotifyInput = () => {
           className='px-4.75 py-1.25'
           backgroundColor='primary'
           disabledBackgroundColor='neutral-500'
-          disabled={!isValidEmail}
+          disabled={!isValidEmail || isPending}
         />
       </form>
       <RecruitmentNotificationModal

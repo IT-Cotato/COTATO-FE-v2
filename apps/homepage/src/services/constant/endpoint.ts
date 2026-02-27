@@ -32,6 +32,8 @@ export const ENDPOINT = {
   RECRUITMENTS: {
     STATUS: '/v1/api/recruitments/status',
     TOGGLE: '/v1/api/admin/recruitments/toggle',
+    SUBSCRIBE: '/v1/api/recruitments/subscribe',
+    NOTICES: '/v1/api/recruitments/notices',
   },
 
   /** 프로젝트 API */
@@ -49,6 +51,7 @@ export const ENDPOINT = {
     SESSIONS: '/v1/api/attendances/sessions',
     MY_DASHBOARD: '/v1/api/attendances/my/dashboard',
     MY_RECORDS: '/v1/api/attendances/my',
+    STATUS: '/v1/api/events/attendances', //출결 상태 조회
   },
 
   /** 상벌점 API */
@@ -56,6 +59,9 @@ export const ENDPOINT = {
     MY_DASHBOARD: '/v1/api/minus-points/my/dashboard',
     MY_RECORDS: '/v1/api/minus-points/my',
   },
+
+  /** faq API */
+  FAQ: '/v1/api/faq',
 
   /** 기수 관련 API */
   GENERATIONS: {

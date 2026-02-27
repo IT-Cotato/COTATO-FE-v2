@@ -1,14 +1,19 @@
 import {
   AdminSession,
+  AdminSessionSchema,
   SessionData,
   AdminSessionDetailResponse,
+  AdminSessionDetailResponseSchema,
   CreateSessionRequest,
   CreateSessionResponse,
+  CreateSessionResponseSchema,
   UpdateSessionRequest,
   PresignedUrlRequest,
   PresignedUrlResponse,
+  PresignedUrlResponseSchema,
   CompleteImageUploadRequest,
   CompleteImageUploadResponse,
+  CompleteImageUploadResponseSchema,
   ChangeImageOrderRequest,
   DeleteSessionImageRequest,
 } from '@/schemas/admin/session.schema';
@@ -28,7 +33,7 @@ const mapToSessionData = (data: AdminSessionDetailResponse): SessionData => ({
   generation: data.generationId ? `코테이토 ${data.generationId}기` : '',
   attendanceStartTime: extractISOTime(data.sessionDateTime),
   images: data.sessionImages?.slice().sort((a, b) => a.order - b.order) || [],
-  location: data.attendance?.location,
+  location: data.attendance?.location || {latitude: 0, longitude: 0},
   attendTime: {
     attendanceEndTime: extractISOTime(data.attendance?.attendanceDeadLine),
     lateEndTime: extractISOTime(data.attendance?.lateDeadLine),
@@ -48,7 +53,7 @@ export const getAdminSessions = async (
         params: {generationId},
       }
     );
-    return data;
+    return AdminSessionSchema.array().parse(data);
   } catch (error) {
     return handleApiError(error);
   }
@@ -62,7 +67,8 @@ export const getSessionDetail = async (
     const {data} = await privateAxios.get<AdminSessionDetailResponse>(
       ENDPOINT.SESSIONS.DETAIL(sessionId)
     );
-    return mapToSessionData(data);
+    const parsed = AdminSessionDetailResponseSchema.parse(data);
+    return mapToSessionData(parsed);
   } catch (error) {
     return handleApiError(error);
   }
@@ -77,7 +83,7 @@ export const createSession = async (
       ENDPOINT.SESSIONS.ADMIN_LIST,
       request
     );
-    return data;
+    return CreateSessionResponseSchema.parse(data);
   } catch (error) {
     return handleApiError(error);
   }
@@ -103,7 +109,7 @@ export const getPresignedUrl = async (
       ENDPOINT.SESSIONS.IMAGE.PRESIGNED_URL,
       request
     );
-    return data;
+    return PresignedUrlResponseSchema.parse(data);
   } catch (error) {
     return handleApiError(error);
   }
@@ -134,7 +140,7 @@ export const completeImageUpload = async (
       ENDPOINT.SESSIONS.IMAGE.COMPLETE,
       request
     );
-    return data;
+    return CompleteImageUploadResponseSchema.parse(data);
   } catch (error) {
     return handleApiError(error);
   }

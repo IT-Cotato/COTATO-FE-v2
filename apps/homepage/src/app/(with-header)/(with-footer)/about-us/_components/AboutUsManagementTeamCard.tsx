@@ -18,7 +18,7 @@ export const AboutUsManagementTeamCard = ({
       <motion.div className='relative h-full w-full transition-all duration-700 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]'>
         <div className='absolute inset-0 [backface-visibility:hidden]'>
           <Image
-            src='/keycap/management-background.svg'
+            src='/keycap/management-background.webp'
             alt=''
             aria-hidden='true'
             fill
@@ -34,7 +34,7 @@ export const AboutUsManagementTeamCard = ({
 
         <div className='absolute inset-0 h-full w-full [transform:rotateY(180deg)] overflow-hidden [backface-visibility:hidden]'>
           <Image
-            src='/keycap/management-background-hover.svg'
+            src='/keycap/management-background-hover.webp'
             alt=''
             aria-hidden='true'
             fill
