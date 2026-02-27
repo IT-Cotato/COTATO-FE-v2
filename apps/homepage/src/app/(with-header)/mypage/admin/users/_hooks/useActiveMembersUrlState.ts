@@ -4,7 +4,8 @@ import {useRouter, useSearchParams} from 'next/navigation';
 export const useActiveMembersUrlState = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const currentPage = Number(searchParams.get('page') ?? 1);
+  const rawPage = Number(searchParams.get('page'));
+  const currentPage = Number.isInteger(rawPage) && rawPage > 0 ? rawPage : 1;
   const searchParam = searchParams.get('search') ?? undefined;
   const [keyword, setKeyword] = useState('');
 

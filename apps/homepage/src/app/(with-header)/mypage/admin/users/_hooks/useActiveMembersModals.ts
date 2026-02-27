@@ -58,16 +58,20 @@ export const useActiveMembersModals = ({
         alert('현재 활동 기수의 회원만 정보를 수정할 수 있습니다.');
         return;
       }
-      const detail = await queryClient.fetchQuery({
-        queryKey: QUERY_KEYS.ADMIN_MEMBERS.DETAIL(memberId),
-        queryFn: () => getAdminMemberDetail(memberId),
-      });
-      if (detail) {
-        setSelectedMember({
-          ...detail,
-          generationMemberId: member.generationMemberId,
+      try {
+        const detail = await queryClient.fetchQuery({
+          queryKey: QUERY_KEYS.ADMIN_MEMBERS.DETAIL(memberId),
+          queryFn: () => getAdminMemberDetail(memberId),
         });
-        setIsDetailModalOpen(true);
+        if (detail) {
+          setSelectedMember({
+            ...detail,
+            generationMemberId: member.generationMemberId,
+          });
+          setIsDetailModalOpen(true);
+        }
+      } catch {
+        alert('회원 정보를 불러오는 데 실패했습니다. 다시 시도해주세요.');
       }
     }
   };

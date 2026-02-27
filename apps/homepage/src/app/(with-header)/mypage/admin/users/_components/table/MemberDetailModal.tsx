@@ -114,12 +114,14 @@ export const MemberDetailModal = ({
                     min={1}
                     value={memberData.passedGenerationNumber}
                     className={`${fieldClass} [appearance:textfield] pr-8 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none`}
-                    onChange={(e) =>
+                    onChange={(e) => {
+                      const parsed = e.target.valueAsNumber;
+                      if (Number.isNaN(parsed) || parsed < 1) return;
                       setMemberData({
                         ...memberData,
-                        passedGenerationNumber: Number(e.target.value),
-                      })
-                    }
+                        passedGenerationNumber: parsed,
+                      });
+                    }}
                   />
                   <span className='text-body-l pointer-events-none absolute top-1/2 right-4 -translate-y-1/2 text-neutral-600'>
                     기
