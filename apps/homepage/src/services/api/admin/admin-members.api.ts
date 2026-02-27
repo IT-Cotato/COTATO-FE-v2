@@ -1,9 +1,13 @@
 import {
+  ActiveMembersPageResponseSchema,
   AdminMemberDetailSchema,
   AdminMembersPageResponseSchema,
   DeleteMembersRequest,
+  GetActiveMembersParams,
   GetAdminMembersParams,
+  PatchActiveMemberRoleRequest,
   PatchMembersStatusRequest,
+  UpdateActiveMemberInfoRequest,
 } from '@/schemas/admin/admin-members.schema';
 import {privateAxios} from '@/services/config/axios';
 import {ENDPOINT} from '@/services/constant/endpoint';
@@ -60,6 +64,63 @@ export const patchAdminMembersStatus = async (
 export const deleteAdminMembers = async (body: DeleteMembersRequest) => {
   try {
     await privateAxios.delete(ENDPOINT.ADMIN_MEMBERS.DELETE, {data: body});
+  } catch (error) {
+    handleApiError(error);
+  }
+};
+
+/** 활동 회원 목록 조회 */
+export const getActiveMembers = async (params: GetActiveMembersParams) => {
+  try {
+    const response = await privateAxios.get(ENDPOINT.ADMIN_MEMBERS.ACTIVE_LIST, {params});
+    return ActiveMembersPageResponseSchema.parse(response.data);
+  } catch (error) {
+    return handleApiError(error);
+  }
+};
+
+/** 활동 회원 정보 수정 */
+export const patchActiveMember = async ({
+  generationMemberId,
+  body,
+}: {
+  generationMemberId: number;
+  body: UpdateActiveMemberInfoRequest;
+}) => {
+  try {
+    await privateAxios.patch(
+      ENDPOINT.ADMIN_MEMBERS.ACTIVE(generationMemberId),
+      body
+    );
+  } catch (error) {
+    handleApiError(error);
+  }
+};
+
+/** 활동 회원 역할 변경 */
+export const patchActiveMemberRole = async ({
+  generationMemberId,
+  body,
+}: {
+  generationMemberId: number;
+  body: PatchActiveMemberRoleRequest;
+}) => {
+  try {
+    await privateAxios.patch(
+      ENDPOINT.ADMIN_MEMBERS.ACTIVE_ROLE(generationMemberId),
+      body
+    );
+  } catch (error) {
+    handleApiError(error);
+  }
+};
+
+/** 활동 회원 삭제 */
+export const deleteActiveMember = async (generationMemberId: number) => {
+  try {
+    await privateAxios.delete(
+      ENDPOINT.ADMIN_MEMBERS.ACTIVE(generationMemberId)
+    );
   } catch (error) {
     handleApiError(error);
   }

@@ -93,7 +93,7 @@ export const MEMBER_ROLE_OPTIONS = Object.keys(
 
 export const MEMBER_POSITION_OPTIONS = [
   'PM',
-  'DE',
+  'DESIGN',
   'FE',
   'BE',
   'NONE',
@@ -103,7 +103,7 @@ export type MemberPositionKey = (typeof MEMBER_POSITION_OPTIONS)[number];
 
 export const MEMBER_POSITION_LABEL: Record<MemberPositionKey, string> = {
   PM: '기획',
-  DE: '디자인',
+  DESIGN: '디자인',
   FE: '프론트엔드',
   BE: '백엔드',
   NONE: '없음',
