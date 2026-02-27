@@ -49,7 +49,7 @@ export const EtcQuestionView = ({
       </div>
 
       <div className='flex flex-col gap-4'>
-        <label className='sm:text-h5 text-body-xs text-neutral-800'>
+        <label className='sm:text-h5 text-body-l-b text-neutral-800'>
           {ETC_QUESTION_LABELS.sessionAttendance}
         </label>
         <FormRadio
@@ -59,7 +59,7 @@ export const EtcQuestionView = ({
         />
       </div>
       <div className='flex flex-col gap-4'>
-        <label className='sm:text-h5 text-body-xs text-neutral-800'>
+        <label className='sm:text-h5 text-body-l-b text-neutral-800'>
           최종 합격 시 대면 OT({etcQuestions.otDate ?? '-'}), 코커톤(
           {etcQuestions.cokerthonDate}), 데모데이(
           {etcQuestions.demoDayDate})는 필수 참여입니다.
@@ -91,7 +91,7 @@ export const EtcQuestionView = ({
         onClick={onPrev}
         backgroundColor='neutral-600'
         height={54}
-        className='sm:text-h4 text-body-s'
+        className='sm:text-h4 text-h5'
       />
     </div>
   );
