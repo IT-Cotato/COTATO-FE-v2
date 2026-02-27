@@ -25,6 +25,10 @@
   --text-body-l--line-height: 22px;
   --text-body-l--font-weight: 400;
 
+  --text-body-l-b: 14px;
+  --text-body-l-b--line-height: 22px;
+  --text-body-l-b--font-weight: 700;
+
   --text-body-m: 12px;
   --text-body-m--line-height: 20px;
   --text-body-m--font-weight: 400;
@@ -42,7 +46,7 @@
 @media (max-width: 640px) {
   :root {
     /* headings */
-    --text-h1: 34px;
+    --text-h1: 32px;
     --text-h1--line-height: 38px;
     --text-h1--font-weight: 700;
 
@@ -52,24 +56,24 @@
 
     --text-h3: 22px;
     --text-h3--line-height: 26px;
-    --text-h3--font-weight: 600;
+    --text-h3--font-weight: 700;
 
-    --text-h4: 20px;
-    --text-h4--line-height: 24px;
+    --text-h4: 18px;
+    --text-h4--line-height: 30px;
     --text-h4--font-weight: 600;
 
-    /* body */
-    --text-body-l: 18px;
-    --text-body-l--line-height: 22px;
-    --text-body-l--font-weight: 400;
+    --text-h5: 16px;
+    --text-h5--line-height: 24px;
+    --text-h5--font-weight: 600;
 
-    --text-body-m: 17px;
+    /* body */
+
+    --text-body-m: 13px;
     --text-body-m--line-height: 21px;
     --text-body-m--font-weight: 400;
 
-    /* caption */
-    --text-caption: 12px;
-    --text-caption--line-height: 16px;
-    --text-caption--font-weight: 400;
+    --text-body-m-b: 13px;
+    --text-body-m-b--line-height: 21px;
+    --text-body-m-b--font-weight: 700;
   }
 }

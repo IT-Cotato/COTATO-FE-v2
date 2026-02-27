@@ -59,7 +59,7 @@ export const FormTextarea = forwardRef<HTMLTextAreaElement, FormTextareaProps>(
               id={inputId}
               spellCheck='false'
               className={clsx(
-                'placeholder-body-l min-h-0 w-full flex-1 resize-none bg-transparent px-4.75 pt-4.5 placeholder:text-neutral-400 focus:outline-none',
+                'sm:placeholder-body-l placeholder-h5 min-h-0 w-full flex-1 resize-none bg-transparent px-4.75 pt-4.5 placeholder:text-neutral-400 focus:outline-none',
                 'read-only:cursor-default read-only:focus:ring-0',
                 props.readOnly && formFieldStyles.readOnlyTextarea,
                 className

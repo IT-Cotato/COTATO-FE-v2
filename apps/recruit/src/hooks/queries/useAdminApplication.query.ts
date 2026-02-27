@@ -73,6 +73,10 @@ export const useAdminApplicationEvaluation = ({
     queryFn: () =>
       getAdminApplicationEvaluation({applicationId, evaluatorType}),
     enabled: !!applicationId && !!evaluatorType,
+
+    staleTime: 0,
+    gcTime: 0,
+    refetchOnMount: 'always',
   });
 };
 
