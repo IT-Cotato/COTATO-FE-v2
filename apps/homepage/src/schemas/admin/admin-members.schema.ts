@@ -77,11 +77,8 @@ export type AdminMembersPageResponse = z.infer<
   typeof AdminMembersPageResponseSchema
 >;
 
-// ─── 기존 타입 호환 ───────────────────────────────────────────────────────────
-
-/** @deprecated AdminMemberType 사용 권장 */
+/** @deprecated AdminMemberType 사용 권장 가입 승인 API 연동시 삭제 예정*/
 export type MemberType = AdminMemberType;
-
 export type ApprovalMemberType = {
   memberId: number;
   name: string;
