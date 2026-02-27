@@ -17,10 +17,8 @@ import {useRouter, useSearchParams} from 'next/navigation';
 import {useEffect, useMemo, useState} from 'react';
 import {useGenerationQuery} from '@/hooks/queries/useGeneration.query';
 import {useAdminMembersQuery} from '@/hooks/queries/useAdminMembers.query';
-import {
-  useDeleteAdminMembers,
-  usePatchAdminMembersStatus,
-} from '@/hooks/mutations/useAdminMembers.mutation';
+import {usePatchAdminMembersStatus} from '@/hooks/mutations/usePatchAdminMembersStatus.mutation';
+import {useDeleteAdminMembers} from '@/hooks/mutations/useDeleteAdminMembers.mutation';
 
 interface AdminUsersTableContainerProps {
   activeTab: MemberTabType;
@@ -53,6 +51,11 @@ export const AdminUsersTableContainer = ({
 
   // 체크박스 선택 상태
   const [selectedIds, setSelectedIds] = useState<number[]>([]);
+
+  // 페이지 이동 시 선택 초기화 (allItems가 현재 페이지 데이터만 포함하므로)
+  useEffect(() => {
+    setSelectedIds([]);
+  }, [currentPage]);
 
   const {data, isLoading} = useAdminMembersQuery({
     search: searchParam,
