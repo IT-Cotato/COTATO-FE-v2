@@ -3,7 +3,12 @@
 import {useRouter, useSearchParams} from 'next/navigation';
 import {PartTab} from '@/app/(with-header)/mypage/admin/attendance/_components/PartTab';
 import {AttendancePartPartType} from '@/schemas/admin/admin.schema';
-import {ATTENDANCE_PART_TAB} from '@/constants/admin/admin';
+import {
+  ATTENDANCE_PART_TAB,
+  ATTENDANCE_STATUS_CONFIG,
+  ATTENDANCE_STATUS_OPTION,
+} from '@/constants/admin/admin';
+import {StatusChip} from '@repo/ui/components/chip/StatusChip';
 
 export const TabContainer = () => {
   const router = useRouter();
@@ -36,20 +41,33 @@ export const TabContainer = () => {
   };
 
   return (
-    <div className='flex gap-7.5' role='tablist' aria-label='파트 선택'>
-      {ATTENDANCE_PART_TAB.map(({label, value}, index) => {
-        const isActive = activePart === value;
-        return (
-          <PartTab
-            key={value}
-            partName={label}
-            isActive={isActive}
-            tabIndex={isActive ? 0 : -1}
-            onClick={() => handleTabClick(value)}
-            onKeyDown={(e) => handleKeyDown(e, index)}
-          />
-        );
-      })}
+    <div className='flex flex-col gap-2.5'>
+      <div className='flex gap-7.5' aria-label='파트 선택'>
+        {ATTENDANCE_PART_TAB.map(({label, value}, index) => {
+          const isActive = activePart === value;
+          return (
+            <PartTab
+              key={value}
+              partName={label}
+              isActive={isActive}
+              tabIndex={isActive ? 0 : -1}
+              onClick={() => handleTabClick(value)}
+              onKeyDown={(e) => handleKeyDown(e, index)}
+            />
+          );
+        })}
+      </div>
+      <div className='flex gap-2.5'>
+        {ATTENDANCE_STATUS_OPTION.map((item) => {
+          return (
+            <StatusChip
+              key={item}
+              value={item}
+              config={ATTENDANCE_STATUS_CONFIG}
+            />
+          );
+        })}
+      </div>
     </div>
   );
 };
