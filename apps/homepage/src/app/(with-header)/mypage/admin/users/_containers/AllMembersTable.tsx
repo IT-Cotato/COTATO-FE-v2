@@ -13,7 +13,7 @@ export const AllMembersTable = () => {
         ? urlState.selectedStatuses
         : undefined,
     page: urlState.currentPage - 1,
-    size: 10,
+    size: 11,
   });
 
   const members: MemberType[] = data?.content ?? [];

@@ -49,18 +49,24 @@ export const ActiveMembersTableContainer = () => {
         onAddGeneration={handleAddGeneration}
       />
 
-      <AdminUsersTableView
-        items={members}
-        allItems={members}
-        activeTab='ACTIVE'
-        selectedStatuses={[]}
-        onFilterChange={() => {}}
-        selectedIds={[]}
-        onSelectAll={() => {}}
-        onSelect={() => {}}
-        onStatusChange={() => {}}
-        onMenuAction={handleMenuAction}
-      />
+      {!isLoading && members.length === 0 ? (
+        <div className='text-body-l flex min-h-60 items-center justify-center text-neutral-600'>
+          현재 활동 회원이 없습니다.
+        </div>
+      ) : (
+        <AdminUsersTableView
+          items={members}
+          allItems={members}
+          activeTab='ACTIVE'
+          selectedStatuses={[]}
+          onFilterChange={() => {}}
+          selectedIds={[]}
+          onSelectAll={() => {}}
+          onSelect={() => {}}
+          onStatusChange={() => {}}
+          onMenuAction={handleMenuAction}
+        />
+      )}
 
       <div className='flex w-full justify-center'>
         <Pagination
