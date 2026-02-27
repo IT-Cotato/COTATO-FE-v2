@@ -147,3 +147,15 @@ export const ATTENDANCE_PART_TAB: {
   {label: '프론트엔드', value: 'FE'},
   {label: '백엔드', value: 'BE'},
 ];
+
+export const ATTENDANCE_STATUS_CONFIG = {
+  PRESENT: {label: '출석', className: 'bg-chip'},
+  LATE: {label: '지각', className: 'bg-disabled'},
+  ABSENT: {label: '결석', className: 'bg-alert'},
+  UNAUTHORIZED_ABSENT: {label: '무단결석', className: 'bg-neutral-600'},
+  DEFAULT: {label: '출석 전', className: 'bg-text-disabled'},
+};
+export type AttendanceStatusKey = keyof typeof ATTENDANCE_STATUS_CONFIG;
+export const ATTENDANCE_STATUS_OPTION = Object.keys(
+  ATTENDANCE_STATUS_CONFIG
+) as AttendanceStatusKey[];
