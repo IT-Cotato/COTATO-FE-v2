@@ -3,7 +3,7 @@ import {useQueryClient} from '@tanstack/react-query';
 import {MemberMenuAction} from '@/constants/admin/admin';
 import {QUERY_KEYS} from '@/constants/query-keys';
 import {MemberType} from '@/schemas/admin/admin-members.schema';
-import {useDeleteAdminMembers} from '@/hooks/mutations/useAdminMembers.mutation';
+import {useDeleteAdminMembers} from '@/hooks/mutations/useDeleteAdminMembers.mutation';
 import {getAdminMemberDetail} from '@/services/api/admin/admin-members.api';
 
 interface UseAllMembersModalsProps {

@@ -5,7 +5,7 @@ import {ConfirmDeleteModal} from '@/app/(with-header)/mypage/admin/users/_compon
 import {MemberDetailModal} from '@/app/(with-header)/mypage/admin/users/_components/table/MemberDetailModal';
 import {AllMembersActionBar} from '@/app/(with-header)/mypage/admin/users/_components/AllMembersActionBar';
 import {Pagination} from '@repo/ui/components/pagination/Pagination';
-import {AllMembersTable} from '@/app/(with-header)/mypage/admin/users/_containers/AllMembersTable';
+import {useAllMembersTable} from '@/app/(with-header)/mypage/admin/users/_hooks/useAllMembersTable';
 
 export const AllMembersTableContainer = () => {
   const {
@@ -32,7 +32,7 @@ export const AllMembersTableContainer = () => {
     selectedMember,
     setIsDetailModalOpen,
     handleMenuAction,
-  } = AllMembersTable();
+  } = useAllMembersTable();
 
   return (
     <div className='flex flex-col gap-3.5'>

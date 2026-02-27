@@ -1,7 +1,7 @@
 import {useState} from 'react';
 import {MemberStatusKey} from '@/constants/admin/admin';
 import {MemberType} from '@/schemas/admin/admin-members.schema';
-import {usePatchAdminMembersStatus} from '@/hooks/mutations/useAdminMembers.mutation';
+import {usePatchAdminMembersStatus} from '@/hooks/mutations/usePatchAdminMembersStatus.mutation';
 
 interface UseAllMembersSelectionProps {
   members: MemberType[];

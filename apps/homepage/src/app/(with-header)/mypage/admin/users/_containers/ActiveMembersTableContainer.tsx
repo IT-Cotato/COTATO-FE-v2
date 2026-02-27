@@ -6,7 +6,7 @@ import {MemberDetailModal} from '@/app/(with-header)/mypage/admin/users/_compone
 import {ActiveMembersActionBar} from '@/app/(with-header)/mypage/admin/users/_components/ActiveMembersActionBar';
 import {SearchBar} from '@/app/(with-header)/mypage/admin/_components/SearchBar';
 import {Pagination} from '@repo/ui/components/pagination/Pagination';
-import {ActiveMembersTable} from '@/app/(with-header)/mypage/admin/users/_containers/ActiveMembersTable';
+import {useActiveMembersTable} from '@/app/(with-header)/mypage/admin/users/_hooks/useActiveMembersTable';
 
 export const ActiveMembersTableContainer = () => {
   const {
@@ -30,7 +30,7 @@ export const ActiveMembersTableContainer = () => {
     setIsDetailModalOpen,
     handleMenuAction,
     handleSaveMember,
-  } = ActiveMembersTable();
+  } = useActiveMembersTable();
 
   return (
     <div className='flex flex-col gap-3.5'>

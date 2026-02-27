@@ -1,10 +1,10 @@
 import {MemberType} from '@/schemas/admin/admin-members.schema';
 import {useAdminMembersQuery} from '@/hooks/queries/useAdminMembers.query';
-import {useAllMembersUrlState} from '../_hooks/useAllMembersUrlState';
-import {useAllMembersSelection} from '../_hooks/useAllMembersSelection';
-import {useAllMembersModals} from '../_hooks/useAllMembersModals';
+import {useAllMembersUrlState} from './useAllMembersUrlState';
+import {useAllMembersSelection} from './useAllMembersSelection';
+import {useAllMembersModals} from './useAllMembersModals';
 
-export const AllMembersTable = () => {
+export const useAllMembersTable = () => {
   const urlState = useAllMembersUrlState();
   const {data, isLoading} = useAdminMembersQuery({
     search: urlState.searchParam,

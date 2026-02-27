@@ -1,10 +1,10 @@
 import {MemberType} from '@/schemas/admin/admin-members.schema';
 import {useActiveMembersQuery} from '@/hooks/queries/useAdminMembers.query';
-import {useActiveMembersUrlState} from '../_hooks/useActiveMembersUrlState';
-import {useActiveMembersGeneration} from '../_hooks/useActiveMembersGeneration';
-import {useActiveMembersModals} from '../_hooks/useActiveMembersModals';
+import {useActiveMembersUrlState} from './useActiveMembersUrlState';
+import {useActiveMembersGeneration} from './useActiveMembersGeneration';
+import {useActiveMembersModals} from './useActiveMembersModals';
 
-export const ActiveMembersTable = () => {
+export const useActiveMembersTable = () => {
   const urlState = useActiveMembersUrlState();
   const generation = useActiveMembersGeneration();
   const {data, isLoading} = useActiveMembersQuery(
