@@ -1,4 +1,5 @@
-export const formatPhoneNumber = (value: string) => {
+export const formatPhoneNumber = (value: string | null | undefined) => {
+  if (!value) return '';
   const onlyNums = value.replace(/[^\d]/g, '');
   if (onlyNums.length <= 3) return onlyNums;
   if (onlyNums.length <= 7)

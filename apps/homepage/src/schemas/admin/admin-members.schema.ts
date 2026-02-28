@@ -26,7 +26,7 @@ export const AdminMemberSchema = z.object({
   memberId: z.number(),
   name: z.string(),
   gender: GenderSchema,
-  phoneNumber: z.string(),
+  phoneNumber: z.string().nullable(),
   university: z.string(),
   passedGenerationNumber: z.number(),
   latestGenerationNumber: z.number(),
@@ -54,7 +54,7 @@ export const ActiveMemberSchema = z.object({
   generationMemberId: z.number(),
   memberId: z.number(),
   name: z.string(),
-  phoneNumber: z.string(),
+  phoneNumber: z.string().nullable(),
   university: z.string(),
   position: PositionSchema,
   role: MemberRoleSchema,
@@ -74,7 +74,7 @@ export const UpdateActiveMemberInfoRequestSchema = z.object({
   name: z.string(),
   gender: GenderSchema,
   university: z.string(),
-  phoneNumber: z.string(),
+  phoneNumber: z.string().nullable(),
   position: PositionSchema,
   role: MemberRoleSchema,
   status: MemberStatusSchema,
@@ -113,7 +113,7 @@ export type PatchActiveMemberRequest = {
   name: string;
   gender: 'MALE' | 'FEMALE';
   university: string;
-  phoneNumber: string;
+  phoneNumber: string | null;
   position: PositionType;
   role: MemberRole;
   status: MemberStatus;
@@ -146,7 +146,7 @@ export type MemberType = {
   passedGenerationNumber: number;
   position: PositionType;
   university: string;
-  phoneNumber: string;
+  phoneNumber: string | null;
   role: MemberRole;
   // ALL 탭 전용
   status?: MemberStatus;
@@ -169,6 +169,6 @@ export type ApprovalMemberType = {
   appliedAt: string;
   passedGenerationNumber: number;
   position: PositionType;
-  phoneNumber: string;
+  phoneNumber: string | null;
   status: MemberStatus;
 };
