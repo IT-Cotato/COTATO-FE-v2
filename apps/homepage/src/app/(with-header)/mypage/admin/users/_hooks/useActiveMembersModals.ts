@@ -85,7 +85,7 @@ export const useActiveMembersModals = ({
           name: memberData.name,
           gender: memberData.gender,
           university: memberData.university,
-          phoneNumber: memberData.phoneNumber.replace(/-/g, ''),
+          phoneNumber: memberData.phoneNumber?.replace(/-/g, '') ?? null,
           position: memberData.position,
           role: memberData.role,
           status: memberData.status ?? 'APPROVED',

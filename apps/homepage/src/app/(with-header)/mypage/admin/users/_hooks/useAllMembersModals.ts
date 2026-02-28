@@ -30,6 +30,9 @@ export const useAllMembersModals = ({
           setIsDeleteModalOpen(false);
           setMemberToDelete(null);
         },
+        onError: () => {
+          alert('회원 삭제에 실패했습니다. 다시 시도해주세요.');
+        },
       }
     );
   };
@@ -49,6 +52,7 @@ export const useAllMembersModals = ({
       setMemberToDelete(member);
       setIsDeleteModalOpen(true);
     } else if (action === 'detail') {
+      try {
       const detail = await queryClient.fetchQuery({
         queryKey: QUERY_KEYS.ADMIN_MEMBERS.DETAIL(memberId),
         queryFn: () => getAdminMemberDetail(memberId),
@@ -57,6 +61,9 @@ export const useAllMembersModals = ({
         setSelectedMember(detail);
         setIsDetailModalOpen(true);
       }
+    }catch (error) {
+      alert ('회원 정보를 불러오는데 실패했습니다.');
+    }
     }
   };
 
