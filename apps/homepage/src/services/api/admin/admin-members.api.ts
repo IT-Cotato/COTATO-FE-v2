@@ -23,7 +23,9 @@ export const getAdminMembers = async (params: GetAdminMembersParams) => {
         Object.entries(p).forEach(([key, value]) => {
           if (value !== undefined) {
             if (Array.isArray(value)) {
-              value.forEach((v) => searchParams.append(key, v));
+              value.forEach((v) => {
+                searchParams.append(key, String(v));
+              });
             } else {
               searchParams.append(key, String(value));
             }
@@ -57,7 +59,7 @@ export const patchAdminMembersStatus = async (
   try {
     await privateAxios.patch(ENDPOINT.ADMIN_MEMBERS.PATCH_STATUS, body);
   } catch (error) {
-    handleApiError(error);
+    throw handleApiError(error);
   }
 };
 
@@ -66,7 +68,7 @@ export const deleteAdminMembers = async (body: DeleteMembersRequest) => {
   try {
     await privateAxios.delete(ENDPOINT.ADMIN_MEMBERS.DELETE, {data: body});
   } catch (error) {
-    handleApiError(error);
+    throw handleApiError(error);
   }
 };
 
@@ -94,7 +96,7 @@ export const patchActiveMember = async ({
       body
     );
   } catch (error) {
-    handleApiError(error);
+    throw handleApiError(error);
   }
 };
 
@@ -112,7 +114,7 @@ export const patchActiveMemberRole = async ({
       body
     );
   } catch (error) {
-    handleApiError(error);
+    throw handleApiError(error);
   }
 };
 
@@ -123,6 +125,6 @@ export const deleteActiveMember = async (generationMemberId: number) => {
       ENDPOINT.ADMIN_MEMBERS.ACTIVE(generationMemberId)
     );
   } catch (error) {
-    handleApiError(error);
+    throw handleApiError(error);
   }
 };
