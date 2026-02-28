@@ -13,8 +13,14 @@ export const useAllMembersSelection = ({members}: UseAllMembersSelectionProps) =
   const [selectedIds, setSelectedIds] = useState<number[]>([]);
 
   const handleBatchStatusChange = (status: MemberStatusKey) => {
-    patchStatus({memberIds: selectedIds, status});
+    if (selectedIds.length === 0) return;
+    patchStatus({memberIds: selectedIds, status},
+      { 
+        onSuccess: () => {
     setSelectedIds([]);
+  },
+}
+    );
   };
 
   const handleStatusChange = (memberId: number, status: MemberStatusKey) => {
