@@ -14,6 +14,7 @@ import {
   MemberStatusKey,
 } from '@/constants/admin/admin';
 import {MemberType} from '@/schemas/admin/admin-members.schema';
+import {formatPhoneNumber} from '@/utils/formatPhoneNumber';
 import {
   TextField,
   fieldClass,
@@ -50,7 +51,14 @@ export const MemberDetailModal = ({
   const [memberData, setMemberData] = useState<MemberType | null>(member);
 
   useEffect(() => {
-    setMemberData(member);
+    if (member) {
+      setMemberData({
+        ...member,
+        phoneNumber: formatPhoneNumber(member.phoneNumber),
+      });
+    } else {
+      setMemberData(null);
+    }
   }, [isOpen, member]);
 
   if (!isOpen || !memberData) return null;
@@ -161,7 +169,10 @@ export const MemberDetailModal = ({
             value={memberData.phoneNumber}
             readonly={readonly}
             onChange={(e) =>
-              setMemberData({...memberData, phoneNumber: e.target.value})
+              setMemberData({
+                ...memberData,
+                phoneNumber: formatPhoneNumber(e.target.value),
+              })
             }
           />
 

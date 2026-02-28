@@ -1,5 +1,6 @@
 import {MemberTabType} from '@/schemas/admin/admin.type';
 import {MemberType} from '@/schemas/admin/admin-members.schema';
+import {formatPhoneNumber} from '@/utils/formatPhoneNumber';
 import {
   MEMBER_COLUMNS,
   MEMBER_ROLE_CONFIG,
@@ -136,7 +137,7 @@ export const AdminUsersTableView = ({
               {member.university}
             </td>
             <td className='truncate px-3 py-4 text-center'>
-              {member.phoneNumber}
+              {formatPhoneNumber(member.phoneNumber)}
             </td>
             <td className='px-3 py-4'>
               <div className='flex items-center justify-center gap-2'>
