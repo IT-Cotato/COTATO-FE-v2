@@ -32,8 +32,3 @@ export type ApprovalMemberType = {
   phoneNumber: string;
   status: MemberStatus;
 };
-
-export const AttendancePartPartSchema = z.enum(['ALL', 'PM', 'DE', 'FE', 'BE']);
-
-/** 타입 추출 */
-export type AttendancePartPartType = z.infer<typeof AttendancePartPartSchema>;

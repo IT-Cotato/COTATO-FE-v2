@@ -2,7 +2,6 @@
 
 import {useRouter, useSearchParams} from 'next/navigation';
 import {PartTab} from '@/app/(with-header)/mypage/admin/attendance/_components/PartTab';
-import {AttendancePartPartType} from '@/schemas/admin/admin.schema';
 import {
   ATTENDANCE_PART_TAB,
   ATTENDANCE_STATUS_CONFIG,
@@ -11,6 +10,7 @@ import {
 import {StatusChip} from '@repo/ui/components/chip/StatusChip';
 import SearchIcon from '@repo/ui/assets/icons/search.svg';
 import {useState} from 'react';
+import {AttendancePartType} from '@/schemas/admin/attendance.schema';
 
 export const TabContainer = () => {
   const router = useRouter();
@@ -20,10 +20,9 @@ export const TabContainer = () => {
     searchParams.get('keyword') ?? ''
   );
 
-  const activePart =
-    (searchParams.get('part') as AttendancePartPartType) ?? 'ALL';
+  const activePart = (searchParams.get('part') as AttendancePartType) ?? 'ALL';
 
-  const handleTabClick = (part: AttendancePartPartType) => {
+  const handleTabClick = (part: AttendancePartType) => {
     const params = new URLSearchParams(searchParams.toString());
     params.set('part', part);
     router.push(`?${params.toString()}`, {scroll: false});

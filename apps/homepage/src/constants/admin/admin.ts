@@ -1,8 +1,10 @@
-import {
-  ApprovalTabType,
-  AttendancePartPartType,
-  MemberTabType,
-} from '@/schemas/admin/admin.schema';
+import {FC, SVGProps} from 'react';
+import {ApprovalTabType, MemberTabType} from '@/schemas/admin/admin.schema';
+import {AttendancePartType} from '@/schemas/admin/attendance.schema';
+import Present from '@/assets/mypage-admin/attendance/present.svg';
+import Late from '@/assets/mypage-admin/attendance/late.svg';
+import Absent from '@/assets/mypage-admin/attendance/absent.svg';
+import UnauthorizedAbsent from '@/assets/mypage-admin/attendance/unauthorized-absent.svg';
 
 /** 회원 관리 테이블 컬럼 상수 */
 export const MEMBER_COLUMNS = [
@@ -139,7 +141,7 @@ export const APPROVAL_COLUMNS = [
 /** 출석 파트 탭 상수 */
 export const ATTENDANCE_PART_TAB: {
   label: string;
-  value: AttendancePartPartType;
+  value: AttendancePartType;
 }[] = [
   {label: '전체 회원', value: 'ALL'},
   {label: '기획', value: 'PM'},
@@ -159,3 +161,17 @@ export type AttendanceStatusKey = keyof typeof ATTENDANCE_STATUS_CONFIG;
 export const ATTENDANCE_STATUS_OPTION = Object.keys(
   ATTENDANCE_STATUS_CONFIG
 ) as AttendanceStatusKey[];
+
+/** 출석 테이블 헤더 상수 */
+export const ATTENDANCE_FULL_TABLE_HEADER: {
+  key: string;
+  label: string;
+  icon?: FC<SVGProps<SVGElement>>;
+}[] = [
+  {key: 'name', label: '이름'},
+  {key: 'part', label: '파트'},
+  {key: 'present', label: '출석', icon: Present},
+  {key: 'late', label: '지각', icon: Late},
+  {key: 'absent', label: '결석', icon: Absent},
+  {key: 'unauthorized-absent', label: '무단결석', icon: UnauthorizedAbsent},
+];
