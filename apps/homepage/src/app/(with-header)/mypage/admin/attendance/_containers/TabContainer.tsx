@@ -96,8 +96,8 @@ export const TabContainer = () => {
         <SearchIcon width={16} height={16} />
         <input
           type='search'
-          placeholder='이름 혹은 학교 검색'
-          aria-label='지원자 이름 또는 학교 검색'
+          placeholder='SEARCH'
+          aria-label='지원자 이름 검색'
           value={keyword}
           onChange={(e) => setKeyword(e.target.value)}
           // todo : make disabled on searching loading
