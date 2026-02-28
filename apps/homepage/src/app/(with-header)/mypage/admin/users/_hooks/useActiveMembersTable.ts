@@ -1,9 +1,9 @@
 import {MemberType} from '@/schemas/admin/admin-members.schema';
 import {useActiveMembersQuery} from '@/hooks/queries/useAdminMembers.query';
 import {usePatchActiveMemberRole} from '@/hooks/mutations/useAdminActiveMembers.mutation';
-import {useActiveMembersUrlState} from './useActiveMembersUrlState';
-import {useActiveMembersGeneration} from './useActiveMembersGeneration';
-import {useActiveMembersModals} from './useActiveMembersModals';
+import {useActiveMembersUrlState} from '@/app/(with-header)/mypage/admin/users/_hooks/useActiveMembersUrlState';
+import {useActiveMembersGeneration} from '@/app/(with-header)/mypage/admin/users/_hooks/useActiveMembersGeneration';
+import {useActiveMembersModals} from '@/app/(with-header)/mypage/admin/users/_hooks/useActiveMembersModals';
 import {MemberRole} from '@/schemas/admin/admin-members.schema';
 
 export const useActiveMembersTable = () => {
@@ -23,6 +23,7 @@ export const useActiveMembersTable = () => {
   const isCurrentGeneration =
     generation.selectedGeneration !== null &&
     generation.selectedGeneration === generation.defaultGenerationId;
+  const totalPages = data?.totalPages ?? 1;
 
   const modals = useActiveMembersModals({members, isCurrentGeneration});
   const {mutate: patchRoleMutate} = usePatchActiveMemberRole();
@@ -35,6 +36,7 @@ export const useActiveMembersTable = () => {
 
   return {
     members,
+    totalPages,
     isLoading,
     handleRoleChange,
     ...urlState,

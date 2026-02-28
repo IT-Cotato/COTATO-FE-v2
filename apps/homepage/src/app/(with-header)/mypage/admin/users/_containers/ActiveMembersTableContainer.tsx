@@ -21,6 +21,7 @@ export const ActiveMembersTableContainer = () => {
     setSelectedGeneration,
     handleAddGeneration,
     handleUpdatePage,
+    totalPages,
     isDeleteModalOpen,
     memberToDelete,
     setIsDeleteModalOpen,
@@ -73,7 +74,7 @@ export const ActiveMembersTableContainer = () => {
       <div className='flex w-full justify-center'>
         <Pagination
           currentPage={currentPage}
-          totalPages={1}
+          totalPages={totalPages}
           onPageChange={handleUpdatePage}
           disabled={isLoading}
           variant='admin'
@@ -92,7 +93,7 @@ export const ActiveMembersTableContainer = () => {
         onClose={() => setIsDetailModalOpen(false)}
         onSave={handleSaveMember}
         member={selectedMember}
-        readonly={false}
+        mode='edit'
       />
     </div>
   );

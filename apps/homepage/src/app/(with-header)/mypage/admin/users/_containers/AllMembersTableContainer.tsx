@@ -79,7 +79,7 @@ export const AllMembersTableContainer = () => {
         isOpen={isDetailModalOpen}
         onClose={() => setIsDetailModalOpen(false)}
         member={selectedMember}
-        readonly
+        mode='read'
       />
     </div>
   );
