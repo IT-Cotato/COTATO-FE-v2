@@ -148,7 +148,7 @@ export const SessionCard = ({
                   </span>
                   <p className='text-h5 text-neutral-600'>
                     {session.placeName && `${session.placeName}`}
-                    {session.roadNameAddress && ` (${session.roadNameAddress})`}
+                    {session.roadNameAddress && ` ${session.roadNameAddress}`}
                   </p>
                 </div>
               </div>
