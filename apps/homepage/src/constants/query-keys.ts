@@ -27,6 +27,9 @@ export const QUERY_KEYS = {
     RECORDS: (month?: number) => ['penalty', 'records', {month}],
   },
   FAQ: (type: string) => ['faq', type],
+  APPROVALS: {
+    LIST: (params: object) => ['approvals', params],
+  },
   SESSIONS: {
     ADMIN_BASE: ['sessions', 'admin'],
     ADMIN_LIST: (generationId?: number) => [
