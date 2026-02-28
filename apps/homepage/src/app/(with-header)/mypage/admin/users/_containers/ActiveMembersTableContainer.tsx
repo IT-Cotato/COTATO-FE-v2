@@ -30,6 +30,7 @@ export const ActiveMembersTableContainer = () => {
     setIsDetailModalOpen,
     handleMenuAction,
     handleSaveMember,
+    handleRoleChange,
   } = useActiveMembersTable();
 
   return (
@@ -64,6 +65,7 @@ export const ActiveMembersTableContainer = () => {
           onSelectAll={() => {}}
           onSelect={() => {}}
           onStatusChange={() => {}}
+          onRoleChange={handleRoleChange}
           onMenuAction={handleMenuAction}
         />
       )}

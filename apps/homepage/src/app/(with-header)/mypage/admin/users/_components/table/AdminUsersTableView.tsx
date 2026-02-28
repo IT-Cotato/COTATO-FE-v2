@@ -35,6 +35,7 @@ interface AdminUsersTableViewProps {
   onSelectAll: (checked: boolean) => void;
   onSelect: (id: number, checked: boolean) => void;
   onStatusChange: (memberId: number, status: MemberStatusKey) => void;
+  onRoleChange?: (memberId: number, role: MemberRoleKey) => void;
   onMenuAction: (action: MemberMenuAction, memberId: number) => void;
 }
 
@@ -48,6 +49,7 @@ export const AdminUsersTableView = ({
   onSelectAll,
   onSelect,
   onStatusChange,
+  onRoleChange,
   onMenuAction,
 }: AdminUsersTableViewProps) => {
   const isAllTab = activeTab === 'ALL';
@@ -157,9 +159,7 @@ export const AdminUsersTableView = ({
                     value={member.role as MemberRoleKey}
                     options={MEMBER_ROLE_OPTIONS}
                     config={MEMBER_ROLE_CONFIG}
-                    onChange={() => {
-                      /** 역할 변경 핸들러 추후 구현 필요 */
-                    }}
+                    onChange={(value) => onRoleChange?.(member.memberId, value)}
                     disabled={false}
                     ariaLabel='역할 선택'
                   />
