@@ -5,15 +5,16 @@ import {SearchBar} from '../../_components/SearchBar';
 import {Pagination} from '@repo/ui/components/pagination/Pagination';
 import {Modal} from '@repo/ui/components/modal/Modal';
 import {Button} from '@repo/ui/components/buttons/Button';
-import {
-  ApprovalMemberType,
-  ApprovalTabType,
-} from '@/schemas/admin/admin.schema';
-import {MOCK_APPROVAL_MEMBERS} from '@/mocks/admin/mock-admin-approval';
+import {ApprovalTabType} from '@/schemas/admin/admin.schema';
 import {useRouter, useSearchParams} from 'next/navigation';
-import {useState} from 'react';
-
-const ITEMS_PER_PAGE = 10;
+import {useState, useEffect} from 'react';
+import {useApplicantsQuery} from '@/hooks/queries/useAdminApprovals.query';
+import {
+  useApproveMembers,
+  useRejectMembers,
+  useRestoreMembers,
+  useDeleteRejectedMembers,
+} from '@/hooks/mutations/useAdminApprovals.mutation';
 
 interface ApprovalTableContainerProps {
   activeTab: ApprovalTabType;
@@ -39,30 +40,29 @@ export const ApprovalTableContainer = ({
 
   const pageParam = searchParams.get('page');
   const currentPage = pageParam ? Number(pageParam) : 1;
+  const searchParam = searchParams.get('search') ?? '';
 
-  // TODO: API 연동 시 서버 데이터로 교체
-  const [members, setMembers] = useState<ApprovalMemberType[]>(
-    MOCK_APPROVAL_MEMBERS
-  );
+  const {data} = useApplicantsQuery({
+    status: activeTab,
+    name: searchParam || undefined,
+    page: currentPage - 1,
+    size: 11,
+  });
 
-  // 체크박스 선택 상태
+  const members = data?.content ?? [];
+  const totalPages = data?.totalPages ?? 1;
+
+  const {mutate: approve} = useApproveMembers();
+  const {mutate: reject} = useRejectMembers();
+  const {mutate: restore} = useRestoreMembers();
+  const {mutate: deleteRejected} = useDeleteRejectedMembers();
+
   const [selectedIds, setSelectedIds] = useState<number[]>([]);
-
-  // 모달 상태
   const [modalConfig, setModalConfig] = useState<ModalConfig>(null);
 
-  const filteredItems = members.filter((m) =>
-    activeTab === 'REQUESTED'
-      ? m.status === 'REQUESTED'
-      : m.status === 'REJECTED'
-  );
-
-  const totalPages = Math.ceil(filteredItems.length / ITEMS_PER_PAGE) || 1;
-  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-  const paginatedItems = filteredItems.slice(
-    startIndex,
-    startIndex + ITEMS_PER_PAGE
-  );
+  useEffect(() => {
+    setSelectedIds([]);
+  }, [activeTab, currentPage]);
 
   const handleUpdatePage = (page: number) => {
     const params = new URLSearchParams(searchParams.toString());
@@ -71,7 +71,7 @@ export const ApprovalTableContainer = ({
   };
 
   const handleSelectAll = (checked: boolean) => {
-    setSelectedIds(checked ? paginatedItems.map((item) => item.memberId) : []);
+    setSelectedIds(checked ? members.map((item) => item.memberId) : []);
   };
 
   const handleSelect = (id: number, checked: boolean) => {
@@ -85,16 +85,17 @@ export const ApprovalTableContainer = ({
     const member = members.find((m) => m.memberId === memberId);
     if (!member) return;
     setModalConfig({
-      title: `${member.name}님의 가입을 승인하시겠습니까?`,
-      description: '확인 버튼 클릭 시 가입 승인 메일이 전송됩니다.',
+      title:
+        activeTab === 'REQUESTED'
+          ? `${member.name}님의 가입을 승인하시겠습니까?`
+          : `${member.name}님을 복원하시겠습니까?`,
+      description:
+        activeTab === 'REQUESTED'
+          ? '확인 버튼 클릭 시 가입 승인 메일이 전송됩니다.'
+          : '확인 버튼 클릭 시 가입 요청 상태로 복원됩니다.',
       onConfirm: () => {
-        // TODO: API 연동
-        setMembers((prev) =>
-          prev.map((m) =>
-            m.memberId === memberId ? {...m, status: 'APPROVED'} : m
-          )
-        );
-        setModalConfig(null);
+        const mutate = activeTab === 'REQUESTED' ? approve : restore;
+        mutate([memberId], {onSuccess: () => setModalConfig(null)});
       },
     });
   };
@@ -104,16 +105,17 @@ export const ApprovalTableContainer = ({
     const member = members.find((m) => m.memberId === memberId);
     if (!member) return;
     setModalConfig({
-      title: `${member.name}님의 가입을 거절하시겠습니까?`,
-      description: '확인 버튼 클릭 시 가입 승인 메일이 전송됩니다.',
+      title:
+        activeTab === 'REQUESTED'
+          ? `${member.name}님의 가입을 거절하시겠습니까?`
+          : `${member.name}님을 영구 삭제하시겠습니까?`,
+      description:
+        activeTab === 'REQUESTED'
+          ? '확인 버튼 클릭 시 가입 거절 메일이 전송됩니다.'
+          : '확인 버튼 클릭 시 영구 삭제됩니다.',
       onConfirm: () => {
-        // TODO: API 연동
-        setMembers((prev) =>
-          prev.map((m) =>
-            m.memberId === memberId ? {...m, status: 'REJECTED'} : m
-          )
-        );
-        setModalConfig(null);
+        const mutate = activeTab === 'REQUESTED' ? reject : deleteRejected;
+        mutate([memberId], {onSuccess: () => setModalConfig(null)});
       },
     });
   };
@@ -131,14 +133,12 @@ export const ApprovalTableContainer = ({
       title,
       description: '확인 버튼 클릭 시 가입 승인 메일이 전송됩니다.',
       onConfirm: () => {
-        // TODO: API 연동
-        setMembers((prev) =>
-          prev.map((m) =>
-            selectedIds.includes(m.memberId) ? {...m, status: 'APPROVED'} : m
-          )
-        );
-        setSelectedIds([]);
-        setModalConfig(null);
+        approve(selectedIds, {
+          onSuccess: () => {
+            setSelectedIds([]);
+            setModalConfig(null);
+          },
+        });
       },
     });
   };
@@ -154,33 +154,54 @@ export const ApprovalTableContainer = ({
         : `${firstName}님 외 ${selectedIds.length - 1}명의 가입을 거절하시겠습니까?`;
     setModalConfig({
       title,
-      description: '확인 버튼 클릭 시 가입 승인 메일이 전송됩니다.',
+      description: '확인 버튼 클릭 시 가입 거절 메일이 전송됩니다.',
       onConfirm: () => {
-        // TODO: API 연동
-        setMembers((prev) =>
-          prev.map((m) =>
-            selectedIds.includes(m.memberId) ? {...m, status: 'REJECTED'} : m
-          )
-        );
-        setSelectedIds([]);
-        setModalConfig(null);
+        reject(selectedIds, {
+          onSuccess: () => {
+            setSelectedIds([]);
+            setModalConfig(null);
+          },
+        });
       },
     });
   };
 
-  // 거절 항목 삭제
+  // 배치 복원 (REJECTED -> REQUESTED)
+  const handleBatchRestore = () => {
+    if (selectedIds.length === 0) return;
+    const firstName =
+      members.find((m) => m.memberId === selectedIds[0])?.name ?? '';
+    const title =
+      selectedIds.length === 1
+        ? `${firstName}님을 복원하시겠습니까?`
+        : `${firstName}님 외 ${selectedIds.length - 1}명을 복원하시겠습니까?`;
+    setModalConfig({
+      title,
+      description: '확인 버튼 클릭 시 가입 요청 상태로 복원됩니다.',
+      onConfirm: () => {
+        restore(selectedIds, {
+          onSuccess: () => {
+            setSelectedIds([]);
+            setModalConfig(null);
+          },
+        });
+      },
+    });
+  };
+
+  // 영구 삭제
   const handleDeleteRejected = () => {
     if (selectedIds.length === 0) return;
     setModalConfig({
       title: '거절 항목 기록을 삭제하시겠습니까?',
       description: '확인 버튼 클릭 시 영구 삭제됩니다.',
       onConfirm: () => {
-        // TODO: API 연동
-        setMembers((prev) =>
-          prev.filter((m) => !selectedIds.includes(m.memberId))
-        );
-        setSelectedIds([]);
-        setModalConfig(null);
+        deleteRejected(selectedIds, {
+          onSuccess: () => {
+            setSelectedIds([]);
+            setModalConfig(null);
+          },
+        });
       },
     });
   };
@@ -208,7 +229,7 @@ export const ApprovalTableContainer = ({
             <button
               type='button'
               disabled={selectedIds.length === 0}
-              onClick={handleBatchApprove}
+              onClick={handleBatchRestore}
               className='text-body-m h-8 w-23.25 cursor-pointer rounded-lg bg-neutral-50 font-semibold text-neutral-600 disabled:cursor-not-allowed disabled:opacity-50'>
               복원하기
             </button>
@@ -229,8 +250,8 @@ export const ApprovalTableContainer = ({
       </div>
 
       <ApprovalTableView
-        items={paginatedItems}
-        allItems={filteredItems}
+        items={members}
+        allItems={members}
         selectedIds={selectedIds}
         onSelectAll={handleSelectAll}
         onSelect={handleSelect}
