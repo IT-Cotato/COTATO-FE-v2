@@ -32,7 +32,7 @@ export const StatusChip = <T extends string>({
       aria-expanded='false'
       className={clsx(
         'inline-flex w-fit min-w-18.75 items-center justify-center rounded-[10px] py-1.5 shadow-[0_0_10px_0_rgba(0,0,0,0.15)] transition-opacity duration-300',
-        isSelected ? 'opacity-100' : 'opacity-50',
+        isSelected ? 'opacity-100' : 'opacity-25',
         className
       )}
       onClick={handleClick}>
