@@ -4,6 +4,7 @@ import {
   patchActiveMember,
   patchActiveMemberRole,
 } from '@/services/api/admin/admin-members.api';
+import {QUERY_KEYS} from '@/constants/query-keys';
 
 /** 활동 회원 삭제 */
 export const useDeleteActiveMember = () => {
@@ -13,8 +14,7 @@ export const useDeleteActiveMember = () => {
     mutationFn: deleteActiveMember,
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ['admin-members'],
-      });
+queryKey: [QUERY_KEYS.ADMIN_MEMBERS.LIST({})],      });
     },
     onError: () => {
       alert('활동 회원 삭제에 실패했습니다. 다시 시도해 주세요.');
@@ -30,7 +30,7 @@ export const usePatchActiveMember = () => {
     mutationFn: patchActiveMember,
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ['admin-members'],
+        queryKey: QUERY_KEYS.ADMIN_MEMBERS.ACTIVE_LIST({}),
       });
     },
     onError: () => {
@@ -47,7 +47,7 @@ export const usePatchActiveMemberRole = () => {
     mutationFn: patchActiveMemberRole,
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ['admin-members'],
+        queryKey: QUERY_KEYS.ADMIN_MEMBERS.ACTIVE_LIST({}),
       });
     },
     onError: () => {

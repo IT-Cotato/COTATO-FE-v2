@@ -1,8 +1,8 @@
 import {MemberType} from '@/schemas/admin/admin-members.schema';
 import {useAdminMembersQuery} from '@/hooks/queries/useAdminMembers.query';
-import {useAllMembersUrlState} from './useAllMembersUrlState';
-import {useAllMembersSelection} from './useAllMembersSelection';
-import {useAllMembersModals} from './useAllMembersModals';
+import {useAllMembersUrlState} from '@/app/(with-header)/mypage/admin/users/_hooks/useAllMembersUrlState';
+import {useAllMembersSelection} from '@/app/(with-header)/mypage/admin/users/_hooks/useAllMembersSelection';
+import {useAllMembersModals} from '@/app/(with-header)/mypage/admin/users/_hooks/useAllMembersModals';
 
 export const useAllMembersTable = () => {
   const urlState = useAllMembersUrlState();

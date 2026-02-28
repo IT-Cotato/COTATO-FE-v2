@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {useRouter, useSearchParams} from 'next/navigation';
 
 export const useActiveMembersUrlState = () => {
@@ -7,7 +7,11 @@ export const useActiveMembersUrlState = () => {
   const rawPage = Number(searchParams.get('page'));
   const currentPage = Number.isInteger(rawPage) && rawPage > 0 ? rawPage : 1;
   const searchParam = searchParams.get('search') ?? undefined;
-  const [keyword, setKeyword] = useState('');
+  const [keyword, setKeyword] = useState(searchParam??'');
+
+  useEffect(()=> {
+    setKeyword(searchParam ?? '');
+  },[searchParam])
 
   const handleSearch = () => {
     const params = new URLSearchParams(searchParams.toString());
