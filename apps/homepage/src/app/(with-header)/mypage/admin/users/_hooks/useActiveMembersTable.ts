@@ -9,21 +9,24 @@ import {MemberRole} from '@/schemas/admin/admin-members.schema';
 export const useActiveMembersTable = () => {
   const urlState = useActiveMembersUrlState();
   const generation = useActiveMembersGeneration();
-  const {data, isLoading} = useActiveMembersQuery(
+  const isGenerationReady = generation.selectedGeneration !== null;
+  const {data, isLoading: isQueryLoading} = useActiveMembersQuery(
     {
       generationId: generation.selectedGeneration ?? 0,
       search: urlState.searchParam,
       page: urlState.currentPage - 1,
       size: 11,
     },
-    generation.selectedGeneration !== null
+    isGenerationReady
   );
 
+  // 기수가 아직 결정되지 않았으면 로딩 중으로 처리
+  const isLoading = !isGenerationReady || isQueryLoading;
   const members: MemberType[] = data?.content ?? [];
   const isCurrentGeneration =
     generation.selectedGeneration !== null &&
     generation.selectedGeneration === generation.defaultGenerationId;
-  const totalPages = data?.totalPages ?? 1;
+  const totalPages = data?.totalPages ?? (data?.isLast ? data.page + 1 : 1);
 
   const modals = useActiveMembersModals({members, isCurrentGeneration});
   const {mutate: patchRoleMutate} = usePatchActiveMemberRole();
