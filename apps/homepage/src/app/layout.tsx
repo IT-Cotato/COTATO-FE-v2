@@ -1,6 +1,6 @@
 import type {Metadata} from 'next';
-import '@/styles/globals.css';
 import '@repo/ui/styles.css';
+import '@/styles/globals.css';
 import localFont from 'next/font/local';
 import Providers from '@/app/providers';
 import {AuthProvider} from '@/components/providers/AuthProvider';

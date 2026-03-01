@@ -1,5 +1,6 @@
 @import 'tailwindcss';
 @import '@repo/tailwind-config';
+@source '../../../../packages/ui/src/**/*.{ts,tsx}';
 
 @layer base {
   html,
