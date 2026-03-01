@@ -1,19 +1,28 @@
 'use client';
 
 import {useRouter, useSearchParams} from 'next/navigation';
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import clsx from 'clsx';
 import {APPROVAL_TABS} from '@/constants/admin/admin';
 import {ApprovalTabType} from '@/constants/admin/admin';
-import {ApprovalTableContainer} from './ApprovalTableContainer';
+import {ApprovalTableContainer} from '@/app/(with-header)/mypage/admin/approvals/_containers/ApprovalTableContainer';
 import {useApplicantsQuery} from '@/hooks/queries/useAdminApprovals.query';
 
 export const ApprovalContainer = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const activeTab = (searchParams.get('tab') as ApprovalTabType) ?? 'REQUESTED';
-  const [keyword, setKeyword] = useState(searchParams.get('search') ?? '');
+  const tabParam = searchParams.get('tab');
+  const activeTab: ApprovalTabType =
+    tabParam === 'REQUESTED' || tabParam === 'REJECTED'
+      ? tabParam
+      : 'REQUESTED';
+  const searchKeyword = searchParams.get('search') ?? '';
+  const [keyword, setKeyword] = useState(searchKeyword);
+
+  useEffect(() => {
+    setKeyword(searchKeyword);
+  }, [searchKeyword]);
 
   const handleSearch = () => {
     const params = new URLSearchParams(searchParams.toString());
@@ -35,8 +44,14 @@ export const ApprovalContainer = () => {
     router.push(`?${params.toString()}`, {scroll: false});
   };
 
-  const {data: requestedData} = useApplicantsQuery({status: 'REQUESTED', size: 1});
-  const {data: rejectedData} = useApplicantsQuery({status: 'REJECTED', size: 1});
+  const {data: requestedData} = useApplicantsQuery({
+    status: 'REQUESTED',
+    size: 1,
+  });
+  const {data: rejectedData} = useApplicantsQuery({
+    status: 'REJECTED',
+    size: 1,
+  });
 
   const tabCounts: Record<ApprovalTabType, number> = {
     REQUESTED: requestedData?.totalElements ?? 0,

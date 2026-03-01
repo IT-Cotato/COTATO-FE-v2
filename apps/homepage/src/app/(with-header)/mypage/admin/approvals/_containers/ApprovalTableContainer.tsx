@@ -5,7 +5,6 @@ import {SearchBar} from '../../_components/SearchBar';
 import {Pagination} from '@repo/ui/components/pagination/Pagination';
 import {Modal} from '@repo/ui/components/modal/Modal';
 import {Button} from '@repo/ui/components/buttons/Button';
-import {ApprovalMemberType} from '@/schemas/admin/admin-members.schema';
 import {ApprovalTabType} from '@/constants/admin/admin';
 import {useRouter, useSearchParams} from 'next/navigation';
 import {useEffect} from 'react';

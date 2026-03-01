@@ -6,13 +6,17 @@ import {useAllMembersModals} from '@/app/(with-header)/mypage/admin/users/_hooks
 
 export const useAllMembersTable = () => {
   const urlState = useAllMembersUrlState();
+  const normalizedPage =
+    Number.isFinite(urlState.currentPage) && urlState.currentPage > 0
+      ? urlState.currentPage
+      : 1;
   const {data, isLoading} = useAdminMembersQuery({
     search: urlState.searchParam,
     statuses:
       urlState.selectedStatuses.length > 0
         ? urlState.selectedStatuses
         : undefined,
-    page: urlState.currentPage - 1,
+    page: normalizedPage - 1,
     size: 11,
   });
 
