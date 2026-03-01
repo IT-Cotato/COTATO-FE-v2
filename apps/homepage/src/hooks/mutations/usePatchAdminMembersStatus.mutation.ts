@@ -1,5 +1,6 @@
 import {useMutation, useQueryClient} from '@tanstack/react-query';
 import {patchAdminMembersStatus} from '@/services/api/admin/admin-members.api';
+import {QUERY_KEYS} from '@/constants/query-keys';
 
 /** 일괄 활동 여부 변경 */
 export const usePatchAdminMembersStatus = () => {
@@ -9,7 +10,7 @@ export const usePatchAdminMembersStatus = () => {
     mutationFn: patchAdminMembersStatus,
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ['admin-members'],
+        queryKey: QUERY_KEYS.ADMIN_MEMBERS.LIST({}),
       });
     },
     onError: () => {

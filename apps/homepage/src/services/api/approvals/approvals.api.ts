@@ -1,7 +1,4 @@
-import {
-  ApplicantsPageResponse,
-  ApprovalMemberType,
-} from '@/schemas/admin/admin-members.schema';
+import {ApplicantsPageResponse} from '@/schemas/admin/admin-members.schema';
 import {ApprovalTabType} from '@/constants/admin/admin';
 import {privateAxios} from '@/services/config/axios';
 import {ENDPOINT} from '@/services/constant/endpoint';

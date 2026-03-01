@@ -1,5 +1,6 @@
 import {useMutation, useQueryClient} from '@tanstack/react-query';
 import {deleteAdminMembers} from '@/services/api/admin/admin-members.api';
+import {QUERY_KEYS} from '@/constants/query-keys';
 
 /** 회원 영구 삭제 */
 export const useDeleteAdminMembers = () => {
@@ -9,7 +10,7 @@ export const useDeleteAdminMembers = () => {
     mutationFn: deleteAdminMembers,
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ['admin-members'],
+        queryKey: QUERY_KEYS.ADMIN_MEMBERS.LIST({}),
       });
     },
     onError: () => {
