@@ -15,7 +15,7 @@ export default function OnboardingPage() {
         )}
       />
 
-      <div className='absolute inset-0 flex h-0 w-0 items-center overflow-hidden opacity-0 lg:h-full lg:w-full lg:opacity-100'>
+      <div className='absolute inset-0 flex h-0 w-0 items-center overflow-hidden opacity-0 xl:h-full xl:w-full xl:opacity-100'>
         <div className='flex h-full w-1/2 items-center justify-center'>
           <CotatoLogo />
         </div>
