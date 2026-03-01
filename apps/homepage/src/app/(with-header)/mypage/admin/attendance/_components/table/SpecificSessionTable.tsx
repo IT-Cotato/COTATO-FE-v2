@@ -1,0 +1,55 @@
+import {
+  ATTENDANCE_SPECIFIC_TABLE_HEADER,
+  ATTENDANCE_STATUS_CONFIG,
+  ATTENDANCE_STATUS_OPTION,
+} from '@/constants/admin/admin';
+import {SpecificSessionTableRowType} from '@/schemas/admin/attendance.schema';
+import {StatusDropdown} from '@repo/ui/components/dropdown/StatusDropdown';
+
+interface SpecificSessionTableProps {
+  items: SpecificSessionTableRowType[];
+}
+
+export const SpecificSessionTable = ({items}: SpecificSessionTableProps) => {
+  return (
+    <table className='h-fit flex-1 border-collapse'>
+      <thead className='bg-neutral-200'>
+        <tr>
+          {ATTENDANCE_SPECIFIC_TABLE_HEADER.map((col) => (
+            <th
+              key={col.key}
+              className='text-body-l-sb px-3 py-4 text-neutral-600'>
+              <div className='flex items-center justify-center gap-2.5'>
+                {col.label}
+              </div>
+            </th>
+          ))}
+        </tr>
+      </thead>
+      <tbody>
+        {items.map((row) => (
+          <tr
+            key={row.memberInfo.memberId}
+            className='text-body-l-sb text-center text-neutral-600'>
+            <td className='truncate px-3 py-4'>{row.memberInfo.name}</td>
+            <td className='truncate px-3 py-4'>
+              {row.memberInfo.generationId}기
+            </td>
+            <td className='px-3 py-4'>
+              <div className='flex items-center justify-center'>
+                <StatusDropdown
+                  value={row.result ?? 'NOT_YET'}
+                  options={ATTENDANCE_STATUS_OPTION}
+                  config={ATTENDANCE_STATUS_CONFIG}
+                  onChange={() => console.log('출석 상태 변경 api 호출')}
+                  disabled={false}
+                  ariaLabel='지원 결과 선택'
+                />
+              </div>
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  );
+};
