@@ -9,6 +9,7 @@ import {useEffect, useMemo} from 'react';
 export const DropdownContainer = () => {
   const {
     selectedGeneration,
+    selectedGenerationNumber,
     selectedSession,
     setSelectedGeneration,
     setSelectedSession,
@@ -19,7 +20,7 @@ export const DropdownContainer = () => {
   const {data: generationList} = useGenerationQuery();
 
   const {data: sessionList} = useAttendanceIdByGenerationQuery(
-    parseInt(selectedGeneration.split('기')[0])
+    selectedGenerationNumber ?? 0
   );
 
   const generations = useMemo(() => {

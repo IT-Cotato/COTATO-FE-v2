@@ -2,6 +2,7 @@ import {create} from 'zustand';
 
 interface AdminAttendanceState {
   selectedGeneration: string;
+  selectedGenerationNumber: number | null;
   selectedSession: string;
   attendanceId: number | null;
   selectedSessionType: 'FULL' | 'SPECIFIC';
@@ -13,11 +14,15 @@ interface AdminAttendanceState {
 
 export const useAdminAttendanceStore = create<AdminAttendanceState>((set) => ({
   selectedGeneration: '기수',
+  selectedGenerationNumber: null,
   selectedSession: '세션',
   attendanceId: null,
   selectedSessionType: 'FULL',
 
-  setSelectedGeneration: (selectedGeneration) => set({selectedGeneration}),
+  setSelectedGeneration: (selectedGeneration) => {
+    const num = parseInt(selectedGeneration.split('기')[0]);
+    set({selectedGeneration, selectedGenerationNumber: num});
+  },
 
   setSelectedSession: (selectedSession) => set({selectedSession}),
 
