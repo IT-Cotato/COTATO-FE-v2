@@ -54,6 +54,8 @@ export const ENDPOINT = {
     STATUS: '/v1/api/events/attendances', //출결 상태 조회
     ATTENDANCE_ID: 'v1/api/admin/attendances/sessions',
     FULL_RECORDS: '/v1/api/admin/attendances/records',
+    SPECIFIC_RECORDS: (attendanceId: number) =>
+      `/v1/api/admin/attendances/${attendanceId}/records`,
   },
 
   /** 상벌점 API */

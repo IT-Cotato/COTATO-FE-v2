@@ -5,8 +5,10 @@ import {
 } from '@/schemas/mypage-mem/attendance/attendance.schema';
 import {ENDPOINT} from '@/services/constant/endpoint';
 import {
+  AttendanceStatusType,
   FullSessionTableResponse,
   PositionType,
+  SpecificSessionTableResponse,
 } from '@/schemas/admin/attendance.schema';
 
 /** 출석 세션 목록 조회 */
@@ -48,5 +50,21 @@ export const getAttendanceFullRecord = async (
   const {data} = await privateAxios.get(ENDPOINT.ATTENDANCE.FULL_RECORDS, {
     params: {generationId, position, search},
   });
+  return data;
+};
+
+/** 세션별 출석 조회 */
+export const getAttendanceSpecificRecord = async (
+  attendanceId: number,
+  position?: PositionType,
+  attendanceResults?: AttendanceStatusType,
+  search?: string
+): Promise<SpecificSessionTableResponse> => {
+  const {data} = await privateAxios.get(
+    ENDPOINT.ATTENDANCE.SPECIFIC_RECORDS(attendanceId),
+    {
+      params: {position, attendanceResults, search},
+    }
+  );
   return data;
 };

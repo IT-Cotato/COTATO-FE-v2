@@ -4,8 +4,12 @@ import {
   getAttendanceFullRecord,
   getAttendanceIdByGeneration,
   getAttendanceSessions,
+  getAttendanceSpecificRecord,
 } from '@/services/api/attendance/attendance.api';
-import {PositionType} from '@/schemas/admin/attendance.schema';
+import {
+  AttendanceStatusType,
+  PositionType,
+} from '@/schemas/admin/attendance.schema';
 
 /** 출석 세션 목록 쿼리 */
 export const useAttendanceSessionsQuery = (month?: number) => {
@@ -34,5 +38,25 @@ export const useAttendanceFullRecordQuery = (
     queryKey: QUERY_KEYS.ATTENDANCE.FULL_RECORDS(generationId),
     queryFn: () => getAttendanceFullRecord(generationId, position, search),
     enabled: !!generationId,
+  });
+};
+
+/** 세션별 출석 조회 쿼리 */
+export const useAttendanceSpecificRecordQuery = (
+  attendanceId: number,
+  position?: PositionType,
+  attendanceResults?: AttendanceStatusType,
+  search?: string
+) => {
+  return useQuery({
+    queryKey: QUERY_KEYS.ATTENDANCE.SPECIFIC_RECORDS(attendanceId),
+    queryFn: () =>
+      getAttendanceSpecificRecord(
+        attendanceId,
+        position,
+        attendanceResults,
+        search
+      ),
+    enabled: !!attendanceId,
   });
 };

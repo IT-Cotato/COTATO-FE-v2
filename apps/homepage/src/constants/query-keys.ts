@@ -26,6 +26,11 @@ export const QUERY_KEYS = {
       'full-records',
       {generation},
     ],
+    SPECIFIC_RECORDS: (attendanceId: number) => [
+      'attendance',
+      'specific-records',
+      {attendanceId},
+    ],
   },
   PENALTY: {
     BASE: 'penalty',

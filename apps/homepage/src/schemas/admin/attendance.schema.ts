@@ -41,6 +41,10 @@ export const SpecificSessionTableRowSchema = z.object({
   result: AttendanceStatusSchema,
 });
 
+export const SpecificSessionTableResponseSchema = z.array(
+  SpecificSessionTableRowSchema
+);
+
 /** 타입 추출 */
 export type PositionType = z.infer<typeof PositionSchema>;
 export type AttendancePartType = z.infer<typeof AttendancePartSchema>;
@@ -51,4 +55,7 @@ export type FullSessionTableResponse = z.infer<
 >;
 export type SpecificSessionTableRowType = z.infer<
   typeof SpecificSessionTableRowSchema
+>;
+export type SpecificSessionTableResponse = z.infer<
+  typeof SpecificSessionTableResponseSchema
 >;
