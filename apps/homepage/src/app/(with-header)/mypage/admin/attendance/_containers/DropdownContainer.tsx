@@ -3,9 +3,14 @@
 import {Dropdown} from '@/components/dropdown/Dropdown';
 import {useGenerationQuery} from '@/hooks/queries/useGeneration.query';
 import {useAdminSessionsQuery} from '@/hooks/queries/useSession.query';
-import {useEffect, useMemo, useState} from 'react';
+import {useRouter, useSearchParams} from 'next/navigation';
+import {useEffect, useMemo, useRef, useState} from 'react';
 
 export const DropdownContainer = () => {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const searchParamsRef = useRef(searchParams);
+
   const [selectedGeneration, setSelectedGeneration] = useState<string>('');
   const [selectedSession, setSelectedSession] = useState<string>('전체 세션');
 
@@ -43,21 +48,23 @@ export const DropdownContainer = () => {
   }, [sessions]);
 
   useEffect(() => {
+    if (sessions.length <= 0) return;
     if (selectedSession === '전체 세션') {
-      console.log(
-        '/v1/api/admin/attendances/records - 전체 출석 통계 조회 << 호출하기'
-      );
-    } else if (sessions.length > 0) {
+      const params = new URLSearchParams(searchParamsRef.current.toString());
+      params.delete('attendanceId');
+      router.push(`?${params.toString()}`, {scroll: false});
+      // todo : /v1/api/admin/attendances/records - 전체 출석 통계 조회 << 호출하기
+    } else {
       const sessionListIndex =
         Number(selectedSession.split('회차 세션')[0]) - 1;
       if (sessionListIndex < 0 || sessionListIndex >= sessions.length) return;
-      const selectedSessionId = sessions[sessionListIndex].sessionId;
-      console.log(
-        '/v1/api/admin/attendances/{attendanceId}/records - 세션별 출석 관리 조회 << 호출하기 // 세션 id:',
-        selectedSessionId
-      );
+      const selectedSessionAttendanceId = sessions[sessionListIndex].sessionId;
+      const params = new URLSearchParams(searchParamsRef.current.toString());
+      params.set('attendanceId', String(selectedSessionAttendanceId));
+      router.push(`?${params.toString()}`, {scroll: false});
+      // todo : /v1/api/admin/attendances/{attendanceId}/records - 세션별 출석 관리 조회 << 호출하기 // attendanceId: selectedSessionAttendanceId
     }
-  }, [selectedSession, sessions]);
+  }, [router, selectedSession, sessions]);
 
   return (
     <div className='flex gap-5'>

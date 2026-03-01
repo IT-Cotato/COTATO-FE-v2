@@ -8,8 +8,8 @@ export default function AdminAttendancePage() {
     <section className='px-11.25'>
       <div className='flex min-w-275 flex-col gap-4.5 py-13.5'>
         <h1 className='text-h2 text-neutral-800'>출석 관리</h1>
-        <DropdownContainer />
         <SuspenseWrapper>
+          <DropdownContainer />
           <TabContainer />
         </SuspenseWrapper>
         <TableContainer />
