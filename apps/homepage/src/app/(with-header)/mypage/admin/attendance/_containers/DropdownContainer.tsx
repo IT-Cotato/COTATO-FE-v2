@@ -1,8 +1,8 @@
 'use client';
 
 import {Dropdown} from '@/components/dropdown/Dropdown';
+import {useAttendanceIdByGenerationQuery} from '@/hooks/queries/useAttendance.queries';
 import {useGenerationQuery} from '@/hooks/queries/useGeneration.query';
-import {useAdminSessionsQuery} from '@/hooks/queries/useSession.query';
 import {useRouter, useSearchParams} from 'next/navigation';
 import {useEffect, useMemo, useRef, useState} from 'react';
 
@@ -16,7 +16,7 @@ export const DropdownContainer = () => {
 
   const {data: generationList} = useGenerationQuery();
 
-  const {data: sessionList} = useAdminSessionsQuery(
+  const {data: sessionList} = useAttendanceIdByGenerationQuery(
     Number(selectedGeneration.split('기')[0])
   );
 
@@ -30,10 +30,10 @@ export const DropdownContainer = () => {
   const sessions = useMemo(() => {
     if (!sessionList) return [];
     return [...sessionList]
-      .sort((a, b) => a.sessionNumber - b.sessionNumber)
+      .sort((a, b) => a.sessionId - b.sessionId)
       .map((item, idx) => ({
         sessionOption: `${idx + 1}회차 세션`,
-        sessionId: item.sessionId,
+        attendanceId: item.attendanceId,
       }));
   }, [sessionList]);
 
@@ -58,7 +58,8 @@ export const DropdownContainer = () => {
       const sessionListIndex =
         Number(selectedSession.split('회차 세션')[0]) - 1;
       if (sessionListIndex < 0 || sessionListIndex >= sessions.length) return;
-      const selectedSessionAttendanceId = sessions[sessionListIndex].sessionId;
+      const selectedSessionAttendanceId =
+        sessions[sessionListIndex].attendanceId;
       const params = new URLSearchParams(searchParamsRef.current.toString());
       params.set('attendanceId', String(selectedSessionAttendanceId));
       router.push(`?${params.toString()}`, {scroll: false});
