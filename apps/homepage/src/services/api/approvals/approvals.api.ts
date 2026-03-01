@@ -1,4 +1,8 @@
-import {ApprovalMemberType, ApprovalTabType} from '@/schemas/admin/admin.schema';
+import {
+  ApplicantsPageResponse,
+  ApprovalMemberType,
+} from '@/schemas/admin/admin-members.schema';
+import {ApprovalTabType} from '@/constants/admin/admin';
 import {privateAxios} from '@/services/config/axios';
 import {ENDPOINT} from '@/services/constant/endpoint';
 import {handleApiError} from '@/services/utils/apiHelper';
@@ -8,17 +12,6 @@ export type GetApplicantsParams = {
   name?: string;
   page?: number;
   size?: number;
-};
-
-export type ApplicantsPageResponse = {
-  content: ApprovalMemberType[];
-  hasNext: boolean;
-  totalPages: number;
-  totalElements: number;
-  page: number;
-  size: number;
-  isFirst: boolean;
-  isLast: boolean;
 };
 
 export const getApplicants = async (

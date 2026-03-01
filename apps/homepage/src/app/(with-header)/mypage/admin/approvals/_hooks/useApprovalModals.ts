@@ -1,8 +1,8 @@
 'use client';
 
 import {useState} from 'react';
-import {ApprovalTabType} from '@/schemas/admin/admin.schema';
-import {ApprovalMemberType} from '@/schemas/admin/admin.schema';
+import {ApprovalTabType} from '@/constants/admin/admin';
+import {ApprovalMemberType} from '@/schemas/admin/admin-members.schema';
 
 type ModalConfig = {
   title: string;
