@@ -6,7 +6,7 @@ import {Pagination} from '@repo/ui/components/pagination/Pagination';
 import {Modal} from '@repo/ui/components/modal/Modal';
 import {Button} from '@repo/ui/components/buttons/Button';
 import {ApprovalMemberType} from '@/schemas/admin/admin-members.schema';
-import {ApprovalTabType} from '@/schemas/admin/admin.type';
+import {ApprovalTabType} from '@/constants/admin/admin';
 import {useRouter, useSearchParams} from 'next/navigation';
 import {useEffect} from 'react';
 import {useApplicantsQuery} from '@/hooks/queries/useAdminApprovals.query';

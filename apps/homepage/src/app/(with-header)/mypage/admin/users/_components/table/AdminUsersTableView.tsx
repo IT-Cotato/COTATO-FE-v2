@@ -1,4 +1,4 @@
-import {MemberTabType} from '@/schemas/admin/admin.type';
+import {MemberTabType} from '@/constants/admin/admin';
 import {MemberType} from '@/schemas/admin/admin-members.schema';
 import {formatPhoneNumber} from '@/utils/formatPhoneNumber';
 import {

@@ -1,4 +1,5 @@
-import {ApprovalTabType, MemberTabType} from '@/schemas/admin/admin.type';
+export type MemberTabType = 'ALL' | 'ACTIVE';
+export type ApprovalTabType = 'REQUESTED' | 'REJECTED';
 
 /** 회원 관리 테이블 컬럼 상수 */
 export const MEMBER_COLUMNS = [

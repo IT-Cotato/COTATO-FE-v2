@@ -4,7 +4,7 @@ import {useRouter, useSearchParams} from 'next/navigation';
 import {useState} from 'react';
 import clsx from 'clsx';
 import {APPROVAL_TABS} from '@/constants/admin/admin';
-import {ApprovalTabType} from '@/schemas/admin/admin.type';
+import {ApprovalTabType} from '@/constants/admin/admin';
 import {ApprovalTableContainer} from './ApprovalTableContainer';
 import {useApplicantsQuery} from '@/hooks/queries/useAdminApprovals.query';
 
