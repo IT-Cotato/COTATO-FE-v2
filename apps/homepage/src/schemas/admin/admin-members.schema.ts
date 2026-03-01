@@ -9,7 +9,7 @@ export const MemberStatusSchema = z.enum([
   'APPROVED',
 ]);
 
-export const PositionSchema = z.enum(['PM', 'DESIGN', 'FE', 'BE', 'NONE']);
+export const PositionSchema = z.enum(['PM', 'DE', 'FE', 'BE', 'NONE']);
 
 export const MemberRoleSchema = z.enum([
   'MEMBER',
