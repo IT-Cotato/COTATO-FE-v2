@@ -54,7 +54,6 @@ export const DropdownContainer = () => {
     if (sessions.length <= 0 || selectedSession === '전체 세션') {
       setAttendanceId(null);
       setSelectedSessionType('FULL');
-      // todo : /v1/api/admin/attendances/records - 전체 출석 통계 조회 << 호출하기
       return;
     }
     const sessionListIndex =
@@ -62,12 +61,10 @@ export const DropdownContainer = () => {
     if (sessionListIndex < 0 || sessionListIndex >= sessions.length) {
       setAttendanceId(null);
       setSelectedSessionType('FULL');
-      // todo : /v1/api/admin/attendances/records - 전체 출석 통계 조회 << 호출하기
       return;
     }
     setAttendanceId(sessions[sessionListIndex].attendanceId);
     setSelectedSessionType('SPECIFIC');
-    // todo : /v1/api/admin/attendances/{attendanceId}/records - 세션별 출석 관리 조회 << 호출하기 // attendanceId: selectedSessionAttendanceId
   }, [selectedSession, sessions, setAttendanceId, setSelectedSessionType]);
 
   return (
