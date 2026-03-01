@@ -31,20 +31,23 @@ export const OnboardingFormDropdown = ({
   };
 
   return (
-    <div className={clsx('flex flex-col gap-3', className)}>
-      <label className='text-h5 text-neutral-100'>{label}</label>
+    <div className={clsx('flex flex-col gap-1.25 sm:gap-3', className)}>
+      <label className='text-body-l sm:text-h5 text-neutral-100'>{label}</label>
 
       <div className='relative'>
         <div
           onClick={() => setIsOpen(!isOpen)}
           className={clsx(
-            'focus:ring-primary flex cursor-pointer items-center justify-between rounded-[9px] bg-neutral-800 px-6.25 py-4.75 text-neutral-100 transition-all focus:ring-1',
+            'focus:ring-primary flex cursor-pointer items-center justify-between rounded-[9px] bg-neutral-800 px-4 py-3 text-neutral-100 transition-all focus:ring-1 sm:px-6.25 sm:py-4.75',
             isOpen || error ? 'ring-1' : 'ring-0',
             isOpen ? 'ring-primary' : error ? 'ring-alert' : ''
           )}>
           <span
             className={clsx(
-              value ? 'text-neutral-100' : 'text-body-l text-neutral-400'
+              'min-w-0 flex-1 truncate text-left',
+              value
+                ? 'text-neutral-100'
+                : 'sm:text-body-l text-h5 text-neutral-500'
             )}>
             {value || placeholder}
           </span>
@@ -57,12 +60,12 @@ export const OnboardingFormDropdown = ({
         </div>
 
         {isOpen && (
-          <ul className='absolute top-[calc(100%+4px)] z-50 w-full overflow-hidden rounded-[10px] border border-neutral-700 bg-neutral-600 shadow-2xl'>
+          <ul className='text-body-l absolute top-[calc(100%+4px)] z-50 w-full overflow-hidden rounded-[10px] border border-neutral-700 bg-neutral-600 shadow-2xl'>
             {options.map((option) => (
               <li
                 key={option}
                 onClick={() => handleOptionClick(option)}
-                className='cursor-pointer px-6.25 py-3.5 text-neutral-100 transition-colors hover:bg-neutral-500'>
+                className='cursor-pointer px-4 py-3 text-neutral-100 transition-colors hover:bg-neutral-500 sm:px-6.25 sm:py-3.5'>
                 {option}
               </li>
             ))}

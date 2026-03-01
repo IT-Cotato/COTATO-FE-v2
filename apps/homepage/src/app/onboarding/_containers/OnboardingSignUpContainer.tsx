@@ -6,7 +6,7 @@ import {Button} from '@repo/ui/components/buttons/Button';
 import {useState} from 'react';
 import {JoinRequestSchema, JoinRequestType} from '@/schemas/auth/auth.schema';
 import {useAuthMutation} from '@/hooks/mutations/auth/useAuth.mutations';
-import {OnboardingFormPassword} from '@/components/password-form/OnboardingFormPassword';
+import {FormPassword} from '@/components/password-form/FormPassword';
 
 interface OnboardingSignUpContainerProps {
   onNext: (data: {email: string; password: string; name: string}) => void;
@@ -112,7 +112,7 @@ export const OnboardingSignUpContainer = ({
         disabled={verifyCodeMutation.isSuccess}
       />
 
-      <OnboardingFormPassword
+      <FormPassword
         label='비밀번호'
         value={formData.password}
         onChange={(val) => setFormData({...formData, password: val})}
@@ -121,7 +121,7 @@ export const OnboardingSignUpContainer = ({
         error={errors?.password?._errors[0]}
       />
 
-      <OnboardingFormPassword
+      <FormPassword
         label='비밀번호 확인'
         value={formData.confirmPassword}
         onChange={(val) => setFormData({...formData, confirmPassword: val})}
