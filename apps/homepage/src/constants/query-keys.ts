@@ -28,6 +28,7 @@ export const QUERY_KEYS = {
   },
   FAQ: (type: string) => ['faq', type],
   APPROVALS: {
+    BASE: ['approvals'],
     LIST: (params: object) => ['approvals', params],
   },
   SESSIONS: {
