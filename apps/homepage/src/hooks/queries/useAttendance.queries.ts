@@ -1,9 +1,11 @@
 import {useQuery} from '@tanstack/react-query';
 import {QUERY_KEYS} from '@/constants/query-keys';
 import {
+  getAttendanceFullRecord,
   getAttendanceIdByGeneration,
   getAttendanceSessions,
 } from '@/services/api/attendance/attendance.api';
+import {PositionType} from '@/schemas/admin/attendance.schema';
 
 /** 출석 세션 목록 쿼리 */
 export const useAttendanceSessionsQuery = (month?: number) => {
@@ -18,6 +20,19 @@ export const useAttendanceIdByGenerationQuery = (generationId: number) => {
   return useQuery({
     queryKey: QUERY_KEYS.ATTENDANCE.ATTENDANCE_ID(generationId),
     queryFn: () => getAttendanceIdByGeneration(generationId),
+    enabled: !!generationId,
+  });
+};
+
+/** 전체 출석 통계 조회 쿼리 */
+export const useAttendanceFullRecordQuery = (
+  generationId: number,
+  position?: PositionType,
+  search?: string
+) => {
+  return useQuery({
+    queryKey: QUERY_KEYS.ATTENDANCE.ATTENDANCE_ID(generationId),
+    queryFn: () => getAttendanceFullRecord(generationId, position, search),
     enabled: !!generationId,
   });
 };

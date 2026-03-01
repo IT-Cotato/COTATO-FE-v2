@@ -7,9 +7,13 @@ import {
 } from '@/mocks/admin/mock-admin-attendance';
 import {SpecificSessionTable} from '@/app/(with-header)/mypage/admin/attendance/_components/table/SpecificSessionTable';
 import {useAdminAttendanceStore} from '@/store/useAdminAttendanceStore';
+import {useAttendanceFullRecordQuery} from '@/hooks/queries/useAttendance.queries';
 
 export const TableContainer = () => {
   const {selectedSessionType} = useAdminAttendanceStore();
+
+  // const {data: fullAttendanceList} = useAttendanceFullRecordQuery()
+
   const half = Math.ceil(MOCK_SPECIFIC_SESSION_TABLE.length / 2);
 
   return (
