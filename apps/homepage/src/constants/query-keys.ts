@@ -35,6 +35,11 @@ export const QUERY_KEYS = {
       'specific-records',
       {attendanceId},
     ],
+    MANAGE_STATUS: (attendanceId: number) => [
+      'attendance',
+      'manage-status',
+      {attendanceId},
+    ],
   },
   PENALTY: {
     BASE: 'penalty',

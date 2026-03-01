@@ -56,6 +56,8 @@ export const ENDPOINT = {
     FULL_RECORDS: '/v1/api/admin/attendances/records',
     SPECIFIC_RECORDS: (attendanceId: number) =>
       `/v1/api/admin/attendances/${attendanceId}/records`,
+    MANAGE_STATUS: (attendanceId: number) =>
+      `/v1/api/admin/attendances/${attendanceId}/records`,
   },
 
   /** 상벌점 API */

@@ -66,3 +66,18 @@ export const getAttendanceSpecificRecord = async (
   );
   return data;
 };
+
+/** 출석 상태 관리 */
+export const patchAttendanceStatus = async (params: {
+  attendanceId: number;
+  memberId: number;
+  result: AttendanceStatusType;
+}): Promise<void> => {
+  await privateAxios.patch(
+    ENDPOINT.ATTENDANCE.MANAGE_STATUS(params.attendanceId),
+    {
+      memberId: params.memberId,
+      result: params.result,
+    }
+  );
+};
