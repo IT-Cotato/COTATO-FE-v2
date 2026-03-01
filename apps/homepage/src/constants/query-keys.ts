@@ -20,7 +20,11 @@ export const QUERY_KEYS = {
     RECORDS: (month?: number) => ['attendance', 'records', {month}],
     SESSIONS: (month?: number) => ['attendance', 'sessions', {month}],
     STATUS: ['attendance', 'status'],
-    ATTENDANCE_ID: (generation: number) => ['attendance-id', {generation}],
+    ATTENDANCE_ID: (generation: number) => [
+      'attendance',
+      'attendance-id',
+      {generation},
+    ],
     FULL_RECORDS: (generation: number) => [
       'attendance',
       'full-records',
