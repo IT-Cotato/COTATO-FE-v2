@@ -122,6 +122,7 @@ export const OnboardingUserInfoContainer = ({
 
       <div className='flex flex-row gap-2.75 sm:gap-6'>
         <OnboardingFormInput
+          className='w-34.5 sm:w-44.5'
           label='기수'
           type='string'
           placeholder='OO기'
@@ -137,7 +138,7 @@ export const OnboardingUserInfoContainer = ({
         <OnboardingFormDropdown
           className='flex-1'
           label='직군'
-          placeholder='직군을 선택해 주세요.'
+          placeholder='직군'
           options={['기획', '디자인', '프론트엔드', '백엔드']}
           value={userInfo.position}
           onChange={(val) => setUserInfo({...userInfo, position: val})}

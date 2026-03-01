@@ -38,13 +38,13 @@ export const OnboardingFormDropdown = ({
         <div
           onClick={() => setIsOpen(!isOpen)}
           className={clsx(
-            'focus:ring-primary flex cursor-pointer items-center justify-between rounded-[9px] bg-neutral-800 px-4 py-3 text-neutral-100 transition-all focus:ring-1 sm:px-6.25 sm:py-4.75',
+            'focus:ring-primary flex min-w-0 cursor-pointer items-center justify-between rounded-[9px] bg-neutral-800 px-4 py-3 text-neutral-100 transition-all focus:ring-1 sm:px-6.25 sm:py-4.75',
             isOpen || error ? 'ring-1' : 'ring-0',
             isOpen ? 'ring-primary' : error ? 'ring-alert' : ''
           )}>
           <span
             className={clsx(
-              'min-w-0 flex-1 truncate text-left',
+              'mr-2 min-w-0 flex-1 truncate overflow-hidden text-left',
               value
                 ? 'text-neutral-100'
                 : 'sm:text-body-l text-h5 text-neutral-500'
