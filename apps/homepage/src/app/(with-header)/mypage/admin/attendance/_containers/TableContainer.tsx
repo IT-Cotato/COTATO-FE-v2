@@ -43,8 +43,6 @@ export const TableContainer = () => {
   } = useManageAttendanceStatusMutation();
 
   if (isFullAttendanceLoading || isSpecificAttendanceLoading) {
-    console.log('isFullAttendanceLoading:', isFullAttendanceLoading);
-    console.log('isSpecificAttendanceLoading:', isSpecificAttendanceLoading);
     return (
       <div
         className='flex min-h-100 items-center justify-center'

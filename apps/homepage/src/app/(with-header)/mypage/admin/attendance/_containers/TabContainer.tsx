@@ -6,10 +6,11 @@ import {
   ATTENDANCE_PART_TAB,
   ATTENDANCE_STATUS_CONFIG,
   ATTENDANCE_STATUS_OPTION,
+  AttendanceStatusKey,
 } from '@/constants/admin/admin';
 import {StatusChip} from '@repo/ui/components/chip/StatusChip';
 import SearchIcon from '@repo/ui/assets/icons/search.svg';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {AttendancePartType} from '@/schemas/admin/attendance.schema';
 import {useAdminAttendanceStore} from '@/store/useAdminAttendanceStore';
 
@@ -23,7 +24,20 @@ export const TabContainer = () => {
     searchParams.get('keyword') ?? ''
   );
 
+  useEffect(() => {
+    if (searchParams.getAll('status').length === 0) {
+      const params = new URLSearchParams(searchParams.toString());
+      params.append('status', 'NOT_YET');
+      router.replace(`?${params.toString()}`, {scroll: false});
+    }
+  }, []);
+
   const activePart = (searchParams.get('part') as AttendancePartType) ?? 'ALL';
+  const activeStatusList = (searchParams.getAll('status') ??
+    'NOT_YET') as AttendanceStatusKey[];
+  const isAllSelected =
+    activeStatusList.length === 0 ||
+    activeStatusList.length === ATTENDANCE_STATUS_OPTION.length;
 
   const handleTabClick = (part: AttendancePartType) => {
     const params = new URLSearchParams(searchParams.toString());
@@ -46,6 +60,24 @@ export const TabContainer = () => {
 
     const nextTab = ATTENDANCE_PART_TAB[nextIndex];
     handleTabClick(nextTab.value);
+  };
+
+  const handleChipClick = (status: AttendanceStatusKey) => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.delete('status');
+    const currentList = isAllSelected
+      ? ATTENDANCE_STATUS_OPTION
+      : activeStatusList;
+    const newList = currentList.includes(status)
+      ? currentList.filter((v) => v !== status)
+      : [...currentList, status];
+    if (
+      newList.length > 0 &&
+      newList.length < ATTENDANCE_STATUS_OPTION.length
+    ) {
+      newList.forEach((v) => params.append('status', v));
+    }
+    router.push(`?${params.toString()}`, {scroll: false});
   };
 
   const handleSearch = () => {
@@ -79,11 +111,14 @@ export const TabContainer = () => {
         {selectedSessionType === 'SPECIFIC' && (
           <div className='flex gap-2.5' aria-label='출석 상태 선택'>
             {ATTENDANCE_STATUS_OPTION.map((item) => {
+              const isActive = isAllSelected || activeStatusList.includes(item);
               return (
                 <StatusChip
                   key={item}
                   value={item}
                   config={ATTENDANCE_STATUS_CONFIG}
+                  isActive={isActive}
+                  onClick={() => handleChipClick(item)}
                 />
               );
             })}
@@ -105,8 +140,6 @@ export const TabContainer = () => {
           aria-label='지원자 이름 검색'
           value={keyword}
           onChange={(e) => setKeyword(e.target.value)}
-          // todo : make disabled on searching loading
-          disabled={false}
           className='text-body-l w-full font-normal outline-none placeholder:text-neutral-600'
         />
       </form>
