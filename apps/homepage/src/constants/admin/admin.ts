@@ -151,11 +151,19 @@ export const ATTENDANCE_PART_TAB: {
 ];
 
 export const ATTENDANCE_STATUS_CONFIG = {
-  PRESENT: {label: '출석', className: 'bg-chip'},
-  LATE: {label: '지각', className: 'bg-disabled'},
-  ABSENT: {label: '결석', className: 'bg-alert'},
-  UNAUTHORIZED_ABSENT: {label: '무단결석', className: 'bg-neutral-600'},
-  DEFAULT: {label: '출석 전', className: 'bg-text-disabled'},
+  PRESENT: {label: '출석', className: 'bg-chip', textColor: '#ffffff'},
+  LATE: {label: '지각', className: 'bg-disabled', textColor: '#ffffff'},
+  ABSENT: {label: '결석', className: 'bg-alert', textColor: '#ffffff'},
+  UNAUTHORIZED_ABSENT: {
+    label: '무단결석',
+    className: 'bg-neutral-600',
+    textColor: '#ffffff',
+  },
+  NOT_YET: {
+    label: '출석 전',
+    className: 'bg-text-disabled',
+    textColor: '#ffffff',
+  },
 };
 export type AttendanceStatusKey = keyof typeof ATTENDANCE_STATUS_CONFIG;
 export const ATTENDANCE_STATUS_OPTION = Object.keys(
@@ -174,4 +182,13 @@ export const ATTENDANCE_FULL_TABLE_HEADER: {
   {key: 'late', label: '지각', icon: Late},
   {key: 'absent', label: '결석', icon: Absent},
   {key: 'unauthorized-absent', label: '무단결석', icon: UnauthorizedAbsent},
+];
+
+export const ATTENDANCE_SPECIFIC_TABLE_HEADER: {
+  key: string;
+  label: string;
+}[] = [
+  {key: 'name', label: '이름'},
+  {key: 'generation', label: '기수'},
+  {key: 'attendance-status', label: '출석여부'},
 ];

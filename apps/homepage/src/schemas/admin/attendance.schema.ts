@@ -2,6 +2,14 @@ import z from 'zod';
 
 export const AttendancePartSchema = z.enum(['ALL', 'PM', 'DE', 'FE', 'BE']);
 
+export const AttendanceStatusSchema = z.enum([
+  'PRESENT',
+  'LATE',
+  'ABSENT',
+  'UNAUTHORIZED_ABSENT',
+  'NOT_YET',
+]);
+
 export const FullSessionTableRowSchema = z.object({
   memberInfo: z.object({
     memberId: z.number(),
@@ -17,6 +25,20 @@ export const FullSessionTableRowSchema = z.object({
   }),
 });
 
+export const SpecificSessionTableRowSchema = z.object({
+  memberInfo: z.object({
+    memberId: z.number(),
+    name: z.string(),
+    position: z.string(),
+    generationId: z.number(),
+  }),
+  result: AttendanceStatusSchema,
+});
+
 /** 타입 추출 */
 export type AttendancePartType = z.infer<typeof AttendancePartSchema>;
+export type AttendanceStatusType = z.infer<typeof AttendanceStatusSchema>;
 export type FullSessionTableRowType = z.infer<typeof FullSessionTableRowSchema>;
+export type SpecificSessionTableRowType = z.infer<
+  typeof SpecificSessionTableRowSchema
+>;
