@@ -11,8 +11,8 @@ export default function AdminAttendancePage() {
         <DropdownContainer />
         <SuspenseWrapper>
           <TabContainer />
+          <TableContainer />
         </SuspenseWrapper>
-        <TableContainer />
       </div>
     </section>
   );

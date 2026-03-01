@@ -35,7 +35,11 @@ export const useAttendanceFullRecordQuery = (
   search?: string
 ) => {
   return useQuery({
-    queryKey: QUERY_KEYS.ATTENDANCE.FULL_RECORDS(generationId),
+    queryKey: QUERY_KEYS.ATTENDANCE.FULL_RECORDS(
+      generationId,
+      position,
+      search
+    ),
     queryFn: () => getAttendanceFullRecord(generationId, position, search),
     enabled: !!generationId,
   });
@@ -49,7 +53,12 @@ export const useAttendanceSpecificRecordQuery = (
   search?: string
 ) => {
   return useQuery({
-    queryKey: QUERY_KEYS.ATTENDANCE.SPECIFIC_RECORDS(attendanceId),
+    queryKey: QUERY_KEYS.ATTENDANCE.SPECIFIC_RECORDS(
+      attendanceId,
+      position,
+      attendanceResults,
+      search
+    ),
     queryFn: () =>
       getAttendanceSpecificRecord(
         attendanceId,

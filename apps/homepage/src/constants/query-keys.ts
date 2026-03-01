@@ -1,3 +1,8 @@
+import {
+  AttendanceStatusType,
+  PositionType,
+} from '@/schemas/admin/attendance.schema';
+
 export const QUERY_KEYS = {
   PROJECT: {
     LIST: (params: {generationId?: number; projectType?: string}) => [
@@ -25,15 +30,20 @@ export const QUERY_KEYS = {
       'attendance-id',
       {generation},
     ],
-    FULL_RECORDS: (generation: number) => [
-      'attendance',
-      'full-records',
-      {generation},
-    ],
-    SPECIFIC_RECORDS: (attendanceId: number) => [
+    FULL_RECORDS: (
+      generation: number,
+      position?: PositionType,
+      search?: string
+    ) => ['attendance', 'full-records', {generation, position, search}],
+    SPECIFIC_RECORDS: (
+      attendanceId: number,
+      position?: PositionType,
+      attendanceResults?: AttendanceStatusType,
+      search?: string
+    ) => [
       'attendance',
       'specific-records',
-      {attendanceId},
+      {attendanceId, position, attendanceResults, search},
     ],
     MANAGE_STATUS: (attendanceId: number) => [
       'attendance',

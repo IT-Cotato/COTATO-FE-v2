@@ -9,18 +9,29 @@ import {
 } from '@/hooks/queries/useAttendance.queries';
 import {Spinner} from '@repo/ui/components/spinner/Spinner';
 import {useManageAttendanceStatusMutation} from '@/hooks/mutations/useAttendance.mutation';
+import {useSearchParams} from 'next/navigation';
+import {AttendancePartType} from '@/schemas/admin/attendance.schema';
 
 export const TableContainer = () => {
+  const searchParams = useSearchParams();
+  const activePart = (searchParams.get('part') as AttendancePartType) ?? 'ALL';
+
   const {selectedGenerationNumber, selectedSessionType, attendanceId} =
     useAdminAttendanceStore();
 
   const {data: fullAttendanceList = [], isLoading: isFullAttendanceLoading} =
-    useAttendanceFullRecordQuery(selectedGenerationNumber ?? 0);
+    useAttendanceFullRecordQuery(
+      selectedGenerationNumber ?? 0,
+      activePart === 'ALL' ? undefined : activePart
+    );
 
   const {
     data: specificAttendanceList = [],
     isLoading: isSpecificAttendanceLoading,
-  } = useAttendanceSpecificRecordQuery(attendanceId ?? 0);
+  } = useAttendanceSpecificRecordQuery(
+    attendanceId ?? 0,
+    activePart === 'ALL' ? undefined : activePart
+  );
 
   const {
     mutate: updateAttendanceStatus,
