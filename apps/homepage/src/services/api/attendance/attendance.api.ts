@@ -4,7 +4,10 @@ import {
   SessionAttendanceListResponse,
 } from '@/schemas/mypage-mem/attendance/attendance.schema';
 import {ENDPOINT} from '@/services/constant/endpoint';
-import {PositionType} from '@/schemas/admin/attendance.schema';
+import {
+  FullSessionTableResponse,
+  PositionType,
+} from '@/schemas/admin/attendance.schema';
 
 /** 출석 세션 목록 조회 */
 export const getAttendanceSessions = async (
@@ -41,8 +44,8 @@ export const getAttendanceFullRecord = async (
   generationId: number,
   position?: PositionType,
   search?: string
-): Promise<AttendanceIdByGenerationResponse> => {
-  const {data} = await privateAxios.get(ENDPOINT.ATTENDANCE.ATTENDANCE_ID, {
+): Promise<FullSessionTableResponse> => {
+  const {data} = await privateAxios.get(ENDPOINT.ATTENDANCE.FULL_RECORDS, {
     params: {generationId, position, search},
   });
   return data;

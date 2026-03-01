@@ -27,6 +27,10 @@ export const FullSessionTableRowSchema = z.object({
   }),
 });
 
+export const FullSessionTableResponseSchema = z.array(
+  FullSessionTableRowSchema
+);
+
 export const SpecificSessionTableRowSchema = z.object({
   memberInfo: z.object({
     memberId: z.number(),
@@ -42,6 +46,9 @@ export type PositionType = z.infer<typeof PositionSchema>;
 export type AttendancePartType = z.infer<typeof AttendancePartSchema>;
 export type AttendanceStatusType = z.infer<typeof AttendanceStatusSchema>;
 export type FullSessionTableRowType = z.infer<typeof FullSessionTableRowSchema>;
+export type FullSessionTableResponse = z.infer<
+  typeof FullSessionTableResponseSchema
+>;
 export type SpecificSessionTableRowType = z.infer<
   typeof SpecificSessionTableRowSchema
 >;

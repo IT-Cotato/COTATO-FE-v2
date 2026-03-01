@@ -31,7 +31,7 @@ export const useAttendanceFullRecordQuery = (
   search?: string
 ) => {
   return useQuery({
-    queryKey: QUERY_KEYS.ATTENDANCE.ATTENDANCE_ID(generationId),
+    queryKey: QUERY_KEYS.ATTENDANCE.FULL_RECORDS(generationId),
     queryFn: () => getAttendanceFullRecord(generationId, position, search),
     enabled: !!generationId,
   });
