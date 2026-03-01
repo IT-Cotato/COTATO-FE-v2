@@ -36,7 +36,9 @@ export const FormRadio = forwardRef<HTMLInputElement, FormRadioProps>(
           <div className='bg-active pointer-events-none absolute size-3.5 scale-0 rounded-full transition-transform duration-200 peer-checked:scale-100' />
         </div>
 
-        <span className='text-h5 font-semibold text-neutral-600'>{label}</span>
+        <span className='sm:text-h5 text-body-l-b font-semibold text-neutral-600'>
+          {label}
+        </span>
       </label>
     );
   }

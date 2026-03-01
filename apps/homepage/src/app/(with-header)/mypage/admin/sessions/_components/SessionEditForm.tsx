@@ -185,17 +185,6 @@ export const SessionEditForm = ({form, onChange}: SessionEditFormProps) => {
             placeholder='세션 설명을 입력해주세요.'
             className={`text-body-m ${INPUT_BASE} h-8 px-2`}
           />
-
-          <p className='text-h5 self-start pt-1.5 text-neutral-600'>
-            세션 내용
-          </p>
-          <textarea
-            value={form.content}
-            onChange={(e) => set('content', e.target.value)}
-            placeholder='세션 내용을 입력해주세요.'
-            rows={2}
-            className={`text-body-m resize-none ${INPUT_BASE} px-2 py-1.5`}
-          />
         </div>
       </div>
     </>

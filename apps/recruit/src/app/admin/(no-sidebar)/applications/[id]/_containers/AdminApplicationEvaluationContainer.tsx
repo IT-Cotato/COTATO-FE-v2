@@ -1,12 +1,12 @@
 'use client';
 
 import {EvaluationTextarea} from '@/app/admin/(no-sidebar)/applications/[id]/_components/EvaluationTextArea';
-import {Button} from '@repo/ui/components/buttons/Button';
 import {EVALUATOR_TABS} from '@/constants/admin/admin-applications';
 import {useAdminApplicationEvaluation} from '@/hooks/queries/useAdminApplication.query';
 import {EvaluatorType} from '@/schemas/admin/admin-application.schema';
 import {useRouter, useSearchParams} from 'next/navigation';
 import {useEffect, useRef} from 'react';
+import clsx from 'clsx';
 
 const DEFAULT_EVALUATOR: EvaluatorType = 'STAFF1';
 
@@ -50,20 +50,23 @@ export const AdminApplicationEvaluationContainer = ({
 
   return (
     <div className='flex w-full flex-col gap-2.5'>
-      <div className='flex gap-10'>
+      <div className='flex gap-5 sm:gap-10'>
         {EVALUATOR_TABS.map(({label, value}) => {
           const isActive = evaluator === value;
           return (
-            <Button
+            <button
               key={value}
-              label={label}
-              labelTypo='h5'
               onClick={() => handleEvaluatorClick(value)}
-              textColor={isActive ? 'neutral-800' : 'neutral-400'}
-              backgroundColor='white'
-              width='min-w-[50px]'
-              height={40}
-            />
+              className={clsx(
+                'flex h-10 min-w-12.5 items-center justify-center transition-colors',
+                'text-body-m sm:text-h5',
+                isActive
+                  ? 'font-bold text-neutral-800'
+                  : 'font-medium text-neutral-400',
+                'bg-white hover:text-neutral-600'
+              )}>
+              {label}
+            </button>
           );
         })}
       </div>
