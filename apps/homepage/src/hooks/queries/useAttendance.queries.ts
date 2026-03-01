@@ -18,5 +18,6 @@ export const useAttendanceIdByGenerationQuery = (generationId: number) => {
   return useQuery({
     queryKey: QUERY_KEYS.ATTENDANCE.ATTENDANCE_ID(generationId),
     queryFn: () => getAttendanceIdByGeneration(generationId),
+    enabled: !!generationId,
   });
 };
