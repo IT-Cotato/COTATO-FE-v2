@@ -38,7 +38,7 @@ export const QUERY_KEYS = {
     SPECIFIC_RECORDS: (
       attendanceId: number,
       position?: PositionType,
-      attendanceResults?: AttendanceStatusType,
+      attendanceResults?: AttendanceStatusType[],
       search?: string
     ) => [
       'attendance',

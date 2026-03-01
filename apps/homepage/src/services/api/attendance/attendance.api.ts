@@ -1,3 +1,4 @@
+import qs from 'qs';
 import {privateAxios} from '@/services/config/axios';
 import {SessionAttendanceListResponse} from '@/schemas/mypage-mem/attendance/attendance.schema';
 import {ENDPOINT} from '@/services/constant/endpoint';
@@ -55,13 +56,15 @@ export const getAttendanceFullRecord = async (
 export const getAttendanceSpecificRecord = async (
   attendanceId: number,
   position?: PositionType,
-  attendanceResults?: AttendanceStatusType,
+  attendanceResults?: AttendanceStatusType[],
   search?: string
 ): Promise<SpecificSessionTableResponse> => {
   const {data} = await privateAxios.get(
     ENDPOINT.ATTENDANCE.SPECIFIC_RECORDS(attendanceId),
     {
       params: {position, attendanceResults, search},
+      paramsSerializer: (params) =>
+        qs.stringify(params, {arrayFormat: 'repeat'}),
     }
   );
   return data;

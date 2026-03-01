@@ -49,7 +49,7 @@ export const useAttendanceFullRecordQuery = (
 export const useAttendanceSpecificRecordQuery = (
   attendanceId: number,
   position?: PositionType,
-  attendanceResults?: AttendanceStatusType,
+  attendanceResults?: AttendanceStatusType[],
   search?: string
 ) => {
   return useQuery({

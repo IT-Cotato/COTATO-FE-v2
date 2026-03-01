@@ -11,11 +11,15 @@ import {Spinner} from '@repo/ui/components/spinner/Spinner';
 import {useManageAttendanceStatusMutation} from '@/hooks/mutations/useAttendance.mutation';
 import {useSearchParams} from 'next/navigation';
 import {AttendancePartType} from '@/schemas/admin/attendance.schema';
+import {AttendanceStatusKey} from '@/constants/admin/admin';
 
 export const TableContainer = () => {
   const searchParams = useSearchParams();
   const activePart = (searchParams.get('part') as AttendancePartType) ?? 'ALL';
   const search = searchParams.get('keyword') ?? undefined;
+  const attendanceResults = searchParams.getAll(
+    'status'
+  ) as AttendanceStatusKey[];
 
   const {selectedGenerationNumber, selectedSessionType, attendanceId} =
     useAdminAttendanceStore();
@@ -33,7 +37,7 @@ export const TableContainer = () => {
   } = useAttendanceSpecificRecordQuery(
     attendanceId ?? 0,
     activePart === 'ALL' ? undefined : activePart,
-    undefined,
+    attendanceResults,
     search
   );
 
