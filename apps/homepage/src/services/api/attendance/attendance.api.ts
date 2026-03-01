@@ -1,5 +1,8 @@
 import {privateAxios} from '@/services/config/axios';
-import {SessionAttendanceListResponse} from '@/schemas/mypage-mem/attendance/attendance.schema';
+import {
+  AttendanceIdByGenerationResponse,
+  SessionAttendanceListResponse,
+} from '@/schemas/mypage-mem/attendance/attendance.schema';
 import {ENDPOINT} from '@/services/constant/endpoint';
 
 /** 출석 세션 목록 조회 */
@@ -19,5 +22,15 @@ export const postAttendanceRecord = async (params: {
   longitude?: number;
 }) => {
   const {data} = await privateAxios.post(ENDPOINT.ATTENDANCE.RECORDS, params);
+  return data;
+};
+
+/** 세션 목록 조회 */
+export const getAttendanceIdByGeneration = async (
+  generationId: number
+): Promise<AttendanceIdByGenerationResponse> => {
+  const {data} = await privateAxios.get(ENDPOINT.ATTENDANCE.ATTENDANCE_ID, {
+    params: {generationId},
+  });
   return data;
 };

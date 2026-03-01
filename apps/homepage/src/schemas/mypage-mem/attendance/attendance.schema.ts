@@ -45,9 +45,19 @@ export const SessionAttendanceListResponseSchema = z.object({
   sessions: z.array(SessionAttendanceSchema),
 });
 
+export const AttendanceIdByGenerationResponseSchema = z.array(
+  z.object({
+    sessionId: z.number(),
+    attendanceId: z.number(),
+  })
+);
+
 export type SessionAttendance = z.infer<typeof SessionAttendanceSchema>;
 export type SessionAttendanceListResponse = z.infer<
   typeof SessionAttendanceListResponseSchema
 >;
 export type AttendanceStatus = z.infer<typeof AttendanceStatusEnum>;
 export type MyAttendanceResult = z.infer<typeof MyAttendanceResultEnum>;
+export type AttendanceIdByGenerationResponse = z.infer<
+  typeof AttendanceIdByGenerationResponseSchema
+>;
