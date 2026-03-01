@@ -127,7 +127,7 @@ export const TabContainer = () => {
       </div>
       <form
         role='search'
-        aria-label='지원자 검색'
+        aria-label='회원 검색'
         onSubmit={(e) => {
           e.preventDefault();
           handleSearch();
@@ -137,7 +137,7 @@ export const TabContainer = () => {
         <input
           type='search'
           placeholder='SEARCH'
-          aria-label='지원자 이름 검색'
+          aria-label='회원 이름 검색'
           value={keyword}
           onChange={(e) => setKeyword(e.target.value)}
           className='text-body-l w-full font-normal outline-none placeholder:text-neutral-600'

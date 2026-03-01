@@ -143,7 +143,7 @@ export const ATTENDANCE_PART_TAB: {
   label: string;
   value: AttendancePartType;
 }[] = [
-  {label: '전체 회원', value: 'ALL'},
+  {label: '전체 파트', value: 'ALL'},
   {label: '기획', value: 'PM'},
   {label: '디자인', value: 'DE'},
   {label: '프론트엔드', value: 'FE'},
