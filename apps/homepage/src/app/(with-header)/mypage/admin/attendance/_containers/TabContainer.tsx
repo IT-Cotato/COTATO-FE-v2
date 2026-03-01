@@ -11,10 +11,13 @@ import {StatusChip} from '@repo/ui/components/chip/StatusChip';
 import SearchIcon from '@repo/ui/assets/icons/search.svg';
 import {useState} from 'react';
 import {AttendancePartType} from '@/schemas/admin/attendance.schema';
+import {useAdminAttendanceStore} from '@/store/useAdminAttendanceStore';
 
 export const TabContainer = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
+
+  const {selectedSessionType} = useAdminAttendanceStore();
 
   const [keyword, setKeyword] = useState<string>(
     searchParams.get('keyword') ?? ''
@@ -73,17 +76,19 @@ export const TabContainer = () => {
             );
           })}
         </div>
-        <div className='flex gap-2.5' aria-label='출석 상태 선택'>
-          {ATTENDANCE_STATUS_OPTION.map((item) => {
-            return (
-              <StatusChip
-                key={item}
-                value={item}
-                config={ATTENDANCE_STATUS_CONFIG}
-              />
-            );
-          })}
-        </div>
+        {selectedSessionType === 'SPECIFIC' && (
+          <div className='flex gap-2.5' aria-label='출석 상태 선택'>
+            {ATTENDANCE_STATUS_OPTION.map((item) => {
+              return (
+                <StatusChip
+                  key={item}
+                  value={item}
+                  config={ATTENDANCE_STATUS_CONFIG}
+                />
+              );
+            })}
+          </div>
+        )}
       </div>
       <form
         role='search'
