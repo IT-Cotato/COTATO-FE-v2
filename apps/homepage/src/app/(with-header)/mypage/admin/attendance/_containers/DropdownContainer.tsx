@@ -4,13 +4,17 @@ import {Dropdown} from '@/components/dropdown/Dropdown';
 import {useAttendanceIdByGenerationQuery} from '@/hooks/queries/useAttendance.queries';
 import {useGenerationQuery} from '@/hooks/queries/useGeneration.query';
 import {useAdminAttendanceStore} from '@/store/useAdminAttendanceStore';
-import {useEffect, useMemo, useState} from 'react';
+import {useEffect, useMemo} from 'react';
 
 export const DropdownContainer = () => {
-  const [selectedGeneration, setSelectedGeneration] = useState<string>('기수');
-  const [selectedSession, setSelectedSession] = useState<string>('세션');
-
-  const {setAttendanceId, setSelectedSessionType} = useAdminAttendanceStore();
+  const {
+    selectedGeneration,
+    selectedSession,
+    setSelectedGeneration,
+    setSelectedSession,
+    setAttendanceId,
+    setSelectedSessionType,
+  } = useAdminAttendanceStore();
 
   const {data: generationList} = useGenerationQuery();
 
@@ -39,11 +43,11 @@ export const DropdownContainer = () => {
     if (generations.length > 0) {
       setSelectedGeneration(generations[0]);
     }
-  }, [generations]);
+  }, [generations, setSelectedGeneration]);
 
   useEffect(() => {
     setSelectedSession('전체 세션');
-  }, [sessions]);
+  }, [sessions, setSelectedSession]);
 
   useEffect(() => {
     if (sessions.length <= 0 || selectedSession === '전체 세션') {
