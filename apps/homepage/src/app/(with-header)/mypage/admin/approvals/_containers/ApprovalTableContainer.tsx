@@ -41,7 +41,7 @@ export const ApprovalTableContainer = ({
 
   const members = data?.content ?? [];
   const totalPages = data?.totalPages ?? 1;
-  const actions = useApprovalActions();
+  const {isLoading, ...actions} = useApprovalActions();
 
   const {
     selectedIds,
@@ -75,12 +75,14 @@ export const ApprovalTableContainer = ({
           <>
             <button
               type='button'
+              disabled={isLoading}
               onClick={handleApproveSelected}
               className='text-primary text-body-m h-8 w-23.25 cursor-pointer rounded-lg bg-neutral-50 font-semibold disabled:cursor-not-allowed disabled:opacity-50'>
               가입 승인
             </button>
             <button
               type='button'
+              disabled={isLoading}
               onClick={handleRejectSelected}
               className='text-body-m h-8 w-23.25 cursor-pointer rounded-lg bg-neutral-50 font-semibold text-neutral-600 disabled:cursor-not-allowed disabled:opacity-50'>
               가입 거절
@@ -90,14 +92,14 @@ export const ApprovalTableContainer = ({
           <>
             <button
               type='button'
-              disabled={selectedIds.length === 0}
+              disabled={selectedIds.length === 0 || isLoading}
               onClick={handleRestoreSelected}
               className='text-body-m h-8 w-23.25 cursor-pointer rounded-lg bg-neutral-50 font-semibold text-neutral-600 disabled:cursor-not-allowed disabled:opacity-50'>
               복원하기
             </button>
             <button
               type='button'
-              disabled={selectedIds.length === 0}
+              disabled={selectedIds.length === 0 || isLoading}
               onClick={handleDeleteSelected}
               className='text-primary text-body-m h-8 w-23.25 cursor-pointer rounded-lg bg-neutral-50 font-semibold disabled:cursor-not-allowed disabled:opacity-50'>
               영구 삭제
@@ -119,6 +121,7 @@ export const ApprovalTableContainer = ({
         onSelect={handleSelect}
         onApprove={handleApprove}
         onReject={handleReject}
+        isLoading={isLoading}
       />
 
       <div className='flex w-full justify-center'>
@@ -143,7 +146,8 @@ export const ApprovalTableContainer = ({
               <Button
                 variant='primary'
                 onClick={modalConfig.onConfirm}
-                label='확인'
+                label={isLoading ? '처리 중...' : '확인'}
+                disabled={isLoading}
               />
             </div>
           }
