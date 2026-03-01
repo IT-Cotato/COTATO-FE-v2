@@ -3,7 +3,7 @@
 import {useRouter, useSearchParams} from 'next/navigation';
 import clsx from 'clsx';
 import {MEMBER_TABS} from '@/constants/admin/admin';
-import {MemberTabType} from '@/schemas/admin/admin.type';
+import {MemberTabType} from '@/constants/admin/admin';
 import {AllMembersTableContainer} from '@/app/(with-header)/mypage/admin/users/_containers/AllMembersTableContainer';
 import {ActiveMembersTableContainer} from '@/app/(with-header)/mypage/admin/users/_containers/ActiveMembersTableContainer';
 
