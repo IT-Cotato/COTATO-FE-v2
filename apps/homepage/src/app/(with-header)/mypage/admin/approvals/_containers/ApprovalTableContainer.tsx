@@ -7,14 +7,10 @@ import {Modal} from '@repo/ui/components/modal/Modal';
 import {Button} from '@repo/ui/components/buttons/Button';
 import {ApprovalTabType} from '@/schemas/admin/admin.schema';
 import {useRouter, useSearchParams} from 'next/navigation';
-import {useState, useEffect} from 'react';
+import {useEffect} from 'react';
 import {useApplicantsQuery} from '@/hooks/queries/useAdminApprovals.query';
-import {
-  useApproveMembers,
-  useRejectMembers,
-  useRestoreMembers,
-  useDeleteRejectedMembers,
-} from '@/hooks/mutations/useAdminApprovals.mutation';
+import {useApprovalModals} from '@/app/(with-header)/mypage/admin/approvals/_hooks/useApprovalModals';
+import {useApprovalActions} from '@/app/(with-header)/mypage/admin/approvals/_hooks/useApprovalActions';
 
 interface ApprovalTableContainerProps {
   activeTab: ApprovalTabType;
@@ -22,12 +18,6 @@ interface ApprovalTableContainerProps {
   onKeywordChange: (value: string) => void;
   onSearch: () => void;
 }
-
-type ModalConfig = {
-  title: string;
-  description: string;
-  onConfirm: () => void;
-} | null;
 
 export const ApprovalTableContainer = ({
   activeTab,
@@ -51,159 +41,31 @@ export const ApprovalTableContainer = ({
 
   const members = data?.content ?? [];
   const totalPages = data?.totalPages ?? 1;
+  const actions = useApprovalActions();
 
-  const {mutate: approve} = useApproveMembers();
-  const {mutate: reject} = useRejectMembers();
-  const {mutate: restore} = useRestoreMembers();
-  const {mutate: deleteRejected} = useDeleteRejectedMembers();
-
-  const [selectedIds, setSelectedIds] = useState<number[]>([]);
-  const [modalConfig, setModalConfig] = useState<ModalConfig>(null);
+  const {
+    selectedIds,
+    setSelectedIds,
+    modalConfig,
+    setModalConfig,
+    handleSelectAll,
+    handleSelect,
+    handleApprove,
+    handleReject,
+    handleApproveSelected,
+    handleRejectSelected,
+    handleRestoreSelected,
+    handleDeleteSelected,
+  } = useApprovalModals({activeTab, members, actions});
 
   useEffect(() => {
     setSelectedIds([]);
-  }, [activeTab, currentPage]);
+  }, [activeTab, currentPage, setSelectedIds]);
 
   const handleUpdatePage = (page: number) => {
     const params = new URLSearchParams(searchParams.toString());
     params.set('page', String(page));
     router.push(`?${params.toString()}`);
-  };
-
-  const handleSelectAll = (checked: boolean) => {
-    setSelectedIds(checked ? members.map((item) => item.memberId) : []);
-  };
-
-  const handleSelect = (id: number, checked: boolean) => {
-    setSelectedIds((prev) =>
-      checked ? [...prev, id] : prev.filter((i) => i !== id)
-    );
-  };
-
-  // 단일 승인
-  const handleApprove = (memberId: number) => {
-    const member = members.find((m) => m.memberId === memberId);
-    if (!member) return;
-    setModalConfig({
-      title:
-        activeTab === 'REQUESTED'
-          ? `${member.name}님의 가입을 승인하시겠습니까?`
-          : `${member.name}님을 복원하시겠습니까?`,
-      description:
-        activeTab === 'REQUESTED'
-          ? '확인 버튼 클릭 시 가입 승인 메일이 전송됩니다.'
-          : '확인 버튼 클릭 시 가입 요청 상태로 복원됩니다.',
-      onConfirm: () => {
-        const mutate = activeTab === 'REQUESTED' ? approve : restore;
-        mutate([memberId], {onSuccess: () => setModalConfig(null)});
-      },
-    });
-  };
-
-  // 단일 거절
-  const handleReject = (memberId: number) => {
-    const member = members.find((m) => m.memberId === memberId);
-    if (!member) return;
-    setModalConfig({
-      title:
-        activeTab === 'REQUESTED'
-          ? `${member.name}님의 가입을 거절하시겠습니까?`
-          : `${member.name}님을 영구 삭제하시겠습니까?`,
-      description:
-        activeTab === 'REQUESTED'
-          ? '확인 버튼 클릭 시 가입 거절 메일이 전송됩니다.'
-          : '확인 버튼 클릭 시 영구 삭제됩니다.',
-      onConfirm: () => {
-        const mutate = activeTab === 'REQUESTED' ? reject : deleteRejected;
-        mutate([memberId], {onSuccess: () => setModalConfig(null)});
-      },
-    });
-  };
-
-  // 배치 승인
-  const handleBatchApprove = () => {
-    if (selectedIds.length === 0) return;
-    const firstName =
-      members.find((m) => m.memberId === selectedIds[0])?.name ?? '';
-    const title =
-      selectedIds.length === 1
-        ? `${firstName}님의 가입을 승인하시겠습니까?`
-        : `${firstName}님 외 ${selectedIds.length - 1}명의 가입을 승인하시겠습니까?`;
-    setModalConfig({
-      title,
-      description: '확인 버튼 클릭 시 가입 승인 메일이 전송됩니다.',
-      onConfirm: () => {
-        approve(selectedIds, {
-          onSuccess: () => {
-            setSelectedIds([]);
-            setModalConfig(null);
-          },
-        });
-      },
-    });
-  };
-
-  // 배치 거절
-  const handleBatchReject = () => {
-    if (selectedIds.length === 0) return;
-    const firstName =
-      members.find((m) => m.memberId === selectedIds[0])?.name ?? '';
-    const title =
-      selectedIds.length === 1
-        ? `${firstName}님의 가입을 거절하시겠습니까?`
-        : `${firstName}님 외 ${selectedIds.length - 1}명의 가입을 거절하시겠습니까?`;
-    setModalConfig({
-      title,
-      description: '확인 버튼 클릭 시 가입 거절 메일이 전송됩니다.',
-      onConfirm: () => {
-        reject(selectedIds, {
-          onSuccess: () => {
-            setSelectedIds([]);
-            setModalConfig(null);
-          },
-        });
-      },
-    });
-  };
-
-  // 배치 복원 (REJECTED -> REQUESTED)
-  const handleBatchRestore = () => {
-    if (selectedIds.length === 0) return;
-    const firstName =
-      members.find((m) => m.memberId === selectedIds[0])?.name ?? '';
-    const title =
-      selectedIds.length === 1
-        ? `${firstName}님을 복원하시겠습니까?`
-        : `${firstName}님 외 ${selectedIds.length - 1}명을 복원하시겠습니까?`;
-    setModalConfig({
-      title,
-      description: '확인 버튼 클릭 시 가입 요청 상태로 복원됩니다.',
-      onConfirm: () => {
-        restore(selectedIds, {
-          onSuccess: () => {
-            setSelectedIds([]);
-            setModalConfig(null);
-          },
-        });
-      },
-    });
-  };
-
-  // 영구 삭제
-  const handleDeleteRejected = () => {
-    if (selectedIds.length === 0) return;
-    setModalConfig({
-      title: '거절 항목 기록을 삭제하시겠습니까?',
-      description: '확인 버튼 클릭 시 영구 삭제됩니다.',
-      onConfirm: () => {
-        deleteRejected(selectedIds, {
-          onSuccess: () => {
-            setSelectedIds([]);
-            setModalConfig(null);
-          },
-        });
-      },
-    });
   };
 
   return (
@@ -213,13 +75,13 @@ export const ApprovalTableContainer = ({
           <>
             <button
               type='button'
-              onClick={handleBatchApprove}
+              onClick={handleApproveSelected}
               className='text-primary text-body-m h-8 w-23.25 cursor-pointer rounded-lg bg-neutral-50 font-semibold disabled:cursor-not-allowed disabled:opacity-50'>
               가입 승인
             </button>
             <button
               type='button'
-              onClick={handleBatchReject}
+              onClick={handleRejectSelected}
               className='text-body-m h-8 w-23.25 cursor-pointer rounded-lg bg-neutral-50 font-semibold text-neutral-600 disabled:cursor-not-allowed disabled:opacity-50'>
               가입 거절
             </button>
@@ -229,14 +91,14 @@ export const ApprovalTableContainer = ({
             <button
               type='button'
               disabled={selectedIds.length === 0}
-              onClick={handleBatchRestore}
+              onClick={handleRestoreSelected}
               className='text-body-m h-8 w-23.25 cursor-pointer rounded-lg bg-neutral-50 font-semibold text-neutral-600 disabled:cursor-not-allowed disabled:opacity-50'>
               복원하기
             </button>
             <button
               type='button'
               disabled={selectedIds.length === 0}
-              onClick={handleDeleteRejected}
+              onClick={handleDeleteSelected}
               className='text-primary text-body-m h-8 w-23.25 cursor-pointer rounded-lg bg-neutral-50 font-semibold disabled:cursor-not-allowed disabled:opacity-50'>
               영구 삭제
             </button>
