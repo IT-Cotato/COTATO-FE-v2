@@ -1,10 +1,8 @@
 import {privateAxios} from '@/services/config/axios';
-import {
-  AttendanceIdByGenerationResponse,
-  SessionAttendanceListResponse,
-} from '@/schemas/mypage-mem/attendance/attendance.schema';
+import {SessionAttendanceListResponse} from '@/schemas/mypage-mem/attendance/attendance.schema';
 import {ENDPOINT} from '@/services/constant/endpoint';
 import {
+  AttendanceIdByGenerationResponse,
   AttendanceStatusType,
   FullSessionTableResponse,
   PositionType,

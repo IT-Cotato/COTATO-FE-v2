@@ -12,6 +12,13 @@ export const AttendanceStatusSchema = z.enum([
   'NOT_YET',
 ]);
 
+export const AttendanceIdByGenerationResponseSchema = z.array(
+  z.object({
+    sessionId: z.number(),
+    attendanceId: z.number(),
+  })
+);
+
 export const FullSessionTableRowSchema = z.object({
   memberInfo: z.object({
     memberId: z.number(),
@@ -49,6 +56,9 @@ export const SpecificSessionTableResponseSchema = z.array(
 export type PositionType = z.infer<typeof PositionSchema>;
 export type AttendancePartType = z.infer<typeof AttendancePartSchema>;
 export type AttendanceStatusType = z.infer<typeof AttendanceStatusSchema>;
+export type AttendanceIdByGenerationResponse = z.infer<
+  typeof AttendanceIdByGenerationResponseSchema
+>;
 export type FullSessionTableRowType = z.infer<typeof FullSessionTableRowSchema>;
 export type FullSessionTableResponse = z.infer<
   typeof FullSessionTableResponseSchema
