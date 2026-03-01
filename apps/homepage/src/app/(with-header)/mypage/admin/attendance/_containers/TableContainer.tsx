@@ -15,6 +15,7 @@ import {AttendancePartType} from '@/schemas/admin/attendance.schema';
 export const TableContainer = () => {
   const searchParams = useSearchParams();
   const activePart = (searchParams.get('part') as AttendancePartType) ?? 'ALL';
+  const search = searchParams.get('keyword') ?? undefined;
 
   const {selectedGenerationNumber, selectedSessionType, attendanceId} =
     useAdminAttendanceStore();
@@ -22,7 +23,8 @@ export const TableContainer = () => {
   const {data: fullAttendanceList = [], isLoading: isFullAttendanceLoading} =
     useAttendanceFullRecordQuery(
       selectedGenerationNumber ?? 0,
-      activePart === 'ALL' ? undefined : activePart
+      activePart === 'ALL' ? undefined : activePart,
+      search
     );
 
   const {
@@ -30,7 +32,9 @@ export const TableContainer = () => {
     isLoading: isSpecificAttendanceLoading,
   } = useAttendanceSpecificRecordQuery(
     attendanceId ?? 0,
-    activePart === 'ALL' ? undefined : activePart
+    activePart === 'ALL' ? undefined : activePart,
+    undefined,
+    search
   );
 
   const {
