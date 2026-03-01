@@ -3,21 +3,19 @@
 import {Dropdown} from '@/components/dropdown/Dropdown';
 import {useAttendanceIdByGenerationQuery} from '@/hooks/queries/useAttendance.queries';
 import {useGenerationQuery} from '@/hooks/queries/useGeneration.query';
-import {useRouter, useSearchParams} from 'next/navigation';
-import {useEffect, useMemo, useRef, useState} from 'react';
+import {useAdminAttendanceStore} from '@/store/useAdminAttendanceStore';
+import {useEffect, useMemo, useState} from 'react';
 
 export const DropdownContainer = () => {
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  const searchParamsRef = useRef(searchParams);
+  const [selectedGeneration, setSelectedGeneration] = useState<string>('기수');
+  const [selectedSession, setSelectedSession] = useState<string>('세션');
 
-  const [selectedGeneration, setSelectedGeneration] = useState<string>('');
-  const [selectedSession, setSelectedSession] = useState<string>('전체 세션');
+  const {setAttendanceId, setSelectedSessionType} = useAdminAttendanceStore();
 
   const {data: generationList} = useGenerationQuery();
 
   const {data: sessionList} = useAttendanceIdByGenerationQuery(
-    Number(selectedGeneration.split('기')[0])
+    parseInt(selectedGeneration.split('기')[0])
   );
 
   const generations = useMemo(() => {
@@ -48,24 +46,24 @@ export const DropdownContainer = () => {
   }, [sessions]);
 
   useEffect(() => {
-    if (sessions.length <= 0) return;
-    if (selectedSession === '전체 세션') {
-      const params = new URLSearchParams(searchParamsRef.current.toString());
-      params.delete('attendanceId');
-      router.push(`?${params.toString()}`, {scroll: false});
+    if (sessions.length <= 0 || selectedSession === '전체 세션') {
+      setAttendanceId(null);
+      setSelectedSessionType('FULL');
       // todo : /v1/api/admin/attendances/records - 전체 출석 통계 조회 << 호출하기
-    } else {
-      const sessionListIndex =
-        Number(selectedSession.split('회차 세션')[0]) - 1;
-      if (sessionListIndex < 0 || sessionListIndex >= sessions.length) return;
-      const selectedSessionAttendanceId =
-        sessions[sessionListIndex].attendanceId;
-      const params = new URLSearchParams(searchParamsRef.current.toString());
-      params.set('attendanceId', String(selectedSessionAttendanceId));
-      router.push(`?${params.toString()}`, {scroll: false});
-      // todo : /v1/api/admin/attendances/{attendanceId}/records - 세션별 출석 관리 조회 << 호출하기 // attendanceId: selectedSessionAttendanceId
+      return;
     }
-  }, [router, selectedSession, sessions]);
+    const sessionListIndex =
+      parseInt(selectedSession.split('회차 세션')[0]) - 1;
+    if (sessionListIndex < 0 || sessionListIndex >= sessions.length) {
+      setAttendanceId(null);
+      setSelectedSessionType('FULL');
+      // todo : /v1/api/admin/attendances/records - 전체 출석 통계 조회 << 호출하기
+      return;
+    }
+    setAttendanceId(sessions[sessionListIndex].attendanceId);
+    setSelectedSessionType('SPECIFIC');
+    // todo : /v1/api/admin/attendances/{attendanceId}/records - 세션별 출석 관리 조회 << 호출하기 // attendanceId: selectedSessionAttendanceId
+  }, [selectedSession, sessions, setAttendanceId, setSelectedSessionType]);
 
   return (
     <div className='flex gap-5'>
