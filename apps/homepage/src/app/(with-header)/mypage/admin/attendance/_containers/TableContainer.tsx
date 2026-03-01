@@ -8,6 +8,7 @@ import {
   useAttendanceSpecificRecordQuery,
 } from '@/hooks/queries/useAttendance.queries';
 import {Spinner} from '@repo/ui/components/spinner/Spinner';
+import {useManageAttendanceStatusMutation} from '@/hooks/mutations/useAttendance.mutation';
 
 export const TableContainer = () => {
   const {selectedGenerationNumber, selectedSessionType, attendanceId} =
@@ -20,6 +21,11 @@ export const TableContainer = () => {
     data: specificAttendanceList = [],
     isLoading: isSpecificAttendanceLoading,
   } = useAttendanceSpecificRecordQuery(attendanceId ?? 0);
+
+  const {
+    mutate: updateAttendanceStatus,
+    isPending: isUpdatingAttendanceStatus,
+  } = useManageAttendanceStatusMutation();
 
   if (isFullAttendanceLoading || isSpecificAttendanceLoading) {
     console.log('isFullAttendanceLoading:', isFullAttendanceLoading);
@@ -44,8 +50,28 @@ export const TableContainer = () => {
         <FullSessionTable items={fullAttendanceList} />
       ) : (
         <div className='flex gap-5'>
-          <SpecificSessionTable items={specificAttendanceList.slice(0, half)} />
-          <SpecificSessionTable items={specificAttendanceList.slice(half)} />
+          <SpecificSessionTable
+            items={specificAttendanceList.slice(0, half)}
+            onChangeAttendanceStatus={(memberId, result) =>
+              updateAttendanceStatus({
+                attendanceId: attendanceId!,
+                memberId,
+                result,
+              })
+            }
+            isUpdating={isUpdatingAttendanceStatus}
+          />
+          <SpecificSessionTable
+            items={specificAttendanceList.slice(half)}
+            onChangeAttendanceStatus={(memberId, result) =>
+              updateAttendanceStatus({
+                attendanceId: attendanceId!,
+                memberId,
+                result,
+              })
+            }
+            isUpdating={isUpdatingAttendanceStatus}
+          />
         </div>
       )}
     </>

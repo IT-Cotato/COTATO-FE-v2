@@ -3,14 +3,26 @@ import {
   ATTENDANCE_STATUS_CONFIG,
   ATTENDANCE_STATUS_OPTION,
 } from '@/constants/admin/admin';
-import {SpecificSessionTableRowType} from '@/schemas/admin/attendance.schema';
+import {
+  AttendanceStatusType,
+  SpecificSessionTableRowType,
+} from '@/schemas/admin/attendance.schema';
 import {StatusDropdown} from '@repo/ui/components/dropdown/StatusDropdown';
 
 interface SpecificSessionTableProps {
   items: SpecificSessionTableRowType[];
+  onChangeAttendanceStatus: (
+    memberId: number,
+    result: AttendanceStatusType
+  ) => void;
+  isUpdating: boolean;
 }
 
-export const SpecificSessionTable = ({items}: SpecificSessionTableProps) => {
+export const SpecificSessionTable = ({
+  items,
+  onChangeAttendanceStatus,
+  isUpdating,
+}: SpecificSessionTableProps) => {
   return (
     <table className='h-fit flex-1 border-collapse'>
       <thead className='bg-neutral-200'>
@@ -48,8 +60,10 @@ export const SpecificSessionTable = ({items}: SpecificSessionTableProps) => {
                     value={row.result ?? 'NOT_YET'}
                     options={ATTENDANCE_STATUS_OPTION}
                     config={ATTENDANCE_STATUS_CONFIG}
-                    onChange={() => console.log('출석 상태 변경 api 호출')}
-                    disabled={false}
+                    onChange={(value) =>
+                      onChangeAttendanceStatus(row.memberInfo.memberId, value)
+                    }
+                    disabled={isUpdating}
                     ariaLabel='지원 결과 선택'
                   />
                 </div>
