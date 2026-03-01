@@ -73,7 +73,7 @@ export const ApplicantSchema = z.object({
   gender: z.string(),
   applicationPartType: z.string().nullable(),
   university: z.string(),
-  phoneNumber: z.string(),
+  phoneNumber: z.string().nullable(),
   passStatus: ApplicationPassStatusSchema,
   submittedAt: z.string(),
 });

@@ -6,7 +6,7 @@ import {
   useSensors,
 } from '@dnd-kit/core';
 import {arrayMove} from '@dnd-kit/sortable';
-import {SessionImage} from '@/schemas/admin/session.schema';
+import {SessionImage} from '@/schemas/admin/admin-sessions.schema';
 import {
   useDeleteSessionImage,
   useUploadSessionImage,

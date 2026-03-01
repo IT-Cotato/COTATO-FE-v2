@@ -1,4 +1,4 @@
-import {ApprovalMemberType} from '@/schemas/admin/admin.schema';
+import {ApprovalMemberType} from '@/schemas/admin/admin-members.schema';
 
 export const MOCK_APPROVAL_MEMBERS: ApprovalMemberType[] = Array.from(
   {length: 11},

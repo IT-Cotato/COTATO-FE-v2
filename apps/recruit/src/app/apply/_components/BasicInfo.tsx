@@ -84,7 +84,7 @@ export const BasicInfo = ({
       const transformedData = {
         name: basicInfo.name,
         gender: basicInfo.gender,
-        contact: basicInfo.phoneNumber,
+        contact: basicInfo.phoneNumber ?? undefined,
         birthDate: basicInfo.birthDate,
         school: basicInfo.university,
         isCollegeStudent: (basicInfo.isEnrolled

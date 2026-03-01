@@ -114,7 +114,7 @@ export const BasicInfoRequestSchema = z.object({
   name: z.string(),
   gender: z.enum(['MALE', 'FEMALE']),
   birthDate: z.string(),
-  phoneNumber: z.string(),
+  phoneNumber: z.string().nullable(),
   university: z.string(),
   major: z.string(),
   completedSemesters: z.number(),

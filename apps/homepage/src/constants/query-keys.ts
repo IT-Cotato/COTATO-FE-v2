@@ -31,6 +31,11 @@ export const QUERY_KEYS = {
     BASE: ['approvals'],
     LIST: (params: object) => ['approvals', params],
   },
+  ADMIN_MEMBERS: {
+    LIST: (params: object) => ['admin-members', params],
+    DETAIL: (memberId: number) => ['admin-members', 'detail', memberId],
+    ACTIVE_LIST: (params: object) => ['admin-members', 'active', params],
+  },
   SESSIONS: {
     ADMIN_BASE: ['sessions', 'admin'],
     ADMIN_LIST: (generationId?: number) => [
