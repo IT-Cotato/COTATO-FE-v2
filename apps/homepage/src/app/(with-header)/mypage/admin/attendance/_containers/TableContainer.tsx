@@ -13,20 +13,15 @@ export const TableContainer = () => {
   const {selectedGenerationNumber, selectedSessionType, attendanceId} =
     useAdminAttendanceStore();
 
-  const {data: fullAttendanceList, isLoading: isFullAttendanceLoading} =
+  const {data: fullAttendanceList = [], isLoading: isFullAttendanceLoading} =
     useAttendanceFullRecordQuery(selectedGenerationNumber ?? 0);
 
-  const {data: specificAttendanceList, isLoading: isSpecificAttendanceLoading} =
-    useAttendanceSpecificRecordQuery(attendanceId ?? 0);
+  const {
+    data: specificAttendanceList = [],
+    isLoading: isSpecificAttendanceLoading,
+  } = useAttendanceSpecificRecordQuery(attendanceId ?? 0);
 
-  if (
-    !fullAttendanceList ||
-    !specificAttendanceList ||
-    isFullAttendanceLoading ||
-    isSpecificAttendanceLoading
-  ) {
-    console.log('!fullAttendanceList:', !fullAttendanceList);
-    console.log('!specificAttendanceList:', !specificAttendanceList);
+  if (isFullAttendanceLoading || isSpecificAttendanceLoading) {
     console.log('isFullAttendanceLoading:', isFullAttendanceLoading);
     console.log('isSpecificAttendanceLoading:', isSpecificAttendanceLoading);
     return (
