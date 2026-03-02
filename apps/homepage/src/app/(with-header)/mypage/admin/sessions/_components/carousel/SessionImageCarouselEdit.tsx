@@ -133,7 +133,7 @@ export const SessionImageCarouselEdit = ({
               className='flex h-20 w-20 shrink-0 cursor-pointer flex-col items-center justify-center gap-1 rounded-lg border border-dashed border-neutral-300 bg-neutral-50'
               aria-label='이미지 추가'>
               <PlusIcon className='h-5 w-5 text-neutral-600' />
-              <span className='text-body-s text-neutral-600'>추가</span>
+              <span className='text-h5 text-neutral-600'>추가</span>
             </button>
           )}
 
