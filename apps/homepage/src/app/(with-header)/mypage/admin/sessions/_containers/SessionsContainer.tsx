@@ -29,13 +29,9 @@ export const SessionsContainer = () => {
   const today = new Date().toLocaleDateString('sv-SE');
   const lastEndedGenerationId = generations
     ?.filter((g) => g.endDate <= today)
-    ?.reduce<number | undefined>(
-      (latestId, g) =>
-        latestId === undefined || g.generationId > latestId
-          ? g.generationId
-          : latestId,
-      undefined
-    );
+    ?.reduce<
+      number | undefined
+    >((latestId, g) => (latestId === undefined || g.generationId > latestId ? g.generationId : latestId), undefined);
   const activeGenerationId =
     generations?.find((g) => g.startDate <= today && today <= g.endDate)
       ?.generationId || lastEndedGenerationId;

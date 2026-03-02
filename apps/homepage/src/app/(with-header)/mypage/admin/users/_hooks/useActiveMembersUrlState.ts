@@ -7,11 +7,11 @@ export const useActiveMembersUrlState = () => {
   const rawPage = Number(searchParams.get('page'));
   const currentPage = Number.isInteger(rawPage) && rawPage > 0 ? rawPage : 1;
   const searchParam = searchParams.get('search') ?? undefined;
-  const [keyword, setKeyword] = useState(searchParam??'');
+  const [keyword, setKeyword] = useState(searchParam ?? '');
 
-  useEffect(()=> {
+  useEffect(() => {
     setKeyword(searchParam ?? '');
-  },[searchParam])
+  }, [searchParam]);
 
   const handleSearch = () => {
     const params = new URLSearchParams(searchParams.toString());

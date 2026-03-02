@@ -162,7 +162,9 @@ export const MemberDetailModal = (props: MemberDetailModalProps) => {
           <SelectField
             label='파트'
             displayValue={
-              (MEMBER_POSITION_LABEL[memberData.position as MemberPositionKey] ??
+              (MEMBER_POSITION_LABEL[
+                memberData.position as MemberPositionKey
+              ] ??
                 memberData.position) ||
               ''
             }
