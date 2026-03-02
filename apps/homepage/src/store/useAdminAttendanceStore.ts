@@ -20,8 +20,11 @@ export const useAdminAttendanceStore = create<AdminAttendanceState>((set) => ({
   selectedSessionType: 'FULL',
 
   setSelectedGeneration: (selectedGeneration) => {
-    const num = parseInt(selectedGeneration.split('기')[0]);
-    set({selectedGeneration, selectedGenerationNumber: num});
+    const parsed = Number.parseInt(selectedGeneration.split('기')[0], 10);
+    set({
+      selectedGeneration,
+      selectedGenerationNumber: Number.isNaN(parsed) ? null : parsed,
+    });
   },
 
   setSelectedSession: (selectedSession) => set({selectedSession}),
