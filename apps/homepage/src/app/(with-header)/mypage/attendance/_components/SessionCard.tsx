@@ -147,8 +147,19 @@ export const SessionCard = ({
                     세션 장소
                   </span>
                   <p className='text-h5 text-neutral-600'>
-                    {session.placeName && `${session.placeName}`}
-                    {session.roadNameAddress && ` ${session.roadNameAddress}`}
+                    {session.sessionType === 'ONLINE' && !session.placeName ? (
+                      '온라인 세션'
+                    ) : (
+                      <>
+                        {session.placeName || ''}
+                        {session.roadNameAddress
+                          ? ` ${session.roadNameAddress}`
+                          : ''}
+                        {!session.placeName &&
+                          !session.roadNameAddress &&
+                          '장소 정보가 없습니다.'}
+                      </>
+                    )}
                   </p>
                 </div>
               </div>
