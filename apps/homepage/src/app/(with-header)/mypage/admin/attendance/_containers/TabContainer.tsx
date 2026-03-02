@@ -25,6 +25,10 @@ export const TabContainer = () => {
   );
 
   useEffect(() => {
+    setKeyword(searchParams.get('keyword') ?? '');
+  }, [searchParams]);
+
+  useEffect(() => {
     if (searchParams.getAll('status').length === 0) {
       const params = new URLSearchParams(searchParams.toString());
       params.append('status', 'NOT_YET');
@@ -97,7 +101,7 @@ export const TabContainer = () => {
   return (
     <div className='flex items-end'>
       <div className='mr-97.25 flex flex-col gap-2.5'>
-        <div className='flex gap-7.5' aria-label='파트 선택'>
+        <div role='tablist' className='flex gap-7.5' aria-label='파트 선택'>
           {ATTENDANCE_PART_TAB.map(({label, value}, index) => {
             const isActive = activePart === value;
             return (

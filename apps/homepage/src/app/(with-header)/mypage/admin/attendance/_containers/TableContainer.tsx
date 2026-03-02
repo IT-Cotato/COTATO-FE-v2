@@ -24,9 +24,14 @@ export const TableContainer = () => {
   const {selectedGenerationNumber, selectedSessionType, attendanceId} =
     useAdminAttendanceStore();
 
+  const shouldFetchFull =
+    selectedSessionType === 'FULL' && !!selectedGenerationNumber;
+  const shouldFetchSpecific =
+    selectedSessionType === 'SPECIFIC' && !!attendanceId;
+
   const {data: fullAttendanceList = [], isLoading: isFullAttendanceLoading} =
     useAttendanceFullRecordQuery(
-      selectedGenerationNumber ?? 0,
+      shouldFetchFull ? (selectedGenerationNumber ?? 0) : 0,
       activePart === 'ALL' ? undefined : activePart,
       search
     );
@@ -35,7 +40,7 @@ export const TableContainer = () => {
     data: specificAttendanceList = [],
     isLoading: isSpecificAttendanceLoading,
   } = useAttendanceSpecificRecordQuery(
-    attendanceId ?? 0,
+    shouldFetchSpecific ? (attendanceId ?? 0) : 0,
     activePart === 'ALL' ? undefined : activePart,
     attendanceResults,
     search
@@ -58,7 +63,11 @@ export const TableContainer = () => {
     });
   };
 
-  if (isFullAttendanceLoading || isSpecificAttendanceLoading) {
+  const isLoading =
+    (selectedSessionType === 'FULL' && isFullAttendanceLoading) ||
+    (selectedSessionType === 'SPECIFIC' && isSpecificAttendanceLoading);
+
+  if (isLoading) {
     return (
       <div
         className='flex min-h-100 items-center justify-center'
