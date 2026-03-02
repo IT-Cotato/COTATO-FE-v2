@@ -27,13 +27,13 @@ export const HomeSectionDescription = ({
       viewport={{once: false, margin: '-100px'}}
       variants={containerVariants}>
       <motion.h2
-        className='text-h2 break-keep text-neutral-800'
+        className='text-h5 sm:text-h2 font-bold break-keep text-neutral-800'
         variants={itemVariants}>
         {title}
       </motion.h2>
 
       <motion.div
-        className='text-h5 flex flex-col break-keep text-neutral-500'
+        className='text-body-l sm:text-h5 flex flex-col break-keep text-neutral-500'
         variants={itemVariants}>
         {descriptions.map((line, index) => (
           <p key={index}>{line}</p>
