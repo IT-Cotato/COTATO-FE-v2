@@ -15,6 +15,7 @@ interface ApprovalTableViewProps {
   onSelect: (id: number, checked: boolean) => void;
   onApprove: (memberId: number) => void;
   onReject: (memberId: number) => void;
+  isLoading?: boolean;
 }
 
 export const ApprovalTableView = ({
@@ -25,6 +26,7 @@ export const ApprovalTableView = ({
   onSelect,
   onApprove,
   onReject,
+  isLoading = false,
 }: ApprovalTableViewProps) => {
   const isAllSelected =
     items.length > 0 &&
@@ -83,14 +85,16 @@ export const ApprovalTableView = ({
               <div className='flex items-center justify-center gap-2.5'>
                 <button
                   type='button'
+                  disabled={isLoading}
                   onClick={() => onApprove(member.memberId)}
-                  className='text-primary text-body-m cursor-pointer rounded-lg bg-neutral-50 px-4.5 py-0.75'>
+                  className='text-primary text-body-m cursor-pointer rounded-lg bg-neutral-50 px-4.5 py-0.75 disabled:cursor-not-allowed disabled:opacity-50'>
                   승인
                 </button>
                 <button
                   type='button'
+                  disabled={isLoading}
                   onClick={() => onReject(member.memberId)}
-                  className='text-body-m cursor-pointer rounded-lg bg-neutral-50 px-4.5 py-0.75 text-neutral-600'>
+                  className='text-body-m cursor-pointer rounded-lg bg-neutral-50 px-4.5 py-0.75 text-neutral-600 disabled:cursor-not-allowed disabled:opacity-50'>
                   거절
                 </button>
               </div>

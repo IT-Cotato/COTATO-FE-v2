@@ -1,33 +1,61 @@
 'use client';
 
 import {useRouter, useSearchParams} from 'next/navigation';
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import clsx from 'clsx';
 import {APPROVAL_TABS} from '@/constants/admin/admin';
 import {ApprovalTabType} from '@/constants/admin/admin';
-import {ApprovalTableContainer} from './ApprovalTableContainer';
+import {ApprovalTableContainer} from '@/app/(with-header)/mypage/admin/approvals/_containers/ApprovalTableContainer';
+import {useApplicantsQuery} from '@/hooks/queries/useAdminApprovals.query';
 
 export const ApprovalContainer = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const activeTab = (searchParams.get('tab') as ApprovalTabType) ?? 'REQUESTED';
+  const tabParam = searchParams.get('tab');
+  const activeTab: ApprovalTabType =
+    tabParam === 'REQUESTED' || tabParam === 'REJECTED'
+      ? tabParam
+      : 'REQUESTED';
+  const searchKeyword = searchParams.get('search') ?? '';
+  const [keyword, setKeyword] = useState(searchKeyword);
 
-  // TODO: API 연동 시 검색 로직 구현
-  const [keyword, setKeyword] = useState('');
-  const handleSearch = () => {};
+  useEffect(() => {
+    setKeyword(searchKeyword);
+  }, [searchKeyword]);
+
+  const handleSearch = () => {
+    const params = new URLSearchParams(searchParams.toString());
+    if (keyword.trim()) {
+      params.set('search', keyword.trim());
+    } else {
+      params.delete('search');
+    }
+    params.set('page', '1');
+    router.push(`?${params.toString()}`, {scroll: false});
+  };
 
   const handleTabClick = (tab: ApprovalTabType) => {
     const params = new URLSearchParams(searchParams.toString());
     params.set('tab', tab);
     params.set('page', '1');
+    params.delete('search');
+    setKeyword('');
     router.push(`?${params.toString()}`, {scroll: false});
   };
 
-  // TODO: API 연동 시 실제 카운트로 교체
+  const {data: requestedData} = useApplicantsQuery({
+    status: 'REQUESTED',
+    size: 1,
+  });
+  const {data: rejectedData} = useApplicantsQuery({
+    status: 'REJECTED',
+    size: 1,
+  });
+
   const tabCounts: Record<ApprovalTabType, number> = {
-    REQUESTED: 256,
-    REJECTED: 0,
+    REQUESTED: requestedData?.totalElements ?? 0,
+    REJECTED: rejectedData?.totalElements ?? 0,
   };
 
   return (

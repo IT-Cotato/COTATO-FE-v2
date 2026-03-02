@@ -36,7 +36,7 @@ export const getAdminMembers = async (params: GetAdminMembersParams) => {
     });
     return AdminMembersPageResponseSchema.parse(response.data);
   } catch (error) {
-    return handleApiError(error);
+    handleApiError(error);
   }
 };
 
@@ -48,7 +48,7 @@ export const getAdminMemberDetail = async (memberId: number) => {
     );
     return AdminMemberDetailSchema.parse(response.data);
   } catch (error) {
-    return handleApiError(error);
+    handleApiError(error);
   }
 };
 
@@ -75,10 +75,13 @@ export const deleteAdminMembers = async (body: DeleteMembersRequest) => {
 /** 활동 회원 목록 조회 */
 export const getActiveMembers = async (params: GetActiveMembersParams) => {
   try {
-    const response = await privateAxios.get(ENDPOINT.ADMIN_MEMBERS.ACTIVE_LIST, {params});
+    const response = await privateAxios.get(
+      ENDPOINT.ADMIN_MEMBERS.ACTIVE_LIST,
+      {params}
+    );
     return ActiveMembersPageResponseSchema.parse(response.data);
   } catch (error) {
-    return handleApiError(error);
+    handleApiError(error);
   }
 };
 

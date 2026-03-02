@@ -9,7 +9,7 @@ export const MemberStatusSchema = z.enum([
   'APPROVED',
 ]);
 
-export const PositionSchema = z.enum(['PM', 'DESIGN', 'FE', 'BE', 'NONE']);
+export const PositionSchema = z.enum(['PM', 'DE', 'FE', 'BE', 'NONE']);
 
 export const MemberRoleSchema = z.enum([
   'MEMBER',
@@ -41,6 +41,27 @@ export const AdminMemberDetailSchema = AdminMemberSchema.extend({
 
 export const AdminMembersPageResponseSchema = z.object({
   content: z.array(AdminMemberSchema),
+  hasNext: z.boolean(),
+  totalPages: z.number(),
+  totalElements: z.number(),
+  page: z.number(),
+  size: z.number(),
+  isFirst: z.boolean(),
+  isLast: z.boolean(),
+});
+
+export const ApprovalMemberSchema = z.object({
+  memberId: z.number(),
+  name: z.string(),
+  appliedAt: z.string(),
+  passedGenerationNumber: z.number(),
+  position: PositionSchema,
+  phoneNumber: z.string().nullable(),
+  status: MemberStatusSchema,
+});
+
+export const ApplicantsPageResponseSchema = z.object({
+  content: z.array(ApprovalMemberSchema),
   hasNext: z.boolean(),
   totalPages: z.number(),
   totalElements: z.number(),
@@ -163,13 +184,8 @@ export type UpdateGenerationMemberRoleRequest = z.infer<
   typeof UpdateGenerationMemberRoleRequestSchema
 >;
 
-/** @deprecated 가입 승인 API 연동시 삭제 예정 */
-export type ApprovalMemberType = {
-  memberId: number;
-  name: string;
-  appliedAt: string;
-  passedGenerationNumber: number;
-  position: PositionType;
-  phoneNumber: string | null;
-  status: MemberStatus;
-};
+export type ApprovalMemberType = z.infer<typeof ApprovalMemberSchema>;
+export type ApplicantsPageResponse = z.infer<
+  typeof ApplicantsPageResponseSchema
+>;
+

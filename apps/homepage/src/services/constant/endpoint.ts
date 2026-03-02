@@ -73,6 +73,15 @@ export const ENDPOINT = {
       `/v1/api/admin/generations/${generationId}`,
   },
 
+  /** 가입 승인 관련 API */
+  APPROVALS: {
+    LIST: '/v1/api/admin/member-approvals/applicants',
+    APPROVE: '/v1/api/admin/member-approvals/approve',
+    REJECT: '/v1/api/admin/member-approvals/reject',
+    RESTORE: '/v1/api/admin/member-approvals/restore',
+    DELETE: '/v1/api/admin/member-approvals',
+  },
+
   /** 어드민 회원 관련 API */
   ADMIN_MEMBERS: {
     LIST: '/v1/api/admin/members',

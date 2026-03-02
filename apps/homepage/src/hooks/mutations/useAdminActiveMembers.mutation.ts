@@ -14,7 +14,8 @@ export const useDeleteActiveMember = () => {
     mutationFn: deleteActiveMember,
     onSuccess: () => {
       queryClient.invalidateQueries({
-queryKey: [QUERY_KEYS.ADMIN_MEMBERS.LIST({})],      });
+        queryKey: QUERY_KEYS.ADMIN_MEMBERS.LIST({}),
+      });
     },
     onError: () => {
       alert('활동 회원 삭제에 실패했습니다. 다시 시도해 주세요.');
