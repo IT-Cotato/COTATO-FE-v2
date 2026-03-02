@@ -35,11 +35,16 @@ export const SessionCard = ({
   );
 
   const {isCompleted, isAvailable} = useMemo(() => {
+    // NOT_YET이 아니고 실제 결과 값이 있을 때만 완료
+    const hasFinalResult =
+      !!session.myAttendanceResult && session.myAttendanceResult !== 'NOT_YET';
+
     return {
-      isCompleted: !!session.myAttendanceResult,
+      isCompleted: hasFinalResult,
       isAvailable:
-        session.attendanceStatus === 'OPEN' ||
-        session.attendanceStatus === 'LATE',
+        !hasFinalResult &&
+        (session.attendanceStatus === 'OPEN' ||
+          session.attendanceStatus === 'LATE'),
     };
   }, [session.myAttendanceResult, session.attendanceStatus]);
 
@@ -71,9 +76,15 @@ export const SessionCard = ({
             <div
               className={clsx(
                 'text-body-m-sb shadow-default flex h-8 w-18.75 items-center justify-center rounded-[10px] text-white',
-                ATTENDANCE_STATUS[session.myAttendanceResult!].className
+                ATTENDANCE_STATUS[
+                  session.myAttendanceResult as keyof typeof ATTENDANCE_STATUS
+                ].className
               )}>
-              {ATTENDANCE_STATUS[session.myAttendanceResult!].label}
+              {
+                ATTENDANCE_STATUS[
+                  session.myAttendanceResult as keyof typeof ATTENDANCE_STATUS
+                ].label
+              }
             </div>
           ) : (
             isAvailable && (
@@ -128,7 +139,7 @@ export const SessionCard = ({
                     세션 설명
                   </span>
                   <p className='text-h5 text-neutral-600'>
-                    {session.content || '설명이 없습니다.'}
+                    {session.description || '설명이 없습니다.'}
                   </p>
                 </div>
                 <div className='flex w-94.25 shrink-0 flex-col gap-1'>
@@ -136,7 +147,8 @@ export const SessionCard = ({
                     세션 장소
                   </span>
                   <p className='text-h5 text-neutral-600'>
-                    {session.placeName || '장소 미정'}
+                    {session.placeName && `${session.placeName}`}
+                    {session.roadNameAddress && ` ${session.roadNameAddress}`}
                   </p>
                 </div>
               </div>
