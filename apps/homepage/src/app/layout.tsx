@@ -65,23 +65,6 @@ const pretendard = localFont({
   weight: '45 920',
 });
 
-const sebangGothic = localFont({
-  src: [
-    {
-      path: '../fonts/Sebang-gothic/SEBANG Gothic OTF.otf',
-      weight: '400',
-      style: 'normal',
-    },
-    {
-      path: '../fonts/Sebang-gothic/SEBANG Gothic OTF Bold.otf',
-      weight: '700',
-      style: 'normal',
-    },
-  ],
-  variable: '--font-sebang-gothic',
-  display: 'swap',
-});
-
 const roboto = localFont({
   src: '../fonts/Roboto/RobotoVariable.ttf',
   variable: '--font-roboto',
@@ -97,7 +80,7 @@ export default function RootLayout({
   return (
     <html
       lang='ko'
-      className={`${pretendard.variable} ${sebangGothic.variable} ${roboto.variable} antialiased`}>
+      className={`${pretendard.variable} ${roboto.variable} antialiased`}>
       <Providers>
         <AuthProvider>
           <body>
