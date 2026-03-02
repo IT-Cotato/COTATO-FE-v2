@@ -30,11 +30,13 @@ export const TabContainer = () => {
       params.append('status', 'NOT_YET');
       router.replace(`?${params.toString()}`, {scroll: false});
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const activePart = (searchParams.get('part') as AttendancePartType) ?? 'ALL';
-  const activeStatusList = (searchParams.getAll('status') ??
-    'NOT_YET') as AttendanceStatusKey[];
+  const activeStatusList = searchParams.getAll(
+    'status'
+  ) as AttendanceStatusKey[];
   const isAllSelected =
     activeStatusList.length === 0 ||
     activeStatusList.length === ATTENDANCE_STATUS_OPTION.length;
@@ -75,7 +77,9 @@ export const TabContainer = () => {
       newList.length > 0 &&
       newList.length < ATTENDANCE_STATUS_OPTION.length
     ) {
-      newList.forEach((v) => params.append('status', v));
+      for (const v of newList) {
+        params.append('status', v);
+      }
     }
     router.push(`?${params.toString()}`, {scroll: false});
   };
