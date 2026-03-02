@@ -11,7 +11,7 @@ import {
 import {StatusChip} from '@repo/ui/components/chip/StatusChip';
 import SearchIcon from '@repo/ui/assets/icons/search.svg';
 import {useEffect, useState} from 'react';
-import {AttendancePartType} from '@/schemas/admin/attendance.schema';
+import {AttendancePartType} from '@/schemas/admin/admin-attendance.schema';
 import {useAdminAttendanceStore} from '@/store/useAdminAttendanceStore';
 
 export const TabContainer = () => {

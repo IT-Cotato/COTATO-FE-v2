@@ -3,7 +3,7 @@ import {
   MEMBER_POSITION_LABEL,
   type MemberPositionKey,
 } from '@/constants/admin/admin';
-import {FullSessionTableRowType} from '@/schemas/admin/attendance.schema';
+import {FullSessionTableRowType} from '@/schemas/admin/admin-attendance.schema';
 
 interface FullSessionTableProps {
   items: FullSessionTableRowType[];

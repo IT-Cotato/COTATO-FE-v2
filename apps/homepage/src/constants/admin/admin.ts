@@ -1,5 +1,5 @@
 import {FC, SVGProps} from 'react';
-import {AttendancePartType} from '@/schemas/admin/attendance.schema';
+import {AttendancePartType} from '@/schemas/admin/admin-attendance.schema';
 import Present from '@/assets/mypage-admin/attendance/present.svg';
 import Late from '@/assets/mypage-admin/attendance/late.svg';
 import Absent from '@/assets/mypage-admin/attendance/absent.svg';

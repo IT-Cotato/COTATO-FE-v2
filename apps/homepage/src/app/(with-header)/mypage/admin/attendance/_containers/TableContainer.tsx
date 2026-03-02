@@ -10,7 +10,7 @@ import {
 import {Spinner} from '@repo/ui/components/spinner/Spinner';
 import {useManageAttendanceStatusMutation} from '@/hooks/mutations/useAttendance.mutation';
 import {useSearchParams} from 'next/navigation';
-import {AttendancePartType} from '@/schemas/admin/attendance.schema';
+import {AttendancePartType} from '@/schemas/admin/admin-attendance.schema';
 import {AttendanceStatusKey} from '@/constants/admin/admin';
 
 export const TableContainer = () => {

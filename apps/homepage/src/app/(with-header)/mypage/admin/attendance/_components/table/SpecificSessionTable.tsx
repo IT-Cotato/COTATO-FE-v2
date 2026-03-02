@@ -6,7 +6,7 @@ import {
 import {
   AttendanceStatusType,
   SpecificSessionTableRowType,
-} from '@/schemas/admin/attendance.schema';
+} from '@/schemas/admin/admin-attendance.schema';
 import {StatusDropdown} from '@repo/ui/components/dropdown/StatusDropdown';
 
 interface SpecificSessionTableProps {

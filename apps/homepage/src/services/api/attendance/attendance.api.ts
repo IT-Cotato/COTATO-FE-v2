@@ -11,7 +11,7 @@ import {
   PositionType,
   SpecificSessionTableResponse,
   SpecificSessionTableResponseSchema,
-} from '@/schemas/admin/attendance.schema';
+} from '@/schemas/admin/admin-attendance.schema';
 import {handleApiError} from '@/services/utils/apiHelper';
 
 /** 출석 세션 목록 조회 */

@@ -1,7 +1,7 @@
 import {
   AttendanceStatusType,
   PositionType,
-} from '@/schemas/admin/attendance.schema';
+} from '@/schemas/admin/admin-attendance.schema';
 
 export const QUERY_KEYS = {
   PROJECT: {

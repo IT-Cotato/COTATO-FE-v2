@@ -9,7 +9,7 @@ import {
 import {
   AttendanceStatusType,
   PositionType,
-} from '@/schemas/admin/attendance.schema';
+} from '@/schemas/admin/admin-attendance.schema';
 
 /** 출석 세션 목록 쿼리 */
 export const useAttendanceSessionsQuery = (month?: number) => {
