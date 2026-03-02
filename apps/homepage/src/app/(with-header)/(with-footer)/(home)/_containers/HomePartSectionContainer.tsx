@@ -1,20 +1,17 @@
 'use client';
 
 import {Button} from '@repo/ui/components/buttons/Button';
-import {motion, AnimatePresence, Variants} from 'framer-motion';
+import {motion, AnimatePresence, Variants, PanInfo} from 'framer-motion';
 import {useState, useRef, useEffect} from 'react';
 import {HomeSectionDescription} from '@/app/(with-header)/(with-footer)/(home)/_components/HomeSectionDescription';
 import Image from 'next/image';
 
 const PARTS = ['pm', 'design', 'frontend', 'backend'] as const;
-
 type PartType = (typeof PARTS)[number];
 
 export const HomePartSectionContainer = () => {
   const [currentPart, setCurrentPart] = useState<PartType>('pm');
-
   const prevIndexRef = useRef<number>(0);
-
   const currentIndex = PARTS.indexOf(currentPart);
   const direction = currentIndex > prevIndexRef.current ? 1 : -1;
 
@@ -30,8 +27,22 @@ export const HomePartSectionContainer = () => {
     setCurrentPart(part);
   };
 
+  const handleDragEnd = (
+    event: MouseEvent | TouchEvent | PointerEvent,
+    info: PanInfo
+  ) => {
+    const swipeThreshold = 50;
+    if (info.offset.x < -swipeThreshold) {
+      const nextIndex = (currentIndex + 1) % PARTS.length;
+      handlePartClick(PARTS[nextIndex]);
+    } else if (info.offset.x > swipeThreshold) {
+      const prevIndex = (currentIndex - 1 + PARTS.length) % PARTS.length;
+      handlePartClick(PARTS[prevIndex]);
+    }
+  };
+
   return (
-    <section className='flex flex-col gap-17.5'>
+    <section className='flex flex-col gap-10 xl:gap-17.5'>
       <HomeSectionDescription
         title='성장의 시작, 코테이토의 4가지 파트'
         descriptions={[
@@ -43,12 +54,10 @@ export const HomePartSectionContainer = () => {
       />
 
       <div className='flex flex-col gap-7.5'>
-        {/* TabList */}
-        <div className='flex flex-row gap-6' role='tablist'>
+        <div className='hidden flex-row gap-6 xl:flex' role='tablist'>
           {PARTS.map((partKey) => (
             <div key={partKey} className='relative'>
               <Button
-                key={partKey}
                 id={`tab-${partKey}`}
                 role='tab'
                 aria-selected={currentPart === partKey}
@@ -74,9 +83,9 @@ export const HomePartSectionContainer = () => {
             </div>
           ))}
         </div>
-        {/** TabPanel */}
+
         <div
-          className='relative h-140 w-full overflow-hidden rounded-[40px] bg-neutral-900'
+          className='relative h-60 w-full overflow-hidden rounded-lg bg-neutral-900 xl:h-140 xl:rounded-[40px]'
           id={`tabpanel-${currentPart}`}
           role='tabpanel'
           aria-labelledby={`tab-${currentPart}`}
@@ -89,8 +98,12 @@ export const HomePartSectionContainer = () => {
               initial='enter'
               animate='center'
               exit='exit'
-              className='absolute inset-0 h-full w-full'>
-              <div className='relative h-full w-full overflow-hidden'>
+              drag='x'
+              dragConstraints={{left: 0, right: 0}}
+              dragElastic={0.2}
+              onDragEnd={handleDragEnd}
+              className='absolute inset-0 h-full w-full cursor-grab active:cursor-grabbing'>
+              <div className='pointer-events-none relative h-full w-full overflow-hidden'>
                 <motion.div
                   key={`${currentPart}-bg`}
                   custom={direction}
@@ -109,16 +122,16 @@ export const HomePartSectionContainer = () => {
                   <div className='absolute inset-0 bg-black/50' />
                 </motion.div>
 
-                <div className='absolute inset-0 flex flex-col justify-between p-17.75'>
+                <div className='absolute inset-0 flex flex-col justify-between px-3 py-4 xl:p-17.75'>
                   <motion.p
                     variants={textVariants}
-                    className='text-h1 text-neutral-50'>
+                    className='text-h4 xl:text-h1 font-bold text-neutral-50'>
                     {partData[currentPart].title}
                   </motion.p>
 
                   <motion.div
                     variants={textVariants}
-                    className='text-h4 text-neutral-100'>
+                    className='text-p2 xl:text-h4 text-neutral-100'>
                     {partData[currentPart].desc.map((line, idx) => (
                       <p key={idx}>{line}</p>
                     ))}
@@ -128,10 +141,24 @@ export const HomePartSectionContainer = () => {
             </motion.div>
           </AnimatePresence>
         </div>
+
+        <div className='flex justify-center gap-2.25 xl:hidden'>
+          {PARTS.map((partKey) => (
+            <button
+              key={partKey}
+              onClick={() => handlePartClick(partKey)}
+              className={`h-1 w-1 rounded-full transition-all duration-300 ${
+                currentPart === partKey ? 'bg-neutral-600' : 'bg-neutral-300'
+              }`}
+              aria-label={`${partKey} 파트 보기`}
+            />
+          ))}
+        </div>
       </div>
     </section>
   );
 };
+
 const partData = {
   pm: {
     title: 'Product Manager',
