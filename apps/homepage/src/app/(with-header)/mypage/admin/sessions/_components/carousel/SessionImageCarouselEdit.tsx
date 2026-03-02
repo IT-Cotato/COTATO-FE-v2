@@ -108,7 +108,7 @@ export const SessionImageCarouselEdit = ({
 
       {/* 썸네일 목록 */}
       <div className='mt-3.25 flex flex-col gap-3'>
-        <div className='custom-scrollbar flex gap-2 overflow-x-scroll pb-2'>
+        <div className='session-scrollbar flex gap-2 overflow-x-scroll pb-2'>
           <DndContext
             sensors={sensors}
             collisionDetection={closestCenter}
