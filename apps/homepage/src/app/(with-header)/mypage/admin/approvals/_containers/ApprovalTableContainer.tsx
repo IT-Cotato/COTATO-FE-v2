@@ -5,10 +5,8 @@ import {SearchBar} from '../../_components/SearchBar';
 import {Pagination} from '@repo/ui/components/pagination/Pagination';
 import {Modal} from '@repo/ui/components/modal/Modal';
 import {Button} from '@repo/ui/components/buttons/Button';
-import {
-  ApprovalMemberType,
-  ApprovalTabType,
-} from '@/schemas/admin/admin.schema';
+import {ApprovalMemberType} from '@/schemas/admin/admin-members.schema';
+import {ApprovalTabType} from '@/constants/admin/admin';
 import {MOCK_APPROVAL_MEMBERS} from '@/mocks/admin/mock-admin-approval';
 import {useRouter, useSearchParams} from 'next/navigation';
 import {useState} from 'react';

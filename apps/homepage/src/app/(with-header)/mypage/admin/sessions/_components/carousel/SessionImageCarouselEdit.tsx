@@ -12,7 +12,7 @@ import ChevronRightIcon from '@/assets/chevrons/chevron-right.svg';
 import PlusIcon from '@repo/ui/assets/icons/plus-nobackground.svg';
 import ThumbnailImage from '@/assets/thumbnail/thumbnail.svg';
 import XIcon from '@repo/ui/assets/icons/cancel.svg';
-import {SessionImage} from '@/schemas/admin/session.schema';
+import {SessionImage} from '@/schemas/admin/admin-sessions.schema';
 import {SortableThumbnail} from '@/app/(with-header)/mypage/admin/sessions/_components/carousel/SortableThumbnail';
 import {useSessionImageCarousel} from '@/app/(with-header)/mypage/admin/sessions/_hooks/useSessionImageCarousel';
 

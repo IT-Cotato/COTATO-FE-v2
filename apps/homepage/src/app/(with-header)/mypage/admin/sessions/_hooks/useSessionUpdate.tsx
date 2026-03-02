@@ -2,7 +2,7 @@ import {
   CreateSessionRequest,
   SessionData,
   UpdateSessionRequest,
-} from '@/schemas/admin/session.schema';
+} from '@/schemas/admin/admin-sessions.schema';
 import {
   useCreateSession,
   useUpdateSession,

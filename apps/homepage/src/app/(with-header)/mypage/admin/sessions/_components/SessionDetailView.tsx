@@ -1,4 +1,4 @@
-import {SessionData} from '@/schemas/admin/session.schema';
+import {SessionData} from '@/schemas/admin/admin-sessions.schema';
 
 interface SessionDetailViewProps {
   session: SessionData;

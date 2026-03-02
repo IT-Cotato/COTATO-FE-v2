@@ -1,5 +1,5 @@
 import SearchIcon from '@repo/ui/assets/icons/search.svg';
-
+import XIcon from '@repo/ui/assets/icons/cancel.svg';
 interface SearchBarProps {
   keyword: string;
   onKeywordChange: (value: string) => void;
@@ -34,8 +34,21 @@ export const SearchBar = ({
         value={keyword}
         onChange={(e) => onKeywordChange(e.target.value)}
         disabled={disabled}
-        className='text-body-l w-full font-normal outline-none placeholder:text-neutral-600'
+        className='text-body-l flex-1 bg-transparent font-normal outline-none placeholder:text-neutral-600 [&::-webkit-search-cancel-button]:hidden'
       />
+      {keyword && (
+        <button
+          type='button'
+          aria-label='검색어 지우기'
+          onClick={() => onKeywordChange('')}
+          disabled={disabled}>
+          <XIcon
+            aria-hidden='true'
+            className='h-3 w-3 text-neutral-600'
+            focusable='false'
+          />
+        </button>
+      )}
     </form>
   );
 };

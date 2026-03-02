@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import {useSortable} from '@dnd-kit/sortable';
 import {CSS} from '@dnd-kit/utilities';
-import {SessionImage} from '@/schemas/admin/session.schema';
+import {SessionImage} from '@/schemas/admin/admin-sessions.schema';
 
 interface SortableThumbnailProps {
   image: SessionImage;
