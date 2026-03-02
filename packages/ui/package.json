@@ -5,7 +5,7 @@
   "exports": {
     "./styles.css": "./src/styles.css",
     "./*": {
-      "development": "./src/*.tsx",
+      "development": "./src/*",
       "default": "./dist/*.js"
     },
     "./assets/*": "./dist/assets/*"
