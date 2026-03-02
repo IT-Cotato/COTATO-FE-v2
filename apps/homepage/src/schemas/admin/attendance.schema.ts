@@ -15,7 +15,7 @@ export const AttendanceStatusSchema = z.enum([
 export const AttendanceIdByGenerationResponseSchema = z.array(
   z.object({
     sessionId: z.number(),
-    attendanceId: z.number(),
+    attendanceId: z.nullable(z.number()),
   })
 );
 
