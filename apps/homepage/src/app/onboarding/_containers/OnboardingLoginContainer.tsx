@@ -1,12 +1,11 @@
 'use client';
 
 import {FullButton} from '@repo/ui/components/buttons/FullButton';
-
 import {useState} from 'react';
 import {OnboardingFormInput} from '@/app/onboarding/_components/OnboardingFormInput';
-import {OnboardingFormPassword} from '@/components/password-form/OnboardingFormPassword';
 import {useLoginMutation} from '@/hooks/mutations/auth/useAuth.mutations';
 import {LoginSchema} from '@/schemas/auth/auth.schema';
+import {FormPassword} from '@/components/password-form/FormPassword';
 
 interface OnboardingLoginContainerProps {
   onSignUpClick: () => void;
@@ -55,7 +54,7 @@ export const OnboardingLoginContainer = ({
           error={emailError}
         />
 
-        <OnboardingFormPassword
+        <FormPassword
           label='비밀번호'
           showPassword={showPassword}
           value={loginData.password}
@@ -81,10 +80,9 @@ export const OnboardingLoginContainer = ({
       </div>
       <FullButton
         label='로그인'
-        disabled={isPending}
+        disabled={isPending || !isValid}
         height={45}
         type='submit'
-        onClick={handleLogin}
       />
     </form>
   );

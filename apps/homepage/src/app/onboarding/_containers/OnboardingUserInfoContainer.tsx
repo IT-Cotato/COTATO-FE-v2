@@ -88,9 +88,9 @@ export const OnboardingUserInfoContainer = ({
 
   return (
     <div className='flex flex-col gap-3.5'>
-      <div className='flex flex-row justify-between gap-5.75'>
+      <div className='flex flex-row justify-between gap-1.75 sm:gap-6'>
         <OnboardingFormDropdown
-          className='w-44.5'
+          className='w-34.5 sm:w-44.5'
           label='성별'
           placeholder='성별'
           value={userInfo.gender}
@@ -120,9 +120,9 @@ export const OnboardingUserInfoContainer = ({
         error={errors?.university?._errors[0]}
       />
 
-      <div className='flex flex-row gap-6'>
+      <div className='flex flex-row gap-2.75 sm:gap-6'>
         <OnboardingFormInput
-          className='w-44.5'
+          className='w-34.5 sm:w-44.5'
           label='기수'
           type='string'
           placeholder='OO기'
@@ -138,7 +138,7 @@ export const OnboardingUserInfoContainer = ({
         <OnboardingFormDropdown
           className='flex-1'
           label='직군'
-          placeholder='직군을 선택해 주세요.'
+          placeholder='직군'
           options={['기획', '디자인', '프론트엔드', '백엔드']}
           value={userInfo.position}
           onChange={(val) => setUserInfo({...userInfo, position: val})}
@@ -146,14 +146,14 @@ export const OnboardingUserInfoContainer = ({
       </div>
 
       <div className='flex cursor-pointer flex-row items-center justify-between border-b border-b-neutral-800 pb-4'>
-        <label className='text-h5 pointer-events-none text-neutral-100'>
+        <label className='text-body-l sm:text-h5 pointer-events-none text-neutral-100'>
           이용약관 전체 동의
         </label>
         <Checkbox checked={isAllAgreed} onChange={handleAllAgree} />
       </div>
       <div className='flex flex-row items-center justify-between'>
         <label
-          className='text-h5 flex cursor-pointer flex-row items-center gap-2.5 text-neutral-100'
+          className='text-body-l sm:text-h5 flex cursor-pointer flex-row items-center gap-2.5 text-neutral-100'
           onClick={() => {
             window.open(
               'https://cyclic-drain-e4c.notion.site/COTATO-3014e7fe345c8074ba9fd7cfea83d390',
@@ -176,10 +176,9 @@ export const OnboardingUserInfoContainer = ({
         />
       </div>
 
-      {/* --- 서비스 이용약관 --- */}
       <div className='flex flex-row items-center justify-between'>
         <label
-          className='text-h5 flex cursor-pointer flex-row items-center gap-2.5 text-neutral-100'
+          className='text-body-l sm:text-h5 flex cursor-pointer flex-row items-center gap-2.5 text-neutral-100'
           onClick={() => {
             window.open(
               'https://cyclic-drain-e4c.notion.site/COTATO-3014e7fe345c805f88dde6e2fe46dd7a',

@@ -12,7 +12,7 @@ import ChevronRightIcon from '@/assets/chevrons/chevron-right.svg';
 import PlusIcon from '@repo/ui/assets/icons/plus-nobackground.svg';
 import ThumbnailImage from '@/assets/thumbnail/thumbnail.svg';
 import XIcon from '@repo/ui/assets/icons/cancel.svg';
-import {SessionImage} from '@/schemas/admin/session.schema';
+import {SessionImage} from '@/schemas/admin/admin-sessions.schema';
 import {SortableThumbnail} from '@/app/(with-header)/mypage/admin/sessions/_components/carousel/SortableThumbnail';
 import {useSessionImageCarousel} from '@/app/(with-header)/mypage/admin/sessions/_hooks/useSessionImageCarousel';
 
@@ -133,7 +133,7 @@ export const SessionImageCarouselEdit = ({
               className='flex h-20 w-20 shrink-0 cursor-pointer flex-col items-center justify-center gap-1 rounded-lg border border-dashed border-neutral-300 bg-neutral-50'
               aria-label='이미지 추가'>
               <PlusIcon className='h-5 w-5 text-neutral-600' />
-              <span className='text-body-s text-neutral-600'>추가</span>
+              <span className='text-h5 text-neutral-600'>추가</span>
             </button>
           )}
 

@@ -1,4 +1,4 @@
-import {OnboardingFormPassword} from '@/components/password-form/OnboardingFormPassword';
+import {FormPassword} from '@/components/password-form/FormPassword';
 import {usePasswordMutation} from '@/hooks/mutations/auth/useAuth.mutations';
 import {ResetPasswordSchema} from '@/schemas/members/members.schema';
 import {clearAuthState} from '@/services/utils/tokenManager';
@@ -27,7 +27,10 @@ export const OnboardingResetPasswordContainer = ({
   const passwordError = errors?.password?._errors[0];
   const confirmError = errors?.passwordConfirm?._errors[0];
 
-  const handleReset = () => {
+  const handleReset = (e?: React.FormEvent) => {
+    // 폼 제출 이벤트를 통해 호출된 경우 새로고침 방지
+    e?.preventDefault();
+
     if (!validation.success) return;
 
     resetPasswordMutation.mutate(password, {
@@ -37,11 +40,10 @@ export const OnboardingResetPasswordContainer = ({
       },
     });
   };
-
   {
     return (
-      <div className='flex flex-col gap-7'>
-        <OnboardingFormPassword
+      <form onSubmit={handleReset} className='flex flex-col gap-6 sm:gap-7'>
+        <FormPassword
           value={password}
           onChange={(val) => setPassword(val)}
           onTogglePasswordVisibility={() => setShowPassword(!showPassword)}
@@ -50,7 +52,7 @@ export const OnboardingResetPasswordContainer = ({
           placeholder='새로운 비밀번호를 입력해 주세요.'
           error={passwordError}
         />
-        <OnboardingFormPassword
+        <FormPassword
           value={passwordConfirm}
           onChange={(val) => setPasswordConfirm(val)}
           showPassword={showPasswordConfirm}
@@ -83,7 +85,7 @@ export const OnboardingResetPasswordContainer = ({
             }
           />
         )}
-      </div>
+      </form>
     );
   }
 };

@@ -1,4 +1,4 @@
-import {AdminSession, SessionData} from '@/schemas/admin/session.schema';
+import {AdminSession, SessionData} from '@/schemas/admin/admin-sessions.schema';
 import {useEffect, useMemo, useState} from 'react';
 import {formatDate} from '@repo/ui/utils/date';
 import {useSessionDetailQuery} from '@/hooks/queries/useSession.query';

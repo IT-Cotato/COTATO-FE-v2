@@ -1,10 +1,11 @@
 import {FC, SVGProps} from 'react';
-import {ApprovalTabType, MemberTabType} from '@/schemas/admin/admin.schema';
 import {AttendancePartType} from '@/schemas/admin/attendance.schema';
 import Present from '@/assets/mypage-admin/attendance/present.svg';
 import Late from '@/assets/mypage-admin/attendance/late.svg';
 import Absent from '@/assets/mypage-admin/attendance/absent.svg';
 import UnauthorizedAbsent from '@/assets/mypage-admin/attendance/unauthorized-absent.svg';
+export type MemberTabType = 'ALL' | 'ACTIVE';
+export type ApprovalTabType = 'REQUESTED' | 'REJECTED';
 
 /** 회원 관리 테이블 컬럼 상수 */
 export const MEMBER_COLUMNS = [

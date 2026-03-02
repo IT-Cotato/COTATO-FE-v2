@@ -47,7 +47,7 @@ export const ActionMenu = <T extends string>({
       {isOpen && (
         <ul
           role='menu'
-          className={`text-body-s absolute top-full z-10 mt-1 w-25 rounded-sm bg-neutral-700 py-1 text-neutral-300 shadow-lg ${align === 'right' ? 'right-0' : '-right-21.5'}`}>
+          className={`text-body-m absolute top-full z-10 mt-1 w-25 rounded-sm bg-neutral-700 py-1 text-neutral-300 shadow-lg ${align === 'right' ? 'right-0' : '-right-21.5'}`}>
           {items.map((item) => (
             <li
               key={item.key}
