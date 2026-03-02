@@ -64,7 +64,7 @@ export const SpecificSessionTable = ({
                       onChangeAttendanceStatus(row.memberInfo.memberId, value)
                     }
                     disabled={isUpdating}
-                    ariaLabel='지원 결과 선택'
+                    ariaLabel='출석 상태 선택'
                   />
                 </div>
               </td>

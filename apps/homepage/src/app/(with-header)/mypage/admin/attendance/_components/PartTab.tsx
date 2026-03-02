@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 
 interface PartTabProps {
-  partName?: string;
+  partName: string;
   isActive?: boolean;
   tabIndex?: number;
   onClick?: () => void;
