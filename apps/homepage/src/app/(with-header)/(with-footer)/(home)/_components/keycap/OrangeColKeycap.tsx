@@ -20,16 +20,16 @@ export const OrangeColKeycap = ({
         src='/keycap/orange-keycap-long-col.svg'
         alt=''
         fill
-        className='h-full w-full transition-opacity duration-300 group-hover:opacity-0 group-focus-visible:opacity-0'
+        className='h-full w-full transition-opacity duration-300 group-hover:opacity-0 group-focus:opacity-0 group-focus-visible:opacity-0'
         unoptimized={true}
       />
       <span className='text-h3 xl:text-h2 absolute top-11.25 left-9 z-10 font-bold text-white transition-colors xl:top-16.5 xl:left-16.5'>
         {title}
       </span>
-      <span className='text-h5 xl:text-h4 absolute bottom-11 left-7 z-10 text-neutral-100 opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100 xl:top-30.5 xl:left-16.5'>
+      <span className='text-h5 xl:text-h4 absolute bottom-11 left-7 z-10 text-neutral-100 opacity-0 transition-opacity group-hover:opacity-100 group-focus:opacity-100 group-focus-visible:opacity-100 xl:top-30.5 xl:left-16.5'>
         {subTitle}
       </span>
-      <div className='absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100'>
+      <div className='absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus:opacity-100 group-focus-visible:opacity-100'>
         <Image
           src={imageSrc}
           alt={title}

@@ -29,10 +29,10 @@ export const ScheduleKeycap = ({
         src='/keycap/white-keycap.svg'
         alt=''
         fill
-        className='transition-opacity duration-300 group-hover:opacity-0 group-focus-visible:opacity-0'
+        className='transition-opacity duration-300 group-hover:opacity-0 group-focus:opacity-0 group-focus-visible:opacity-0'
         unoptimized={true}
       />
-      <div className='absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100'>
+      <div className='absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus:opacity-100 group-focus-visible:opacity-100'>
         <Image
           src={imageSrc}
           alt={title}
@@ -43,11 +43,11 @@ export const ScheduleKeycap = ({
         <div className='absolute inset-0 bg-black/20' />
       </div>
       <span
-        className={`text-h3 xl:text-h2 absolute top-7.75 left-8.75 z-10 font-semibold transition-colors group-hover:text-white xl:top-16.5 xl:left-16.5 ${titleColor} group-focus-visible:text-white`}>
+        className={`text-h3 xl:text-h2 absolute top-7.75 left-8.75 z-10 font-semibold transition-colors group-hover:text-white xl:top-16.5 xl:left-16.5 ${titleColor} group-focus:text-white group-focus-visible:text-white`}>
         {title}
       </span>
       {subTitle && (
-        <span className='text-h5 xl:text-h4 absolute bottom-[27.5px] left-8.75 z-10 text-neutral-100 opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100 xl:top-30.5 xl:left-16.5'>
+        <span className='text-h5 xl:text-h4 absolute bottom-[27.5px] left-8.75 z-10 text-neutral-100 opacity-0 transition-opacity group-hover:opacity-100 group-focus:opacity-100 group-focus-visible:opacity-100 xl:top-30.5 xl:left-16.5'>
           {subTitle}
         </span>
       )}

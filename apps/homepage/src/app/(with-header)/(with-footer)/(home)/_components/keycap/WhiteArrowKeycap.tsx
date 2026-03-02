@@ -27,13 +27,13 @@ export const WhiteArrowKeycap = ({
         alt=''
         fill
         unoptimized={true}
-        className='absolute top-0 left-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100'
+        className='absolute top-0 left-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus:opacity-100 group-focus-visible:opacity-100'
       />
       <Arrow
-        className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-100 transition-opacity duration-300 group-hover:opacity-0 group-focus-visible:opacity-0 ${rotateClass[direction]}`}
+        className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-100 transition-opacity duration-300 group-hover:opacity-0 group-focus:opacity-0 group-focus-visible:opacity-0 ${rotateClass[direction]}`}
       />
       <ArrowHover
-        className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100 ${rotateClass[direction]}`}
+        className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus:opacity-100 group-focus-visible:opacity-100 ${rotateClass[direction]}`}
       />
     </div>
   );
