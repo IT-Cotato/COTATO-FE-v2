@@ -56,3 +56,26 @@
     box-shadow: 0 6px 15px 0 rgba(0, 0, 0, 0.2);
   }
 }
+
+@layer utilities {
+  .custom-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: #737373 #e5e5e5;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar {
+    display: block;
+    height: 6px;
+    border-radius: 10px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: #e5e5e5;
+    border-radius: 10px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: #737373;
+    border-radius: 10px;
+  }
+}
