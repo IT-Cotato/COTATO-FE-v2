@@ -46,6 +46,18 @@ export const TableContainer = () => {
     isPending: isUpdatingAttendanceStatus,
   } = useManageAttendanceStatusMutation();
 
+  const handleChangeAttendanceStatus = (
+    memberId: number,
+    result: AttendanceStatusKey
+  ) => {
+    if (!attendanceId) return;
+    updateAttendanceStatus({
+      attendanceId,
+      memberId,
+      result,
+    });
+  };
+
   if (isFullAttendanceLoading || isSpecificAttendanceLoading) {
     return (
       <div
@@ -69,24 +81,12 @@ export const TableContainer = () => {
         <div className='flex gap-5'>
           <SpecificSessionTable
             items={specificAttendanceList.slice(0, half)}
-            onChangeAttendanceStatus={(memberId, result) =>
-              updateAttendanceStatus({
-                attendanceId: attendanceId!,
-                memberId,
-                result,
-              })
-            }
+            onChangeAttendanceStatus={handleChangeAttendanceStatus}
             isUpdating={isUpdatingAttendanceStatus}
           />
           <SpecificSessionTable
             items={specificAttendanceList.slice(half)}
-            onChangeAttendanceStatus={(memberId, result) =>
-              updateAttendanceStatus({
-                attendanceId: attendanceId!,
-                memberId,
-                result,
-              })
-            }
+            onChangeAttendanceStatus={handleChangeAttendanceStatus}
             isUpdating={isUpdatingAttendanceStatus}
           />
         </div>
