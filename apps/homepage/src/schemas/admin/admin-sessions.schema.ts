@@ -138,8 +138,8 @@ export const CompleteImageUploadRequestSchema = z.object({
 export const CompleteImageUploadResponseSchema = z.object({
   imageId: z.number(),
   imageUrl: z.string(),
-  s3Key: z.string(),
-  order: z.number(),
+  s3Key: z.string().optional(),
+  order: z.number().optional().default(0),
 });
 
 export const ChangeImageOrderRequestSchema = z.object({
