@@ -32,6 +32,30 @@
   }
 }
 
+@utility session-scrollbar {
+  &::-webkit-scrollbar {
+    height: 6px !important;
+    display: block !important;
+  }
+
+  &::-webkit-scrollbar-button {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: var(--color-neutral-200) !important;
+    border-radius: 10px !important;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--color-neutral-500) !important;
+    border-radius: 10px !important;
+    background-clip: padding-box;
+  }
+}
+
 @utility project-scrollbar {
   &::-webkit-scrollbar {
     width: 7px !important;
