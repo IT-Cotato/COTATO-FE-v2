@@ -47,11 +47,6 @@ export const useSessionImageCarousel = ({
   const {mutate: changeOrder} = useChangeSessionImageOrder();
 
   const handleAdd = (file: File) => {
-    if (images.length >= MAX_IMAGES) {
-      alert(`이미지는 최대 ${MAX_IMAGES}장까지 추가할 수 있습니다.`);
-      return;
-    }
-
     const nextOrder =
       images.length === 0 ? 0 : Math.max(...images.map((img) => img.order)) + 1;
     uploadImage(

@@ -129,17 +129,24 @@ export const SessionImageCarouselEdit = ({
           </DndContext>
 
           {/* 추가 버튼 */}
-          {canAddMore && (
-            <button
-              type='button'
-              onClick={() => fileInputRef.current?.click()}
-              title={`최대 ${MAX_IMAGES}장`}
-              className='flex h-20 w-20 shrink-0 cursor-pointer flex-col items-center justify-center gap-1 rounded-lg border border-dashed border-neutral-300 bg-neutral-50'
-              aria-label='이미지 추가'>
-              <PlusIcon className='h-5 w-5 text-neutral-600' />
-              <span className='text-h5 text-neutral-600'>추가</span>
-            </button>
-          )}
+          <button
+            type='button'
+            onClick={() => {
+              if (!canAddMore) {
+                alert(`이미지는 최대 ${MAX_IMAGES}장까지 추가할 수 있습니다.`);
+                return;
+              }
+              fileInputRef.current?.click();
+            }}
+            title={`최대 ${MAX_IMAGES}장`}
+            aria-disabled={!canAddMore}
+            className={`flex h-20 w-20 shrink-0 flex-col items-center justify-center gap-1 rounded-lg border border-dashed border-neutral-300 bg-neutral-50 ${
+              canAddMore ? 'cursor-pointer' : 'cursor-not-allowed opacity-50'
+            }`}
+            aria-label='이미지 추가'>
+            <PlusIcon className='h-5 w-5 text-neutral-600' />
+            <span className='text-h5 text-neutral-600'>추가</span>
+          </button>
 
           {/* 숨겨진 파일 input */}
           <input
