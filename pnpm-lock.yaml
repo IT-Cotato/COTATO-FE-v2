@@ -78,6 +78,9 @@ importers:
       next:
         specifier: 16.1.0
         version: 16.1.0(@babel/core@7.29.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+      qs:
+        specifier: ^6.14.1
+        version: 6.14.1
       react:
         specifier: ^19.2.3
         version: 19.2.3
@@ -115,6 +118,9 @@ importers:
       '@types/node':
         specifier: ^22.15.3
         version: 22.15.3
+      '@types/qs':
+        specifier: ^6.14.0
+        version: 6.14.0
       '@types/react':
         specifier: 19.2.2
         version: 19.2.2

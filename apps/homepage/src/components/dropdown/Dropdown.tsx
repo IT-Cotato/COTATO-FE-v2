@@ -14,6 +14,7 @@ interface DropdownProps<T extends string> {
   className?: string;
   width?: number;
   triggerClassName?: string; // 트리거 버튼의 스타일 클래스를 완전히 교체할 때 사용
+  isShadow?: boolean;
 }
 
 export const Dropdown = <T extends string>({
@@ -25,6 +26,7 @@ export const Dropdown = <T extends string>({
   className,
   width,
   triggerClassName,
+  isShadow,
 }: DropdownProps<T>) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
@@ -64,7 +66,8 @@ export const Dropdown = <T extends string>({
                 ? 'bg-neutral-100 text-neutral-400'
                 : 'bg-white text-neutral-600',
               !width && 'min-w-27.5'
-            )
+            ),
+          isShadow && 'shadow-[0_0_10px_rgba(0,0,0,0.15)]'
         )}
         style={{width: dropdownWidth}}
         aria-expanded={isOpen}

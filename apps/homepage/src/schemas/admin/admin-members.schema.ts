@@ -188,4 +188,3 @@ export type ApprovalMemberType = z.infer<typeof ApprovalMemberSchema>;
 export type ApplicantsPageResponse = z.infer<
   typeof ApplicantsPageResponseSchema
 >;
-

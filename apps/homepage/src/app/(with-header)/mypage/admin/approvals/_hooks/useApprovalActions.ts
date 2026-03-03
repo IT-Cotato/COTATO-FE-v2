@@ -12,10 +12,13 @@ interface ActionOptions {
 }
 
 export const useApprovalActions = () => {
-  const {mutate: approveMutate, isPending: isApprovePending} = useApproveMembers();
+  const {mutate: approveMutate, isPending: isApprovePending} =
+    useApproveMembers();
   const {mutate: rejectMutate, isPending: isRejectPending} = useRejectMembers();
-  const {mutate: restoreMutate, isPending: isRestorePending} = useRestoreMembers();
-  const {mutate: deleteRejectedMutate, isPending: isDeletePending} = useDeleteRejectedMembers();
+  const {mutate: restoreMutate, isPending: isRestorePending} =
+    useRestoreMembers();
+  const {mutate: deleteRejectedMutate, isPending: isDeletePending} =
+    useDeleteRejectedMembers();
 
   const isLoading =
     isApprovePending || isRejectPending || isRestorePending || isDeletePending;

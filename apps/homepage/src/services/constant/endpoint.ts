@@ -52,6 +52,12 @@ export const ENDPOINT = {
     MY_DASHBOARD: '/v1/api/attendances/my/dashboard',
     MY_RECORDS: '/v1/api/attendances/my',
     STATUS: '/v1/api/events/attendances', //출결 상태 조회
+    ATTENDANCE_ID: '/v1/api/admin/attendances/sessions',
+    FULL_RECORDS: '/v1/api/admin/attendances/records',
+    SPECIFIC_RECORDS: (attendanceId: number) =>
+      `/v1/api/admin/attendances/${attendanceId}/records`,
+    MANAGE_STATUS: (attendanceId: number) =>
+      `/v1/api/admin/attendances/${attendanceId}/records`,
   },
 
   /** 상벌점 API */

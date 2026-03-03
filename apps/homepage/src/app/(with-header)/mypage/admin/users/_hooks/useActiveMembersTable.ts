@@ -34,7 +34,10 @@ export const useActiveMembersTable = () => {
   const handleRoleChange = (memberId: number, role: MemberRole) => {
     const member = members.find((m) => m.memberId === memberId);
     if (!member?.generationMemberId) return;
-    patchRoleMutate({generationMemberId: member.generationMemberId, body: {role}});
+    patchRoleMutate({
+      generationMemberId: member.generationMemberId,
+      body: {role},
+    });
   };
 
   return {

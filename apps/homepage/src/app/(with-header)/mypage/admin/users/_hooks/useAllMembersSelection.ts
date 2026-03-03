@@ -7,19 +7,22 @@ interface UseAllMembersSelectionProps {
   members: MemberType[];
 }
 
-export const useAllMembersSelection = ({members}: UseAllMembersSelectionProps) => {
+export const useAllMembersSelection = ({
+  members,
+}: UseAllMembersSelectionProps) => {
   const {mutate: patchStatus} = usePatchAdminMembersStatus();
 
   const [selectedIds, setSelectedIds] = useState<number[]>([]);
 
   const handleBatchStatusChange = (status: MemberStatusKey) => {
     if (selectedIds.length === 0) return;
-    patchStatus({memberIds: selectedIds, status},
-      { 
+    patchStatus(
+      {memberIds: selectedIds, status},
+      {
         onSuccess: () => {
-    setSelectedIds([]);
-  },
-}
+          setSelectedIds([]);
+        },
+      }
     );
   };
 
