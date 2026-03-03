@@ -26,7 +26,7 @@ export const HomeBannerContainer = () => {
       aria-label='홈 배너'
       onClick={toggleOverlay}>
       <div
-        className={`absolute inset-0 transition-all duration-500 lg:translate-y-0 lg:px-12.5 ${!isOverlayHidden ? 'lg:group-hover:translate-y-4' : ''}`}>
+        className={`absolute inset-0 translate-y-0 transition-all duration-500 lg:px-12.5 ${!isOverlayHidden ? 'lg:group-hover:translate-y-4' : ''}`}>
         <div className='relative h-full w-full overflow-hidden rounded-2xl'>
           <Image
             src='/keycap/background-keycap.svg'
