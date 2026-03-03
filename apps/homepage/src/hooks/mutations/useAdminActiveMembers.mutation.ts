@@ -14,7 +14,7 @@ export const useDeleteActiveMember = () => {
     mutationFn: deleteActiveMember,
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: QUERY_KEYS.ADMIN_MEMBERS.LIST({}),
+        queryKey: QUERY_KEYS.ADMIN_MEMBERS.BASE,
       });
     },
     onError: () => {
@@ -31,7 +31,7 @@ export const usePatchActiveMember = () => {
     mutationFn: patchActiveMember,
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: QUERY_KEYS.ADMIN_MEMBERS.ACTIVE_LIST({}),
+        queryKey: QUERY_KEYS.ADMIN_MEMBERS.BASE,
       });
     },
     onError: () => {
@@ -48,7 +48,7 @@ export const usePatchActiveMemberRole = () => {
     mutationFn: patchActiveMemberRole,
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: QUERY_KEYS.ADMIN_MEMBERS.ACTIVE_LIST({}),
+        queryKey: QUERY_KEYS.ADMIN_MEMBERS.BASE,
       });
     },
     onError: () => {
