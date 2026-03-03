@@ -147,7 +147,7 @@ export const completeImageUpload = async (
       imageId: data.imageId,
       imageUrl: data.imageUrl,
       s3Key: data.s3Key ?? request.s3Key,
-      order: data.order ?? request.order ?? 0,
+      order: data.order ?? -1,
     };
 
     return CompleteImageUploadResponseSchema.parse(normalizedData);
@@ -182,5 +182,9 @@ export const deleteSessionImage = async (
 
 /** 세션 삭제 API */
 export const deleteSession = async (sessionId: number): Promise<void> => {
-  await privateAxios.delete(ENDPOINT.SESSIONS.DELETE(sessionId));
+  try {
+    await privateAxios.delete(ENDPOINT.SESSIONS.DELETE(sessionId));
+  } catch (error) {
+    return handleApiError(error);
+  }
 };
