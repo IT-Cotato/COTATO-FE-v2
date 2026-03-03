@@ -30,7 +30,7 @@ export const MobileReviewContainer = ({
     [controls, reviews.length, singleItemDistance]
   );
 
-  const onDragEnd = (
+  const handleDragEnd = (
     _: MouseEvent | TouchEvent | PointerEvent,
     info: PanInfo
   ) => {
@@ -54,7 +54,7 @@ export const MobileReviewContainer = ({
             right: 0,
           }}
           animate={controls}
-          onDragEnd={onDragEnd}>
+          onDragEnd={handleDragEnd}>
           {reviews.map((review) => (
             <div key={review.id} className='shrink-0 select-none'>
               <HomeCotatoReviewCard {...review} />
