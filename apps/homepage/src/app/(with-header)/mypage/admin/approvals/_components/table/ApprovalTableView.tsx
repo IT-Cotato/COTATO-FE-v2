@@ -65,13 +65,6 @@ export const ApprovalTableView = ({
             </td>
             <td className='truncate px-3 py-4 text-center'>{member.name}</td>
             <td className='truncate px-3 py-4 text-center'>
-              {new Date(member.appliedAt).toLocaleDateString('ko-KR', {
-                year: 'numeric',
-                month: '2-digit',
-                day: '2-digit',
-              })}
-            </td>
-            <td className='truncate px-3 py-4 text-center'>
               {member.passedGenerationNumber}기
             </td>
             <td className='truncate px-3 py-4 text-center'>
@@ -80,6 +73,13 @@ export const ApprovalTableView = ({
             </td>
             <td className='truncate px-3 py-4 text-center'>
               {member.phoneNumber}
+            </td>
+            <td className='truncate px-3 py-4 text-center'>
+              {new Date(member.appliedAt).toLocaleDateString('ko-KR', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+              })}
             </td>
             <td className='px-3 py-4'>
               <div className='flex items-center justify-center gap-2.5'>

@@ -127,8 +127,8 @@ export const APPROVAL_TABS: {label: string; value: ApprovalTabType}[] = [
 /** 가입 승인 테이블 컬럼 상수 */
 export const APPROVAL_COLUMNS = [
   {key: 'name', label: '이름'},
-  {key: 'applicationDate', label: '가입신청일'},
   {key: 'generation', label: '기수'},
   {key: 'part', label: '파트'},
   {key: 'phone', label: '전화번호'},
+  {key: 'applicationDate', label: '가입신청일'},
 ] as const;
