@@ -21,9 +21,6 @@ export const MEMBER_STATUS_CONFIG = {
   APPROVED: {label: '활동 중', className: 'bg-active text-white'},
   RETIRED: {label: '수료', className: 'bg-chip text-white'},
   NOT_RETIRED: {label: '미수료', className: 'bg-neutral-600 text-white'},
-  INACTIVE: {label: '비활동', className: 'bg-neutral-400 text-white'},
-  REJECTED: {label: '가입 거절', className: 'bg-neutral-400 text-white'},
-  REQUESTED: {label: '가입 요청', className: 'bg-neutral-400 text-white'},
 };
 
 export const MEMBER_ROLE_CONFIG = {
