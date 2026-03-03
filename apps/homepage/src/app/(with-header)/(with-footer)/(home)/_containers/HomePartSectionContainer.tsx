@@ -5,6 +5,7 @@ import {motion, AnimatePresence, Variants, PanInfo} from 'framer-motion';
 import {useState, useRef, useEffect} from 'react';
 import {HomeSectionDescription} from '@/app/(with-header)/(with-footer)/(home)/_components/HomeSectionDescription';
 import Image from 'next/image';
+import clsx from 'clsx';
 
 const PARTS = ['pm', 'design', 'frontend', 'backend'] as const;
 type PartType = (typeof PARTS)[number];
@@ -147,9 +148,10 @@ export const HomePartSectionContainer = () => {
             <button
               key={partKey}
               onClick={() => handlePartClick(partKey)}
-              className={`h-1 w-1 rounded-full transition-all duration-300 ${
+              className={clsx(
+                'h-1 w-1 rounded-full transition-all duration-300',
                 currentPart === partKey ? 'bg-neutral-600' : 'bg-neutral-300'
-              }`}
+              )}
               aria-label={`${partKey} 파트 보기`}
             />
           ))}

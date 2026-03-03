@@ -62,13 +62,13 @@ export const HeaderMobileMenu = ({
             {!isAuthenticated ? (
               <Link
                 href={ROUTES.ONBOARDING}
-                className='text-body-l-sb text-primary border-primary hover:border-primary rounded-[30px] border bg-white/5 px-17.5 py-2.25 text-center shadow-[0_4px_30px_rgba(0,0,0,0.1)] backdrop-blur-md transition-all duration-300 hover:bg-white/10'>
+                className='text-body-l-sb text-primary border-primary rounded-[30px] border px-17.5 py-2.25 text-center duration-300'>
                 로그인
               </Link>
             ) : (
               <button
                 onClick={onLogout}
-                className='text-body-l-sb text-primary border-primary hover:border-primary rounded-[30px] border bg-white/5 px-17.5 py-2.25 text-center shadow-[0_4px_30px_rgba(0,0,0,0.1)] backdrop-blur-md transition-all duration-300 hover:bg-white/10'>
+                className='text-body-l-sb text-primary border-primary rounded-[30px] border px-17.5 py-2.25 text-center duration-300'>
                 로그아웃
               </button>
             )}

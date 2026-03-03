@@ -1,5 +1,6 @@
 import {HomeCotatoReviewCard} from '@/app/(with-header)/(with-footer)/(home)/_components/HomeCotatoReviewCard';
 import {CotatoReview} from '@/app/(with-header)/(with-footer)/(home)/_containers/HomeCotatoReviewContainer';
+import clsx from 'clsx';
 import {motion, useAnimationControls} from 'framer-motion';
 import {useCallback, useEffect, useState} from 'react';
 
@@ -81,11 +82,12 @@ export const DesktopReviewContainer = ({
           <button
             key={i}
             onClick={() => animateTo(i + 1)}
-            className={`h-1.5 w-1.5 rounded-full transition-all ${
+            className={clsx(
+              'h-1.5 w-1.5 rounded-full transition-all',
               (displayIndex - 1) % totalPages === i
                 ? 'bg-neutral-600'
                 : 'bg-neutral-200'
-            }`}
+            )}
           />
         ))}
       </div>

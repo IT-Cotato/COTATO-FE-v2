@@ -37,9 +37,9 @@ export const HomeCoreValue = () => {
 
   return (
     <section
-      className='flex scroll-mt-40 flex-col gap-10 xl:gap-17.5'
-      aria-labelledby='core-value'
-      id='core-value'>
+      className='flex flex-col gap-10 xl:gap-17.5'
+      aria-labelledby='core-value'>
+      <div id='core-value' className='scroll-mt-40' />
       <HomeSectionHeader mainHeading='Core Value' subHeading='핵심 가치' />
 
       <div className='relative w-full overflow-hidden'>
