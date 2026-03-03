@@ -136,11 +136,21 @@ export const completeImageUpload = async (
   request: CompleteImageUploadRequest
 ): Promise<CompleteImageUploadResponse> => {
   try {
-    const {data} = await privateAxios.post<CompleteImageUploadResponse>(
-      ENDPOINT.SESSIONS.IMAGE.COMPLETE,
-      request
-    );
-    return CompleteImageUploadResponseSchema.parse(data);
+    const {data} = await privateAxios.post<
+      Partial<CompleteImageUploadResponse> & {
+        imageId: number;
+        imageUrl: string;
+      }
+    >(ENDPOINT.SESSIONS.IMAGE.COMPLETE, request);
+
+    const normalizedData: CompleteImageUploadResponse = {
+      imageId: data.imageId,
+      imageUrl: data.imageUrl,
+      s3Key: data.s3Key ?? request.s3Key,
+      order: data.order ?? request.order ?? 0,
+    };
+
+    return CompleteImageUploadResponseSchema.parse(normalizedData);
   } catch (error) {
     return handleApiError(error);
   }

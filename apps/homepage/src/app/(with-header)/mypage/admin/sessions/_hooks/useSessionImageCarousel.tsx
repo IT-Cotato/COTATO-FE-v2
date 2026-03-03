@@ -47,8 +47,7 @@ export const useSessionImageCarousel = ({
   const {mutate: changeOrder} = useChangeSessionImageOrder();
 
   const handleAdd = (file: File) => {
-    const nextOrder =
-      images.length === 0 ? 0 : Math.max(...images.map((img) => img.order)) + 1;
+    const nextOrder = images.length;
     uploadImage(
       {sessionId, file, order: nextOrder},
       {
