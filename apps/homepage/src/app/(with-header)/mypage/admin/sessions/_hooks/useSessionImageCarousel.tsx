@@ -13,7 +13,7 @@ import {
   useChangeSessionImageOrder,
 } from '@/hooks/mutations/useSession.mutation';
 
-const MAX_IMAGES = 5;
+export const MAX_IMAGES = 5;
 
 interface UseSessionImageCarouselParams {
   sessionId: number;
@@ -47,8 +47,15 @@ export const useSessionImageCarousel = ({
   const {mutate: changeOrder} = useChangeSessionImageOrder();
 
   const handleAdd = (file: File) => {
+    if (images.length >= MAX_IMAGES) {
+      alert(`이미지는 최대 ${MAX_IMAGES}장까지 추가할 수 있습니다.`);
+      return;
+    }
+
+    const nextOrder =
+      images.length === 0 ? 0 : Math.max(...images.map((img) => img.order)) + 1;
     uploadImage(
-      {sessionId, file, order: images.length},
+      {sessionId, file, order: nextOrder},
       {
         onSuccess: (newImage) => {
           onChange((prev) => [
@@ -57,13 +64,10 @@ export const useSessionImageCarousel = ({
               imageId: newImage.imageId,
               imageUrl: newImage.imageUrl,
               s3Key: newImage.s3Key,
-              order: newImage.order,
+              order: newImage.order ?? nextOrder,
             },
           ]);
-          onChange((prev) => {
-            setCurrentIndex(prev.length - 1);
-            return prev;
-          });
+          setCurrentIndex(images.length);
         },
       }
     );
