@@ -139,7 +139,11 @@ export const Header = () => {
           <HamburgerIcon className='h-5 w-5 transition-transform' />
         )}
       </button>
-
+      <hr
+        className={`fixed top-20 right-0 left-0 z-50 border-t border-white/10 transition-opacity duration-300 lg:hidden ${
+          isMenuOpen ? 'opacity-100' : 'opacity-0'
+        }`}
+      />
       <HeaderMobileMenu
         isOpen={isMenuOpen}
         pathname={pathname}
