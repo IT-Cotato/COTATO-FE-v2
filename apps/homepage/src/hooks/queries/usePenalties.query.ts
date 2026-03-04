@@ -23,7 +23,7 @@ export const useAllStatisticsQuery = (
   });
 };
 
-/** 세션별 상벌점 관리 조회 쿼리 */
+/** 세션별 상벌점 조회 쿼리 */
 export const useSessionDetailQuery = (sessionId: number, search?: string) => {
   return useQuery({
     queryKey: QUERY_KEYS.PENALTY.SESSION_DETAIL({
