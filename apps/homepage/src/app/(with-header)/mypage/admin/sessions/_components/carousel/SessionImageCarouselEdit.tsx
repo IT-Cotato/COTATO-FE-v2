@@ -12,9 +12,13 @@ import ChevronRightIcon from '@/assets/chevrons/chevron-right.svg';
 import PlusIcon from '@repo/ui/assets/icons/plus-nobackground.svg';
 import ThumbnailImage from '@/assets/thumbnail/thumbnail.svg';
 import XIcon from '@repo/ui/assets/icons/cancel.svg';
-import {SessionImage} from '@/schemas/admin/session.schema';
+import {SessionImage} from '@/schemas/admin/admin-sessions.schema';
 import {SortableThumbnail} from '@/app/(with-header)/mypage/admin/sessions/_components/carousel/SortableThumbnail';
-import {useSessionImageCarousel} from '@/app/(with-header)/mypage/admin/sessions/_hooks/useSessionImageCarousel';
+import {
+  MAX_IMAGES,
+  useSessionImageCarousel,
+} from '@/app/(with-header)/mypage/admin/sessions/_hooks/useSessionImageCarousel';
+import clsx from 'clsx';
 
 interface SessionImageCarouselEditProps {
   sessionId: number;
@@ -42,7 +46,7 @@ export const SessionImageCarouselEdit = ({
   } = useSessionImageCarousel({sessionId, images, onChange});
 
   return (
-    <div className='flex flex-col'>
+    <div className='flex w-87.5 flex-col'>
       {/* 큰 미리보기 영역 */}
       <div className='relative h-57.5 w-87.5 overflow-hidden rounded-[10px] bg-neutral-200'>
         {currentImage ? (
@@ -105,7 +109,7 @@ export const SessionImageCarouselEdit = ({
 
       {/* 썸네일 목록 */}
       <div className='mt-3.25 flex flex-col gap-3'>
-        <div className='flex gap-2.25'>
+        <div className='session-scrollbar flex gap-2.25 overflow-x-scroll pb-2'>
           <DndContext
             sensors={sensors}
             collisionDetection={closestCenter}
@@ -126,16 +130,28 @@ export const SessionImageCarouselEdit = ({
           </DndContext>
 
           {/* 추가 버튼 */}
-          {canAddMore && (
-            <button
-              type='button'
-              onClick={() => fileInputRef.current?.click()}
-              className='flex h-20 w-20 shrink-0 cursor-pointer flex-col items-center justify-center gap-1 rounded-lg border border-dashed border-neutral-300 bg-neutral-50'
-              aria-label='이미지 추가'>
-              <PlusIcon className='h-5 w-5 text-neutral-600' />
-              <span className='text-body-s text-neutral-600'>추가</span>
-            </button>
-          )}
+          <button
+            type='button'
+            onClick={() => {
+              if (!canAddMore) {
+                alert(`이미지는 최대 ${MAX_IMAGES}장까지 추가할 수 있습니다.`);
+                return;
+              }
+              fileInputRef.current?.click();
+            }}
+            title={`최대 ${MAX_IMAGES}장`}
+            aria-disabled={!canAddMore}
+            className={clsx(
+              'flex h-20 w-20 shrink-0 flex-col items-center justify-center gap-1 rounded-lg border border-dashed border-neutral-300 bg-neutral-50',
+              {
+                'cursor-pointer': canAddMore,
+                'cursor-not-allowed opacity-50': !canAddMore,
+              }
+            )}
+            aria-label='이미지 추가'>
+            <PlusIcon className='h-5 w-5 text-neutral-600' />
+            <span className='text-h5 text-neutral-600'>추가</span>
+          </button>
 
           {/* 숨겨진 파일 input */}
           <input

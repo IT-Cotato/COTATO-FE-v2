@@ -13,7 +13,7 @@ export const PenaltyRows = ({data}: {data: PenaltyRecord[]}) => (
       };
       return (
         <tr key={record.sessionId} className='h-12.25 text-center'>
-          <td>{record.week}</td>
+          <td>{record.week + 1}</td>
           <td>{record.content}</td>
           <td className='flex h-12.25 items-center justify-center py-[8.5px]'>
             <span

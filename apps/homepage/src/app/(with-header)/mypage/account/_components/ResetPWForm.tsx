@@ -10,11 +10,12 @@ import {
   MyPageResetPasswordSchema,
   MyPageResetPasswordType,
 } from '@/schemas/mypage-mem/account/account.schema';
-import {OnboardingFormPassword} from '@/components/password-form/OnboardingFormPassword';
+
 import {
   useUpdatePasswordMutation,
   useVerifyPasswordMutation,
 } from '@/hooks/mutations/useMembers.mutation';
+import {FormPassword} from '@/components/password-form/FormPassword';
 
 export const ResetPWForm = () => {
   const [showPws, setShowPws] = useState({
@@ -79,7 +80,7 @@ export const ResetPWForm = () => {
     <form
       onSubmit={handleSubmit(onSubmit)}
       className='flex min-w-275 flex-col gap-6.5'>
-      <OnboardingFormPassword
+      <FormPassword
         variant='mypage'
         label='현재 비밀번호'
         placeholder='현재 비밀번호를 입력해주세요.'
@@ -93,7 +94,7 @@ export const ResetPWForm = () => {
         }
         error={errors.currentPassword?.message}
       />
-      <OnboardingFormPassword
+      <FormPassword
         variant='mypage'
         label='새 비밀번호'
         placeholder='새로운 비밀번호를 입력하세요.'
@@ -107,7 +108,7 @@ export const ResetPWForm = () => {
         error={errors.password?.message}
       />
       <div className='flex flex-col gap-1'>
-        <OnboardingFormPassword
+        <FormPassword
           variant='mypage'
           label='새 비밀번호 확인'
           placeholder='새 비밀번호를 다시 한 번 더 입력해주세요.'

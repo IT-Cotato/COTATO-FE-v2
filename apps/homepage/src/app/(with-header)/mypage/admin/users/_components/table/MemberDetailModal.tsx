@@ -13,20 +13,32 @@ import {
   MemberRoleKey,
   MemberStatusKey,
 } from '@/constants/admin/admin';
-import {MemberType} from '@/schemas/admin/admin.schema';
+import {MemberType} from '@/schemas/admin/admin-members.schema';
+import {formatPhoneNumber} from '@/utils/formatPhoneNumber';
 import {
   TextField,
   fieldClass,
 } from '@/app/(with-header)/mypage/admin/users/_components/table/TextField';
 import {SelectField} from '@/app/(with-header)/mypage/admin/users/_components/table/SelectField';
 
-interface MemberDetailModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-  onSave: (memberData: MemberType) => void;
-  member: MemberType | null;
-  readonly?: boolean;
+interface BaseMemberDetailModalProps {
+  readonly isOpen: boolean;
+  readonly onClose: () => void;
+  readonly member: MemberType | null;
 }
+
+interface ReadOnlyMemberDetailModalProps extends BaseMemberDetailModalProps {
+  readonly mode: 'read';
+}
+
+interface EditableMemberDetailModalProps extends BaseMemberDetailModalProps {
+  readonly mode: 'edit';
+  readonly onSave: (memberData: MemberType) => void;
+}
+
+export type MemberDetailModalProps =
+  | ReadOnlyMemberDetailModalProps
+  | EditableMemberDetailModalProps;
 
 const POSITION_REVERSE = Object.fromEntries(
   Object.entries(MEMBER_POSITION_LABEL).map(([k, v]) => [v, k])
@@ -40,24 +52,31 @@ const STATUS_REVERSE = Object.fromEntries(
   MEMBER_STATUS_OPTIONS.map((k) => [MEMBER_STATUS_LABEL[k], k])
 ) as Record<string, MemberStatusKey>;
 
-export const MemberDetailModal = ({
-  isOpen,
-  onClose,
-  onSave,
-  member,
-  readonly = false,
-}: MemberDetailModalProps) => {
+export const MemberDetailModal = (props: MemberDetailModalProps) => {
+  const {isOpen, onClose, member, mode} = props;
+  const readonly = mode === 'read';
   const [memberData, setMemberData] = useState<MemberType | null>(member);
 
   useEffect(() => {
-    setMemberData(member);
+    if (member) {
+      setMemberData({
+        ...member,
+        phoneNumber: formatPhoneNumber(member.phoneNumber),
+      });
+    } else {
+      setMemberData(null);
+    }
   }, [isOpen, member]);
 
   if (!isOpen || !memberData) return null;
 
   const handleSave = () => {
-    onSave(memberData);
-    onClose();
+    if (props.mode === 'edit') {
+      props.onSave(memberData);
+      onClose();
+    } else {
+      console.error('Invalid save call in read-only mode');
+    }
   };
 
   const positionOptions = MEMBER_POSITION_OPTIONS.map(
@@ -104,7 +123,7 @@ export const MemberDetailModal = ({
               {readonly ? (
                 <input
                   readOnly
-                  value={`${memberData.generationMemberId}기`}
+                  value={`${memberData.passedGenerationNumber}기`}
                   className={fieldClass}
                 />
               ) : (
@@ -112,14 +131,16 @@ export const MemberDetailModal = ({
                   <input
                     type='number'
                     min={1}
-                    value={memberData.generationMemberId}
+                    value={memberData.passedGenerationNumber}
                     className={`${fieldClass} [appearance:textfield] pr-8 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none`}
-                    onChange={(e) =>
+                    onChange={(e) => {
+                      const parsed = e.target.valueAsNumber;
+                      if (Number.isNaN(parsed) || parsed < 1) return;
                       setMemberData({
                         ...memberData,
-                        generationMemberId: Number(e.target.value),
-                      })
-                    }
+                        passedGenerationNumber: parsed,
+                      });
+                    }}
                   />
                   <span className='text-body-l pointer-events-none absolute top-1/2 right-4 -translate-y-1/2 text-neutral-600'>
                     기
@@ -141,8 +162,11 @@ export const MemberDetailModal = ({
           <SelectField
             label='파트'
             displayValue={
-              MEMBER_POSITION_LABEL[memberData.position as MemberPositionKey] ??
-              memberData.position
+              (MEMBER_POSITION_LABEL[
+                memberData.position as MemberPositionKey
+              ] ??
+                memberData.position) ||
+              ''
             }
             options={positionOptions}
             onSelect={(val) =>
@@ -156,18 +180,22 @@ export const MemberDetailModal = ({
 
           <TextField
             label='전화번호'
-            value={memberData.phoneNumber}
+            value={memberData.phoneNumber || ''}
             readonly={readonly}
             onChange={(e) =>
-              setMemberData({...memberData, phoneNumber: e.target.value})
+              setMemberData({
+                ...memberData,
+                phoneNumber: formatPhoneNumber(e.target.value),
+              })
             }
           />
 
           <SelectField
             label='역할'
             displayValue={
-              MEMBER_ROLE_LABEL[memberData.role as MemberRoleKey] ??
-              memberData.role
+              (MEMBER_ROLE_LABEL[memberData.role as MemberRoleKey] ??
+                memberData.role) ||
+              ''
             }
             options={roleOptions}
             onSelect={(val) =>
@@ -179,8 +207,9 @@ export const MemberDetailModal = ({
           <SelectField
             label='활동여부'
             displayValue={
-              MEMBER_STATUS_LABEL[memberData.status as MemberStatusKey] ??
-              memberData.status
+              (MEMBER_STATUS_LABEL[memberData.status as MemberStatusKey] ??
+                memberData.status) ||
+              ''
             }
             options={statusOptions}
             onSelect={(val) =>

@@ -6,14 +6,14 @@ import {
   useSensors,
 } from '@dnd-kit/core';
 import {arrayMove} from '@dnd-kit/sortable';
-import {SessionImage} from '@/schemas/admin/session.schema';
+import {SessionImage} from '@/schemas/admin/admin-sessions.schema';
 import {
   useDeleteSessionImage,
   useUploadSessionImage,
   useChangeSessionImageOrder,
 } from '@/hooks/mutations/useSession.mutation';
 
-const MAX_IMAGES = 5;
+export const MAX_IMAGES = 5;
 
 interface UseSessionImageCarouselParams {
   sessionId: number;
@@ -47,8 +47,9 @@ export const useSessionImageCarousel = ({
   const {mutate: changeOrder} = useChangeSessionImageOrder();
 
   const handleAdd = (file: File) => {
+    const nextOrder = images.length;
     uploadImage(
-      {sessionId, file, order: images.length},
+      {sessionId, file, order: nextOrder},
       {
         onSuccess: (newImage) => {
           onChange((prev) => [
@@ -57,13 +58,10 @@ export const useSessionImageCarousel = ({
               imageId: newImage.imageId,
               imageUrl: newImage.imageUrl,
               s3Key: newImage.s3Key,
-              order: newImage.order,
+              order: newImage.order ?? nextOrder,
             },
           ]);
-          onChange((prev) => {
-            setCurrentIndex(prev.length - 1);
-            return prev;
-          });
+          setCurrentIndex(images.length);
         },
       }
     );

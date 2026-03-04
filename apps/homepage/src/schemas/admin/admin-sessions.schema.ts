@@ -132,7 +132,7 @@ export const PresignedUrlResponseSchema = z.object({
 export const CompleteImageUploadRequestSchema = z.object({
   sessionId: z.number(),
   s3Key: z.string(),
-  order: z.number(),
+  order: z.number().optional().default(0),
 });
 
 export const CompleteImageUploadResponseSchema = z.object({

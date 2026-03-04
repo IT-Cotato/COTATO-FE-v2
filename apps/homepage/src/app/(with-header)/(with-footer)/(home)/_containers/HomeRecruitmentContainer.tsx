@@ -51,7 +51,7 @@ export const HomeRecruitmentContainer = () => {
               width={349}
               labelTypo='h3'
               onClick={handleButtonClick}
-              className='transition-all duration-300 hover:shadow-[0_4px_40px_0_rgba(255,255,255,0.80)]'
+              className='transition-all duration-300'
               aria-label={
                 isRecruiting
                   ? '코테이토 지원서 작성 외부 사이트로 이동'

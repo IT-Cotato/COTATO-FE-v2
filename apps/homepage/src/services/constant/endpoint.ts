@@ -52,6 +52,12 @@ export const ENDPOINT = {
     MY_DASHBOARD: '/v1/api/attendances/my/dashboard',
     MY_RECORDS: '/v1/api/attendances/my',
     STATUS: '/v1/api/events/attendances', //출결 상태 조회
+    ATTENDANCE_ID: '/v1/api/admin/attendances/sessions',
+    FULL_RECORDS: '/v1/api/admin/attendances/records',
+    SPECIFIC_RECORDS: (attendanceId: number) =>
+      `/v1/api/admin/attendances/${attendanceId}/records`,
+    MANAGE_STATUS: (attendanceId: number) =>
+      `/v1/api/admin/attendances/${attendanceId}/records`,
   },
 
   /** 상벌점 API */
@@ -63,7 +69,7 @@ export const ENDPOINT = {
   /** faq API */
   FAQ: '/v1/api/faq',
 
-  /** 기수 관련 API */
+  /** 어드민 기수 관련 API */
   GENERATIONS: {
     LIST: '/v1/api/generations',
     CREATE: '/v1/api/admin/generations',
@@ -73,7 +79,29 @@ export const ENDPOINT = {
       `/v1/api/admin/generations/${generationId}`,
   },
 
-  /** 세션 관련 API */
+  /** 가입 승인 관련 API */
+  APPROVALS: {
+    LIST: '/v1/api/admin/member-approvals/applicants',
+    APPROVE: '/v1/api/admin/member-approvals/approve',
+    REJECT: '/v1/api/admin/member-approvals/reject',
+    RESTORE: '/v1/api/admin/member-approvals/restore',
+    DELETE: '/v1/api/admin/member-approvals',
+  },
+
+  /** 어드민 회원 관련 API */
+  ADMIN_MEMBERS: {
+    LIST: '/v1/api/admin/members',
+    DETAIL: (memberId: number) => `/v1/api/admin/members/${memberId}`,
+    PATCH_STATUS: '/v1/api/admin/members/status',
+    DELETE: '/v1/api/admin/members',
+    ACTIVE_LIST: '/v1/api/admin/members/active',
+    ACTIVE: (generationMemberId: number) =>
+      `/v1/api/admin/members/active/${generationMemberId}`,
+    ACTIVE_ROLE: (generationMemberId: number) =>
+      `/v1/api/admin/members/active/${generationMemberId}/role`,
+  },
+
+  /** 어드민 세션 관련 API */
   SESSIONS: {
     ADMIN_LIST: '/v1/api/admin/sessions',
     DETAIL: (sessionId: number) => `/v1/api/sessions/${sessionId}`,

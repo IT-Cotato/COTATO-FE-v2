@@ -92,7 +92,7 @@ export const BasicInfoView = ({onNext, basicInfo}: BasicInfoViewProps) => {
           label='다음'
           onClick={onNext}
           height={54}
-          className='text-body-s sm:text-h4'
+          className='text-h4'
         />
       </div>
     </div>

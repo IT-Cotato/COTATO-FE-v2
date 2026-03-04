@@ -62,13 +62,12 @@ export const OnboardingVerificationCodeContainer = ({
   const isComplete = codes.every((c) => c !== '');
 
   return (
-    <div className='flex flex-col gap-20'>
+    <div className='flex flex-col gap-6 sm:gap-20'>
       <div className='text-body-l flex flex-col text-neutral-100'>
         <span>{email}(으)로 인증코드를 발송했습니다.</span>
         <span>이메일에서 코드 6자리를 확인 후 입력해 주세요.</span>
       </div>
       <div className='flex flex-col gap-6.25'>
-        {' '}
         <div className='flex justify-between gap-2'>
           {codes.map((code, i) => (
             <input
@@ -82,7 +81,7 @@ export const OnboardingVerificationCodeContainer = ({
               onChange={(e) => handleChange(e, i)}
               onKeyDown={(e) => handleKeyDown(e, i)}
               className={clsx(
-                'text-h2 focus:ring-primary h-20 w-17 rounded-[10px] bg-neutral-800 text-center text-neutral-100 outline-none focus:ring-1',
+                'text-h3 sm:text-h2 focus:ring-primary text-primary h-13 w-10 rounded-[10px] bg-neutral-800 text-center outline-none focus:ring-1 sm:h-20 sm:w-17',
                 code ? 'ring-primary ring-1' : 'ring-0'
               )}
             />

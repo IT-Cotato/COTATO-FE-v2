@@ -28,21 +28,18 @@ export const SessionAttendanceContainer = () => {
   const isNotActiveMember = currentError?.response?.data?.code === 'NP-002';
 
   const handlePrevMonth = () => {
-    if (!data) return;
+    if (!data || !data.hasPreviousMonth) return;
     const prevMonth = [...data.availableMonths]
-      .sort((a, b) => a - b)
-      .reverse()
+      .sort((a, b) => b - a)
       .find((m) => m < data.currentMonth);
-
     if (prevMonth) handleMonthChange(prevMonth);
   };
 
   const handleNextMonth = () => {
-    if (!data) return;
+    if (!data || !data.hasNextMonth) return;
     const nextMonth = [...data.availableMonths]
       .sort((a, b) => a - b)
       .find((m) => m > data.currentMonth);
-
     if (nextMonth) handleMonthChange(nextMonth);
   };
 

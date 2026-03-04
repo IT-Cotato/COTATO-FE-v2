@@ -5,7 +5,7 @@ import {AddSessionButton} from '../_components/AddSessionButton';
 import {SessionCard} from '../_components/SessionCard';
 import {useAdminSessionsQuery} from '@/hooks/queries/useSession.query';
 import {useGenerationQuery} from '@/hooks/queries/useGeneration.query';
-import {AdminSession} from '@/schemas/admin/session.schema';
+import {AdminSession} from '@/schemas/admin/admin-sessions.schema';
 import {useSessionUpdate} from '@/app/(with-header)/mypage/admin/sessions/_hooks/useSessionUpdate';
 import {useDeleteSession} from '@/hooks/mutations/useSession.mutation';
 
@@ -29,13 +29,9 @@ export const SessionsContainer = () => {
   const today = new Date().toLocaleDateString('sv-SE');
   const lastEndedGenerationId = generations
     ?.filter((g) => g.endDate <= today)
-    ?.reduce<number | undefined>(
-      (latestId, g) =>
-        latestId === undefined || g.generationId > latestId
-          ? g.generationId
-          : latestId,
-      undefined
-    );
+    ?.reduce<
+      number | undefined
+    >((latestId, g) => (latestId === undefined || g.generationId > latestId ? g.generationId : latestId), undefined);
   const activeGenerationId =
     generations?.find((g) => g.startDate <= today && today <= g.endDate)
       ?.generationId || lastEndedGenerationId;

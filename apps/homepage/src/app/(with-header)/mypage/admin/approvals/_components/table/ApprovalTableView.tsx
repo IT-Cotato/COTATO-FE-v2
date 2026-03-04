@@ -1,4 +1,4 @@
-import {ApprovalMemberType} from '@/schemas/admin/admin.schema';
+import {ApprovalMemberType} from '@/schemas/admin/admin-members.schema';
 import {
   APPROVAL_COLUMNS,
   MEMBER_POSITION_LABEL,
@@ -15,6 +15,7 @@ interface ApprovalTableViewProps {
   onSelect: (id: number, checked: boolean) => void;
   onApprove: (memberId: number) => void;
   onReject: (memberId: number) => void;
+  isLoading?: boolean;
 }
 
 export const ApprovalTableView = ({
@@ -25,6 +26,7 @@ export const ApprovalTableView = ({
   onSelect,
   onApprove,
   onReject,
+  isLoading = false,
 }: ApprovalTableViewProps) => {
   const isAllSelected =
     items.length > 0 &&
@@ -63,13 +65,6 @@ export const ApprovalTableView = ({
             </td>
             <td className='truncate px-3 py-4 text-center'>{member.name}</td>
             <td className='truncate px-3 py-4 text-center'>
-              {new Date(member.appliedAt).toLocaleDateString('ko-KR', {
-                year: 'numeric',
-                month: '2-digit',
-                day: '2-digit',
-              })}
-            </td>
-            <td className='truncate px-3 py-4 text-center'>
               {member.passedGenerationNumber}기
             </td>
             <td className='truncate px-3 py-4 text-center'>
@@ -79,18 +74,27 @@ export const ApprovalTableView = ({
             <td className='truncate px-3 py-4 text-center'>
               {member.phoneNumber}
             </td>
+            <td className='truncate px-3 py-4 text-center'>
+              {new Date(member.appliedAt).toLocaleDateString('ko-KR', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+              })}
+            </td>
             <td className='px-3 py-4'>
               <div className='flex items-center justify-center gap-2.5'>
                 <button
                   type='button'
+                  disabled={isLoading}
                   onClick={() => onApprove(member.memberId)}
-                  className='text-primary text-body-m cursor-pointer rounded-lg bg-neutral-50 px-4.5 py-0.75'>
+                  className='text-primary text-body-m cursor-pointer rounded-lg bg-neutral-50 px-4.5 py-0.75 disabled:cursor-not-allowed disabled:opacity-50'>
                   승인
                 </button>
                 <button
                   type='button'
+                  disabled={isLoading}
                   onClick={() => onReject(member.memberId)}
-                  className='text-body-m cursor-pointer rounded-lg bg-neutral-50 px-4.5 py-0.75 text-neutral-600'>
+                  className='text-body-m cursor-pointer rounded-lg bg-neutral-50 px-4.5 py-0.75 text-neutral-600 disabled:cursor-not-allowed disabled:opacity-50'>
                   거절
                 </button>
               </div>

@@ -3,8 +3,11 @@
   "version": "0.0.0",
   "private": true,
   "exports": {
-    "./styles.css": "./dist/index.css",
-    "./*": "./dist/*.js",
+    "./styles.css": "./src/styles.css",
+    "./*": {
+      "development": "./src/*",
+      "default": "./dist/*.js"
+    },
     "./assets/*": "./dist/assets/*"
   },
   "scripts": {

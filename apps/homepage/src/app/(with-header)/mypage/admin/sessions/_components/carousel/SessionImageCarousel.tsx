@@ -1,4 +1,4 @@
-import {SessionImage} from '@/schemas/admin/session.schema';
+import {SessionImage} from '@/schemas/admin/admin-sessions.schema';
 import {SessionImageCarouselEdit} from '@/app/(with-header)/mypage/admin/sessions/_components/carousel/SessionImageCarouselEdit';
 import {SessionImageCarouselView} from '@/app/(with-header)/mypage/admin/sessions/_components/carousel/SessionImageCarouselView';
 
