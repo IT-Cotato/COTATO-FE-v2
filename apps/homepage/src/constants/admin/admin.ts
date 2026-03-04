@@ -27,9 +27,6 @@ export const MEMBER_STATUS_CONFIG = {
   APPROVED: {label: '활동 중', className: 'bg-active text-white'},
   RETIRED: {label: '수료', className: 'bg-chip text-white'},
   NOT_RETIRED: {label: '미수료', className: 'bg-neutral-600 text-white'},
-  INACTIVE: {label: '비활동', className: 'bg-neutral-400 text-white'},
-  REJECTED: {label: '가입 거절', className: 'bg-neutral-400 text-white'},
-  REQUESTED: {label: '가입 요청', className: 'bg-neutral-400 text-white'},
 };
 
 export const MEMBER_ROLE_CONFIG = {
@@ -133,10 +130,10 @@ export const APPROVAL_TABS: {label: string; value: ApprovalTabType}[] = [
 /** 가입 승인 테이블 컬럼 상수 */
 export const APPROVAL_COLUMNS = [
   {key: 'name', label: '이름'},
-  {key: 'applicationDate', label: '가입신청일'},
   {key: 'generation', label: '기수'},
   {key: 'part', label: '파트'},
   {key: 'phone', label: '전화번호'},
+  {key: 'applicationDate', label: '가입신청일'},
 ] as const;
 
 /** 출석 파트 탭 상수 */

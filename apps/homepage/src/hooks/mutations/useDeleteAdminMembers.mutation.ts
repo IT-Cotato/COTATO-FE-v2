@@ -10,7 +10,7 @@ export const useDeleteAdminMembers = () => {
     mutationFn: deleteAdminMembers,
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: QUERY_KEYS.ADMIN_MEMBERS.LIST({}),
+        queryKey: QUERY_KEYS.ADMIN_MEMBERS.BASE,
       });
     },
     onError: () => {
