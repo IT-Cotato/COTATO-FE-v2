@@ -79,7 +79,11 @@ export const DropdownContainer = () => {
     }
     const sessionListIndex =
       parseInt(selectedSession.split('회차 세션')[0]) - 1;
-    if (sessionListIndex < 0 || sessionListIndex >= sessions.length) {
+    if (
+      Number.isNaN(sessionListIndex) ||
+      sessionListIndex < 0 ||
+      sessionListIndex >= sessions.length
+    ) {
       setSesssionId(null);
       setSelectedSessionType('FULL');
       return;
