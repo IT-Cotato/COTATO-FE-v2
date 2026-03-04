@@ -9,6 +9,7 @@ interface StatusChipProps<T extends string> {
   value: T;
   config: Record<T, StatusChipConfig>;
   isActive?: boolean;
+  disabled?: boolean;
   onClick?: () => void;
 }
 
@@ -16,6 +17,7 @@ export const StatusChip = <T extends string>({
   value,
   config,
   isActive,
+  disabled,
   onClick,
 }: StatusChipProps<T>) => {
   const currentConfig = config[value];
@@ -32,6 +34,7 @@ export const StatusChip = <T extends string>({
         isActive ? 'opacity-100' : 'opacity-25',
         className
       )}
+      disabled={disabled}
       onClick={onClick}>
       <span className='text-body-m-sb text-white'>{label}</span>
     </button>
