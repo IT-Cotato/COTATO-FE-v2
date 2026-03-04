@@ -207,3 +207,14 @@ export const PENALTY_SPECIFIC_TABLE_HEADER = [
   {key: 'beer-networking-participated', label: '비어 네트워킹'},
   {key: 'extra-minus-point', label: '기타 벌점'},
 ];
+
+/** 상벌점 비어 네트워킹 참여 여부 상수 */
+export const BEER_NETWORKING_ATTENDANCE_CONFIG = {
+  PRESENT: {label: '참여', className: 'bg-chip'},
+  ABSENT: {label: '미참여', className: 'bg-neutral-400'},
+};
+export type BeerNetworkingAttendanceKey =
+  keyof typeof BEER_NETWORKING_ATTENDANCE_CONFIG;
+export const BEER_NETWORKING_ATTENDANCE_OPTION = Object.keys(
+  ATTENDANCE_STATUS_CONFIG
+) as BeerNetworkingAttendanceKey[];
