@@ -22,17 +22,18 @@ export const SpecificSessionRow = ({
   isUpdatingBeerNetworkingChip,
   onChangeExtraMinusPoint,
 }: SpecificSessionRowProps) => {
-  const [value, setValue] = useState(row.extraMinusPoint);
+  const [value, setValue] = useState(String(Math.abs(row.extraMinusPoint)));
 
   const debouncedValue = useDebounce(value, 500);
 
   useEffect(() => {
-    setValue(row.extraMinusPoint);
+    setValue(String(Math.abs(row.extraMinusPoint)));
   }, [row.extraMinusPoint]);
 
   useEffect(() => {
-    if (debouncedValue !== row.extraMinusPoint) {
-      onChangeExtraMinusPoint(row.memberId, debouncedValue);
+    const num = Number(debouncedValue);
+    if (!Number.isNaN(num) && -num !== row.extraMinusPoint) {
+      onChangeExtraMinusPoint(row.memberId, -num);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debouncedValue]);
@@ -71,7 +72,10 @@ export const SpecificSessionRow = ({
           placeholder='0'
           aria-label='기타 벌점'
           value={value}
-          onChange={(e) => setValue(Number(e.target.value))}
+          onChange={(e) => {
+            const num = parseInt(e.target.value, 10);
+            setValue(isNaN(num) ? String(0) : String(num));
+          }}
           className='text-body-l-sb placeholder:text-body-l-sb w-full bg-transparent text-center text-neutral-600 outline-none placeholder:text-neutral-600'
         />
       </td>
