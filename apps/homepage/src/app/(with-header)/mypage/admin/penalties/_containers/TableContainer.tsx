@@ -37,8 +37,8 @@ export const TableContainer = () => {
     useSessionDetailQuery(shouldFetchSpecific ? (sessionId ?? 0) : 0, search);
 
   const {
-    mutate: updateBeerNetworkingAttendance,
-    isPending: isUpdatingBeerNetworkingAttendance,
+    mutate: updateBeerNetworkingChip,
+    isPending: isUpdatingBeerNetworkingChip,
   } = usePatchBeerNetworkingMutation();
 
   const handleClickBeerNetworkingChip = (
@@ -46,7 +46,7 @@ export const TableContainer = () => {
     participated: boolean
   ) => {
     if (!sessionId) return;
-    updateBeerNetworkingAttendance({
+    updateBeerNetworkingChip({
       sessionId,
       memberId,
       participated,
@@ -97,6 +97,7 @@ export const TableContainer = () => {
           <SpecificSessionTable
             items={sessionDetail?.members ?? []}
             onClickBeerNetworkingChip={handleClickBeerNetworkingChip}
+            isUpdatingBeerNetworkingChip={isUpdatingBeerNetworkingChip}
           />
         </div>
       )}

@@ -8,11 +8,13 @@ import {StatusChip} from '@repo/ui/components/chip/StatusChip';
 interface SpecificSessionTableProps {
   items: SpecificSessionTableRowType[];
   onClickBeerNetworkingChip: (memberId: number, participated: boolean) => void;
+  isUpdatingBeerNetworkingChip: boolean;
 }
 
 export const SpecificSessionTable = ({
   items,
   onClickBeerNetworkingChip,
+  isUpdatingBeerNetworkingChip,
 }: SpecificSessionTableProps) => {
   return (
     <table className='h-fit flex-1 border-collapse'>
@@ -50,6 +52,7 @@ export const SpecificSessionTable = ({
                   value={row.beerNetworkingParticipated ? 'PRESENT' : 'ABSENT'}
                   config={BEER_NETWORKING_ATTENDANCE_CONFIG}
                   isActive={true}
+                  disabled={isUpdatingBeerNetworkingChip}
                   onClick={() =>
                     onClickBeerNetworkingChip(
                       row.memberId,
