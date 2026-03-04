@@ -1,4 +1,5 @@
 import {
+  ATTENDANCE_STATUS_CONFIG,
   BEER_NETWORKING_ATTENDANCE_CONFIG,
   PENALTY_SPECIFIC_TABLE_HEADER,
 } from '@/constants/admin/admin';
@@ -46,7 +47,14 @@ export const SpecificSessionTable = ({
               key={row.memberId}
               className='text-body-l-sb text-center text-neutral-600'>
               <td className='truncate px-3 py-4'>{row.name}</td>
-              <td className='truncate px-3 py-4'>{row.attendanceResult}</td>
+              <td className='truncate px-3 py-4'>
+                <StatusChip
+                  value={row.attendanceResult}
+                  config={ATTENDANCE_STATUS_CONFIG}
+                  isActive={true}
+                  disabled={true}
+                />
+              </td>
               <td className='px-3 py-4'>
                 <StatusChip
                   value={row.beerNetworkingParticipated ? 'PRESENT' : 'ABSENT'}
