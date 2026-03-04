@@ -72,7 +72,7 @@ export const SpecificSessionRow = ({
           aria-label='기타 벌점'
           value={value}
           onChange={(e) => setValue(Number(e.target.value))}
-          className='text-body-l-sb placeholder:text-body-l-sb w-full bg-transparent text-center font-normal outline-none placeholder:text-neutral-600'
+          className='text-body-l-sb placeholder:text-body-l-sb w-full bg-transparent text-center text-neutral-600 outline-none placeholder:text-neutral-600'
         />
       </td>
     </tr>
