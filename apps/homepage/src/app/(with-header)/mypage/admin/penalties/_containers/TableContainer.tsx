@@ -1,6 +1,6 @@
 'use client';
 
-import {useSearchParams} from 'next/navigation';
+import {useRouter, useSearchParams} from 'next/navigation';
 import {useAdminPenaltiesStore} from '@/store/useAdminPenaltiesStore';
 import {FullSessionTable} from '@/app/(with-header)/mypage/admin/penalties/_components/table/FullSessionTable';
 import {SpecificSessionTable} from '@/app/(with-header)/mypage/admin/penalties/_components/table/SpecificSessionTable';
@@ -8,6 +8,7 @@ import {useAllStatisticsQuery} from '@/hooks/queries/usePenalties.query';
 import {SortDirection} from '@/types/mypage/admin/penalties/penalties.type';
 
 export const TableContainer = () => {
+  const router = useRouter();
   const searchParams = useSearchParams();
   const sortDirection =
     (searchParams.get('sort') as SortDirection) ?? undefined;
@@ -39,10 +40,28 @@ export const TableContainer = () => {
       sortDirection
     );
 
+  const handleSort = () => {
+    const params = new URLSearchParams(searchParams.toString());
+    const currentSort =
+      (searchParams.get('sort') as SortDirection) ?? undefined;
+    if (!currentSort) {
+      params.set('sort', 'ASC');
+    } else if (currentSort === 'ASC') {
+      params.set('sort', 'DESC');
+    } else if (currentSort === 'DESC') {
+      params.delete('sort');
+    }
+    router.replace(`?${params.toString()}`, {scroll: false});
+  };
+
   return (
     <>
       {selectedSessionType === 'FULL' ? (
-        <FullSessionTable items={allStatistics} />
+        <FullSessionTable
+          items={allStatistics}
+          onSort={handleSort}
+          sortedDirection={sortDirection}
+        />
       ) : (
         <div className='flex gap-5'>
           <SpecificSessionTable items={specificAttendanceList} />

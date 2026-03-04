@@ -1,13 +1,24 @@
 import {PENALTY_FULL_TABLE_HEADER} from '@/constants/admin/admin';
 import {FullSessionTableRowType} from '@/schemas/admin/admin-penalties.schema';
-import {PenaltyFullTableKey} from '@/types/mypage/admin/penalties/penalties.type';
+import {
+  PenaltyFullTableKey,
+  SortDirection,
+} from '@/types/mypage/admin/penalties/penalties.type';
 import MinusIcon from '@repo/ui/assets/icons/minus-round.svg';
+import ArrowDownIcon from '@repo/ui/assets/icons/arrow-down.svg';
+import clsx from 'clsx';
 
 interface FullSessionTableProps {
   items: FullSessionTableRowType[];
+  onSort: () => void;
+  sortedDirection?: SortDirection;
 }
 
-export const FullSessionTable = ({items}: FullSessionTableProps) => {
+export const FullSessionTable = ({
+  items,
+  onSort,
+  sortedDirection,
+}: FullSessionTableProps) => {
   return (
     <table className='min-w-275 border-collapse'>
       <thead className='bg-neutral-200'>
@@ -18,14 +29,25 @@ export const FullSessionTable = ({items}: FullSessionTableProps) => {
               className='text-body-l-sb px-3 py-4 text-neutral-600'>
               <div className='flex items-center justify-center gap-2.5'>
                 {col.label}
-                {col.key === ('total-minus-point' as PenaltyFullTableKey) && (
-                  <MinusIcon
-                    width={16}
-                    height={16}
-                    className='fill-neutral-600'
-                    onClick={() => console.log('// todo : 필터링 적용하기')}
-                  />
-                )}
+                {col.key === ('total-minus-point' as PenaltyFullTableKey) &&
+                  (sortedDirection ? (
+                    <ArrowDownIcon
+                      width={16}
+                      height={16}
+                      className={clsx(
+                        'stroke-neutral-600',
+                        sortedDirection === 'DESC' && 'rotate-180'
+                      )}
+                      onClick={onSort}
+                    />
+                  ) : (
+                    <MinusIcon
+                      width={16}
+                      height={16}
+                      className='fill-neutral-600'
+                      onClick={onSort}
+                    />
+                  ))}
               </div>
             </th>
           ))}
