@@ -10,12 +10,14 @@ interface SpecificSessionTableProps {
   items: SpecificSessionTableRowType[];
   onClickBeerNetworkingChip: (memberId: number, participated: boolean) => void;
   isUpdatingBeerNetworkingChip: boolean;
+  onChangeExtraMinusPoint: (memberId: number, extraMinusPoint: number) => void;
 }
 
 export const SpecificSessionTable = ({
   items,
   onClickBeerNetworkingChip,
   isUpdatingBeerNetworkingChip,
+  onChangeExtraMinusPoint,
 }: SpecificSessionTableProps) => {
   return (
     <table className='h-fit flex-1 border-collapse'>
@@ -69,7 +71,21 @@ export const SpecificSessionTable = ({
                   }
                 />
               </td>
-              <td className='px-3 py-4'>{row.extraMinusPoint}</td>
+              <td className='px-3 py-4'>
+                <input
+                  type='number'
+                  placeholder=''
+                  aria-label='기타 벌점'
+                  value={row.extraMinusPoint}
+                  onChange={(e) =>
+                    onChangeExtraMinusPoint(
+                      row.memberId,
+                      Number(e.target.value)
+                    )
+                  }
+                  className='text-body-l-sb w-full [appearance:textfield] bg-transparent text-center font-normal outline-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none'
+                />
+              </td>
             </tr>
           ))
         )}

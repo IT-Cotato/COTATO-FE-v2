@@ -10,7 +10,10 @@ import {
   useSessionDetailQuery,
 } from '@/hooks/queries/usePenalties.query';
 import {SortDirection} from '@/types/mypage/admin/penalties/penalties.type';
-import {usePatchBeerNetworkingMutation} from '@/hooks/mutations/usePenalties.mutation';
+import {
+  usePatchBeerNetworkingMutation,
+  usePatchExtraMinusPointMutation,
+} from '@/hooks/mutations/usePenalties.mutation';
 
 export const TableContainer = () => {
   const router = useRouter();
@@ -41,6 +44,8 @@ export const TableContainer = () => {
     isPending: isUpdatingBeerNetworkingChip,
   } = usePatchBeerNetworkingMutation();
 
+  const {mutate: updateExtraMinusPoint} = usePatchExtraMinusPointMutation();
+
   const handleClickBeerNetworkingChip = (
     memberId: number,
     participated: boolean
@@ -50,6 +55,18 @@ export const TableContainer = () => {
       sessionId,
       memberId,
       participated,
+    });
+  };
+
+  const handleChangeExtraMinusPoint = (
+    memberId: number,
+    extraMinusPoint: number
+  ) => {
+    if (!sessionId) return;
+    updateExtraMinusPoint({
+      sessionId,
+      memberId,
+      extraMinusPoint,
     });
   };
 
@@ -98,6 +115,7 @@ export const TableContainer = () => {
             items={sessionDetail?.members ?? []}
             onClickBeerNetworkingChip={handleClickBeerNetworkingChip}
             isUpdatingBeerNetworkingChip={isUpdatingBeerNetworkingChip}
+            onChangeExtraMinusPoint={handleChangeExtraMinusPoint}
           />
         </div>
       )}
