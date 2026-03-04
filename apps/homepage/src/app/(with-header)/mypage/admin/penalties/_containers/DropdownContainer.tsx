@@ -4,9 +4,18 @@ import {Dropdown} from '@/components/dropdown/Dropdown';
 import {useAttendanceIdByGenerationQuery} from '@/hooks/queries/useAttendance.queries';
 import {useGenerationQuery} from '@/hooks/queries/useGeneration.query';
 import {useAdminPenaltiesStore} from '@/store/useAdminPenaltiesStore';
-import {useEffect, useMemo} from 'react';
+import {useEffect, useMemo, useState} from 'react';
+import {SearchBar} from '@/app/(with-header)/mypage/admin/_components/SearchBar';
+import {useRouter, useSearchParams} from 'next/navigation';
 
 export const DropdownContainer = () => {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const [keyword, setKeyword] = useState<string>(
+    searchParams.get('keyword') ?? ''
+  );
+
   const {
     selectedGeneration,
     selectedGenerationNumber,
@@ -67,23 +76,41 @@ export const DropdownContainer = () => {
     setSelectedSessionType('SPECIFIC');
   }, [selectedSession, sessions, setSesssionId, setSelectedSessionType]);
 
+  const handleSearch = () => {
+    const params = new URLSearchParams(searchParams.toString());
+    if (keyword.trim()) {
+      params.set('keyword', keyword);
+    } else {
+      params.delete('keyword');
+    }
+    router.push(`?${params.toString()}`, {scroll: false});
+  };
+
   return (
-    <div className='flex gap-5'>
-      <Dropdown
-        placeholder='기수'
-        value={selectedGeneration}
-        options={generations}
-        onSelect={(value) => setSelectedGeneration(value)}
-        isShadow={true}
-        className='w-fit'
-      />
-      <Dropdown
-        placeholder='세션'
-        value={selectedSession}
-        options={['전체 세션', ...sessions.map((item) => item.sessionOption)]}
-        onSelect={(value) => setSelectedSession(value)}
-        isShadow={true}
-        className='w-fit'
+    <div className='flex justify-between'>
+      <div className='flex gap-5'>
+        <Dropdown
+          placeholder='기수'
+          value={selectedGeneration}
+          options={generations}
+          onSelect={(value) => setSelectedGeneration(value)}
+          isShadow={true}
+          className='w-fit'
+        />
+        <Dropdown
+          placeholder='세션'
+          value={selectedSession}
+          options={['전체 세션', ...sessions.map((item) => item.sessionOption)]}
+          onSelect={(value) => setSelectedSession(value)}
+          isShadow={true}
+          className='w-fit'
+        />
+      </div>
+
+      <SearchBar
+        onSearch={handleSearch}
+        keyword={keyword}
+        onKeywordChange={setKeyword}
       />
     </div>
   );
