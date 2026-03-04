@@ -64,10 +64,10 @@ export const ENDPOINT = {
   PENALTY: {
     MY_DASHBOARD: '/v1/api/minus-points/my/dashboard',
     MY_RECORDS: '/v1/api/minus-points/my',
-    EDIT_EXTRA_MINUS_POINT:
-      '/v1/api/admin/minus-points/sessions/{sessionId}/extra-minus-points',
-    EDIT_BEER_NETWORKING:
-      '/v1/api/admin/minus-points/sessions/{sessionId}/beer-networking',
+    EDIT_EXTRA_MINUS_POINT: (sessionId: number) =>
+      `/v1/api/admin/minus-points/sessions/${sessionId}/extra-minus-points`,
+    EDIT_BEER_NETWORKING: (sessionId: number) =>
+      `/v1/api/admin/minus-points/sessions/${sessionId}/beer-networking`,
     ALL_STATISTICS: '/v1/api/admin/minus-points/statistics',
     SESSION_DETAIL: (sessionId: number) =>
       `/v1/api/admin/minus-points/sessions/${sessionId}`,

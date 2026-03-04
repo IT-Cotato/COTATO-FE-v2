@@ -17,13 +17,10 @@ export const patchExtraMinusPoint = async (params: {
 }): Promise<void> => {
   try {
     await privateAxios.patch(
-      ENDPOINT.PENALTY.EDIT_EXTRA_MINUS_POINT,
+      ENDPOINT.PENALTY.EDIT_EXTRA_MINUS_POINT(params.sessionId),
       {
         memberId: params.memberId,
         extraMinusPoint: params.extraMinusPoint,
-      },
-      {
-        params: {sessionId: params.sessionId},
       }
     );
   } catch (error) {
@@ -39,13 +36,10 @@ export const patchBeerNetworking = async (params: {
 }): Promise<void> => {
   try {
     await privateAxios.patch(
-      ENDPOINT.PENALTY.EDIT_BEER_NETWORKING,
+      ENDPOINT.PENALTY.EDIT_BEER_NETWORKING(params.sessionId),
       {
         memberId: params.memberId,
         participated: params.participated,
-      },
-      {
-        params: {sessionId: params.sessionId},
       }
     );
   } catch (error) {
