@@ -16,7 +16,7 @@ export const SpecificSessionTable = ({
   onChangeExtraMinusPoint,
 }: SpecificSessionTableProps) => {
   return (
-    <table className='h-fit flex-1 border-collapse'>
+    <table className='h-fit w-full table-fixed border-collapse'>
       <thead className='bg-neutral-200'>
         <tr>
           {PENALTY_SPECIFIC_TABLE_HEADER.map((col) => (

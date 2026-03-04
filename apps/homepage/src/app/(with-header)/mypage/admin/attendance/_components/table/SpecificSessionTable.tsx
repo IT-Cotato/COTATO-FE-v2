@@ -24,7 +24,7 @@ export const SpecificSessionTable = ({
   isUpdating,
 }: SpecificSessionTableProps) => {
   return (
-    <table className='h-fit flex-1 border-collapse'>
+    <table className='h-fit w-full table-fixed border-collapse'>
       <thead className='bg-neutral-200'>
         <tr>
           {ATTENDANCE_SPECIFIC_TABLE_HEADER.map((col) => (

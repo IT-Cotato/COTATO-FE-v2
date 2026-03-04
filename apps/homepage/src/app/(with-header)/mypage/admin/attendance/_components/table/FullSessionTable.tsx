@@ -11,7 +11,7 @@ interface FullSessionTableProps {
 
 export const FullSessionTable = ({items}: FullSessionTableProps) => {
   return (
-    <table className='min-w-275 border-collapse'>
+    <table className='h-fit w-full table-fixed border-collapse'>
       <thead className='bg-neutral-200'>
         <tr>
           {ATTENDANCE_FULL_TABLE_HEADER.map((col) => (
