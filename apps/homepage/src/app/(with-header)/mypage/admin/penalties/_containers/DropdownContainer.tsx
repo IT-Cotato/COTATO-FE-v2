@@ -50,14 +50,26 @@ export const DropdownContainer = () => {
   }, [sessionList]);
 
   useEffect(() => {
-    if (generations.length > 0) {
+    if (
+      generations.length > 0 &&
+      (selectedGeneration === '기수' ||
+        !generations.includes(selectedGeneration))
+    ) {
       setSelectedGeneration(generations[0]);
     }
-  }, [generations, setSelectedGeneration]);
+  }, [generations, selectedGeneration, setSelectedGeneration]);
 
   useEffect(() => {
-    setSelectedSession('전체 세션');
-  }, [sessions, setSelectedSession]);
+    if (
+      selectedSession === '세션' ||
+      (selectedSession !== '전체 세션' &&
+        !['전체 세션', ...sessions.map((s) => s.sessionOption)].includes(
+          selectedSession
+        ))
+    ) {
+      setSelectedSession('전체 세션');
+    }
+  }, [sessions, selectedSession, setSelectedSession]);
 
   useEffect(() => {
     if (sessions.length <= 0 || selectedSession === '전체 세션') {
