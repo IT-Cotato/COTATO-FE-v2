@@ -4,7 +4,10 @@ import {useRouter, useSearchParams} from 'next/navigation';
 import {useAdminPenaltiesStore} from '@/store/useAdminPenaltiesStore';
 import {FullSessionTable} from '@/app/(with-header)/mypage/admin/penalties/_components/table/FullSessionTable';
 import {SpecificSessionTable} from '@/app/(with-header)/mypage/admin/penalties/_components/table/SpecificSessionTable';
-import {useAllStatisticsQuery} from '@/hooks/queries/usePenalties.query';
+import {
+  useAllStatisticsQuery,
+  useSessionDetailQuery,
+} from '@/hooks/queries/usePenalties.query';
 import {SortDirection} from '@/types/mypage/admin/penalties/penalties.type';
 
 export const TableContainer = () => {
@@ -14,24 +17,12 @@ export const TableContainer = () => {
     (searchParams.get('sort') as SortDirection) ?? undefined;
   const search = searchParams.get('keyword') ?? undefined;
 
-  const {selectedGenerationNumber, selectedSessionType} =
+  const {selectedGenerationNumber, selectedSessionType, sessionId} =
     useAdminPenaltiesStore();
 
   const shouldFetchFull =
     selectedSessionType === 'FULL' && !!selectedGenerationNumber;
-
-  const specificAttendanceList: {
-    memberId: number;
-    name: string;
-    attendanceResult:
-      | 'PRESENT'
-      | 'LATE'
-      | 'ABSENT'
-      | 'UNAUTHORIZED_ABSENT'
-      | 'NOT_YET';
-    beerNetworkingParticipated: boolean;
-    extraMinusPoint: number;
-  }[] = [];
+  const shouldFetchSpecific = selectedSessionType === 'SPECIFIC' && !!sessionId;
 
   const {data: allStatistics = [], isLoading: isAllStatisticsLoading} =
     useAllStatisticsQuery(
@@ -39,6 +30,9 @@ export const TableContainer = () => {
       search,
       sortDirection
     );
+
+  const {data: sessionDetail, isLoading: isSessionDetailLoading} =
+    useSessionDetailQuery(shouldFetchSpecific ? (sessionId ?? 0) : 0, search);
 
   const handleSort = () => {
     const params = new URLSearchParams(searchParams.toString());
@@ -64,7 +58,7 @@ export const TableContainer = () => {
         />
       ) : (
         <div className='flex gap-5'>
-          <SpecificSessionTable items={specificAttendanceList} />
+          <SpecificSessionTable items={sessionDetail?.members ?? []} />
         </div>
       )}
     </>
