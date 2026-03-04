@@ -18,11 +18,12 @@ export const FullSessionTable = ({items}: FullSessionTableProps) => {
               className='text-body-l-sb px-3 py-4 text-neutral-600'>
               <div className='flex items-center justify-center gap-2.5'>
                 {col.label}
-                {col.label === ('total-minus-point' as PenaltyFullTableKey) && (
+                {col.key === ('total-minus-point' as PenaltyFullTableKey) && (
                   <MinusIcon
                     width={16}
                     height={16}
                     className='fill-neutral-600'
+                    onClick={() => console.log('// todo : 필터링 적용하기')}
                   />
                 )}
               </div>
