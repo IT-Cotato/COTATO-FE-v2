@@ -18,8 +18,9 @@ import {
 export const TableContainer = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const sortDirection =
-    (searchParams.get('sort') as SortDirection) ?? undefined;
+  const rawSort = searchParams.get('sort');
+  const sortDirection: SortDirection | undefined =
+    rawSort === 'ASC' || rawSort === 'DESC' ? rawSort : undefined;
   const search = searchParams.get('keyword') ?? undefined;
 
   const {selectedGenerationNumber, selectedSessionType, sessionId} =
@@ -89,8 +90,11 @@ export const TableContainer = () => {
 
   const handleSort = () => {
     const params = new URLSearchParams(searchParams.toString());
-    const currentSort =
-      (searchParams.get('sort') as SortDirection) ?? undefined;
+    const currentSortParam = searchParams.get('sort');
+    const currentSort: SortDirection | undefined =
+      currentSortParam === 'ASC' || currentSortParam === 'DESC'
+        ? currentSortParam
+        : undefined;
     if (!currentSort) {
       params.set('sort', 'ASC');
     } else if (currentSort === 'ASC') {
