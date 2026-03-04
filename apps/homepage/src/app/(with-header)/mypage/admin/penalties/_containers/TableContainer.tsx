@@ -1,21 +1,24 @@
 'use client';
 
+import {useSearchParams} from 'next/navigation';
 import {useAdminPenaltiesStore} from '@/store/useAdminPenaltiesStore';
 import {FullSessionTable} from '@/app/(with-header)/mypage/admin/penalties/_components/table/FullSessionTable';
 import {SpecificSessionTable} from '@/app/(with-header)/mypage/admin/penalties/_components/table/SpecificSessionTable';
+import {useAllStatisticsQuery} from '@/hooks/queries/usePenalties.query';
+import {SortDirection} from '@/types/mypage/admin/penalties/penalties.type';
 
 export const TableContainer = () => {
-  const {selectedSessionType} = useAdminPenaltiesStore();
+  const searchParams = useSearchParams();
+  const sortDirection =
+    (searchParams.get('sort') as SortDirection) ?? undefined;
+  const search = searchParams.get('keyword') ?? undefined;
 
-  const fullAttendanceList: {
-    memberId: number;
-    name: string;
-    attendanceMinusPoint: number;
-    sessionMinusPoint: number;
-    beerNetworkingCount: number;
-    beerNetworkingBonusPoint: number;
-    totalMinusPoint: number;
-  }[] = [];
+  const {selectedGenerationNumber, selectedSessionType} =
+    useAdminPenaltiesStore();
+
+  const shouldFetchFull =
+    selectedSessionType === 'FULL' && !!selectedGenerationNumber;
+
   const specificAttendanceList: {
     memberId: number;
     name: string;
@@ -29,10 +32,17 @@ export const TableContainer = () => {
     extraMinusPoint: number;
   }[] = [];
 
+  const {data: allStatistics = [], isLoading: isAllStatisticsLoading} =
+    useAllStatisticsQuery(
+      shouldFetchFull ? (selectedGenerationNumber ?? 0) : 0,
+      search,
+      sortDirection
+    );
+
   return (
     <>
       {selectedSessionType === 'FULL' ? (
-        <FullSessionTable items={fullAttendanceList} />
+        <FullSessionTable items={allStatistics} />
       ) : (
         <div className='flex gap-5'>
           <SpecificSessionTable items={specificAttendanceList} />
