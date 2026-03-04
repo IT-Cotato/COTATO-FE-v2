@@ -1,5 +1,6 @@
 'use client';
 
+import {Spinner} from '@repo/ui/components/spinner/Spinner';
 import {useRouter, useSearchParams} from 'next/navigation';
 import {useAdminPenaltiesStore} from '@/store/useAdminPenaltiesStore';
 import {FullSessionTable} from '@/app/(with-header)/mypage/admin/penalties/_components/table/FullSessionTable';
@@ -33,6 +34,23 @@ export const TableContainer = () => {
 
   const {data: sessionDetail, isLoading: isSessionDetailLoading} =
     useSessionDetailQuery(shouldFetchSpecific ? (sessionId ?? 0) : 0, search);
+
+  const isLoading =
+    (selectedSessionType === 'FULL' && isAllStatisticsLoading) ||
+    (selectedSessionType === 'SPECIFIC' && isSessionDetailLoading);
+
+  if (isLoading) {
+    return (
+      <div
+        className='flex min-h-100 items-center justify-center'
+        role='status'
+        aria-live='polite'
+        aria-busy='true'>
+        <Spinner />
+        <span className='sr-only'>데이터를 불러오는 중입니다.</span>
+      </div>
+    );
+  }
 
   const handleSort = () => {
     const params = new URLSearchParams(searchParams.toString());
