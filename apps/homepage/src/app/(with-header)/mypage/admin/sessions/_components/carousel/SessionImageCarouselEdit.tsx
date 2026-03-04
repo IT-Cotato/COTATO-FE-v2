@@ -18,6 +18,7 @@ import {
   MAX_IMAGES,
   useSessionImageCarousel,
 } from '@/app/(with-header)/mypage/admin/sessions/_hooks/useSessionImageCarousel';
+import clsx from 'clsx';
 
 interface SessionImageCarouselEditProps {
   sessionId: number;
@@ -140,9 +141,13 @@ export const SessionImageCarouselEdit = ({
             }}
             title={`최대 ${MAX_IMAGES}장`}
             aria-disabled={!canAddMore}
-            className={`flex h-20 w-20 shrink-0 flex-col items-center justify-center gap-1 rounded-lg border border-dashed border-neutral-300 bg-neutral-50 ${
-              canAddMore ? 'cursor-pointer' : 'cursor-not-allowed opacity-50'
-            }`}
+            className={clsx(
+              'flex h-20 w-20 shrink-0 flex-col items-center justify-center gap-1 rounded-lg border border-dashed border-neutral-300 bg-neutral-50',
+              {
+                'cursor-pointer': canAddMore,
+                'cursor-not-allowed opacity-50': !canAddMore,
+              }
+            )}
             aria-label='이미지 추가'>
             <PlusIcon className='h-5 w-5 text-neutral-600' />
             <span className='text-h5 text-neutral-600'>추가</span>
