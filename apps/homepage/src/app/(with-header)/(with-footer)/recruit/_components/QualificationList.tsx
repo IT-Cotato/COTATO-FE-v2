@@ -10,8 +10,8 @@ export const QualificationList = () => {
           도달하는 성장의 종착지
         </p>
         <p className='text-h4 text-center text-white'>
-          혼자 고민하던 시간은 뒤로하고, 협업의 밀도 속에서 진짜 프로젝트를
-          경험하세요.
+          코테이토에서, &apos;말하는 감자&apos;에서 &apos;행동하는 감자&apos;로
+          도약할 당신을 기다립니다.
         </p>
       </div>
       <div className='flex justify-center gap-20'>

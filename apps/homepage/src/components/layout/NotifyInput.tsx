@@ -51,7 +51,7 @@ export const NotifyInput = () => {
           labelTypo='body_m'
           width={126}
           height={34}
-          className='px-4.75 py-1.25'
+          className='py-1.25'
           backgroundColor='primary'
           disabledBackgroundColor='neutral-500'
           disabled={!isValidEmail || isPending}
