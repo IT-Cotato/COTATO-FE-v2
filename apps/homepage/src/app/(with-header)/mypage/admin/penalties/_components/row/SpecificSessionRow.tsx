@@ -67,11 +67,12 @@ export const SpecificSessionRow = ({
 
       <td className='px-3 py-4'>
         <input
-          type='number'
+          type='text'
+          placeholder='0'
           aria-label='기타 벌점'
           value={value}
           onChange={(e) => setValue(Number(e.target.value))}
-          className='text-body-l-sb w-full [appearance:textfield] bg-transparent text-center font-normal outline-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none'
+          className='text-body-l-sb placeholder:text-body-l-sb w-full bg-transparent text-center font-normal outline-none placeholder:text-neutral-600'
         />
       </td>
     </tr>
