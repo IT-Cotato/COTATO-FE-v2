@@ -215,6 +215,3 @@ export const BEER_NETWORKING_ATTENDANCE_CONFIG = {
 };
 export type BeerNetworkingAttendanceKey =
   keyof typeof BEER_NETWORKING_ATTENDANCE_CONFIG;
-export const BEER_NETWORKING_ATTENDANCE_OPTION = Object.keys(
-  ATTENDANCE_STATUS_CONFIG
-) as BeerNetworkingAttendanceKey[];
