@@ -31,22 +31,32 @@ export const FullSessionTable = ({
                 {col.label}
                 {col.key === ('total-minus-point' as PenaltyFullTableKey) &&
                   (sortedDirection ? (
-                    <ArrowDownIcon
-                      width={16}
-                      height={16}
-                      className={clsx(
-                        'stroke-neutral-600',
-                        sortedDirection === 'DESC' && 'rotate-180'
-                      )}
+                    <button
+                      type='button'
                       onClick={onSort}
-                    />
+                      aria-label='누계 정렬 변경'
+                      className='inline-flex'>
+                      <ArrowDownIcon
+                        width={16}
+                        height={16}
+                        className={clsx(
+                          'stroke-neutral-600',
+                          sortedDirection === 'DESC' && 'rotate-180'
+                        )}
+                      />
+                    </button>
                   ) : (
-                    <MinusIcon
-                      width={16}
-                      height={16}
-                      className='fill-neutral-600'
+                    <button
+                      type='button'
                       onClick={onSort}
-                    />
+                      aria-label='누계 정렬 변경'
+                      className='inline-flex'>
+                      <MinusIcon
+                        width={16}
+                        height={16}
+                        className='fill-neutral-600'
+                      />
+                    </button>
                   ))}
               </div>
             </th>
