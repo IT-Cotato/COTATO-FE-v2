@@ -23,13 +23,13 @@ export const SpecificSessionTableRowSchema = z.object({
   extraMinusPoint: z.number(),
 });
 
-export const SpecificSessionTableResponseSchema = {
+export const SpecificSessionTableResponseSchema = z.object({
   sessionId: z.number(),
   sessionNumber: z.number(),
   sessionTitle: z.string(),
   sessionDateTime: z.string(),
   members: z.array(SpecificSessionTableRowSchema),
-};
+});
 
 /** 타입 추출 */
 export type FullSessionTableRowType = z.infer<typeof FullSessionTableRowSchema>;
