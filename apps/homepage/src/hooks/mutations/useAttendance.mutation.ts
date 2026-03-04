@@ -26,9 +26,14 @@ export const useManageAttendanceStatusMutation = () => {
   return useMutation({
     mutationFn: patchAttendanceStatus,
     onSuccess: async () => {
-      await queryClient.invalidateQueries({
-        queryKey: [QUERY_KEYS.ATTENDANCE.BASE],
-      });
+      await Promise.all([
+        await queryClient.invalidateQueries({
+          queryKey: [QUERY_KEYS.ATTENDANCE.BASE],
+        }),
+        await queryClient.invalidateQueries({
+          queryKey: [QUERY_KEYS.PENALTY.BASE],
+        }),
+      ]);
     },
   });
 };
