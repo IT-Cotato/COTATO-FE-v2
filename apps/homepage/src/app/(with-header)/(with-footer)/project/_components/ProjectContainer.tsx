@@ -102,12 +102,14 @@ export const ProjectContainer = () => {
               const gen = label === '전체' ? 'all' : label.replace('기', '');
               updateQuery('gen', gen);
             }}
+            isBorder
           />
           <Dropdown
             placeholder='활동'
             value={selectedActLabel}
             options={activityLabels}
             onSelect={handleActSelect}
+            isBorder
           />
         </div>
         {isAdmin && (

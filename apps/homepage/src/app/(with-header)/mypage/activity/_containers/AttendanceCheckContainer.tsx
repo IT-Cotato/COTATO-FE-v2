@@ -46,6 +46,7 @@ export const AttendanceCheckContainer = ({activeTab}: {activeTab: TabType}) => {
           value={selectedMonth}
           options={monthOptions}
           onSelect={setSelectedMonth}
+          isBorder
         />
       </div>
       <div className='rounded-[10px] bg-neutral-50 px-15.75 py-7 text-center'>
