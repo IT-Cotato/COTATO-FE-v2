@@ -10,6 +10,7 @@ import {
   useSessionDetailQuery,
 } from '@/hooks/queries/usePenalties.query';
 import {SortDirection} from '@/types/mypage/admin/penalties/penalties.type';
+import {usePatchBeerNetworkingMutation} from '@/hooks/mutations/usePenalties.mutation';
 
 export const TableContainer = () => {
   const router = useRouter();
@@ -34,6 +35,23 @@ export const TableContainer = () => {
 
   const {data: sessionDetail, isLoading: isSessionDetailLoading} =
     useSessionDetailQuery(shouldFetchSpecific ? (sessionId ?? 0) : 0, search);
+
+  const {
+    mutate: updateBeerNetworkingAttendance,
+    isPending: isUpdatingBeerNetworkingAttendance,
+  } = usePatchBeerNetworkingMutation();
+
+  const handleClickBeerNetworkingChip = (
+    memberId: number,
+    participated: boolean
+  ) => {
+    if (!sessionId) return;
+    updateBeerNetworkingAttendance({
+      sessionId,
+      memberId,
+      participated,
+    });
+  };
 
   const isLoading =
     (selectedSessionType === 'FULL' && isAllStatisticsLoading) ||
@@ -76,7 +94,10 @@ export const TableContainer = () => {
         />
       ) : (
         <div className='flex gap-5'>
-          <SpecificSessionTable items={sessionDetail?.members ?? []} />
+          <SpecificSessionTable
+            items={sessionDetail?.members ?? []}
+            onClickBeerNetworkingChip={handleClickBeerNetworkingChip}
+          />
         </div>
       )}
     </>
