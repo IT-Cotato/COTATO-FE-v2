@@ -1,6 +1,6 @@
 import {z} from 'zod';
 
-export const PositionEnum = z.enum(['PM', 'DESIGN', 'FE', 'BE']);
+export const PositionEnum = z.enum(['PM', 'DE', 'FE', 'BE']);
 
 export const ProjectRegistrationSchema = z.object({
   generationId: z.number().int(),

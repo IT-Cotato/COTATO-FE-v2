@@ -4,7 +4,7 @@ import Plus from '@repo/ui/assets/icons/plus-nobackground.svg';
 import {TeamSectionProps} from '@/schemas/project/project-type';
 import {POSITION_LABEL} from '@/constants/project/project-detail';
 
-const ROLES: Position[] = ['PM', 'DESIGN', 'FE', 'BE'];
+const ROLES: Position[] = ['PM', 'DE', 'FE', 'BE'];
 
 export const TeamSection = ({
   teamMembers,
