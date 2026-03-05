@@ -50,7 +50,10 @@ export const useActiveMembersModals = ({
     const member = members.find((m) => m.memberId === memberId);
     if (!member) return;
 
-    if (action === 'delete' || action === 'exclude') {
+    if (action === 'exclude') {
+      if (!member.generationMemberId) return;
+      deleteActiveMemberMutate(member.generationMemberId);
+    } else if (action === 'delete') {
       setMemberToDelete(member);
       setIsDeleteModalOpen(true);
     } else if (action === 'edit') {
