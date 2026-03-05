@@ -1,8 +1,6 @@
 import {QUERY_KEYS} from '@/constants/query-keys';
-import {
-  patchAttendanceStatus,
-  postAttendanceRecord,
-} from '@/services/api/attendance/attendance.api';
+import {patchAttendanceStatus} from '@/services/api/admin/admin-attendance.api';
+import {postAttendanceRecord} from '@/services/api/attendance/attendance.api';
 import {useMutation, useQueryClient} from '@tanstack/react-query';
 
 /** 출석 제출 Mutation */

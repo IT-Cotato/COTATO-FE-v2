@@ -1,11 +1,11 @@
 import {useQuery} from '@tanstack/react-query';
 import {QUERY_KEYS} from '@/constants/query-keys';
+import {getAttendanceSessions} from '@/services/api/attendance/attendance.api';
 import {
   getAttendanceFullRecord,
   getAttendanceIdByGeneration,
-  getAttendanceSessions,
   getAttendanceSpecificRecord,
-} from '@/services/api/attendance/attendance.api';
+} from '@/services/api/admin/admin-attendance.api';
 import {
   AttendanceStatusType,
   PositionType,
