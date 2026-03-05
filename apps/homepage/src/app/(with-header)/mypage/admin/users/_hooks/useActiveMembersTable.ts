@@ -26,7 +26,7 @@ export const useActiveMembersTable = () => {
   const isCurrentGeneration =
     generation.selectedGeneration !== null &&
     generation.selectedGeneration === generation.defaultGenerationId;
-  const totalPages = data?.totalPages ?? (data?.isLast ? data.page + 1 : 1);
+  const totalPages = data ? (data.isLast ? data.page + 1 : data.page + 2) : 1;
 
   const modals = useActiveMembersModals({members, isCurrentGeneration});
   const {mutate: patchRoleMutate} = usePatchActiveMemberRole();

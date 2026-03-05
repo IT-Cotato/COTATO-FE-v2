@@ -85,7 +85,6 @@ export const ActiveMemberSchema = z.object({
 export const ActiveMembersPageResponseSchema = z.object({
   content: z.array(ActiveMemberSchema),
   hasNext: z.boolean(),
-  totalPages: z.number().optional(),
   page: z.number(),
   size: z.number(),
   isFirst: z.boolean(),
