@@ -1,4 +1,3 @@
-import {PENALTY_FULL_TABLE_HEADER} from '@/constants/admin/admin';
 import {
   PenaltyFullTableKey,
   SortDirection,
@@ -7,6 +6,7 @@ import MinusIcon from '@repo/ui/assets/icons/minus-round.svg';
 import ArrowDownIcon from '@repo/ui/assets/icons/arrow-down.svg';
 import clsx from 'clsx';
 import {AdminPenaltiesEntireTableRowType} from '@/schemas/admin/admin-penalties.schema';
+import {PENALTY_FULL_TABLE_HEADER} from '@/constants/admin/admin-penalties';
 
 interface AdminPenaltiesEntireTableProps {
   items: AdminPenaltiesEntireTableRowType[];

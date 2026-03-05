@@ -1,6 +1,6 @@
-import {PENALTY_SPECIFIC_TABLE_HEADER} from '@/constants/admin/admin';
 import {AdminPenaltiesSpecificTableRowType} from '@/schemas/admin/admin-penalties.schema';
 import {AdminPenaltiesSpecificTableRow} from '@/app/(with-header)/mypage/admin/penalties/_components/row/AdminPenaltiesSpecificTableRow';
+import {PENALTY_SPECIFIC_TABLE_HEADER} from '@/constants/admin/admin-penalties';
 
 interface AdminPenaltiesSpecificTableProps {
   items: AdminPenaltiesSpecificTableRowType[];

@@ -1,9 +1,7 @@
 'use client';
 
-import {
-  ATTENDANCE_STATUS_CONFIG,
-  BEER_NETWORKING_ATTENDANCE_CONFIG,
-} from '@/constants/admin/admin';
+import {ATTENDANCE_STATUS_CONFIG} from '@/constants/admin/admin-attendance';
+import {BEER_NETWORKING_ATTENDANCE_CONFIG} from '@/constants/admin/admin-penalties';
 import {AdminPenaltiesSpecificTableRowType} from '@/schemas/admin/admin-penalties.schema';
 import {StatusChip} from '@repo/ui/components/chip/StatusChip';
 import {useDebounce} from '@repo/ui/hooks/useDebounce';
