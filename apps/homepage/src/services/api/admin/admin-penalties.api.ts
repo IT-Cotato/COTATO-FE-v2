@@ -1,8 +1,8 @@
 import {
-  FullSessionTableResponse,
-  FullSessionTableResponseSchema,
-  SpecificSessionTableResponse,
-  SpecificSessionTableResponseSchema,
+  AdminPenaltiesEntireTableResponse,
+  AdminPenaltiesEntireTableResponseSchema,
+  AdminPenaltiesSpecificTableResponse,
+  AdminPenaltiesSpecificTableResponseSchema,
 } from '@/schemas/admin/admin-penalties.schema';
 import {privateAxios} from '@/services/config/axios';
 import {ENDPOINT} from '@/services/constant/endpoint';
@@ -52,12 +52,12 @@ export const getAllStatistics = async (params: {
   generationId: number;
   search?: string;
   sortDirection?: SortDirection;
-}): Promise<FullSessionTableResponse> => {
+}): Promise<AdminPenaltiesEntireTableResponse> => {
   try {
     const {data} = await privateAxios.get(ENDPOINT.PENALTY.ALL_STATISTICS, {
       params,
     });
-    return FullSessionTableResponseSchema.parse(data);
+    return AdminPenaltiesEntireTableResponseSchema.parse(data);
   } catch (error) {
     return handleApiError(error);
   }
@@ -67,7 +67,7 @@ export const getAllStatistics = async (params: {
 export const getSessionDetail = async (params: {
   sessionId: number;
   search?: string;
-}): Promise<SpecificSessionTableResponse> => {
+}): Promise<AdminPenaltiesSpecificTableResponse> => {
   try {
     const {data} = await privateAxios.get(
       ENDPOINT.PENALTY.SESSION_DETAIL(params.sessionId),
@@ -75,7 +75,7 @@ export const getSessionDetail = async (params: {
         params: {search: params.search},
       }
     );
-    return SpecificSessionTableResponseSchema.parse(data);
+    return AdminPenaltiesSpecificTableResponseSchema.parse(data);
   } catch (error) {
     return handleApiError(error);
   }

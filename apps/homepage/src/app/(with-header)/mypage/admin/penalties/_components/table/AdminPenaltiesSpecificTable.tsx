@@ -1,9 +1,9 @@
 import {PENALTY_SPECIFIC_TABLE_HEADER} from '@/constants/admin/admin';
-import {SpecificSessionTableRowType} from '@/schemas/admin/admin-penalties.schema';
+import {AdminPenaltiesSpecificTableRowType} from '@/schemas/admin/admin-penalties.schema';
 import {AdminPenaltiesSpecificTableRow} from '@/app/(with-header)/mypage/admin/penalties/_components/row/AdminPenaltiesSpecificTableRow';
 
 interface AdminPenaltiesSpecificTableProps {
-  items: SpecificSessionTableRowType[];
+  items: AdminPenaltiesSpecificTableRowType[];
   onClickBeerNetworkingChip: (memberId: number, participated: boolean) => void;
   isUpdatingBeerNetworkingChip: boolean;
   onChangeExtraMinusPoint: (memberId: number, extraMinusPoint: number) => void;

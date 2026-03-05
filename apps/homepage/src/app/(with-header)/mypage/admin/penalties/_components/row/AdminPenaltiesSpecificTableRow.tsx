@@ -4,13 +4,13 @@ import {
   ATTENDANCE_STATUS_CONFIG,
   BEER_NETWORKING_ATTENDANCE_CONFIG,
 } from '@/constants/admin/admin';
-import {SpecificSessionTableRowType} from '@/schemas/admin/admin-penalties.schema';
+import {AdminPenaltiesSpecificTableRowType} from '@/schemas/admin/admin-penalties.schema';
 import {StatusChip} from '@repo/ui/components/chip/StatusChip';
 import {useDebounce} from '@repo/ui/hooks/useDebounce';
 import {useEffect, useState} from 'react';
 
 interface AdminPenaltiesSpecificRowProps {
-  row: SpecificSessionTableRowType;
+  row: AdminPenaltiesSpecificTableRowType;
   onClickBeerNetworkingChip: (memberId: number, participated: boolean) => void;
   isUpdatingBeerNetworkingChip: boolean;
   onChangeExtraMinusPoint: (memberId: number, extraMinusPoint: number) => void;
