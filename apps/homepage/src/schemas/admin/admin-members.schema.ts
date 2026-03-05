@@ -29,7 +29,7 @@ export const AdminMemberSchema = z.object({
   phoneNumber: z.string().nullable(),
   university: z.string(),
   passedGenerationNumber: z.number(),
-  latestGenerationNumber: z.number(),
+  latestGenerationNumber: z.number().nullable(),
   position: PositionSchema,
   role: MemberRoleSchema,
   status: MemberStatusSchema,
@@ -171,7 +171,7 @@ export type MemberType = {
   // ALL 탭 전용
   status?: MemberStatus;
   gender?: z.infer<typeof GenderSchema>;
-  latestGenerationNumber?: number;
+  latestGenerationNumber?: number | null;
   // ACTIVE 탭 전용
   generationMemberId?: number;
 };
