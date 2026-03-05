@@ -1,5 +1,5 @@
 import {PositionCard} from '@/app/(with-header)/(with-footer)/recruit/_components/PositionCard';
-import {PositionCardType} from '@/schemas/recruitments/recruitments.schema';
+import {PositionCardType} from '@/schemas/recruit/recruit.schema';
 
 interface PositionListProps {
   parts?: PositionCardType[];

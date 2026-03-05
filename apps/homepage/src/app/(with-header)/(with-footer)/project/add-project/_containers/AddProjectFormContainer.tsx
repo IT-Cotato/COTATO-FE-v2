@@ -93,12 +93,14 @@ export const AddProjectFormContainer = () => {
             value={selectedGeneration}
             options={generations}
             onSelect={(value) => setSelectedGeneration(value)}
+            isBorder
           />
           <Dropdown
             placeholder='활동'
             value={selectedActivity}
             options={activities}
             onSelect={(value) => setSelectedActivity(value)}
+            isBorder
           />
         </div>
       </div>

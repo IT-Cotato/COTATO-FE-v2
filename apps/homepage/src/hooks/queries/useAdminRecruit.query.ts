@@ -1,8 +1,5 @@
 import {QUERY_KEYS} from '@/constants/query-keys';
-import {
-  getRecruitmentNotice,
-  getRecruitmentsStatus,
-} from '@/services/api/recruitments/recruitments.api';
+import {getRecruitmentsStatus} from '@/services/api/admin/admin-recruit.api';
 import {useQuery} from '@tanstack/react-query';
 
 export const useRecruitmentsStatus = () => {
@@ -10,12 +7,5 @@ export const useRecruitmentsStatus = () => {
     queryKey: QUERY_KEYS.RECRUITMENTS.STATUS,
     queryFn: getRecruitmentsStatus,
     staleTime: 1000 * 60 * 5,
-  });
-};
-
-export const useRecruitmentNoticeQuery = () => {
-  return useQuery({
-    queryKey: QUERY_KEYS.RECRUITMENTS.NOTICE,
-    queryFn: getRecruitmentNotice,
   });
 };

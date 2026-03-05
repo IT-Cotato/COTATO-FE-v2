@@ -8,9 +8,9 @@ import {ROUTES} from '@/constants/routes';
 import {useAuthStore} from '@/store/useAuthStore';
 import {useShallow} from 'zustand/shallow';
 import {useMemberInfoQuery} from '@/hooks/queries/useMembers.query';
-import {useRecruitmentsStatus} from '@/hooks/queries/useRecruitments.query';
 import {useEffect} from 'react';
 import {useAttendanceStatusQuery} from '@/hooks/queries/useAttendanceStatus.query';
+import {useRecruitmentsStatus} from '@/hooks/queries/useAdminRecruit.query';
 
 export const Header = () => {
   const pathname = usePathname();

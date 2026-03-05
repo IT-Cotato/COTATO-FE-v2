@@ -3,7 +3,7 @@
 import {useState} from 'react';
 import {Button} from '@repo/ui/components/buttons/Button';
 import {RecruitmentNotificationModal} from '@/components/modal/RecruitmentNotificationModal';
-import {useSubscribeRecruitmentNotify} from '@/hooks/mutations/useRecruitments.mutation';
+import {useSubscribeRecruitmentNotify} from '@/hooks/mutations/useRecruit.mutation';
 
 export const NotifyInput = () => {
   const [email, setEmail] = useState('');

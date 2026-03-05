@@ -2,17 +2,17 @@
 
 import {useRouter, useSearchParams} from 'next/navigation';
 import {PartTab} from '@/app/(with-header)/mypage/admin/attendance/_components/PartTab';
+import {StatusChip} from '@repo/ui/components/chip/StatusChip';
+import {useEffect, useState} from 'react';
+import {AttendancePartType} from '@/schemas/admin/admin-attendance.schema';
+import {useAdminAttendanceStore} from '@/store/useAdminAttendanceStore';
+import {SearchBar} from '@/app/(with-header)/mypage/admin/_components/SearchBar';
 import {
   ATTENDANCE_PART_TAB,
   ATTENDANCE_STATUS_CONFIG,
   ATTENDANCE_STATUS_OPTION,
   AttendanceStatusKey,
-} from '@/constants/admin/admin';
-import {StatusChip} from '@repo/ui/components/chip/StatusChip';
-import SearchIcon from '@repo/ui/assets/icons/search.svg';
-import {useEffect, useState} from 'react';
-import {AttendancePartType} from '@/schemas/admin/admin-attendance.schema';
-import {useAdminAttendanceStore} from '@/store/useAdminAttendanceStore';
+} from '@/constants/admin/admin-attendance';
 
 export const TabContainer = () => {
   const router = useRouter();
@@ -100,7 +100,7 @@ export const TabContainer = () => {
 
   return (
     <div className='flex items-end'>
-      <div className='mr-97.25 flex flex-col gap-2.5'>
+      <div className='flex flex-col gap-2.5'>
         <div role='tablist' className='flex gap-7.5' aria-label='파트 선택'>
           {ATTENDANCE_PART_TAB.map(({label, value}, index) => {
             const isActive = activePart === value;
@@ -133,24 +133,11 @@ export const TabContainer = () => {
           </div>
         )}
       </div>
-      <form
-        role='search'
-        aria-label='회원 검색'
-        onSubmit={(e) => {
-          e.preventDefault();
-          handleSearch();
-        }}
-        className='flex h-fit flex-1 items-center gap-2.5 rounded-[10px] bg-neutral-50 px-4 py-3.5'>
-        <SearchIcon width={16} height={16} />
-        <input
-          type='search'
-          placeholder='SEARCH'
-          aria-label='회원 이름 검색'
-          value={keyword}
-          onChange={(e) => setKeyword(e.target.value)}
-          className='text-body-l w-full font-normal outline-none placeholder:text-neutral-600'
-        />
-      </form>
+      <SearchBar
+        onSearch={handleSearch}
+        keyword={keyword}
+        onKeywordChange={setKeyword}
+      />
     </div>
   );
 };

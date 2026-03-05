@@ -9,7 +9,7 @@ import {NotifyInput} from '@/components/layout/NotifyInput';
 
 type bgColorKey = 'bg-transparent' | 'bg-neutral-50' | 'bg-[#010101]';
 
-interface RecruitmentLayoutProps {
+interface RecruitLayoutProps {
   isRecruiting: boolean;
   backgroundColor?: bgColorKey;
   backgroundSrc?: string;
@@ -17,13 +17,13 @@ interface RecruitmentLayoutProps {
   limitVisualStripWidth?: boolean;
 }
 
-export default function RecruitmentLayout({
+export function RecruitLayout({
   isRecruiting,
   backgroundColor,
   backgroundSrc,
   visualStripSrc,
   limitVisualStripWidth = false,
-}: RecruitmentLayoutProps) {
+}: RecruitLayoutProps) {
   return (
     <div
       className={clsx(

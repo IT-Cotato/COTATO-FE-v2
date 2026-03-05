@@ -2,15 +2,15 @@ import {
   ATTENDANCE_SPECIFIC_TABLE_HEADER,
   ATTENDANCE_STATUS_CONFIG,
   ATTENDANCE_STATUS_OPTION,
-} from '@/constants/admin/admin';
+} from '@/constants/admin/admin-attendance';
 import {
+  AdminAttendanceSpecificTableRowType,
   AttendanceStatusType,
-  SpecificSessionTableRowType,
 } from '@/schemas/admin/admin-attendance.schema';
 import {StatusDropdown} from '@repo/ui/components/dropdown/StatusDropdown';
 
-interface SpecificSessionTableProps {
-  items: SpecificSessionTableRowType[];
+interface AdminAttendanceSpecificTableProps {
+  items: AdminAttendanceSpecificTableRowType[];
   onChangeAttendanceStatus: (
     memberId: number,
     result: AttendanceStatusType
@@ -18,13 +18,13 @@ interface SpecificSessionTableProps {
   isUpdating: boolean;
 }
 
-export const SpecificSessionTable = ({
+export const AdminAttendanceSpecificTable = ({
   items,
   onChangeAttendanceStatus,
   isUpdating,
-}: SpecificSessionTableProps) => {
+}: AdminAttendanceSpecificTableProps) => {
   return (
-    <table className='h-fit flex-1 border-collapse'>
+    <table className='h-fit w-full table-fixed border-collapse'>
       <thead className='bg-neutral-200'>
         <tr>
           {ATTENDANCE_SPECIFIC_TABLE_HEADER.map((col) => (

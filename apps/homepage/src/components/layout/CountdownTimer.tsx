@@ -3,7 +3,7 @@
 import clsx from 'clsx';
 import {useState, useEffect} from 'react';
 import {Spinner} from '@repo/ui/components/spinner/Spinner';
-import {useRecruitmentNoticeQuery} from '@/hooks/queries/useRecruitments.query';
+import {useRecruitmentNoticeQuery} from '@/hooks/queries/useRecruit.query';
 
 interface CountdownTimerProps {
   highlightUnits?: boolean;

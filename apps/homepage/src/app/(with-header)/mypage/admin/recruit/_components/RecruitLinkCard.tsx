@@ -1,8 +1,8 @@
 'use client';
 
-import {useRecruitmentsStatus} from '@/hooks/queries/useRecruitments.query';
-import {ToggleSwitch} from './ToggleSwitch';
-import {useToggleRecruitmentsStatusMutation} from '@/hooks/mutations/useRecruitments.mutation';
+import {useRecruitmentsStatus} from '@/hooks/queries/useAdminRecruit.query';
+import {ToggleSwitch} from '@/app/(with-header)/mypage/admin/recruit/_components/ToggleSwitch';
+import {useToggleRecruitmentsStatusMutation} from '@/hooks/mutations/useAdminRecruit.mutation';
 
 export const RecruitLinkCard = () => {
   const {data} = useRecruitmentsStatus();

@@ -5,7 +5,7 @@ import {QualificationList} from '@/app/(with-header)/(with-footer)/recruit/_comp
 import {PositionList} from '@/app/(with-header)/(with-footer)/recruit/_components/PositionList';
 import {ActivityList} from '@/app/(with-header)/(with-footer)/recruit/_components/ActivityList';
 import {FaqContainer} from '@/app/(with-header)/(with-footer)/recruit/_containers/FaqContainer';
-import {useRecruitmentNoticeQuery} from '@/hooks/queries/useRecruitments.query';
+import {useRecruitmentNoticeQuery} from '@/hooks/queries/useRecruit.query';
 
 export const ContentContainer = () => {
   const {data} = useRecruitmentNoticeQuery();

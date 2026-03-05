@@ -3,21 +3,12 @@ import {QUERY_KEYS} from '@/constants/query-keys';
 import {
   getAttendanceFullRecord,
   getAttendanceIdByGeneration,
-  getAttendanceSessions,
   getAttendanceSpecificRecord,
-} from '@/services/api/attendance/attendance.api';
+} from '@/services/api/admin/admin-attendance.api';
 import {
   AttendanceStatusType,
   PositionType,
 } from '@/schemas/admin/admin-attendance.schema';
-
-/** 출석 세션 목록 쿼리 */
-export const useAttendanceSessionsQuery = (month?: number) => {
-  return useQuery({
-    queryKey: QUERY_KEYS.ATTENDANCE.SESSIONS(month),
-    queryFn: () => getAttendanceSessions(month),
-  });
-};
 
 /** 기수별 세션 출석 id 목록 쿼리 */
 export const useAttendanceIdByGenerationQuery = (generationId: number) => {

@@ -1,9 +1,5 @@
 import z from 'zod';
 
-export const RecruitmentsStatusSchema = z.object({
-  active: z.boolean(),
-});
-
 /** 일정 타임라인 */
 export const TimelineSchema = z.object({
   title: z.string(),
@@ -54,7 +50,6 @@ export const SubscribeEmail = z.object({
 });
 
 /** 타입 추출 */
-export type RecruitmentsStatusType = z.infer<typeof RecruitmentsStatusSchema>;
 export type TimelineType = z.infer<typeof TimelineSchema>;
 export type PositionType = z.infer<typeof PositionSchema>;
 export type PositionCardType = z.infer<typeof PositionCardSchema>;
