@@ -22,7 +22,7 @@ export const DropdownContainer = () => {
     selectedSession,
     setSelectedGeneration,
     setSelectedSession,
-    setSesssionId,
+    setSessionId,
     setSelectedSessionType,
   } = useAdminPenaltiesStore();
 
@@ -73,7 +73,7 @@ export const DropdownContainer = () => {
 
   useEffect(() => {
     if (sessions.length <= 0 || selectedSession === '전체 세션') {
-      setSesssionId(null);
+      setSessionId(null);
       setSelectedSessionType('FULL');
       return;
     }
@@ -84,13 +84,13 @@ export const DropdownContainer = () => {
       sessionListIndex < 0 ||
       sessionListIndex >= sessions.length
     ) {
-      setSesssionId(null);
+      setSessionId(null);
       setSelectedSessionType('FULL');
       return;
     }
-    setSesssionId(sessions[sessionListIndex].sessionId);
+    setSessionId(sessions[sessionListIndex].sessionId);
     setSelectedSessionType('SPECIFIC');
-  }, [selectedSession, sessions, setSesssionId, setSelectedSessionType]);
+  }, [selectedSession, sessions, setSessionId, setSelectedSessionType]);
 
   const handleSearch = () => {
     const params = new URLSearchParams(searchParams.toString());

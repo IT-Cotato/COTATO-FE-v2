@@ -8,7 +8,7 @@ interface AdminPenaltiesState {
   selectedSessionType: 'FULL' | 'SPECIFIC';
   setSelectedGeneration: (selectedGeneration: string) => void;
   setSelectedSession: (selectedSession: string) => void;
-  setSesssionId: (sessionId: number | null) => void;
+  setSessionId: (sessionId: number | null) => void;
   setSelectedSessionType: (selectedSessionType: 'FULL' | 'SPECIFIC') => void;
 }
 
@@ -29,7 +29,7 @@ export const useAdminPenaltiesStore = create<AdminPenaltiesState>((set) => ({
 
   setSelectedSession: (selectedSession) => set({selectedSession}),
 
-  setSesssionId: (sessionId) =>
+  setSessionId: (sessionId) =>
     set({
       sessionId,
     }),
