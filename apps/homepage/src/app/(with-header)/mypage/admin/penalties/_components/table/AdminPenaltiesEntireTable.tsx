@@ -8,17 +8,17 @@ import MinusIcon from '@repo/ui/assets/icons/minus-round.svg';
 import ArrowDownIcon from '@repo/ui/assets/icons/arrow-down.svg';
 import clsx from 'clsx';
 
-interface FullSessionTableProps {
+interface AdminPenaltiesEntireTableProps {
   items: FullSessionTableRowType[];
   onSort: () => void;
   sortedDirection?: SortDirection;
 }
 
-export const FullSessionTable = ({
+export const AdminPenaltiesEntireTable = ({
   items,
   onSort,
   sortedDirection,
-}: FullSessionTableProps) => {
+}: AdminPenaltiesEntireTableProps) => {
   return (
     <table className='h-fit w-full table-fixed border-collapse'>
       <thead className='bg-neutral-200'>

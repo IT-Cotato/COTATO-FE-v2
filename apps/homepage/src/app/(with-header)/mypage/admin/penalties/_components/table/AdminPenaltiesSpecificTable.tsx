@@ -1,20 +1,20 @@
 import {PENALTY_SPECIFIC_TABLE_HEADER} from '@/constants/admin/admin';
 import {SpecificSessionTableRowType} from '@/schemas/admin/admin-penalties.schema';
-import {SpecificSessionRow} from '@/app/(with-header)/mypage/admin/penalties/_components//row/SpecificSessionRow';
+import {AdminPenaltiesSpecificTableRow} from '@/app/(with-header)/mypage/admin/penalties/_components/row/AdminPenaltiesSpecificTableRow';
 
-interface SpecificSessionTableProps {
+interface AdminPenaltiesSpecificTableProps {
   items: SpecificSessionTableRowType[];
   onClickBeerNetworkingChip: (memberId: number, participated: boolean) => void;
   isUpdatingBeerNetworkingChip: boolean;
   onChangeExtraMinusPoint: (memberId: number, extraMinusPoint: number) => void;
 }
 
-export const SpecificSessionTable = ({
+export const AdminPenaltiesSpecificTable = ({
   items,
   onClickBeerNetworkingChip,
   isUpdatingBeerNetworkingChip,
   onChangeExtraMinusPoint,
-}: SpecificSessionTableProps) => {
+}: AdminPenaltiesSpecificTableProps) => {
   return (
     <table className='h-fit w-full table-fixed border-collapse'>
       <thead className='bg-neutral-200'>
@@ -41,7 +41,7 @@ export const SpecificSessionTable = ({
           </tr>
         ) : (
           items.map((row) => (
-            <SpecificSessionRow
+            <AdminPenaltiesSpecificTableRow
               key={row.memberId}
               row={row}
               onClickBeerNetworkingChip={onClickBeerNetworkingChip}

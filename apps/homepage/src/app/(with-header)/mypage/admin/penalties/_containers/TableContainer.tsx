@@ -3,8 +3,6 @@
 import {Spinner} from '@repo/ui/components/spinner/Spinner';
 import {useRouter, useSearchParams} from 'next/navigation';
 import {useAdminPenaltiesStore} from '@/store/useAdminPenaltiesStore';
-import {FullSessionTable} from '@/app/(with-header)/mypage/admin/penalties/_components/table/FullSessionTable';
-import {SpecificSessionTable} from '@/app/(with-header)/mypage/admin/penalties/_components/table/SpecificSessionTable';
 import {
   useAllStatisticsQuery,
   useSessionDetailQuery,
@@ -14,6 +12,8 @@ import {
   usePatchBeerNetworkingMutation,
   usePatchExtraMinusPointMutation,
 } from '@/hooks/mutations/usePenalties.mutation';
+import {AdminPenaltiesEntireTable} from '@/app/(with-header)/mypage/admin/penalties/_components/table/AdminPenaltiesEntireTable';
+import {AdminPenaltiesSpecificTable} from '@/app/(with-header)/mypage/admin/penalties/_components/table/AdminPenaltiesSpecificTable';
 
 export const TableContainer = () => {
   const router = useRouter();
@@ -108,14 +108,14 @@ export const TableContainer = () => {
   return (
     <>
       {selectedSessionType === 'FULL' ? (
-        <FullSessionTable
+        <AdminPenaltiesEntireTable
           items={allStatistics}
           onSort={handleSort}
           sortedDirection={sortDirection}
         />
       ) : (
         <div className='flex gap-5'>
-          <SpecificSessionTable
+          <AdminPenaltiesSpecificTable
             items={sessionDetail?.members ?? []}
             onClickBeerNetworkingChip={handleClickBeerNetworkingChip}
             isUpdatingBeerNetworkingChip={isUpdatingBeerNetworkingChip}

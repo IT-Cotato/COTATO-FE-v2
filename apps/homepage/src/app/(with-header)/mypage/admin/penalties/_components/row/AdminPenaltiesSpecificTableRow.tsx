@@ -9,19 +9,19 @@ import {StatusChip} from '@repo/ui/components/chip/StatusChip';
 import {useDebounce} from '@repo/ui/hooks/useDebounce';
 import {useEffect, useState} from 'react';
 
-interface SpecificSessionRowProps {
+interface AdminPenaltiesSpecificRowProps {
   row: SpecificSessionTableRowType;
   onClickBeerNetworkingChip: (memberId: number, participated: boolean) => void;
   isUpdatingBeerNetworkingChip: boolean;
   onChangeExtraMinusPoint: (memberId: number, extraMinusPoint: number) => void;
 }
 
-export const SpecificSessionRow = ({
+export const AdminPenaltiesSpecificTableRow = ({
   row,
   onClickBeerNetworkingChip,
   isUpdatingBeerNetworkingChip,
   onChangeExtraMinusPoint,
-}: SpecificSessionRowProps) => {
+}: AdminPenaltiesSpecificRowProps) => {
   const [value, setValue] = useState(String(Math.abs(row.extraMinusPoint)));
 
   const debouncedValue = useDebounce(value, 500);
