@@ -171,7 +171,7 @@ export const AddGenerationModal = ({
           disabled={!generation || !startDate || !endDate}
           enableHover
           onClick={handleSubmit}
-          className='mt-2.5 self-end'
+          wrapperClassName='self-end mt-2.5'
         />
       </div>
     </div>
