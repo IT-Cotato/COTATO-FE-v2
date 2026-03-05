@@ -1,12 +1,12 @@
 'use client';
 
 import {Dropdown} from '@/components/dropdown/Dropdown';
-import {useAttendanceIdByGenerationQuery} from '@/hooks/queries/useAttendance.queries';
 import {useGenerationQuery} from '@/hooks/queries/useGeneration.query';
 import {useAdminPenaltiesStore} from '@/store/useAdminPenaltiesStore';
 import {useEffect, useMemo, useState} from 'react';
 import {SearchBar} from '@/app/(with-header)/mypage/admin/_components/SearchBar';
 import {useRouter, useSearchParams} from 'next/navigation';
+import {useAttendanceIdByGenerationQuery} from '@/hooks/queries/useAdminAttendance.query';
 
 export const DropdownContainer = () => {
   const router = useRouter();

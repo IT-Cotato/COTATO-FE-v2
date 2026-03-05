@@ -6,12 +6,12 @@ import {useAdminPenaltiesStore} from '@/store/useAdminPenaltiesStore';
 import {
   useAllStatisticsQuery,
   useSessionDetailQuery,
-} from '@/hooks/queries/usePenalties.query';
+} from '@/hooks/queries/useAdminPenalties.query';
 import {SortDirection} from '@/types/admin/admin-penalties.type';
 import {
   usePatchBeerNetworkingMutation,
   usePatchExtraMinusPointMutation,
-} from '@/hooks/mutations/usePenalties.mutation';
+} from '@/hooks/mutations/useAdminPenalties.mutation';
 import {AdminPenaltiesEntireTable} from '@/app/(with-header)/mypage/admin/penalties/_components/table/AdminPenaltiesEntireTable';
 import {AdminPenaltiesSpecificTable} from '@/app/(with-header)/mypage/admin/penalties/_components/table/AdminPenaltiesSpecificTable';
 

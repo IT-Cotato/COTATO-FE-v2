@@ -1,7 +1,7 @@
 'use client';
 
 import {Dropdown} from '@/components/dropdown/Dropdown';
-import {useAttendanceIdByGenerationQuery} from '@/hooks/queries/useAttendance.queries';
+import {useAttendanceIdByGenerationQuery} from '@/hooks/queries/useAdminAttendance.query';
 import {useGenerationQuery} from '@/hooks/queries/useGeneration.query';
 import {useAdminAttendanceStore} from '@/store/useAdminAttendanceStore';
 import {useEffect, useMemo} from 'react';
