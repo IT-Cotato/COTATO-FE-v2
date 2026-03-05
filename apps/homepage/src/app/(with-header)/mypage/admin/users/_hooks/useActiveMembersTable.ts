@@ -15,7 +15,7 @@ export const useActiveMembersTable = () => {
       generationId: generation.selectedGeneration ?? 0,
       search: urlState.searchParam,
       page: urlState.currentPage - 1,
-      size: 11,
+      size: 10,
     },
     isGenerationReady
   );
