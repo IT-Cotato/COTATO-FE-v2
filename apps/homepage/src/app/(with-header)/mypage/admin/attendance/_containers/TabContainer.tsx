@@ -2,17 +2,17 @@
 
 import {useRouter, useSearchParams} from 'next/navigation';
 import {PartTab} from '@/app/(with-header)/mypage/admin/attendance/_components/PartTab';
-import {
-  ATTENDANCE_PART_TAB,
-  ATTENDANCE_STATUS_CONFIG,
-  ATTENDANCE_STATUS_OPTION,
-  AttendanceStatusKey,
-} from '@/constants/admin/admin';
 import {StatusChip} from '@repo/ui/components/chip/StatusChip';
 import {useEffect, useState} from 'react';
 import {AttendancePartType} from '@/schemas/admin/admin-attendance.schema';
 import {useAdminAttendanceStore} from '@/store/useAdminAttendanceStore';
 import {SearchBar} from '@/app/(with-header)/mypage/admin/_components/SearchBar';
+import {
+  ATTENDANCE_PART_TAB,
+  ATTENDANCE_STATUS_CONFIG,
+  ATTENDANCE_STATUS_OPTION,
+  AttendanceStatusKey,
+} from '@/constants/admin/admin-attendance';
 
 export const TabContainer = () => {
   const router = useRouter();
