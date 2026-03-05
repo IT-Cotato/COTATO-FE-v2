@@ -3,14 +3,14 @@ import {privateAxios} from '@/services/config/axios';
 import {SessionAttendanceListResponse} from '@/schemas/mypage-mem/attendance/attendance.schema';
 import {ENDPOINT} from '@/services/constant/endpoint';
 import {
+  AdminAttendanceEntireTableResponse,
+  AdminAttendanceEntireTableResponseSchema,
+  AdminAttendanceSpecificTableResponse,
+  AdminAttendanceSpecificTableResponseSchema,
   AttendanceIdByGenerationResponse,
   AttendanceIdByGenerationResponseSchema,
   AttendanceStatusType,
-  FullSessionTableResponse,
-  FullSessionTableResponseSchema,
   PositionType,
-  SpecificSessionTableResponse,
-  SpecificSessionTableResponseSchema,
 } from '@/schemas/admin/admin-attendance.schema';
 import {handleApiError} from '@/services/utils/apiHelper';
 
@@ -53,12 +53,12 @@ export const getAttendanceFullRecord = async (
   generationId: number,
   position?: PositionType,
   search?: string
-): Promise<FullSessionTableResponse> => {
+): Promise<AdminAttendanceEntireTableResponse> => {
   try {
     const {data} = await privateAxios.get(ENDPOINT.ATTENDANCE.FULL_RECORDS, {
       params: {generationId, position, search},
     });
-    return FullSessionTableResponseSchema.parse(data);
+    return AdminAttendanceEntireTableResponseSchema.parse(data);
   } catch (error) {
     return handleApiError(error);
   }
@@ -70,7 +70,7 @@ export const getAttendanceSpecificRecord = async (
   position?: PositionType,
   attendanceResults?: AttendanceStatusType[],
   search?: string
-): Promise<SpecificSessionTableResponse> => {
+): Promise<AdminAttendanceSpecificTableResponse> => {
   try {
     const {data} = await privateAxios.get(
       ENDPOINT.ATTENDANCE.SPECIFIC_RECORDS(attendanceId),
@@ -80,7 +80,7 @@ export const getAttendanceSpecificRecord = async (
           qs.stringify(params, {arrayFormat: 'repeat'}),
       }
     );
-    return SpecificSessionTableResponseSchema.parse(data);
+    return AdminAttendanceSpecificTableResponseSchema.parse(data);
   } catch (error) {
     return handleApiError(error);
   }

@@ -3,10 +3,10 @@ import {
   MEMBER_POSITION_LABEL,
   type MemberPositionKey,
 } from '@/constants/admin/admin';
-import {FullSessionTableRowType} from '@/schemas/admin/admin-attendance.schema';
+import {AdminAttendanceEntireTableRowType} from '@/schemas/admin/admin-attendance.schema';
 
 interface AdminAttendanceEntireTableProps {
-  items: FullSessionTableRowType[];
+  items: AdminAttendanceEntireTableRowType[];
 }
 
 export const AdminAttendanceEntireTable = ({

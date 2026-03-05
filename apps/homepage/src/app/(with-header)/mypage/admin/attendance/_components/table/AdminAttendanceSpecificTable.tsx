@@ -4,13 +4,13 @@ import {
   ATTENDANCE_STATUS_OPTION,
 } from '@/constants/admin/admin';
 import {
+  AdminAttendanceSpecificTableRowType,
   AttendanceStatusType,
-  SpecificSessionTableRowType,
 } from '@/schemas/admin/admin-attendance.schema';
 import {StatusDropdown} from '@repo/ui/components/dropdown/StatusDropdown';
 
 interface AdminAttendanceSpecificTableProps {
-  items: SpecificSessionTableRowType[];
+  items: AdminAttendanceSpecificTableRowType[];
   onChangeAttendanceStatus: (
     memberId: number,
     result: AttendanceStatusType
