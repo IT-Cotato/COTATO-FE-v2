@@ -9,7 +9,7 @@ import {
 } from '@/schemas/admin/admin-attendance.schema';
 import {StatusDropdown} from '@repo/ui/components/dropdown/StatusDropdown';
 
-interface SpecificSessionTableProps {
+interface AdminAttendanceSpecificTableProps {
   items: SpecificSessionTableRowType[];
   onChangeAttendanceStatus: (
     memberId: number,
@@ -18,11 +18,11 @@ interface SpecificSessionTableProps {
   isUpdating: boolean;
 }
 
-export const SpecificSessionTable = ({
+export const AdminAttendanceSpecificTable = ({
   items,
   onChangeAttendanceStatus,
   isUpdating,
-}: SpecificSessionTableProps) => {
+}: AdminAttendanceSpecificTableProps) => {
   return (
     <table className='h-fit w-full table-fixed border-collapse'>
       <thead className='bg-neutral-200'>

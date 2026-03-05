@@ -5,11 +5,13 @@ import {
 } from '@/constants/admin/admin';
 import {FullSessionTableRowType} from '@/schemas/admin/admin-attendance.schema';
 
-interface FullSessionTableProps {
+interface AdminAttendanceEntireTableProps {
   items: FullSessionTableRowType[];
 }
 
-export const FullSessionTable = ({items}: FullSessionTableProps) => {
+export const AdminAttendanceEntireTable = ({
+  items,
+}: AdminAttendanceEntireTableProps) => {
   return (
     <table className='h-fit w-full table-fixed border-collapse'>
       <thead className='bg-neutral-200'>
