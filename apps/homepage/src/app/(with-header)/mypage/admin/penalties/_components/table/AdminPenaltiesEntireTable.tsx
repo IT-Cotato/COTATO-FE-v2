@@ -1,7 +1,7 @@
 import {
   PenaltyFullTableKey,
   SortDirection,
-} from '@/types/mypage/admin/penalties/penalties.type';
+} from '@/types/admin/admin-penalties.type';
 import MinusIcon from '@repo/ui/assets/icons/minus-round.svg';
 import ArrowDownIcon from '@repo/ui/assets/icons/arrow-down.svg';
 import clsx from 'clsx';

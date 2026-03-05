@@ -3,7 +3,7 @@ import {
   getAllStatistics,
   getSessionDetail,
 } from '@/services/api/admin/admin-penalties.api';
-import {SortDirection} from '@/types/mypage/admin/penalties/penalties.type';
+import {SortDirection} from '@/types/admin/admin-penalties.type';
 import {useQuery} from '@tanstack/react-query';
 
 /** 전체 상벌점 통계 조회 쿼리 */

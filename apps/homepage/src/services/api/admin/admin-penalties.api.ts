@@ -7,7 +7,7 @@ import {
 import {privateAxios} from '@/services/config/axios';
 import {ENDPOINT} from '@/services/constant/endpoint';
 import {handleApiError} from '@/services/utils/apiHelper';
-import {SortDirection} from '@/types/mypage/admin/penalties/penalties.type';
+import {SortDirection} from '@/types/admin/admin-penalties.type';
 
 /** 기타 벌점 수정 */
 export const patchExtraMinusPoint = async (params: {

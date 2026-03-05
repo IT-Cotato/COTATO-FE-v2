@@ -7,7 +7,7 @@ import {
   useAllStatisticsQuery,
   useSessionDetailQuery,
 } from '@/hooks/queries/usePenalties.query';
-import {SortDirection} from '@/types/mypage/admin/penalties/penalties.type';
+import {SortDirection} from '@/types/admin/admin-penalties.type';
 import {
   usePatchBeerNetworkingMutation,
   usePatchExtraMinusPointMutation,
