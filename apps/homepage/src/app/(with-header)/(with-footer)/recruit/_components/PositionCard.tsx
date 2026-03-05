@@ -1,8 +1,8 @@
 import Image from 'next/image';
 import SmallLogo from '@/assets/small-logo/small-logo.svg';
 import clsx from 'clsx';
-import {POSITION_CARD_STYLES} from '@/constants/recruitment/recruitment-components';
-import {PositionCardType} from '@/schemas/recruitments/recruitments.schema';
+import {POSITION_CARD_STYLES} from '@/constants/recruit/recruit';
+import {PositionCardType} from '@/schemas/recruit/recruit.schema';
 
 interface PositionCardProps {
   item: PositionCardType;

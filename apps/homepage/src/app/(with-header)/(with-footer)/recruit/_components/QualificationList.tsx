@@ -1,4 +1,4 @@
-import {QUALIFICATIONS_CARD_ITEMS} from '@/constants/recruitment/recruitment-components';
+import {QUALIFICATIONS_CARD_ITEMS} from '@/constants/recruit/recruit';
 import {QualificationsCard} from '@/app/(with-header)/(with-footer)/recruit/_components/QualificationsCard';
 
 export const QualificationList = () => {
