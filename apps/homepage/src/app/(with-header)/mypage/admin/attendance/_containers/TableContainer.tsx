@@ -9,9 +9,9 @@ import {Spinner} from '@repo/ui/components/spinner/Spinner';
 import {useManageAttendanceStatusMutation} from '@/hooks/mutations/useAttendance.mutation';
 import {useSearchParams} from 'next/navigation';
 import {AttendancePartType} from '@/schemas/admin/admin-attendance.schema';
-import {AttendanceStatusKey} from '@/constants/admin/admin';
 import {AdminAttendanceEntireTable} from '@/app/(with-header)/mypage/admin/attendance/_components/table/AdminAttendanceEntireTable';
 import {AdminAttendanceSpecificTable} from '@/app/(with-header)/mypage/admin/attendance/_components/table/AdminAttendanceSpecificTable';
+import {AttendanceStatusKey} from '@/constants/admin/admin-attendance';
 
 export const TableContainer = () => {
   const searchParams = useSearchParams();

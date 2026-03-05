@@ -1,8 +1,8 @@
 import {
-  ATTENDANCE_FULL_TABLE_HEADER,
   MEMBER_POSITION_LABEL,
   type MemberPositionKey,
 } from '@/constants/admin/admin';
+import {ATTENDANCE_FULL_TABLE_HEADER} from '@/constants/admin/admin-attendance';
 import {AdminAttendanceEntireTableRowType} from '@/schemas/admin/admin-attendance.schema';
 
 interface AdminAttendanceEntireTableProps {

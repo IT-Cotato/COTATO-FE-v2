@@ -2,7 +2,7 @@ import {
   ATTENDANCE_SPECIFIC_TABLE_HEADER,
   ATTENDANCE_STATUS_CONFIG,
   ATTENDANCE_STATUS_OPTION,
-} from '@/constants/admin/admin';
+} from '@/constants/admin/admin-attendance';
 import {
   AdminAttendanceSpecificTableRowType,
   AttendanceStatusType,
