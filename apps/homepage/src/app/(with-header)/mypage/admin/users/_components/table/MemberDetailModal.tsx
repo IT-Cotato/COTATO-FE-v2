@@ -74,8 +74,6 @@ export const MemberDetailModal = (props: MemberDetailModalProps) => {
     if (props.mode === 'edit') {
       props.onSave(memberData);
       onClose();
-    } else {
-      console.error('Invalid save call in read-only mode');
     }
   };
 
@@ -120,33 +118,11 @@ export const MemberDetailModal = (props: MemberDetailModalProps) => {
             />
             <div className='flex w-32 flex-col gap-2.5'>
               <label className='text-h5 text-neutral-600'>기수</label>
-              {readonly ? (
-                <input
-                  readOnly
-                  value={`${memberData.passedGenerationNumber}기`}
-                  className={fieldClass}
-                />
-              ) : (
-                <div className='relative'>
-                  <input
-                    type='number'
-                    min={1}
-                    value={memberData.passedGenerationNumber}
-                    className={`${fieldClass} [appearance:textfield] pr-8 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none`}
-                    onChange={(e) => {
-                      const parsed = e.target.valueAsNumber;
-                      if (Number.isNaN(parsed) || parsed < 1) return;
-                      setMemberData({
-                        ...memberData,
-                        passedGenerationNumber: parsed,
-                      });
-                    }}
-                  />
-                  <span className='text-body-l pointer-events-none absolute top-1/2 right-4 -translate-y-1/2 text-neutral-600'>
-                    기
-                  </span>
-                </div>
-              )}
+              <input
+                readOnly
+                value={`${memberData.passedGenerationNumber}기`}
+                className={fieldClass}
+              />
             </div>
           </div>
 

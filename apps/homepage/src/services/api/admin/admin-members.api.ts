@@ -77,7 +77,24 @@ export const getActiveMembers = async (params: GetActiveMembersParams) => {
   try {
     const response = await privateAxios.get(
       ENDPOINT.ADMIN_MEMBERS.ACTIVE_LIST,
-      {params}
+      {
+        params,
+        paramsSerializer: (p) => {
+          const searchParams = new URLSearchParams();
+          Object.entries(p).forEach(([key, value]) => {
+            if (value !== undefined) {
+              if (Array.isArray(value)) {
+                value.forEach((v) => {
+                  searchParams.append(key, String(v));
+                });
+              } else {
+                searchParams.append(key, String(value));
+              }
+            }
+          });
+          return searchParams.toString();
+        },
+      }
     );
     return ActiveMembersPageResponseSchema.parse(response.data);
   } catch (error) {

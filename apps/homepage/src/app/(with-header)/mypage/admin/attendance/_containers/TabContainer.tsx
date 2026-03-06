@@ -13,7 +13,6 @@ import {
   ATTENDANCE_STATUS_OPTION,
   AttendanceStatusKey,
 } from '@/constants/admin/admin-attendance';
-
 export const TabContainer = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -134,9 +133,9 @@ export const TabContainer = () => {
         )}
       </div>
       <SearchBar
-        onSearch={handleSearch}
         keyword={keyword}
         onKeywordChange={setKeyword}
+        onSearch={handleSearch}
       />
     </div>
   );
