@@ -12,14 +12,7 @@ import {
   ATTENDANCE_STATUS_CONFIG,
   ATTENDANCE_STATUS_OPTION,
   AttendanceStatusKey,
-} from '@/constants/admin/admin';
-import {StatusChip} from '@repo/ui/components/chip/StatusChip';
-import {useEffect, useState} from 'react';
-import {AttendancePartType} from '@/schemas/admin/admin-attendance.schema';
-import {useAdminAttendanceStore} from '@/store/useAdminAttendanceStore';
-import {SearchBar} from '@/app/(with-header)/mypage/admin/_components/SearchBar';
-
-
+} from '@/constants/admin/admin-attendance';
 export const TabContainer = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -44,9 +37,7 @@ export const TabContainer = () => {
   }, []);
 
   const activePart = (searchParams.get('part') as AttendancePartType) ?? 'ALL';
-  const activeStatusList = searchParams.getAll(
-    'status'
-  ) as AttendanceStatusKey[];
+  const activeStatusList = searchParams.getAll('status') as string[];
   const isAllSelected =
     activeStatusList.length === 0 ||
     activeStatusList.length === ATTENDANCE_STATUS_OPTION.length;
