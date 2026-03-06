@@ -26,16 +26,16 @@ export const DropdownContainer = () => {
   const generations = useMemo(() => {
     if (!generationList) return [];
     return [...generationList]
-      .sort((a, b) => a.generationId - b.generationId)
+      .sort((a, b) => b.generationId - a.generationId)
       .map((item) => `${item.generationId}기`);
   }, [generationList]);
 
   const sessions = useMemo(() => {
     if (!sessionList) return [];
     return [...sessionList]
-      .sort((a, b) => a.sessionId - b.sessionId)
+      .sort((a, b) => b.sessionId - a.sessionId)
       .map((item, idx) => ({
-        sessionOption: `${idx + 1}회차 세션`,
+        sessionOption: `${sessionList.length - idx}회차 세션`,
         attendanceId: item.attendanceId,
       }));
   }, [sessionList]);
