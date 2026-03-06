@@ -6,7 +6,7 @@ export const ClubRules = () => {
       <h4 className='text-h4'>
         IT 연합 동아리 코테이토 회칙
         <br />
-        [2025.09.05 최종수정자 정찬민]
+        [2026.03.04 최종수정자 임준서]
       </h4>
       {CLUB_RULES.map((section) => (
         <div key={section.title} className='flex flex-col gap-1'>
