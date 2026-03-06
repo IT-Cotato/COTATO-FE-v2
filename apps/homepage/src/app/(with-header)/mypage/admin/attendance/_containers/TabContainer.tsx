@@ -37,7 +37,9 @@ export const TabContainer = () => {
   }, []);
 
   const activePart = (searchParams.get('part') as AttendancePartType) ?? 'ALL';
-  const activeStatusList = searchParams.getAll('status') as string[];
+  const activeStatusList = searchParams.getAll(
+    'status'
+  ) as AttendanceStatusKey[];
   const isAllSelected =
     activeStatusList.length === 0 ||
     activeStatusList.length === ATTENDANCE_STATUS_OPTION.length;
