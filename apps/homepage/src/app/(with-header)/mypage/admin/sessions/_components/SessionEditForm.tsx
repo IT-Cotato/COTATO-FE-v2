@@ -169,6 +169,19 @@ export const SessionEditForm = ({form, onChange}: SessionEditFormProps) => {
               <ClockIcon className='h-4.5 w-4.5 shrink-0 text-neutral-600' />
               <input
                 type='text'
+                value={form.attendTime.attendanceEndTime}
+                onChange={(e) =>
+                  setAttendTime('attendanceEndTime', e.target.value)
+                }
+                placeholder='19:00'
+                className='text-body-m w-full bg-transparent outline-none placeholder:text-neutral-400'
+              />
+            </div>
+            <div
+              className={`flex items-center ${INPUT_BASE} h-8 w-27.5 gap-2.5 px-1.5 py-1.25`}>
+              <ClockIcon className='h-4.5 w-4.5 shrink-0 text-neutral-600' />
+              <input
+                type='text'
                 value={form.attendTime.lateEndTime}
                 onChange={(e) => setAttendTime('lateEndTime', e.target.value)}
                 placeholder='19:20'
