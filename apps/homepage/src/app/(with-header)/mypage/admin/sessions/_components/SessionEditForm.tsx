@@ -70,7 +70,7 @@ export const SessionEditForm = ({form, onChange}: SessionEditFormProps) => {
               className={`flex cursor-pointer items-center ${INPUT_BASE} h-8 w-27.5 gap-2.5 px-1.5 py-1.25`}>
               <SearchIcon className='h-4.5 w-4.5 shrink-0 text-neutral-600' />
               <span
-                className={`text-body-m truncate ${form.placeName ? 'text-neutral-800' : 'text-neutral-600'}`}>
+                className={`text-body-m truncate ${form.placeName ? 'text-neutral-800' : 'text-neutral-400'}`}>
                 {form.placeName || '장소 검색'}
               </span>
             </div>
