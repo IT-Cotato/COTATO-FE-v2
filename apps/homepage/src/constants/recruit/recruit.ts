@@ -1,7 +1,7 @@
 import {
   ActivityCategoryType,
   PositionType,
-} from '@/schemas/recruitments/recruitments.schema';
+} from '@/schemas/recruit/recruit.schema';
 
 export const QUALIFICATIONS_CARD_ITEMS = [
   {

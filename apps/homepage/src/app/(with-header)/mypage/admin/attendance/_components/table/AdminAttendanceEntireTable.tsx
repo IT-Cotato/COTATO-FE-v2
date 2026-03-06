@@ -1,17 +1,19 @@
 import {
-  ATTENDANCE_FULL_TABLE_HEADER,
   MEMBER_POSITION_LABEL,
   type MemberPositionKey,
 } from '@/constants/admin/admin';
-import {FullSessionTableRowType} from '@/schemas/admin/admin-attendance.schema';
+import {ATTENDANCE_FULL_TABLE_HEADER} from '@/constants/admin/admin-attendance';
+import {AdminAttendanceEntireTableRowType} from '@/schemas/admin/admin-attendance.schema';
 
-interface FullSessionTableProps {
-  items: FullSessionTableRowType[];
+interface AdminAttendanceEntireTableProps {
+  items: AdminAttendanceEntireTableRowType[];
 }
 
-export const FullSessionTable = ({items}: FullSessionTableProps) => {
+export const AdminAttendanceEntireTable = ({
+  items,
+}: AdminAttendanceEntireTableProps) => {
   return (
-    <table className='min-w-275 border-collapse'>
+    <table className='h-fit w-full table-fixed border-collapse'>
       <thead className='bg-neutral-200'>
         <tr>
           {ATTENDANCE_FULL_TABLE_HEADER.map((col) => (

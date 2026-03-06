@@ -2,6 +2,11 @@
 
 import {useRouter, useSearchParams} from 'next/navigation';
 import {PartTab} from '@/app/(with-header)/mypage/admin/attendance/_components/PartTab';
+import {StatusChip} from '@repo/ui/components/chip/StatusChip';
+import {useEffect, useState} from 'react';
+import {AttendancePartType} from '@/schemas/admin/admin-attendance.schema';
+import {useAdminAttendanceStore} from '@/store/useAdminAttendanceStore';
+import {SearchBar} from '@/app/(with-header)/mypage/admin/_components/SearchBar';
 import {
   ATTENDANCE_PART_TAB,
   ATTENDANCE_STATUS_CONFIG,
@@ -13,6 +18,7 @@ import {useEffect, useState} from 'react';
 import {AttendancePartType} from '@/schemas/admin/admin-attendance.schema';
 import {useAdminAttendanceStore} from '@/store/useAdminAttendanceStore';
 import {SearchBar} from '@/app/(with-header)/mypage/admin/_components/SearchBar';
+
 
 export const TabContainer = () => {
   const router = useRouter();
@@ -100,7 +106,7 @@ export const TabContainer = () => {
 
   return (
     <div className='flex items-end'>
-      <div className='mr-97.25 flex flex-col gap-2.5'>
+      <div className='flex flex-col gap-2.5'>
         <div role='tablist' className='flex gap-7.5' aria-label='파트 선택'>
           {ATTENDANCE_PART_TAB.map(({label, value}, index) => {
             const isActive = activePart === value;

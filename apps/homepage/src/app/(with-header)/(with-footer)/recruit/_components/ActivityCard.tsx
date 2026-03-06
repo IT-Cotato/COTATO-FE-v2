@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import clsx from 'clsx';
-import {ActivityCardType} from '@/schemas/recruitments/recruitments.schema';
-import {ACTIVITY_CARD_STYLES} from '@/constants/recruitment/recruitment-components';
+import {ActivityCardType} from '@/schemas/recruit/recruit.schema';
+import {ACTIVITY_CARD_STYLES} from '@/constants/recruit/recruit';
 
 interface ActivityCardProps {
   item: ActivityCardType;

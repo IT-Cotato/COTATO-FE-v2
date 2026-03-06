@@ -1,4 +1,4 @@
-import {QualificationsCardItem} from '@/types/recruitment/recruitment-components.type';
+import {QualificationsCardItem} from '@/types/recruit/recruit.type';
 import Image from 'next/image';
 
 interface QualificationsCardProps {

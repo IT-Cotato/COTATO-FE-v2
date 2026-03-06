@@ -5,7 +5,7 @@ import {AttendanceModals} from '@/app/(with-header)/mypage/attendance/_component
 import {MonthNavigator} from '@/app/(with-header)/mypage/attendance/_components/MonthNavigator';
 import {SessionList} from '@/app/(with-header)/mypage/attendance/_components/SessionList';
 import {useAttendance} from '@/app/(with-header)/mypage/attendance/_hooks/useAttendance';
-import {useAttendanceSessionsQuery} from '@/hooks/queries/useAttendance.queries';
+import {useAttendanceSessionsQuery} from '@/hooks/queries/useAttendance.query';
 import {Spinner} from '@repo/ui/components/spinner/Spinner';
 import {ErrorResponse} from '@/schemas/common/common-schema';
 import {NotActiveMemberView} from '@/app/(with-header)/mypage/activity/_components/NotActiveMemberView';
