@@ -15,7 +15,7 @@ interface SessionCardProps {
   onAttendance: () => void;
 }
 
-const DEFAULT_IMAGE = '/images/default-session.png';
+const DEFAULT_IMAGE = '/images/attendance/default-session.svg';
 
 export const SessionCard = ({
   session,
