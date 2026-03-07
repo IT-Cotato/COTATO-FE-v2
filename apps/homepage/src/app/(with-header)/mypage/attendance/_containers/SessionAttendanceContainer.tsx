@@ -28,6 +28,15 @@ export const SessionAttendanceContainer = () => {
   const currentError = error as AxiosError<ErrorResponse> | null;
   const isNotActiveMember = currentError?.response?.data?.code === 'NP-002';
 
+  const handleErrorModalClose = () => {
+    setIsErrorModalOpen(false);
+
+    // 출석 시간이 지났을 때는 페이지 새로고침
+    if (errorCode === 'AT-401') {
+      window.location.reload();
+    }
+  };
+
   const handlePrevMonth = () => {
     if (!data || !data.hasPreviousMonth) return;
     const prevMonth = [...data.availableMonths]
@@ -81,7 +90,7 @@ export const SessionAttendanceContainer = () => {
         isErrorOpen={isErrorModalOpen}
         errorCode={errorCode}
         onSuccessClose={() => setIsSuccessModalOpen(false)}
-        onErrorClose={() => setIsErrorModalOpen(false)}
+        onErrorClose={handleErrorModalClose}
       />
     </div>
   );
