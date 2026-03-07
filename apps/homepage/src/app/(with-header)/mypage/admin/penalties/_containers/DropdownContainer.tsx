@@ -42,7 +42,7 @@ export const DropdownContainer = () => {
   const sessions = useMemo(() => {
     if (!sessionList) return [];
     return [...sessionList]
-      .sort((a, b) => b.sessionId - a.sessionId)
+      .sort((a, b) => a.sessionId - b.sessionId)
       .map((item, idx) => ({
         sessionOption: `${sessionList.length - idx}회차 세션`,
         sessionId: item.sessionId,
