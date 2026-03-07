@@ -95,7 +95,7 @@ const DesktopMainScheduleLayout = () => (
         title='MT'
         subTitle='2026.03.27'
         secondTitle='정기 세션'
-        secondSubTitle='매주 금요일'
+        secondSubTitle='매주 금요일 19시'
       />
     </div>
     <div className='col-start-1 row-span-2'>
