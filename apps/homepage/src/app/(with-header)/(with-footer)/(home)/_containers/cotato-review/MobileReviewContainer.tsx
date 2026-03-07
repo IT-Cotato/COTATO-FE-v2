@@ -11,9 +11,9 @@ export const MobileReviewContainer = ({
   reviews,
 }: MobileReviewContainerProps) => {
   const controls = useAnimationControls();
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState<number>(0);
 
-  const cardWidth = 320;
+  const cardWidth = 269;
   const gap = 12;
   const singleItemDistance = cardWidth + gap;
 
@@ -41,10 +41,8 @@ export const MobileReviewContainer = ({
   };
 
   return (
-    <div className='flex w-full flex-col items-center gap-6'>
-      <div
-        className='w-full overflow-hidden'
-        style={{maxWidth: `${cardWidth}px`}}>
+    <div className='flex w-full flex-col gap-6'>
+      <div className='w-full' style={{maxWidth: `${cardWidth}px`}}>
         <motion.div
           className='flex'
           style={{gap: `${gap}px`}}
@@ -53,17 +51,32 @@ export const MobileReviewContainer = ({
             left: -(reviews.length - 1) * singleItemDistance,
             right: 0,
           }}
+          dragElastic={0.2}
           animate={controls}
           onDragEnd={handleDragEnd}>
-          {reviews.map((review) => (
-            <div key={review.id} className='shrink-0 select-none'>
-              <HomeCotatoReviewCard {...review} />
-            </div>
-          ))}
+          {reviews.map((review, index) => {
+            const isActive = index === currentIndex;
+
+            return (
+              <motion.div
+                key={review.id}
+                className='shrink-0 select-none'
+                animate={{
+                  scale: isActive ? 1 : 0.95,
+                  opacity: isActive ? 1 : 0.9,
+                }}
+                transition={{
+                  duration: 0.3,
+                  ease: 'easeInOut',
+                }}>
+                <HomeCotatoReviewCard {...review} />
+              </motion.div>
+            );
+          })}
         </motion.div>
       </div>
 
-      <div className='h-1 w-50 overflow-hidden rounded-full bg-neutral-100'>
+      <div className='h-1 w-full overflow-hidden rounded-full bg-neutral-100'>
         <motion.div
           className='h-full bg-neutral-400'
           animate={{width: `${((currentIndex + 1) / reviews.length) * 100}%`}}

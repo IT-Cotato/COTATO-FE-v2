@@ -25,7 +25,7 @@ export const HomeCotatoReviewCard = ({
   const selectedPotatoPath = POTATO_IMAGE_PATHS[id % POTATO_IMAGE_PATHS.length];
 
   return (
-    <div className='flex h-92 w-80 flex-col gap-5 rounded-[30px] bg-neutral-800 px-6.75 py-7 text-white xl:w-84.75'>
+    <div className='flex h-92 w-67.25 flex-col gap-5 rounded-[30px] bg-neutral-800 px-6.75 py-7 text-white xl:w-84.75'>
       <div className='flex flex-row items-end justify-between xl:h-26'>
         <div>
           <p className='text-body-l'>
@@ -46,7 +46,7 @@ export const HomeCotatoReviewCard = ({
       <div className='bg-primary text-h5 rounded-[5px] py-1 text-center xl:py-2'>
         {`"${shortDescription}"`}
       </div>
-      <div className='relative flex-1 overflow-hidden'>
+      <div className='relative flex-1 overflow-hidden xl:overflow-visible'>
         <div className='scrollbar-hide h-full overflow-y-auto'>
           <p className='text-h5 xl:text-body-l leading-relaxed'>
             {longDescription}
@@ -54,7 +54,7 @@ export const HomeCotatoReviewCard = ({
         </div>
 
         <div
-          className='pointer-events-none absolute bottom-0 left-0 h-10 w-full bg-linear-to-t from-neutral-800 to-transparent'
+          className='pointer-events-none absolute bottom-0 left-0 h-10 w-full bg-linear-to-t from-neutral-800 to-transparent xl:hidden'
           aria-hidden='true'
         />
       </div>
