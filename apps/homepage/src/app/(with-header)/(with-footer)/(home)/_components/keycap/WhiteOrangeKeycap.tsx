@@ -18,7 +18,7 @@ export const WhiteOrangeKeycap = ({
   secondSubTitle,
 }: WhiteOrangeKeycapProps) => {
   return (
-    <div className='relative h-135 w-140 cursor-pointer overflow-hidden rounded-[50px]'>
+    <div className='relative h-135 w-140 overflow-hidden rounded-[50px]'>
       <Image
         src='/keycap/white-orange-enter-keycap.svg'
         alt=''

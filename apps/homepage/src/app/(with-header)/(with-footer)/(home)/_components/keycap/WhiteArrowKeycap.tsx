@@ -18,7 +18,7 @@ export const WhiteArrowKeycap = ({
 
   return (
     <div
-      className='group relative h-67 w-67 cursor-pointer rounded-[50px]'
+      className='group relative h-67 w-67 rounded-[50px]'
       role='button'
       tabIndex={0}>
       <Image src='/keycap/white-keycap.svg' alt='' fill unoptimized={true} />

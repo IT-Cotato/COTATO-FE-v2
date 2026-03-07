@@ -22,7 +22,7 @@ export const ScheduleKeycap = ({
 }: ScheduleKeycapProps) => {
   return (
     <div
-      className={`group relative inline-block h-39 w-39 cursor-pointer overflow-hidden rounded-[27px] xl:h-67 xl:w-67 xl:rounded-[50px] ${className}`}
+      className={`group relative inline-block h-39 w-39 overflow-hidden rounded-[27px] xl:h-67 xl:w-67 xl:rounded-[50px] ${className}`}
       role='button'
       tabIndex={0}>
       <Image
@@ -43,7 +43,7 @@ export const ScheduleKeycap = ({
         <div className='absolute inset-0 bg-black/20' />
       </div>
       <span
-        className={`text-h3 xl:text-h2 absolute top-7.75 left-8.75 z-10 font-semibold transition-colors group-hover:text-white xl:top-16.5 xl:left-16.5 ${titleColor} group-focus:text-white group-focus-visible:text-white`}>
+        className={`text-h4 xl:text-h2 absolute top-7.75 left-8.75 z-10 transition-colors group-hover:text-white xl:top-16.5 xl:left-16.5 ${titleColor} group-focus:text-white group-focus-visible:text-white`}>
         {title}
       </span>
       {subTitle && (
