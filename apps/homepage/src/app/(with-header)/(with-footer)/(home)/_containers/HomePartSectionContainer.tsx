@@ -55,7 +55,7 @@ export const HomePartSectionContainer = () => {
       />
 
       <div className='flex flex-col gap-7.5'>
-        {/* 데스크톱 탭 리스트 */}
+        {/* 탭 리스트 */}
         <div
           className='hidden flex-row gap-6 xl:flex'
           role='tablist'
@@ -94,7 +94,6 @@ export const HomePartSectionContainer = () => {
           className='relative h-60 w-full overflow-hidden rounded-lg bg-neutral-900 xl:h-140 xl:rounded-[40px]'
           id={`tabpanel-${currentPart}`}
           role='tabpanel'
-          // 데스크톱/모바일 아이디 모두를 참조할 수 있도록 설정하거나 현재 활성화된 쪽을 참조
           aria-labelledby={
             typeof window !== 'undefined' && window.innerWidth >= 1280
               ? `tab-desktop-${currentPart}`
@@ -114,7 +113,6 @@ export const HomePartSectionContainer = () => {
               dragElastic={0.2}
               onDragEnd={handleDragEnd}
               className='focus-visible:outline-primary absolute inset-0 h-full w-full cursor-grab focus-visible:outline-2 active:cursor-grabbing'>
-              {/* 내부 콘텐츠 생략 (기존과 동일) */}
               <div className='pointer-events-none relative h-full w-full overflow-hidden'>
                 <motion.div
                   key={`${currentPart}-bg`}
