@@ -66,7 +66,8 @@ export const HomeBannerContainer = () => {
         )}>
         <button
           onClick={scrollToNextSection}
-          className='h-6.75 w-6.75 animate-bounce cursor-pointer sm:h-12.5 sm:w-12.5'>
+          className='h-6.75 w-6.75 animate-bounce cursor-pointer sm:h-12.5 sm:w-12.5'
+          aria-label='핵심 가치 섹션으로 이동'>
           <MainArrowIcon />
         </button>
       </div>
