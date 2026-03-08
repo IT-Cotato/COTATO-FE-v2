@@ -9,11 +9,12 @@ import {ROUTES} from '@/constants/routes';
 import {useAuthStore} from '@/store/useAuthStore';
 import {useShallow} from 'zustand/shallow';
 import {useMemberInfoQuery} from '@/hooks/queries/useMembers.query';
-import {useRecruitmentsStatus} from '@/hooks/queries/useAdminRecruitment.query';
+
 import {useEffect, useState} from 'react';
 import {useAttendanceStatusQuery} from '@/hooks/queries/useAttendanceStatus.query';
 import {useLogoutMutation} from '@/hooks/mutations/auth/useAuth.mutations';
 import {HeaderMobileMenu} from '@/components/layout/header/HeaderMobileMenu';
+import {useRecruitmentsStatus} from '@/hooks/queries/useAdminRecruit.query';
 
 export const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
