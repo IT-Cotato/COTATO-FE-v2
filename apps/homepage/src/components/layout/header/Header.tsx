@@ -5,7 +5,6 @@ import {usePathname} from 'next/navigation';
 import MainLogo from '@/assets/main-logo/main-logo.svg';
 import SmallLogo from '@/assets/small-logo/small-logo.svg';
 import HamburgerIcon from '@/assets/layout/hamburger.svg';
-import CancelIcon from '@/assets/cancel/cancel.svg';
 import {ROUTES} from '@/constants/routes';
 import {useAuthStore} from '@/store/useAuthStore';
 import {useShallow} from 'zustand/shallow';
@@ -129,28 +128,24 @@ export const Header = () => {
       </nav>
 
       {/** 모바일 햄버거 헤더  */}
-      <button
-        className='z-50 block p-2 text-white md:hidden'
-        onClick={() => setIsMenuOpen(!isMenuOpen)}
-        aria-label='메뉴 열기'>
-        {isMenuOpen ? (
-          <CancelIcon className='h-5 w-5' />
-        ) : (
-          <HamburgerIcon className='h-5 w-5 transition-transform' />
-        )}
-      </button>
-      <hr
-        className={`fixed top-20 right-0 left-0 z-50 border-t border-white/10 transition-opacity duration-300 md:hidden ${
-          isMenuOpen ? 'opacity-100' : 'opacity-0'
-        }`}
-      />
+      {!isMenuOpen && (
+        <button
+          className='z-50 block p-2 text-white md:hidden'
+          onClick={() => setIsMenuOpen(true)}
+          aria-label='메뉴 열기'>
+          <HamburgerIcon className='h-5 w-5' />
+        </button>
+      )}
+
       <HeaderMobileMenu
         isOpen={isMenuOpen}
         pathname={pathname}
         mobileNavItems={mobileNavItems}
         isInitialized={isInitialized}
         isAuthenticated={isAuthenticated}
+        userName={user?.name}
         onLogout={handleLogout}
+        onClose={() => setIsMenuOpen(false)}
       />
     </header>
   );
