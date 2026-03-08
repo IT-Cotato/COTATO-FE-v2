@@ -2,7 +2,7 @@ import {HomeCotatoReviewCard} from '@/app/(with-header)/(with-footer)/(home)/_co
 import {CotatoReview} from '@/app/(with-header)/(with-footer)/(home)/_containers/HomeCotatoReviewContainer';
 import clsx from 'clsx';
 import {motion, useAnimationControls} from 'framer-motion';
-import {useCallback, useEffect, useState} from 'react';
+import {useCallback, useEffect, useRef, useState} from 'react';
 
 const ITEMS_PER_PAGE = 3;
 
@@ -15,7 +15,7 @@ export const DesktopReviewContainer = ({
 }: DesktopReviewContainerProps) => {
   const controls = useAnimationControls();
   const [displayIndex, setDisplayIndex] = useState(1);
-  const [isTransitioning, setIsTransitioning] = useState(false);
+  const isTransitioningRef = useRef(false);
   const [isPaused, setIsPaused] = useState(false);
 
   const cardWidth = 339;
@@ -31,8 +31,8 @@ export const DesktopReviewContainer = ({
 
   const animateTo = useCallback(
     async (targetIndex: number) => {
-      if (isTransitioning) return;
-      setIsTransitioning(true);
+      if (isTransitioningRef.current) return;
+      isTransitioningRef.current = true;
       setDisplayIndex(targetIndex);
 
       await controls.start({
@@ -47,9 +47,9 @@ export const DesktopReviewContainer = ({
         controls.set({x: -totalPages * moveDistance});
         setDisplayIndex(totalPages);
       }
-      setIsTransitioning(false);
+      isTransitioningRef.current = false;
     },
-    [controls, moveDistance, totalPages, isTransitioning]
+    [controls, moveDistance, totalPages]
   );
 
   useEffect(() => {
