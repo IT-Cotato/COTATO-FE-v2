@@ -1,10 +1,10 @@
 'use client';
 
 import {ROUTES} from '@/constants/routes';
-import {useRecruitmentsStatus} from '@/hooks/queries/useRecruitments.query';
 import {Button} from '@repo/ui/components/buttons/Button';
 import {useRouter} from 'next/navigation';
 import {motion, Variants} from 'framer-motion';
+import {useRecruitmentsStatus} from '@/hooks/queries/useAdminRecruit.query';
 
 export const HomeRecruitmentContainer = () => {
   const router = useRouter();

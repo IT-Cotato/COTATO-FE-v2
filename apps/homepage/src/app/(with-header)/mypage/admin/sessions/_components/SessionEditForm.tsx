@@ -13,7 +13,7 @@ interface SessionEditFormProps {
 }
 
 const INPUT_BASE =
-  'rounded-lg border border-neutral-200 placeholder:text-neutral-600 outline-none bg-neutral-50';
+  'rounded-lg border border-neutral-200 placeholder:text-neutral-400 outline-none bg-neutral-50';
 
 const RADIO_BASE =
   'checked:after:bg-active relative h-6.5 w-6.5 appearance-none rounded-full border-2 border-neutral-300 after:absolute after:top-1/2 after:left-1/2 after:h-4 after:w-4 after:-translate-x-1/2 after:-translate-y-1/2 after:rounded-full after:content-[""] focus:outline-none';
@@ -70,7 +70,7 @@ export const SessionEditForm = ({form, onChange}: SessionEditFormProps) => {
               className={`flex cursor-pointer items-center ${INPUT_BASE} h-8 w-27.5 gap-2.5 px-1.5 py-1.25`}>
               <SearchIcon className='h-4.5 w-4.5 shrink-0 text-neutral-600' />
               <span
-                className={`text-body-m truncate ${form.placeName ? 'text-neutral-800' : 'text-neutral-600'}`}>
+                className={`text-body-m truncate ${form.placeName ? 'text-neutral-800' : 'text-neutral-400'}`}>
                 {form.placeName || '장소 검색'}
               </span>
             </div>
@@ -79,7 +79,7 @@ export const SessionEditForm = ({form, onChange}: SessionEditFormProps) => {
               value={form.detailAddress}
               onChange={(e) => set('detailAddress', e.target.value)}
               placeholder='상세 장소 (예: 세미나실 1)'
-              className={`text-body-m ${INPUT_BASE} h-8 w-27.5 px-1.5 py-1.25 placeholder:text-neutral-600`}
+              className={`text-body-m ${INPUT_BASE} h-8 w-27.5 px-1.5 py-1.25 placeholder:text-neutral-400`}
             />
             <button
               type='button'
@@ -144,7 +144,7 @@ export const SessionEditForm = ({form, onChange}: SessionEditFormProps) => {
                 value={form.attendanceStartTime}
                 onChange={(e) => set('attendanceStartTime', e.target.value)}
                 placeholder='18:50'
-                className='text-body-m w-full bg-transparent outline-none placeholder:text-neutral-600'
+                className='text-body-m w-full bg-transparent outline-none placeholder:text-neutral-400'
               />
             </div>
             <div
@@ -157,7 +157,7 @@ export const SessionEditForm = ({form, onChange}: SessionEditFormProps) => {
                   setAttendTime('attendanceEndTime', e.target.value)
                 }
                 placeholder='19:00'
-                className='text-body-m w-full bg-transparent outline-none placeholder:text-neutral-600'
+                className='text-body-m w-full bg-transparent outline-none placeholder:text-neutral-400'
               />
             </div>
           </div>
@@ -169,10 +169,23 @@ export const SessionEditForm = ({form, onChange}: SessionEditFormProps) => {
               <ClockIcon className='h-4.5 w-4.5 shrink-0 text-neutral-600' />
               <input
                 type='text'
+                value={form.attendTime.attendanceEndTime}
+                onChange={(e) =>
+                  setAttendTime('attendanceEndTime', e.target.value)
+                }
+                placeholder='19:00'
+                className='text-body-m w-full bg-transparent outline-none placeholder:text-neutral-400'
+              />
+            </div>
+            <div
+              className={`flex items-center ${INPUT_BASE} h-8 w-27.5 gap-2.5 px-1.5 py-1.25`}>
+              <ClockIcon className='h-4.5 w-4.5 shrink-0 text-neutral-600' />
+              <input
+                type='text'
                 value={form.attendTime.lateEndTime}
                 onChange={(e) => setAttendTime('lateEndTime', e.target.value)}
                 placeholder='19:20'
-                className='text-body-m w-full bg-transparent outline-none placeholder:text-neutral-600'
+                className='text-body-m w-full bg-transparent outline-none placeholder:text-neutral-400'
               />
             </div>
           </div>

@@ -9,7 +9,7 @@ import {ROUTES} from '@/constants/routes';
 import {useAuthStore} from '@/store/useAuthStore';
 import {useShallow} from 'zustand/shallow';
 import {useMemberInfoQuery} from '@/hooks/queries/useMembers.query';
-import {useRecruitmentsStatus} from '@/hooks/queries/useRecruitments.query';
+import {useRecruitmentsStatus} from '@/hooks/queries/useAdminRecruitment.query';
 import {useEffect, useState} from 'react';
 import {useAttendanceStatusQuery} from '@/hooks/queries/useAttendanceStatus.query';
 import {useLogoutMutation} from '@/hooks/mutations/auth/useAuth.mutations';

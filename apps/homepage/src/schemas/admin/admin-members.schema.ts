@@ -29,7 +29,7 @@ export const AdminMemberSchema = z.object({
   phoneNumber: z.string().nullable(),
   university: z.string(),
   passedGenerationNumber: z.number(),
-  latestGenerationNumber: z.number(),
+  latestGenerationNumber: z.number().nullable(),
   position: PositionSchema,
   role: MemberRoleSchema,
   status: MemberStatusSchema,
@@ -85,7 +85,6 @@ export const ActiveMemberSchema = z.object({
 export const ActiveMembersPageResponseSchema = z.object({
   content: z.array(ActiveMemberSchema),
   hasNext: z.boolean(),
-  totalPages: z.number().optional(),
   page: z.number(),
   size: z.number(),
   isFirst: z.boolean(),
@@ -117,7 +116,6 @@ export type GetAdminMembersParams = {
 
 export type GetActiveMembersParams = {
   generationId: number;
-  search?: string;
   page?: number;
   size?: number;
 };
@@ -173,7 +171,7 @@ export type MemberType = {
   // ALL 탭 전용
   status?: MemberStatus;
   gender?: z.infer<typeof GenderSchema>;
-  latestGenerationNumber?: number;
+  latestGenerationNumber?: number | null;
   // ACTIVE 탭 전용
   generationMemberId?: number;
 };
@@ -188,4 +186,3 @@ export type ApprovalMemberType = z.infer<typeof ApprovalMemberSchema>;
 export type ApplicantsPageResponse = z.infer<
   typeof ApplicantsPageResponseSchema
 >;
-

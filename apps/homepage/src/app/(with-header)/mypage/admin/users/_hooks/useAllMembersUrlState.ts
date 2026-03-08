@@ -15,7 +15,7 @@ export const useAllMembersUrlState = () => {
 
   const currentPage = Number(searchParams.get('page') ?? 1);
   const searchParam = searchParams.get('search') ?? undefined;
-  const [keyword, setKeyword] = useState(searchParam??'');
+  const [keyword, setKeyword] = useState(searchParam ?? '');
 
   const handleSearch = () => {
     const params = new URLSearchParams(searchParams.toString());

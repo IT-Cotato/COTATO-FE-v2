@@ -9,7 +9,7 @@ import {NotifyInput} from '@/components/layout/NotifyInput';
 
 type bgColorKey = 'bg-transparent' | 'bg-neutral-50' | 'bg-[#010101]';
 
-interface RecruitmentLayoutProps {
+interface RecruitLayoutProps {
   isRecruiting: boolean;
   backgroundColor?: bgColorKey;
   backgroundSrc?: string;
@@ -17,13 +17,13 @@ interface RecruitmentLayoutProps {
   limitVisualStripWidth?: boolean;
 }
 
-export default function RecruitmentLayout({
+export function RecruitLayout({
   isRecruiting,
   backgroundColor,
   backgroundSrc,
   visualStripSrc,
   limitVisualStripWidth = false,
-}: RecruitmentLayoutProps) {
+}: RecruitLayoutProps) {
   return (
     <div
       className={clsx(
@@ -113,7 +113,7 @@ const recruitmentText = {
     descriptionText: '지금 바로 지원하고 코테이토와 당신의 여정을 함께하세요!',
   },
   isDoneRecruiting: {
-    statusText: '코테이토 모집이 곧 시작됩니다!',
+    statusText: '코테이토 모집이 종료되었습니다!',
     descriptionText:
       '모집 안내 예약 신청을 해주시면 누구보다 먼저 코테이토에 지원하실 수 있어요.',
   },

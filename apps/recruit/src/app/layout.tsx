@@ -7,6 +7,7 @@ import Providers from '@/app/providers';
 import {ConditionalAuthProvider} from '@/components/providers/ConditionalAuthProvider';
 import {GoogleAnalytics} from '@/lib/GoogleAnalytics';
 import {BeUsableRum} from '@/lib/BeUsableRum';
+import {GoogleTagManager, GtmNoscript} from '@/lib/GoogleTagManager';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://recruit.cotato.kr'),
@@ -74,13 +75,17 @@ const roboto = localFont({
 });
 
 export default function RootLayout({children}: {children: React.ReactNode}) {
+  const gtmId = process.env.NEXT_PUBLIC_GOOGLE_TAG_MANAGER;
+
   return (
     <html
       lang='ko'
       className={`${pretendard.variable} ${roboto.variable} antialiased`}>
+      {gtmId && <GoogleTagManager gtmId={gtmId} />}
       <body className='flex min-h-screen w-full flex-col bg-black'>
         <Providers>
           <ConditionalAuthProvider>
+            {gtmId && <GtmNoscript gtmId={gtmId} />}
             {process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS ? (
               <GoogleAnalytics
                 gaId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}

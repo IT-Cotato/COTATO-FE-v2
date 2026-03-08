@@ -5,7 +5,7 @@ export default function AdminSessionsPage() {
   return (
     <section className='flex flex-col p-12.5'>
       <div className='flex min-w-275 flex-col gap-13'>
-        <h1 className='text-h4'>세션 관리</h1>
+        <h1 className='text-h2'>세션 관리</h1>
         <SuspenseWrapper>
           <SessionsContainer />
         </SuspenseWrapper>

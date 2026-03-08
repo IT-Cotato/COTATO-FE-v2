@@ -3,7 +3,7 @@
 import {useState} from 'react';
 import {Button} from '@repo/ui/components/buttons/Button';
 import {RecruitmentNotificationModal} from '@/components/modal/RecruitmentNotificationModal';
-import {useSubscribeRecruitmentNotify} from '@/hooks/mutations/useRecruitments.mutation';
+import {useSubscribeRecruitmentNotify} from '@/hooks/mutations/useRecruit.mutation';
 
 export const NotifyInput = () => {
   const [email, setEmail] = useState('');
@@ -51,7 +51,7 @@ export const NotifyInput = () => {
           labelTypo='body_m'
           width={126}
           height={34}
-          className='px-4.75 py-1.25'
+          className='py-1.25'
           backgroundColor='primary'
           disabledBackgroundColor='neutral-500'
           disabled={!isValidEmail || isPending}

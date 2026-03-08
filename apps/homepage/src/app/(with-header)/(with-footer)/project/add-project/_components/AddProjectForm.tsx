@@ -42,7 +42,7 @@ export const AddProjectForm = ({
   const formatInitialMembers = (
     members: {name: string; position: Position}[] | undefined
   ): TeamState => {
-    const result: TeamState = {PM: [], DESIGN: [], FE: [], BE: []};
+    const result: TeamState = {PM: [], DE: [], FE: [], BE: []};
     if (!members) return result;
     members.forEach((m) => {
       if (result[m.position]) result[m.position].push(m.name);
@@ -54,7 +54,7 @@ export const AddProjectForm = ({
     useTeamMembers(
       initialData?.memberInfos
         ? formatInitialMembers(initialData.memberInfos)
-        : {PM: ['감직이'], DESIGN: ['감직이'], FE: ['감직이'], BE: ['감직이']}
+        : {PM: ['감직이'], DE: ['감직이'], FE: ['감직이'], BE: ['감직이']}
     );
 
   const {states, setters, isFormValid} = useProjectForm(

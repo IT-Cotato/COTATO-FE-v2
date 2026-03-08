@@ -15,7 +15,7 @@ interface SessionCardProps {
   onAttendance: () => void;
 }
 
-const DEFAULT_IMAGE = '/images/default-session.png';
+const DEFAULT_IMAGE = '/images/attendance/default-session.svg';
 
 export const SessionCard = ({
   session,
@@ -34,17 +34,24 @@ export const SessionCard = ({
     [session.imageUrls]
   );
 
-  const {isCompleted, isAvailable} = useMemo(() => {
-    // NOT_YET이 아니고 실제 결과 값이 있을 때만 완료
+  const {isCompleted, showAttendanceButton, isButtonActive} = useMemo(() => {
+    // NOT_YET이 아니고 실제 결과 값이 있을 때
     const hasFinalResult =
-      !!session.myAttendanceResult && session.myAttendanceResult !== 'NOT_YET';
+      session.myAttendanceResult && session.myAttendanceResult !== 'NOT_YET';
+
+    const status = session.attendanceStatus;
+
+    // OPEN, LATE일 때만 출석하기 가능
+    const canAttend = status === 'OPEN' || status === 'LATE';
+
+    // 출석하기 버튼 렌더링 여부
+    const shouldShowButton =
+      !hasFinalResult && (status === 'BEFORE' || canAttend);
 
     return {
       isCompleted: hasFinalResult,
-      isAvailable:
-        !hasFinalResult &&
-        (session.attendanceStatus === 'OPEN' ||
-          session.attendanceStatus === 'LATE'),
+      showAttendanceButton: shouldShowButton,
+      isButtonActive: canAttend, // false면 disabled
     };
   }, [session.myAttendanceResult, session.attendanceStatus]);
 
@@ -87,10 +94,16 @@ export const SessionCard = ({
               }
             </div>
           ) : (
-            isAvailable && (
+            showAttendanceButton && (
               <button
-                onClick={onAttendance}
-                className='bg-primary text-body-m-sb shadow-default flex h-8 w-29 items-center justify-center rounded-[10px] font-semibold text-white'>
+                onClick={isButtonActive ? onAttendance : undefined}
+                disabled={!isButtonActive}
+                className={clsx(
+                  'text-body-m-sb shadow-default flex h-8 w-29 items-center justify-center rounded-[10px] text-white transition-all',
+                  isButtonActive
+                    ? 'bg-primary cursor-pointer'
+                    : 'bg-text-disabled cursor-default'
+                )}>
                 출석하기
               </button>
             )
@@ -147,8 +160,19 @@ export const SessionCard = ({
                     세션 장소
                   </span>
                   <p className='text-h5 text-neutral-600'>
-                    {session.placeName && `${session.placeName}`}
-                    {session.roadNameAddress && ` ${session.roadNameAddress}`}
+                    {session.sessionType === 'ONLINE' && !session.placeName ? (
+                      '온라인 세션'
+                    ) : (
+                      <>
+                        {session.placeName || ''}
+                        {session.roadNameAddress
+                          ? ` ${session.roadNameAddress}`
+                          : ''}
+                        {!session.placeName &&
+                          !session.roadNameAddress &&
+                          '장소 정보가 없습니다.'}
+                      </>
+                    )}
                   </p>
                 </div>
               </div>

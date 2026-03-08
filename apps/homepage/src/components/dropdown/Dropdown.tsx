@@ -14,6 +14,8 @@ interface DropdownProps<T extends string> {
   className?: string;
   width?: number;
   triggerClassName?: string; // 트리거 버튼의 스타일 클래스를 완전히 교체할 때 사용
+  isShadow?: boolean;
+  isBorder?: boolean;
 }
 
 export const Dropdown = <T extends string>({
@@ -25,6 +27,8 @@ export const Dropdown = <T extends string>({
   className,
   width,
   triggerClassName,
+  isShadow,
+  isBorder,
 }: DropdownProps<T>) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
@@ -59,12 +63,14 @@ export const Dropdown = <T extends string>({
           disabled ? 'cursor-not-allowed' : 'cursor-pointer',
           triggerClassName ??
             clsx(
-              'text-body-l h-10 rounded-[20px] border border-neutral-200 px-2.5 py-2.5',
+              'text-body-l h-10 rounded-[20px] px-2.5 py-2.5',
               disabled
                 ? 'bg-neutral-100 text-neutral-400'
                 : 'bg-white text-neutral-600',
               !width && 'min-w-27.5'
-            )
+            ),
+          isShadow && 'shadow-[0_0_10px_rgba(0,0,0,0.15)]',
+          isBorder && 'border border-neutral-200'
         )}
         style={{width: dropdownWidth}}
         aria-expanded={isOpen}
