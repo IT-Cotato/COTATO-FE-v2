@@ -44,7 +44,7 @@ export const WhiteOrangeKeycap = ({
         <span className='text-h2 absolute top-16.5 left-16.5 z-40 font-bold text-neutral-500 transition-colors group-hover:text-white group-focus:text-white group-focus-visible:text-white'>
           {title}
         </span>
-        <span className='text-h4 group-focus-visible:opacity-100group-focus:opacity-100 absolute top-30.5 left-16.5 z-40 font-bold text-neutral-100 opacity-0 transition-opacity group-hover:opacity-100'>
+        <span className='text-h4 absolute top-30.5 left-16.5 z-40 font-bold text-neutral-100 opacity-0 transition-opacity group-hover:opacity-100 group-focus:opacity-100 group-focus-visible:opacity-100'>
           {subTitle}
         </span>
       </div>
