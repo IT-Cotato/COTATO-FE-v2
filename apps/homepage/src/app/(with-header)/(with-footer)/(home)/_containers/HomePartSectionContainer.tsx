@@ -55,14 +55,18 @@ export const HomePartSectionContainer = () => {
       />
 
       <div className='flex flex-col gap-7.5'>
-        <div className='hidden flex-row gap-6 xl:flex' role='tablist'>
+        {/* 데스크톱 탭 리스트 */}
+        <div
+          className='hidden flex-row gap-6 xl:flex'
+          role='tablist'
+          aria-label='파트 선택'>
           {PARTS.map((partKey) => (
             <div key={partKey} className='relative'>
               <Button
-                id={`tab-${partKey}`}
+                id={`tab-desktop-${partKey}`}
                 role='tab'
                 aria-selected={currentPart === partKey}
-                aria-controls={`tabpanel-${partKey}`}
+                aria-controls={`tabpanel-${currentPart}`}
                 label={
                   partKey === 'pm'
                     ? '기획'
@@ -85,11 +89,17 @@ export const HomePartSectionContainer = () => {
           ))}
         </div>
 
+        {/* 메인 탭 패널 */}
         <div
           className='relative h-60 w-full overflow-hidden rounded-lg bg-neutral-900 xl:h-140 xl:rounded-[40px]'
           id={`tabpanel-${currentPart}`}
           role='tabpanel'
-          aria-labelledby={`tab-${currentPart}`}
+          // 데스크톱/모바일 아이디 모두를 참조할 수 있도록 설정하거나 현재 활성화된 쪽을 참조
+          aria-labelledby={
+            typeof window !== 'undefined' && window.innerWidth >= 1280
+              ? `tab-desktop-${currentPart}`
+              : `tab-mobile-${currentPart}`
+          }
           tabIndex={0}>
           <AnimatePresence mode='popLayout' custom={direction}>
             <motion.div
@@ -103,7 +113,8 @@ export const HomePartSectionContainer = () => {
               dragConstraints={{left: 0, right: 0}}
               dragElastic={0.2}
               onDragEnd={handleDragEnd}
-              className='absolute inset-0 h-full w-full cursor-grab active:cursor-grabbing'>
+              className='focus-visible:outline-primary absolute inset-0 h-full w-full cursor-grab focus-visible:outline-2 active:cursor-grabbing'>
+              {/* 내부 콘텐츠 생략 (기존과 동일) */}
               <div className='pointer-events-none relative h-full w-full overflow-hidden'>
                 <motion.div
                   key={`${currentPart}-bg`}
@@ -115,7 +126,7 @@ export const HomePartSectionContainer = () => {
                   className='absolute inset-0'>
                   <Image
                     src={`/images/part-section/${currentPart}.webp`}
-                    alt={partData[currentPart].title}
+                    alt=''
                     fill
                     priority
                     className='object-cover'
@@ -143,17 +154,35 @@ export const HomePartSectionContainer = () => {
           </AnimatePresence>
         </div>
 
-        <div className='flex justify-center gap-2.25 xl:hidden'>
+        <div
+          className='flex justify-center xl:hidden'
+          role='tablist'
+          aria-label='파트 선택 (모바일)'>
           {PARTS.map((partKey) => (
             <button
               key={partKey}
+              id={`tab-mobile-${partKey}`}
+              role='tab'
+              aria-selected={currentPart === partKey}
+              aria-controls={`tabpanel-${currentPart}`}
               onClick={() => handlePartClick(partKey)}
-              className={clsx(
-                'h-1 w-1 rounded-full transition-all duration-300',
-                currentPart === partKey ? 'bg-neutral-600' : 'bg-neutral-300'
-              )}
-              aria-label={`${partKey} 파트 보기`}
-            />
+              className='group relative flex h-5 w-5 items-center justify-center transition-all'
+              aria-label={
+                partKey === 'pm'
+                  ? '기획 파트 보기'
+                  : partKey === 'design'
+                    ? '디자인 파트 보기'
+                    : partKey === 'frontend'
+                      ? '프론트엔드 파트 보기'
+                      : '백엔드 파트 보기'
+              }>
+              <span
+                className={clsx(
+                  'h-1 w-1 rounded-full transition-all duration-300',
+                  currentPart === partKey ? 'bg-neutral-600' : 'bg-neutral-300'
+                )}
+              />
+            </button>
           ))}
         </div>
       </div>
