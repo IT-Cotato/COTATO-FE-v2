@@ -23,7 +23,7 @@ export const HomeBannerContainer = () => {
 
   return (
     <section
-      className='group relative flex h-screen w-full cursor-pointer items-center overflow-hidden bg-black'
+      className='group relative flex h-screen w-full items-center overflow-hidden bg-black'
       aria-label='홈 배너'
       onClick={toggleOverlay}>
       <div className='absolute inset-0 translate-y-0 transition-all duration-500 xl:px-12.5 xl:group-hover:translate-y-4'>
