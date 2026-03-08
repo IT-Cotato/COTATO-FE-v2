@@ -1,5 +1,3 @@
-'use client';
-
 /**
  * 홈 메인 스케줄 사진, 일정 등 데이터 조회 로직을 포함하는 메인 스케줄 컨테이너
 
@@ -13,25 +11,20 @@ import {WhiteOrangeKeycap} from '@/app/(with-header)/(with-footer)/(home)/_compo
 import {OrangeColKeycap} from '@/app/(with-header)/(with-footer)/(home)/_components/keycap/OrangeColKeycap';
 import {BlackRowKeycap} from '@/app/(with-header)/(with-footer)/(home)/_components/keycap/BlackRowKeycap';
 import {OrangeRowKeycap} from '@/app/(with-header)/(with-footer)/(home)/_components/keycap/OrangeRowKeycap';
-import {useEffect, useState} from 'react';
 
 export const HomeMainScheduleContainer = () => {
-  const [isMobile, setIsMobile] = useState<boolean>(false);
-
-  useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 1280);
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
-
   return (
     <section className='flex flex-col items-center gap-5 sm:gap-10'>
       <HomeSectionHeader
         mainHeading='Main Schedule'
         subHeading='주요 활동일정'
       />
-      {isMobile ? <MobileMainScheduleLayout /> : <DesktopMainScheduleLayout />}
+      <div className='xl:hidden'>
+        <MobileMainScheduleLayout />
+      </div>
+      <div className='hidden xl:block'>
+        <DesktopMainScheduleLayout />
+      </div>
     </section>
   );
 };
