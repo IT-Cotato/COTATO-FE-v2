@@ -1,6 +1,6 @@
 import {Modal} from '@repo/ui/components/modal/Modal';
 import {Button} from '@repo/ui/components/buttons/Button';
-import {getAttendanceModalContent} from '@/utils/getAttendanceModalContent';
+import {getAttendanceModalContent} from '@/app/(with-header)/mypage/attendance/_utils/getAttendanceModalContent';
 
 interface AttendanceModalsProps {
   isSuccessOpen: boolean;
