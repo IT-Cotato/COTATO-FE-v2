@@ -17,7 +17,7 @@ export const useAllMembersTable = () => {
         ? urlState.selectedStatuses
         : undefined,
     page: normalizedPage - 1,
-    size: 11,
+    size: 10,
   });
 
   const members: MemberType[] = data?.content ?? [];

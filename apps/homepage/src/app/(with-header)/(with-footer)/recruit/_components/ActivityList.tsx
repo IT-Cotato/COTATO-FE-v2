@@ -1,5 +1,5 @@
 import {ActivityCard} from '@/app/(with-header)/(with-footer)/recruit/_components/ActivityCard';
-import {ActivityCardType} from '@/schemas/recruitments/recruitments.schema';
+import {ActivityCardType} from '@/schemas/recruit/recruit.schema';
 
 interface ActivityListProps {
   activities?: ActivityCardType[];

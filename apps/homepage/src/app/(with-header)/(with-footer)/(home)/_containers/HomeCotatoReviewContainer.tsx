@@ -1,71 +1,30 @@
 'use client';
 
-import {HomeCotatoReviewCard} from '@/app/(with-header)/(with-footer)/(home)/_components/HomeCotatoReviewCard';
+import {useEffect, useState} from 'react';
 import {HomeSectionDescription} from '@/app/(with-header)/(with-footer)/(home)/_components/HomeSectionDescription';
-import {motion, useAnimationControls} from 'framer-motion';
-import {useCallback, useEffect, useState} from 'react';
+import {MobileReviewContainer} from '@/app/(with-header)/(with-footer)/(home)/_containers/cotato-review/MobileReviewContainer';
+import {DesktopReviewContainer} from '@/app/(with-header)/(with-footer)/(home)/_containers/cotato-review/DesktopReviewContainer';
 
-const ITEMS_PER_PAGE = 3;
+export interface CotatoReview {
+  id: number;
+  generation: string;
+  part: '백엔드' | '기획' | '디자인' | '프론트엔드';
+  name: string;
+  shortDescription: string;
+  longDescription: string;
+}
 
 export const HomeCotatoReviewContainer = () => {
-  const controls = useAnimationControls();
-  const [displayIndex, setDisplayIndex] = useState<number>(1);
-  const [isTransitioning, setIsTransitioning] = useState<boolean>(false);
-  const [isPaused, setIsPaused] = useState<boolean>(false);
-
-  const cardWidth = 339;
-  const gap = 20;
-  const moveDistance = cardWidth * ITEMS_PER_PAGE + gap * ITEMS_PER_PAGE;
-
-  const totalPages = Math.ceil(COTATO_REVIEWS_DATA.length / ITEMS_PER_PAGE);
-
-  const extendedReviews = [
-    ...COTATO_REVIEWS_DATA.slice(-ITEMS_PER_PAGE),
-    ...COTATO_REVIEWS_DATA,
-    ...COTATO_REVIEWS_DATA.slice(0, ITEMS_PER_PAGE),
-  ];
-
-  const animateTo = useCallback(
-    async (targetIndex: number) => {
-      setIsTransitioning(true);
-      setDisplayIndex(targetIndex);
-
-      await controls.start({
-        x: -targetIndex * moveDistance,
-        transition: {duration: 0.8, ease: [0.4, 0, 0.2, 1]},
-      });
-
-      if (targetIndex > totalPages) {
-        controls.set({x: -1 * moveDistance});
-        setDisplayIndex(1);
-      } else if (targetIndex < 1) {
-        controls.set({x: -totalPages * moveDistance});
-        setDisplayIndex(totalPages);
-      }
-
-      setIsTransitioning(false);
-    },
-    [controls, moveDistance, totalPages]
-  );
-
-  const handleNext = useCallback(() => {
-    if (isTransitioning) return;
-    animateTo(displayIndex + 1);
-  }, [animateTo, displayIndex, isTransitioning]);
-
-  const handleDotClick = (index: number) => {
-    if (isTransitioning || (displayIndex - 1) % totalPages === index) return;
-    animateTo(index + 1);
-  };
+  const [isMobile, setIsMobile] = useState<boolean | null>(null);
 
   useEffect(() => {
-    if (isPaused) return;
+    const checkMobile = () => setIsMobile(window.innerWidth < 1280);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
-    const timer = setInterval(() => {
-      handleNext();
-    }, 5000);
-    return () => clearInterval(timer);
-  }, [handleNext, isPaused]);
+  if (isMobile === null) return null;
 
   return (
     <section
@@ -79,46 +38,11 @@ export const HomeCotatoReviewContainer = () => {
         align='end'
       />
 
-      <div
-        className='relative mx-auto overflow-hidden'
-        style={{width: `${cardWidth * 3 + gap * 2}px`}}
-        onMouseEnter={() => setIsPaused(true)}
-        onMouseLeave={() => setIsPaused(false)}>
-        <motion.div
-          className='flex'
-          style={{gap: `${gap}px`}}
-          initial={{x: -moveDistance}}
-          animate={controls}>
-          {extendedReviews.map((review, idx) => (
-            <div key={`${review.id}-${idx}`} className='shrink-0'>
-              <HomeCotatoReviewCard {...review} />
-            </div>
-          ))}
-        </motion.div>
-      </div>
-
-      <div
-        className='flex justify-center gap-3'
-        role='tablist'
-        aria-label='리뷰 페이지 선택'>
-        {Array.from({length: totalPages}).map((_, index) => {
-          const isActive = (displayIndex - 1) % totalPages === index;
-          return (
-            <button
-              key={index}
-              onClick={() => handleDotClick(index)}
-              role='tab'
-              aria-selected={isActive}
-              aria-label={`${totalPages}개 리뷰 그룹 중 ${index + 1}번째 그룹 보기`}
-              className={`h-1.5 w-1.5 cursor-pointer rounded-full transition-all duration-300 ${
-                isActive
-                  ? 'bg-neutral-600'
-                  : 'bg-neutral-200 hover:bg-neutral-400'
-              }`}
-            />
-          );
-        })}
-      </div>
+      {isMobile ? (
+        <MobileReviewContainer reviews={COTATO_REVIEWS_DATA} />
+      ) : (
+        <DesktopReviewContainer reviews={COTATO_REVIEWS_DATA} />
+      )}
     </section>
   );
 };
@@ -127,7 +51,7 @@ export const HomeCotatoReviewContainer = () => {
  * 리뷰 데이터 12개 고정
  * 프론트에서 관리
  */
-const COTATO_REVIEWS_DATA = [
+const COTATO_REVIEWS_DATA: CotatoReview[] = [
   {
     id: 5,
     generation: '9 ~ 11',

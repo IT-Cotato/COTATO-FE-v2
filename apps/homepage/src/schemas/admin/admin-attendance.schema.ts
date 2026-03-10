@@ -19,7 +19,7 @@ export const AttendanceIdByGenerationResponseSchema = z.array(
   })
 );
 
-export const FullSessionTableRowSchema = z.object({
+export const AdminAttendanceEntireTableRowSchema = z.object({
   memberInfo: z.object({
     memberId: z.number(),
     name: z.string(),
@@ -34,11 +34,11 @@ export const FullSessionTableRowSchema = z.object({
   }),
 });
 
-export const FullSessionTableResponseSchema = z.array(
-  FullSessionTableRowSchema
+export const AdminAttendanceEntireTableResponseSchema = z.array(
+  AdminAttendanceEntireTableRowSchema
 );
 
-export const SpecificSessionTableRowSchema = z.object({
+export const AdminAttendanceSpecificTableRowSchema = z.object({
   memberInfo: z.object({
     memberId: z.number(),
     name: z.string(),
@@ -48,8 +48,8 @@ export const SpecificSessionTableRowSchema = z.object({
   result: AttendanceStatusSchema,
 });
 
-export const SpecificSessionTableResponseSchema = z.array(
-  SpecificSessionTableRowSchema
+export const AdminAttendanceSpecificTableResponseSchema = z.array(
+  AdminAttendanceSpecificTableRowSchema
 );
 
 /** 타입 추출 */
@@ -59,13 +59,15 @@ export type AttendanceStatusType = z.infer<typeof AttendanceStatusSchema>;
 export type AttendanceIdByGenerationResponse = z.infer<
   typeof AttendanceIdByGenerationResponseSchema
 >;
-export type FullSessionTableRowType = z.infer<typeof FullSessionTableRowSchema>;
-export type FullSessionTableResponse = z.infer<
-  typeof FullSessionTableResponseSchema
+export type AdminAttendanceEntireTableRowType = z.infer<
+  typeof AdminAttendanceEntireTableRowSchema
 >;
-export type SpecificSessionTableRowType = z.infer<
-  typeof SpecificSessionTableRowSchema
+export type AdminAttendanceEntireTableResponse = z.infer<
+  typeof AdminAttendanceEntireTableResponseSchema
 >;
-export type SpecificSessionTableResponse = z.infer<
-  typeof SpecificSessionTableResponseSchema
+export type AdminAttendanceSpecificTableRowType = z.infer<
+  typeof AdminAttendanceSpecificTableRowSchema
+>;
+export type AdminAttendanceSpecificTableResponse = z.infer<
+  typeof AdminAttendanceSpecificTableResponseSchema
 >;

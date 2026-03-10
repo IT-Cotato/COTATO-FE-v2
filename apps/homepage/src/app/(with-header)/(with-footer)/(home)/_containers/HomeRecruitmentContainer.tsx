@@ -1,10 +1,10 @@
 'use client';
 
 import {ROUTES} from '@/constants/routes';
-import {useRecruitmentsStatus} from '@/hooks/queries/useRecruitments.query';
 import {Button} from '@repo/ui/components/buttons/Button';
 import {useRouter} from 'next/navigation';
 import {motion, Variants} from 'framer-motion';
+import {useRecruitmentsStatus} from '@/hooks/queries/useAdminRecruit.query';
 
 export const HomeRecruitmentContainer = () => {
   const router = useRouter();
@@ -26,20 +26,22 @@ export const HomeRecruitmentContainer = () => {
 
   return (
     <section
-      className='flex flex-col items-center gap-10'
+      className='flex flex-col items-center gap-5 sm:gap-10'
       aria-labelledby='recruitment-title'>
       <motion.div
-        className='flex flex-col items-center gap-6'
+        className='flex flex-col items-center gap-2 sm:gap-6'
         variants={containerVariants}
         initial='hidden'
         whileInView='visible'
         viewport={{once: false, amount: 0.3}}>
-        <motion.p variants={itemVariants} className='text-h4 text-neutral-600'>
+        <motion.p
+          variants={itemVariants}
+          className='text-h5 sm:text-h4 text-neutral-600'>
           코테이토와 당신의 여정을 함께하세요!
         </motion.p>
         <motion.h2
           variants={itemVariants}
-          className='text-h2 text-neutral-800'
+          className='text-h5 sm:text-h2 font-bold text-neutral-800'
           id='recruitment-title'>
           코테이토에서 함께할 신입 감자분들을 모집합니다.
         </motion.h2>
@@ -49,9 +51,8 @@ export const HomeRecruitmentContainer = () => {
             <Button
               label={isRecruiting ? '지원서 작성하기' : '알림 신청 바로가기'}
               width={349}
-              labelTypo='h3'
               onClick={handleButtonClick}
-              className='transition-all duration-300'
+              className='text-h5 sm:text-h3 transition-all duration-300'
               aria-label={
                 isRecruiting
                   ? '코테이토 지원서 작성 외부 사이트로 이동'

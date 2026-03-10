@@ -13,23 +13,23 @@ export const OrangeColKeycap = ({
 }: OrangeColKeycapProps) => {
   return (
     <div
-      className='group relative h-135 w-67 cursor-pointer overflow-hidden rounded-[50px]'
+      className='group relative h-81.5 w-39 overflow-hidden rounded-[27px] xl:h-135 xl:w-67 xl:rounded-[50px]'
       role='button'
       tabIndex={0}>
       <Image
         src='/keycap/orange-keycap-long-col.svg'
         alt=''
         fill
-        className='h-full w-full transition-opacity duration-300 group-hover:opacity-0 group-focus-visible:opacity-0'
+        className='h-full w-full transition-opacity duration-300 group-hover:opacity-0 group-focus:opacity-0 group-focus-visible:opacity-0'
         unoptimized={true}
       />
-      <span className='text-h2 absolute top-16.5 left-16.5 z-10 font-bold text-white transition-colors'>
+      <span className='text-h4 xl:text-h2 absolute top-11.25 left-11.25 z-10 text-white transition-colors xl:top-16.5 xl:left-16.5'>
         {title}
       </span>
-      <span className='text-h4 absolute top-30.5 left-16.5 z-10 text-neutral-100 opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100'>
+      <span className='text-h5 xl:text-h4 absolute bottom-11 left-7 z-10 text-neutral-100 opacity-0 transition-opacity group-hover:opacity-100 group-focus:opacity-100 group-focus-visible:opacity-100 xl:top-30.5 xl:left-16.5'>
         {subTitle}
       </span>
-      <div className='absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100'>
+      <div className='absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus:opacity-100 group-focus-visible:opacity-100'>
         <Image
           src={imageSrc}
           alt={title}

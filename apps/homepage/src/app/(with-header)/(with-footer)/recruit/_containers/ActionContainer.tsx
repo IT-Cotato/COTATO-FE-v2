@@ -1,8 +1,8 @@
 'use client';
 
-import RecruitmentLayout from '@/components/layout/RecruitmentLayout';
 import {Spinner} from '@repo/ui/components/spinner/Spinner';
-import {useRecruitmentsStatus} from '@/hooks/queries/useRecruitments.query';
+import {RecruitLayout} from '@/components/layout/RecruitLayout';
+import {useRecruitmentsStatus} from '@/hooks/queries/useAdminRecruit.query';
 
 export const ActionContainer = () => {
   const {data, isLoading} = useRecruitmentsStatus();
@@ -17,7 +17,7 @@ export const ActionContainer = () => {
   }
 
   return (
-    <RecruitmentLayout
+    <RecruitLayout
       isRecruiting={isRecruiting}
       backgroundColor='bg-[#010101]'
       visualStripSrc='/images/visual/recruitment-visual-strip-black.webp'

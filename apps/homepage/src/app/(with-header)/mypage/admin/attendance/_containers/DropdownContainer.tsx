@@ -1,7 +1,7 @@
 'use client';
 
 import {Dropdown} from '@/components/dropdown/Dropdown';
-import {useAttendanceIdByGenerationQuery} from '@/hooks/queries/useAttendance.queries';
+import {useAttendanceIdByGenerationQuery} from '@/hooks/queries/useAdminAttendance.query';
 import {useGenerationQuery} from '@/hooks/queries/useGeneration.query';
 import {useAdminAttendanceStore} from '@/store/useAdminAttendanceStore';
 import {useEffect, useMemo} from 'react';
@@ -26,7 +26,7 @@ export const DropdownContainer = () => {
   const generations = useMemo(() => {
     if (!generationList) return [];
     return [...generationList]
-      .sort((a, b) => a.generationId - b.generationId)
+      .sort((a, b) => b.generationId - a.generationId)
       .map((item) => `${item.generationId}기`);
   }, [generationList]);
 
@@ -35,20 +35,32 @@ export const DropdownContainer = () => {
     return [...sessionList]
       .sort((a, b) => a.sessionId - b.sessionId)
       .map((item, idx) => ({
-        sessionOption: `${idx + 1}회차 세션`,
+        sessionOption: `${sessionList.length - idx}회차 세션`,
         attendanceId: item.attendanceId,
       }));
   }, [sessionList]);
 
   useEffect(() => {
-    if (generations.length > 0) {
+    if (
+      generations.length > 0 &&
+      (selectedGeneration === '기수' ||
+        !generations.includes(selectedGeneration))
+    ) {
       setSelectedGeneration(generations[0]);
     }
-  }, [generations, setSelectedGeneration]);
+  }, [generations, selectedGeneration, setSelectedGeneration]);
 
   useEffect(() => {
-    setSelectedSession('전체 세션');
-  }, [sessions, setSelectedSession]);
+    if (
+      selectedSession === '세션' ||
+      (selectedSession !== '전체 세션' &&
+        !['전체 세션', ...sessions.map((s) => s.sessionOption)].includes(
+          selectedSession
+        ))
+    ) {
+      setSelectedSession('전체 세션');
+    }
+  }, [sessions, selectedSession, setSelectedSession]);
 
   useEffect(() => {
     if (sessions.length <= 0 || selectedSession === '전체 세션') {
@@ -58,7 +70,11 @@ export const DropdownContainer = () => {
     }
     const sessionListIndex =
       parseInt(selectedSession.split('회차 세션')[0]) - 1;
-    if (sessionListIndex < 0 || sessionListIndex >= sessions.length) {
+    if (
+      Number.isNaN(sessionListIndex) ||
+      sessionListIndex < 0 ||
+      sessionListIndex >= sessions.length
+    ) {
       setAttendanceId(null);
       setSelectedSessionType('FULL');
       return;

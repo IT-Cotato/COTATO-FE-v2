@@ -1,6 +1,9 @@
+'use client';
+
 import {useState} from 'react';
 import {SessionAttendance} from '@/schemas/mypage-mem/attendance/attendance.schema';
 import {useSubmitAttendanceMutation} from '@/hooks/mutations/useAttendance.mutation';
+import {ErrorResponse} from '@/schemas/common/common-schema';
 
 export const useAttendance = () => {
   const [currentMonth, setCurrentMonth] = useState<number>(
@@ -11,12 +14,20 @@ export const useAttendance = () => {
   );
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
   const [isErrorModalOpen, setIsErrorModalOpen] = useState(false);
+  const [errorCode, setErrorCode] = useState<string | null>(null);
 
   const {mutate: submitAttendance, isPending} = useSubmitAttendanceMutation();
 
   const handleMonthChange = (month: number) => {
     setCurrentMonth(month);
     setExpandedSessionId(null);
+  };
+
+  const processError = (error: unknown) => {
+    const serverError = error as ErrorResponse;
+    const actualCode = serverError?.code || 'UNKNOWN';
+    setErrorCode(actualCode);
+    setIsErrorModalOpen(true);
   };
 
   const handleAttendance = async (session: SessionAttendance) => {
@@ -29,7 +40,7 @@ export const useAttendance = () => {
         {attendanceId},
         {
           onSuccess: () => setIsSuccessModalOpen(true),
-          onError: () => setIsErrorModalOpen(true),
+          onError: processError,
         }
       );
       return;
@@ -37,7 +48,8 @@ export const useAttendance = () => {
 
     // 대면 세션 - 위치 정보 필요
     if (!navigator.geolocation) {
-      alert('브라우저가 위치 정보를 지원하지 않습니다.');
+      setErrorCode('BROWSER_NOT_SUPPORT');
+      setIsErrorModalOpen(true);
       return;
     }
 
@@ -48,12 +60,12 @@ export const useAttendance = () => {
           {attendanceId, latitude, longitude},
           {
             onSuccess: () => setIsSuccessModalOpen(true),
-            onError: () => setIsErrorModalOpen(true),
+            onError: processError,
           }
         );
       },
-      (error) => {
-        console.error('위치 권한 오류:', error);
+      () => {
+        setErrorCode('PERMISSION_DENIED');
         setIsErrorModalOpen(true);
       }
     );
@@ -64,6 +76,7 @@ export const useAttendance = () => {
     expandedSessionId,
     isSuccessModalOpen,
     isErrorModalOpen,
+    errorCode,
     isPending,
     setExpandedSessionId,
     setIsSuccessModalOpen,

@@ -17,10 +17,10 @@ export const FooterContact = ({isRecruit}: FooterContactProps) => {
     : '서비스 이용약관';
 
   return (
-    <section className='flex flex-col items-end'>
-      <div className='flex items-center gap-5.25'>
-        <h3 className='text-h5 text-white'>Contact Us</h3>
-        <div className='flex items-center gap-3'>
+    <section className='flex flex-col gap-6 sm:items-end sm:gap-0'>
+      <div className='flex flex-col gap-4 sm:flex-row sm:gap-5.25'>
+        <h3 className='text-h5 hidden text-white sm:block'>Contact Us</h3>
+        <div className='flex items-center gap-5 sm:gap-3'>
           <SocialLink href='mailto:itcotato@gmail.com' ariaLabel='이메일'>
             <Email />
           </SocialLink>
@@ -45,17 +45,19 @@ export const FooterContact = ({isRecruit}: FooterContactProps) => {
         </div>
       </div>
 
-      <a
-        href={linkHref}
-        target='_blank'
-        rel='noopener noreferrer'
-        className='text-body-m-sb mt-7.5 text-white underline'>
-        {linkText}
-      </a>
+      <div className='flex flex-col gap-2 sm:items-end sm:gap-[3px]'>
+        <a
+          href={linkHref}
+          target='_blank'
+          rel='noopener noreferrer'
+          className='text-body-m sm:text-body-m-sb mt-4 text-neutral-400 underline decoration-neutral-500 underline-offset-4 sm:mt-7.5'>
+          {linkText}
+        </a>
 
-      <p className='text-body-m mt-3.5 text-white'>
-        Copyright©2026 COTATO, All rights reserved.
-      </p>
+        <p className='text-body-m text-center text-neutral-400 sm:text-right'>
+          Copyright © 2026 COTATO. All rights reserved.
+        </p>
+      </div>
     </section>
   );
 };

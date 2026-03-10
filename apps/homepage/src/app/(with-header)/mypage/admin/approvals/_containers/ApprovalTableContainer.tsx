@@ -36,7 +36,7 @@ export const ApprovalTableContainer = ({
     status: activeTab,
     name: searchParam || undefined,
     page: currentPage - 1,
-    size: 11,
+    size: 10,
   });
 
   const members = data?.content ?? [];

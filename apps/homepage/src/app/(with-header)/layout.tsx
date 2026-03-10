@@ -1,4 +1,4 @@
-import {Header} from '@/components/layout/Header';
+import {HeaderContainer} from '@/app/(with-header)/_containers/HeaderContainer';
 
 export default function WithHeaderLayout({
   children,
@@ -7,7 +7,7 @@ export default function WithHeaderLayout({
 }>) {
   return (
     <div>
-      <Header />
+      <HeaderContainer />
       <main className='flex-1'>{children}</main>
     </div>
   );

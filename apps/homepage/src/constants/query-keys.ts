@@ -55,6 +55,13 @@ export const QUERY_KEYS = {
     BASE: 'penalty',
     DASHBOARD: ['penalty', 'dashboard'],
     RECORDS: (month?: number) => ['penalty', 'records', {month}],
+    ALL_STATISTICS: (params: object) => ['penalty', 'records', 'full', params],
+    SESSION_DETAIL: (params: object) => [
+      'penalty',
+      'records',
+      'specific',
+      params,
+    ],
   },
   FAQ: (type: string) => ['faq', type],
   APPROVALS: {

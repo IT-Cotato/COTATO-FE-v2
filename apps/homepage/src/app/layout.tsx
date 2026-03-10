@@ -6,6 +6,7 @@ import Providers from '@/app/providers';
 import {AuthProvider} from '@/components/providers/AuthProvider';
 import {GoogleAnalytics} from '@/lib/GoogleAnalytics';
 import {BeUsableRum} from '@/lib/BeUsableRum';
+import {GoogleTagManager, GtmNoscript} from '@/lib/GoogleTagManager';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.cotato.kr'),
@@ -77,13 +78,17 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const gtmId = process.env.NEXT_PUBLIC_GOOGLE_TAG_MANAGER;
+
   return (
     <html
       lang='ko'
       className={`${pretendard.variable} ${roboto.variable} antialiased`}>
+      {gtmId && <GoogleTagManager gtmId={gtmId} />}
       <Providers>
         <AuthProvider>
           <body>
+            {gtmId && <GtmNoscript gtmId={gtmId} />}
             {process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS ? (
               <GoogleAnalytics
                 gaId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}

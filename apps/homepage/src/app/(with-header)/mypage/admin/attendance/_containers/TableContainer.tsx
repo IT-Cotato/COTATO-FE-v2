@@ -1,17 +1,17 @@
 'use client';
 
-import {FullSessionTable} from '@/app/(with-header)/mypage/admin/attendance/_components/table/FullSessionTable';
-import {SpecificSessionTable} from '@/app/(with-header)/mypage/admin/attendance/_components/table/SpecificSessionTable';
 import {useAdminAttendanceStore} from '@/store/useAdminAttendanceStore';
+import {Spinner} from '@repo/ui/components/spinner/Spinner';
+import {useSearchParams} from 'next/navigation';
+import {AttendancePartType} from '@/schemas/admin/admin-attendance.schema';
+import {AdminAttendanceEntireTable} from '@/app/(with-header)/mypage/admin/attendance/_components/table/AdminAttendanceEntireTable';
+import {AdminAttendanceSpecificTable} from '@/app/(with-header)/mypage/admin/attendance/_components/table/AdminAttendanceSpecificTable';
+import {AttendanceStatusKey} from '@/constants/admin/admin-attendance';
 import {
   useAttendanceFullRecordQuery,
   useAttendanceSpecificRecordQuery,
-} from '@/hooks/queries/useAttendance.queries';
-import {Spinner} from '@repo/ui/components/spinner/Spinner';
-import {useManageAttendanceStatusMutation} from '@/hooks/mutations/useAttendance.mutation';
-import {useSearchParams} from 'next/navigation';
-import {AttendancePartType} from '@/schemas/admin/admin-attendance.schema';
-import {AttendanceStatusKey} from '@/constants/admin/admin';
+} from '@/hooks/queries/useAdminAttendance.query';
+import {useManageAttendanceStatusMutation} from '@/hooks/mutations/useAdminAttendance.mutation';
 
 export const TableContainer = () => {
   const searchParams = useSearchParams();
@@ -85,15 +85,15 @@ export const TableContainer = () => {
   return (
     <>
       {selectedSessionType === 'FULL' ? (
-        <FullSessionTable items={fullAttendanceList} />
+        <AdminAttendanceEntireTable items={fullAttendanceList} />
       ) : (
         <div className='flex gap-5'>
-          <SpecificSessionTable
+          <AdminAttendanceSpecificTable
             items={specificAttendanceList.slice(0, half)}
             onChangeAttendanceStatus={handleChangeAttendanceStatus}
             isUpdating={isUpdatingAttendanceStatus}
           />
-          <SpecificSessionTable
+          <AdminAttendanceSpecificTable
             items={specificAttendanceList.slice(half)}
             onChangeAttendanceStatus={handleChangeAttendanceStatus}
             isUpdating={isUpdatingAttendanceStatus}
