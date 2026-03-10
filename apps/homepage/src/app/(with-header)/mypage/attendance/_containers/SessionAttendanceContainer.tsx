@@ -16,6 +16,7 @@ export const SessionAttendanceContainer = () => {
     expandedSessionId,
     isSuccessModalOpen,
     isErrorModalOpen,
+    errorCode,
     setExpandedSessionId,
     setIsSuccessModalOpen,
     setIsErrorModalOpen,
@@ -26,6 +27,15 @@ export const SessionAttendanceContainer = () => {
   const {data, isLoading, error} = useAttendanceSessionsQuery(currentMonth);
   const currentError = error as AxiosError<ErrorResponse> | null;
   const isNotActiveMember = currentError?.response?.data?.code === 'NP-002';
+
+  const handleErrorModalClose = () => {
+    setIsErrorModalOpen(false);
+
+    // 출석 시간이 지났을 때는 페이지 새로고침
+    if (errorCode === 'AT-401') {
+      window.location.reload();
+    }
+  };
 
   const handlePrevMonth = () => {
     if (!data || !data.hasPreviousMonth) return;
@@ -51,12 +61,10 @@ export const SessionAttendanceContainer = () => {
     );
   }
 
-  // 활동 회원이 아닐 경우
   if (isNotActiveMember) {
     return <NotActiveMemberView />;
   }
 
-  // 데이터가 없고 에러도 아닐 때
   if (!data) return null;
 
   return (
@@ -80,8 +88,9 @@ export const SessionAttendanceContainer = () => {
       <AttendanceModals
         isSuccessOpen={isSuccessModalOpen}
         isErrorOpen={isErrorModalOpen}
+        errorCode={errorCode}
         onSuccessClose={() => setIsSuccessModalOpen(false)}
-        onErrorClose={() => setIsErrorModalOpen(false)}
+        onErrorClose={handleErrorModalClose}
       />
     </div>
   );

@@ -1,6 +1,7 @@
 import {privateAxios} from '@/services/config/axios';
 import {SessionAttendanceListResponse} from '@/schemas/mypage-mem/attendance/attendance.schema';
 import {ENDPOINT} from '@/services/constant/endpoint';
+import {handleApiError} from '@/services/utils/apiHelper';
 
 /** 출석 세션 목록 조회 */
 export const getAttendanceSessions = async (
@@ -18,6 +19,10 @@ export const postAttendanceRecord = async (params: {
   latitude?: number;
   longitude?: number;
 }) => {
-  const {data} = await privateAxios.post(ENDPOINT.ATTENDANCE.RECORDS, params);
-  return data;
+  try {
+    const {data} = await privateAxios.post(ENDPOINT.ATTENDANCE.RECORDS, params);
+    return data;
+  } catch (error) {
+    return handleApiError(error);
+  }
 };
