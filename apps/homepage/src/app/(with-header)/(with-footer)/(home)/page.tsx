@@ -5,6 +5,7 @@ import {HomeMainScheduleContainer} from '@/app/(with-header)/(with-footer)/(home
 import {SuspenseWrapper} from '@/components/wrappers/SuspenseWrapper';
 import {HomeRecruitmentContainer} from '@/app/(with-header)/(with-footer)/(home)/_containers/HomeRecruitmentContainer';
 import {HomeBannerContainer} from '@/app/(with-header)/(with-footer)/(home)/_containers/HomeBannerContainer';
+import {HomeAttendanceContainer} from '@/app/(with-header)/(with-footer)/(home)/_containers/HomeAttendanceContainer';
 
 export default function HomePage() {
   return (
@@ -18,6 +19,7 @@ export default function HomePage() {
         </SuspenseWrapper>
         <HomeCotatoReviewContainer />
         <HomeRecruitmentContainer />
+        <HomeAttendanceContainer />
       </div>
     </div>
   );
