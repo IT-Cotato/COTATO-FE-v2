@@ -48,9 +48,7 @@ export const HomeCotatoReviewCard = ({
       </div>
       <div className='relative flex-1 overflow-hidden xl:overflow-visible'>
         <div className='scrollbar-hide h-full overflow-y-auto'>
-          <p className='text-h5 xl:text-body-l leading-relaxed'>
-            {longDescription}
-          </p>
+          <p className='text-body-l leading-relaxed'>{longDescription}</p>
         </div>
 
         <div
