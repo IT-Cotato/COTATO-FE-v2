@@ -1,5 +1,3 @@
-'use client';
-
 import Link from 'next/link';
 import {ROUTES} from '@/constants/routes';
 import CancelIcon from '@/assets/cancel/cancel.svg';
@@ -12,6 +10,7 @@ interface HeaderMobileMenuProps {
   userName?: string;
   isInitialized: boolean;
   isAuthenticated: boolean;
+  isAdmin?: boolean;
   onLogout: () => void;
   onClose: () => void;
 }
@@ -23,6 +22,7 @@ export const HeaderMobileMenu = ({
   userName,
   isInitialized,
   isAuthenticated,
+  isAdmin,
   onLogout,
   onClose,
 }: HeaderMobileMenuProps) => {
@@ -56,9 +56,7 @@ export const HeaderMobileMenu = ({
             </div>
           </div>
 
-          <h1 className='text-h4 px-4 py-7.5 text-neutral-400'>메인 메뉴</h1>
-
-          <div className='flex flex-col gap-8 px-10'>
+          <div className='flex flex-col gap-8 px-10 py-10'>
             {mobileNavItems.map(({label, href, external}) => {
               const isActive = !external && pathname === href;
               return (
@@ -76,15 +74,48 @@ export const HeaderMobileMenu = ({
 
             {/** 로그인되어 있을 경우 마이페이지 탭 추가 */}
             {isInitialized && isAuthenticated && (
-              <Link
-                href={ROUTES.MYPAGE}
-                className={`text-h5 font-bold transition-all duration-300 hover:text-neutral-50 ${
-                  pathname.startsWith(ROUTES.MYPAGE)
-                    ? 'text-neutral-50'
-                    : 'text-neutral-300'
-                }`}>
-                MY PAGE
-              </Link>
+              <div className='flex flex-col gap-8'>
+                <Link
+                  href={ROUTES.MYPAGE}
+                  className={`text-h5 font-bold transition-all duration-300 hover:text-neutral-50 ${
+                    pathname.startsWith(ROUTES.MYPAGE)
+                      ? 'text-neutral-50'
+                      : 'text-neutral-300'
+                  }`}>
+                  MY PAGE
+                </Link>
+                <div className='text-h5 flex flex-col gap-3 pl-5'>
+                  <Link
+                    href={ROUTES.MYPAGE_ACTIVITY}
+                    className={`transition-all duration-300 hover:text-neutral-50 ${
+                      pathname.startsWith(ROUTES.MYPAGE_ACTIVITY)
+                        ? 'text-neutral-50'
+                        : 'text-neutral-300'
+                    }`}>
+                    마이 메뉴
+                  </Link>
+                  <Link
+                    href={ROUTES.MYPAGE_ACCOUNT}
+                    className={`transition-all duration-300 hover:text-neutral-50 ${
+                      pathname.startsWith(ROUTES.MYPAGE_ACCOUNT)
+                        ? 'text-neutral-50'
+                        : 'text-neutral-300'
+                    }`}>
+                    설정
+                  </Link>
+                  {isAdmin && (
+                    <Link
+                      href={ROUTES.ADMIN_USERS}
+                      className={`transition-all duration-300 hover:text-neutral-50 ${
+                        pathname.startsWith(ROUTES.ADMIN_USERS)
+                          ? 'text-neutral-50'
+                          : 'text-neutral-300'
+                      }`}>
+                      관리자 메뉴
+                    </Link>
+                  )}
+                </div>
+              </div>
             )}
           </div>
 

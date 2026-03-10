@@ -9,14 +9,14 @@ import {ROUTES} from '@/constants/routes';
 import {useAuthStore} from '@/store/useAuthStore';
 import {useShallow} from 'zustand/shallow';
 import {useMemberInfoQuery} from '@/hooks/queries/useMembers.query';
-
 import {useEffect, useState} from 'react';
 import {useAttendanceStatusQuery} from '@/hooks/queries/useAttendanceStatus.query';
 import {useLogoutMutation} from '@/hooks/mutations/auth/useAuth.mutations';
-import {HeaderMobileMenu} from '@/components/layout/header/HeaderMobileMenu';
-import {useRecruitmentsStatus} from '@/hooks/queries/useAdminRecruit.query';
 
-export const Header = () => {
+import {useRecruitmentsStatus} from '@/hooks/queries/useAdminRecruit.query';
+import {HeaderMobileMenu} from '@/app/(with-header)/_components/HeaderMobileMenu';
+
+export const HeaderContainer = () => {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const pathname = usePathname();
   const {data: recruitStatus} = useRecruitmentsStatus();
@@ -147,6 +147,7 @@ export const Header = () => {
         userName={user?.name}
         onLogout={handleLogout}
         onClose={() => setIsMenuOpen(false)}
+        isAdmin={user?.isAdmin}
       />
     </header>
   );
