@@ -56,3 +56,23 @@
     box-shadow: 0 6px 15px 0 rgba(0, 0, 0, 0.2);
   }
 }
+
+@layer utilities {
+  @keyframes attendance-pulse {
+    0%,
+    100% {
+      background-color: rgba(255, 107, 0, 0.85);
+      box-shadow: 0 0 0 0 rgba(255, 107, 0, 0);
+    }
+    50% {
+      background-color: #ff9000;
+      box-shadow:
+        0 12px 40px 0 rgba(255, 107, 0, 0.6),
+        0 0 0 1.5px rgba(255, 255, 255, 0.3) inset;
+    }
+  }
+
+  .animate-attendance {
+    animation: attendance-pulse 2s infinite ease-in-out;
+  }
+}

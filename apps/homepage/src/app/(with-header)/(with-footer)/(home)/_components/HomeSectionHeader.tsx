@@ -13,16 +13,20 @@ export const HomeSectionHeader = ({
 }: HomeSectionHeaderProps) => {
   return (
     <motion.div
-      className='flex flex-col items-center gap-5'
+      className='flex flex-col items-center gap-2 sm:gap-5'
       initial='hidden'
       whileInView='visible'
       viewport={{once: false, margin: '-100px'}}
       variants={containerVariants}>
-      <motion.p className='text-h3 text-neutral-500' variants={itemVariants}>
+      <motion.p
+        className='text-body-l sm:text-h3 text-neutral-500'
+        variants={itemVariants}>
         {mainHeading}
       </motion.p>
 
-      <motion.h2 className='text-h2 text-neutral-800' variants={itemVariants}>
+      <motion.h2
+        className='text-h5 sm:text-h2 font-bold text-neutral-800'
+        variants={itemVariants}>
         {subHeading}
       </motion.h2>
     </motion.div>

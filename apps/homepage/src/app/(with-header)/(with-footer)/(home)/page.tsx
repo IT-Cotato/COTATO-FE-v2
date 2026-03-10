@@ -1,17 +1,17 @@
 import {HomeCoreValue} from '@/app/(with-header)/(with-footer)/(home)/_components/HomeCoreValue';
-
 import {HomeCotatoReviewContainer} from '@/app/(with-header)/(with-footer)/(home)/_containers/HomeCotatoReviewContainer';
 import {HomePartSectionContainer} from '@/app/(with-header)/(with-footer)/(home)/_containers/HomePartSectionContainer';
 import {HomeMainScheduleContainer} from '@/app/(with-header)/(with-footer)/(home)/_containers/HomeMainScheduleContainer';
 import {SuspenseWrapper} from '@/components/wrappers/SuspenseWrapper';
 import {HomeRecruitmentContainer} from '@/app/(with-header)/(with-footer)/(home)/_containers/HomeRecruitmentContainer';
 import {HomeBannerContainer} from '@/app/(with-header)/(with-footer)/(home)/_containers/HomeBannerContainer';
+import {HomeAttendanceContainer} from '@/app/(with-header)/(with-footer)/(home)/_containers/HomeAttendanceContainer';
 
 export default function HomePage() {
   return (
-    <div className='min-w-360'>
+    <div className='flex w-full flex-col gap-42.5 sm:gap-50'>
       <HomeBannerContainer />
-      <div className='flex flex-col items-center gap-50 bg-white pt-25 pb-50'>
+      <div className='flex flex-col items-center gap-42.5 overflow-x-hidden bg-white px-6 pb-50 sm:gap-50'>
         <HomeCoreValue />
         <HomeMainScheduleContainer />
         <SuspenseWrapper>
@@ -19,6 +19,7 @@ export default function HomePage() {
         </SuspenseWrapper>
         <HomeCotatoReviewContainer />
         <HomeRecruitmentContainer />
+        <HomeAttendanceContainer />
       </div>
     </div>
   );

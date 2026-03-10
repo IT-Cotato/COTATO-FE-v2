@@ -1,20 +1,18 @@
 'use client';
 
 import {Button} from '@repo/ui/components/buttons/Button';
-import {motion, AnimatePresence, Variants} from 'framer-motion';
+import {motion, AnimatePresence, Variants, PanInfo} from 'framer-motion';
 import {useState, useRef, useEffect} from 'react';
 import {HomeSectionDescription} from '@/app/(with-header)/(with-footer)/(home)/_components/HomeSectionDescription';
 import Image from 'next/image';
+import clsx from 'clsx';
 
 const PARTS = ['pm', 'design', 'frontend', 'backend'] as const;
-
 type PartType = (typeof PARTS)[number];
 
 export const HomePartSectionContainer = () => {
   const [currentPart, setCurrentPart] = useState<PartType>('pm');
-
   const prevIndexRef = useRef<number>(0);
-
   const currentIndex = PARTS.indexOf(currentPart);
   const direction = currentIndex > prevIndexRef.current ? 1 : -1;
 
@@ -30,8 +28,22 @@ export const HomePartSectionContainer = () => {
     setCurrentPart(part);
   };
 
+  const handleDragEnd = (
+    event: MouseEvent | TouchEvent | PointerEvent,
+    info: PanInfo
+  ) => {
+    const swipeThreshold = 50;
+    if (info.offset.x < -swipeThreshold) {
+      const nextIndex = (currentIndex + 1) % PARTS.length;
+      handlePartClick(PARTS[nextIndex]);
+    } else if (info.offset.x > swipeThreshold) {
+      const prevIndex = (currentIndex - 1 + PARTS.length) % PARTS.length;
+      handlePartClick(PARTS[prevIndex]);
+    }
+  };
+
   return (
-    <section className='flex flex-col gap-17.5'>
+    <section className='flex flex-col gap-10 xl:gap-17.5'>
       <HomeSectionDescription
         title='성장의 시작, 코테이토의 4가지 파트'
         descriptions={[
@@ -43,16 +55,18 @@ export const HomePartSectionContainer = () => {
       />
 
       <div className='flex flex-col gap-7.5'>
-        {/* TabList */}
-        <div className='flex flex-row gap-6' role='tablist'>
+        {/* 탭 리스트 */}
+        <div
+          className='hidden flex-row gap-6 xl:flex'
+          role='tablist'
+          aria-label='파트 선택'>
           {PARTS.map((partKey) => (
             <div key={partKey} className='relative'>
               <Button
-                key={partKey}
-                id={`tab-${partKey}`}
+                id={`tab-desktop-${partKey}`}
                 role='tab'
                 aria-selected={currentPart === partKey}
-                aria-controls={`tabpanel-${partKey}`}
+                aria-controls={`tabpanel-${currentPart}`}
                 label={
                   partKey === 'pm'
                     ? '기획'
@@ -74,12 +88,17 @@ export const HomePartSectionContainer = () => {
             </div>
           ))}
         </div>
-        {/** TabPanel */}
+
+        {/* 메인 탭 패널 */}
         <div
-          className='relative h-140 w-full overflow-hidden rounded-[40px] bg-neutral-900'
+          className='relative h-60 w-full overflow-hidden rounded-lg bg-neutral-900 xl:h-140 xl:rounded-[40px]'
           id={`tabpanel-${currentPart}`}
           role='tabpanel'
-          aria-labelledby={`tab-${currentPart}`}
+          aria-labelledby={
+            typeof window !== 'undefined' && window.innerWidth >= 1280
+              ? `tab-desktop-${currentPart}`
+              : `tab-mobile-${currentPart}`
+          }
           tabIndex={0}>
           <AnimatePresence mode='popLayout' custom={direction}>
             <motion.div
@@ -89,8 +108,12 @@ export const HomePartSectionContainer = () => {
               initial='enter'
               animate='center'
               exit='exit'
-              className='absolute inset-0 h-full w-full'>
-              <div className='relative h-full w-full overflow-hidden'>
+              drag='x'
+              dragConstraints={{left: 0, right: 0}}
+              dragElastic={0.2}
+              onDragEnd={handleDragEnd}
+              className='focus-visible:outline-primary absolute inset-0 h-full w-full cursor-grab focus-visible:outline-2 active:cursor-grabbing'>
+              <div className='pointer-events-none relative h-full w-full overflow-hidden'>
                 <motion.div
                   key={`${currentPart}-bg`}
                   custom={direction}
@@ -101,7 +124,7 @@ export const HomePartSectionContainer = () => {
                   className='absolute inset-0'>
                   <Image
                     src={`/images/part-section/${currentPart}.webp`}
-                    alt={partData[currentPart].title}
+                    alt=''
                     fill
                     priority
                     className='object-cover'
@@ -109,16 +132,16 @@ export const HomePartSectionContainer = () => {
                   <div className='absolute inset-0 bg-black/50' />
                 </motion.div>
 
-                <div className='absolute inset-0 flex flex-col justify-between p-17.75'>
+                <div className='absolute inset-0 flex flex-col justify-between px-3 py-4 xl:p-17.75'>
                   <motion.p
                     variants={textVariants}
-                    className='text-h1 text-neutral-50'>
+                    className='text-h4 xl:text-h1 font-bold text-neutral-50'>
                     {partData[currentPart].title}
                   </motion.p>
 
                   <motion.div
                     variants={textVariants}
-                    className='text-h4 text-neutral-100'>
+                    className='text-p2 xl:text-h4 text-neutral-100'>
                     {partData[currentPart].desc.map((line, idx) => (
                       <p key={idx}>{line}</p>
                     ))}
@@ -128,10 +151,43 @@ export const HomePartSectionContainer = () => {
             </motion.div>
           </AnimatePresence>
         </div>
+
+        <div
+          className='flex justify-center xl:hidden'
+          role='tablist'
+          aria-label='파트 선택 (모바일)'>
+          {PARTS.map((partKey) => (
+            <button
+              key={partKey}
+              id={`tab-mobile-${partKey}`}
+              role='tab'
+              aria-selected={currentPart === partKey}
+              aria-controls={`tabpanel-${currentPart}`}
+              onClick={() => handlePartClick(partKey)}
+              className='group relative flex h-5 w-5 items-center justify-center transition-all'
+              aria-label={
+                partKey === 'pm'
+                  ? '기획 파트 보기'
+                  : partKey === 'design'
+                    ? '디자인 파트 보기'
+                    : partKey === 'frontend'
+                      ? '프론트엔드 파트 보기'
+                      : '백엔드 파트 보기'
+              }>
+              <span
+                className={clsx(
+                  'h-1 w-1 rounded-full transition-all duration-300',
+                  currentPart === partKey ? 'bg-neutral-600' : 'bg-neutral-300'
+                )}
+              />
+            </button>
+          ))}
+        </div>
       </div>
     </section>
   );
 };
+
 const partData = {
   pm: {
     title: 'Product Manager',

@@ -34,7 +34,7 @@ export const AboutUsBanner = () => {
           onClick={scrollToNextSection}
           className='animate-bounce cursor-pointer'
           aria-label='활동 소개 섹션으로 이동'>
-          <MainArrowIcon />
+          <MainArrowIcon className='h-12.5 w-12.5' />
         </button>
       </div>
     </section>

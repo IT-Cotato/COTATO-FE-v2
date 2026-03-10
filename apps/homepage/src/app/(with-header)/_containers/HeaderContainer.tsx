@@ -4,19 +4,37 @@ import Link from 'next/link';
 import {usePathname} from 'next/navigation';
 import MainLogo from '@/assets/main-logo/main-logo.svg';
 import SmallLogo from '@/assets/small-logo/small-logo.svg';
+import HamburgerIcon from '@/assets/layout/hamburger.svg';
 import {ROUTES} from '@/constants/routes';
 import {useAuthStore} from '@/store/useAuthStore';
 import {useShallow} from 'zustand/shallow';
 import {useMemberInfoQuery} from '@/hooks/queries/useMembers.query';
-import {useEffect} from 'react';
+import {useEffect, useState} from 'react';
 import {useAttendanceStatusQuery} from '@/hooks/queries/useAttendanceStatus.query';
-import {useRecruitmentsStatus} from '@/hooks/queries/useAdminRecruit.query';
+import {useLogoutMutation} from '@/hooks/mutations/auth/useAuth.mutations';
 
-export const Header = () => {
+import {useRecruitmentsStatus} from '@/hooks/queries/useAdminRecruit.query';
+import {HeaderMobileMenu} from '@/app/(with-header)/_components/HeaderMobileMenu';
+
+export const HeaderContainer = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const pathname = usePathname();
   const {data: recruitStatus} = useRecruitmentsStatus();
 
   const navItems = [
+    {label: 'ABOUT US', href: ROUTES.ABOUTUS},
+    {label: 'PROJECT', href: ROUTES.PROJECT},
+    {
+      label: 'RECRUIT',
+      href: recruitStatus?.active
+        ? 'https://recruit.cotato.kr/'
+        : ROUTES.RECRUIT,
+      external: recruitStatus?.active,
+    },
+  ];
+
+  const mobileNavItems = [
+    {label: 'HOME', href: ROUTES.HOME},
     {label: 'ABOUT US', href: ROUTES.ABOUTUS},
     {label: 'PROJECT', href: ROUTES.PROJECT},
     {
@@ -36,8 +54,10 @@ export const Header = () => {
       setUser: state.setUser,
     }))
   );
+
   const {data: attendanceStatus} = useAttendanceStatusQuery(isAuthenticated);
   const {data: memberInfo} = useMemberInfoQuery(isAuthenticated);
+  const {mutate: logout} = useLogoutMutation();
 
   useEffect(() => {
     if (memberInfo) {
@@ -45,49 +65,56 @@ export const Header = () => {
     }
   }, [memberInfo, setUser]);
 
+  useEffect(() => {
+    setIsMenuOpen(false);
+  }, [pathname]);
+
+  const handleLogout = () => {
+    if (confirm('로그아웃 하시겠습니까?')) {
+      logout();
+    }
+  };
+
   return (
-    <header className='z-header sticky top-0 flex h-22 w-full min-w-360 items-center justify-between bg-black pr-26.25 pl-6.25'>
-      <div>
+    <header className='z-header sticky top-0 flex h-12.5 w-full items-center justify-between bg-black px-6 md:h-22 md:pr-26.25 md:pl-6.25'>
+      <div className='z-50'>
         <Link href={ROUTES.HOME}>
-          <MainLogo className='w-36.5' />
+          <MainLogo className='w-28 lg:w-36.5' />
         </Link>
       </div>
-      <nav className='flex items-center gap-5'>
+
+      <nav className='hidden items-center gap-5 md:flex'>
         {navItems.map(({label, href, external}) => {
           const isActive = !external && pathname === href;
-          const baseClasses =
-            'text-body-l-sb px-4.25 py-6 transition-colors duration-300 hover:text-white';
-          const colorClasses = isActive ? 'text-white' : 'text-neutral-300';
-
           return (
             <Link
               key={label}
               href={href}
               target={external ? '_blank' : undefined}
-              className={`${baseClasses} ${colorClasses}`}>
+              className={`text-body-l-sb white px-4.25 py-6 transition-colors duration-300 hover:text-neutral-50 hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.8)] ${
+                isActive ? 'text-neutral-50' : 'text-neutral-300'
+              }`}>
               {label}
             </Link>
           );
         })}
 
         {isInitialized && (
-          <>
+          <div className='flex items-center gap-5'>
             {!isAuthenticated ? (
-              // 로그인 안 되어 있을 때
               <Link
                 href={ROUTES.ONBOARDING}
-                className='text-primary text-body-l-sb'>
+                className='text-primary text-body-l-sb hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.5)]'>
                 LOGIN
               </Link>
             ) : (
               <>
                 <Link
                   href={ROUTES.MYPAGE}
-                  className='text-body-l-sb flex flex-row items-center justify-center gap-1.25 px-4.25 py-6 text-white'>
+                  className='text-body-l-sb flex items-center gap-1.25 text-white'>
                   <SmallLogo className='h-4 w-4 text-white' />
                   {user?.name || '사용자'}
                 </Link>
-                {/* 출석 활성화 시간일 때  */}
                 {attendanceStatus?.openStatus === 'OPEN' && (
                   <Link
                     href={ROUTES.MYPAGE_ATTENDANCE}
@@ -97,9 +124,31 @@ export const Header = () => {
                 )}
               </>
             )}
-          </>
+          </div>
         )}
       </nav>
+
+      {/** 모바일 햄버거 헤더  */}
+      {!isMenuOpen && (
+        <button
+          className='z-50 block p-2 text-white md:hidden'
+          onClick={() => setIsMenuOpen(true)}
+          aria-label='메뉴 열기'>
+          <HamburgerIcon className='h-5 w-5' />
+        </button>
+      )}
+
+      <HeaderMobileMenu
+        isOpen={isMenuOpen}
+        pathname={pathname}
+        mobileNavItems={mobileNavItems}
+        isInitialized={isInitialized}
+        isAuthenticated={isAuthenticated}
+        userName={user?.name}
+        onLogout={handleLogout}
+        onClose={() => setIsMenuOpen(false)}
+        isAdmin={user?.isAdmin}
+      />
     </header>
   );
 };
