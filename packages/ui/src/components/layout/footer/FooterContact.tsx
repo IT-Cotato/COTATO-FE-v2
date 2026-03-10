@@ -22,25 +22,25 @@ export const FooterContact = ({isRecruit}: FooterContactProps) => {
         <h3 className='text-h5 hidden text-white sm:block'>Contact Us</h3>
         <div className='flex items-center gap-5 sm:gap-3'>
           <SocialLink href='mailto:itcotato@gmail.com' ariaLabel='이메일'>
-            <Email />
+            <Email className='w-6' />
           </SocialLink>
           <SocialLink href='https://github.com/IT-Cotato' ariaLabel='GitHub'>
-            <Github />
+            <Github className='h-6 w-6' />
           </SocialLink>
           <SocialLink
             href='https://www.instagram.com/cotato_official/'
             ariaLabel='Instagram'>
-            <Insta />
+            <Insta className='h-6 w-6' />
           </SocialLink>
           <SocialLink
             href='https://pf.kakao.com/_LQLyG'
             ariaLabel='KakaoTalk 채널'>
-            <Kakao />
+            <Kakao className='h-6 w-6' />
           </SocialLink>
           <SocialLink
             href='https://cafe.naver.com/cotato'
             ariaLabel='네이버 카페'>
-            <NaverCafe />
+            <NaverCafe className='h-6 w-6' />
           </SocialLink>
         </div>
       </div>
