@@ -20,7 +20,7 @@ export const HomeAttendanceContainer = () => {
         'fixed right-7 bottom-7 z-30 transition-all duration-300',
         'md:hidden'
       )}>
-      {attendanceStatus && <AttendanceFloatingButton />}
+      {attendanceStatus?.openStatus === 'OPEN' && <AttendanceFloatingButton />}
     </div>
   );
 };
