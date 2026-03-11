@@ -4,7 +4,7 @@ import {MobileMyPageNav} from '@/app/(with-header)/mypage/_components/MyPageMobi
 import {ProtectedRoute} from '@/components/auth/ProtectedRoute';
 import {useAuthStore} from '@/store/useAuthStore';
 
-export const MyPageClientMobileWrapper = ({
+export const MyPageClientWrapper = ({
   children,
 }: {
   children: React.ReactNode;
