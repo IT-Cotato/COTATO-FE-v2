@@ -9,7 +9,7 @@ export default function MyPageLayout({
   return (
     <ProtectedRoute>
       <section className='flex min-h-screen w-full min-w-360 flex-row'>
-        <aside className='z-sidebar sticky left-0 bg-neutral-50'>
+        <aside className='z-sidebar sticky left-0 hidden bg-neutral-50 md:block'>
           <SideBarContainer />
         </aside>
         <main className='min-w-0 flex-1'>{children}</main>
