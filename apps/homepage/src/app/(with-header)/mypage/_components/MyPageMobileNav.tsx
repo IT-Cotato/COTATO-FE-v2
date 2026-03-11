@@ -1,6 +1,6 @@
 'use client';
 
-import {useState, useMemo} from 'react';
+import {useState, useMemo, useEffect} from 'react';
 import {useRouter, usePathname} from 'next/navigation';
 import ChevronDown from '@/assets/chevrons/chevron-down.svg';
 import {ADMIN_NAV_GROUP, SIDEBAR_NAV_GROUPS} from '@/constants/sidebar';
@@ -9,6 +9,10 @@ export const MobileMyPageNav = ({isAdmin}: {isAdmin?: boolean}) => {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
+
+  useEffect(() => {
+    setIsOpen(false);
+  }, [pathname]);
 
   const allGroups = useMemo(() => {
     return isAdmin
