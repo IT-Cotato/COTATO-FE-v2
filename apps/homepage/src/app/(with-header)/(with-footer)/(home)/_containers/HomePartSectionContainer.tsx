@@ -69,12 +69,12 @@ export const HomePartSectionContainer = () => {
                 aria-controls={`tabpanel-${currentPart}`}
                 label={
                   partKey === 'pm'
-                    ? '기획'
+                    ? '기획 파트 보기'
                     : partKey === 'design'
-                      ? '디자인'
+                      ? '디자인 파트 보기'
                       : partKey === 'frontend'
-                        ? '프론트엔드'
-                        : '백엔드'
+                        ? '프론트엔드 파트 보기'
+                        : '백엔드 파트 보기'
                 }
                 width={220}
                 labelTypo='h3'
@@ -94,11 +94,7 @@ export const HomePartSectionContainer = () => {
           className='relative h-60 w-full overflow-hidden rounded-lg bg-neutral-900 xl:h-140 xl:rounded-[40px]'
           id={`tabpanel-${currentPart}`}
           role='tabpanel'
-          aria-labelledby={
-            typeof window !== 'undefined' && window.innerWidth >= 1280
-              ? `tab-desktop-${currentPart}`
-              : `tab-mobile-${currentPart}`
-          }
+          aria-labelledby={`tab-${currentPart}`}
           tabIndex={0}>
           <AnimatePresence mode='popLayout' custom={direction}>
             <motion.div
@@ -155,7 +151,7 @@ export const HomePartSectionContainer = () => {
         <div
           className='flex justify-center xl:hidden'
           role='tablist'
-          aria-label='파트 선택 (모바일)'>
+          aria-label='파트 선택'>
           {PARTS.map((partKey) => (
             <button
               key={partKey}
