@@ -24,15 +24,22 @@ export const MobileMyPageNav = ({isAdmin}: {isAdmin?: boolean}) => {
     return (
       allGroups
         .flatMap((group) => group.items)
-        .find((item) => item.href === pathname) ||
-      SIDEBAR_NAV_GROUPS[0].items[0]
+        .find(
+          (item) =>
+            !item.isExternal &&
+            (pathname === item.href || pathname.startsWith(`${item.href}/`))
+        ) || SIDEBAR_NAV_GROUPS[0].items[0]
     );
   }, [allGroups, pathname]);
 
   const activeGroup = useMemo(() => {
     return (
       allGroups.find((group) =>
-        group.items.some((item) => item.href === pathname)
+        group.items.some(
+          (item) =>
+            !item.isExternal &&
+            (pathname === item.href || pathname.startsWith(`${item.href}/`))
+        )
       ) || SIDEBAR_NAV_GROUPS[0]
     );
   }, [allGroups, pathname]);
