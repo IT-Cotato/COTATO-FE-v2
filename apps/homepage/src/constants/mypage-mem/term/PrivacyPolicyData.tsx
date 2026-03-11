@@ -411,9 +411,9 @@ export const PRIVACY_POLICY: TermsSection[] = [
           2. 동아리가 개인정보 처리방침을 변경하는 경우, 변경 내용 및 시행일자를
           명시하여 시행 7일 전부터 카카오톡 오픈채팅방 등을 통하여 공지합니다.
         </div>
-        <div>
+        <div className='pl-3.75'>
           다만, 수집하는 개인정보 항목의 변경 등 중요한 내용의 변경인 경우에는
-          <div className='pl-3.75'>최소 30일 전에 공지합니다.</div>
+          최소 30일 전에 공지합니다.
         </div>
       </div>
     ),
