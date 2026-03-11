@@ -39,7 +39,7 @@ export const MobileMyPageNav = ({isAdmin}: {isAdmin?: boolean}) => {
 
   const handleMove = (href: string, isExternal?: boolean) => {
     if (isExternal) {
-      window.open(href, '_blank');
+      window.open(href, '_blank', 'noopener,noreferrer');
     } else {
       router.push(href);
     }
