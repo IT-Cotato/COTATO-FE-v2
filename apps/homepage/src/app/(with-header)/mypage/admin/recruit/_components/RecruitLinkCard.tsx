@@ -21,9 +21,10 @@ export const RecruitLinkCard = () => {
         홈페이지 헤더의 RECRUIT 메뉴가 연결될 링크를 선택하세요.
       </p>
       <div className='flex items-center justify-between rounded-[10px] bg-white px-5.5 py-6'>
-        <div>
-          <h3 className='text-h5-bold md:text-h4 break-all text-neutral-600'>
-            외부 링크(cotato.kr/recruit)
+        <div className='pr-4.5'>
+          <h3 className='text-h5 md:text-h4 font-bold text-neutral-600'>
+            외부 링크
+            <span className='block md:inline'>(cotato.kr/recruit)</span>
           </h3>
           <p className='text-body-l md:text-h5 break-keep text-neutral-400'>
             현재 홈페이지 외부 recruit 사이트로 연결됩니다
