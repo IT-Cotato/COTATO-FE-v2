@@ -55,6 +55,19 @@
   .shadow-project-card {
     box-shadow: 0 6px 15px 0 rgba(0, 0, 0, 0.2);
   }
+
+  /* Swiper Custom Pagination */
+  .activity-swiper .swiper-pagination-bullet {
+    background: #bdbdbd !important;
+    opacity: 1;
+  }
+
+  .activity-swiper .swiper-pagination-bullet-active {
+    background: #525252 !important;
+    width: 4px;
+    border-radius: 4px;
+    transition: width 0.3s;
+  }
 }
 
 @layer utilities {
