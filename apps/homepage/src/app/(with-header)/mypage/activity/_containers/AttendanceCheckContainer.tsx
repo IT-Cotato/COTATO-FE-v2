@@ -64,7 +64,7 @@ export const AttendanceCheckContainer = ({activeTab}: {activeTab: TabType}) => {
     : penaltyRecords?.records || [];
 
   return (
-    <div className='flex w-full flex-col gap-4'>
+    <div className='flex w-full flex-col gap-4.5 md:gap-4'>
       <div className='flex justify-start'>
         <Dropdown
           width={85}
