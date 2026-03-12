@@ -12,9 +12,8 @@ import {useMemberInfoQuery} from '@/hooks/queries/useMembers.query';
 import {useEffect, useState} from 'react';
 import {useAttendanceStatusQuery} from '@/hooks/queries/useAttendanceStatus.query';
 import {useLogoutMutation} from '@/hooks/mutations/auth/useAuth.mutations';
-
 import {useRecruitmentsStatus} from '@/hooks/queries/useAdminRecruit.query';
-import {HeaderMobileMenu} from '@/app/(with-header)/_components/HeaderMobileMenu';
+import {HeaderMobileMenu} from '@/app/(with-header)/_mobile/HeaderMobileMenu';
 
 export const HeaderContainer = () => {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);

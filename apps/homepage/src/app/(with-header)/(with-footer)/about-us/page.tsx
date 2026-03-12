@@ -1,4 +1,4 @@
-import {AboutUsBanner} from '@/app/(with-header)/(with-footer)/about-us/_components/AboutUsBanner';
+import {AboutUsBannerContainer} from '@/app/(with-header)/(with-footer)/about-us/_containers/AboutUsBannerContainer';
 import {AboutUsMainActivitiesContainer} from '@/app/(with-header)/(with-footer)/about-us/_containers/AboutUsMainActivitiesContainer';
 import {AboutUsManagementTeamContainer} from '@/app/(with-header)/(with-footer)/about-us/_containers/AboutUsManagementTeamContainer';
 import {AboutUsProjectContainer} from '@/app/(with-header)/(with-footer)/about-us/_containers/AboutUsProjectContainer';
@@ -18,12 +18,14 @@ export const metadata: Metadata = {
 
 export default function AboutUsPage() {
   return (
-    <div className='mx-auto flex w-full min-w-360 flex-col items-center justify-center overflow-x-hidden'>
-      <AboutUsBanner />
+    <div className='mx-auto flex w-full flex-col items-center justify-center overflow-x-hidden'>
+      <AboutUsBannerContainer />
       <AboutUsMainActivitiesContainer />
-      <AboutUsStudyContainer />
-      <AboutUsProjectContainer />
-      <AboutUsManagementTeamContainer />
+      <div className='flex flex-col px-6'>
+        <AboutUsStudyContainer />
+        <AboutUsProjectContainer />
+        <AboutUsManagementTeamContainer />
+      </div>
     </div>
   );
 }
