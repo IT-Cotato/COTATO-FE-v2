@@ -8,7 +8,7 @@ export default function MyPageLayout({
 }>) {
   return (
     <MyPageClientWrapper>
-      <section className='flex min-h-screen w-full min-w-360 flex-col md:flex-row'>
+      <section className='flex min-h-screen w-full min-w-0 flex-col md:min-w-360 md:flex-row'>
         <aside className='z-sidebar sticky left-0 hidden bg-neutral-50 md:block'>
           <SideBarContainer />
         </aside>
