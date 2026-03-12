@@ -1,6 +1,6 @@
 'use client';
 
-import {ReactNode, useRef, useEffect} from 'react';
+import {ReactNode, useRef} from 'react';
 import clsx from 'clsx';
 import CloseIcon from '@repo/ui/assets/icons/cancel.svg';
 import {FullButton} from '@repo/ui/components/buttons/FullButton';
@@ -26,15 +26,6 @@ export const AttendanceModal = ({
   const modalRef = useRef<HTMLDivElement>(null);
 
   useClickOutside(modalRef, onClose);
-
-  useEffect(() => {
-    if (!isOpen) return;
-    const handleEsc = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose();
-    };
-    window.addEventListener('keydown', handleEsc);
-    return () => window.removeEventListener('keydown', handleEsc);
-  }, [isOpen, onClose]);
 
   if (!isOpen) return null;
 
