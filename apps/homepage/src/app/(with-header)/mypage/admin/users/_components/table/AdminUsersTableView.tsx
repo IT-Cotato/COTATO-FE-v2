@@ -63,53 +63,65 @@ export const AdminUsersTableView = ({
     items.every((item) => selectedIds.includes(item.memberId));
 
   return (
-    <table className='min-w-277.5 border-collapse'>
+    <>
+    <table className='w-full table-fixed border-collapse [border-spacing:0] md:min-w-277.5 md:table-auto'>
       <thead className='bg-neutral-200'>
         <tr>
-          {isAllTab && (
-            <th className='w-12 px-3 py-4 text-center'>
-              <Checkbox
-                checked={isAllSelected}
-                onChange={onSelectAll}
-                className='border-0 bg-neutral-50'
-              />
-            </th>
-          )}
           {MEMBER_COLUMNS.map((col) => {
             const isStatusColumn = col.key === 'status';
+            const isNameColumn = col.key === 'name';
             return (
               <th
                 key={col.key}
-                className='text-body-l px-3 py-4 text-center align-middle font-semibold text-neutral-600'>
-                <div className='flex items-center justify-center gap-2.5'>
-                  <div>{isStatusColumn && !isAllTab ? '역할' : col.label}</div>
-                  {isStatusColumn && isAllTab && (
-                    <div ref={filterRef} className='relative flex items-center'>
-                      <button
-                        type='button'
-                        onClick={() => setIsFilterOpen(!isFilterOpen)}
-                        aria-label='활동여부 필터 토글'
-                        className='cursor-pointer'>
-                        {selectedStatuses.length > 0 ? (
-                          <FinishFilterIcon />
-                        ) : (
-                          <DefaultFilterIcon />
-                        )}
-                      </button>
-                      {isFilterOpen && (
-                        <div className='absolute top-full left-0 z-50 mt-2 w-27 -translate-x-3/4'>
-                          <CheckboxFilter
-                            options={MEMBER_STATUS_OPTIONS}
-                            selected={selectedStatuses}
-                            onChange={onFilterChange}
-                            onClose={() => setIsFilterOpen(false)}
-                            getLabel={(key) => MEMBER_STATUS_CONFIG[key].label}
-                          />
-                        </div>
-                      )}
+                className={`text-body-m md:text-body-l border-0 py-3 text-center align-middle font-semibold text-neutral-600 md:px-3 md:py-4 ${col.key === 'school' || col.key === 'phone' ? 'hidden md:table-cell' : ''}`}>
+                {isNameColumn && isAllTab ? (
+                  <div className='flex items-center px-2'>
+                    <span className='shrink-0'>
+                      <Checkbox
+                        checked={isAllSelected}
+                        onChange={onSelectAll}
+                        className='border-0 bg-neutral-50'
+                      />
+                    </span>
+                    <span className='flex-1 text-center'>이름</span>
+                  </div>
+                ) : (
+                  <div className='flex items-center justify-center gap-2.5'>
+                    <div>
+                      {isStatusColumn && !isAllTab ? '역할' : col.label}
                     </div>
-                  )}
-                </div>
+                    {isStatusColumn && isAllTab && (
+                      <div
+                        ref={filterRef}
+                        className='relative flex items-center'>
+                        <button
+                          type='button'
+                          onClick={() => setIsFilterOpen(!isFilterOpen)}
+                          aria-label='활동여부 필터 토글'
+                          className='cursor-pointer'>
+                          {selectedStatuses.length > 0 ? (
+                            <FinishFilterIcon />
+                          ) : (
+                            <DefaultFilterIcon />
+                          )}
+                        </button>
+                        {isFilterOpen && (
+                          <div className='absolute top-full left-0 z-50 mt-2 w-27 -translate-x-3/4'>
+                            <CheckboxFilter
+                              options={MEMBER_STATUS_OPTIONS}
+                              selected={selectedStatuses}
+                              onChange={onFilterChange}
+                              onClose={() => setIsFilterOpen(false)}
+                              getLabel={(key) =>
+                                MEMBER_STATUS_CONFIG[key].label
+                              }
+                            />
+                          </div>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                )}
               </th>
             );
           })}
@@ -117,32 +129,38 @@ export const AdminUsersTableView = ({
       </thead>
       <tbody>
         {items.map((member) => (
-          <tr key={member.memberId} className='text-body-l text-neutral-600'>
-            {isAllTab && (
-              <td className='px-3 py-4 text-center'>
-                <Checkbox
-                  checked={selectedIds.includes(member.memberId)}
-                  onChange={(checked) => onSelect(member.memberId, checked)}
-                  className='border-0 bg-neutral-50'
-                />
-              </td>
-            )}
-            <td className='truncate px-3 py-4 text-center'>{member.name}</td>
-            <td className='truncate px-3 py-4 text-center'>
+          <tr
+            key={member.memberId}
+            className='text-body-m md:text-body-l text-neutral-600'>
+            <td className='truncate border-0 py-3 md:px-3 md:py-4'>
+              <div className='flex items-center px-2'>
+                {isAllTab && (
+                  <span className='shrink-0'>
+                    <Checkbox
+                      checked={selectedIds.includes(member.memberId)}
+                      onChange={(checked) => onSelect(member.memberId, checked)}
+                      className='border-0 bg-neutral-50'
+                    />
+                  </span>
+                )}
+                <span className='flex-1 text-center'>{member.name}</span>
+              </div>
+            </td>
+            <td className='truncate border-0 py-3 text-center md:px-3 md:py-4'>
               {member.passedGenerationNumber}기
             </td>
-            <td className='truncate px-3 py-4 text-center'>
+            <td className='truncate border-0 py-3 text-center md:px-3 md:py-4'>
               {MEMBER_POSITION_LABEL[member.position as MemberPositionKey] ??
                 member.position}
             </td>
-            <td className='truncate px-3 py-4 text-center'>
+            <td className='hidden truncate border-0 py-3 text-center md:table-cell md:px-3 md:py-4'>
               {member.university}
             </td>
-            <td className='truncate px-3 py-4 text-center'>
+            <td className='hidden truncate border-0 py-3 text-center md:table-cell md:px-3 md:py-4'>
               {formatPhoneNumber(member.phoneNumber)}
             </td>
-            <td className='px-3 py-4'>
-              <div className='flex items-center justify-center gap-2'>
+            <td className='border-0 py-3 md:px-3 md:py-4'>
+              <div className='flex items-center justify-center md:gap-2'>
                 {isAllTab ? (
                   <StatusDropdown
                     key={`${member.memberId}-status`}
@@ -152,6 +170,7 @@ export const AdminUsersTableView = ({
                     onChange={(value) => onStatusChange(member.memberId, value)}
                     disabled={false}
                     ariaLabel='활동여부 선택'
+                    wrapperClassName='w-[61px] md:w-18.75'
                   />
                 ) : (
                   <StatusDropdown
@@ -162,6 +181,7 @@ export const AdminUsersTableView = ({
                     onChange={(value) => onRoleChange?.(member.memberId, value)}
                     disabled={false}
                     ariaLabel='역할 선택'
+                    wrapperClassName='w-[61px] md:w-18.75'
                   />
                 )}
                 <ActionMenu
@@ -175,30 +195,25 @@ export const AdminUsersTableView = ({
           </tr>
         ))}
       </tbody>
-      {isAllTab && selectedIds.length > 0 && (
-        <tfoot>
-          <tr>
-            <td
-              colSpan={MEMBER_COLUMNS.length + 1}
-              className='bg-neutral-100 px-12 py-2.75'>
-              <div className='flex flex-wrap items-center gap-5.5'>
-                <span className='text-body-l pr-1.25 text-neutral-600'>
-                  선택 {selectedIds.length}
-                </span>
-                {allItems
-                  .filter((m) => selectedIds.includes(m.memberId))
-                  .map((m) => (
-                    <SelectedMemberChip
-                      key={m.memberId}
-                      name={m.name}
-                      onRemove={() => onSelect(m.memberId, false)}
-                    />
-                  ))}
-              </div>
-            </td>
-          </tr>
-        </tfoot>
-      )}
     </table>
+    {isAllTab && selectedIds.length > 0 && (
+      <div className='bg-neutral-100 px-6 py-3 md:px-12 md:py-2.75'>
+        <div className='flex flex-wrap items-center gap-5.5'>
+          <span className='text-body-l pr-1.25 text-neutral-600'>
+            선택 {selectedIds.length}
+          </span>
+          {allItems
+            .filter((m) => selectedIds.includes(m.memberId))
+            .map((m) => (
+              <SelectedMemberChip
+                key={m.memberId}
+                name={m.name}
+                onRemove={() => onSelect(m.memberId, false)}
+              />
+            ))}
+        </div>
+      </div>
+    )}
+    </>
   );
 };
