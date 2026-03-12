@@ -6,7 +6,7 @@ import {AboutUsTickerColumn} from '@/app/(with-header)/(with-footer)/about-us/_c
 export const AboutUsStudyContainer = () => {
   return (
     <section
-      className='flex flex-col items-center gap-25 overflow-hidden py-40'
+      className='flex flex-col items-center gap-25 overflow-hidden py-20 md:py-40'
       aria-label='코테이토 스터디 소개'
       id='study'>
       <AboutUsDescription
@@ -15,9 +15,10 @@ export const AboutUsStudyContainer = () => {
         subTitleOption='완성도 높은 다양한 스터디가 꾸준히 운영됩니다.'
         titleColor='text-neutral-800'
         subTitleColor='text-neutral-500'
+        className='text-left sm:text-center'
       />
 
-      <div className='relative flex w-full max-w-250 gap-4'>
+      <div className='relative flex w-full max-w-160 justify-center gap-4 md:max-w-250'>
         <div className='pointer-events-none absolute inset-x-0 top-0 z-10 h-32 bg-linear-to-b from-neutral-50 to-transparent' />
         <div className='pointer-events-none absolute inset-x-0 bottom-0 z-10 h-40 bg-linear-to-t from-neutral-50 via-neutral-50/20 to-transparent' />
 
@@ -25,7 +26,11 @@ export const AboutUsStudyContainer = () => {
 
         <AboutUsTickerColumn items={STUDY_GROUPS[1]} duration={25} reverse />
 
-        <AboutUsTickerColumn items={STUDY_GROUPS[2]} duration={30} />
+        <AboutUsTickerColumn
+          items={STUDY_GROUPS[2]}
+          duration={30}
+          className='hidden md:block'
+        />
       </div>
     </section>
   );
@@ -40,7 +45,7 @@ const STUDY_GROUPS = [
     },
     {
       id: 2,
-      label: '리액트 공식문서 읽기 스터디',
+      label: '리켓단 스터디',
       src: '/images/study/react-study.webp',
     },
     {id: 3, label: 'React 스터디', src: '/images/study/react-study-2.webp'},
