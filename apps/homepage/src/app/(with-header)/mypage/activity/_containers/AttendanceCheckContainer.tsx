@@ -74,7 +74,7 @@ export const AttendanceCheckContainer = ({activeTab}: {activeTab: TabType}) => {
           isBorder
         />
       </div>
-      <div className='flex min-h-75 flex-col justify-center rounded-[10px] bg-neutral-50 px-15.75 py-7 text-center'>
+      <div className='flex min-h-75 flex-col justify-center rounded-[10px] bg-neutral-50 px-2.5 py-2.5 text-center md:px-15.75 md:py-7'>
         {isDataLoading ? (
           <div className='flex items-center justify-center py-20'>
             <Spinner />
@@ -82,7 +82,7 @@ export const AttendanceCheckContainer = ({activeTab}: {activeTab: TabType}) => {
         ) : (
           <table className='w-full table-fixed border-separate border-spacing-y-2.5'>
             <thead>
-              <tr className='text-h5 h-12.25 bg-white text-neutral-800'>
+              <tr className='text-body-l-b md:text-h5 h-8 bg-white text-neutral-800 md:h-12.25'>
                 <th>회차</th>
                 {isAttendance ? (
                   <>
@@ -100,7 +100,7 @@ export const AttendanceCheckContainer = ({activeTab}: {activeTab: TabType}) => {
                 )}
               </tr>
             </thead>
-            <tbody className='text-body-l text-neutral-800'>
+            <tbody className='md:text-body-l text-[14px] text-neutral-800'>
               {currentRecords.length === 0 ? (
                 <tr>
                   <td

@@ -54,7 +54,7 @@ export const MobileMyPageNav = ({isAdmin}: {isAdmin?: boolean}) => {
   };
 
   return (
-    <div className='relative w-full px-6 py-10 md:hidden'>
+    <div className='relative w-full px-6 pt-10 md:hidden'>
       <button
         onClick={() => setIsOpen(!isOpen)}
         className='flex w-full items-center gap-2.5 rounded-[10px] border border-neutral-100 bg-white p-2.5 text-left'>
