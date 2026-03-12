@@ -59,6 +59,10 @@
   .shadow-mobile-dropdown {
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.25);
   }
+
+  .shadow-mobile {
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.15);
+  }
 }
 
 @layer utilities {
