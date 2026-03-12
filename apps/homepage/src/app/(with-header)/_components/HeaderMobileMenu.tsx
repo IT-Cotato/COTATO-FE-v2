@@ -105,7 +105,7 @@ export const HeaderMobileMenu = ({
                   </Link>
                   {isAdmin && (
                     <Link
-                      href={ROUTES.ADMIN_USERS}
+                      href={ROUTES.ADMIN_ATTENDANCE}
                       className={`transition-all duration-300 hover:text-neutral-50 ${
                         pathname.startsWith(ROUTES.ADMIN_USERS)
                           ? 'text-neutral-50'

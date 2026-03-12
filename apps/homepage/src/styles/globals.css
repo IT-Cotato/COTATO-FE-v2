@@ -55,6 +55,10 @@
   .shadow-project-card {
     box-shadow: 0 6px 15px 0 rgba(0, 0, 0, 0.2);
   }
+
+  .shadow-mobile-dropdown {
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.25);
+  }
 }
 
 @layer utilities {
