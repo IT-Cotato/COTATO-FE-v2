@@ -51,7 +51,7 @@ export const Modal = ({
         }}>
         <div
           className={clsx(
-            'relative w-[calc(100%-48px)] rounded-[20px] bg-white px-5.25 py-6 sm:w-full sm:max-w-126.75 sm:px-10.75 sm:py-15.5',
+            'relative w-[calc(100%-48px)] max-w-126.75 rounded-[20px] bg-white px-5.25 py-6',
             fullHeight && 'h-full'
           )}
           style={containerStyle}
