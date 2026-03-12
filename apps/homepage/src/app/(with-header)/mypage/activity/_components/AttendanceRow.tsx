@@ -9,7 +9,9 @@ export const AttendanceRows = ({data}: {data: MemberAttendResponse[]}) => (
       return (
         <tr key={item.sessionId} className='text-center'>
           <td>{item.sessionNumber + 1}</td>
-          <td>{item.placeName || '-'}</td>
+          <td className='h-8 max-w-15 truncate px-1 md:h-12.25 md:max-w-none'>
+            {item.placeName || '-'}
+          </td>
           <td>
             {item.sessionType === 'OFFLINE' && '대면'}
             {item.sessionType === 'ONLINE' && '비대면'}
