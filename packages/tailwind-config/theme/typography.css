@@ -41,6 +41,10 @@
   --text-body-m-sb: 12px;
   --text-body-m-sb--line-height: 20px;
   --text-body-m-sb--font-weight: 600;
+
+  --text-body-s: 10px;
+  --text-body-s--line-height: 18px;
+  --text-body-s--font-weight: 400;
 }
 
 @media (max-width: 640px) {
