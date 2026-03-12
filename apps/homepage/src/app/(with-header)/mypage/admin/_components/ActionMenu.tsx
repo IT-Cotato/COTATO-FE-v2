@@ -1,6 +1,7 @@
 'use client';
 
-import {useRef, useState} from 'react';
+import React, {useRef, useState} from 'react';
+import clsx from 'clsx';
 import MoreHorizontalIcon from '@/assets/more-horizontal/more-horizontal.svg';
 import {useClickOutside} from '@repo/ui/hooks/useClickOutside';
 
@@ -47,15 +48,22 @@ export const ActionMenu = <T extends string>({
       {isOpen && (
         <ul
           role='menu'
-          className={`text-body-m absolute top-full z-10 mt-1 w-25 rounded-sm bg-neutral-700 py-1 text-neutral-300 shadow-lg ${align === 'right' ? 'right-0' : '-right-21.5'}`}>
-          {items.map((item) => (
-            <li
-              key={item.key}
-              role='menuitem'
-              className='hover:text-primary cursor-pointer px-3 py-1.5 text-center'
-              onClick={() => handleAction(item.key)}>
-              {item.label}
-            </li>
+          className={clsx(
+            'text-body-m absolute top-full z-10 w-20 rounded-sm bg-neutral-700 text-neutral-300 shadow-lg md:mt-1 md:w-25 md:py-1',
+            align === 'right' ? 'right-0' : 'right-0 md:-right-21.5'
+          )}>
+          {items.map((item, index) => (
+            <React.Fragment key={item.key}>
+              {index > 0 && (
+                <li role='separator' className='h-px bg-neutral-600' />
+              )}
+              <li
+                role='menuitem'
+                className='hover:text-primary cursor-pointer px-3 py-1.5 text-center'
+                onClick={() => handleAction(item.key)}>
+                {item.label}
+              </li>
+            </React.Fragment>
           ))}
         </ul>
       )}
