@@ -15,7 +15,7 @@ export const AttendanceTab = ({activeTab, onTabChange}: AttendanceTabProps) => {
   ];
 
   return (
-    <div className='flex w-full'>
+    <div className='flex w-full pb-2.5 md:pb-0'>
       <div className='flex gap-5 px-2.5 md:gap-8.5 md:px-0'>
         {tabs.map((tab) => {
           const isActive = activeTab === tab.id;

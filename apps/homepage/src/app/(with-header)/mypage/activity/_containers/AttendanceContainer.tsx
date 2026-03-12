@@ -43,7 +43,7 @@ export const AttendanceContainer = () => {
   }
 
   return (
-    <div className='flex w-full flex-col items-center gap-10 md:gap-7.5'>
+    <div className='flex w-full flex-col items-center gap-7.5'>
       <AttendanceTab activeTab={activeTab} onTabChange={setActiveTab} />
       <AttendanceStatusContainer activeTab={activeTab} />
       <AttendanceCheckContainer activeTab={activeTab} />
