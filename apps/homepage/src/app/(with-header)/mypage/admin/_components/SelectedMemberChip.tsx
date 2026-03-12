@@ -10,10 +10,10 @@ export const SelectedMemberChip = ({
   onRemove,
 }: SelectedMemberChipProps) => {
   return (
-    <div className='bg-primary flex items-center gap-1.5 rounded-[20px] px-3.5 py-1 text-white'>
-      <span className='text-h5'>{name}</span>
+    <div className='bg-primary flex items-center gap-1.5 rounded-[20px] px-1.75 py-[1.5px] text-white md:px-3.5 md:py-1'>
+      <span className='text-body-m md:text-h5'>{name}</span>
       <button type='button' onClick={onRemove} aria-label={`${name} 선택 해제`}>
-        <XIcon className='h-3 w-3 text-white' />
+        <XIcon className='h-2 w-2 text-white md:h-3 md:w-3' />
       </button>
     </div>
   );
