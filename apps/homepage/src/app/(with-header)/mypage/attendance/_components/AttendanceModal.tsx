@@ -1,43 +1,82 @@
-import {Modal} from '@repo/ui/components/modal/Modal';
-import {Button} from '@repo/ui/components/buttons/Button';
-import {getAttendanceModalContent} from '@/app/(with-header)/mypage/attendance/_utils/getAttendanceModalContent';
+'use client';
 
-interface AttendanceModalsProps {
-  isSuccessOpen: boolean;
-  isErrorOpen: boolean;
-  errorCode: string | null;
-  onSuccessClose: () => void;
-  onErrorClose: () => void;
+import {ReactNode, useRef, useEffect} from 'react';
+import clsx from 'clsx';
+import CloseIcon from '@repo/ui/assets/icons/cancel.svg';
+import {FullButton} from '@repo/ui/components/buttons/FullButton';
+import {useClickOutside} from '@repo/ui/hooks/useClickOutside';
+
+interface AttendanceModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  title: ReactNode;
+  content?: ReactNode;
+  onConfirm: () => void;
+  confirmLabel?: string;
 }
 
-export const AttendanceModals = ({
-  isSuccessOpen,
-  isErrorOpen,
-  errorCode,
-  onSuccessClose,
-  onErrorClose,
-}: AttendanceModalsProps) => {
-  const {title, content} = getAttendanceModalContent(errorCode);
+export const AttendanceModal = ({
+  isOpen,
+  onClose,
+  title,
+  content,
+  onConfirm,
+  confirmLabel = '확인',
+}: AttendanceModalProps) => {
+  const modalRef = useRef<HTMLDivElement>(null);
+
+  useClickOutside(modalRef, onClose);
+
+  useEffect(() => {
+    const handleEsc = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    window.addEventListener('keydown', handleEsc);
+    return () => window.removeEventListener('keydown', handleEsc);
+  }, [onClose]);
+
+  if (!isOpen) return null;
 
   return (
-    <>
-      <Modal
-        isOpen={isErrorOpen}
-        onClose={onErrorClose}
-        title={title}
-        content={content}
-        titleStyle='text-h4 text-neutral-800'
-        actions={<Button onClick={onErrorClose} label='확인' width={340} />}
-        contentWrapperClassName='gap-[40px] text-h5 text-neutral-600 text-center'
-      />
-      <Modal
-        isOpen={isSuccessOpen}
-        onClose={onSuccessClose}
-        title='출석이 완료되었습니다!'
-        titleStyle='text-h4 text-neutral-800'
-        noContent
-        actions={<Button width={340} onClick={onSuccessClose} label='확인' />}
-      />
-    </>
+    <div className='z-modal fixed inset-0 flex items-center justify-center bg-black/50 px-6 backdrop-blur-sm'>
+      <section
+        ref={modalRef}
+        className={clsx(
+          'relative flex flex-col items-center justify-center rounded-xl bg-white text-center',
+          'h-50 w-81.5 px-6 md:h-75 md:w-127.5'
+        )}>
+        <button
+          onClick={onClose}
+          className='absolute top-4 right-5'
+          aria-label='닫기'>
+          <CloseIcon className='h-2.25 w-2.25 text-neutral-800 md:h-3 md:w-3' />
+        </button>
+        <div
+          className={clsx(
+            'flex w-full flex-col items-center',
+            content ? 'mb-8.5 md:mb-10' : 'mb-10 md:mb-10'
+          )}>
+          <h2 className='text-h5 md:text-h4 font-bold whitespace-pre-wrap text-neutral-800'>
+            {title}
+          </h2>
+          {content && (
+            <p className='text-body-m md:text-h5 mt-1.25 font-normal whitespace-pre-wrap text-neutral-500 md:mt-1.5'>
+              {content}
+            </p>
+          )}
+        </div>
+        <div className='flex w-full justify-center'>
+          <FullButton
+            onClick={onConfirm}
+            label={confirmLabel}
+            backgroundColor='primary'
+            className={clsx(
+              'text-body-m-sb! h-10.5! rounded-[10px]! py-2.25!',
+              'md:text-h5! md:h-11.75! md:w-85! md:py-2.75!'
+            )}
+          />
+        </div>
+      </section>
+    </div>
   );
 };
