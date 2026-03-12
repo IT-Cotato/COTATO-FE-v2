@@ -11,6 +11,7 @@ export const AboutUsSponsor = () => {
         subTitleColor='text-neutral-500'
         subTitle='COde Together, Arrive TOgether!'
         subTitleOption='코테이토의 여정에 동행해주시는 공식 파트너 단체입니다.'
+        className='text-left sm:text-center'
       />
 
       <div className='z-20 grid grid-cols-2 gap-x-2 gap-y-2 md:flex-row md:items-center lg:flex lg:gap-11'>
