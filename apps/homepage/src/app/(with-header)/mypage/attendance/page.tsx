@@ -2,7 +2,7 @@ import {SessionAttendanceContainer} from '@/app/(with-header)/mypage/attendance/
 
 export default function AttendancePage() {
   return (
-    <section className='flex min-w-250 flex-col px-11.25 py-12.5'>
+    <section className='flex w-full flex-col px-6 py-5 md:px-11.25 md:py-12.5'>
       <SessionAttendanceContainer />
     </section>
   );
