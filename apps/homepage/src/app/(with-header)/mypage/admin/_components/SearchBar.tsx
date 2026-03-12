@@ -21,7 +21,7 @@ export const SearchBar = ({
         e.preventDefault();
         onSearch();
       }}
-      className='ml-auto flex h-12.5 w-75 shrink-0 flex-row items-center gap-2.5 rounded-[10px] bg-neutral-50 px-4 py-2.75'>
+      className='flex w-full shrink-0 flex-row items-center gap-2.5 rounded-[10px] bg-neutral-50 px-4 py-2.25 md:ml-auto md:h-12.5 md:w-75 md:py-2.75'>
       <SearchIcon
         aria-hidden='true'
         className='h-4 w-4 text-neutral-600'
