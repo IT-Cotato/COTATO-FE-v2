@@ -10,7 +10,7 @@ interface DesktopReviewContainerProps {
   reviews: CotatoReview[];
 }
 
-export const DesktopReviewContainer = ({
+export const HomeDesktopCotatoReviewContainer = ({
   reviews,
 }: DesktopReviewContainerProps) => {
   const controls = useAnimationControls();

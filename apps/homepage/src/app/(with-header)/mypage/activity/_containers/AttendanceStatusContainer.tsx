@@ -39,8 +39,8 @@ export const AttendanceStatusContainer = ({
     <div
       className={clsx(
         'grid w-full',
-        'grid-cols-2 gap-x-4 gap-y-5.5',
-        'md:flex md:flex-row md:items-center md:gap-10 md:gap-y-0'
+        'grid-cols-2 gap-x-4 gap-y-5.5 px-[15.5px]',
+        'lg:flex lg:flex-row lg:items-center lg:gap-10 lg:gap-y-0 lg:px-0'
       )}>
       {currentCards.map((card) => (
         <StatusCard key={card.label} {...card} />

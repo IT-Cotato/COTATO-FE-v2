@@ -4,11 +4,13 @@ import {useState, useMemo, useEffect} from 'react';
 import {useRouter, usePathname} from 'next/navigation';
 import ChevronDown from '@/assets/chevrons/chevron-down.svg';
 import {ADMIN_NAV_GROUP, SIDEBAR_NAV_GROUPS} from '@/constants/sidebar';
+import {ROUTES} from '@/constants/routes';
 
 export const MobileMyPageNav = ({isAdmin}: {isAdmin?: boolean}) => {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
+  const isDeletePage = pathname === ROUTES.MYPAGE_ACCOUNT_DELETE;
 
   useEffect(() => {
     setIsOpen(false);
@@ -53,8 +55,10 @@ export const MobileMyPageNav = ({isAdmin}: {isAdmin?: boolean}) => {
     setIsOpen(false);
   };
 
+  if (isDeletePage) return null;
+
   return (
-    <div className='relative w-full px-6 pt-10 md:hidden'>
+    <div className='relative w-full px-6 pt-10 lg:hidden'>
       <button
         onClick={() => setIsOpen(!isOpen)}
         className='flex w-full items-center gap-2.5 rounded-[10px] border border-neutral-100 bg-white p-2.5 text-left'>

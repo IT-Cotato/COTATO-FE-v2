@@ -5,11 +5,11 @@ import {HomeMainScheduleContainer} from '@/app/(with-header)/(with-footer)/(home
 import {SuspenseWrapper} from '@/components/wrappers/SuspenseWrapper';
 import {HomeRecruitmentContainer} from '@/app/(with-header)/(with-footer)/(home)/_containers/HomeRecruitmentContainer';
 import {HomeBannerContainer} from '@/app/(with-header)/(with-footer)/(home)/_containers/HomeBannerContainer';
-import {HomeAttendanceContainer} from '@/app/(with-header)/(with-footer)/(home)/_containers/HomeAttendanceContainer';
+import {HomeMobileAttendanceContainer} from '@/app/(with-header)/(with-footer)/(home)/_mobile/HomeMobileAttendanceContainer';
 
 export default function HomePage() {
   return (
-    <div className='flex w-full flex-col gap-42.5 sm:gap-50'>
+    <div className='flex w-full flex-col gap-42.5 sm:gap-50 md:min-w-360'>
       <HomeBannerContainer />
       <div className='flex flex-col items-center gap-42.5 overflow-x-hidden bg-white px-6 pb-50 sm:gap-50'>
         <HomeCoreValue />
@@ -19,7 +19,7 @@ export default function HomePage() {
         </SuspenseWrapper>
         <HomeCotatoReviewContainer />
         <HomeRecruitmentContainer />
-        <HomeAttendanceContainer />
+        <HomeMobileAttendanceContainer />
       </div>
     </div>
   );

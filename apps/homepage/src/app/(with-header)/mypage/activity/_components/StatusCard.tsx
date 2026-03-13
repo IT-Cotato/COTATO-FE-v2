@@ -27,10 +27,12 @@ export const StatusCard = ({label, value, variant}: StatusCardProps) => {
   const SelectedIcon = IconMap[variant];
 
   return (
-    <div className='text-h4 shadow-mem-card flex h-62.5 flex-1 flex-col items-center gap-2.5 rounded-[10px] bg-white px-3.25 py-5 text-neutral-800'>
-      <SelectedIcon />
+    <div className='text-body-l-b lg:text-h4 shadow-mem-card flex h-33 flex-1 flex-col items-center gap-3.25 rounded-[10px] bg-white px-3.25 py-2.75 text-neutral-800 lg:h-62.5 lg:gap-2.5 lg:py-5'>
+      <div className='flex h-8 w-7.5 items-center justify-center lg:h-27 lg:w-25'>
+        <SelectedIcon />
+      </div>
       <span className='whitespace-nowrap'>{label}</span>
-      <div className='h-12.5 w-full rounded-[10px] bg-neutral-50 py-2.25 text-center font-bold'>
+      <div className='text-h5 lg:text-h4 h-7.5 w-full rounded-[10px] bg-neutral-50 text-center font-bold lg:h-12.5 lg:py-2.25'>
         {value ?? 0}
       </div>
     </div>

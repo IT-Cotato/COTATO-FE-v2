@@ -2,13 +2,23 @@
 
 import Image from 'next/image';
 import {useEffect, useState} from 'react';
-import {motion, AnimatePresence} from 'framer-motion';
 import AboutUsBackgroundSecond from '@/assets/about-us/background-about-us-second.webp';
 import {AboutUsDescription} from '@/app/(with-header)/(with-footer)/about-us/_components/AboutUsDescription';
+import 'swiper/css';
+import 'swiper/css/pagination';
+import {AboutUsMobileMainActivitiesContainer} from '@/app/(with-header)/(with-footer)/about-us/_mobile/AboutUsMobileMainActivitiesContainer';
+import {AboutUsDesktopMainActivitiesContainer} from '@/app/(with-header)/(with-footer)/about-us/_desktop/AboutUsDesktopMainActivitiesContainer';
+
+export interface AboutUsActivity {
+  id: number;
+  title: string;
+  description: string;
+  src: string;
+  gridClass: string;
+}
 
 export const AboutUsMainActivitiesContainer = () => {
   const [selectedId, setSelectedId] = useState<number | null>(null);
-  const selectedActivity = ACTIVITIES.find((a) => a.id === selectedId);
 
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
@@ -20,7 +30,7 @@ export const AboutUsMainActivitiesContainer = () => {
 
   return (
     <section
-      className='relative flex w-full flex-col items-center gap-25 overflow-hidden bg-[linear-gradient(180deg,#010101_13.94%,rgba(1,1,1,0)_100%)] py-20 md:gap-25 md:py-40'
+      className='relative flex w-full flex-col items-center gap-25 overflow-hidden bg-linear-to-b from-[#010101] from-[13.94%] via-white via-50% to-white py-40'
       id='main-activities'>
       <Image
         src={AboutUsBackgroundSecond}
@@ -30,130 +40,27 @@ export const AboutUsMainActivitiesContainer = () => {
         height={1080}
         unoptimized={true}
         draggable={false}
-        className='pointer-events-none absolute top-0 right-0 md:opacity-100'
+        className='pointer-events-none absolute top-0 right-0'
       />
+
       <AboutUsDescription
         title='코테이토의 활동을 소개합니다'
         subTitle='다양한 활동을 통해 직군별 역량과 협업 경험을 동시에 쌓습니다.'
         titleColor='text-white'
         subTitleColor='text-neutral-300'
       />
-      <div className='z-10 grid w-full max-w-310 grid-cols-12 gap-4 px-6 md:gap-7.5'>
-        {ACTIVITIES.map((activity) => (
-          <motion.div
-            key={activity.id}
-            role='button'
-            layoutId={`card-${activity.id}`}
-            tabIndex={0}
-            aria-haspopup='dialog'
-            onKeyDown={(e) => {
-              if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                setSelectedId(activity.id);
-              }
-            }}
-            onClick={() => setSelectedId(activity.id)}
-            style={{borderRadius: '20px'}}
-            className={`group relative cursor-pointer overflow-hidden bg-neutral-600 shadow-lg ${activity.gridClass} h-121.75`}>
-            <motion.div
-              layoutId={`image-container-${activity.id}`}
-              className='relative h-full w-full'>
-              <Image
-                src={activity.src}
-                alt=''
-                aria-hidden='true'
-                fill
-                sizes='(max-width: 768px) 100vw, (max-width: 1240px) 50vw, 600px'
-                unoptimized={true}
-                className='object-cover transition-transform duration-500 group-hover:scale-105'
-              />
-              <div className='absolute inset-0 z-10 bg-black/40' />
-              <motion.h3
-                layoutId={`title-${activity.id}`}
-                className='text-h3 absolute top-10 left-10 z-20 font-bold text-white'>
-                {activity.title}
-              </motion.h3>
-            </motion.div>
 
-            <motion.div
-              layoutId={`content-${activity.id}`}
-              className='h-0 overflow-hidden opacity-0'>
-              <p>{activity.description}</p>
-            </motion.div>
-          </motion.div>
-        ))}
-      </div>
-      <AnimatePresence>
-        {selectedId && selectedActivity && (
-          <div className='fixed inset-0 z-50 flex items-center justify-center p-4 md:p-10'>
-            <motion.div
-              role='dialog'
-              aria-modal='true'
-              aria-labelledby={`modal-title-${selectedId}`}
-              initial={{opacity: 0}}
-              animate={{opacity: 1}}
-              exit={{opacity: 0}}
-              onClick={() => setSelectedId(null)}
-              className='absolute inset-0 bg-black/60 backdrop-blur-md'
-            />
+      <AboutUsDesktopMainActivitiesContainer activities={ACTIVITIES} />
 
-            <motion.div
-              layoutId={`card-${selectedId}`}
-              style={{borderRadius: '30px'}}
-              onClick={() => setSelectedId(null)}
-              className='relative z-50 flex h-auto max-h-[90vh] w-full max-w-150 flex-col overflow-hidden bg-neutral-600 shadow-2xl'>
-              <motion.div
-                layoutId={`image-container-${selectedId}`}
-                className='relative h-80 w-full shrink-0 overflow-hidden'>
-                <motion.div
-                  initial={{scale: 1.4}}
-                  animate={{scale: 1.4}}
-                  exit={{scale: 1}}
-                  transition={{duration: 0.6, ease: [0.16, 1, 0.3, 1]}}
-                  className='relative h-full w-full'>
-                  <Image
-                    src={selectedActivity.src}
-                    alt={selectedActivity.title}
-                    fill
-                    sizes='(max-width: 768px) 90vw, 600px'
-                    unoptimized={true}
-                    className='object-cover'
-                  />
-                </motion.div>
-
-                <div className='absolute inset-0 bg-black/40' />
-
-                <motion.h3
-                  layoutId={`title-${selectedId}`}
-                  id={`modal-title-${selectedId}`}
-                  className='text-h2 absolute top-10 left-10 z-10 font-bold text-white'>
-                  {selectedActivity.title}
-                </motion.h3>
-              </motion.div>
-
-              <motion.div
-                layoutId={`content-${selectedId}`}
-                layout='position'
-                className='custom-scrollbar flex-1 overflow-y-auto p-8 md:p-12'>
-                <motion.div
-                  initial={{opacity: 0}}
-                  animate={{opacity: 1}}
-                  exit={{opacity: 0, transition: {duration: 0.1}}}
-                  transition={{duration: 0.2, delay: 0.2}}>
-                  <p className='text-h5 leading-relaxed font-medium whitespace-pre-wrap text-white/90'>
-                    {selectedActivity.description}
-                  </p>
-                </motion.div>
-              </motion.div>
-            </motion.div>
-          </div>
-        )}
-      </AnimatePresence>
+      <AboutUsMobileMainActivitiesContainer activities={ACTIVITIES} />
     </section>
   );
 };
 
-const ACTIVITIES = [
+/**
+ * 활동 소개 데이터
+ */
+const ACTIVITIES: AboutUsActivity[] = [
   {
     id: 1,
     title: 'CS 교육',

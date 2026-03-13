@@ -33,9 +33,9 @@ export const TermsContainer = () => {
   };
 
   return (
-    <div className='flex flex-col gap-9.75'>
+    <div className='flex flex-col gap-5 lg:gap-9.75'>
       <TermsTab activeTab={activeTab} onTabChange={handleTabChange} />
-      <div className='w-full'>{renderContent()}</div>
+      <div className='w-full px-6 lg:px-0'>{renderContent()}</div>
     </div>
   );
 };
