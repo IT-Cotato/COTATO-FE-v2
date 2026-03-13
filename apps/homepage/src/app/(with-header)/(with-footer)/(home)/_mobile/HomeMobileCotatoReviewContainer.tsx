@@ -3,13 +3,13 @@ import {CotatoReview} from '@/app/(with-header)/(with-footer)/(home)/_containers
 import {motion, useAnimationControls, PanInfo} from 'framer-motion';
 import {useCallback, useState} from 'react';
 
-interface MobileReviewContainerProps {
+interface HomeMobileCotatoReviewContainerProps {
   reviews: CotatoReview[];
 }
 
-export const MobileReviewContainer = ({
+export const HomeMobileCotatoReviewContainer = ({
   reviews,
-}: MobileReviewContainerProps) => {
+}: HomeMobileCotatoReviewContainerProps) => {
   const controls = useAnimationControls();
   const [currentIndex, setCurrentIndex] = useState<number>(0);
 
