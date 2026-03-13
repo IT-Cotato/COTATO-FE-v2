@@ -87,25 +87,25 @@ export const MemberDetailModal = (props: MemberDetailModalProps) => {
 
   return (
     <div
-      className='z-modal fixed inset-0 flex items-center justify-center bg-black/50'
+      className='z-modal fixed inset-0 flex items-center justify-center bg-black/50 px-6'
       onClick={onClose}
       role='dialog'
       aria-modal='true'>
       <div
-        className='relative flex w-113.5 flex-col gap-6.5 rounded-[10px] bg-white px-6.5 py-7.5'
+        className='relative flex flex-col gap-4 rounded-[10px] bg-white px-6 py-5 md:w-113.5 md:gap-6.5 md:px-6.5 md:py-7.5'
         onClick={(e) => e.stopPropagation()}>
         <button
           onClick={onClose}
-          className='absolute top-6.5 right-6.5'
+          className='absolute top-5 right-6 md:top-6.5 md:right-6.5'
           aria-label='닫기'>
-          <Close className='h-6 w-6 cursor-pointer' />
+          <Close className='block h-6 w-6 cursor-pointer' />
         </button>
 
-        <h2 className='text-h4 text-neutral-800'>
+        <h2 className='text-h5 md:text-h4 font-bold text-neutral-800'>
           {readonly ? '회원 상세 정보' : '활동 회원 정보 수정'}
         </h2>
 
-        <div className='flex flex-col gap-4'>
+        <div className='flex flex-col gap-1 md:gap-4'>
           <div className='flex gap-4'>
             <TextField
               label='이름'
@@ -116,8 +116,10 @@ export const MemberDetailModal = (props: MemberDetailModalProps) => {
                 setMemberData({...memberData, name: e.target.value})
               }
             />
-            <div className='flex w-32 flex-col gap-2.5'>
-              <label className='text-h5 text-neutral-600'>기수</label>
+            <div className='flex flex-1 flex-col gap-1 md:w-32 md:flex-none md:gap-2.5'>
+              <label className='text-body-l-b md:text-h5 text-neutral-600'>
+                기수
+              </label>
               <input
                 readOnly
                 value={`${memberData.passedGenerationNumber}기`}
