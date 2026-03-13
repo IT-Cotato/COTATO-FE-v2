@@ -43,7 +43,7 @@ export const HomePartSectionContainer = () => {
   };
 
   return (
-    <section className='flex flex-col gap-10 xl:gap-17.5'>
+    <section className='flex flex-col gap-10 lg:gap-17.5'>
       <HomeSectionDescription
         title='성장의 시작, 코테이토의 4가지 파트'
         descriptions={[
@@ -57,7 +57,7 @@ export const HomePartSectionContainer = () => {
       <div className='flex flex-col gap-7.5'>
         {/* 탭 리스트 */}
         <div
-          className='hidden flex-row gap-6 xl:flex'
+          className='hidden flex-row gap-6 lg:flex'
           role='tablist'
           aria-label='파트 선택'>
           {PARTS.map((partKey) => (
@@ -91,14 +91,10 @@ export const HomePartSectionContainer = () => {
 
         {/* 메인 탭 패널 */}
         <div
-          className='relative h-60 w-full overflow-hidden rounded-lg bg-neutral-900 xl:h-140 xl:rounded-[40px]'
+          className='relative h-60 w-full overflow-hidden rounded-lg bg-neutral-900 lg:h-140 xl:rounded-[40px]'
           id={`tabpanel-${currentPart}`}
           role='tabpanel'
-          aria-labelledby={
-            typeof window !== 'undefined' && window.innerWidth >= 1280
-              ? `tab-desktop-${currentPart}`
-              : `tab-mobile-${currentPart}`
-          }
+          aria-labelledby={`tab-${currentPart}`}
           tabIndex={0}>
           <AnimatePresence mode='popLayout' custom={direction}>
             <motion.div
@@ -132,16 +128,16 @@ export const HomePartSectionContainer = () => {
                   <div className='absolute inset-0 bg-black/50' />
                 </motion.div>
 
-                <div className='absolute inset-0 flex flex-col justify-between px-3 py-4 xl:p-17.75'>
+                <div className='absolute inset-0 flex flex-col justify-between px-3 py-4 lg:p-17.75'>
                   <motion.p
                     variants={textVariants}
-                    className='text-h4 xl:text-h1 font-bold text-neutral-50'>
+                    className='text-h4 lg:text-h1 font-bold text-neutral-50'>
                     {partData[currentPart].title}
                   </motion.p>
 
                   <motion.div
                     variants={textVariants}
-                    className='text-p2 xl:text-h4 text-neutral-100'>
+                    className='text-p2 lg:text-h4 text-neutral-100'>
                     {partData[currentPart].desc.map((line, idx) => (
                       <p key={idx}>{line}</p>
                     ))}
@@ -153,9 +149,9 @@ export const HomePartSectionContainer = () => {
         </div>
 
         <div
-          className='flex justify-center xl:hidden'
+          className='flex justify-center lg:hidden'
           role='tablist'
-          aria-label='파트 선택 (모바일)'>
+          aria-label='파트 선택'>
           {PARTS.map((partKey) => (
             <button
               key={partKey}

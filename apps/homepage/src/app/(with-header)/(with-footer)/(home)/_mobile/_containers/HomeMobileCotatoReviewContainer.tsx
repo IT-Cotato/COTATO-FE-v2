@@ -1,15 +1,17 @@
+'use client';
+
 import {HomeCotatoReviewCard} from '@/app/(with-header)/(with-footer)/(home)/_components/HomeCotatoReviewCard';
 import {CotatoReview} from '@/app/(with-header)/(with-footer)/(home)/_containers/HomeCotatoReviewContainer';
 import {motion, useAnimationControls, PanInfo} from 'framer-motion';
 import {useCallback, useState} from 'react';
 
-interface MobileReviewContainerProps {
+interface HomeMobileCotatoReviewContainerProps {
   reviews: CotatoReview[];
 }
 
-export const MobileReviewContainer = ({
+export const HomeMobileCotatoReviewContainer = ({
   reviews,
-}: MobileReviewContainerProps) => {
+}: HomeMobileCotatoReviewContainerProps) => {
   const controls = useAnimationControls();
   const [currentIndex, setCurrentIndex] = useState<number>(0);
 
@@ -41,7 +43,7 @@ export const MobileReviewContainer = ({
   };
 
   return (
-    <div className='flex w-full flex-col gap-6'>
+    <div className='flex w-full flex-col gap-6 overflow-x-hidden'>
       <div className='w-full' style={{maxWidth: `${cardWidth}px`}}>
         <motion.div
           className='flex'

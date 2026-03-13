@@ -14,23 +14,37 @@ export const PenaltyRows = ({data}: {data: PenaltyRecord[]}) => {
           className: 'bg-neutral-400',
         };
 
+        // 세션 <- 단어 제거 (모바일용)
+        const mobileLabel = status.label.replace(/^세션\s*/, '');
+        const mobileContent = record.content.replace(/^세션\s*/, '');
+
         return (
           <tr
             key={`${record.sessionId}-${index}`}
-            className='h-12.25 text-center'>
+            className='h-8 text-center lg:h-12.25'>
             <td>{record.week + 1}</td>
-            <td>{record.content}</td>
-            <td className='flex h-12.25 items-center justify-center py-[8.5px]'>
+            <td className='h-8 px-px lg:h-12.25 lg:px-0'>
+              <div className='mx-auto w-full max-w-15 truncate lg:max-w-none'>
+                {/* 모바일에서는 '세션'이 제거된 텍스트로 렌더링, 웹은 그대로 렌더링 */}
+                <span className='lg:hidden'>{mobileContent}</span>
+                <span className='hidden lg:inline'>{record.content}</span>
+              </div>
+            </td>
+            <td className='my-0.5 flex h-7 items-center justify-center lg:my-0 lg:h-12.25 lg:py-[8.5px]'>
               <span
                 className={clsx(
-                  'text-body-m-sb flex h-full w-18.75 items-center justify-center rounded-[10px] text-white',
+                  'lg:text-body-m-sb text-body-m flex h-7 w-14.5 items-center justify-center rounded-[10px] text-white lg:h-full lg:w-18.75',
                   status?.className
                 )}>
-                {status?.label}
+                <span className='lg:hidden'>{mobileLabel}</span>
+                <span className='hidden lg:inline'>{status.label}</span>
               </span>
             </td>
-            <td>{record.point}점</td>
-            <td className='text-body-l text-neutral-800'>
+            <td className='h-8 lg:h-12.25'>
+              {record.point}
+              <span className='hidden lg:inline'>점</span>
+            </td>
+            <td className='lg:text-body-l h-8 text-[14px] text-neutral-800'>
               {record.cumulativePoint}
             </td>
           </tr>

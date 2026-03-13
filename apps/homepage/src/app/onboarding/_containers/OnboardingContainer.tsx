@@ -39,12 +39,12 @@ export const OnboardingContainer = () => {
   const currentConfig = STEP_CONFIG[funnel.step];
 
   return (
-    <div className='custom-scrollbar flex h-fit max-h-[90vh] w-full flex-col gap-11.75 overflow-y-auto rounded-[40px] border border-neutral-100/10 bg-neutral-100/20 px-5 py-9 shadow-xl backdrop-blur-xs sm:min-w-134.75 sm:px-11 sm:py-18.5'>
+    <div className='custom-scrollbar flex h-fit max-h-[90vh] w-full flex-col gap-11.75 overflow-y-auto rounded-[40px] border border-neutral-100/10 bg-neutral-100/20 px-5 py-9 shadow-xl backdrop-blur-xs lg:min-w-134.75 lg:px-11 lg:py-18.5'>
       <div className='flex flex-col gap-4'>
         <div className='flex flex-row justify-between'>
           <h2 className='flex flex-row items-center gap-3.5'>
             <span className='text-h5 text-white'>Welcome to</span>
-            <Logo className='w-13.25 sm:w-22.5' />
+            <Logo className='w-13.25 lg:w-22.5' />
           </h2>
           {currentConfig.showLoginLink && (
             <div className='text-body-m flex flex-col items-end justify-end text-neutral-400'>
@@ -58,7 +58,7 @@ export const OnboardingContainer = () => {
           )}
         </div>
 
-        <h1 className='sm:text-h2 text-h3 text-neutral-100'>
+        <h1 className='lg:text-h2 text-h3 text-neutral-100'>
           {currentConfig.title}
         </h1>
       </div>

@@ -2,7 +2,7 @@ import {AttendanceContainer} from '@/app/(with-header)/mypage/activity/_containe
 
 export default function MyPage() {
   return (
-    <section className='flex min-w-250 flex-col px-23.75 py-10'>
+    <section className='flex w-full flex-col px-6 pt-5 pb-10 lg:px-23.75 lg:py-10'>
       <AttendanceContainer />
     </section>
   );

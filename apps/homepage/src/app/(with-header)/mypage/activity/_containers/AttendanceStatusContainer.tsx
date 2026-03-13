@@ -11,6 +11,7 @@ import {
   TabType,
 } from '@/schemas/mypage-mem/activity/mypage-mem-type';
 import {StatusCard} from '@/app/(with-header)/mypage/activity/_components/StatusCard';
+import clsx from 'clsx';
 
 export const AttendanceStatusContainer = ({
   activeTab,
@@ -35,7 +36,12 @@ export const AttendanceStatusContainer = ({
   }, [isAttendance, attendData, penaltyData]);
 
   return (
-    <div className='flex w-full items-center gap-10'>
+    <div
+      className={clsx(
+        'grid w-full',
+        'grid-cols-2 gap-x-4 gap-y-5.5 px-[15.5px]',
+        'lg:flex lg:flex-row lg:items-center lg:gap-10 lg:gap-y-0 lg:px-0'
+      )}>
       {currentCards.map((card) => (
         <StatusCard key={card.label} {...card} />
       ))}

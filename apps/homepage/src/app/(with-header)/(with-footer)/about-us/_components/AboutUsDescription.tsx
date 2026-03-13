@@ -8,6 +8,7 @@ interface AboutUsDescriptionProps {
   subTitleOption?: string;
   titleColor: string;
   subTitleColor: string;
+  className?: string;
 }
 
 export const AboutUsDescription = ({
@@ -16,24 +17,33 @@ export const AboutUsDescription = ({
   subTitleOption,
   titleColor,
   subTitleColor,
+  className = 'items-center text-center',
 }: AboutUsDescriptionProps) => {
   return (
     <motion.div
-      className='flex flex-col gap-12.5'
+      className={`z-20 flex w-full flex-col gap-3 sm:gap-12.5 ${className}`}
       initial='hidden'
       whileInView='visible'
       viewport={{once: false, margin: '-100px'}}
       variants={containerVariants}>
       <motion.h2
-        className={`text-h2 z-10 px-4 text-center font-bold ${titleColor}`}
+        className={`text-h5 sm:text-h2 z-10 w-full font-bold whitespace-pre-line ${titleColor}`}
         variants={itemVariants}>
         {title}
       </motion.h2>
 
-      <motion.div className='flex flex-col text-center' variants={itemVariants}>
-        <h4 className={`text-h4 ${subTitleColor}`}>{subTitle}</h4>
+      <motion.div
+        className={`flex w-full flex-col ${className}`}
+        variants={itemVariants}>
+        <h4
+          className={`text-body-l sm:text-h4 whitespace-pre-line ${subTitleColor}`}>
+          {subTitle}
+        </h4>
         {subTitleOption && (
-          <h4 className={`text-h4 ${subTitleColor}`}>{subTitleOption}</h4>
+          <h4
+            className={`text-body-l sm:text-h4 whitespace-pre-line ${subTitleColor}`}>
+            {subTitleOption}
+          </h4>
         )}
       </motion.div>
     </motion.div>
