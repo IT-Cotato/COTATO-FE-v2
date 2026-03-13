@@ -62,7 +62,7 @@ export const DeleteAccount = () => {
                   영구적으로 삭제됩니다. <br />
                   탈퇴를 신청하기 전에 안내 사항을 꼭 확인해 주세요.
                 </p>
-                <div className='text-body-s lg:text-body-l flex flex-col gap-6 text-neutral-700 lg:gap-7'>
+                <div className='text-body-l flex flex-col gap-6 text-neutral-700 lg:gap-7'>
                   <div className='flex flex-col gap-1'>
                     <p>1. 계정 비활성화</p>
                     <p className='pl-4 lg:pl-5'>
@@ -94,7 +94,7 @@ export const DeleteAccount = () => {
                     </p>
                   </div>
                 </div>
-                <div className='text-body-s lg:text-body-l text-neutral-800'>
+                <div className='text-body-l-sb lg:text-body-l text-neutral-800'>
                   탈퇴와 관련해 추가적인 문의 사항이 있으시면 COTATO 관리자에게
                   연락해 주시기 바랍니다.
                 </div>

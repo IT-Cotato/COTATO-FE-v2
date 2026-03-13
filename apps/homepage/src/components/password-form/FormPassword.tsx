@@ -39,7 +39,7 @@ export const FormPassword = ({
         className={clsx(
           'sm:text-h5 text-body-l flex items-center gap-1',
           isMypage
-            ? 'font-bold text-neutral-700 md:font-semibold'
+            ? 'font-bold text-neutral-700 lg:font-semibold'
             : 'text-neutral-100'
         )}>
         {label} <span className='text-alert'>*</span>
