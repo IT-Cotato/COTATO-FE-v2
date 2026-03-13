@@ -47,7 +47,7 @@ export const OnboardingFormDropdown = ({
               'mr-2 min-w-0 flex-1 truncate overflow-hidden text-left',
               value
                 ? 'text-neutral-100'
-                : 'sm:text-body-l text-h5 text-neutral-500'
+                : 'lg:text-body-l text-h5 text-neutral-500'
             )}>
             {value || placeholder}
           </span>
