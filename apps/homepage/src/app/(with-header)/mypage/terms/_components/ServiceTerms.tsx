@@ -20,7 +20,7 @@ export const ServiceTerms = () => {
           {section.content}
         </div>
       ))}
-      <div className='w-full shrink-0 lg:h-[38.5px]' aria-hidden='true' />
+      <div className='h-0.5 w-full shrink-0 lg:h-[38.5px]' aria-hidden='true' />
     </div>
   );
 };

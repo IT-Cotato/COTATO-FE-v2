@@ -16,7 +16,7 @@ export const ClubRules = () => {
           {section.content}
         </div>
       ))}
-      <div className='h-5 w-full shrink-0 lg:h-[38.5px]' aria-hidden='true' />
+      <div className='h-0.5 w-full shrink-0 lg:h-[38.5px]' aria-hidden='true' />
     </div>
   );
 };
