@@ -1,14 +1,16 @@
 'use client';
 
-import {Project} from '@/app/(with-header)/(with-footer)/about-us/_containers/AboutUsProjectContainer';
+import {AboutUsProject} from '@/app/(with-header)/(with-footer)/about-us/_containers/AboutUsProjectContainer';
 import {motion} from 'framer-motion';
 import Image from 'next/image';
 
+interface AboutUsMobileProjectContainerProps {
+  projects: AboutUsProject[];
+}
+
 export const AboutUsMobileProjectContainer = ({
   projects,
-}: {
-  projects: Project[];
-}) => {
+}: AboutUsMobileProjectContainerProps) => {
   const duplicatedProjects = [...projects, ...projects, ...projects];
 
   return (

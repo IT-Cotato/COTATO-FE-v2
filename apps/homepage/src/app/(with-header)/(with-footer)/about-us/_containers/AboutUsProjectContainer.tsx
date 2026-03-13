@@ -6,7 +6,7 @@ import {AboutUsDescription} from '@/app/(with-header)/(with-footer)/about-us/_co
 import {AboutUsMobileProjectContainer} from '@/app/(with-header)/(with-footer)/about-us/_mobile/AboutUsMobileProjectContainer';
 import {AboutUsDesktopProjectContainer} from '@/app/(with-header)/(with-footer)/about-us/_desktop/AboutUsDesktopProjectContainer';
 
-export interface Project {
+export interface AboutUsProject {
   id: number;
   title: string;
   imageSrc: string;
@@ -45,7 +45,7 @@ export const AboutUsProjectContainer = () => {
   );
 };
 
-const PROJECTS: Project[] = [
+const PROJECTS: AboutUsProject[] = [
   {
     id: 1,
     title: '온길',

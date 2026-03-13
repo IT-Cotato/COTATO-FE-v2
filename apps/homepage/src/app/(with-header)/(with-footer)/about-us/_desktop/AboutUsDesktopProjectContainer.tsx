@@ -1,15 +1,17 @@
 'use client';
 
-import {Project} from '@/app/(with-header)/(with-footer)/about-us/_containers/AboutUsProjectContainer';
+import {AboutUsProject} from '@/app/(with-header)/(with-footer)/about-us/_containers/AboutUsProjectContainer';
 import {AnimatePresence, motion} from 'framer-motion';
 import Image from 'next/image';
 import {useState} from 'react';
 
+interface AboutUsDesktopProjectContainerProps {
+  projects: AboutUsProject[];
+}
+
 export const AboutUsDesktopProjectContainer = ({
   projects,
-}: {
-  projects: Project[];
-}) => {
+}: AboutUsDesktopProjectContainerProps) => {
   const middleIndex = Math.floor(projects.length / 2);
   const [index, setIndex] = useState<number>(middleIndex);
 

@@ -5,7 +5,7 @@ import {motion, AnimatePresence} from 'framer-motion';
 import Image from 'next/image';
 import SmallLogoIcon from '@/assets/small-logo/small-logo.svg';
 
-interface MobileTeamAccordionProps {
+interface AboutUsMobileManagementAccordionItemProps {
   title: string;
   description: string[];
 }
@@ -13,7 +13,7 @@ interface MobileTeamAccordionProps {
 export const AboutUsMobileManagementAccordionItem = ({
   title,
   description,
-}: MobileTeamAccordionProps) => {
+}: AboutUsMobileManagementAccordionItemProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   return (

@@ -6,11 +6,10 @@ import AboutUsBackgroundSecond from '@/assets/about-us/background-about-us-secon
 import {AboutUsDescription} from '@/app/(with-header)/(with-footer)/about-us/_components/AboutUsDescription';
 import 'swiper/css';
 import 'swiper/css/pagination';
-
 import {AboutUsMobileMainActivitiesContainer} from '@/app/(with-header)/(with-footer)/about-us/_mobile/AboutUsMobileMainActivitiesContainer';
 import {AboutUsDesktopMainActivitiesContainer} from '@/app/(with-header)/(with-footer)/about-us/_desktop/AboutUsDesktopMainActivitiesContainer';
 
-export interface Activity {
+export interface AboutUsActivity {
   id: number;
   title: string;
   description: string;
@@ -61,7 +60,7 @@ export const AboutUsMainActivitiesContainer = () => {
 /**
  * 활동 소개 데이터
  */
-const ACTIVITIES: Activity[] = [
+const ACTIVITIES: AboutUsActivity[] = [
   {
     id: 1,
     title: 'CS 교육',

@@ -1,14 +1,9 @@
+import {AboutUsStudy} from '@/app/(with-header)/(with-footer)/about-us/_containers/AboutUsStudyContainer';
 import {motion} from 'framer-motion';
 import Image from 'next/image';
 
-interface TickerItem {
-  id: number;
-  src: string;
-  label: string;
-}
-
 interface AboutUsTickerColumnProps {
-  items: TickerItem[];
+  items: AboutUsStudy[];
   duration: number;
   reverse?: boolean;
   className?: string;

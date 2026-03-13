@@ -3,6 +3,12 @@
 import {AboutUsDescription} from '@/app/(with-header)/(with-footer)/about-us/_components/AboutUsDescription';
 import {AboutUsTickerColumn} from '@/app/(with-header)/(with-footer)/about-us/_components/AboutUsTickerColumn';
 
+export interface AboutUsStudy {
+  id: number;
+  label: string;
+  src: string;
+}
+
 export const AboutUsStudyContainer = () => {
   return (
     <section
@@ -36,7 +42,7 @@ export const AboutUsStudyContainer = () => {
   );
 };
 
-const STUDY_GROUPS = [
+const STUDY_GROUPS: AboutUsStudy[][] = [
   [
     {
       id: 1,

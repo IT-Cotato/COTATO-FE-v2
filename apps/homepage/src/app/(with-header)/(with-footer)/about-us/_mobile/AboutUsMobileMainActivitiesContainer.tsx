@@ -5,13 +5,15 @@ import {Swiper, SwiperSlide} from 'swiper/react';
 import {Pagination} from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/pagination';
-import {Activity} from '@/app/(with-header)/(with-footer)/about-us/_containers/AboutUsMainActivitiesContainer';
+import {AboutUsActivity} from '@/app/(with-header)/(with-footer)/about-us/_containers/AboutUsMainActivitiesContainer';
+
+interface AboutUsMobileMainActivitiesContainerProps {
+  activities: AboutUsActivity[];
+}
 
 export const AboutUsMobileMainActivitiesContainer = ({
   activities,
-}: {
-  activities: Activity[];
-}) => {
+}: AboutUsMobileMainActivitiesContainerProps) => {
   return (
     <div className='z-10 block w-full px-6 md:hidden'>
       <Swiper

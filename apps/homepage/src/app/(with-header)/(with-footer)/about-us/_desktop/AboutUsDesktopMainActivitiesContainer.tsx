@@ -3,13 +3,15 @@
 import {useEffect, useState} from 'react';
 import Image from 'next/image';
 import {motion, AnimatePresence} from 'framer-motion';
-import {Activity} from '@/app/(with-header)/(with-footer)/about-us/_containers/AboutUsMainActivitiesContainer';
+import {AboutUsActivity} from '@/app/(with-header)/(with-footer)/about-us/_containers/AboutUsMainActivitiesContainer';
+
+interface AboutUsDesktopMainActivitiesContainerProps {
+  activities: AboutUsActivity[];
+}
 
 export const AboutUsDesktopMainActivitiesContainer = ({
   activities,
-}: {
-  activities: Activity[];
-}) => {
+}: AboutUsDesktopMainActivitiesContainerProps) => {
   const [selectedId, setSelectedId] = useState<number | null>(null);
   const selectedActivity = activities.find((a) => a.id === selectedId);
 
