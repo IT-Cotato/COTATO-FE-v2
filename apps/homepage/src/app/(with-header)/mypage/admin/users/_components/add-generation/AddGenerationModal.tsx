@@ -66,7 +66,7 @@ export const AddGenerationModal = ({
       className='fixed inset-0 z-[100] flex items-center justify-center bg-black/50 px-6'
       onClick={handleClose}>
       <div
-        className='relative flex w-113.5 flex-col gap-6.5 rounded-[10px] bg-white px-4 py-5 lg:px-6.5 lg:py-7.5'
+        className='relative flex w-113.5 flex-col gap-4 rounded-[10px] bg-white px-4 py-5 lg:gap-6.5 lg:px-6.5 lg:py-7.5'
         onClick={(e) => e.stopPropagation()}>
         <button
           onClick={handleClose}
@@ -166,14 +166,14 @@ export const AddGenerationModal = ({
         <Button
           label='추가하기'
           variant='primary'
-          width={116}
           height={40}
           borderRadius={5}
           labelTypo='body_l'
           disabled={!generation || !startDate || !endDate}
           enableHover
           onClick={handleSubmit}
-          wrapperClassName='self-end mt-2.5'
+          className='w-full! lg:w-29!'
+          wrapperClassName='mt-2.5 w-full lg:w-auto lg:self-end'
         />
       </div>
     </div>
