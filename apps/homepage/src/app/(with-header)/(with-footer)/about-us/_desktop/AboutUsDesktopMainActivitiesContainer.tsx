@@ -1,6 +1,6 @@
 'use client';
 
-import {useEffect, useState} from 'react';
+import {useEffect, useRef, useState} from 'react';
 import Image from 'next/image';
 import {motion, AnimatePresence} from 'framer-motion';
 import {AboutUsActivity} from '@/app/(with-header)/(with-footer)/about-us/_containers/AboutUsMainActivitiesContainer';
@@ -14,6 +14,7 @@ export const AboutUsDesktopMainActivitiesContainer = ({
 }: AboutUsDesktopMainActivitiesContainerProps) => {
   const [selectedId, setSelectedId] = useState<number | null>(null);
   const selectedActivity = activities.find((a) => a.id === selectedId);
+  const modalRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
@@ -21,6 +22,10 @@ export const AboutUsDesktopMainActivitiesContainer = ({
     };
     if (selectedId) window.addEventListener('keydown', handleEsc);
     return () => window.removeEventListener('keydown', handleEsc);
+  }, [selectedId]);
+
+  useEffect(() => {
+    if (selectedId !== null) modalRef.current?.focus();
   }, [selectedId]);
 
   return (
@@ -79,6 +84,8 @@ export const AboutUsDesktopMainActivitiesContainer = ({
             <motion.div
               role='dialog'
               aria-modal='true'
+              tabIndex={-1}
+              ref={modalRef}
               aria-labelledby={`modal-title-${selectedId}`}
               aria-describedby={`modal-description-${selectedId}`}
               layoutId={`card-${selectedId}`}
