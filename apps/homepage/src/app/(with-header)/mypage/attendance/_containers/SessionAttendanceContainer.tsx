@@ -1,7 +1,7 @@
 'use client';
 
 import {AxiosError} from 'axios';
-import {AttendanceModals} from '@/app/(with-header)/mypage/attendance/_components/AttendanceModal';
+import {AttendanceModals} from '@/app/(with-header)/mypage/attendance/_components/AttendanceModals';
 import {MonthNavigator} from '@/app/(with-header)/mypage/attendance/_components/MonthNavigator';
 import {SessionList} from '@/app/(with-header)/mypage/attendance/_components/SessionList';
 import {useAttendance} from '@/app/(with-header)/mypage/attendance/_hooks/useAttendance';
@@ -68,7 +68,7 @@ export const SessionAttendanceContainer = () => {
   if (!data) return null;
 
   return (
-    <div className='flex w-full flex-col gap-13'>
+    <div className='flex w-full flex-col gap-5.25 lg:gap-13'>
       <MonthNavigator
         currentMonth={data.currentMonth}
         hasPrev={data.hasPreviousMonth}
