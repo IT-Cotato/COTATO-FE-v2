@@ -202,7 +202,7 @@ export const MemberDetailModal = (props: MemberDetailModalProps) => {
             <button
               type='button'
               onClick={handleSave}
-              className='bg-primary text-h5 rounded-[10px] px-8 py-3 text-white'>
+              className='bg-primary text-body-l-sb lg:text-h5 w-full lg:w-auto rounded-[5px] py-2 text-white lg:rounded-[10px] lg:px-8 lg:py-3'>
               저장하기
             </button>
           </div>
