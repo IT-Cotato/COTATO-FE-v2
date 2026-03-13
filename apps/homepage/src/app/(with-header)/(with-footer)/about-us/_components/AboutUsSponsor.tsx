@@ -4,17 +4,17 @@ import Image from 'next/image';
 
 export const AboutUsSponsor = () => {
   return (
-    <div className='flex flex-col items-center gap-15 py-20 lg:gap-25 lg:py-40'>
+    <div className='flex w-full flex-col items-center gap-15 py-20 lg:gap-25 lg:py-40'>
       <AboutUsDescription
         title='Sponsored by'
         titleColor='text-neutral-800'
         subTitleColor='text-neutral-500'
         subTitle='COde Together, Arrive TOgether!'
         subTitleOption='코테이토의 여정에 동행해주시는 공식 파트너 단체입니다.'
-        className='text-left sm:text-center'
+        className='text-left lg:text-center'
       />
 
-      <div className='z-20 grid grid-cols-2 gap-x-2 gap-y-2 md:flex-row md:items-center lg:flex lg:gap-11'>
+      <div className='z-20 grid grid-cols-2 gap-x-2 gap-y-2 lg:flex lg:flex-row lg:items-center lg:gap-11'>
         {SPONSORS.map(
           ({id, src, link, alt, width, height, mobileWidth, mobileHeight}) => (
             <Link
@@ -24,7 +24,7 @@ export const AboutUsSponsor = () => {
               rel='noopener noreferrer'
               className='flex items-center justify-center transition-transform hover:scale-105 active:scale-95'>
               <div className='relative flex items-center justify-center'>
-                <div className='hidden md:block'>
+                <div className='hidden lg:block'>
                   <Image
                     src={src}
                     alt={alt}
@@ -35,7 +35,7 @@ export const AboutUsSponsor = () => {
                   />
                 </div>
 
-                <div className='block md:hidden'>
+                <div className='block lg:hidden'>
                   <Image
                     src={src}
                     alt={alt}

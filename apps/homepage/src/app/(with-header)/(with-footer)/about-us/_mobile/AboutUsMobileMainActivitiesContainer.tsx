@@ -15,7 +15,7 @@ export const AboutUsMobileMainActivitiesContainer = ({
   activities,
 }: AboutUsMobileMainActivitiesContainerProps) => {
   return (
-    <div className='z-10 block w-full px-6 md:hidden'>
+    <div className='z-10 block w-full px-6 lg:hidden'>
       <Swiper
         modules={[Pagination]}
         spaceBetween={16}

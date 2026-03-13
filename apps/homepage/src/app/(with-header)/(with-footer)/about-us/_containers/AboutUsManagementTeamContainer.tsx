@@ -28,7 +28,7 @@ export const AboutUsManagementTeamContainer = () => {
         subTitleColor='text-neutral-500'
         subTitle='COTATO의 운영진은 네 팀으로 이루어져있으며,'
         subTitleOption='운영팀, 교육팀, 기획팀, 홍보팀으로 구성되어있어요.'
-        className='text-left sm:text-center'
+        className='text-left lg:text-center'
       />
 
       <ul className='z-10 hidden flex-row gap-10 xl:flex' role='list'>
