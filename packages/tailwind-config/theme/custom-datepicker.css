@@ -2,7 +2,7 @@
   z-index: var(--z-index-datepicker) !important;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 1024px) {
   .react-datepicker-popper {
     position: absolute !important;
     left: 0 !important;
@@ -25,7 +25,7 @@
   height: auto !important;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 1024px) {
   .react-datepicker {
     padding: 24px !important;
   }
@@ -79,7 +79,7 @@
   cursor: pointer;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 1024px) {
   .react-datepicker__day {
     margin: 4px 8px !important;
   }

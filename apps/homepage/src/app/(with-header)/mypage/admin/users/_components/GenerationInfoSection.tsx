@@ -15,7 +15,7 @@ const mobileCenterX = {
   name: 'mobileCenterX',
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   fn({rects}: any) {
-    if (typeof window === 'undefined' || window.innerWidth >= 768) return {};
+    if (typeof window === 'undefined' || window.innerWidth >= 1024) return {};
     return {
       x: Math.round(window.innerWidth / 2 - rects.floating.width / 2),
     };
