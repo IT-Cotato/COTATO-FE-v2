@@ -15,8 +15,8 @@ export const AttendanceTab = ({activeTab, onTabChange}: AttendanceTabProps) => {
   ];
 
   return (
-    <div className='flex w-full pb-2.5 md:pb-0'>
-      <div className='flex gap-5 px-2.5 md:gap-8.5 md:px-0'>
+    <div className='flex w-full pb-2.5 lg:pb-0'>
+      <div className='flex gap-5 px-2.5 lg:gap-8.5 lg:px-0'>
         {tabs.map((tab) => {
           const isActive = activeTab === tab.id;
           return (
@@ -24,7 +24,7 @@ export const AttendanceTab = ({activeTab, onTabChange}: AttendanceTabProps) => {
               key={tab.id}
               onClick={() => onTabChange(tab.id)}
               className={clsx(
-                'text-h5 md:text-body-l-sb relative w-19 pb-2 font-bold transition-colors md:font-semibold',
+                'text-h5 lg:text-body-l-sb relative w-19 pb-2 font-bold transition-colors lg:font-semibold',
                 isActive ? 'text-primary' : 'text-neutral-800'
               )}>
               {tab.label}
