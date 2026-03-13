@@ -8,7 +8,7 @@ import {AboutUsMobileManagementAccordionItem} from '@/app/(with-header)/(with-fo
 export const AboutUsManagementTeamContainer = () => {
   return (
     <section
-      className='relative flex w-full flex-col items-center gap-25 overflow-hidden sm:py-40'
+      className='relative flex w-full flex-col items-center gap-25 overflow-hidden py-20 lg:py-40'
       aria-label='코테이토 운영진 소개'
       id='management-team'>
       <Image
@@ -19,7 +19,7 @@ export const AboutUsManagementTeamContainer = () => {
         height={1737}
         unoptimized={true}
         draggable={false}
-        className='pointer-events-none absolute inset-0 z-0'
+        className='pointer-events-none absolute inset-0 z-0 hidden lg:block'
       />
 
       <AboutUsDescription

@@ -21,7 +21,7 @@ export const AboutUsProjectContainer = () => {
 
   return (
     <section
-      className='flex min-h-175 flex-col items-center gap-25 py-40'
+      className='flex min-h-175 flex-col items-center gap-25 py-20 lg:py-40'
       aria-label='코테이토 프로젝트 소개'
       id='project'>
       <AboutUsDescription

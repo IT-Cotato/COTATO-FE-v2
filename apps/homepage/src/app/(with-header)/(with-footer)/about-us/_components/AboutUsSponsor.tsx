@@ -4,7 +4,7 @@ import Image from 'next/image';
 
 export const AboutUsSponsor = () => {
   return (
-    <div className='flex w-full flex-col items-center gap-15 py-20 lg:gap-25 lg:py-40'>
+    <div className='flex w-full flex-col items-center gap-25 py-20 lg:py-40'>
       <AboutUsDescription
         title='Sponsored by'
         titleColor='text-neutral-800'
