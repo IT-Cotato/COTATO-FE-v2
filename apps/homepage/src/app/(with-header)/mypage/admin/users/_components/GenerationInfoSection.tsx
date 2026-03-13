@@ -11,6 +11,17 @@ import {useUpdateGenerationMutation} from '@/hooks/mutations/useGeneration.mutat
 import {Spinner} from '@repo/ui/components/spinner/Spinner';
 import clsx from 'clsx';
 
+const mobileCenterX = {
+  name: 'mobileCenterX',
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  fn({rects}: any) {
+    if (typeof window === 'undefined' || window.innerWidth >= 768) return {};
+    return {
+      x: Math.round(window.innerWidth / 2 - rects.floating.width / 2),
+    };
+  },
+};
+
 interface GenerationInfoSectionProps {
   selectedGeneration: number;
 }
@@ -139,6 +150,8 @@ export const GenerationInfoSection = ({
                       customInput={<CustomInput />}
                       wrapperClassName='block w-full'
                       popperPlacement='bottom-start'
+                      popperProps={{strategy: 'fixed'}}
+                      popperModifiers={[mobileCenterX]}
                       formatWeekDay={(nameOfDay: string) =>
                         nameOfDay.toLowerCase().slice(0, 3)
                       }
@@ -160,6 +173,8 @@ export const GenerationInfoSection = ({
                       customInput={<CustomInput />}
                       wrapperClassName='block w-full'
                       popperPlacement='bottom-start'
+                      popperProps={{strategy: 'fixed'}}
+                      popperModifiers={[mobileCenterX]}
                       formatWeekDay={(nameOfDay: string) =>
                         nameOfDay.toLowerCase().slice(0, 3)
                       }

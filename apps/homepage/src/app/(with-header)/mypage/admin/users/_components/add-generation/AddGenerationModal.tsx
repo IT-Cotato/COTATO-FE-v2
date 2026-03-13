@@ -63,24 +63,26 @@ export const AddGenerationModal = ({
 
   return (
     <div
-      className='fixed inset-0 z-[100] flex items-center justify-center bg-black/50'
+      className='fixed inset-0 z-[100] flex items-center justify-center bg-black/50 px-6'
       onClick={handleClose}>
       <div
-        className='relative flex w-113.5 flex-col gap-6.5 rounded-[10px] bg-white px-6.5 py-7.5'
+        className='relative flex w-113.5 flex-col gap-6.5 rounded-[10px] bg-white px-4 py-5 lg:px-6.5 lg:py-7.5'
         onClick={(e) => e.stopPropagation()}>
         <button
           onClick={handleClose}
-          className='absolute top-6.5 right-6.5'
+          className='absolute top-5 right-4 lg:top-6.5 lg:right-6.5'
           aria-label='닫기'>
           <Close className='h-6 w-6 cursor-pointer' />
         </button>
 
-        <h2 className='text-h4 font-bold text-neutral-800'>
+        <h2 className='text-h5 lg:text-h4 font-bold text-neutral-800'>
           활동 기수 추가하기
         </h2>
 
         <div className='flex flex-col gap-2.5'>
-          <label className='text-h5 font-semibold text-neutral-800'>기수</label>
+          <label className='text-h5 font-bold text-neutral-600 lg:font-semibold'>
+            기수
+          </label>
           <div className='flex items-center gap-2.5'>
             <input
               type='number'
@@ -96,7 +98,7 @@ export const AddGenerationModal = ({
         </div>
 
         <div ref={startCalendarRef} className='relative flex flex-col gap-2.5'>
-          <label className='text-h5 font-semibold text-neutral-800'>
+          <label className='text-h5 font-bold text-neutral-600 lg:font-semibold'>
             시작 날짜
           </label>
           <CustomInput
@@ -130,7 +132,7 @@ export const AddGenerationModal = ({
         </div>
 
         <div ref={endCalendarRef} className='relative flex flex-col gap-2.5'>
-          <label className='text-h5 font-semibold text-neutral-800'>
+          <label className='text-h5 font-bold text-neutral-600 md:font-semibold'>
             종료 날짜
           </label>
           <CustomInput
