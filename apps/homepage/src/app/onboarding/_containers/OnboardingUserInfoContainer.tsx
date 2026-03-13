@@ -11,6 +11,7 @@ import {ROUTES} from '@/constants/routes';
 import {Modal} from '@repo/ui/components/modal/Modal';
 import {FullButton} from '@repo/ui/components/buttons/FullButton';
 import {formatPhoneNumber} from '@/utils/formatPhoneNumber';
+import {createPortal} from 'react-dom';
 
 interface OnboardingUserInfoContainerProps {
   onPrev: () => void;
@@ -216,24 +217,28 @@ export const OnboardingUserInfoContainer = ({
           className='shadow-default'
         />
       </div>
-      {isJoinModalOpen && (
-        <Modal
-          title='가입 신청이 완료되었습니다.'
-          isOpen={isJoinModalOpen}
-          titleStyle='text-h4 text-neutral-800'
-          content={
-            <>
-              승인 완료까지 약 3-5일 소요됩니다.
-              <br />
-              승인이 완료된 후 서비스 이용이 가능합니다.
-            </>
-          }
-          contentWrapperClassName='flex flex-col gap-[29px]'
-          actions={
-            <FullButton label='홈으로 이동' onClick={handleModalClose} />
-          }
-          onClose={handleModalClose}></Modal>
-      )}
+      {isJoinModalOpen &&
+        typeof document !== 'undefined' &&
+        createPortal(
+          <Modal
+            title='가입 신청이 완료되었습니다.'
+            isOpen={isJoinModalOpen}
+            titleStyle='text-h4 text-neutral-800'
+            content={
+              <>
+                승인 완료까지 약 3-5일 소요됩니다.
+                <br />
+                승인이 완료된 후 서비스 이용이 가능합니다.
+              </>
+            }
+            contentWrapperClassName='flex flex-col gap-[29px]'
+            actions={
+              <FullButton label='홈으로 이동' onClick={handleModalClose} />
+            }
+            onClose={handleModalClose}
+          />,
+          document.body
+        )}
     </div>
   );
 };

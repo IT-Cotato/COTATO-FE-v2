@@ -6,6 +6,7 @@ import {FullButton} from '@repo/ui/components/buttons/FullButton';
 import {Modal} from '@repo/ui/components/modal/Modal';
 
 import {useState} from 'react';
+import {createPortal} from 'react-dom';
 
 interface OnboardingResetPasswordContainerProps {
   onSuccess: () => void;
@@ -68,23 +69,26 @@ export const OnboardingResetPasswordContainer = ({
           onClick={handleReset}
           disabled={!validation.success || resetPasswordMutation.isPending}
         />
-        {isCompleteModalOpen && (
-          <Modal
-            isOpen={isCompleteModalOpen}
-            title='비밀번호 재설정이 완료되었습니다.'
-            content='이제 새로운 비밀번호로 로그인하실 수 있습니다.'
-            titleStyle='text-h4 font-bold'
-            actions={
-              <FullButton
-                label='로그인'
-                onClick={() => {
-                  setIsCompleteModalOpen(false);
-                  onSuccess();
-                }}
-              />
-            }
-          />
-        )}
+        {isCompleteModalOpen &&
+          typeof document !== 'undefined' &&
+          createPortal(
+            <Modal
+              isOpen={isCompleteModalOpen}
+              title='비밀번호 재설정이 완료되었습니다.'
+              content='이제 새로운 비밀번호로 로그인하실 수 있습니다.'
+              titleStyle='text-h4 font-bold'
+              actions={
+                <FullButton
+                  label='로그인'
+                  onClick={() => {
+                    setIsCompleteModalOpen(false);
+                    onSuccess();
+                  }}
+                />
+              }
+            />,
+            document.body
+          )}
       </form>
     );
   }
