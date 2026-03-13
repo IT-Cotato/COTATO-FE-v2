@@ -17,7 +17,7 @@ export const AboutUsBannerContainer = () => {
   };
 
   const toggleOverlay = () => {
-    if (window.innerWidth >= 640) return;
+    if (window.innerWidth >= 1280) return;
     setIsOverlayHidden(!isOverlayHidden);
   };
 
@@ -32,7 +32,7 @@ export const AboutUsBannerContainer = () => {
           alt=''
           aria-hidden='true'
           fill
-          className='hidden object-cover sm:block'
+          className='hidden object-cover xl:block'
           priority
           fetchPriority='high'
           quality={75}
@@ -42,7 +42,7 @@ export const AboutUsBannerContainer = () => {
           alt=''
           aria-hidden='true'
           fill
-          className='block object-contain object-[center_25%] sm:hidden'
+          className='block object-cover xl:hidden'
           priority
           fetchPriority='high'
           quality={75}
@@ -55,9 +55,9 @@ export const AboutUsBannerContainer = () => {
           'items-center justify-center',
           isOverlayHidden ? 'pointer-events-none opacity-0' : 'opacity-100',
           'bg-black/40 backdrop-blur-[6px]',
-          'sm:justify-start sm:bg-transparent sm:backdrop-blur-none'
+          'xl:justify-start xl:bg-transparent xl:backdrop-blur-none'
         )}>
-        <div className='flex h-[40%] flex-col items-center justify-between sm:ml-[16.666%]'>
+        <div className='flex h-[40%] flex-col items-center justify-between xl:ml-[16.666%]'>
           <CotatoLogo />
           <button
             onClick={(e) => {
