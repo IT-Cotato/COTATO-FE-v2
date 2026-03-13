@@ -2,7 +2,7 @@ import {AccountContainer} from '@/app/(with-header)/mypage/account/_containers/A
 
 export default function AccountPage() {
   return (
-    <section className='flex min-w-250 flex-col px-11.25 py-12.5'>
+    <section className='flex flex-col px-6 py-4.5 md:min-w-250 md:px-11.25 md:py-12.5'>
       <AccountContainer />
     </section>
   );
