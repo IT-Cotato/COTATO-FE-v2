@@ -1,3 +1,5 @@
+'use client';
+
 import {HomeCotatoReviewCard} from '@/app/(with-header)/(with-footer)/(home)/_components/HomeCotatoReviewCard';
 import {CotatoReview} from '@/app/(with-header)/(with-footer)/(home)/_containers/HomeCotatoReviewContainer';
 import clsx from 'clsx';
