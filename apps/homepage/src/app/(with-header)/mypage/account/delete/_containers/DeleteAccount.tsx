@@ -42,35 +42,35 @@ export const DeleteAccount = () => {
   };
 
   return (
-    <div className='mt-3.5 flex flex-col gap-7.5'>
-      <div className='flex flex-col gap-9.75'>
+    <div className='mt-3.5 flex w-full flex-col gap-6 md:gap-7.5'>
+      <div className='flex flex-col gap-10 md:gap-9.75'>
         <div className='flex items-center gap-5'>
           <BackIcon
-            className='h-7 w-7 cursor-pointer text-neutral-700'
+            className='h-6 w-6 cursor-pointer text-neutral-700 md:h-7 md:w-7'
             onClick={() => router.back()}
           />
           <h3 className='text-h3 text-neutral-700'>회원 탈퇴</h3>
         </div>
-        <div className='flex flex-col gap-11.25 rounded-[10px] border-2 border-neutral-200 px-10 py-8.25'>
-          <div className='flex flex-col gap-5.25'>
-            <h4 className='text-h4 text-neutral-700'>탈퇴 안내</h4>
-            <div className='text-h5 flex flex-col gap-7 leading-relaxed text-neutral-600'>
-              <p>
-                회원님께서 COTATO 동아리 페이지의 회원 탈퇴를 진행하실 경우,
-                아래 사항에 따라 계정이 비활성화되며 30일 후에는 모든 정보가
-                영구적으로 삭제됩니다. <br />
-                탈퇴를 신청하기 전에 안내 사항을 꼭 확인해 주세요.
-              </p>
-              <div className='text-body-l flex flex-col gap-7 text-neutral-700'>
-                <div className='flex flex-col gap-1'>
-                  <p>1. 계정 비활성화</p>
-                  <p className='pl-5'>
-                    탈퇴 신청을 하시면 해당 계정은 30일 동안 비활성화 상태로
-                    전환됩니다. 비활성화 기간 동안 COTATO 서비스 이용이
-                    제한됩니다.
-                  </p>
-                </div>
-                <div className='text-body-l flex flex-col gap-7 text-neutral-700'>
+        <div className='flex flex-col items-center gap-2.5 self-stretch rounded-[10px] border-2 border-neutral-200 px-10.5 py-7 md:gap-11.25 md:px-10 md:py-8.25'>
+          <div className='scrollbar-hide flex h-153.25 w-full flex-col items-start gap-8 self-stretch overflow-y-auto md:h-auto md:overflow-visible'>
+            <div className='flex flex-col gap-5.25'>
+              <h4 className='text-h4 text-neutral-700'>탈퇴 안내</h4>
+              <div className='text-h5 flex flex-col gap-6 leading-relaxed text-neutral-600 md:gap-7'>
+                <p className='text-h5 font-bold md:font-normal'>
+                  회원님께서 COTATO 동아리 페이지의 회원 탈퇴를 진행하실 경우,
+                  아래 사항에 따라 계정이 비활성화되며 30일 후에는 모든 정보가
+                  영구적으로 삭제됩니다. <br />
+                  탈퇴를 신청하기 전에 안내 사항을 꼭 확인해 주세요.
+                </p>
+                <div className='text-body-s md:text-body-l flex flex-col gap-6 text-neutral-700 md:gap-7'>
+                  <div className='flex flex-col gap-1'>
+                    <p>1. 계정 비활성화</p>
+                    <p className='pl-4 md:pl-5'>
+                      탈퇴 신청을 하시면 해당 계정은 30일 동안 비활성화 상태로
+                      전환됩니다. 비활성화 기간 동안 COTATO 서비스 이용이
+                      제한됩니다.
+                    </p>
+                  </div>
                   <div className='flex flex-col gap-1'>
                     <p>2. 데이터 수정 및 보존</p>
                     <ul className='flex flex-col gap-1 pl-4'>
@@ -86,8 +86,6 @@ export const DeleteAccount = () => {
                       </li>
                     </ul>
                   </div>
-                </div>
-                <div className='text-body-l flex flex-col gap-7 text-neutral-700'>
                   <div className='flex flex-col gap-1'>
                     <p>3. 계정 복구 가능 기간</p>
                     <p className='pl-4'>
@@ -96,39 +94,49 @@ export const DeleteAccount = () => {
                     </p>
                   </div>
                 </div>
-              </div>
-              <div className='text-body-l text-neutral-800'>
-                탈퇴와 관련해 추가적인 문의 사항이 있으시면 COTATO 관리자에게
-                연락해 주시기 바랍니다.
+                <div className='text-body-s md:text-body-l text-neutral-800'>
+                  탈퇴와 관련해 추가적인 문의 사항이 있으시면 COTATO 관리자에게
+                  연락해 주시기 바랍니다.
+                </div>
               </div>
             </div>
-          </div>
-          <div className='flex items-center gap-2.5'>
-            <DeleteCheckbox checked={isChecked} onChange={setIsChecked} />
-            <span className='text-h5 text-neutral-600'>
-              안내사항을 모두 확인하였으며, 이에 동의합니다.
-            </span>
+            <div className='hidden items-center gap-2.5 md:flex'>
+              <DeleteCheckbox checked={isChecked} onChange={setIsChecked} />
+              <span className='text-h5 text-neutral-600'>
+                안내사항을 모두 확인하였으며, 이에 동의합니다.
+              </span>
+            </div>
           </div>
         </div>
       </div>
-      <div className='flex justify-end'>
-        <Button
-          label='탈퇴하기'
-          width={227}
-          height={56}
-          labelTypo='body_l_sb'
-          borderRadius={15}
-          disabled={!isChecked || isPending}
-          onClick={handleDeactivateClick}
-        />
+      <div className='flex flex-col gap-5 md:gap-0'>
+        <div className='flex items-center gap-2.5 md:hidden'>
+          <DeleteCheckbox checked={isChecked} onChange={setIsChecked} />
+          <span className='text-body-l-b text-neutral-600'>
+            안내사항을 모두 확인하였으며, 이에 동의합니다.
+          </span>
+        </div>
+        <div className='flex flex-col md:flex-row md:justify-end'>
+          <Button
+            label='탈퇴하기'
+            backgroundColor='primary'
+            className='w-full md:w-56.75'
+            width='100%'
+            height={56}
+            labelTypo='body_l_sb'
+            borderRadius={15}
+            disabled={!isChecked || isPending}
+            onClick={handleDeactivateClick}
+          />
+        </div>
       </div>
       <Modal
         isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
+        onClose={handleDeleteConfirm}
         title='회원 탈퇴가 완료되었습니다.'
-        titleStyle='text-h4 text-neutral-800'
+        titleStyle='text-h5 font-bold text-neutral-800 md:text-h4'
         content={
-          <p>
+          <p className='text-body-m md:text-h5'>
             그동안 코테이토를 이용해 주셔서
             <br />
             진심으로 감사합니다.
@@ -138,8 +146,8 @@ export const DeleteAccount = () => {
           <FullButton
             type='button'
             label='확인'
-            width={340}
             height={47}
+            labelTypo='h5'
             onClick={handleDeleteConfirm}
           />
         }
