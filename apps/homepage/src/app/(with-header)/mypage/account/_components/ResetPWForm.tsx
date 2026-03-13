@@ -79,7 +79,7 @@ export const ResetPWForm = () => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className='flex flex-col gap-6.5 md:min-w-275'>
+      className='flex flex-col gap-6.5 lg:min-w-275'>
       <FormPassword
         variant='mypage'
         label='현재 비밀번호'
@@ -128,12 +128,12 @@ export const ResetPWForm = () => {
           </span>
         )}
       </div>
-      <div className='flex flex-col md:mt-6 md:flex-row md:justify-end'>
+      <div className='flex flex-col lg:mt-6 lg:flex-row lg:justify-end'>
         <Button
           type='submit'
           label='비밀번호 재설정'
           backgroundColor='primary'
-          className='w-full md:w-35.5'
+          className='w-full lg:w-35.5'
           width='100%'
           height={42}
           labelTypo='body_l_sb'
