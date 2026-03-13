@@ -30,17 +30,15 @@ export const AboutUsMainActivitiesContainer = () => {
 
   return (
     <section
-      className='relative flex w-full flex-col items-center gap-25 overflow-hidden bg-linear-to-b from-[#010101] from-[13.94%] via-white via-50% to-white py-40'
+      className='relative flex w-full flex-col items-center gap-25 overflow-hidden bg-linear-to-b from-[#010101] from-20% via-white via-50% to-white py-20 lg:py-40'
       id='main-activities'>
       <Image
         src={AboutUsBackgroundSecond}
         alt=''
         aria-hidden={true}
-        width={956}
-        height={1080}
         unoptimized={true}
         draggable={false}
-        className='pointer-events-none absolute top-0 right-0'
+        className='pointer-events-none absolute top-0 right-0 hidden h-auto w-[60vw] max-w-239 lg:block'
       />
 
       <AboutUsDescription

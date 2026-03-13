@@ -30,7 +30,7 @@ export const AboutUsDesktopMainActivitiesContainer = ({
 
   return (
     <>
-      <div className='z-10 hidden w-full max-w-310 grid-cols-12 gap-7.5 px-6 md:grid'>
+      <div className='z-10 hidden w-full max-w-310 grid-cols-12 gap-7.5 px-6 lg:grid'>
         {activities.map((activity) => (
           <motion.div
             key={activity.id}
@@ -72,7 +72,7 @@ export const AboutUsDesktopMainActivitiesContainer = ({
       {/* 모달 */}
       <AnimatePresence>
         {selectedId && selectedActivity && (
-          <div className='fixed inset-0 z-50 hidden items-center justify-center p-10 md:flex'>
+          <div className='fixed inset-0 z-50 hidden items-center justify-center p-10 lg:flex'>
             <motion.div
               aria-hidden='true'
               initial={{opacity: 0}}

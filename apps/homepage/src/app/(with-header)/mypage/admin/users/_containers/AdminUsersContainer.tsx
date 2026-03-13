@@ -6,7 +6,10 @@ import {MEMBER_TABS} from '@/constants/admin/admin';
 import {MemberTabType} from '@/constants/admin/admin';
 import {AllMembersTableContainer} from '@/app/(with-header)/mypage/admin/users/_containers/AllMembersTableContainer';
 import {ActiveMembersTableContainer} from '@/app/(with-header)/mypage/admin/users/_containers/ActiveMembersTableContainer';
-import {useAdminMembersQuery, useActiveMembersQuery} from '@/hooks/queries/useAdminMembers.query';
+import {
+  useAdminMembersQuery,
+  useActiveMembersQuery,
+} from '@/hooks/queries/useAdminMembers.query';
 import {useActiveMembersGeneration} from '@/app/(with-header)/mypage/admin/users/_hooks/useActiveMembersGeneration';
 
 export const AdminUsersContainer = () => {

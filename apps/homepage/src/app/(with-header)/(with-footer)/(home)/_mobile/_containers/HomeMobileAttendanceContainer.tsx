@@ -36,7 +36,7 @@ export const HomeMobileAttendanceContainer = () => {
     <div
       className={clsx(
         'fixed right-7 bottom-7 z-30 transition-all duration-300',
-        'md:hidden'
+        'xl:hidden'
       )}>
       {attendanceStatus?.openStatus === 'OPEN' && (
         <button

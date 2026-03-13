@@ -11,18 +11,18 @@ export default function OnboardingPage() {
 
           '-left-[50%] h-[200%] w-[200%] object-top-left',
 
-          'lg:left-0 lg:h-full lg:w-full lg:object-center'
+          'xl:left-0 xl:h-full xl:w-full xl:object-center'
         )}
       />
 
       <div className='absolute inset-0 flex h-0 w-0 items-center overflow-hidden opacity-0 xl:h-full xl:w-full xl:opacity-100'>
-        <div className='z-20 flex h-full w-1/2 items-center justify-center'>
+        <div className='flex h-full w-1/2 items-center justify-center'>
           <CotatoLogo />
         </div>
       </div>
 
-      <div className='relative z-10 flex h-full w-full items-center px-6 py-10 md:px-30'>
-        <div className='mx-auto lg:mr-0 lg:ml-auto'>
+      <div className='relative z-10 flex h-full w-full items-center px-6 py-10 xl:px-30'>
+        <div className='mx-auto xl:mr-0 xl:ml-auto'>
           <OnboardingContainer />
         </div>
       </div>

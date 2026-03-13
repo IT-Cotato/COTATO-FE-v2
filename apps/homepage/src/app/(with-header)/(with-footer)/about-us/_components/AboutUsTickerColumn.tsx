@@ -19,7 +19,7 @@ export const AboutUsTickerColumn = ({
 
   return (
     <div
-      className={`relative h-201.5 w-38.75 flex-1 overflow-hidden rounded-[10px] sm:w-67 ${className}`}>
+      className={`relative h-134.25 w-38.75 flex-1 overflow-hidden rounded-[10px] lg:h-201.5 lg:w-67 ${className}`}>
       <motion.div
         className='flex flex-col gap-4 py-2'
         animate={{

@@ -21,7 +21,7 @@ export const AboutUsProjectContainer = () => {
 
   return (
     <section
-      className='flex min-h-175 flex-col items-center gap-25 py-40'
+      className='flex min-h-175 flex-col items-center gap-25 py-20 lg:py-40'
       aria-label='코테이토 프로젝트 소개'
       id='project'>
       <AboutUsDescription
@@ -29,14 +29,14 @@ export const AboutUsProjectContainer = () => {
         subTitle='함께 만들어 도착한, COTATO의 프로젝트를 만나보세요.'
         titleColor='text-neutral-800'
         subTitleColor='text-neutral-500'
-        className='text-right sm:text-center'
+        className='text-right lg:text-center'
       />
       <div className='hidden w-full items-center justify-center xl:flex'>
         <AboutUsDesktopProjectContainer projects={PROJECTS} />
       </div>
       <AboutUsMobileProjectContainer projects={PROJECTS} />
       <button
-        className='text-body-l sm:text-h5 font-bold text-neutral-600'
+        className='text-body-l xl:text-h5 font-bold text-neutral-600'
         onClick={handleProjectMoreViewClick}
         aria-label='코테이토 전체 프로젝트 목록 페이지로 이동'>
         프로젝트 더보기

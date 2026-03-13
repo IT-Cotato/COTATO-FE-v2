@@ -26,6 +26,27 @@ export const HeaderMobileMenu = ({
   onLogout,
   onClose,
 }: HeaderMobileMenuProps) => {
+  // 1. '마이 메뉴'
+  const isMyMenuActive = [
+    ROUTES.MYPAGE_ACTIVITY,
+    ROUTES.MYPAGE_ATTENDANCE,
+  ].some((path) => pathname === path);
+
+  // 2. '설정'
+  const isSettingsActive = [ROUTES.MYPAGE_ACCOUNT, ROUTES.MYPAGE_TERMS].some(
+    (path) => pathname === path
+  );
+
+  // 3. '관리자 메뉴'
+  const isAdminActive = [
+    ROUTES.ADMIN_APPROVALS,
+    ROUTES.ADMIN_ATTENDANCE,
+    ROUTES.ADMIN_PENALTIES,
+    ROUTES.ADMIN_RECRUIT,
+    ROUTES.ADMIN_SESSIONS,
+    ROUTES.ADMIN_USERS,
+  ].some((path) => pathname === path);
+
   return (
     <>
       {isOpen && (
@@ -84,32 +105,29 @@ export const HeaderMobileMenu = ({
                   }`}>
                   MY PAGE
                 </Link>
+
                 <div className='text-h5 flex flex-col gap-3 pl-5'>
                   <Link
                     href={ROUTES.MYPAGE_ACTIVITY}
                     className={`transition-all duration-300 hover:text-neutral-50 ${
-                      pathname.startsWith(ROUTES.MYPAGE_ACTIVITY)
-                        ? 'text-neutral-50'
-                        : 'text-neutral-300'
+                      isMyMenuActive ? 'text-primary' : 'text-neutral-300'
                     }`}>
                     마이 메뉴
                   </Link>
+
                   <Link
                     href={ROUTES.MYPAGE_ACCOUNT}
                     className={`transition-all duration-300 hover:text-neutral-50 ${
-                      pathname.startsWith(ROUTES.MYPAGE_ACCOUNT)
-                        ? 'text-neutral-50'
-                        : 'text-neutral-300'
+                      isSettingsActive ? 'text-primary' : 'text-neutral-300'
                     }`}>
                     설정
                   </Link>
+
                   {isAdmin && (
                     <Link
                       href={ROUTES.ADMIN_ATTENDANCE}
                       className={`transition-all duration-300 hover:text-neutral-50 ${
-                        pathname.startsWith(ROUTES.ADMIN_USERS)
-                          ? 'text-neutral-50'
-                          : 'text-neutral-300'
+                        isAdminActive ? 'text-primary' : 'text-neutral-300'
                       }`}>
                       관리자 메뉴
                     </Link>

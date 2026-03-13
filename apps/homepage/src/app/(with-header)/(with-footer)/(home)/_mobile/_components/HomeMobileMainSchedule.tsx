@@ -3,7 +3,7 @@ import {BlackRowKeycap} from '@/app/(with-header)/(with-footer)/(home)/_componen
 import {OrangeColKeycap} from '@/app/(with-header)/(with-footer)/(home)/_components/keycap/OrangeColKeycap';
 import {ScheduleKeycap} from '@/app/(with-header)/(with-footer)/(home)/_components/keycap/ScheduleKeycap';
 
-export const HomeMobileMainScheduleContainer = () => {
+export const HomeMobileMainSchedule = () => {
   return (
     <div className='grid max-w-81 grid-cols-2 gap-2'>
       <ScheduleKeycap
