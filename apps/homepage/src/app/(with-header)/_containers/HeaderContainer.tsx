@@ -76,14 +76,14 @@ export const HeaderContainer = () => {
   };
 
   return (
-    <header className='z-header sticky top-0 flex h-12.5 w-full items-center justify-between bg-black px-6 md:h-22 md:min-w-360 md:pr-26.25 md:pl-6.25'>
+    <header className='z-header sticky top-0 flex h-12.5 w-full items-center justify-between bg-black px-6 lg:h-22 lg:min-w-360 lg:pr-26.25 lg:pl-6.25'>
       <div className='z-50'>
         <Link href={ROUTES.HOME}>
           <MainLogo className='w-28 lg:w-36.5' />
         </Link>
       </div>
 
-      <nav className='hidden items-center gap-5 md:flex'>
+      <nav className='hidden items-center gap-5 lg:flex'>
         {navItems.map(({label, href, external}) => {
           const isActive = !external && pathname === href;
           return (
@@ -131,7 +131,7 @@ export const HeaderContainer = () => {
       {/** 모바일 햄버거 헤더  */}
       {!isMenuOpen && (
         <button
-          className='z-50 block p-2 text-white md:hidden'
+          className='z-50 block p-2 text-white lg:hidden'
           onClick={() => setIsMenuOpen(true)}
           aria-label='메뉴 열기'>
           <HamburgerIcon className='h-5 w-5' />
