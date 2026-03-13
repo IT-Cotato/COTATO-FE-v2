@@ -38,12 +38,12 @@ export const useUpdateGenerationMutation = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({queryKey: QUERY_KEYS.GENERATIONS});
     },
-    onError: (error) => {
-      if (error instanceof Error) {
-        alert(error.message);
-      } else {
-        alert('기수 수정에 실패했습니다.');
-      }
+    onError: (error: unknown) => {
+      const message =
+        error instanceof Error
+          ? error.message
+          : (error as {message?: string})?.message ?? '기수 수정에 실패했습니다.';
+      alert(message);
     },
   });
 };
