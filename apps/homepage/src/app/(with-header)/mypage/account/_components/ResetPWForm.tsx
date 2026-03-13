@@ -55,7 +55,7 @@ export const ResetPWForm = () => {
   const onSubmit = (data: MyPageResetPasswordType) => {
     if (data.currentPassword === data.password) {
       setError('password', {
-        message: '이전에 사용한 적 없는 비밀번호를 설정해주세요.',
+        message: '기존 비밀번호와 다른 비밀번호로 설정해주세요.',
       });
       return;
     }
