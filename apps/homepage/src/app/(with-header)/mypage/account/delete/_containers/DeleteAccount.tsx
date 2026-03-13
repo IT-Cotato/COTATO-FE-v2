@@ -52,7 +52,7 @@ export const DeleteAccount = () => {
           <h3 className='text-h3 text-neutral-700'>회원 탈퇴</h3>
         </div>
         <div className='flex flex-col items-center gap-2.5 self-stretch rounded-[10px] border-2 border-neutral-200 px-10.5 py-7 lg:gap-11.25 lg:px-10 lg:py-8.25'>
-          <div className='scrollbar-hide flex h-153.25 w-full flex-col items-start gap-8 self-stretch overflow-y-auto lg:h-auto lg:overflow-visible'>
+          <div className='scrollbar-hide flex max-h-153.25 w-full flex-col items-start gap-8 self-stretch overflow-y-auto lg:h-auto lg:overflow-visible'>
             <div className='flex flex-col gap-5.25'>
               <h4 className='text-h4 text-neutral-700'>탈퇴 안내</h4>
               <div className='text-h5 flex flex-col gap-6 leading-relaxed text-neutral-600 lg:gap-7'>
