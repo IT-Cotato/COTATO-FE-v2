@@ -27,7 +27,7 @@ export const SERVICE_TERMS: TermsSection[] = [
   {
     title: '제1조 (목적)',
     content: (
-      <div className='text-body-m lg:text-body-l pl-3'>
+      <div className='text-body-m lg:text-body-l px-3'>
         이 약관은 동아리가 제공하는 웹 서비스 및 관련 제반 서비스(이하
         “서비스”)의 이용 조건, 절차, 회원과 동아리의 권리·의무 및 책임 사항을
         규정함을 목적으로 합니다.
@@ -82,7 +82,7 @@ export const SERVICE_TERMS: TermsSection[] = [
   {
     title: '제3조 (약관의 효력 및 변경)',
     content: (
-      <div className='text-body-m lg:text-body-l flex flex-col gap-1 pl-3'>
+      <div className='text-body-m lg:text-body-l flex flex-col gap-1 px-3'>
         {[
           {
             n: '1.',
@@ -121,7 +121,7 @@ export const SERVICE_TERMS: TermsSection[] = [
   {
     title: '제4조 (회원가입 및 승인)',
     content: (
-      <div className='text-body-m lg:text-body-l flex flex-col gap-1 pl-3'>
+      <div className='text-body-m lg:text-body-l flex flex-col gap-1 px-3'>
         {[
           {
             n: '1.',
@@ -162,7 +162,7 @@ export const SERVICE_TERMS: TermsSection[] = [
   {
     title: '제5조 (서비스의 내용 및 연동)',
     content: (
-      <div className='text-body-m lg:text-body-l flex flex-col gap-2 pl-3'>
+      <div className='text-body-m lg:text-body-l flex flex-col gap-1 px-3'>
         {[
           {
             n: '1.',
@@ -199,7 +199,7 @@ export const SERVICE_TERMS: TermsSection[] = [
   {
     title: '제6조 (서비스의 변경 및 중단)',
     content: (
-      <div className='text-body-m lg:text-body-l flex flex-col gap-2 pl-3'>
+      <div className='text-body-m lg:text-body-l flex flex-col gap-1 px-3'>
         {[
           {
             n: '1.',
@@ -239,7 +239,7 @@ export const SERVICE_TERMS: TermsSection[] = [
   {
     title: '제7조 (출석 관리 및 위치 정보)',
     content: (
-      <div className='text-body-m lg:text-body-l flex flex-col gap-1 pl-3'>
+      <div className='text-body-m lg:text-body-l flex flex-col gap-1 px-3'>
         {[
           {
             n: '1.',
@@ -265,7 +265,7 @@ export const SERVICE_TERMS: TermsSection[] = [
   {
     title: '제8조 (회원의 의무)',
     content: (
-      <div className='text-body-m lg:text-body-l flex flex-col gap-1 pl-3'>
+      <div className='text-body-m lg:text-body-l flex flex-col gap-1 px-3'>
         {[
           {
             n: '1.',
@@ -307,7 +307,7 @@ export const SERVICE_TERMS: TermsSection[] = [
   {
     title: '제9조 (게시물의 저작권 및 이용)',
     content: (
-      <div className='text-body-m lg:text-body-l flex flex-col gap-1 pl-3'>
+      <div className='text-body-m lg:text-body-l flex flex-col gap-1 px-3'>
         {[
           {
             n: '1.',
@@ -341,7 +341,7 @@ export const SERVICE_TERMS: TermsSection[] = [
   {
     title: '제10조 (개인정보의 보호)',
     content: (
-      <div className='text-body-m lg:text-body-l flex flex-col gap-1 pl-3'>
+      <div className='text-body-m lg:text-body-l flex flex-col gap-1 px-3'>
         {[
           {
             n: '1.',
@@ -400,7 +400,7 @@ export const SERVICE_TERMS: TermsSection[] = [
   {
     title: '제11조 (이용계약의 해지 및 회원 탈퇴)',
     content: (
-      <div className='text-body-m lg:text-body-l flex flex-col gap-1 pl-3'>
+      <div className='text-body-m lg:text-body-l flex flex-col gap-1 px-3'>
         {[
           {
             n: '1.',
@@ -426,7 +426,7 @@ export const SERVICE_TERMS: TermsSection[] = [
   {
     title: '제12조 (면책조항)',
     content: (
-      <div className='text-body-m lg:text-body-l flex flex-col gap-1 pl-3'>
+      <div className='text-body-m lg:text-body-l flex flex-col gap-1 px-3'>
         {[
           {
             n: '1.',
@@ -452,7 +452,7 @@ export const SERVICE_TERMS: TermsSection[] = [
   {
     title: '제13조 (준거법 및 관할법원)',
     content: (
-      <div className='text-body-m lg:text-body-l flex flex-col gap-1 pl-3'>
+      <div className='text-body-m lg:text-body-l flex flex-col gap-1 px-3'>
         {[
           {
             n: '1.',
