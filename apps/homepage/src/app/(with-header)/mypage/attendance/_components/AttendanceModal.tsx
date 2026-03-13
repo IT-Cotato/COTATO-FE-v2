@@ -35,24 +35,24 @@ export const AttendanceModal = ({
         ref={modalRef}
         className={clsx(
           'relative flex flex-col items-center justify-center rounded-xl bg-white text-center',
-          'h-50 w-81.5 px-6 md:h-75 md:w-127.5'
+          'h-50 w-81.5 px-6 lg:h-75 lg:w-127.5'
         )}>
         <button
           onClick={onClose}
           className='absolute top-4 right-5'
           aria-label='닫기'>
-          <CloseIcon className='h-2.25 w-2.25 text-neutral-800 md:h-3 md:w-3' />
+          <CloseIcon className='h-2.25 w-2.25 text-neutral-800 lg:h-3 lg:w-3' />
         </button>
         <div
           className={clsx(
             'flex w-full flex-col items-center',
-            content ? 'mb-8.5 md:mb-10' : 'mb-10 md:mb-10'
+            content ? 'mb-8.5 lg:mb-10' : 'mb-10 lg:mb-10'
           )}>
-          <h2 className='text-h5 md:text-h4 font-bold whitespace-pre-wrap text-neutral-800'>
+          <h2 className='text-h5 lg:text-h4 font-bold whitespace-pre-wrap text-neutral-800'>
             {title}
           </h2>
           {content && (
-            <p className='text-body-m md:text-h5 mt-1.25 font-normal whitespace-pre-wrap text-neutral-500 md:mt-1.5'>
+            <p className='text-body-m lg:text-h5 mt-1.25 font-normal whitespace-pre-wrap text-neutral-500 lg:mt-1.5'>
               {content}
             </p>
           )}
@@ -64,7 +64,7 @@ export const AttendanceModal = ({
             backgroundColor='primary'
             className={clsx(
               'text-body-m-sb! h-10.5! rounded-[10px]! py-2.25!',
-              'md:text-h5! md:h-11.75! md:w-85! md:py-2.75!'
+              'lg:text-h5! lg:h-11.75! lg:w-85! lg:py-2.75!'
             )}
           />
         </div>

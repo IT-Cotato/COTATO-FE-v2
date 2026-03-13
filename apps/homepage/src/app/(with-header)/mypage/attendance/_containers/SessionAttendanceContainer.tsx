@@ -68,7 +68,7 @@ export const SessionAttendanceContainer = () => {
   if (!data) return null;
 
   return (
-    <div className='flex w-full flex-col gap-5.25 md:gap-13'>
+    <div className='flex w-full flex-col gap-5.25 lg:gap-13'>
       <MonthNavigator
         currentMonth={data.currentMonth}
         hasPrev={data.hasPreviousMonth}

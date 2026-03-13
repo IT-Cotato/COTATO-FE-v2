@@ -66,15 +66,15 @@ export const SessionCard = ({
   };
 
   return (
-    <div className='flex w-full flex-col gap-2 overflow-hidden rounded-[10px] bg-neutral-50 px-5.5 py-2.5 md:gap-5 md:py-6'>
+    <div className='flex w-full flex-col gap-2 overflow-hidden rounded-[10px] bg-neutral-50 px-5.5 py-2.5 lg:gap-5 lg:py-6'>
       <div
         className='flex cursor-pointer items-center justify-between gap-1 self-stretch'
         onClick={onToggle}>
-        <div className='flex h-12 min-w-0 flex-col md:h-15.5'>
-          <span className='md:text-h5 text-body-l text-neutral-400'>
+        <div className='flex h-12 min-w-0 flex-col lg:h-15.5'>
+          <span className='lg:text-h5 text-body-l text-neutral-400'>
             {session.sessionDateTime.split('T')[0].replaceAll('-', '.')}
           </span>
-          <h3 className='text-h5 md:text-h3 truncate font-bold text-neutral-800'>
+          <h3 className='text-h5 lg:text-h3 truncate font-bold text-neutral-800'>
             {session.title}
           </h3>
         </div>
@@ -84,7 +84,7 @@ export const SessionCard = ({
           {isCompleted ? (
             <div
               className={clsx(
-                'md:shadow-default shadow-mobile-dropdown text-body-m-sb flex h-8 w-18.75 items-center justify-center rounded-[10px] text-white',
+                'lg:shadow-default shadow-mobile-dropdown text-body-m-sb flex h-8 w-18.75 items-center justify-center rounded-[10px] text-white',
                 ATTENDANCE_STATUS[
                   session.myAttendanceResult as keyof typeof ATTENDANCE_STATUS
                 ].className
@@ -101,7 +101,7 @@ export const SessionCard = ({
                 onClick={isButtonActive ? onAttendance : undefined}
                 disabled={!isButtonActive}
                 className={clsx(
-                  'md:shadow-default text-body-m-sb flex h-8 w-29 items-center justify-center rounded-[10px] text-white transition-all',
+                  'lg:shadow-default text-body-m-sb flex h-8 w-29 items-center justify-center rounded-[10px] text-white transition-all',
                   isButtonActive
                     ? 'bg-primary cursor-pointer'
                     : 'bg-text-disabled cursor-default'
@@ -113,8 +113,8 @@ export const SessionCard = ({
         </div>
       </div>
       {isExpanded && (
-        <div className='flex h-full w-full flex-col gap-4 self-stretch md:flex-row md:items-center md:gap-7'>
-          <div className='relative hidden h-57.5 w-87.5 shrink-0 overflow-hidden rounded-[10px] bg-neutral-200 md:block'>
+        <div className='flex h-full w-full flex-col gap-4 self-stretch lg:flex-row lg:items-center lg:gap-7'>
+          <div className='relative hidden h-57.5 w-87.5 shrink-0 overflow-hidden rounded-[10px] bg-neutral-200 lg:block'>
             <Image
               src={images[currentImgIdx]!}
               alt='session'
@@ -139,31 +139,31 @@ export const SessionCard = ({
               </>
             )}
           </div>
-          <div className='no-scrollbar w-full rounded-[10px] bg-white px-8.5 md:h-57.5 md:overflow-y-auto'>
-            <div className='flex flex-col justify-center gap-2 py-5.25 md:min-h-full md:gap-3.75 md:py-9'>
-              <div className='flex flex-col md:gap-1'>
-                <span className='md:text-h5 text-[14px] text-neutral-400'>
+          <div className='no-scrollbar w-full rounded-[10px] bg-white px-8.5 lg:h-57.5 lg:overflow-y-auto'>
+            <div className='flex flex-col justify-center gap-2 py-5.25 lg:min-h-full lg:gap-3.75 lg:py-9'>
+              <div className='flex flex-col lg:gap-1'>
+                <span className='lg:text-h5 text-[14px] text-neutral-400'>
                   코테이토 {generationId}기
                 </span>
-                <h4 className='text-h5 md:text-h3 font-bold text-neutral-800'>
+                <h4 className='text-h5 lg:text-h3 font-bold text-neutral-800'>
                   {session.title}
                 </h4>
               </div>
               <div className='h-px w-full shrink-0 bg-neutral-200' />
-              <div className='flex flex-row gap-2.75 md:gap-10'>
-                <div className='flex flex-1 flex-col gap-1.75 md:gap-1'>
-                  <span className='md:text-h5 text-body-l-b text-neutral-400'>
+              <div className='flex flex-row gap-2.75 lg:gap-10'>
+                <div className='flex flex-1 flex-col gap-1.75 lg:gap-1'>
+                  <span className='lg:text-h5 text-body-l-b text-neutral-400'>
                     세션 설명
                   </span>
-                  <p className='md:text-h5 text-body-m text-neutral-600'>
+                  <p className='lg:text-h5 text-body-m text-neutral-600'>
                     {session.description || '설명이 없습니다.'}
                   </p>
                 </div>
-                <div className='flex flex-col gap-1 md:w-94.25 md:shrink-0'>
-                  <span className='md:text-h5 text-body-l-b text-neutral-400'>
+                <div className='flex flex-col gap-1 lg:w-94.25 lg:shrink-0'>
+                  <span className='lg:text-h5 text-body-l-b text-neutral-400'>
                     세션 장소
                   </span>
-                  <p className='md:text-h5 text-body-m text-neutral-600'>
+                  <p className='lg:text-h5 text-body-m text-neutral-600'>
                     {session.sessionType === 'ONLINE' && !session.placeName ? (
                       '온라인 세션'
                     ) : (

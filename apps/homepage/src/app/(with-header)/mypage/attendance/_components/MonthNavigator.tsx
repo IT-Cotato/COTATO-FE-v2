@@ -16,7 +16,7 @@ export const MonthNavigator = ({
   onNext,
 }: MonthNavigatorProps) => {
   return (
-    <div className='flex items-center justify-center gap-8 md:gap-13.5'>
+    <div className='flex items-center justify-center gap-8 lg:gap-13.5'>
       <button
         onClick={onPrev}
         disabled={!hasPrev}
@@ -24,7 +24,7 @@ export const MonthNavigator = ({
         aria-label='이전 월'>
         <PrevIcon className='h-8 w-8' />
       </button>
-      <span className='md:text-h2 text-h3 text-center text-neutral-600'>
+      <span className='lg:text-h2 text-h3 text-center text-neutral-600'>
         {currentMonth}월
       </span>
       <button
