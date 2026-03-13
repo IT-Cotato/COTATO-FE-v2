@@ -35,8 +35,8 @@ export const ActiveMembersTableContainer = () => {
   } = useActiveMembersTable();
 
   return (
-    <div className='flex flex-col gap-3.5'>
-      <div className='flex items-end gap-6'>
+    <div className='mt-2.5 flex flex-col gap-3.5 md:-mt-13'>
+      <div className='flex md:items-end md:gap-6'>
         <SearchBar
           keyword={keyword}
           onKeywordChange={setKeyword}

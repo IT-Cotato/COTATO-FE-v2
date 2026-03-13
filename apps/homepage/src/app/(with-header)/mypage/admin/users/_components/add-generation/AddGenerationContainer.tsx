@@ -45,9 +45,9 @@ export const AddGenerationContainer = ({
 
   return (
     <>
-      <div className='flex w-full flex-col items-start gap-2.5 rounded-[10px] bg-neutral-100 px-8 py-3'>
-        <div className='flex items-center gap-5.75 self-stretch'>
-          <p className='text-body-l shrink-0 font-medium text-neutral-600'>
+      <div className='-mt-1 flex w-full flex-col items-start gap-2.5 rounded-[10px] bg-neutral-100 px-5 py-3 md:mt-0 md:px-8'>
+        <div className='flex items-center gap-2.5 self-stretch md:gap-5.75'>
+          <p className='text-body-l shrink-0 font-bold text-neutral-600'>
             기수 추가하기
           </p>
           <div className='scrollbar-hide flex items-center gap-2.5 overflow-x-auto'>
@@ -59,7 +59,7 @@ export const AddGenerationContainer = ({
                   type='button'
                   onClick={() => onGenerationChange(generationId)}
                   className={clsx(
-                    'text-body-l flex h-9.5 w-15.75 shrink-0 cursor-pointer items-center justify-center rounded-[5px] font-semibold transition-all',
+                    'text-body-m md:text-body-l flex h-7 w-12.5 shrink-0 cursor-pointer items-center justify-center rounded-[5px] font-semibold transition-all md:h-9.5 md:w-15.75',
                     isSelected
                       ? 'bg-neutral-600 text-white'
                       : 'bg-white text-neutral-600'
