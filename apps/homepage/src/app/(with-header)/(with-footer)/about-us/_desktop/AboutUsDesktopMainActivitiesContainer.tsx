@@ -69,9 +69,7 @@ export const AboutUsDesktopMainActivitiesContainer = ({
         {selectedId && selectedActivity && (
           <div className='fixed inset-0 z-50 hidden items-center justify-center p-10 md:flex'>
             <motion.div
-              role='dialog'
-              aria-modal='true'
-              aria-labelledby={`modal-title-${selectedId}`}
+              aria-hidden='true'
               initial={{opacity: 0}}
               animate={{opacity: 1}}
               exit={{opacity: 0}}
@@ -79,6 +77,10 @@ export const AboutUsDesktopMainActivitiesContainer = ({
               className='absolute inset-0 bg-black/60 backdrop-blur-md'
             />
             <motion.div
+              role='dialog'
+              aria-modal='true'
+              aria-labelledby={`modal-title-${selectedId}`}
+              aria-describedby={`modal-description-${selectedId}`}
               layoutId={`card-${selectedId}`}
               style={{borderRadius: '30px'}}
               className='relative z-50 flex h-auto max-h-[90vh] w-full max-w-150 cursor-pointer flex-col overflow-hidden bg-neutral-600 shadow-2xl'
@@ -101,6 +103,7 @@ export const AboutUsDesktopMainActivitiesContainer = ({
                 <div className='absolute inset-0 bg-black/40' />
               </motion.div>
               <motion.h3
+                id={`modal-title-${selectedId}`}
                 layoutId={`title-${selectedId}`}
                 className='text-h2 absolute top-10 left-10 z-10 font-bold text-white'>
                 {selectedActivity.title}
@@ -109,7 +112,9 @@ export const AboutUsDesktopMainActivitiesContainer = ({
                 initial={{opacity: 0}}
                 animate={{opacity: 1}}
                 className='custom-scrollbar flex-1 overflow-y-auto p-12'>
-                <p className='text-h5 leading-relaxed font-medium whitespace-pre-wrap text-white/90'>
+                <p
+                  id={`modal-description-${selectedId}`}
+                  className='text-h5 leading-relaxed font-medium whitespace-pre-wrap text-white/90'>
                   {selectedActivity.description}
                 </p>
               </motion.div>
