@@ -55,7 +55,7 @@ export const ResetPWForm = () => {
   const onSubmit = (data: MyPageResetPasswordType) => {
     if (data.currentPassword === data.password) {
       setError('password', {
-        message: '이전에 사용한 적 없는 비밀번호를 설정해주세요.',
+        message: '기존 비밀번호와 다른 비밀번호로 설정해주세요.',
       });
       return;
     }
@@ -79,7 +79,7 @@ export const ResetPWForm = () => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className='flex min-w-275 flex-col gap-6.5'>
+      className='flex flex-col gap-6.5 lg:min-w-275'>
       <FormPassword
         variant='mypage'
         label='현재 비밀번호'
@@ -128,12 +128,13 @@ export const ResetPWForm = () => {
           </span>
         )}
       </div>
-      <div className='mt-6 flex justify-end'>
+      <div className='flex flex-col lg:mt-6 lg:flex-row lg:justify-end'>
         <Button
           type='submit'
           label='비밀번호 재설정'
           backgroundColor='primary'
-          width={142}
+          className='w-full lg:w-35.5'
+          width='100%'
           height={42}
           labelTypo='body_l_sb'
           disabled={!isValid || isVerifyPending || isUpdatePending}
