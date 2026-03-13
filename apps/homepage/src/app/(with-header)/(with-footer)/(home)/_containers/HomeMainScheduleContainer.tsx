@@ -4,7 +4,7 @@ import {HomeDesktopMainScheduleContainer} from '@/app/(with-header)/(with-footer
 
 export const HomeMainScheduleContainer = () => {
   return (
-    <section className='flex flex-col items-center gap-5 sm:gap-10'>
+    <section className='flex flex-col items-center gap-5 xl:gap-10'>
       <HomeSectionHeader
         mainHeading='Main Schedule'
         subHeading='주요 활동일정'

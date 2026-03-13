@@ -37,12 +37,12 @@ export const HomeCotatoReviewContainer = () => {
         ]}
         align='end'
       />
-
-      {isMobile ? (
+      <div className='xl:hidden'>
         <HomeMobileCotatoReviewContainer reviews={COTATO_REVIEWS_DATA} />
-      ) : (
+      </div>
+      <div className='hidden xl:block'>
         <HomeDesktopCotatoReviewContainer reviews={COTATO_REVIEWS_DATA} />
-      )}
+      </div>
     </section>
   );
 };

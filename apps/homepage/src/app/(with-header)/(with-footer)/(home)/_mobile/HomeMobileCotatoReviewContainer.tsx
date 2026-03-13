@@ -41,7 +41,7 @@ export const HomeMobileCotatoReviewContainer = ({
   };
 
   return (
-    <div className='flex w-full flex-col gap-6'>
+    <div className='flex w-full flex-col gap-6 overflow-x-hidden'>
       <div className='w-full' style={{maxWidth: `${cardWidth}px`}}>
         <motion.div
           className='flex'
