@@ -9,7 +9,7 @@ import {HomeAttendanceContainer} from '@/app/(with-header)/(with-footer)/(home)/
 
 export default function HomePage() {
   return (
-    <div className='flex w-full flex-col gap-42.5 sm:gap-50'>
+    <div className='flex w-full flex-col gap-42.5 sm:gap-50 md:min-w-360'>
       <HomeBannerContainer />
       <div className='flex flex-col items-center gap-42.5 overflow-x-hidden bg-white px-6 pb-50 sm:gap-50'>
         <HomeCoreValue />
