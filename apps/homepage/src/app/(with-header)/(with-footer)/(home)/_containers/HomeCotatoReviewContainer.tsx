@@ -2,8 +2,8 @@
 
 import {useEffect, useState} from 'react';
 import {HomeSectionDescription} from '@/app/(with-header)/(with-footer)/(home)/_components/HomeSectionDescription';
-import {MobileReviewContainer} from '@/app/(with-header)/(with-footer)/(home)/_containers/cotato-review/MobileReviewContainer';
-import {DesktopReviewContainer} from '@/app/(with-header)/(with-footer)/(home)/_containers/cotato-review/DesktopReviewContainer';
+import {HomeDesktopCotatoReviewContainer} from '@/app/(with-header)/(with-footer)/(home)/_desktop/HomeDesktopCotatoReviewContainer';
+import {HomeMobileCotatoReviewContainer} from '@/app/(with-header)/(with-footer)/(home)/_mobile/HomeMobileCotatoReviewContainer';
 
 export interface CotatoReview {
   id: number;
@@ -39,9 +39,9 @@ export const HomeCotatoReviewContainer = () => {
       />
 
       {isMobile ? (
-        <MobileReviewContainer reviews={COTATO_REVIEWS_DATA} />
+        <HomeMobileCotatoReviewContainer reviews={COTATO_REVIEWS_DATA} />
       ) : (
-        <DesktopReviewContainer reviews={COTATO_REVIEWS_DATA} />
+        <HomeDesktopCotatoReviewContainer reviews={COTATO_REVIEWS_DATA} />
       )}
     </section>
   );
