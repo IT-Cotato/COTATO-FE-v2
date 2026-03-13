@@ -11,7 +11,7 @@ export default function OnboardingPage() {
 
           '-left-[50%] h-[200%] w-[200%] object-top-left',
 
-          'lg:left-0 lg:h-full lg:w-full lg:object-center'
+          'xl:left-0 xl:h-full xl:w-full xl:object-center'
         )}
       />
 
@@ -21,8 +21,8 @@ export default function OnboardingPage() {
         </div>
       </div>
 
-      <div className='relative z-10 flex h-full w-full items-center px-6 py-10 md:px-30'>
-        <div className='mx-auto lg:mr-0 lg:ml-auto'>
+      <div className='relative z-10 flex h-full w-full items-center px-6 py-10 xl:px-30'>
+        <div className='mx-auto xl:mr-0 xl:ml-auto'>
           <OnboardingContainer />
         </div>
       </div>

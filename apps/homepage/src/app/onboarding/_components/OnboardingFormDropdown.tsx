@@ -31,14 +31,14 @@ export const OnboardingFormDropdown = ({
   };
 
   return (
-    <div className={clsx('flex flex-col gap-1.25 sm:gap-3', className)}>
-      <label className='text-body-l sm:text-h5 text-neutral-100'>{label}</label>
+    <div className={clsx('flex flex-col gap-1.25 lg:gap-3', className)}>
+      <label className='text-body-l lg:text-h5 text-neutral-100'>{label}</label>
 
       <div className='relative'>
         <div
           onClick={() => setIsOpen(!isOpen)}
           className={clsx(
-            'focus:ring-primary flex min-w-0 cursor-pointer items-center justify-between rounded-[9px] bg-neutral-800 px-4 py-3 text-neutral-100 transition-all focus:ring-1 sm:px-6.25 sm:py-4.75',
+            'focus:ring-primary flex min-w-0 cursor-pointer items-center justify-between rounded-[9px] bg-neutral-800 px-4 py-3 text-neutral-100 transition-all focus:ring-1 lg:px-6.25 lg:py-4.75',
             isOpen || error ? 'ring-1' : 'ring-0',
             isOpen ? 'ring-primary' : error ? 'ring-alert' : ''
           )}>
@@ -65,7 +65,7 @@ export const OnboardingFormDropdown = ({
               <li
                 key={option}
                 onClick={() => handleOptionClick(option)}
-                className='cursor-pointer px-4 py-3 text-neutral-100 transition-colors hover:bg-neutral-500 sm:px-6.25 sm:py-3.5'>
+                className='cursor-pointer px-4 py-3 text-neutral-100 transition-colors hover:bg-neutral-500 lg:px-6.25 lg:py-3.5'>
                 {option}
               </li>
             ))}

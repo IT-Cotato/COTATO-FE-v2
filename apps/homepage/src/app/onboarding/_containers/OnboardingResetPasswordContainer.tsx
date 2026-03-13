@@ -42,7 +42,7 @@ export const OnboardingResetPasswordContainer = ({
   };
   {
     return (
-      <form onSubmit={handleReset} className='flex flex-col gap-6 sm:gap-7'>
+      <form onSubmit={handleReset} className='flex flex-col gap-6 lg:gap-7'>
         <FormPassword
           value={password}
           onChange={(val) => setPassword(val)}
