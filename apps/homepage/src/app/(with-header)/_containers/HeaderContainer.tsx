@@ -75,7 +75,7 @@ export const HeaderContainer = () => {
   };
 
   return (
-    <header className='z-header sticky top-0 flex h-12.5 w-full items-center justify-between bg-black px-6 md:h-22 md:pr-26.25 md:pl-6.25'>
+    <header className='z-header sticky top-0 flex h-12.5 w-full items-center justify-between bg-black px-6 md:h-22 md:min-w-360 md:pr-26.25 md:pl-6.25'>
       <div className='z-50'>
         <Link href={ROUTES.HOME}>
           <MainLogo className='w-28 lg:w-36.5' />
