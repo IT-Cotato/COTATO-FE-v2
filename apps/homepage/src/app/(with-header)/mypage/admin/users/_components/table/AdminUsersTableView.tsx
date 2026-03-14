@@ -65,7 +65,7 @@ export const AdminUsersTableView = ({
 
   return (
     <>
-      <table className='w-full table-fixed border-collapse [border-spacing:0] md:min-w-277.5 md:table-auto'>
+      <table className='w-full table-fixed border-collapse [border-spacing:0] lg:min-w-277.5 lg:table-auto'>
         <thead className='bg-neutral-200'>
           <tr>
             {MEMBER_COLUMNS.map((col) => {
@@ -136,8 +136,8 @@ export const AdminUsersTableView = ({
           {items.map((member) => (
             <tr
               key={member.memberId}
-              className='text-body-m md:text-body-l text-neutral-600'>
-              <td className='truncate border-0 py-3 md:px-3 md:py-4'>
+              className='text-body-m lg:text-body-l text-neutral-600'>
+              <td className='truncate border-0 py-3 lg:px-3 lg:py-4'>
                 <div className='flex items-center px-2'>
                   {isAllTab && (
                     <span className='shrink-0'>
@@ -153,21 +153,21 @@ export const AdminUsersTableView = ({
                   <span className='flex-1 text-center'>{member.name}</span>
                 </div>
               </td>
-              <td className='truncate border-0 py-3 text-center md:px-3 md:py-4'>
+              <td className='truncate border-0 py-3 text-center lg:px-3 lg:py-4'>
                 {member.passedGenerationNumber}기
               </td>
-              <td className='truncate border-0 py-3 text-center md:px-3 md:py-4'>
+              <td className='truncate border-0 py-3 text-center lg:px-3 lg:py-4'>
                 {MEMBER_POSITION_LABEL[member.position as MemberPositionKey] ??
                   member.position}
               </td>
-              <td className='hidden truncate border-0 py-3 text-center md:table-cell md:px-3 md:py-4'>
+              <td className='hidden truncate border-0 py-3 text-center lg:table-cell lg:px-3 lg:py-4'>
                 {member.university}
               </td>
-              <td className='hidden truncate border-0 py-3 text-center md:table-cell md:px-3 md:py-4'>
+              <td className='hidden truncate border-0 py-3 text-center lg:table-cell lg:px-3 lg:py-4'>
                 {formatPhoneNumber(member.phoneNumber)}
               </td>
-              <td className='border-0 py-3 md:px-3 md:py-4'>
-                <div className='flex items-center justify-center md:gap-2'>
+              <td className='border-0 py-3 lg:px-3 lg:py-4'>
+                <div className='flex items-center justify-center lg:gap-2'>
                   {isAllTab ? (
                     <StatusDropdown
                       key={`${member.memberId}-status`}
@@ -179,7 +179,7 @@ export const AdminUsersTableView = ({
                       }
                       disabled={false}
                       ariaLabel='활동여부 선택'
-                      wrapperClassName='w-[61px] md:w-18.75'
+                      wrapperClassName='w-[61px] lg:w-18.75'
                     />
                   ) : (
                     <StatusDropdown
@@ -192,7 +192,7 @@ export const AdminUsersTableView = ({
                       }
                       disabled={false}
                       ariaLabel='역할 선택'
-                      wrapperClassName='w-[61px] md:w-18.75'
+                      wrapperClassName='w-[61px] lg:w-18.75'
                     />
                   )}
                   <ActionMenu
@@ -210,7 +210,7 @@ export const AdminUsersTableView = ({
         </tbody>
       </table>
       {isAllTab && selectedIds.length > 0 && (
-        <div className='bg-neutral-100 px-6 py-3 md:px-12 md:py-2.75'>
+        <div className='bg-neutral-100 px-6 py-3 lg:px-12 lg:py-2.75'>
           <div className='flex flex-wrap items-center gap-5.5'>
             <span className='text-body-l pr-1.25 text-neutral-600'>
               선택 {selectedIds.length}

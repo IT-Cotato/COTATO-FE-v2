@@ -48,8 +48,8 @@ export const ActionMenu = <T extends string>({
       {isOpen && (
         <ul
           className={clsx(
-            'text-body-m absolute top-full z-10 w-20 rounded-sm bg-neutral-700 text-neutral-300 shadow-lg md:mt-1 md:w-25 md:py-1',
-            align === 'right' ? 'right-0' : 'right-0 md:-right-21.5'
+            'text-body-m absolute top-full z-10 w-20 rounded-sm bg-neutral-700 text-neutral-300 shadow-lg lg:mt-1 lg:w-25 lg:py-1',
+            align === 'right' ? 'right-0' : 'right-0 lg:-right-21.5'
           )}>
           {items.map((item, index) => (
             <React.Fragment key={item.key}>

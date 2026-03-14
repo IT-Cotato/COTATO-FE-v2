@@ -30,8 +30,8 @@ export function CustomInput({
       onClick={onClick}
       disabled={disabled}
       className={clsx(
-        'text-body-m md:text-body-l flex items-center justify-between gap-0.5 rounded-[5px] p-[5.5px] text-neutral-800 md:gap-2 md:px-2.5',
-        !className?.includes('w-') && 'w-full min-w-25 md:w-38.25',
+        'text-body-m lg:text-body-l flex items-center justify-between gap-0.5 rounded-[5px] p-[5.5px] text-neutral-800 lg:gap-2 lg:px-2.5',
+        !className?.includes('w-') && 'w-full min-w-25 lg:w-38.25',
         !className?.includes('h-') && 'h-9',
         !className?.includes('bg-') && 'bg-neutral-50',
         {
@@ -49,7 +49,7 @@ export function CustomInput({
         {value || placeholder}
       </span>
       {!hideIcon && (
-        <CalendarIcon className='hover:text-primary h-4 w-4 md:h-5 md:w-5' />
+        <CalendarIcon className='hover:text-primary h-4 w-4 lg:h-5 lg:w-5' />
       )}
     </button>
   );
