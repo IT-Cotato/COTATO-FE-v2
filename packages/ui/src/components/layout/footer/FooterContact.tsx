@@ -17,10 +17,10 @@ export const FooterContact = ({isRecruit}: FooterContactProps) => {
     : '서비스 이용약관';
 
   return (
-    <section className='flex flex-col gap-6 sm:items-end sm:gap-0'>
-      <div className='flex flex-col gap-4 sm:flex-row sm:gap-5.25'>
-        <h3 className='text-h5 hidden text-white sm:block'>Contact Us</h3>
-        <div className='flex items-center gap-5 sm:gap-3'>
+    <section className='flex flex-col gap-6 lg:items-end lg:gap-0'>
+      <div className='flex flex-col gap-4 lg:flex-row lg:gap-5.25'>
+        <h3 className='text-h5 hidden text-white lg:block'>Contact Us</h3>
+        <div className='flex items-center gap-5 lg:gap-3'>
           <SocialLink href='mailto:itcotato@gmail.com' ariaLabel='이메일'>
             <Email className='w-6' />
           </SocialLink>
@@ -45,16 +45,16 @@ export const FooterContact = ({isRecruit}: FooterContactProps) => {
         </div>
       </div>
 
-      <div className='flex flex-col gap-2 sm:items-end sm:gap-[3px]'>
+      <div className='flex flex-col gap-2 lg:items-end lg:gap-[3px]'>
         <a
           href={linkHref}
           target='_blank'
           rel='noopener noreferrer'
-          className='text-body-m sm:text-body-m-sb mt-4 text-neutral-400 underline decoration-neutral-500 underline-offset-4 sm:mt-7.5'>
+          className='text-body-m lg:text-body-m-sb mt-4 text-neutral-400 underline decoration-neutral-500 underline-offset-4 lg:mt-7.5'>
           {linkText}
         </a>
 
-        <p className='text-body-m text-center text-neutral-400 sm:text-right'>
+        <p className='text-body-m text-center text-neutral-400 lg:text-right'>
           Copyright © 2026 COTATO. All rights reserved.
         </p>
       </div>
