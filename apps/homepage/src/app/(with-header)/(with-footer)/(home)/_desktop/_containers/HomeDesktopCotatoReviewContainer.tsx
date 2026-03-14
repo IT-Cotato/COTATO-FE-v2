@@ -79,7 +79,7 @@ export const HomeDesktopCotatoReviewContainer = ({
           ))}
         </motion.div>
       </div>
-      <div className='flex justify-center gap-3'>
+      <div className='mt-15 flex justify-center gap-3'>
         {Array.from({length: totalPages}).map((_, i) => (
           <button
             key={i}
