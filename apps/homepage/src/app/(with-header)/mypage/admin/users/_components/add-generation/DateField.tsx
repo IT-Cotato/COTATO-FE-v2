@@ -1,6 +1,6 @@
 'use client';
 
-import {useRef} from 'react';
+import {useRef, useEffect} from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import {formatDate} from '@repo/ui/utils/date';
@@ -9,7 +9,7 @@ import {CustomHeader} from '../calendar/CustomHeader';
 import {useClickOutside} from '@repo/ui/hooks/useClickOutside';
 
 const mobileInputClass =
-  'text-body-m h-10 w-full rounded-[5px] bg-neutral-50 p-[5.5px] px-2.5 text-left text-neutral-800 outline-none placeholder:text-neutral-500 md:hidden';
+  'text-body-m h-10 w-full rounded-[5px] bg-neutral-50 p-[5.5px] px-2.5 text-left text-neutral-800 outline-none placeholder:text-neutral-500 lg:hidden';
 
 interface DateFieldProps {
   label: string;
@@ -39,6 +39,16 @@ export const DateField = ({
     if (isOpen) onClose();
   });
 
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && isOpen) {
+        onClose();
+      }
+    };
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, onClose]);
+
   return (
     <div ref={calendarRef} className='relative flex flex-col gap-2.5'>
       <label className='text-h5 font-bold text-neutral-600 lg:font-semibold'>
@@ -57,7 +67,7 @@ export const DateField = ({
       <CustomInput
         value={formatDate(date) ?? ''}
         placeholder='YYYY-MM-DD'
-        className='hidden h-10 w-full bg-neutral-50 md:flex'
+        className='hidden h-10 w-full bg-neutral-50 lg:flex'
         textAlign='left'
         onClick={onToggle}
       />

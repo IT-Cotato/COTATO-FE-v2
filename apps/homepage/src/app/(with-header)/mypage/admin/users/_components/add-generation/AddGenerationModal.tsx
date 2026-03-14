@@ -21,7 +21,16 @@ function formatDateInput(raw: string): string {
 function parseDateText(formatted: string): Date | null {
   if (formatted.length !== 10) return null;
   const date = new Date(formatted);
-  return isNaN(date.getTime()) ? null : date;
+  if (isNaN(date.getTime())) return null;
+  const [year, month, day] = formatted.split('-').map(Number);
+  if (
+    date.getFullYear() !== year ||
+    date.getMonth() + 1 !== month ||
+    date.getDate() !== day
+  ) {
+    return null;
+  }
+  return date;
 }
 
 export const AddGenerationModal = ({

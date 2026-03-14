@@ -47,7 +47,6 @@ export const ActionMenu = <T extends string>({
 
       {isOpen && (
         <ul
-          role='menu'
           className={clsx(
             'text-body-m absolute top-full z-10 w-20 rounded-sm bg-neutral-700 text-neutral-300 shadow-lg md:mt-1 md:w-25 md:py-1',
             align === 'right' ? 'right-0' : 'right-0 md:-right-21.5'
@@ -55,13 +54,15 @@ export const ActionMenu = <T extends string>({
           {items.map((item, index) => (
             <React.Fragment key={item.key}>
               {index > 0 && (
-                <li role='separator' className='h-px bg-neutral-600' />
+                <li aria-hidden='true' className='h-px bg-neutral-600' />
               )}
-              <li
-                role='menuitem'
-                className='hover:text-primary cursor-pointer px-3 py-1.5 text-center'
-                onClick={() => handleAction(item.key)}>
-                {item.label}
+              <li>
+                <button
+                  type='button'
+                  className='hover:text-primary focus-visible:text-primary w-full cursor-pointer px-3 py-1.5 text-center'
+                  onClick={() => handleAction(item.key)}>
+                  {item.label}
+                </button>
               </li>
             </React.Fragment>
           ))}

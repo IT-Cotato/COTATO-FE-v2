@@ -10,6 +10,12 @@
     transform: none !important;
     margin-top: 8px !important;
   }
+  .react-datepicker {
+    padding: 24px !important;
+  }
+  .react-datepicker__day {
+    margin: 4px 8px !important;
+  }
 }
 
 .react-datepicker {
@@ -23,12 +29,6 @@
   flex-direction: column;
   width: fit-content !important;
   height: auto !important;
-}
-
-@media (min-width: 1024px) {
-  .react-datepicker {
-    padding: 24px !important;
-  }
 }
 
 .react-datepicker__triangle {
@@ -77,12 +77,6 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-}
-
-@media (min-width: 1024px) {
-  .react-datepicker__day {
-    margin: 4px 8px !important;
-  }
 }
 
 .react-datepicker__day--selected,

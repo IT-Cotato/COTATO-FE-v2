@@ -112,31 +112,31 @@ export const GenerationInfoSection = ({
 
   return (
     <div className='flex flex-col gap-1.25 rounded-[10px] bg-neutral-100 px-5.25 py-4.25'>
-      <p className='text-body-l font-bold text-neutral-800 md:font-semibold'>
+      <p className='text-body-l font-bold text-neutral-800 lg:font-semibold'>
         활동정보
       </p>
 
-      <div className='flex flex-col gap-3 md:flex-row md:items-end'>
+      <div className='flex flex-col gap-3 lg:flex-row lg:items-end'>
         <div
           className={clsx(
-            'flex md:gap-15',
+            'flex lg:gap-15',
             isEditing ? 'gap-0.75' : 'gap-2.5'
           )}>
           {/* 기수 정보 */}
           <div className='flex flex-col gap-3'>
             <span className='text-body-l text-neutral-600'>기수 정보</span>
-            <div className='md:text-body-l text-body-m flex h-8 w-17 items-center justify-center rounded-lg bg-white font-bold text-neutral-700 shadow-[0_6px_15px_0_rgba(0,0,0,0.10)] md:font-semibold'>
+            <div className='lg:text-body-l text-body-m flex h-8 w-17 items-center justify-center rounded-lg bg-white font-bold text-neutral-700 shadow-[0_6px_15px_0_rgba(0,0,0,0.10)] lg:font-semibold'>
               {selectedGeneration}기
             </div>
           </div>
 
           {/* 활동기간 */}
-          <div className='flex flex-1 flex-col gap-2 md:flex-none'>
+          <div className='flex flex-1 flex-col gap-2 lg:flex-none'>
             <span className='text-body-l text-neutral-600'>활동기간</span>
             <div className='flex items-center gap-2.5'>
               {isEditing ? (
                 <>
-                  <div className='relative flex-1 md:flex-none'>
+                  <div className='relative flex-1 lg:flex-none'>
                     <DatePicker
                       selected={startDate}
                       onChange={(date: Date | null) => {
@@ -160,10 +160,10 @@ export const GenerationInfoSection = ({
                       )}
                     />
                   </div>
-                  <div className='hidden items-center justify-center px-2 md:flex'>
+                  <div className='hidden items-center justify-center px-2 lg:flex'>
                     <RightArrow className='h-4 w-4 text-neutral-400' />
                   </div>
-                  <div className='relative flex-1 md:flex-none'>
+                  <div className='relative flex-1 lg:flex-none'>
                     <DatePicker
                       selected={endDate}
                       onChange={(date: Date | null) => setEndDate(date)}
@@ -186,7 +186,7 @@ export const GenerationInfoSection = ({
                 </>
               ) : (
                 <>
-                  <div className='flex-1 md:flex-none'>
+                  <div className='flex-1 lg:flex-none'>
                     <CustomInput
                       value={
                         savedStartDate
@@ -198,10 +198,10 @@ export const GenerationInfoSection = ({
                       hideIcon
                     />
                   </div>
-                  <div className='hidden items-center justify-center px-2 md:flex'>
+                  <div className='hidden items-center justify-center px-2 lg:flex'>
                     <RightArrow className='h-4 w-4 text-neutral-400' />
                   </div>
-                  <div className='flex-1 md:flex-none'>
+                  <div className='flex-1 lg:flex-none'>
                     <CustomInput
                       value={
                         savedEndDate
@@ -220,7 +220,7 @@ export const GenerationInfoSection = ({
         </div>
 
         {/* 버튼 영역 */}
-        <div className='flex w-full shrink-0 items-end gap-2 self-end md:ml-auto md:w-auto'>
+        <div className='flex w-full shrink-0 items-end gap-2 self-end lg:ml-auto lg:w-auto'>
           {isEditing ? (
             <>
               <button
