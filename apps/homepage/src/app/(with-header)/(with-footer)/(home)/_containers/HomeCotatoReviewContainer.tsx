@@ -1,9 +1,6 @@
-'use client';
-
-import {useEffect, useState} from 'react';
 import {HomeSectionDescription} from '@/app/(with-header)/(with-footer)/(home)/_components/HomeSectionDescription';
-import {MobileReviewContainer} from '@/app/(with-header)/(with-footer)/(home)/_containers/cotato-review/MobileReviewContainer';
-import {DesktopReviewContainer} from '@/app/(with-header)/(with-footer)/(home)/_containers/cotato-review/DesktopReviewContainer';
+import {HomeMobileCotatoReviewContainer} from '@/app/(with-header)/(with-footer)/(home)/_mobile/_containers/HomeMobileCotatoReviewContainer';
+import {HomeDesktopCotatoReviewContainer} from '@/app/(with-header)/(with-footer)/(home)/_desktop/_containers/HomeDesktopCotatoReviewContainer';
 
 export interface CotatoReview {
   id: number;
@@ -15,17 +12,6 @@ export interface CotatoReview {
 }
 
 export const HomeCotatoReviewContainer = () => {
-  const [isMobile, setIsMobile] = useState<boolean | null>(null);
-
-  useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 1280);
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
-
-  if (isMobile === null) return null;
-
   return (
     <section
       className='flex flex-col gap-10 py-10'
@@ -37,12 +23,12 @@ export const HomeCotatoReviewContainer = () => {
         ]}
         align='end'
       />
-
-      {isMobile ? (
-        <MobileReviewContainer reviews={COTATO_REVIEWS_DATA} />
-      ) : (
-        <DesktopReviewContainer reviews={COTATO_REVIEWS_DATA} />
-      )}
+      <div className='xl:hidden'>
+        <HomeMobileCotatoReviewContainer reviews={COTATO_REVIEWS_DATA} />
+      </div>
+      <div className='hidden xl:block'>
+        <HomeDesktopCotatoReviewContainer reviews={COTATO_REVIEWS_DATA} />
+      </div>
     </section>
   );
 };

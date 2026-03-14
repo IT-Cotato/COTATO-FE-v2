@@ -3,11 +3,12 @@ import {AboutUsDescription} from '@/app/(with-header)/(with-footer)/about-us/_co
 import {AboutUsManagementTeamCard} from '@/app/(with-header)/(with-footer)/about-us/_components/AboutUsManagementTeamCard';
 import {AboutUsSponsor} from '@/app/(with-header)/(with-footer)/about-us/_components/AboutUsSponsor';
 import AboutUsBackgroundThird from '@/assets/about-us/background-about-us-third.webp';
+import {AboutUsMobileManagementAccordionItem} from '@/app/(with-header)/(with-footer)/about-us/_mobile/AboutUsMobileManagementAccordionItem';
 
 export const AboutUsManagementTeamContainer = () => {
   return (
     <section
-      className='relative flex w-full flex-col items-center gap-25 overflow-hidden py-40'
+      className='relative flex w-full flex-col items-center gap-25 overflow-hidden py-20 lg:py-40'
       aria-label='코테이토 운영진 소개'
       id='management-team'>
       <Image
@@ -18,7 +19,7 @@ export const AboutUsManagementTeamContainer = () => {
         height={1737}
         unoptimized={true}
         draggable={false}
-        className='pointer-events-none absolute inset-0 z-0'
+        className='pointer-events-none absolute inset-0 z-0 hidden lg:block'
       />
 
       <AboutUsDescription
@@ -27,8 +28,10 @@ export const AboutUsManagementTeamContainer = () => {
         subTitleColor='text-neutral-500'
         subTitle='COTATO의 운영진은 네 팀으로 이루어져있으며,'
         subTitleOption='운영팀, 교육팀, 기획팀, 홍보팀으로 구성되어있어요.'
+        className='text-left lg:text-center'
       />
-      <ul className='z-10 flex flex-row gap-10' role='list'>
+
+      <ul className='z-10 hidden flex-row gap-10 xl:flex' role='list'>
         {MANAGEMENT_TEAMS.map((team) => (
           <li key={team.title}>
             <AboutUsManagementTeamCard
@@ -38,6 +41,17 @@ export const AboutUsManagementTeamContainer = () => {
           </li>
         ))}
       </ul>
+
+      <div className='z-10 flex flex-col gap-4 xl:hidden'>
+        {MANAGEMENT_TEAMS.map((team) => (
+          <AboutUsMobileManagementAccordionItem
+            key={team.title}
+            title={team.title}
+            description={team.description}
+          />
+        ))}
+      </div>
+
       <AboutUsSponsor />
     </section>
   );

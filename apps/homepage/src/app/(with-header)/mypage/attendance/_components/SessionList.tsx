@@ -25,7 +25,7 @@ export const SessionList = ({
   }
 
   return (
-    <div className='flex flex-col gap-2.5'>
+    <div className='flex flex-col gap-5.25 lg:gap-2.5'>
       {sessions.map((session) => (
         <SessionCard
           key={session.sessionId}

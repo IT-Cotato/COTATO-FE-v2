@@ -3,7 +3,7 @@ import {ResetPWForm} from '@/app/(with-header)/mypage/account/_components/ResetP
 
 export const ResetPWContainer = () => {
   return (
-    <div className='flex flex-col gap-9.5'>
+    <div className='flex flex-col gap-5 lg:gap-9.5'>
       <ResetPWHeader />
       <ResetPWForm />
     </div>

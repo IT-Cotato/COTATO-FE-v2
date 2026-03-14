@@ -2,7 +2,7 @@ import {ServiceTerms} from '@/app/(with-header)/mypage/terms/_components/Service
 
 export const ServiceTermsContainer = () => {
   return (
-    <div className='terms-scrollbar flex h-183.75 min-w-275 overflow-y-auto rounded-[10px] border-2 border-neutral-200'>
+    <div className='no-scrollbar lg:terms-scrollbar flex h-153.25 overflow-y-auto rounded-[10px] border-2 border-neutral-200 lg:h-183.75 lg:min-w-275'>
       <ServiceTerms />
     </div>
   );
