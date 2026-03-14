@@ -55,9 +55,9 @@ export const HomeRecruitmentContainer = () => {
           <motion.div whileHover={{scale: 1.02}} whileTap={{scale: 0.98}}>
             <Button
               label={isRecruiting ? '지원서 작성하기' : '알림 신청 바로가기'}
-              width={349}
+              width='100%'
               onClick={handleButtonClick}
-              className='text-h5 lg:text-h3 transition-all duration-300'
+              className='text-h5 lg:text-h3 w-50 transition-all duration-300 lg:w-86.75'
               aria-label={
                 isRecruiting
                   ? '코테이토 지원서 작성 외부 사이트로 이동'
