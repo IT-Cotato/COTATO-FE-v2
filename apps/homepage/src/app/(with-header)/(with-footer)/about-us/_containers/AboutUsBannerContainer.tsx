@@ -2,9 +2,9 @@
 
 import Image from 'next/image';
 import MainArrowIcon from '@/assets/home/main-arrow-icon.svg';
-import {CotatoLogo} from '@repo/ui/components/logo/CotatoLogo';
 import {useState} from 'react';
 import clsx from 'clsx';
+import {CotatoLogo} from '@repo/ui/components/logo/CotatoLogo';
 
 export const AboutUsBannerContainer = () => {
   const [isOverlayHidden, setIsOverlayHidden] = useState<boolean>(false);

@@ -56,7 +56,7 @@ export const AboutUsDesktopMainActivitiesContainer = ({
                 fill
                 unoptimized
                 aria-hidden='true'
-                className='object-cover transition-transform duration-500 group-hover:scale-105'
+                className='object-cover transition-transform duration-500 group-hover:scale-110'
               />
               <div className='absolute inset-0 z-10 bg-black/40' />
             </motion.div>
