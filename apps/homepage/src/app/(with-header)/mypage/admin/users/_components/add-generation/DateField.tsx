@@ -1,6 +1,6 @@
 'use client';
 
-import {useRef, useEffect} from 'react';
+import {useRef, useEffect, useId} from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import {formatDate} from '@repo/ui/utils/date';
@@ -34,6 +34,7 @@ export const DateField = ({
   onToggle,
   onClose,
 }: DateFieldProps) => {
+  const inputId = useId();
   const calendarRef = useRef<HTMLDivElement>(null);
   useClickOutside(calendarRef, () => {
     if (isOpen) onClose();
@@ -51,16 +52,21 @@ export const DateField = ({
 
   return (
     <div ref={calendarRef} className='relative flex flex-col gap-2.5'>
-      <label className='text-h5 font-bold text-neutral-600 lg:font-semibold'>
+      <label
+        htmlFor={inputId}
+        className='text-h5 font-bold text-neutral-600 lg:font-semibold'>
         {label}
       </label>
       {/* 모바일: 텍스트 직접 입력 */}
       <input
+        id={inputId}
         type='text'
         value={dateText}
         onChange={onTextChange}
         placeholder='YYYY-MM-DD'
         maxLength={10}
+        aria-label={label}
+        inputMode='numeric'
         className={mobileInputClass}
       />
       {/* 데스크탑: 캘린더 */}

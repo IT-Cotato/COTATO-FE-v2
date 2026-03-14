@@ -10,12 +10,6 @@
     transform: none !important;
     margin-top: 8px !important;
   }
-  .react-datepicker {
-    padding: 24px !important;
-  }
-  .react-datepicker__day {
-    margin: 4px 8px !important;
-  }
 }
 
 .react-datepicker {
@@ -77,6 +71,15 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
+}
+
+@media (min-width: 1024px) {
+  .react-datepicker {
+    padding: 24px !important;
+  }
+  .react-datepicker__day {
+    margin: 4px 8px !important;
+  }
 }
 
 .react-datepicker__day--selected,
