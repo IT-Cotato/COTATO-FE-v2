@@ -4,7 +4,7 @@ import HeroBanner from '@/assets/backgrounds/banner/hero-main.webp';
 
 export default function ProjectLayout({children}: {children: React.ReactNode}) {
   return (
-    <section className='flex min-h-screen flex-col items-center lg:min-w-360'>
+    <section className='flex min-h-screen flex-col items-center'>
       <HeroMainBanner
         paddingVertical={true}
         heading={
