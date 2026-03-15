@@ -13,12 +13,12 @@ export const FormField = ({
 }: FormFieldProps) => {
   const containerStyle =
     variant === 'row'
-      ? 'flex h-12.5 w-full items-center gap-2.5'
+      ? 'flex h-10 lg:h-12.5 w-full items-center gap-2.5'
       : 'flex flex-col items-start gap-2 self-stretch';
 
   const labelStyle =
     variant === 'row'
-      ? 'text-h4 w-24 text-neutral-600'
+      ? 'text-h5 font-bold shrink-0 lg:text-h4 w-24 text-neutral-600'
       : 'text-h4 text-neutral-600 cursor-pointer';
 
   const childrenStyle = variant === 'row' ? 'w-128.5' : 'w-full';

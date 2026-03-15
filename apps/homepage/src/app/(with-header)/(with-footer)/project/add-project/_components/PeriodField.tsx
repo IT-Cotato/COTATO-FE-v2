@@ -21,10 +21,10 @@ export const PeriodField = ({
 }: PeriodFieldProps) => {
   return (
     <div
-      className='flex items-center'
+      className='flex w-full flex-row items-center gap-1 lg:gap-0'
       role='group'
       aria-label='프로젝트 진행 기간 선택'>
-      <div className='relative'>
+      <div className='relative flex-1 lg:w-auto'>
         <DatePicker
           selected={startDate}
           disabled={disabled}
@@ -39,18 +39,17 @@ export const PeriodField = ({
           customInput={
             <CustomInput disabled={disabled} placeholder='시작 일자' />
           }
-          popperPlacement='bottom-start'
           formatWeekDay={(nameOfDay) => nameOfDay.toLowerCase().slice(0, 3)}
           renderCustomHeader={(props) => <CustomHeader {...props} />}
           disabledKeyboardNavigation
         />
       </div>
       <div
-        className='flex h-12 w-17.5 items-center justify-center'
+        className='flex shrink-0 items-center justify-center px-1 lg:h-12 lg:w-17.5'
         aria-hidden='true'>
         <RightArrow className='h-6 w-6' />
       </div>
-      <div className='relative'>
+      <div className='relative flex-1 lg:w-auto'>
         <DatePicker
           selected={endDate}
           disabled={disabled}
@@ -61,7 +60,7 @@ export const PeriodField = ({
           customInput={
             <CustomInput disabled={disabled} placeholder='발표 날짜' />
           }
-          popperPlacement='bottom-start'
+          popperPlacement='bottom-end'
           formatWeekDay={(nameOfDay) => nameOfDay.toLowerCase().slice(0, 3)}
           renderCustomHeader={(props) => <CustomHeader {...props} />}
           disabledKeyboardNavigation

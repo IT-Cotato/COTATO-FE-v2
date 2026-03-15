@@ -1,5 +1,19 @@
 .react-datepicker-popper {
   z-index: var(--z-index-datepicker) !important;
+  margin-top: 8px !important;
+}
+
+.react-datepicker__input-container {
+  display: block !important;
+  width: 100% !important;
+}
+
+.react-datepicker__input-container input {
+  width: 100% !important;
+}
+
+.react-datepicker-wrapper {
+  width: 100% !important;
 }
 
 @media (min-width: 1024px) {

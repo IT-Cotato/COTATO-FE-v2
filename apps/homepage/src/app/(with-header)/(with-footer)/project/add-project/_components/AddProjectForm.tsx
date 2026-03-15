@@ -101,7 +101,7 @@ export const AddProjectForm = ({
   return (
     <form
       onSubmit={handleSubmit}
-      className='flex flex-col items-end gap-5 self-stretch'
+      className='flex flex-col items-end gap-4.5 self-stretch lg:gap-5'
       aria-label={isEdit ? '프로젝트 수정 폼' : '프로젝트 추가 폼'}>
       <FormField label='프로젝트 명' id='project-name'>
         <FormInput
