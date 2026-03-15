@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 export default function ProjectPage() {
   return (
     <SuspenseWrapper>
-      <div className='w-full max-w-xl lg:w-full lg:max-w-none'>
+      <div className='w-full max-w-xl lg:w-auto lg:max-w-none'>
         <ProjectContainer />
       </div>
     </SuspenseWrapper>
