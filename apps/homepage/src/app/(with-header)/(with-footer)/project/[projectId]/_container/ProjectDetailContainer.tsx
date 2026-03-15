@@ -44,19 +44,24 @@ export const ProjectDetailContainer = () => {
       <div className='flex w-full flex-col gap-2.5 lg:gap-15.25'>
         <button
           onClick={() => router.back()}
-          className='text-h3 flex items-center gap-2 font-bold text-neutral-800 lg:hidden'>
+          className='text-h3 lg:text-h4 flex items-center gap-2 font-bold text-neutral-800 lg:hidden'>
           <ChevronLeft className='h-5 w-5' />
           Project
         </button>
         <div className='flex flex-col gap-7.5 lg:gap-10.75'>
           <ProjectDetailHeader data={data} />
+          <div className='block lg:hidden'>
+            <ProjectDetailImage data={data} isSingle />
+          </div>
           <ProjectDetailInfo
             data={data}
             groupedMembers={groupedMembers}
             positions={positions}
           />
         </div>
-        <ProjectDetailImage data={data} />
+        <div className='hidden lg:block'>
+          <ProjectDetailImage data={data} />
+        </div>
       </div>
     </main>
   );
