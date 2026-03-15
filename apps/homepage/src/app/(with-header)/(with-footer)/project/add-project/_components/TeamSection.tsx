@@ -17,10 +17,12 @@ export const TeamSection = ({
       className='flex w-full items-start gap-27.5'
       role='group'
       aria-labelledby='team-section-label'>
-      <span id='team-section-label' className='text-h4 text-neutral-600'>
+      <span
+        id='team-section-label'
+        className='text-h4 shrink-0 text-neutral-600'>
         팀 구성
       </span>
-      <div className='flex flex-col gap-6'>
+      <div className='flex min-w-0 flex-1 flex-col gap-6'>
         {ROLES.map((role) => (
           <div
             key={role}
@@ -29,11 +31,11 @@ export const TeamSection = ({
             aria-labelledby={`role-${role}`}>
             <span
               id={`role-${role}`}
-              className='text-h4 w-8.25 text-neutral-400'>
+              className='text-h4 w-8.25 shrink-0 text-neutral-400'>
               {POSITION_LABEL[role]}
             </span>
             <div
-              className='no-scrollbar flex w-215 items-center gap-2.5 overflow-x-auto whitespace-nowrap'
+              className='no-scrollbar flex min-w-0 flex-1 items-center gap-2.5 overflow-x-auto whitespace-nowrap'
               role='list'
               aria-label={`${POSITION_LABEL[role]} 명단`}>
               {teamMembers[role].map((name, index) => (
@@ -49,7 +51,7 @@ export const TeamSection = ({
                 <button
                   type='button'
                   onClick={() => onAdd(role)}
-                  className='flex h-8 w-8 items-center justify-center rounded-[15px] bg-neutral-100 text-neutral-600'
+                  className='flex h-8 w-8 shrink-0 items-center justify-center rounded-[15px] bg-neutral-100 text-neutral-600'
                   aria-label={`${POSITION_LABEL[role]} 멤버 추가`}>
                   <Plus className='h-4 w-4' aria-hidden='true' />
                 </button>

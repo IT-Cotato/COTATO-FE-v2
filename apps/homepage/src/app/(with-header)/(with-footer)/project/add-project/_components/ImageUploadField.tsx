@@ -44,7 +44,7 @@ export const ImageUploadField = ({
 
   return (
     <div className='flex w-full gap-4'>
-      <div className='flex flex-col gap-4.75'>
+      <div className='flex w-100 shrink-0 flex-col gap-4.75'>
         <ImagePreviewer selectedImage={selectedImage} onRemove={handleRemove} />
         <FullButton
           type='button'
@@ -68,12 +68,14 @@ export const ImageUploadField = ({
           aria-label='이미지 파일 선택'
         />
       </div>
-      <ImageSortableList
-        images={images}
-        sensors={sensors}
-        onDragEnd={handleReorder}
-        onSelect={setSelectedId}
-      />
+      <div className='min-w-0 flex-1'>
+        <ImageSortableList
+          images={images}
+          sensors={sensors}
+          onDragEnd={handleReorder}
+          onSelect={setSelectedId}
+        />
+      </div>
     </div>
   );
 };

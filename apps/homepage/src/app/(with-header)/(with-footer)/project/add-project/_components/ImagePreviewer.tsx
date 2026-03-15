@@ -16,7 +16,7 @@ export const ImagePreviewer = ({
 }: ImagePreviewerProps) => {
   return (
     <div
-      className='group relative h-53.5 w-98.75 overflow-hidden rounded-[10px] bg-neutral-200'
+      className='group relative aspect-video w-full overflow-hidden rounded-[10px] bg-neutral-200'
       role='region'
       aria-label={`이미지 미리보기 ${index + 1}`}>
       {selectedImage ? (

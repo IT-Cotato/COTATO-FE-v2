@@ -81,7 +81,7 @@ export const AddProjectFormContainer = () => {
 
   return (
     <section
-      className='flex w-full flex-col gap-8.5 py-7.5'
+      className='flex w-full flex-col gap-8.5 px-42.5 py-7.5'
       aria-labelledby='add-project-heading'>
       <h2 id='add-project-heading' className='sr-only'>
         {editId ? '프로젝트 수정' : '프로젝트 추가'} 설정
