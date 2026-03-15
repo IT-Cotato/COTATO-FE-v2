@@ -34,7 +34,7 @@ export const ProjectDetailHeader = ({
           {data.projectType === 'DEMODAY' ? '데모데이' : '해커톤'}
         </span>
       </div>
-      <div className='flex w-full items-start justify-between'>
+      <div className='flex w-full items-start justify-between gap-4.5'>
         <div className='flex items-start gap-4.5'>
           <h1 className='text-h1 max-w-150 text-neutral-800'>{data.name}</h1>
           {hasLink && (
