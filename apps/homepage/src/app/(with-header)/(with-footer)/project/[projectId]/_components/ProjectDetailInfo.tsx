@@ -65,7 +65,7 @@ export const ProjectDetailInfo = ({
       </div>
     </div>
     <div
-      className='flex flex-1 gap-6.5'
+      className='flex flex-1 gap-6.5 lg:w-100'
       role='group'
       aria-labelledby='label-intro'>
       <div

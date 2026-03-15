@@ -38,7 +38,7 @@ export const ProjectDetailContainer = () => {
   }
 
   return (
-    <main className='flex w-275 flex-col py-7.5'>
+    <main className='flex w-full flex-col items-center px-32.5 py-7.5'>
       <div className='flex flex-col gap-15.25'>
         <div className='flex flex-col gap-10.75'>
           <ProjectDetailHeader data={data} />
