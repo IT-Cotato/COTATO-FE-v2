@@ -1,14 +1,21 @@
+'use client';
+
 import Image from 'next/image';
 import {AboutUsDescription} from '@/app/(with-header)/(with-footer)/about-us/_components/AboutUsDescription';
 import {AboutUsManagementTeamCard} from '@/app/(with-header)/(with-footer)/about-us/_components/AboutUsManagementTeamCard';
-import {AboutUsSponsor} from '@/app/(with-header)/(with-footer)/about-us/_components/AboutUsSponsor';
 import AboutUsBackgroundThird from '@/assets/about-us/background-about-us-third.webp';
-import {AboutUsMobileManagementAccordionItem} from '@/app/(with-header)/(with-footer)/about-us/_mobile/AboutUsMobileManagementAccordionItem';
+import {motion} from 'framer-motion';
+import {
+  FADE_IN_UP_CONTAINER,
+  FADE_IN_UP_ITEM,
+} from '@/constants/animation/motion-variants';
+import {AboutUsSponsorContainer} from '@/app/(with-header)/(with-footer)/about-us/_containers/AboutUsSponsorContainer';
+import {AboutUsMobileManagementAccordionItem} from '@/app/(with-header)/(with-footer)/about-us/_mobile/_components/AboutUsMobileManagementAccordionItem';
 
 export const AboutUsManagementTeamContainer = () => {
   return (
     <section
-      className='relative flex w-full flex-col items-center gap-25 overflow-hidden py-20 lg:py-40'
+      className='relative flex w-full flex-col items-center gap-25 overflow-hidden py-35 lg:py-50'
       aria-label='코테이토 운영진 소개'
       id='management-team'>
       <Image
@@ -22,37 +29,50 @@ export const AboutUsManagementTeamContainer = () => {
         className='pointer-events-none absolute inset-0 z-0 hidden lg:block'
       />
 
-      <AboutUsDescription
-        title='코테이토를 이끌어나가는 운영진을 소개합니다'
-        titleColor='text-neutral-800'
-        subTitleColor='text-neutral-500'
-        subTitle='COTATO의 운영진은 네 팀으로 이루어져있으며,'
-        subTitleOption='운영팀, 교육팀, 기획팀, 홍보팀으로 구성되어있어요.'
-        className='text-left lg:text-center'
-      />
-
-      <ul className='z-10 hidden flex-row gap-10 xl:flex' role='list'>
-        {MANAGEMENT_TEAMS.map((team) => (
-          <li key={team.title}>
-            <AboutUsManagementTeamCard
-              title={team.title}
-              description={team.description}
-            />
-          </li>
-        ))}
-      </ul>
-
-      <div className='z-10 flex flex-col gap-4 xl:hidden'>
-        {MANAGEMENT_TEAMS.map((team) => (
-          <AboutUsMobileManagementAccordionItem
-            key={team.title}
-            title={team.title}
-            description={team.description}
+      <motion.div
+        className='z-10 flex w-full flex-col items-center gap-25'
+        variants={FADE_IN_UP_CONTAINER}
+        initial='hidden'
+        whileInView='visible'
+        viewport={{once: false, amount: 0.2}}>
+        <motion.div variants={FADE_IN_UP_ITEM} className='w-full'>
+          <AboutUsDescription
+            title='코테이토를 이끌어나가는 운영진을 소개합니다'
+            titleColor='text-neutral-800'
+            subTitleColor='text-neutral-500'
+            subTitle='COTATO의 운영진은 네 팀으로 이루어져있으며,'
+            subTitleOption='운영팀, 교육팀, 기획팀, 홍보팀으로 구성되어있어요.'
+            className='text-left lg:text-center'
           />
-        ))}
-      </div>
+        </motion.div>
 
-      <AboutUsSponsor />
+        <motion.div
+          variants={FADE_IN_UP_ITEM}
+          className='flex w-full justify-center'>
+          <ul className='hidden flex-row gap-10 xl:flex' role='list'>
+            {MANAGEMENT_TEAMS.map((team) => (
+              <li key={team.title}>
+                <AboutUsManagementTeamCard
+                  title={team.title}
+                  description={team.description}
+                />
+              </li>
+            ))}
+          </ul>
+
+          <div className='flex w-full flex-col items-center gap-4 xl:hidden'>
+            {MANAGEMENT_TEAMS.map((team) => (
+              <AboutUsMobileManagementAccordionItem
+                key={team.title}
+                title={team.title}
+                description={team.description}
+              />
+            ))}
+          </div>
+        </motion.div>
+
+        <AboutUsSponsorContainer />
+      </motion.div>
     </section>
   );
 };

@@ -85,7 +85,7 @@ export const HeaderContainer = () => {
         {'lg:min-w-360': isMypage}
       )}>
       <div className='z-50'>
-        <Link href={ROUTES.HOME}>
+        <Link href={ROUTES.HOME} aria-label='COTATO 홈으로 이동'>
           <MainLogo className='w-28 lg:w-36.5' />
         </Link>
       </div>

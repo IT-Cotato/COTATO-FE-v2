@@ -14,9 +14,13 @@ export const AboutUsMobileProjectContainer = ({
   const duplicatedProjects = [...projects, ...projects, ...projects];
 
   return (
-    <div className='z-10 block w-full overflow-hidden xl:hidden'>
+    <div className='relative z-10 block w-full overflow-hidden xl:hidden'>
+      <div className='pointer-events-none absolute inset-y-0 left-0 z-20 w-16 bg-linear-to-r from-neutral-50 to-transparent' />
+
+      <div className='pointer-events-none absolute inset-y-0 right-0 z-20 w-16 bg-linear-to-l from-neutral-50 to-transparent' />
+
       <motion.div
-        className='flex gap-4'
+        className='flex gap-4 px-4'
         animate={{
           x: ['0%', '-33.33%'],
         }}

@@ -77,6 +77,16 @@
     width: 4px;
     border-radius: 4px;
   }
+
+  .shadow-home-keycap {
+    box-shadow: none;
+  }
+
+  @media (max-width: 1280px) {
+    .shadow-home-keycap {
+      box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.3);
+    }
+  }
 }
 
 @layer utilities {

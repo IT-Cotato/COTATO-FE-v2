@@ -1,6 +1,6 @@
 import {usePasswordMutation} from '@/hooks/mutations/auth/useAuth.mutations';
 import {setAccessToken} from '@/services/utils/tokenManager';
-import {FullButton} from '@repo/ui/components/buttons/FullButton';
+import {Button} from '@repo/ui/components/buttons/Button';
 import clsx from 'clsx';
 import {ChangeEvent, KeyboardEvent, useRef, useState} from 'react';
 
@@ -96,13 +96,18 @@ export const OnboardingVerificationCodeContainer = ({
       </div>
 
       <div className='flex flex-col gap-7'>
-        <FullButton
+        <Button
           label='인증하기'
           onClick={handleVerify}
+          width='100%'
+          height={42}
           disabled={!isComplete || verifyResetCodeMutation.isPending}
         />
         <div className='text-body-l flex flex-row justify-between text-neutral-300'>
-          <button className='border-b border-b-neutral-300'>
+          <button
+            className='border-b border-b-neutral-300'
+            onClick={handleResend}
+            disabled={sendResetCodeMutation.isPending}>
             인증코드를 받지 못했나요?
           </button>
           <button

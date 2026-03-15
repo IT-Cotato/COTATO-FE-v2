@@ -17,7 +17,7 @@ export const AboutUsMobileManagementAccordionItem = ({
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   return (
-    <div className='relative w-81.75 overflow-hidden rounded-[10px] transition-all'>
+    <div className='relative w-full max-w-81.75 overflow-hidden rounded-[10px] transition-all md:max-w-150 xl:max-w-none'>
       <Image
         src='/keycap/management-background.webp'
         alt=''
