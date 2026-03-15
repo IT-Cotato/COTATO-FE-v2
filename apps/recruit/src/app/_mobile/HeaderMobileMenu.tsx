@@ -47,7 +47,7 @@ export const HeaderMobileMenu = ({
           isOpen ? 'translate-x-0' : 'translate-x-full'
         }`}>
         <nav className='flex h-full flex-col'>
-          <div className='flex flex-col border-b border-neutral-600 px-4 py-3'>
+          <div className='flex flex-col border-b border-neutral-600 px-4 py-3.25'>
             <div className='flex items-center justify-between'>
               <div className='flex flex-row items-center gap-1.25'>
                 <SmallLogoIcon className='text-primary h-4 w-4' />
