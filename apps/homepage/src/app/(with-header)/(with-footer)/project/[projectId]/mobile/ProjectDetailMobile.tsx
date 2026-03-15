@@ -38,7 +38,7 @@ export const ProjectDetailMobile = ({
     <div className='flex w-full flex-col bg-white px-6 py-7.5 lg:hidden'>
       <div className='flex items-center justify-between py-2.5'>
         <button
-          onClick={() => router.back()}
+          onClick={() => router.push('/project')}
           className='text-h3 flex items-center gap-2 font-bold text-neutral-800'>
           <ChevronLeft className='h-6 w-6' />
           Project

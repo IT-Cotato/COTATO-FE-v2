@@ -56,7 +56,7 @@ export const ImageSortableList = ({
             <button
               type='button'
               onClick={onAddClick}
-              className='flex h-20 w-20 shrink-0 flex-col items-center justify-center gap-1 rounded-[10px] border border-neutral-200 bg-white'
+              className='flex h-20 w-20 shrink-0 flex-col items-center justify-center rounded-[10px] border border-neutral-200 bg-white'
               aria-label='이미지 추가'>
               <CameraIcon
                 className='h-6 w-6 text-neutral-200'

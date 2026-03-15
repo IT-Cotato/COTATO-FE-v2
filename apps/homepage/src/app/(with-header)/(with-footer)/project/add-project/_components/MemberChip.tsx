@@ -47,7 +47,7 @@ export const MemberChip = ({
       {isEditing ? (
         <input
           autoFocus
-          className='text-h5 w-16 bg-transparent'
+          className='text-h5 w-16 bg-transparent font-semibold'
           value={value}
           aria-label='이름 수정'
           onChange={(e) => setValue(e.target.value)}
@@ -56,7 +56,7 @@ export const MemberChip = ({
         />
       ) : (
         <span
-          className='text-h5 cursor-pointer'
+          className='text-h5 cursor-pointer font-semibold'
           role='button'
           tabIndex={0}
           aria-label={`${name}, 수정하려면 엔터를 누르세요`}
