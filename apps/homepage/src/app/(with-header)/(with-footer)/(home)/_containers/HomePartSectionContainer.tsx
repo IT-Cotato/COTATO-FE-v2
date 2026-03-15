@@ -157,19 +157,15 @@ export const HomePartSectionContainer = () => {
           </AnimatePresence>
         </div>
 
-        <div className='flex justify-center lg:hidden' role='tablist'>
+        <div className='flex justify-center gap-3 py-2 lg:hidden'>
           {PARTS.map((partKey) => (
-            <button
+            <div
               key={partKey}
-              onClick={() => handlePartClick(partKey)}
-              className='group relative flex h-5 w-5 items-center justify-center'>
-              <span
-                className={clsx(
-                  'h-1 w-1 rounded-full transition-all duration-300',
-                  currentPart === partKey ? 'bg-neutral-600' : 'bg-neutral-300'
-                )}
-              />
-            </button>
+              className={clsx(
+                'h-1 w-1 rounded-full transition-all duration-300',
+                currentPart === partKey ? 'bg-neutral-600' : 'bg-neutral-300'
+              )}
+            />
           ))}
         </div>
       </motion.div>
