@@ -106,7 +106,8 @@ export const OnboardingVerificationCodeContainer = ({
         <div className='text-body-l flex flex-row justify-between text-neutral-300'>
           <button
             className='border-b border-b-neutral-300'
-            onClick={handleResend}>
+            onClick={handleResend}
+            disabled={sendResetCodeMutation.isPending}>
             인증코드를 받지 못했나요?
           </button>
           <button
