@@ -14,24 +14,24 @@ export const TeamSection = ({
 }: TeamSectionProps) => {
   return (
     <div
-      className='flex w-full items-start gap-27.5'
+      className='flex w-full items-start gap-16.25 lg:gap-27.5'
       role='group'
       aria-labelledby='team-section-label'>
       <span
         id='team-section-label'
-        className='text-h4 shrink-0 text-neutral-600'>
+        className='text-h5 lg:text-h4 shrink-0 font-bold text-neutral-600'>
         팀 구성
       </span>
       <div className='flex min-w-0 flex-1 flex-col gap-6'>
         {ROLES.map((role) => (
           <div
             key={role}
-            className='flex items-center gap-12.5'
+            className='flex items-center gap-4 lg:gap-12.5'
             role='group'
             aria-labelledby={`role-${role}`}>
             <span
               id={`role-${role}`}
-              className='text-h4 w-8.25 shrink-0 text-neutral-400'>
+              className='text-h5 lg:text-h4 w-8.25 shrink-0 font-bold text-neutral-400'>
               {POSITION_LABEL[role]}
             </span>
             <div

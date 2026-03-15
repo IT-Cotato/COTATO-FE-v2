@@ -39,7 +39,7 @@ export const MemberChip = ({
 
   return (
     <div
-      className={`group relative flex h-8 items-center rounded-[20px] px-5.75 py-1.25 text-white transition-all ${bgColor} ${
+      className={`group relative flex h-8 items-center rounded-[20px] px-3.75 text-white transition-all lg:px-5.75 lg:py-1.25 ${bgColor} ${
         isEditing ? 'pr-12' : 'focus-within:pr-12 hover:pr-12'
       }`}
       role='group'
