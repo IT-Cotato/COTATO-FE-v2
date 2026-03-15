@@ -63,10 +63,10 @@ export const ProjectCard = ({
             {name}
           </h3>
           <div className='flex h-6 gap-2.5'>
-            <span className='text-body-s lg:text-body-m bg-disabled rounded-[5px] px-2.5 py-[0.3px] text-white lg:py-0.5'>
+            <span className='lg:text-body-m bg-disabled flex items-center rounded-[5px] px-2.5 py-[0.3px] text-[10px] text-white lg:py-0.5'>
               {generationId}기
             </span>
-            <span className='bg-primary text-body-s lg:text-body-m shadow-default rounded-[5px] px-2 py-[0.3px] text-white lg:py-0.5'>
+            <span className='bg-primary lg:text-body-m shadow-default flex items-center rounded-[5px] px-[4.8px] text-[10px] text-white lg:px-2 lg:py-0.5'>
               {projectType === 'DEMODAY' ? '데모데이' : '해커톤'}
             </span>
           </div>
