@@ -1,6 +1,6 @@
 'use client';
 
-import {useState, useEffect} from 'react';
+import {useState, useEffect, useCallback} from 'react';
 import {useSearchParams, useRouter, usePathname} from 'next/navigation';
 import {ProjectCard} from './ProjectCard';
 import {Pagination} from '@repo/ui/components/pagination/Pagination';
@@ -25,7 +25,7 @@ export const ProjectSection = ({generation, activity}: ProjectSectionProps) => {
     const handleResize = () => {
       // lg(1024px) 미만일 때 6개, 이상일 때 9개
       if (window.innerWidth < 1024) {
-        setItemsPerPage(6);
+        setItemsPerPage(1);
       } else {
         setItemsPerPage(9);
       }
@@ -47,11 +47,20 @@ export const ProjectSection = ({generation, activity}: ProjectSectionProps) => {
     currentPage * itemsPerPage
   );
 
-  const handlePageChange = (page: number) => {
-    const params = new URLSearchParams(searchParams.toString());
-    params.set('page', page.toString());
-    router.push(`${pathname}?${params.toString()}`);
-  };
+  const handlePageChange = useCallback(
+    (page: number) => {
+      const params = new URLSearchParams(searchParams.toString());
+      params.set('page', page.toString());
+      router.push(`${pathname}?${params.toString()}`);
+    },
+    [searchParams, router, pathname]
+  );
+
+  useEffect(() => {
+    if (currentPage > totalPages && totalPages > 0) {
+      handlePageChange(totalPages);
+    }
+  }, [totalPages, currentPage, handlePageChange]);
 
   if (isLoading) {
     return (
