@@ -10,6 +10,7 @@ import {SortableContext, rectSortingStrategy} from '@dnd-kit/sortable';
 import {restrictToParentElement} from '@dnd-kit/modifiers';
 import {SortableImageItem} from './SortableImageItem';
 import {ImageInfo} from '@/schemas/project/project-type';
+import CameraIcon from '@/assets/camera/camera.svg';
 
 interface ImageSortableListProps {
   images: ImageInfo[];
@@ -51,12 +52,17 @@ export const ImageSortableList = ({
         modifiers={[restrictToParentElement]}>
         <SortableContext items={images} strategy={rectSortingStrategy}>
           {/* 모바일 */}
-          <div className='flex snap-x snap-mandatory gap-3 overflow-x-auto pb-2 lg:hidden'>
+          <div className='flex snap-x snap-mandatory gap-2.25 overflow-x-auto pb-0 lg:hidden'>
             <button
               type='button'
               onClick={onAddClick}
-              className='flex h-20 w-20 shrink-0 items-center justify-center rounded-[10px] border border-neutral-300'>
-              추가
+              className='flex h-20 w-20 shrink-0 flex-col items-center justify-center gap-1 rounded-[10px] border border-neutral-200 bg-white'
+              aria-label='이미지 추가'>
+              <CameraIcon
+                className='h-6 w-6 text-neutral-200'
+                aria-hidden='true'
+              />
+              <span className='text-h5 font-bold text-neutral-200'>추가</span>
             </button>
             {renderSortableItems(true)}
           </div>
