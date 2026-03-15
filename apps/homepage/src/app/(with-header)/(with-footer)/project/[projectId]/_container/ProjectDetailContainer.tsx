@@ -1,14 +1,16 @@
 'use client';
 
-import {useParams} from 'next/navigation';
+import {useParams, useRouter} from 'next/navigation';
 import {ProjectDetailHeader} from '../_components/ProjectDetailHeader';
 import {ProjectDetailInfo} from '../_components/ProjectDetailInfo';
 import {ProjectDetailImage} from '../_components/ProjectDetailImage';
 import {Spinner} from '@repo/ui/components/spinner/Spinner';
 import {useProjectDetail} from '@/app/(with-header)/(with-footer)/project/[projectId]/_hooks/useProjectDetail';
+import ChevronLeft from '@/assets/chevrons/chevron-left.svg';
 
 export const ProjectDetailContainer = () => {
   const params = useParams();
+  const router = useRouter();
   const projectId = Number(params?.projectId);
 
   const {data, groupedMembers, positions, isLoading, isError} =
@@ -38,9 +40,15 @@ export const ProjectDetailContainer = () => {
   }
 
   return (
-    <main className='flex w-full flex-col items-center px-32.5 py-7.5'>
-      <div className='flex flex-col gap-15.25'>
-        <div className='flex flex-col gap-10.75'>
+    <main className='flex w-full flex-col items-center px-6 py-7.5 lg:px-32.5'>
+      <div className='flex w-full flex-col gap-2.5 lg:gap-15.25'>
+        <button
+          onClick={() => router.back()}
+          className='text-h3 flex items-center gap-2 font-bold text-neutral-800 lg:hidden'>
+          <ChevronLeft className='h-5 w-5' />
+          Project
+        </button>
+        <div className='flex flex-col gap-7.5 lg:gap-10.75'>
           <ProjectDetailHeader data={data} />
           <ProjectDetailInfo
             data={data}
