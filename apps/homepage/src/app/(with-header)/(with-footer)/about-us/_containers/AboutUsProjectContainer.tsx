@@ -3,13 +3,13 @@
 import {useRouter} from 'next/navigation';
 import {ROUTES} from '@/constants/routes';
 import {AboutUsDescription} from '@/app/(with-header)/(with-footer)/about-us/_components/AboutUsDescription';
-import {AboutUsMobileProjectContainer} from '@/app/(with-header)/(with-footer)/about-us/_mobile/AboutUsMobileProjectContainer';
-import {AboutUsDesktopProjectContainer} from '@/app/(with-header)/(with-footer)/about-us/_desktop/AboutUsDesktopProjectContainer';
 import {motion} from 'framer-motion';
 import {
   FADE_IN_UP_CONTAINER,
   FADE_IN_UP_ITEM,
 } from '@/constants/animation/motion-variants';
+import {AboutUsMobileProjectContainer} from '@/app/(with-header)/(with-footer)/about-us/_mobile/_containers/AboutUsMobileProjectContainer';
+import {AboutUsDesktopProjectContainer} from '@/app/(with-header)/(with-footer)/about-us/_desktop/_containers/AboutUsDesktopProjectContainer';
 
 export interface AboutUsProject {
   id: number;

@@ -4,13 +4,14 @@ import Image from 'next/image';
 import {AboutUsDescription} from '@/app/(with-header)/(with-footer)/about-us/_components/AboutUsDescription';
 import {AboutUsManagementTeamCard} from '@/app/(with-header)/(with-footer)/about-us/_components/AboutUsManagementTeamCard';
 import AboutUsBackgroundThird from '@/assets/about-us/background-about-us-third.webp';
-import {AboutUsMobileManagementAccordionItem} from '@/app/(with-header)/(with-footer)/about-us/_mobile/AboutUsMobileManagementAccordionItem';
 import {motion} from 'framer-motion';
 import {
   FADE_IN_UP_CONTAINER,
   FADE_IN_UP_ITEM,
 } from '@/constants/animation/motion-variants';
 import {AboutUsSponsorContainer} from '@/app/(with-header)/(with-footer)/about-us/_containers/AboutUsSponsorContainer';
+import {AboutUsMobileManagementAccordionItem} from '@/app/(with-header)/(with-footer)/about-us/_mobile/_components/AboutUsMobileManagementAccordionItem';
+
 export const AboutUsManagementTeamContainer = () => {
   return (
     <section

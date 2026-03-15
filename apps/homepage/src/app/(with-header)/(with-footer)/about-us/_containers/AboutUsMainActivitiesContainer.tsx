@@ -7,12 +7,12 @@ import {AboutUsDescription} from '@/app/(with-header)/(with-footer)/about-us/_co
 import {motion} from 'framer-motion';
 import 'swiper/css';
 import 'swiper/css/pagination';
-import {AboutUsMobileMainActivitiesContainer} from '@/app/(with-header)/(with-footer)/about-us/_mobile/AboutUsMobileMainActivitiesContainer';
-import {AboutUsDesktopMainActivitiesContainer} from '@/app/(with-header)/(with-footer)/about-us/_desktop/AboutUsDesktopMainActivitiesContainer';
 import {
   FADE_IN_UP_CONTAINER,
   FADE_IN_UP_ITEM,
 } from '@/constants/animation/motion-variants';
+import {AboutUsMobileMainActivitiesContainer} from '@/app/(with-header)/(with-footer)/about-us/_mobile/_containers/AboutUsMobileMainActivitiesContainer';
+import {AboutUsDesktopMainActivitiesContainer} from '@/app/(with-header)/(with-footer)/about-us/_desktop/_containers/AboutUsDesktopMainActivitiesContainer';
 
 export interface AboutUsActivity {
   id: number;
