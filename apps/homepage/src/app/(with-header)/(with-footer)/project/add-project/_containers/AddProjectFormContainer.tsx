@@ -81,15 +81,19 @@ export const AddProjectFormContainer = () => {
 
   return (
     <section
-      className='flex w-full flex-col gap-8.5 px-42.5 py-7.5'
+      className='flex w-full flex-col gap-7.5 px-6 py-7.5 lg:gap-8.5 lg:px-42.5 lg:py-7.5'
       aria-labelledby='add-project-heading'>
       <h2 id='add-project-heading' className='sr-only'>
         {editId ? '프로젝트 수정' : '프로젝트 추가'} 설정
       </h2>
       <div className='flex justify-between'>
-        <div className='flex gap-6.25' role='group' aria-label='기본 정보 설정'>
+        <div
+          className='flex w-full gap-6 lg:w-auto lg:gap-6.25'
+          role='group'
+          aria-label='기본 정보 설정'>
           <Dropdown
             placeholder='기수'
+            className='flex-1 lg:flex-none'
             value={selectedGeneration}
             options={generations}
             onSelect={(value) => setSelectedGeneration(value)}
@@ -97,6 +101,7 @@ export const AddProjectFormContainer = () => {
           />
           <Dropdown
             placeholder='활동'
+            className='flex-1 lg:flex-none'
             value={selectedActivity}
             options={activities}
             onSelect={(value) => setSelectedActivity(value)}
