@@ -1,6 +1,10 @@
+.react-datepicker {
+  margin-top: 1px !important;
+  margin-bottom: 1px !important;
+}
+
 .react-datepicker-popper {
   z-index: var(--z-index-datepicker) !important;
-  margin-top: 8px !important;
 }
 
 .react-datepicker__input-container {
