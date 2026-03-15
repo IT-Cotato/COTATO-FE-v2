@@ -1,5 +1,3 @@
-'use client';
-
 import SmallLogoIcon from '@/assets/small-logo/small-logo.svg';
 import CancelIcon from '@/assets/icons/delete.svg';
 import Link from 'next/link';
@@ -161,14 +159,15 @@ export const HeaderMobileMenu = ({
           )}
         </nav>
 
-        {createPortal(
-          <LoginModal
-            title='COTATO에 오신 것을 환영합니다!'
-            isOpen={isLoginModalOpen}
-            onClose={() => setIsLoginModalOpen(false)}
-          />,
-          document.body
-        )}
+        {typeof document !== 'undefined' &&
+          createPortal(
+            <LoginModal
+              title='COTATO에 오신 것을 환영합니다!'
+              isOpen={isLoginModalOpen}
+              onClose={() => setIsLoginModalOpen(false)}
+            />,
+            document.body
+          )}
       </div>
     </>
   );
