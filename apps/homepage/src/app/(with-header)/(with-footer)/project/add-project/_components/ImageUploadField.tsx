@@ -43,20 +43,22 @@ export const ImageUploadField = ({
   };
 
   return (
-    <div className='flex w-full gap-4'>
-      <div className='flex w-100 shrink-0 flex-col gap-4.75'>
+    <div className='flex w-full flex-col gap-4 lg:flex-row'>
+      <div className='flex flex-col gap-4.75 lg:w-100 lg:shrink-0'>
         <ImagePreviewer selectedImage={selectedImage} onRemove={handleRemove} />
-        <FullButton
-          type='button'
-          label='이미지 업로드'
-          labelTypo='body_l_sb'
-          height={46}
-          borderRadius={5}
-          backgroundColor='neutral-400'
-          textColor='neutral-50'
-          onClick={() => fileInputRef.current?.click()}
-          aria-haspopup='dialog'
-        />
+        <div className='hidden lg:block'>
+          <FullButton
+            type='button'
+            label='이미지 업로드'
+            labelTypo='body_l_sb'
+            height={46}
+            borderRadius={5}
+            backgroundColor='neutral-400'
+            textColor='neutral-50'
+            onClick={() => fileInputRef.current?.click()}
+            aria-haspopup='dialog'
+          />
+        </div>
         <input
           id='project-image-input'
           type='file'
@@ -74,6 +76,7 @@ export const ImageUploadField = ({
           sensors={sensors}
           onDragEnd={handleReorder}
           onSelect={setSelectedId}
+          onAddClick={() => fileInputRef.current?.click()}
         />
       </div>
     </div>

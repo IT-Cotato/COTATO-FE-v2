@@ -151,7 +151,7 @@ export const AddProjectForm = ({
           placeholder='프로젝트 설명을 입력해주세요.'
         />
       </FormField>
-      <div className='mt-2.5 w-full'>
+      <div className='w-full lg:mt-2.5'>
         <FormField variant='column' label='자료 업로드'>
           <ImageUploadField
             onImagesChange={setters.setUploadedImages}
