@@ -13,7 +13,7 @@ export const ProjectDetailInfo = ({
   positions,
 }: InfoProps) => (
   <section
-    className='flex w-full justify-between'
+    className='flex w-full justify-between gap-5'
     aria-label='프로젝트 상세 정보'>
     <div className='flex shrink-0 flex-col gap-7.5'>
       <div

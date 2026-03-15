@@ -13,7 +13,7 @@ export const ProjectDetailImage = ({
   // 모바일에서 상단에 하나만 띄울 때
   if (isSingle) {
     return (
-      <div className='w-full overflow-hidden'>
+      <div className='w-full overflow-hidden rounded-[10px]'>
         <Image
           src={data.imageInfos[0].imageUrl}
           alt='프로젝트 썸네일 이미지'

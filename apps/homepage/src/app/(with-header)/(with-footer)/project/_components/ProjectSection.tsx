@@ -25,7 +25,7 @@ export const ProjectSection = ({generation, activity}: ProjectSectionProps) => {
     const handleResize = () => {
       // lg(1024px) 미만일 때 6개, 이상일 때 9개
       if (window.innerWidth < 1024) {
-        setItemsPerPage(1);
+        setItemsPerPage(6);
       } else {
         setItemsPerPage(9);
       }
