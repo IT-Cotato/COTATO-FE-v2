@@ -5,8 +5,8 @@ import ChevronLeft from '@/assets/chevrons/chevron-left.svg';
 import {Button} from '@repo/ui/components/buttons/Button';
 import {ProjectDetailImage} from '@/app/(with-header)/(with-footer)/project/[projectId]/_components/ProjectDetailImage';
 import {Position, ProjectDetail} from '@/schemas/project/project.schema';
-import {ProjectInfoMobile} from '@/app/(with-header)/(with-footer)/project/[projectId]/mobile/ProjectInfoMobile';
-import {ProjectHeaderMobile} from '@/app/(with-header)/(with-footer)/project/[projectId]/mobile/ProjectHeaderMobile';
+import {ProjectInfoMobile} from '@/app/(with-header)/(with-footer)/project/[projectId]/_mobile/ProjectInfoMobile';
+import {ProjectHeaderMobile} from '@/app/(with-header)/(with-footer)/project/[projectId]/_mobile/ProjectHeaderMobile';
 
 interface ProjectDetailMobileProps {
   data: ProjectDetail;

@@ -1,23 +1,5 @@
-.react-datepicker {
-  margin-top: 1px !important;
-  margin-bottom: 1px !important;
-}
-
 .react-datepicker-popper {
   z-index: var(--z-index-datepicker) !important;
-}
-
-.react-datepicker__input-container {
-  display: block !important;
-  width: 100% !important;
-}
-
-.react-datepicker__input-container input {
-  width: 100% !important;
-}
-
-.react-datepicker-wrapper {
-  width: 100% !important;
 }
 
 @media (min-width: 1024px) {
@@ -28,6 +10,10 @@
     transform: none !important;
     margin-top: 8px !important;
   }
+}
+
+.react-datepicker-wrapper {
+  width: 100% !important;
 }
 
 .react-datepicker {
