@@ -1,3 +1,5 @@
+'use client';
+
 import SmallLogoIcon from '@/assets/small-logo/small-logo.svg';
 import CancelIcon from '@/assets/icons/delete.svg';
 import Link from 'next/link';
