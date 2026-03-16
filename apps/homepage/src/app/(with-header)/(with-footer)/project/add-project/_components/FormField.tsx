@@ -21,7 +21,8 @@ export const FormField = ({
       ? 'text-h5 font-bold shrink-0 lg:text-h4 w-24 text-neutral-600'
       : 'text-h5 font-bold lg:text-h4 text-neutral-600 cursor-pointer';
 
-  const childrenStyle = variant === 'row' ? 'w-128.5' : 'w-full';
+  const childrenStyle =
+    variant === 'row' ? 'flex-1 min-w-0 lg:w-128.5 lg:flex-none' : 'w-full';
 
   return (
     <div className={containerStyle}>
