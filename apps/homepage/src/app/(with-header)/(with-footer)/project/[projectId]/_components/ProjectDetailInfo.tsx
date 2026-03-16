@@ -1,7 +1,7 @@
 import {ProjectDetail, Position} from '@/schemas/project/project.schema';
 import {POSITION_LABEL} from '@/constants/project/project-detail';
 
-interface InfoProps {
+interface ProjectDetailInfoProps {
   data: ProjectDetail;
   groupedMembers: Record<Position, string[]>;
   positions: Position[];
@@ -11,8 +11,10 @@ export const ProjectDetailInfo = ({
   data,
   groupedMembers,
   positions,
-}: InfoProps) => (
-  <section className='flex gap-48' aria-label='프로젝트 상세 정보'>
+}: ProjectDetailInfoProps) => (
+  <section
+    className='flex w-full justify-between gap-5'
+    aria-label='프로젝트 상세 정보'>
     <div className='flex shrink-0 flex-col gap-7.5'>
       <div
         className='flex w-94.75 gap-9'
@@ -39,13 +41,13 @@ export const ProjectDetailInfo = ({
         <div id='label-team' className='text-h5 text-neutral-800'>
           팀 구성
         </div>
-        <div className='flex flex-1 flex-col items-start gap-2.25'>
+        <div className='flex flex-col items-start gap-2.25'>
           {positions.map((pos) => (
             <div key={pos} className='grid grid-cols-[108px_1fr] items-center'>
               <span className='text-body-l-sb text-neutral-400'>
                 {POSITION_LABEL[pos]}
               </span>
-              <div className='flex w-36.75 shrink-0 items-center gap-4.5'>
+              <div className='flex items-center gap-4.5'>
                 {groupedMembers[pos].map((name, index) => (
                   <span
                     key={index}
@@ -65,7 +67,7 @@ export const ProjectDetailInfo = ({
       </div>
     </div>
     <div
-      className='flex flex-1 gap-6.5'
+      className='flex w-132.25 gap-6.5'
       role='group'
       aria-labelledby='label-intro'>
       <div
