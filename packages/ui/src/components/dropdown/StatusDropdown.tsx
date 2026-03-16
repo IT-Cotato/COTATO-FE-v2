@@ -17,6 +17,7 @@ interface StatusDropdownProps<T extends string> {
   onChange: (value: T) => void;
   disabled?: boolean;
   ariaLabel?: string;
+  wrapperClassName?: string;
 }
 
 export const StatusDropdown = <T extends string>({
@@ -26,6 +27,7 @@ export const StatusDropdown = <T extends string>({
   onChange,
   disabled,
   ariaLabel = '상태 선택',
+  wrapperClassName = 'w-18.75',
 }: StatusDropdownProps<T>) => {
   const [selectedValue, setSelectedValue] = useState<T>(value);
   const [isOpen, setIsOpen] = useState(false);
@@ -55,14 +57,14 @@ export const StatusDropdown = <T extends string>({
   const {className, label, textColor, chevronColor} = currentConfig;
 
   return (
-    <div className='relative w-18.75' ref={wrapperRef}>
+    <div className={clsx('relative', wrapperClassName)} ref={wrapperRef}>
       <button
         type='button'
         disabled={disabled}
         aria-haspopup='listbox'
         aria-expanded={isOpen}
         className={clsx(
-          'text-body-m-sb inline-flex w-full items-center justify-center gap-1 rounded-[10px] py-1.5',
+          'text-body-m-sb inline-flex w-full items-center justify-center gap-1 rounded-[10px] py-1.5 whitespace-nowrap',
           className
         )}
         style={textColor ? {color: textColor} : undefined}
