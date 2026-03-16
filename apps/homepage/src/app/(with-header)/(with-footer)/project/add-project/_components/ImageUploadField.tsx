@@ -6,6 +6,7 @@ import {
   useSensors,
   PointerSensor,
   KeyboardSensor,
+  TouchSensor,
 } from '@dnd-kit/core';
 import {sortableKeyboardCoordinates} from '@dnd-kit/sortable';
 import {FullButton} from '@repo/ui/components/buttons/FullButton';
@@ -33,8 +34,18 @@ export const ImageUploadField = ({
   } = useImageUpload(onImagesChange, initialImages);
 
   const sensors = useSensors(
-    useSensor(PointerSensor, {activationConstraint: {distance: 8}}),
-    useSensor(KeyboardSensor, {coordinateGetter: sortableKeyboardCoordinates})
+    useSensor(PointerSensor, {
+      activationConstraint: {distance: 6},
+    }),
+    useSensor(TouchSensor, {
+      activationConstraint: {
+        delay: 150,
+        tolerance: 5,
+      },
+    }),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    })
   );
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {

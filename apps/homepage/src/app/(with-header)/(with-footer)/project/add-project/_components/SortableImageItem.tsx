@@ -31,7 +31,11 @@ export const SortableImageItem = ({
     <div
       ref={setNodeRef}
       style={style}
-      className={`shadow-default relative cursor-grab overflow-hidden rounded-[10px] ${isMobile ? 'h-20 w-20 shrink-0' : 'aspect-204/114 w-full'} `}
+      {...attributes}
+      {...listeners}
+      className={`shadow-default relative cursor-grab overflow-hidden rounded-[10px] ${
+        isMobile ? 'h-20 w-20 shrink-0' : 'aspect-204/114 w-full'
+      }`}
       onClick={(e) => {
         e.stopPropagation();
         onSelect();
@@ -46,20 +50,25 @@ export const SortableImageItem = ({
           onSelect();
         }
       }}>
-      <div className='relative h-full w-full' {...attributes} {...listeners}>
+      <div className='relative h-full w-full'>
         <Image
           src={img.publicUrl}
           alt=''
           fill
+          draggable={false}
           sizes={isMobile ? '80px' : '204px'}
-          className='object-cover'
+          className='pointer-events-none object-cover'
           priority={img.order <= 4}
         />
         <div className='pointer-events-none absolute inset-0 z-10 flex items-center justify-center'>
           <div
-            className={`flex items-center justify-center rounded-sm bg-[rgba(158,158,158,0.60)] lg:rounded-[10px] ${isMobile ? 'h-7.5 w-7.5' : 'h-14 w-15.75'} `}>
+            className={`flex items-center justify-center rounded-sm bg-[rgba(158,158,158,0.60)] lg:rounded-[10px] ${
+              isMobile ? 'h-7.5 w-7.5' : 'h-14 w-15.75'
+            }`}>
             <span
-              className={`text-neutral-50 ${isMobile ? 'text-h5 font-bold' : 'text-h4'} `}
+              className={`text-neutral-50 ${
+                isMobile ? 'text-h5 font-bold' : 'text-h4'
+              }`}
               aria-hidden='true'>
               {img.order + 1}
             </span>
