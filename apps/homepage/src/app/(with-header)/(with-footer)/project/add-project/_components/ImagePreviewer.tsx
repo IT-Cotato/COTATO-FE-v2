@@ -37,7 +37,7 @@ export const ImagePreviewer = ({
             aria-label='이미지 삭제'>
             <XIcon className='h-2.5 w-2.5 text-white' aria-hidden='true' />
           </button>
-          <div className='invisible absolute inset-0 z-10 hidden items-center justify-center bg-black/10 group-focus-within:visible group-hover:visible lg:flex'>
+          <div className='pointer-events-none absolute inset-0 z-10 hidden items-center justify-center bg-black/10 opacity-0 transition-opacity group-focus-within:pointer-events-auto group-focus-within:opacity-100 group-hover:pointer-events-auto group-hover:opacity-100 lg:flex'>
             <button
               type='button'
               onClick={(e) => {
