@@ -1,14 +1,6 @@
 'use client';
 
 import {useRef} from 'react';
-import {
-  useSensor,
-  useSensors,
-  KeyboardSensor,
-  TouchSensor,
-  MouseSensor,
-} from '@dnd-kit/core';
-import {sortableKeyboardCoordinates} from '@dnd-kit/sortable';
 import {FullButton} from '@repo/ui/components/buttons/FullButton';
 import {ImageInfo} from '@/schemas/project/project-type';
 import {ImagePreviewer} from './ImagePreviewer';
@@ -32,21 +24,6 @@ export const ImageUploadField = ({
     handleReorder,
     handleRemove,
   } = useImageUpload(onImagesChange, initialImages);
-
-  const sensors = useSensors(
-    useSensor(MouseSensor, {
-      activationConstraint: {distance: 6},
-    }),
-    useSensor(TouchSensor, {
-      activationConstraint: {
-        delay: 150,
-        tolerance: 5,
-      },
-    }),
-    useSensor(KeyboardSensor, {
-      coordinateGetter: sortableKeyboardCoordinates,
-    })
-  );
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) handleUpload(e.target.files);
@@ -84,7 +61,6 @@ export const ImageUploadField = ({
       <div className='min-w-0 flex-1'>
         <ImageSortableList
           images={images}
-          sensors={sensors}
           onDragEnd={handleReorder}
           onSelect={setSelectedId}
           onAddClick={() => fileInputRef.current?.click()}
