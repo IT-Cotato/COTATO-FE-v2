@@ -27,6 +27,15 @@ export const SortableImageItem = ({
     touchAction: 'none',
   };
 
+  const handleKeyDown: React.KeyboardEventHandler<HTMLDivElement> = (e) => {
+    listeners?.onKeyDown?.(e);
+    if (e.defaultPrevented) return;
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      onSelect();
+    }
+  };
+
   return (
     <div
       ref={setNodeRef}
@@ -44,12 +53,7 @@ export const SortableImageItem = ({
       tabIndex={0}
       aria-label={`${img.order + 1}번 이미지`}
       aria-description='엔터나 스페이스를 눌러 선택하거나, 화살표 키로 드래그하여 순서를 변경할 수 있습니다.'
-      onKeyDown={(e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          onSelect();
-        }
-      }}>
+      onKeyDown={handleKeyDown}>
       <div className='relative h-full w-full'>
         <Image
           src={img.publicUrl}
