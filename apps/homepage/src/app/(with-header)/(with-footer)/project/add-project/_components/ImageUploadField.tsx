@@ -4,9 +4,9 @@ import {useRef} from 'react';
 import {
   useSensor,
   useSensors,
-  PointerSensor,
   KeyboardSensor,
   TouchSensor,
+  MouseSensor,
 } from '@dnd-kit/core';
 import {sortableKeyboardCoordinates} from '@dnd-kit/sortable';
 import {FullButton} from '@repo/ui/components/buttons/FullButton';
@@ -34,7 +34,7 @@ export const ImageUploadField = ({
   } = useImageUpload(onImagesChange, initialImages);
 
   const sensors = useSensors(
-    useSensor(PointerSensor, {
+    useSensor(MouseSensor, {
       activationConstraint: {distance: 6},
     }),
     useSensor(TouchSensor, {
