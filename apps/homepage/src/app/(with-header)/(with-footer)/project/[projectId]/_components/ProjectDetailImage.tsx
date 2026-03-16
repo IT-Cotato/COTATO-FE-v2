@@ -1,13 +1,14 @@
 import Image from 'next/image';
 import {ProjectDetail} from '@/schemas/project/project.schema';
 
+interface ProjectDetailImageProps {
+  data: ProjectDetail;
+  isSingle?: boolean;
+}
 export const ProjectDetailImage = ({
   data,
   isSingle,
-}: {
-  data: ProjectDetail;
-  isSingle?: boolean;
-}) => {
+}: ProjectDetailImageProps) => {
   if (!data.imageInfos || data.imageInfos.length === 0) return null;
 
   // 모바일에서 상단에 하나만 띄울 때

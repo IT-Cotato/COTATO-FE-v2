@@ -9,7 +9,7 @@ import {useDeleteProjectMutation} from '@/hooks/mutations/useProject.mutation';
 import {ProjectDeleteModal} from '@/app/(with-header)/(with-footer)/project/[projectId]/_components/ProjectDeleteModal';
 import {ROUTES} from '@/constants/routes';
 import {ProjectDetailMobile} from '@/app/(with-header)/(with-footer)/project/[projectId]/mobile/ProjectDetailMobile';
-import {ProjectDetailWeb} from '@/app/(with-header)/(with-footer)/project/[projectId]/_container/ProjectDetailWeb';
+import {ProjectDetailDesktop} from '@/app/(with-header)/(with-footer)/project/[projectId]/_container/ProjectDetailDesktop';
 
 export const ProjectDetailContainer = () => {
   const params = useParams();
@@ -45,11 +45,14 @@ export const ProjectDetailContainer = () => {
     return (
       <div className='flex min-h-100 items-center justify-center'>
         <Spinner />
+        <span className='sr-only'>프로젝트 상세 정보를 불러오는 중입니다.</span>
       </div>
     );
   if (isError || !data)
     return (
-      <div className='flex min-h-100 items-center justify-center text-neutral-400'>
+      <div
+        className='flex min-h-100 items-center justify-center text-neutral-400'
+        role='alert'>
         정보를 불러올 수 없습니다.
       </div>
     );
@@ -71,7 +74,7 @@ export const ProjectDetailContainer = () => {
           <ProjectDetailMobile {...commonProps} />
         </div>
         {/* 데스크탑 */}
-        <ProjectDetailWeb {...commonProps} />
+        <ProjectDetailDesktop {...commonProps} />
       </main>
       <ProjectDeleteModal
         isOpen={isModalOpen}

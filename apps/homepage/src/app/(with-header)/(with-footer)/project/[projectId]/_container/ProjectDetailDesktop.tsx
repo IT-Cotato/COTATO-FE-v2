@@ -5,7 +5,7 @@ import {ProjectDetailImage} from '@/app/(with-header)/(with-footer)/project/[pro
 import {ProjectDetailInfo} from '@/app/(with-header)/(with-footer)/project/[projectId]/_components/ProjectDetailInfo';
 import {ProjectDetail, Position} from '@/schemas/project/project.schema';
 
-interface WebProps {
+interface ProjectDetailDesktopProps {
   data: ProjectDetail;
   groupedMembers: Record<Position, string[]>;
   positions: Position[];
@@ -14,14 +14,14 @@ interface WebProps {
   onDelete: () => void;
 }
 
-export const ProjectDetailWeb = ({
+export const ProjectDetailDesktop = ({
   data,
   groupedMembers,
   positions,
   isAdmin,
   onEdit,
   onDelete,
-}: WebProps) => {
+}: ProjectDetailDesktopProps) => {
   return (
     <div className='hidden w-full flex-col items-center px-42.5 py-7.5 lg:flex'>
       <div className='flex w-full flex-col gap-15.25'>

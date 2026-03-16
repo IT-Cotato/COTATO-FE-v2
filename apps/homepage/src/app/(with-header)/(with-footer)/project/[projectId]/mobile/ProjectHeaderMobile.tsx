@@ -1,15 +1,17 @@
 import {ProjectDetail} from '@/schemas/project/project.schema';
 import LinkIcon from '@/assets/link/link.svg';
 
+interface ProjectHeaderMobileProps {
+  data: ProjectDetail;
+  hasLink: boolean;
+  normalizedLink: string;
+}
+
 export const ProjectHeaderMobile = ({
   data,
   hasLink,
   normalizedLink,
-}: {
-  data: ProjectDetail;
-  hasLink: boolean;
-  normalizedLink: string;
-}) => (
+}: ProjectHeaderMobileProps) => (
   <div className='flex flex-col gap-5'>
     <div className='flex gap-4.5' role='group' aria-label='프로젝트 분류 정보'>
       <span className='bg-disabled text-body-m flex h-7.5 w-17.75 items-center justify-center rounded-[5px] font-bold text-white'>

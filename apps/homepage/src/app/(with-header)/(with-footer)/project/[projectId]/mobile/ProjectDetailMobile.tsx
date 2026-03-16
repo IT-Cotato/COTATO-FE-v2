@@ -8,7 +8,7 @@ import {Position, ProjectDetail} from '@/schemas/project/project.schema';
 import {ProjectInfoMobile} from '@/app/(with-header)/(with-footer)/project/[projectId]/mobile/ProjectInfoMobile';
 import {ProjectHeaderMobile} from '@/app/(with-header)/(with-footer)/project/[projectId]/mobile/ProjectHeaderMobile';
 
-interface MobileProps {
+interface ProjectDetailMobileProps {
   data: ProjectDetail;
   groupedMembers: Record<Position, string[]>;
   positions: Position[];
@@ -24,11 +24,12 @@ export const ProjectDetailMobile = ({
   isAdmin,
   onEdit,
   onDelete,
-}: MobileProps) => {
+}: ProjectDetailMobileProps) => {
   const router = useRouter();
   const hasLink = !!data.projectLink && data.projectLink.trim() !== '';
   const normalizedLink = hasLink
-    ? data.projectLink.startsWith('http')
+    ? data.projectLink.startsWith('http://') ||
+      data.projectLink.startsWith('https://')
       ? data.projectLink
       : `https://${data.projectLink}`
     : '';

@@ -1,7 +1,7 @@
 import {ProjectDetail, Position} from '@/schemas/project/project.schema';
 import {POSITION_LABEL} from '@/constants/project/project-detail';
 
-interface InfoProps {
+interface ProjectDetailInfoProps {
   data: ProjectDetail;
   groupedMembers: Record<Position, string[]>;
   positions: Position[];
@@ -11,7 +11,7 @@ export const ProjectDetailInfo = ({
   data,
   groupedMembers,
   positions,
-}: InfoProps) => (
+}: ProjectDetailInfoProps) => (
   <section
     className='flex w-full justify-between gap-5'
     aria-label='프로젝트 상세 정보'>

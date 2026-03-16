@@ -1,15 +1,17 @@
 import {POSITION_LABEL} from '@/constants/project/project-detail';
 import {Position, ProjectDetail} from '@/schemas/project/project.schema';
 
+interface ProjectInfoMobileProps {
+  data: ProjectDetail;
+  positions: Position[];
+  groupedMembers: Record<Position, string[]>;
+}
+
 export const ProjectInfoMobile = ({
   data,
   positions,
   groupedMembers,
-}: {
-  data: ProjectDetail;
-  positions: Position[];
-  groupedMembers: Record<Position, string[]>;
-}) => (
+}: ProjectInfoMobileProps) => (
   <div className='flex flex-col gap-3'>
     <section>
       <h2 className='text-h5 mb-3 font-bold text-neutral-800'>프로젝트 기간</h2>
