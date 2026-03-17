@@ -10,13 +10,13 @@ export const MailField = ({isEditing, content, setContent}: MailFieldProps) => {
   const scrollRef = useRef<HTMLDivElement>(null);
 
   return (
-    <div className='h-89 w-full rounded-[10px] bg-neutral-50 px-7.75 py-4.5'>
+    <div className='h-70 w-full rounded-[10px] bg-neutral-50 px-7.75 py-4.5 lg:h-89'>
       <div
         ref={scrollRef}
         className='custom-scrollbar h-full w-full overflow-y-auto'>
         {isEditing ? (
           <textarea
-            className='text-body-m flex min-h-full w-full resize-none bg-transparent text-black outline-none'
+            className='text-body-m flex min-h-full w-full resize-none bg-transparent pr-4 text-black outline-none lg:pr-0'
             value={content}
             onChange={(e) => {
               setContent(e.target.value);
