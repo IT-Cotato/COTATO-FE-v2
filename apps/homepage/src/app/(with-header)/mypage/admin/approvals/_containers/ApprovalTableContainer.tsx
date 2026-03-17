@@ -3,8 +3,7 @@
 import {ApprovalTableView} from '../_components/table/ApprovalTableView';
 import {SearchBar} from '../../_components/SearchBar';
 import {Pagination} from '@repo/ui/components/pagination/Pagination';
-import {Modal} from '@repo/ui/components/modal/Modal';
-import {Button} from '@repo/ui/components/buttons/Button';
+import {ConfirmModal} from '../../_components/ConfirmModal';
 import {ApprovalTabType} from '@/constants/admin/admin';
 import {useRouter, useSearchParams} from 'next/navigation';
 import {useEffect} from 'react';
@@ -137,23 +136,13 @@ export const ApprovalTableContainer = ({
       </div>
 
       {modalConfig && (
-        <Modal
+        <ConfirmModal
           isOpen
           onClose={() => setModalConfig(null)}
-          containerStyle={{width: 510, height: 300}}
-          contentWrapperClassName='justify-around'
           title={modalConfig.title}
-          content={modalConfig.description}
-          actions={
-            <div className='flex w-full justify-center'>
-              <Button
-                variant='primary'
-                onClick={modalConfig.onConfirm}
-                label={isLoading ? '처리 중...' : '확인'}
-                disabled={isLoading}
-              />
-            </div>
-          }
+          description={modalConfig.description}
+          onConfirm={modalConfig.onConfirm}
+          isLoading={isLoading}
         />
       )}
     </div>

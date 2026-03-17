@@ -1,12 +1,12 @@
 'use client';
 
-import {useState} from 'react';
+import {ReactNode, useState} from 'react';
 import {ApprovalTabType} from '@/constants/admin/admin';
 import {ApprovalMemberType} from '@/schemas/admin/admin-members.schema';
 
 type ModalConfig = {
   title: string;
-  description: string;
+  description: ReactNode;
   onConfirm: () => void;
 } | null;
 
@@ -52,9 +52,17 @@ export const useApprovalModals = ({
           ? `${member.name}님의 가입을 승인하시겠습니까?`
           : `${member.name}님을 복원하시겠습니까?`,
       description:
-        activeTab === 'REQUESTED'
-          ? '확인 버튼 클릭 시 가입 승인 메일이 전송됩니다.'
-          : '확인 버튼 클릭 시 가입 요청 상태로 복원됩니다.',
+        activeTab === 'REQUESTED' ? (
+          <>
+            확인 버튼 클릭 시<br className='lg:hidden' /> 가입 승인 메일이
+            전송됩니다.
+          </>
+        ) : (
+          <>
+            확인 버튼 클릭 시<br className='lg:hidden' /> 가입 요청 상태로
+            복원됩니다.
+          </>
+        ),
       onConfirm: () => {
         const action =
           activeTab === 'REQUESTED' ? actions.approve : actions.restore;
@@ -73,9 +81,14 @@ export const useApprovalModals = ({
           ? `${member.name}님의 가입을 거절하시겠습니까?`
           : `${member.name}님을 영구 삭제하시겠습니까?`,
       description:
-        activeTab === 'REQUESTED'
-          ? '확인 버튼 클릭 시 가입 거절 메일이 전송됩니다.'
-          : '확인 버튼 클릭 시 영구 삭제됩니다.',
+        activeTab === 'REQUESTED' ? (
+          <>
+            확인 버튼 클릭 시<br className='lg:hidden' /> 가입 거절 메일이
+            전송됩니다.
+          </>
+        ) : (
+          '확인 버튼 클릭 시 영구 삭제됩니다.'
+        ),
       onConfirm: () => {
         const action =
           activeTab === 'REQUESTED' ? actions.reject : actions.deleteRejected;
@@ -95,7 +108,12 @@ export const useApprovalModals = ({
         : `${firstName}님 외 ${selectedIds.length - 1}명의 가입을 승인하시겠습니까?`;
     setModalConfig({
       title,
-      description: '확인 버튼 클릭 시 가입 승인 메일이 전송됩니다.',
+      description: (
+        <>
+          확인 버튼 클릭 시<br className='lg:hidden' /> 가입 승인 메일이
+          전송됩니다.
+        </>
+      ),
       onConfirm: () => {
         actions.approve(selectedIds, {
           onSuccess: () => {
@@ -118,7 +136,12 @@ export const useApprovalModals = ({
         : `${firstName}님 외 ${selectedIds.length - 1}명의 가입을 거절하시겠습니까?`;
     setModalConfig({
       title,
-      description: '확인 버튼 클릭 시 가입 거절 메일이 전송됩니다.',
+      description: (
+        <>
+          확인 버튼 클릭 시<br className='lg:hidden' /> 가입 거절 메일이
+          전송됩니다.
+        </>
+      ),
       onConfirm: () => {
         actions.reject(selectedIds, {
           onSuccess: () => {
@@ -141,7 +164,12 @@ export const useApprovalModals = ({
         : `${firstName}님 외 ${selectedIds.length - 1}명을 복원하시겠습니까?`;
     setModalConfig({
       title,
-      description: '확인 버튼 클릭 시 가입 요청 상태로 복원됩니다.',
+      description: (
+        <>
+          확인 버튼 클릭 시<br className='lg:hidden' /> 가입 요청 상태로
+          복원됩니다.
+        </>
+      ),
       onConfirm: () => {
         actions.restore(selectedIds, {
           onSuccess: () => {
