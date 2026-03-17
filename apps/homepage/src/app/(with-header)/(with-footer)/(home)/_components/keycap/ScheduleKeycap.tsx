@@ -22,7 +22,7 @@ export const ScheduleKeycap = ({
 }: ScheduleKeycapProps) => {
   return (
     <div
-      className={`group relative inline-block h-39 w-39 overflow-hidden rounded-[27px] xl:h-67 xl:w-67 xl:rounded-[50px] ${className}`}
+      className={`group shadow-home-keycap relative inline-block h-39 w-39 overflow-hidden rounded-[27px] xl:h-67 xl:w-67 xl:rounded-[50px] ${className}`}
       role='button'
       tabIndex={0}>
       <Image

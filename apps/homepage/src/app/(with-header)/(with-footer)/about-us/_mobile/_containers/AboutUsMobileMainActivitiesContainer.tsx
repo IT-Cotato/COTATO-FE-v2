@@ -15,7 +15,7 @@ export const AboutUsMobileMainActivitiesContainer = ({
   activities,
 }: AboutUsMobileMainActivitiesContainerProps) => {
   return (
-    <div className='z-10 block w-full px-6 md:hidden'>
+    <div className='z-10 block w-full px-6 lg:hidden'>
       <Swiper
         modules={[Pagination]}
         spaceBetween={16}
@@ -25,7 +25,7 @@ export const AboutUsMobileMainActivitiesContainer = ({
         className='activity-swiper pb-12!'>
         {activities.map((activity) => (
           <SwiperSlide key={activity.id}>
-            <div className='relative h-114.5 w-full overflow-hidden rounded-lg'>
+            <div className='relative mx-auto h-114.5 max-w-120 cursor-pointer overflow-hidden rounded-lg'>
               <div className='relative h-full w-full'>
                 <Image
                   src={activity.src}

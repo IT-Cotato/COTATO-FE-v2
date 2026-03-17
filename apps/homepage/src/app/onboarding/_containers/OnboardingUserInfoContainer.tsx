@@ -11,6 +11,7 @@ import {ROUTES} from '@/constants/routes';
 import {Modal} from '@repo/ui/components/modal/Modal';
 import {FullButton} from '@repo/ui/components/buttons/FullButton';
 import {formatPhoneNumber} from '@/utils/formatPhoneNumber';
+import {createPortal} from 'react-dom';
 
 interface OnboardingUserInfoContainerProps {
   onPrev: () => void;
@@ -88,9 +89,9 @@ export const OnboardingUserInfoContainer = ({
 
   return (
     <div className='flex flex-col gap-3.5'>
-      <div className='flex flex-row justify-between gap-1.75 sm:gap-6'>
+      <div className='flex flex-row justify-between gap-1.75 lg:gap-6'>
         <OnboardingFormDropdown
-          className='w-34.5 sm:w-44.5'
+          className='w-34.5 lg:w-44.5'
           label='성별'
           placeholder='성별'
           value={userInfo.gender}
@@ -120,9 +121,9 @@ export const OnboardingUserInfoContainer = ({
         error={errors?.university?._errors[0]}
       />
 
-      <div className='flex flex-row gap-2.75 sm:gap-6'>
+      <div className='flex flex-row gap-2.75 lg:gap-6'>
         <OnboardingFormInput
-          className='w-34.5 sm:w-44.5'
+          className='w-34.5 lg:w-44.5'
           label='기수'
           type='string'
           placeholder='OO기'
@@ -146,14 +147,14 @@ export const OnboardingUserInfoContainer = ({
       </div>
 
       <div className='flex cursor-pointer flex-row items-center justify-between border-b border-b-neutral-800 pb-4'>
-        <label className='text-body-l sm:text-h5 pointer-events-none text-neutral-100'>
+        <label className='text-body-l lg:text-h5 pointer-events-none text-neutral-100'>
           이용약관 전체 동의
         </label>
         <Checkbox checked={isAllAgreed} onChange={handleAllAgree} />
       </div>
       <div className='flex flex-row items-center justify-between'>
         <label
-          className='text-body-l sm:text-h5 flex cursor-pointer flex-row items-center gap-2.5 text-neutral-100'
+          className='text-body-l lg:text-h5 flex cursor-pointer flex-row items-center gap-2.5 text-neutral-100'
           onClick={() => {
             window.open(
               'https://cyclic-drain-e4c.notion.site/COTATO-3014e7fe345c8074ba9fd7cfea83d390',
@@ -178,7 +179,7 @@ export const OnboardingUserInfoContainer = ({
 
       <div className='flex flex-row items-center justify-between'>
         <label
-          className='text-body-l sm:text-h5 flex cursor-pointer flex-row items-center gap-2.5 text-neutral-100'
+          className='text-body-l lg:text-h5 flex cursor-pointer flex-row items-center gap-2.5 text-neutral-100'
           onClick={() => {
             window.open(
               'https://cyclic-drain-e4c.notion.site/COTATO-3014e7fe345c805f88dde6e2fe46dd7a',
@@ -202,38 +203,43 @@ export const OnboardingUserInfoContainer = ({
       </div>
       <div className='mt-2 flex flex-row justify-between'>
         <Button
-          width={200}
+          width='100%'
+          className='w-35.25 lg:min-w-50'
           label='이전'
           backgroundColor='neutral-600'
           onClick={onPrev}
         />
         <Button
-          width={200}
+          width='100%'
+          className='w-35.25 lg:min-w-50'
           label='신청 완료'
           onClick={handleJoinSubmit}
           disabled={!isValid}
           backgroundColor={isValid ? 'primary' : 'text-disabled'}
-          className='shadow-default'
         />
       </div>
-      {isJoinModalOpen && (
-        <Modal
-          title='가입 신청이 완료되었습니다.'
-          isOpen={isJoinModalOpen}
-          titleStyle='text-h4 text-neutral-800'
-          content={
-            <>
-              승인 완료까지 약 3-5일 소요됩니다.
-              <br />
-              승인이 완료된 후 서비스 이용이 가능합니다.
-            </>
-          }
-          contentWrapperClassName='flex flex-col gap-[29px]'
-          actions={
-            <FullButton label='홈으로 이동' onClick={handleModalClose} />
-          }
-          onClose={handleModalClose}></Modal>
-      )}
+      {isJoinModalOpen &&
+        typeof document !== 'undefined' &&
+        createPortal(
+          <Modal
+            title='가입 신청이 완료되었습니다.'
+            isOpen={isJoinModalOpen}
+            titleStyle='text-h4 text-neutral-800'
+            content={
+              <>
+                승인 완료까지 약 3-5일 소요됩니다.
+                <br />
+                승인이 완료된 후 서비스 이용이 가능합니다.
+              </>
+            }
+            contentWrapperClassName='flex flex-col gap-[29px]'
+            actions={
+              <FullButton label='홈으로 이동' onClick={handleModalClose} />
+            }
+            onClose={handleModalClose}
+          />,
+          document.body
+        )}
     </div>
   );
 };

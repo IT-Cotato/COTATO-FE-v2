@@ -138,7 +138,7 @@ export const OnboardingSignUpContainer = ({
           disabled={!isFormValid}
           backgroundColor={isFormValid ? 'primary' : 'text-disabled'}
           width={200}
-          height={45}
+          height={42}
           onClick={() =>
             onNext({
               email: formData.email,

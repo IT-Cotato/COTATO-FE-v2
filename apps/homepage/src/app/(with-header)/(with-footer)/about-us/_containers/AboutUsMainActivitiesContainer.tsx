@@ -4,10 +4,15 @@ import Image from 'next/image';
 import {useEffect, useState} from 'react';
 import AboutUsBackgroundSecond from '@/assets/about-us/background-about-us-second.webp';
 import {AboutUsDescription} from '@/app/(with-header)/(with-footer)/about-us/_components/AboutUsDescription';
+import {motion} from 'framer-motion';
 import 'swiper/css';
 import 'swiper/css/pagination';
-import {AboutUsMobileMainActivitiesContainer} from '@/app/(with-header)/(with-footer)/about-us/_mobile/AboutUsMobileMainActivitiesContainer';
-import {AboutUsDesktopMainActivitiesContainer} from '@/app/(with-header)/(with-footer)/about-us/_desktop/AboutUsDesktopMainActivitiesContainer';
+import {
+  FADE_IN_UP_CONTAINER,
+  FADE_IN_UP_ITEM,
+} from '@/constants/animation/motion-variants';
+import {AboutUsMobileMainActivitiesContainer} from '@/app/(with-header)/(with-footer)/about-us/_mobile/_containers/AboutUsMobileMainActivitiesContainer';
+import {AboutUsDesktopMainActivitiesContainer} from '@/app/(with-header)/(with-footer)/about-us/_desktop/_containers/AboutUsDesktopMainActivitiesContainer';
 
 export interface AboutUsActivity {
   id: number;
@@ -30,29 +35,39 @@ export const AboutUsMainActivitiesContainer = () => {
 
   return (
     <section
-      className='relative flex w-full flex-col items-center gap-25 overflow-hidden bg-linear-to-b from-[#010101] from-[13.94%] via-white via-50% to-white py-40'
+      className='relative flex w-full flex-col items-center justify-center gap-25 overflow-hidden bg-linear-to-b from-[#010101] from-30% via-white via-70% to-white py-35 lg:py-50'
       id='main-activities'>
       <Image
         src={AboutUsBackgroundSecond}
         alt=''
         aria-hidden={true}
-        width={956}
-        height={1080}
         unoptimized={true}
         draggable={false}
-        className='pointer-events-none absolute top-0 right-0'
+        className='pointer-events-none absolute top-0 right-0 hidden h-auto w-[60vw] max-w-239 lg:block'
       />
 
-      <AboutUsDescription
-        title='코테이토의 활동을 소개합니다'
-        subTitle='다양한 활동을 통해 직군별 역량과 협업 경험을 동시에 쌓습니다.'
-        titleColor='text-white'
-        subTitleColor='text-neutral-300'
-      />
+      <motion.div
+        className='z-10 flex w-full flex-col items-center justify-center gap-25'
+        variants={FADE_IN_UP_CONTAINER}
+        initial='hidden'
+        whileInView='visible'
+        viewport={{once: false, amount: 0.2}}>
+        <motion.div variants={FADE_IN_UP_ITEM} className='w-full'>
+          <AboutUsDescription
+            title='코테이토의 활동을 소개합니다'
+            subTitle='다양한 활동을 통해 직군별 역량과 협업 경험을 동시에 쌓습니다.'
+            titleColor='text-white'
+            subTitleColor='text-neutral-300'
+          />
+        </motion.div>
 
-      <AboutUsDesktopMainActivitiesContainer activities={ACTIVITIES} />
-
-      <AboutUsMobileMainActivitiesContainer activities={ACTIVITIES} />
+        <motion.div
+          className='flex w-full items-center justify-center'
+          variants={FADE_IN_UP_ITEM}>
+          <AboutUsDesktopMainActivitiesContainer activities={ACTIVITIES} />
+          <AboutUsMobileMainActivitiesContainer activities={ACTIVITIES} />
+        </motion.div>
+      </motion.div>
     </section>
   );
 };

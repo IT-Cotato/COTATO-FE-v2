@@ -21,11 +21,15 @@ export const ProjectDeleteModal = ({
       onClose={onClose}
       title={`${projectName}${getJosa(projectName, '을/를')} 삭제하시겠습니까?`}
       titleStyle='text-h4 text-neutral-800'
-      content='확인 버튼 클릭 시 프로젝트가 영구 삭제됩니다.'
+      content={
+        <span className='text-body-m lg:text-h5 font-normal text-neutral-600 lg:font-semibold'>
+          확인 버튼 클릭 시 프로젝트가 영구 삭제됩니다.
+        </span>
+      }
       actions={
         <FullButton label='확인' variant='primary' onClick={onConfirm} />
       }
-      contentWrapperClassName='gap-[48px]'
+      contentWrapperClassName='gap-[48px] py-4'
     />
   );
 };

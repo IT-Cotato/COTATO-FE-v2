@@ -84,18 +84,19 @@ export const ProjectContainer = () => {
 
   return (
     <section
-      className='flex w-full min-w-275 flex-col gap-7.5 py-7.5'
+      className='flex w-full flex-col gap-6 px-6 py-10 lg:gap-7.5 lg:py-7.5'
       aria-labelledby='project-list-title'>
       <h2 id='project-list-title' className='sr-only'>
         프로젝트 목록 및 필터
       </h2>
-      <div className='flex items-center justify-between'>
+      <div className='flex w-full flex-col items-center gap-7.5 lg:flex-row lg:justify-between'>
         <div
-          className='flex gap-6 px-6'
+          className='flex w-full gap-6 lg:w-auto lg:px-6'
           role='group'
           aria-label='프로젝트 필터링'>
           <Dropdown
             placeholder='기수'
+            className='flex-1 lg:flex-none'
             value={selectedGenLabel}
             options={genOptions}
             onSelect={(label) => {
@@ -106,6 +107,7 @@ export const ProjectContainer = () => {
           />
           <Dropdown
             placeholder='활동'
+            className='flex-1 lg:flex-none'
             value={selectedActLabel}
             options={activityLabels}
             onSelect={handleActSelect}
@@ -113,13 +115,16 @@ export const ProjectContainer = () => {
           />
         </div>
         {isAdmin && (
-          <Button
-            label='추가하기'
-            labelTypo='body_l'
-            width={127}
-            height={40}
-            onClick={() => router.push(ROUTES.ADD_PROJECT())}
-          />
+          <div className='w-full lg:w-auto'>
+            <Button
+              label='추가하기'
+              labelTypo='body_l_sb'
+              width='100%'
+              height={40}
+              className='w-full lg:w-31.75'
+              onClick={() => router.push(ROUTES.ADD_PROJECT())}
+            />
+          </div>
         )}
       </div>
       <ProjectSection

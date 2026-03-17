@@ -24,6 +24,7 @@ import {useClickOutside} from '@repo/ui/hooks/useClickOutside';
 import {StatusDropdown} from '@repo/ui/components/dropdown/StatusDropdown';
 import {ActionMenu} from '@/app/(with-header)/mypage/admin/_components/ActionMenu';
 import {SelectedMembersBar} from '../../../_components/SelectedMembersBar';
+import clsx from 'clsx';
 
 interface AdminUsersTableViewProps {
   items?: MemberType[];
@@ -64,7 +65,7 @@ export const AdminUsersTableView = ({
 
   return (
     <>
-    <table className='w-full table-fixed border-collapse [border-spacing:0] md:min-w-277.5 md:table-auto'>
+    <table className='w-full table-fixed border-collapse [border-spacing:0] lg:min-w-277.5 lg:table-auto'>
       <thead className='bg-neutral-200'>
         <tr>
           {MEMBER_COLUMNS.map((col) => {
@@ -73,7 +74,11 @@ export const AdminUsersTableView = ({
             return (
               <th
                 key={col.key}
-                className={`text-body-m md:text-body-l border-0 px-2.5 py-3 text-center align-middle font-semibold text-neutral-600 md:px-3 md:py-4 ${col.key === 'school' || col.key === 'phone' ? 'hidden md:table-cell' : ''}`}>
+                className={clsx(
+                  'text-body-m lg:text-body-l border-0 py-3 text-center align-middle font-semibold text-neutral-600 lg:px-3 lg:py-4',
+                  (col.key === 'school' || col.key === 'phone') &&
+                    'hidden lg:table-cell'
+                )}>
                 {isNameColumn && isAllTab ? (
                   <div className='flex items-center gap-0.5 px-2'>
                     <span className='shrink-0'>
@@ -131,8 +136,8 @@ export const AdminUsersTableView = ({
         {items.map((member) => (
           <tr
             key={member.memberId}
-            className='text-body-m md:text-body-l text-neutral-600'>
-            <td className='truncate border-0 px-2.5 py-3 md:px-3 md:py-4'>
+            className='text-body-m lg:text-body-l text-neutral-600'>
+            <td className='truncate border-0 px-2.5 py-3 lg:px-3 lg:py-4'>
               <div className='flex items-center gap-0.5 px-2'>
                 {isAllTab && (
                   <span className='shrink-0'>
@@ -146,21 +151,21 @@ export const AdminUsersTableView = ({
                 <span className='flex-1 text-center'>{member.name}</span>
               </div>
             </td>
-            <td className='truncate border-0 py-3 text-center md:px-3 md:py-4'>
+            <td className='truncate border-0 py-3 text-center lg:px-3 lg:py-4'>
               {member.passedGenerationNumber}기
             </td>
-            <td className='truncate border-0 py-3 text-center md:px-3 md:py-4'>
+            <td className='truncate border-0 py-3 text-center lg:px-3 lg:py-4'>
               {MEMBER_POSITION_LABEL[member.position as MemberPositionKey] ??
                 member.position}
             </td>
-            <td className='hidden truncate border-0 py-3 text-center md:table-cell md:px-3 md:py-4'>
+            <td className='hidden truncate border-0 py-3 text-center lg:table-cell lg:px-3 lg:py-4'>
               {member.university}
             </td>
-            <td className='hidden truncate border-0 py-3 text-center md:table-cell md:px-3 md:py-4'>
+            <td className='hidden truncate border-0 py-3 text-center lg:table-cell lg:px-3 lg:py-4'>
               {formatPhoneNumber(member.phoneNumber)}
             </td>
-            <td className='border-0 px-2.5 py-3 md:px-3 md:py-4'>
-              <div className='flex items-center justify-center md:gap-2'>
+            <td className='border-0 px-2.5 py-3 lg:px-3 lg:py-4'>
+              <div className='flex items-center justify-center lg:gap-2'>
                 {isAllTab ? (
                   <StatusDropdown
                     key={`${member.memberId}-status`}
@@ -170,7 +175,7 @@ export const AdminUsersTableView = ({
                     onChange={(value) => onStatusChange(member.memberId, value)}
                     disabled={false}
                     ariaLabel='활동여부 선택'
-                    wrapperClassName='w-[61px] md:w-18.75'
+                    wrapperClassName='w-[61px] lg:w-18.75'
                   />
                 ) : (
                   <StatusDropdown
@@ -181,7 +186,7 @@ export const AdminUsersTableView = ({
                     onChange={(value) => onRoleChange?.(member.memberId, value)}
                     disabled={false}
                     ariaLabel='역할 선택'
-                    wrapperClassName='w-[61px] md:w-18.75'
+                    wrapperClassName='w-[61px] lg:w-18.75'
                   />
                 )}
                 <ActionMenu

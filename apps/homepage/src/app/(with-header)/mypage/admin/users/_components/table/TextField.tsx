@@ -14,8 +14,8 @@ export const TextField = ({
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   className?: string;
 }) => (
-  <div className={`flex flex-col gap-1 md:gap-2.5 ${className ?? ''}`}>
-    <label className='text-body-l-b md:text-h5 text-neutral-600'>{label}</label>
+  <div className={`flex flex-col gap-1 lg:gap-2.5 ${className ?? ''}`}>
+    <label className='text-body-l-b lg:text-h5 text-neutral-600'>{label}</label>
     <input
       value={value}
       readOnly={readonly}

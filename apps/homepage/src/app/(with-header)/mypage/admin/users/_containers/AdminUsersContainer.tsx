@@ -6,7 +6,10 @@ import {MEMBER_TABS} from '@/constants/admin/admin';
 import {MemberTabType} from '@/constants/admin/admin';
 import {AllMembersTableContainer} from '@/app/(with-header)/mypage/admin/users/_containers/AllMembersTableContainer';
 import {ActiveMembersTableContainer} from '@/app/(with-header)/mypage/admin/users/_containers/ActiveMembersTableContainer';
-import {useAdminMembersQuery, useActiveMembersQuery} from '@/hooks/queries/useAdminMembers.query';
+import {
+  useAdminMembersQuery,
+  useActiveMembersQuery,
+} from '@/hooks/queries/useAdminMembers.query';
 import {useActiveMembersGeneration} from '@/app/(with-header)/mypage/admin/users/_hooks/useActiveMembersGeneration';
 
 export const AdminUsersContainer = () => {
@@ -37,7 +40,9 @@ export const AdminUsersContainer = () => {
 
   return (
     <div className='w-full'>
-      <div role='tablist' className='relative z-10 flex items-end gap-8.5 md:gap-6'>
+      <div
+        role='tablist'
+        className='relative z-10 flex items-end gap-8.5 lg:gap-6'>
         {MEMBER_TABS.map(({label, value}) => (
           <button
             key={value}

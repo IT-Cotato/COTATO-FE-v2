@@ -14,11 +14,15 @@ import {useAttendanceStatusQuery} from '@/hooks/queries/useAttendanceStatus.quer
 import {useLogoutMutation} from '@/hooks/mutations/auth/useAuth.mutations';
 import {useRecruitmentsStatus} from '@/hooks/queries/useAdminRecruit.query';
 import {HeaderMobileMenu} from '@/app/(with-header)/_mobile/HeaderMobileMenu';
+import clsx from 'clsx';
 
 export const HeaderContainer = () => {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const pathname = usePathname();
   const {data: recruitStatus} = useRecruitmentsStatus();
+
+  /** 마이페이지 헤더는 min-w-360(1440px) 적용하여 레이아웃 깨짐 방지 */
+  const isMypage = pathname.startsWith(ROUTES.MYPAGE);
 
   const navItems = [
     {label: 'ABOUT US', href: ROUTES.ABOUTUS},
@@ -75,9 +79,13 @@ export const HeaderContainer = () => {
   };
 
   return (
-    <header className='z-header sticky top-0 flex h-12.5 w-full items-center justify-between bg-black px-6 lg:h-22 lg:min-w-360 lg:pr-26.25 lg:pl-6.25'>
+    <header
+      className={clsx(
+        'z-header sticky top-0 flex h-12.5 w-full items-center justify-between bg-black px-6 lg:h-22 lg:pr-26.25 lg:pl-6.25',
+        {'lg:min-w-360': isMypage}
+      )}>
       <div className='z-50'>
-        <Link href={ROUTES.HOME}>
+        <Link href={ROUTES.HOME} aria-label='COTATO 홈으로 이동'>
           <MainLogo className='w-28 lg:w-36.5' />
         </Link>
       </div>

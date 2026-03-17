@@ -2,9 +2,9 @@
 
 import Image from 'next/image';
 import MainArrowIcon from '@/assets/home/main-arrow-icon.svg';
-import {CotatoLogo} from '@repo/ui/components/logo/CotatoLogo';
 import {useState} from 'react';
 import clsx from 'clsx';
+import {CotatoLogo} from '@repo/ui/components/logo/CotatoLogo';
 
 export const AboutUsBannerContainer = () => {
   const [isOverlayHidden, setIsOverlayHidden] = useState<boolean>(false);
@@ -66,7 +66,7 @@ export const AboutUsBannerContainer = () => {
             }}
             className='animate-bounce cursor-pointer'
             aria-label='활동 소개 섹션으로 이동'>
-            <MainArrowIcon className='h-6.75 w-6.75 sm:h-12.5 sm:w-12.5' />
+            <MainArrowIcon className='h-6.75 w-6.75 xl:h-12.5 xl:w-12.5' />
           </button>
         </div>
       </div>

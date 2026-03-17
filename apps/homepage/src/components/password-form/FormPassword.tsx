@@ -33,14 +33,14 @@ export const FormPassword = ({
     <div
       className={clsx(
         'flex min-w-71.25 flex-col',
-        isMypage ? 'gap-1.75' : 'gap-1.25 sm:gap-3'
+        isMypage ? 'gap-1.75' : 'gap-1.25 lg:gap-3'
       )}>
       <label
         className={clsx(
-          'sm:text-h5 text-body-l flex items-center gap-1',
           isMypage
             ? 'font-bold text-neutral-700 lg:font-semibold'
-            : 'text-neutral-100'
+            : 'text-neutral-100',
+          'lg:text-h5 text-body-l flex items-center gap-1'
         )}>
         {label} <span className='text-alert'>*</span>
       </label>
@@ -51,8 +51,8 @@ export const FormPassword = ({
           onChange={(e) => onChange(e.target.value)}
           type={showPassword ? 'text' : 'password'}
           className={clsx(
-            'w-full rounded-[9px] px-4 py-3 pr-15 transition-shadow outline-none focus:ring-1 sm:px-6.25 sm:py-4.75',
-            'placeholder:text-h5 sm:placeholder:text-body-l placeholder:text-neutral-500',
+            'w-full rounded-[9px] px-4 py-3 pr-15 transition-shadow outline-none focus:ring-1 lg:px-6.25 lg:py-4.75',
+            'placeholder:text-h5 lg:placeholder:text-body-l placeholder:text-neutral-500',
             isMypage
               ? 'bg-neutral-50 text-neutral-800'
               : 'bg-neutral-800 text-neutral-100',

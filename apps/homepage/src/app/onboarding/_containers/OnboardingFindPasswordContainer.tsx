@@ -1,7 +1,7 @@
 import {OnboardingFormInput} from '@/app/onboarding/_components/OnboardingFormInput';
 import {usePasswordMutation} from '@/hooks/mutations/auth/useAuth.mutations';
 import {SendCodeRequestSchema} from '@/schemas/auth/auth.schema';
-import {FullButton} from '@repo/ui/components/buttons/FullButton';
+import {Button} from '@repo/ui/components/buttons/Button';
 import {useState} from 'react';
 
 interface OnboardingFindPasswordContainerProps {
@@ -50,7 +50,9 @@ export const OnboardingFindPasswordContainer = ({
           error={emailError}
         />
 
-        <FullButton
+        <Button
+          width='100%'
+          height={42}
           onClick={handleSendCode}
           label='인증코드 전송하기'
           disabled={!isValid || sendResetCodeMutation.isPending}
