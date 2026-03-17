@@ -68,10 +68,7 @@ export const MailSendFooter = ({
             </div>
           )}
         </div>
-        <div
-          className={clsx('w-full lg:w-auto', {
-            'pointer-events-none': isSent || isInProgress || !canSendMail,
-          })}>
+        <div className='w-full lg:w-auto'>
           <Button
             width='100%'
             wrapperClassName='w-full lg:w-[145px]'
