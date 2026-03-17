@@ -73,9 +73,9 @@ export const AdminUsersTableView = ({
             return (
               <th
                 key={col.key}
-                className={`text-body-m md:text-body-l border-0 py-3 text-center align-middle font-semibold text-neutral-600 md:px-3 md:py-4 ${col.key === 'school' || col.key === 'phone' ? 'hidden md:table-cell' : ''}`}>
+                className={`text-body-m md:text-body-l border-0 px-2.5 py-3 text-center align-middle font-semibold text-neutral-600 md:px-3 md:py-4 ${col.key === 'school' || col.key === 'phone' ? 'hidden md:table-cell' : ''}`}>
                 {isNameColumn && isAllTab ? (
-                  <div className='flex items-center px-2'>
+                  <div className='flex items-center gap-0.5 px-2'>
                     <span className='shrink-0'>
                       <Checkbox
                         checked={isAllSelected}
@@ -132,8 +132,8 @@ export const AdminUsersTableView = ({
           <tr
             key={member.memberId}
             className='text-body-m md:text-body-l text-neutral-600'>
-            <td className='truncate border-0 py-3 md:px-3 md:py-4'>
-              <div className='flex items-center px-2'>
+            <td className='truncate border-0 px-2.5 py-3 md:px-3 md:py-4'>
+              <div className='flex items-center gap-0.5 px-2'>
                 {isAllTab && (
                   <span className='shrink-0'>
                     <Checkbox
@@ -159,7 +159,7 @@ export const AdminUsersTableView = ({
             <td className='hidden truncate border-0 py-3 text-center md:table-cell md:px-3 md:py-4'>
               {formatPhoneNumber(member.phoneNumber)}
             </td>
-            <td className='border-0 py-3 md:px-3 md:py-4'>
+            <td className='border-0 px-2.5 py-3 md:px-3 md:py-4'>
               <div className='flex items-center justify-center md:gap-2'>
                 {isAllTab ? (
                   <StatusDropdown
