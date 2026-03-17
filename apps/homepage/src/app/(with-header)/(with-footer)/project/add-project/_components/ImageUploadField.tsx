@@ -33,7 +33,14 @@ export const ImageUploadField = ({
   return (
     <div className='flex w-full flex-col gap-4 lg:flex-row'>
       <div className='flex flex-col gap-4.75 lg:w-100 lg:shrink-0'>
-        <ImagePreviewer selectedImage={selectedImage} onRemove={handleRemove} />
+        <div className='flex flex-col gap-4.75 lg:w-100 lg:shrink-0'>
+          <ImagePreviewer
+            images={images}
+            selectedImage={selectedImage}
+            onSelect={setSelectedId}
+            onRemove={handleRemove}
+          />
+        </div>
         <div className='hidden lg:block'>
           <FullButton
             type='button'
