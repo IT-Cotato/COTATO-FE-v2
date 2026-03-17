@@ -1,4 +1,4 @@
-import {AdminSideBar} from '@/app/admin/_components/AdminSideBar';
+import {AdminSideBarContainer} from '@/app/admin/_containers/AdminSideBarContainer';
 import {ProtectedRoute} from '@/components/auth/ProtectedRoute';
 
 export default function AdminWithSideBarLayout({
@@ -8,10 +8,8 @@ export default function AdminWithSideBarLayout({
 }>) {
   return (
     <ProtectedRoute requireRole='STAFF'>
-      <section className='flex min-h-screen w-full min-w-360 flex-row bg-white'>
-        <aside className='z-sidebar sticky left-0 bg-neutral-50'>
-          <AdminSideBar />
-        </aside>
+      <section className='flex min-h-screen w-full flex-col items-start bg-white px-6 py-5 lg:min-w-360 lg:flex-row lg:px-0 lg:py-0'>
+        <AdminSideBarContainer />
         <main className='min-w-0 flex-1'>{children}</main>
       </section>
     </ProtectedRoute>
