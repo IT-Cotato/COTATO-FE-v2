@@ -20,10 +20,10 @@ export const getRecruitmentStatus =
         ENDPOINT.RECRUITMENT.STATUS,
         {
           params: {_ts: Date.now()},
-          headers: {
-            'Cache-Control': 'no-cache',
-            Pragma: 'no-cache',
-          },
+          // headers: {
+          //   'Cache-Control': 'no-cache',
+          //   Pragma: 'no-cache',
+          // },
         }
       );
 
