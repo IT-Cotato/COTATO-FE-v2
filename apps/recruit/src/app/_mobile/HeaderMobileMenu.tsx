@@ -102,7 +102,7 @@ export const HeaderMobileMenu = ({
                   <Link
                     href={ROUTES.MYPAGE}
                     onClick={onClose}
-                    className={`text-h5 px-4 font-bold transition-all duration-300 hover:text-neutral-50 ${
+                    className={`text-h5 px-4 transition-all duration-300 hover:text-neutral-50 ${
                       pathname.startsWith(ROUTES.MYPAGE)
                         ? 'text-primary'
                         : 'text-neutral-400'
