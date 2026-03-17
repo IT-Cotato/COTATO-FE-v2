@@ -67,20 +67,21 @@ export const ActiveRecruitmentForm = () => {
     <>
       <form
         onSubmit={handleSubmit}
-        className='flex items-end justify-between rounded-[10px] bg-neutral-100 px-8 py-4'>
-        <fieldset className='flex items-end justify-end gap-11.75'>
+        className='flex w-full flex-col items-start justify-between gap-2.5 rounded-[10px] border border-neutral-100 bg-white px-8 py-4 lg:flex-row lg:items-end lg:justify-between lg:gap-0 lg:border-none lg:bg-neutral-100'>
+        <fieldset className='flex w-full items-end justify-between lg:w-auto lg:justify-end lg:gap-11.75'>
           <legend className='sr-only'>모집 설정</legend>
           <GenerationField
             value={generation}
             onChange={setGeneration}
             disabled={isRecruiting}
           />
-          <div className='flex shrink-0 items-center gap-5 whitespace-nowrap select-none'>
+          <div className='flex shrink-0 items-center gap-2.5 whitespace-nowrap select-none lg:gap-5'>
             <span className='text-body-L text-neutral-600'>추가모집 여부</span>
             <Checkbox
               checked={isAdditional}
               onChange={setIsAdditional}
               disabled={isRecruiting}
+              isRecruitment={true}
             />
           </div>
         </fieldset>
@@ -88,7 +89,8 @@ export const ActiveRecruitmentForm = () => {
           type='submit'
           disabled={isLoading}
           label={isRecruiting ? '모집 종료하기' : '모집 시작하기'}
-          width={145}
+          width='100%'
+          wrapperClassName='w-full lg:w-[145px]'
           height={36}
           borderRadius={5}
           labelTypo='body_l'
