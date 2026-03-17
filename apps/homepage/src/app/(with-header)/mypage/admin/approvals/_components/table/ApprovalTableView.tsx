@@ -6,7 +6,7 @@ import {
   type ApprovalTabType,
 } from '@/constants/admin/admin';
 import {Checkbox} from '@repo/ui/components/checkbox/CheckBox';
-import {SelectedMembersBar} from '../../../_components/SelectedMembersBar';
+import {SelectedMembersBar} from '@/app/(with-header)/mypage/admin/_components/SelectedMembersBar';
 import clsx from 'clsx';
 
 interface ApprovalTableViewProps {
@@ -85,17 +85,17 @@ export const ApprovalTableView = ({
                   <span className='flex-1 text-center'>{member.name}</span>
                 </div>
               </td>
-              <td className='truncate px-2.5 py-3 lg:px-3 lg:py-4 text-center'>
+              <td className='truncate px-2.5 py-3 text-center lg:px-3 lg:py-4'>
                 {member.passedGenerationNumber}기
               </td>
-              <td className='truncate px-2.5 py-3 lg:px-3 lg:py-4 text-center'>
+              <td className='truncate px-2.5 py-3 text-center lg:px-3 lg:py-4'>
                 {MEMBER_POSITION_LABEL[member.position as MemberPositionKey] ??
                   member.position}
               </td>
-              <td className='hidden truncate px-2.5 py-3 lg:px-3 lg:py-4 text-center lg:table-cell'>
+              <td className='hidden truncate px-2.5 py-3 text-center lg:table-cell lg:px-3 lg:py-4'>
                 {member.phoneNumber}
               </td>
-              <td className='hidden truncate px-2.5 py-3 lg:px-3 lg:py-4 text-center lg:table-cell'>
+              <td className='hidden truncate px-2.5 py-3 text-center lg:table-cell lg:px-3 lg:py-4'>
                 {new Date(member.appliedAt).toLocaleDateString('ko-KR', {
                   year: 'numeric',
                   month: '2-digit',

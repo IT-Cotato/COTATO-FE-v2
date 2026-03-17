@@ -10,7 +10,7 @@ interface ConfirmModalProps {
   onClose: () => void;
   onConfirm: () => void;
   confirmLabel?: string;
-  cancelLabel?: string;
+  cancelLabel?: string | false;
   isLoading?: boolean;
 }
 
@@ -21,7 +21,7 @@ export const ConfirmModal = ({
   onClose,
   onConfirm,
   confirmLabel = '확인',
-  cancelLabel,
+  cancelLabel = '취소',
   isLoading = false,
 }: ConfirmModalProps) => {
   if (!isOpen) return null;
@@ -29,6 +29,10 @@ export const ConfirmModal = ({
   return (
     <div
       className='z-modal fixed inset-0 flex items-center justify-center bg-black/50 backdrop-blur-sm'
+      role='dialog'
+      aria-modal='true'
+      aria-labelledby='confirm-modal-title'
+      aria-describedby={description ? 'confirm-modal-description' : undefined}
       onClick={onClose}>
       <div
         className='relative w-81.25 rounded-[20px] bg-white px-5 py-8 lg:w-127.5 lg:px-10 lg:py-12'
@@ -42,11 +46,15 @@ export const ConfirmModal = ({
         </button>
         <div className='flex flex-col items-center gap-4 text-center lg:gap-6'>
           <div className='flex flex-col items-center gap-1.25 lg:gap-4'>
-            <h4 className='text-h5 lg:text-h4 font-bold text-neutral-700'>
+            <h4
+              id='confirm-modal-title'
+              className='text-h5 lg:text-h4 font-bold text-neutral-700'>
               {title}
             </h4>
             {description && (
-              <p className='text-body-m lg:text-h5 font-normal text-neutral-600'>
+              <p
+                id='confirm-modal-description'
+                className='text-body-m lg:text-h5 font-normal text-neutral-600'>
                 {description}
               </p>
             )}
