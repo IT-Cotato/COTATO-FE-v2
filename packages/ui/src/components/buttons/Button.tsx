@@ -81,7 +81,7 @@ interface ButtonComponentProps extends ButtonProps {
  *
  * @param wrapperClassName 버튼을 감싸는 div에 적용할 클래스
  *
- *  @param fontWeight 타이포에 지정되어있지않은 font weight를 따로 지정해줘야할 경우 사용 (number or string)
+ *  @param fontWeight 타이포 토큰 외의 font-weight가 필요할 때 사용 (number | string)
  **/
 
 export const Button = ({
