@@ -6,6 +6,7 @@ interface CheckboxProps {
   onChange: (checked: boolean) => void;
   disabled?: boolean;
   className?: string;
+  isRecruitment?: boolean;
 }
 
 export const Checkbox = ({
@@ -13,6 +14,7 @@ export const Checkbox = ({
   onChange,
   disabled,
   className,
+  isRecruitment = false,
 }: CheckboxProps) => {
   return (
     <div
@@ -27,7 +29,9 @@ export const Checkbox = ({
           'cursor-pointer': !disabled,
           'cursor-default opacity-50': disabled,
           'border-primary bg-primary': checked,
-          'border-white bg-white': !checked && !className,
+          'border-neutral-50 bg-neutral-50 lg:border-white lg:bg-white':
+            !checked && !className && isRecruitment,
+          'border-white bg-white': !checked && !className && !isRecruitment,
         },
         className
       )}>
