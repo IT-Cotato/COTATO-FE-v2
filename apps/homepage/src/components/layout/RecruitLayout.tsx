@@ -27,7 +27,7 @@ export function RecruitLayout({
   return (
     <div
       className={clsx(
-        'relative flex min-h-fit w-full min-w-360 flex-col items-center justify-center',
+        'relative flex min-h-fit w-full flex-col items-center justify-center',
         backgroundColor
       )}
       style={{height: `calc(100vh - ${HEADER_HEIGHT}px)`}}>
@@ -43,7 +43,7 @@ export function RecruitLayout({
         />
       )}
 
-      <div className='relative flex min-h-fit min-w-360 flex-1 flex-col items-center justify-center'>
+      <div className='flex min-h-fit w-full max-w-152.5 flex-1 flex-col items-center justify-center px-6'>
         <h1
           className='text-h1 mb-7.5 bg-clip-text text-center text-transparent'
           style={{backgroundImage: 'var(--branding-gradient)'}}>
@@ -64,13 +64,15 @@ export function RecruitLayout({
         </p>
 
         {!isRecruiting && (
-          <div className='mb-15.25'>
+          <div className='mb-15.25 w-full'>
             <NotifyInput />
           </div>
         )}
 
-        <div className='mb-11.5'>
-          <CountdownTimer highlightUnits={isRecruiting} />
+        <div className='mb-11.5 w-full overflow-scroll'>
+          <div className='flex w-full min-w-fit justify-center'>
+            <CountdownTimer highlightUnits={isRecruiting} />
+          </div>
         </div>
 
         {isRecruiting && (
@@ -92,7 +94,7 @@ export function RecruitLayout({
       </div>
 
       {visualStripSrc && (
-        <div className={limitVisualStripWidth ? 'w-360' : 'w-full'}>
+        <div className={limitVisualStripWidth ? 'w-full max-w-360' : 'w-full'}>
           <Image
             src={visualStripSrc}
             alt=''
