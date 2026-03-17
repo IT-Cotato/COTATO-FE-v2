@@ -90,7 +90,7 @@ export const HeaderMobileMenu = ({
                     href={href}
                     onClick={onClose}
                     className={`text-h5 px-4 transition-all duration-300 hover:text-neutral-50 ${
-                      isActive ? 'text-neutral-50' : 'text-neutral-400'
+                      isActive ? 'text-primary' : 'text-neutral-400'
                     }`}>
                     {label}
                   </Link>
