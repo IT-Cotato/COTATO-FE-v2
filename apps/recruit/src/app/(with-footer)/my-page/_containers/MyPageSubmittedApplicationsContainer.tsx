@@ -24,7 +24,6 @@ export const MyPageSubmittedApplicationsContainer = () => {
         <Spinner />
       </div>
     );
-
   if (isError)
     return (
       <div className='text-alert py-20 text-center'>
@@ -33,71 +32,70 @@ export const MyPageSubmittedApplicationsContainer = () => {
     );
 
   return (
-    <div className='flex flex-col items-center justify-center bg-white py-23'>
-      <div className='flex flex-col gap-5'>
-        <h1 className='text-h4 flex w-full items-start font-bold text-neutral-800'>
+    <div className='flex w-full flex-col items-center justify-center bg-white px-4 py-7.5 lg:px-6 lg:py-23'>
+      <div className='flex w-full max-w-275 flex-col gap-5'>
+        <h1 className='text-h3 lg:text-h4 font-bold text-neutral-800'>
           마이페이지
         </h1>
-        <div className='flex min-h-79.25 max-w-480 min-w-275 flex-col items-center justify-center gap-8 rounded-[10px] bg-neutral-50 px-20'>
-          <h2 className='text-h4 flex w-full items-start text-neutral-800'>
-            지원 현황
-          </h2>
-          <div className='w-275 overflow-hidden'>
-            <table className='w-full border-separate border-spacing-0 text-center'>
-              <thead className='text-h5 rounded-[10px] bg-white text-neutral-500'>
+        <div className='flex flex-col gap-5 rounded-[10px] bg-neutral-50 p-3.5 pb-17 lg:gap-8 lg:px-20 lg:py-7.5'>
+          <h2 className='text-h4 font-bold text-neutral-800'>지원 현황</h2>
+
+          <div className='w-full overflow-x-auto'>
+            <table className='w-full min-w-[320px] table-auto border-separate border-spacing-0 text-center'>
+              <thead className='text-body-l lg:text-h5 font-bold text-neutral-500 lg:font-semibold'>
                 <tr>
-                  <th className='rounded-l-[10px] bg-white px-6 py-4 font-semibold'>
+                  <th className='rounded-l-[10px] bg-white px-2 py-2.5 lg:px-6 lg:py-4'>
                     기수
                   </th>
-                  <th className='bg-white px-6 py-4 font-semibold'>
-                    지원 파트
+                  <th className='bg-white py-2.5 lg:px-6 lg:py-4'>
+                    <span className='hidden lg:inline'>지원 </span>파트
                   </th>
-                  <th className='bg-white px-6 py-4 text-center font-semibold'>
+                  <th className='bg-white px-2 py-2.5 lg:px-6 lg:py-4'>
                     지원 상태
                   </th>
-                  <th className='rounded-r-[10px] bg-white px-6 py-4 text-center font-semibold'>
+                  <th className='rounded-r-[10px] bg-white px-2 py-2.5 lg:px-6 lg:py-4'>
                     지원서
                   </th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody className='text-neutral-800'>
                 {applications?.map((item) => (
                   <tr key={item.applicationId}>
-                    <td className='text-body-l px-6 py-5 text-neutral-800'>
-                      {item.generationNumber}
+                    <td className='text-body-m lg:text-body-l py-3 font-bold lg:py-5 lg:font-normal'>
+                      {item.generationNumber}기
                     </td>
-                    <td className='text-body-l px-6 py-5 text-neutral-800'>
+                    <td className='text-body-m lg:text-body-l py-3 lg:px-6 lg:py-5'>
                       {PART_MAP[item.part as keyof typeof PART_MAP] ||
                         item.part}
                     </td>
-                    <td className='px-6 py-5 text-center'>
-                      <span className='bg-primary text-body-l-sb rounded-[10px] px-4 py-2 text-white'>
+                    <td className='py-3 lg:px-6 lg:py-5'>
+                      <span className='bg-primary lg:text-body-l-sb text-body-m inline-block rounded-[10px] px-2 py-1 font-bold text-white lg:px-4'>
                         {item.status}
                       </span>
                     </td>
-                    <td className='text-body-l flex justify-center px-6 py-5 text-center'>
+                    <td className='py-3 lg:px-6 lg:py-5'>
                       <button
-                        className='flex flex-row items-center gap-1 text-center text-neutral-800'
+                        className='flex w-full items-center justify-center gap-0.5 text-center text-neutral-800 hover:opacity-70'
                         onClick={() =>
                           handleApplicationClick(item.applicationId)
                         }>
-                        <span>지원서 확인하기</span>
-                        <ChevronRight className='h-5 w-5 text-neutral-800' />
+                        <p className='text-body-l flex gap-1'>
+                          <span className='hidden lg:inline'>지원서</span>
+                          <span>확인하기</span>
+                        </p>
+                        <ChevronRight className='h-4 w-4 lg:h-5 lg:w-5' />
                       </button>
                     </td>
                   </tr>
                 ))}
-                {applications?.length === 0 && (
-                  <tr>
-                    <td
-                      colSpan={4}
-                      className='text-body-l py-10 text-center text-neutral-800'>
-                      아직 지원하신 내용이 없습니다.
-                    </td>
-                  </tr>
-                )}
               </tbody>
             </table>
+
+            {applications?.length === 0 && (
+              <div className='py-10 text-center text-neutral-600'>
+                아직 지원하신 내용이 없습니다.
+              </div>
+            )}
           </div>
         </div>
       </div>

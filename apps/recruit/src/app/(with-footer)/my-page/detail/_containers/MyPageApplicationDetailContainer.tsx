@@ -52,12 +52,12 @@ export const MyPageApplicationDetailContainer = () => {
   if (!basicInfo || !partQuestions || !etcQuestions) return null;
 
   return (
-    <div className='mx-auto flex max-w-275 flex-col gap-10 py-10'>
+    <div className='mx-auto flex w-full max-w-275 flex-col gap-10 py-7.5 lg:py-10'>
       <div className='flex justify-center'>
         <StepIndicator currentStep={step} totalSteps={3} />
       </div>
 
-      <div className='min-h-150 rounded-[20px] p-10'>
+      <div className='min-h-150 w-full rounded-[20px] lg:p-10'>
         {step === 1 && (
           <BasicInfoView
             basicInfo={basicInfo.data}
@@ -67,7 +67,7 @@ export const MyPageApplicationDetailContainer = () => {
 
         {step === 2 && (
           <div className='flex flex-col gap-6'>
-            <h3 className='text-h3 text-primary font-bold'>
+            <h3 className='text-h5 lg:text-h3 text-primary font-bold'>
               {APPLICATIONS_PART_TABS.find(
                 (tab) => tab.value === basicInfo.data.applicationPartType
               )?.label ?? '-'}{' '}
@@ -85,7 +85,9 @@ export const MyPageApplicationDetailContainer = () => {
 
         {step === 3 && (
           <div className='flex flex-col gap-6'>
-            <h3 className='text-h3 font-bold text-neutral-800'>기타 질문</h3>
+            <h3 className='text-h5 lg:text-h3 font-bold text-neutral-800'>
+              기타 질문
+            </h3>
             <EtcQuestionView
               etcQuestions={etcQuestions.data}
               onPrev={() => handleStepChange(2)}
