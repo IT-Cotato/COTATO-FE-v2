@@ -1,6 +1,7 @@
 import {Button} from '@repo/ui/components/buttons/Button';
 import {clsx} from 'clsx';
 import RefreshIcon from '@/assets/refresh/refresh.svg';
+import {ColorKey} from '@repo/ui/components/buttons/button.types';
 
 interface MailSendFooterProps {
   waitingCount: number;
@@ -29,9 +30,12 @@ export const MailSendFooter = ({
 }: MailSendFooterProps) => {
   const shouldShowStatus = true;
 
-  const getButtonColor = () => {
-    if (isSent || isInProgress) return 'text-disabled';
-    return canSendMail ? 'primary' : 'text-disabled';
+  const isDisabled = isSent || isInProgress || !canSendMail;
+
+  const getButtonColor = (): ColorKey => {
+    if (isSent) return 'neutral-500';
+    if (isInProgress || !canSendMail) return 'text-disabled';
+    return 'primary';
   };
 
   return (
@@ -50,6 +54,8 @@ export const MailSendFooter = ({
               {isInProgress && (
                 <button
                   type='button'
+                  aria-label='메일 전송 상태 새로고침'
+                  title='새로고침'
                   onClick={onRefresh}
                   disabled={isRefreshing}
                   className={clsx(
@@ -80,7 +86,9 @@ export const MailSendFooter = ({
             borderRadius={5}
             labelTypo='body_l'
             fontWeight={600}
+            disabled={isDisabled}
             backgroundColor={getButtonColor()}
+            disabledBackgroundColor={getButtonColor()}
             textColor='neutral-50'
             onClick={onSend}
           />
