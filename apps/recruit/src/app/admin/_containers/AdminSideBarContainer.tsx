@@ -27,7 +27,7 @@ export const AdminSideBarContainer = () => {
         <AdminDesktopSideBar pathName={pathname} />
       </aside>
 
-      <div ref={mobileNavRef} className='block w-full px-4 py-3 lg:hidden'>
+      <div ref={mobileNavRef} className='block w-full lg:hidden'>
         <AdminMobileNavBar
           isOpen={isOpen}
           setIsOpen={setIsOpen}
