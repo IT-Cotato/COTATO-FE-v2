@@ -24,6 +24,7 @@ interface ButtonComponentProps extends ButtonProps {
   borderColor?: ColorKey;
   textColor?: ColorKey;
   wrapperClassName?: string;
+  fontWeight?: React.CSSProperties['fontWeight'];
 }
 /**
  * 공통 Button 컴포넌트
@@ -80,6 +81,7 @@ interface ButtonComponentProps extends ButtonProps {
  *
  * @param wrapperClassName 버튼을 감싸는 div에 적용할 클래스
  *
+ *  @param fontWeight 타이포에 지정되어있지않은 font weight를 따로 지정해줘야할 경우 사용 (number or string)
  **/
 
 export const Button = ({
@@ -100,6 +102,7 @@ export const Button = ({
   borderColor,
   textColor,
   wrapperClassName,
+  fontWeight,
   ...props
 }: ButtonComponentProps) => {
   const isOutline = variant === 'outline';
@@ -145,7 +148,7 @@ export const Button = ({
         {...props}>
         <span
           className={clsx(buttonLabelTextStyles[variant][labelTypo], className)}
-          style={{color: resolvedTextColor}}>
+          style={{color: resolvedTextColor, fontWeight: fontWeight}}>
           {label}
         </span>
       </button>
