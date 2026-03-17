@@ -23,7 +23,7 @@ import {Checkbox} from '@repo/ui/components/checkbox/CheckBox';
 import {useClickOutside} from '@repo/ui/hooks/useClickOutside';
 import {StatusDropdown} from '@repo/ui/components/dropdown/StatusDropdown';
 import {ActionMenu} from '@/app/(with-header)/mypage/admin/_components/ActionMenu';
-import {SelectedMemberChip} from '../../../_components/SelectedMemberChip';
+import {SelectedMembersBar} from '../../../_components/SelectedMembersBar';
 
 interface AdminUsersTableViewProps {
   items?: MemberType[];
@@ -196,23 +196,12 @@ export const AdminUsersTableView = ({
         ))}
       </tbody>
     </table>
-    {isAllTab && selectedIds.length > 0 && (
-      <div className='bg-neutral-100 px-6 py-3 md:px-12 md:py-2.75'>
-        <div className='flex flex-wrap items-center gap-5.5'>
-          <span className='text-body-l pr-1.25 text-neutral-600'>
-            선택 {selectedIds.length}
-          </span>
-          {allItems
-            .filter((m) => selectedIds.includes(m.memberId))
-            .map((m) => (
-              <SelectedMemberChip
-                key={m.memberId}
-                name={m.name}
-                onRemove={() => onSelect(m.memberId, false)}
-              />
-            ))}
-        </div>
-      </div>
+    {isAllTab && (
+      <SelectedMembersBar
+        selectedIds={selectedIds}
+        allItems={allItems}
+        onRemove={(id) => onSelect(id, false)}
+      />
     )}
     </>
   );
