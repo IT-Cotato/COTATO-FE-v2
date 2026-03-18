@@ -47,9 +47,7 @@ export const MyPageSubmittedApplicationsContainer = () => {
                   <th className='rounded-l-[10px] bg-white px-2 py-2.5 lg:px-6 lg:py-4'>
                     기수
                   </th>
-                  <th className='bg-white py-2.5 lg:px-6 lg:py-4'>
-                    <span className='hidden lg:inline'>지원 </span>파트
-                  </th>
+                  <th className='bg-white py-2.5 lg:px-6 lg:py-4'>지원 파트</th>
                   <th className='bg-white px-2 py-2.5 lg:px-6 lg:py-4'>
                     지원 상태
                   </th>
