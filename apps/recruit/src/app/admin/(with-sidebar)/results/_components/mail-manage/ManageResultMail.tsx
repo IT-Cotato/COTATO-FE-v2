@@ -15,7 +15,6 @@ export const ManageResultMail = ({generationId}: ManageResultMailProps) => {
     <div className='flex flex-col gap-2.5 lg:gap-3.5'>
       <MailSelect activeTab={activeTab} onTabChange={setActiveTab} />
       <ManageMail
-        key={activeTab}
         mailType={activeTab}
         generationId={generationId}
         alwaysAble={true}
