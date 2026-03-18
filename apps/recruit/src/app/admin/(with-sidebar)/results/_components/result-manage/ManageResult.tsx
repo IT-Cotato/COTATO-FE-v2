@@ -1,7 +1,6 @@
 'use client';
 
 import {useAdminPassStatusQuery} from '@/hooks/queries/useAdminResult.query';
-
 import {GenerationDropdown} from '@/components/dropdown/GenerationDropdown';
 import {Spinner} from '@repo/ui/components/spinner/Spinner';
 import {useGenerationStore} from '@/store/useGenerationStore';
