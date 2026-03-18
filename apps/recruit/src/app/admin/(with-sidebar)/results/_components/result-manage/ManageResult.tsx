@@ -35,8 +35,10 @@ export const ManageResult = ({
     );
 
   return (
-    <div className='flex w-full flex-col gap-3.5'>
-      <h2 className='text-h4 text-neutral-800'>합격자 관리</h2>
+    <div className='flex w-full flex-col gap-2.5 lg:gap-3.5'>
+      <h2 className='text-h5 lg:text-h4 px-2.5 font-bold text-neutral-800 lg:px-0'>
+        합격자 관리
+      </h2>
       <GenerationDropdown
         generation={generation}
         generations={generationList}
