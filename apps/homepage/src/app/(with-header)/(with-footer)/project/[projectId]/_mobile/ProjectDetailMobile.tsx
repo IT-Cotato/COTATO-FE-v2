@@ -5,8 +5,8 @@ import ChevronLeft from '@/assets/chevrons/chevron-left.svg';
 import {Button} from '@repo/ui/components/buttons/Button';
 import {ProjectDetailImage} from '@/app/(with-header)/(with-footer)/project/[projectId]/_components/ProjectDetailImage';
 import {Position, ProjectDetail} from '@/schemas/project/project.schema';
-import {ProjectInfoMobile} from '@/app/(with-header)/(with-footer)/project/[projectId]/mobile/ProjectInfoMobile';
-import {ProjectHeaderMobile} from '@/app/(with-header)/(with-footer)/project/[projectId]/mobile/ProjectHeaderMobile';
+import {ProjectInfoMobile} from '@/app/(with-header)/(with-footer)/project/[projectId]/_mobile/ProjectInfoMobile';
+import {ProjectHeaderMobile} from '@/app/(with-header)/(with-footer)/project/[projectId]/_mobile/ProjectHeaderMobile';
 
 interface ProjectDetailMobileProps {
   data: ProjectDetail;
@@ -38,7 +38,7 @@ export const ProjectDetailMobile = ({
     <div className='flex w-full flex-col bg-white px-6 py-7.5 lg:hidden'>
       <div className='flex items-center justify-between py-2.5'>
         <button
-          onClick={() => router.back()}
+          onClick={() => router.push('/project')}
           className='text-h3 flex items-center gap-2 font-bold text-neutral-800'>
           <ChevronLeft className='h-6 w-6' />
           Project
