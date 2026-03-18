@@ -1,4 +1,4 @@
-import {SelectedMemberChip} from './SelectedMemberChip';
+import {SelectedMemberChip} from '@/app/(with-header)/mypage/admin/_components/SelectedMemberChip';
 
 interface SelectedMembersBarItem {
   memberId: number;
