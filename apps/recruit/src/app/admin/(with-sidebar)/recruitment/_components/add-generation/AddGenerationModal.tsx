@@ -80,7 +80,7 @@ export const AddGenerationModal = ({
       onClick={handleClose}
       role='presentation'>
       <section
-        className='relative w-full max-w-141.5 rounded-[20px] bg-white px-5.75 py-5'
+        className='relative w-full max-w-81.75 rounded-[20px] bg-white px-5.75 py-5 lg:max-w-141.5'
         onClick={(e) => e.stopPropagation()}
         role='dialog'
         aria-modal='true'
@@ -88,14 +88,14 @@ export const AddGenerationModal = ({
         <div className='flex w-full flex-col items-end gap-2.5'>
           <button
             onClick={handleClose}
-            className='absolute top-4 right-5'
+            className='absolute top-4 right-5.75'
             aria-label='닫기'>
-            <Close className='h-5.25 w-5.25 cursor-pointer text-neutral-400' />
+            <Close className='h-5.25 w-5.25 cursor-pointer text-white' />
           </button>
           <form
             onSubmit={handleCreate}
-            className='flex flex-col items-center gap-7.5 self-stretch'>
-            <h4 id='modal-title' className='text-h4 text-black'>
+            className='flex flex-col items-center gap-5 self-stretch lg:gap-7.5'>
+            <h4 id='modal-title' className='text-h4 font-bold text-black'>
               기수 추가하기
             </h4>
             <div className='flex w-full items-center gap-7.25'>
@@ -111,14 +111,16 @@ export const AddGenerationModal = ({
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
                 placeholder='숫자만 입력해주세요.'
-                className='focus:border-primary w-full rounded-[10px] border border-neutral-200 bg-neutral-50 px-6 py-3 transition-all outline-none focus:bg-white'
+                className='focus:border-primary w-full rounded-[10px] border border-neutral-200 bg-neutral-50 px-6 py-1.25 transition-all outline-none focus:bg-white lg:py-3'
                 required
               />
             </div>
             <FullButton
               type='submit'
+              wrapperClassName='h-8 lg:h-13.5'
               label='추가하기'
               labelTypo='h4'
+              fontWeight={700}
               backgroundColor='neutral-600'
               disabled={isPending}
             />

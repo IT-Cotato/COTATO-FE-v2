@@ -32,12 +32,15 @@ export const RecruitmentConfirmModal = ({
       isOpen={isOpen}
       onClose={onClose}
       title={getTitle()}
-      titleStyle='text-h4 text-neutral-800'
+      titleStyle='text-h5 font-bold lg:text-h4 text-neutral-800'
       noContent
+      containerStyle={{borderRadius: '12px'}}
+      contentWrapperClassName='my-5 lg:my-0 gap-12.25 lg:gap-26.75'
       actions={
         <>
           <Button
-            width={206}
+            width='100%'
+            wrapperClassName='w-full lg:w-51.5'
             height={47}
             onClick={onClose}
             label='취소'
@@ -46,7 +49,8 @@ export const RecruitmentConfirmModal = ({
             backgroundColor='neutral-300'
           />
           <Button
-            width={206}
+            width='100%'
+            wrapperClassName='w-full lg:w-51.5'
             height={47}
             onClick={onConfirm}
             label='확인'

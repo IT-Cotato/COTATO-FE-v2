@@ -30,12 +30,14 @@ export const MailConfirmModal = ({
       title={title}
       content={description}
       noContent={!description}
-      titleStyle='text-h4 text-neutral-800'
+      containerStyle={{borderRadius: '12px'}}
+      contentWrapperClassName='my-5 lg:my-0 gap-12.25 lg:gap-26.75'
+      titleStyle='text-h5 font-bold lg:text-h4 text-neutral-800'
       actions={
         <>
           <Button
-            width={206}
-            height={47}
+            width='100%'
+            wrapperClassName='w-full lg:w-51.5 lg:h-11.75 h-[42px]'
             onClick={onClose}
             label={cancelLabel}
             textColor='neutral-50'
@@ -43,8 +45,8 @@ export const MailConfirmModal = ({
             backgroundColor='neutral-300'
           />
           <Button
-            width={206}
-            height={47}
+            width='100%'
+            wrapperClassName='w-full lg:w-51.5 lg:h-11.75 h-[42px]'
             onClick={onConfirm}
             label={confirmLabel}
             textColor='neutral-50'
