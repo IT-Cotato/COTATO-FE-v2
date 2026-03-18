@@ -11,7 +11,7 @@ export const ResultTable = ({data}: ResultTableProps) => {
 
   return (
     <div className='overflow-x-auto'>
-      <table className='w-full table-fixed bg-white text-center'>
+      <table className='w-full table-fixed bg-neutral-200 text-center'>
         <colgroup>
           <col style={{width: columnWidth}} />
           {RESULT_PARTS.map((part) => (
@@ -19,14 +19,14 @@ export const ResultTable = ({data}: ResultTableProps) => {
           ))}
         </colgroup>
         <thead>
-          <tr className='text-body-l bg-neutral-200 font-semibold'>
-            <th className='px-5.5 py-[11.5px] whitespace-nowrap text-neutral-600'>
+          <tr className='lg:text-body-l-sb text-body-m bg-neutral-200 font-bold'>
+            <th className='px-[3.25px] py-3 whitespace-nowrap text-neutral-600 lg:px-5.5 lg:py-[11.5px]'>
               합격 여부
             </th>
             {RESULT_PARTS.map((part) => (
               <th
                 key={part.value}
-                className='whitespace-nowrap text-neutral-600'>
+                className='px-[3.25px] py-3 whitespace-nowrap text-neutral-600 lg:px-5.5 lg:py-[11.5px]'>
                 {part.label}
               </th>
             ))}
@@ -34,14 +34,14 @@ export const ResultTable = ({data}: ResultTableProps) => {
         </thead>
         <tbody className='divide-y divide-neutral-50 bg-neutral-50'>
           {data.map((row, index) => (
-            <tr key={index}>
-              <td className='text-body-l px-5.5 py-[11.5px] font-semibold whitespace-nowrap text-neutral-600'>
+            <tr key={index} className='bg-neutral-50'>
+              <td className='lg:text-body-l-sb text-body-m px-1 py-[11.5px] font-bold whitespace-nowrap text-neutral-600 lg:px-5.5 lg:font-semibold'>
                 {row.status}
               </td>
               {RESULT_PARTS.map((part) => (
                 <td
                   key={part.value}
-                  className='text-body-l font-semibold text-neutral-500'>
+                  className='text-body-l-sb text-neutral-500'>
                   {row[part.value] ?? 0}
                 </td>
               ))}
