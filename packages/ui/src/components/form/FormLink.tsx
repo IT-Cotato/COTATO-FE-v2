@@ -60,20 +60,22 @@ export const FormLink = forwardRef<HTMLInputElement, FormLinkProps>(
                   className={clsx(
                     formFieldStyles.field,
                     formFieldStyles.readOnlyForm,
-                    'flex flex-row items-center gap-5 rounded-lg px-4 py-3'
+                    'grid w-full min-w-0 grid-cols-[auto_1fr] items-center gap-5 rounded-lg px-4 py-3'
                   )}>
                   {!hideInnerLabel && (
-                    <label className='sm:text-h5 text-body-l-b shrink-0 text-neutral-600'>
+                    <label className='lg:text-h5 text-body-l-b shrink-0 text-neutral-600'>
                       링크 {displayLinks.length > 1 ? index + 1 : ''}
                     </label>
                   )}
-                  <a
-                    href={link.startsWith('http') ? link : `https://${link}`}
-                    target='_blank'
-                    rel='noopener noreferrer'
-                    className='text-blue flex-1 truncate underline'>
-                    {link}
-                  </a>
+                  <div className='no-scrollbar min-w-0 flex-1 overflow-x-auto whitespace-nowrap'>
+                    <a
+                      href={link.startsWith('http') ? link : `https://${link}`}
+                      target='_blank'
+                      rel='noopener noreferrer'
+                      className='text-blue inline-block underline'>
+                      {link}
+                    </a>
+                  </div>
                 </div>
               ))
             ) : (
@@ -89,7 +91,7 @@ export const FormLink = forwardRef<HTMLInputElement, FormLinkProps>(
               'flex flex-row items-center gap-5 rounded-lg px-4 py-3'
             )}>
             {!hideInnerLabel && (
-              <label className='sm:text-h5 text-body-l-b shrink-0 text-neutral-600'>
+              <label className='lg:text-h5 text-body-l-b shrink-0 text-neutral-600'>
                 링크
               </label>
             )}

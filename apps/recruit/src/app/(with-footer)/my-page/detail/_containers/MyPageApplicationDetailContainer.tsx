@@ -53,16 +53,17 @@ export const MyPageApplicationDetailContainer = () => {
 
   return (
     <div className='mx-auto flex w-full max-w-275 flex-col gap-10 py-7.5 lg:py-10'>
-      <div className='flex justify-center'>
-        <StepIndicator currentStep={step} totalSteps={3} />
-      </div>
-
       <div className='min-h-150 w-full rounded-[20px] lg:p-10'>
         {step === 1 && (
-          <BasicInfoView
-            basicInfo={basicInfo.data}
-            onNext={() => handleStepChange(2)}
-          />
+          <>
+            <div className='flex justify-center'>
+              <StepIndicator currentStep={step} totalSteps={3} />
+            </div>
+            <BasicInfoView
+              basicInfo={basicInfo.data}
+              onNext={() => handleStepChange(2)}
+            />
+          </>
         )}
 
         {step === 2 && (
@@ -73,6 +74,9 @@ export const MyPageApplicationDetailContainer = () => {
               )?.label ?? '-'}{' '}
               파트에 관한 질문입니다.
             </h3>
+            <div className='flex justify-center'>
+              <StepIndicator currentStep={step} totalSteps={3} />
+            </div>
             <PartQuestionView
               questionsWithAnswers={partQuestions.data.questionsWithAnswers}
               pdfFileUrl={partQuestions.data.pdfFileUrl}
@@ -88,6 +92,9 @@ export const MyPageApplicationDetailContainer = () => {
             <h3 className='text-h5 lg:text-h3 font-bold text-neutral-800'>
               기타 질문
             </h3>
+            <div className='flex justify-center'>
+              <StepIndicator currentStep={step} totalSteps={3} />
+            </div>
             <EtcQuestionView
               etcQuestions={etcQuestions.data}
               onPrev={() => handleStepChange(2)}
