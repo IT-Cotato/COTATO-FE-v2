@@ -13,7 +13,7 @@ export const CustomHeader = ({
   increaseMonth,
 }: CustomHeaderProps) => {
   return (
-    <div className='mb-4 flex w-full items-center justify-between'>
+    <div className='mb-2.75 flex w-full items-center justify-between lg:mb-4'>
       <button type='button' onClick={decreaseMonth}>
         <LeftChevron className='h-4 w-4 text-neutral-400' />
       </button>

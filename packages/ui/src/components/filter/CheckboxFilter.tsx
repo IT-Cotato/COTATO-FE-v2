@@ -45,7 +45,7 @@ export const CheckboxFilter = <T extends string>({
 
   return (
     <div
-      className='text-body-m flex flex-col gap-0.75 rounded-sm bg-neutral-700 p-1.25 text-neutral-300'
+      className='text-body-s lg:text-body-m flex flex-col rounded-sm bg-neutral-700 p-1.25 text-neutral-300 lg:gap-0.75'
       role='group'
       aria-label='필터'>
       {options.map((option) => {
@@ -55,7 +55,7 @@ export const CheckboxFilter = <T extends string>({
         return (
           <label
             key={option}
-            className='flex w-full cursor-pointer items-center justify-between rounded-sm border-b border-b-neutral-600 px-2 py-1.5'>
+            className='flex w-full cursor-pointer items-center justify-between border-b border-b-neutral-600 px-1 py-1.25 last:border-b-0 lg:px-2 lg:py-1.5'>
             <span>{getLabel ? getLabel(option) : option}</span>
             <Checkbox
               checked={isChecked}

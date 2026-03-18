@@ -203,18 +203,19 @@ export const OnboardingUserInfoContainer = ({
       </div>
       <div className='mt-2 flex flex-row justify-between'>
         <Button
-          width={200}
+          width='100%'
+          className='w-35.25 lg:min-w-50'
           label='이전'
           backgroundColor='neutral-600'
           onClick={onPrev}
         />
         <Button
-          width={200}
+          width='100%'
+          className='w-35.25 lg:min-w-50'
           label='신청 완료'
           onClick={handleJoinSubmit}
           disabled={!isValid}
           backgroundColor={isValid ? 'primary' : 'text-disabled'}
-          className='shadow-default'
         />
       </div>
       {isJoinModalOpen &&

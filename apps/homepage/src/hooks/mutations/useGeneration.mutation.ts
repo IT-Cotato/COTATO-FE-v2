@@ -18,8 +18,13 @@ export const useCreateGenerationMutation = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({queryKey: QUERY_KEYS.GENERATIONS});
     },
-    onError: () => {
-      alert('기수 추가에 실패했습니다. 다시 시도해 주세요.');
+    onError: (error: unknown) => {
+      const message =
+        error instanceof Error
+          ? error.message
+          : ((error as {message?: string})?.message ??
+            '기수 추가에 실패했습니다. 다시 시도해 주세요.');
+      alert(message);
     },
   });
 };
@@ -38,12 +43,13 @@ export const useUpdateGenerationMutation = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({queryKey: QUERY_KEYS.GENERATIONS});
     },
-    onError: (error) => {
-      if (error instanceof Error) {
-        alert(error.message);
-      } else {
-        alert('기수 수정에 실패했습니다.');
-      }
+    onError: (error: unknown) => {
+      const message =
+        error instanceof Error
+          ? error.message
+          : ((error as {message?: string})?.message ??
+            '기수 수정에 실패했습니다.');
+      alert(message);
     },
   });
 };

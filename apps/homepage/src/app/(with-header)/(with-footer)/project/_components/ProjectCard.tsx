@@ -41,8 +41,8 @@ export const ProjectCard = ({
         }
       }}
       onClick={handleNavigation}
-      className='shadow-project-card focus-visible:ring-primary flex w-82.5 cursor-pointer flex-col gap-2.75 rounded-[20px] outline-none focus-visible:ring-2'>
-      <div className='relative h-50 w-82.5 overflow-hidden rounded-t-[20px] bg-neutral-200'>
+      className='shadow-project-card focus-visible:ring-primary flex w-xl cursor-pointer flex-col gap-2.75 rounded-[20px] outline-none focus-visible:ring-2 lg:w-82.5'>
+      <div className='relative h-50 w-full overflow-hidden rounded-t-[20px] bg-neutral-200 lg:w-82.5'>
         {hasThumbnail && (
           <Image
             src={thumbnailUrl}
@@ -58,15 +58,15 @@ export const ProjectCard = ({
         <div className='flex items-center justify-between'>
           <h3
             id={titleId}
-            className='text-h4 line-clamp-1 w-45 break-keep text-neutral-800'
+            className='text-h5 lg:text-h4 line-clamp-1 w-45 font-bold break-keep text-neutral-800'
             title={name}>
             {name}
           </h3>
           <div className='flex h-6 gap-2.5'>
-            <span className='text-body-m bg-disabled rounded-[5px] px-2.5 py-0.5 text-white'>
+            <span className='lg:text-body-m bg-disabled flex items-center rounded-[5px] px-2.5 py-[0.3px] text-[10px] text-white lg:py-0.5'>
               {generationId}기
             </span>
-            <span className='bg-primary text-body-m shadow-default rounded-[5px] px-2 py-0.5 text-white'>
+            <span className='bg-primary lg:text-body-m shadow-default flex items-center rounded-[5px] px-[4.8px] text-[10px] text-white lg:px-2 lg:py-0.5'>
               {projectType === 'DEMODAY' ? '데모데이' : '해커톤'}
             </span>
           </div>

@@ -87,25 +87,25 @@ export const MemberDetailModal = (props: MemberDetailModalProps) => {
 
   return (
     <div
-      className='z-modal fixed inset-0 flex items-center justify-center bg-black/50'
+      className='z-modal fixed inset-0 flex items-center justify-center bg-black/50 px-6'
       onClick={onClose}
       role='dialog'
       aria-modal='true'>
       <div
-        className='relative flex w-113.5 flex-col gap-6.5 rounded-[10px] bg-white px-6.5 py-7.5'
+        className='relative flex max-h-[calc(100vh-3rem)] flex-col gap-4 rounded-[10px] bg-white px-6 py-5 lg:w-113.5 lg:gap-6.5 lg:px-6.5 lg:py-7.5'
         onClick={(e) => e.stopPropagation()}>
         <button
           onClick={onClose}
-          className='absolute top-6.5 right-6.5'
+          className='absolute top-5 right-6 lg:top-6.5 lg:right-6.5'
           aria-label='닫기'>
-          <Close className='h-6 w-6 cursor-pointer' />
+          <Close className='block h-6 w-6 cursor-pointer' />
         </button>
 
-        <h2 className='text-h4 text-neutral-800'>
+        <h2 className='text-h5 lg:text-h4 font-bold text-neutral-800'>
           {readonly ? '회원 상세 정보' : '활동 회원 정보 수정'}
         </h2>
 
-        <div className='flex flex-col gap-4'>
+        <div className='flex flex-col gap-1 lg:gap-4'>
           <div className='flex gap-4'>
             <TextField
               label='이름'
@@ -116,8 +116,10 @@ export const MemberDetailModal = (props: MemberDetailModalProps) => {
                 setMemberData({...memberData, name: e.target.value})
               }
             />
-            <div className='flex w-32 flex-col gap-2.5'>
-              <label className='text-h5 text-neutral-600'>기수</label>
+            <div className='flex flex-1 flex-col gap-1 lg:w-32 lg:flex-none lg:gap-2.5'>
+              <label className='text-body-l-b lg:text-h5 text-neutral-600'>
+                기수
+              </label>
               <input
                 readOnly
                 value={`${memberData.passedGenerationNumber}기`}
@@ -200,7 +202,7 @@ export const MemberDetailModal = (props: MemberDetailModalProps) => {
             <button
               type='button'
               onClick={handleSave}
-              className='bg-primary text-h5 rounded-[10px] px-8 py-3 text-white'>
+              className='bg-primary text-body-l-sb lg:text-h5 w-full rounded-[5px] py-2 text-white lg:w-auto lg:rounded-[10px] lg:px-8 lg:py-3'>
               저장하기
             </button>
           </div>

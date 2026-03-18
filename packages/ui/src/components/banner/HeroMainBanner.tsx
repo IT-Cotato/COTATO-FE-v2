@@ -2,9 +2,10 @@ import clsx from 'clsx';
 
 interface HeroMainBannerProps {
   subheading?: string;
-  heading: string;
+  heading: React.ReactNode;
   headingStyle?: string;
-  paddingVertical?: number;
+  /** paddingVertical이 true이면 웹 79px, 모바일 59px 적용 / false이거나 없으면 104px 적용 */
+  paddingVertical?: boolean;
   bannerImage: React.ReactNode;
 }
 
@@ -12,32 +13,31 @@ const HeroMainBanner = ({
   subheading,
   heading,
   headingStyle,
-  paddingVertical = 104,
+  paddingVertical,
   bannerImage,
 }: HeroMainBannerProps) => {
   return (
     <aside
       role='banner'
-      className='relative h-61 w-full px-60'
-      style={{
-        paddingTop: paddingVertical,
-        paddingBottom: paddingVertical,
-      }}>
+      className={clsx(
+        'relative w-full px-10 lg:h-61 lg:px-60',
+        paddingVertical ? 'h-50 py-[59px] lg:py-[79px]' : 'h-auto py-[104px]'
+      )}>
       {bannerImage && <>{bannerImage}</>}
       <div
         className='absolute inset-0 h-full w-full bg-[#000000]/60'
         aria-hidden='true'
       />
 
-      <div className='relative z-10 flex flex-col gap-6'>
+      <div className='relative z-10 flex flex-col gap-2.5 lg:gap-6'>
         {subheading && (
-          <p className='text-h4 whitespace-nowrap text-neutral-400'>
+          <p className='text-h5 lg:text-h4 whitespace-nowrap text-neutral-400'>
             {subheading}
           </p>
         )}
         <h1
           className={clsx(
-            'text-h3 w-min whitespace-nowrap text-neutral-100',
+            'text-h5 lg:text-h3 w-min font-bold whitespace-nowrap text-neutral-100',
             headingStyle
           )}>
           {heading}

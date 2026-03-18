@@ -17,8 +17,8 @@ export const SelectField = ({
   onSelect: (val: string) => void;
   readonly: boolean;
 }) => (
-  <div className='flex flex-col gap-2.5'>
-    <label className='text-h5 text-neutral-600'>{label}</label>
+  <div className='flex flex-col gap-1 lg:gap-2.5'>
+    <label className='text-body-l-b lg:text-h5 text-neutral-600'>{label}</label>
     {readonly ? (
       <input readOnly value={displayValue} className={fieldClass} />
     ) : (

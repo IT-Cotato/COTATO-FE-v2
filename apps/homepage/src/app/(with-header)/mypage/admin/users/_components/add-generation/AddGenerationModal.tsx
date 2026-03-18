@@ -1,19 +1,36 @@
 'use client';
 
-import {useState, useRef} from 'react';
-import DatePicker from 'react-datepicker';
+import {useState} from 'react';
 import Close from '@/assets/modal/close.svg';
-import 'react-datepicker/dist/react-datepicker.css';
-import {formatDate} from '@repo/ui/utils/date';
-import {CustomInput} from '../calendar/CustomInput';
-import {CustomHeader} from '../calendar/CustomHeader';
 import {Button} from '@repo/ui/components/buttons/Button';
-import {useClickOutside} from '@repo/ui/hooks/useClickOutside';
+import {DateField} from './DateField';
 
 interface AddGenerationModalProps {
   isOpen: boolean;
   onClose: () => void;
   onSave: (data: {generation: number; startDate: Date; endDate: Date}) => void;
+}
+
+function formatDateInput(raw: string): string {
+  const digits = raw.replace(/\D/g, '').slice(0, 8);
+  if (digits.length <= 4) return digits;
+  if (digits.length <= 6) return `${digits.slice(0, 4)}-${digits.slice(4)}`;
+  return `${digits.slice(0, 4)}-${digits.slice(4, 6)}-${digits.slice(6)}`;
+}
+
+function parseDateText(formatted: string): Date | null {
+  if (formatted.length !== 10) return null;
+  const date = new Date(formatted);
+  if (isNaN(date.getTime())) return null;
+  const [year, month, day] = formatted.split('-').map(Number);
+  if (
+    date.getFullYear() !== year ||
+    date.getMonth() + 1 !== month ||
+    date.getDate() !== day
+  ) {
+    return null;
+  }
+  return date;
 }
 
 export const AddGenerationModal = ({
@@ -24,19 +41,11 @@ export const AddGenerationModal = ({
   const [generation, setGeneration] = useState<string>('');
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
+  const [startDateText, setStartDateText] = useState('');
+  const [endDateText, setEndDateText] = useState('');
   const [openCalendar, setOpenCalendar] = useState<'start' | 'end' | null>(
     null
   );
-
-  const startCalendarRef = useRef<HTMLDivElement>(null);
-  const endCalendarRef = useRef<HTMLDivElement>(null);
-
-  useClickOutside(startCalendarRef, () => {
-    if (openCalendar === 'start') setOpenCalendar(null);
-  });
-  useClickOutside(endCalendarRef, () => {
-    if (openCalendar === 'end') setOpenCalendar(null);
-  });
 
   if (!isOpen) return null;
 
@@ -44,6 +53,8 @@ export const AddGenerationModal = ({
     setGeneration('');
     setStartDate(null);
     setEndDate(null);
+    setStartDateText('');
+    setEndDateText('');
   };
 
   const handleClose = () => {
@@ -53,34 +64,46 @@ export const AddGenerationModal = ({
 
   const handleSubmit = () => {
     if (!generation || !startDate || !endDate) return;
-    onSave({
-      generation: parseInt(generation),
-      startDate,
-      endDate,
-    });
+    onSave({generation: parseInt(generation), startDate, endDate});
     resetState();
+  };
+
+  const handleStartDateText = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const formatted = formatDateInput(e.target.value);
+    setStartDateText(formatted);
+    const parsed = parseDateText(formatted);
+    setStartDate(parsed);
+    if (parsed && endDate && parsed > endDate) setEndDate(null);
+  };
+
+  const handleEndDateText = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const formatted = formatDateInput(e.target.value);
+    setEndDateText(formatted);
+    setEndDate(parseDateText(formatted));
   };
 
   return (
     <div
-      className='fixed inset-0 z-[100] flex items-center justify-center bg-black/50'
+      className='fixed inset-0 z-[100] flex items-center justify-center bg-black/50 px-6'
       onClick={handleClose}>
       <div
-        className='relative flex w-113.5 flex-col gap-6.5 rounded-[10px] bg-white px-6.5 py-7.5'
+        className='relative flex w-113.5 flex-col gap-4 rounded-[10px] bg-white px-4 py-5 lg:gap-6.5 lg:px-6.5 lg:py-7.5'
         onClick={(e) => e.stopPropagation()}>
         <button
           onClick={handleClose}
-          className='absolute top-6.5 right-6.5'
+          className='absolute top-5 right-4 lg:top-6.5 lg:right-6.5'
           aria-label='닫기'>
           <Close className='h-6 w-6 cursor-pointer' />
         </button>
 
-        <h2 className='text-h4 font-bold text-neutral-800'>
+        <h2 className='text-h5 lg:text-h4 font-bold text-neutral-800'>
           활동 기수 추가하기
         </h2>
 
         <div className='flex flex-col gap-2.5'>
-          <label className='text-h5 font-semibold text-neutral-800'>기수</label>
+          <label className='text-h5 font-bold text-neutral-600 lg:font-semibold'>
+            기수
+          </label>
           <div className='flex items-center gap-2.5'>
             <input
               type='number'
@@ -95,83 +118,47 @@ export const AddGenerationModal = ({
           </div>
         </div>
 
-        <div ref={startCalendarRef} className='relative flex flex-col gap-2.5'>
-          <label className='text-h5 font-semibold text-neutral-800'>
-            시작 날짜
-          </label>
-          <CustomInput
-            value={formatDate(startDate) ?? ''}
-            placeholder='YYYY-MM-DD'
-            className='h-10 w-full bg-neutral-50'
-            textAlign='left'
-            onClick={() =>
-              setOpenCalendar(openCalendar === 'start' ? null : 'start')
-            }
-          />
-          {openCalendar === 'start' && (
-            <div className='absolute top-full left-0 z-10 mt-1 rounded-[10px] bg-white shadow-lg'>
-              <DatePicker
-                selected={startDate}
-                onChange={(date: Date | null) => {
-                  setStartDate(date);
-                  if (date && endDate && date > endDate) {
-                    setEndDate(null);
-                  }
-                  setOpenCalendar(null);
-                }}
-                inline
-                formatWeekDay={(nameOfDay: string) =>
-                  nameOfDay.toLowerCase().slice(0, 3)
-                }
-                renderCustomHeader={(props) => <CustomHeader {...props} />}
-              />
-            </div>
-          )}
-        </div>
+        <DateField
+          label='시작 날짜'
+          date={startDate}
+          dateText={startDateText}
+          isOpen={openCalendar === 'start'}
+          onDateChange={(date) => {
+            setStartDate(date);
+            if (date && endDate && date > endDate) setEndDate(null);
+          }}
+          onTextChange={handleStartDateText}
+          onToggle={() =>
+            setOpenCalendar(openCalendar === 'start' ? null : 'start')
+          }
+          onClose={() => setOpenCalendar(null)}
+        />
 
-        <div ref={endCalendarRef} className='relative flex flex-col gap-2.5'>
-          <label className='text-h5 font-semibold text-neutral-800'>
-            종료 날짜
-          </label>
-          <CustomInput
-            value={formatDate(endDate) ?? ''}
-            placeholder='YYYY-MM-DD'
-            className='h-10 w-full bg-neutral-50'
-            textAlign='left'
-            onClick={() =>
-              setOpenCalendar(openCalendar === 'end' ? null : 'end')
-            }
-          />
-          {openCalendar === 'end' && (
-            <div className='absolute top-full left-0 z-10 mt-1 rounded-[10px] bg-white shadow-lg'>
-              <DatePicker
-                selected={endDate}
-                onChange={(date: Date | null) => {
-                  setEndDate(date);
-                  setOpenCalendar(null);
-                }}
-                minDate={startDate ?? undefined}
-                inline
-                formatWeekDay={(nameOfDay: string) =>
-                  nameOfDay.toLowerCase().slice(0, 3)
-                }
-                renderCustomHeader={(props) => <CustomHeader {...props} />}
-              />
-            </div>
-          )}
-        </div>
+        <DateField
+          label='종료 날짜'
+          date={endDate}
+          dateText={endDateText}
+          isOpen={openCalendar === 'end'}
+          minDate={startDate}
+          onDateChange={setEndDate}
+          onTextChange={handleEndDateText}
+          onToggle={() =>
+            setOpenCalendar(openCalendar === 'end' ? null : 'end')
+          }
+          onClose={() => setOpenCalendar(null)}
+        />
 
         <Button
           label='추가하기'
           variant='primary'
-          width={116}
           height={40}
           borderRadius={5}
           labelTypo='body_l'
           disabled={!generation || !startDate || !endDate}
           enableHover
           onClick={handleSubmit}
-          wrapperClassName='self-end mt-2.5'
+          className='w-full! lg:w-29!'
+          wrapperClassName='mt-2.5 w-full lg:w-auto lg:self-end'
         />
       </div>
     </div>

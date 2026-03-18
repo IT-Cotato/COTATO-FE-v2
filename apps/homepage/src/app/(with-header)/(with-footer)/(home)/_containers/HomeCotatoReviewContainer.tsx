@@ -1,6 +1,13 @@
+'use client';
+
 import {HomeSectionDescription} from '@/app/(with-header)/(with-footer)/(home)/_components/HomeSectionDescription';
 import {HomeMobileCotatoReviewContainer} from '@/app/(with-header)/(with-footer)/(home)/_mobile/_containers/HomeMobileCotatoReviewContainer';
 import {HomeDesktopCotatoReviewContainer} from '@/app/(with-header)/(with-footer)/(home)/_desktop/_containers/HomeDesktopCotatoReviewContainer';
+import {
+  FADE_IN_UP_CONTAINER,
+  FADE_IN_UP_ITEM,
+} from '@/constants/animation/motion-variants';
+import {motion} from 'framer-motion';
 
 export interface CotatoReview {
   id: number;
@@ -13,22 +20,32 @@ export interface CotatoReview {
 
 export const HomeCotatoReviewContainer = () => {
   return (
-    <section
-      className='flex flex-col gap-10 py-10'
-      aria-label='찐감자들의 후기'>
-      <HomeSectionDescription
-        title='찐감자들의 후기'
-        descriptions={[
-          '열정 가득한 찐감자들의 생생한 후기를 통해 코테이토를 만나보세요!',
-        ]}
-        align='end'
-      />
-      <div className='xl:hidden'>
-        <HomeMobileCotatoReviewContainer reviews={COTATO_REVIEWS_DATA} />
-      </div>
-      <div className='hidden xl:block'>
-        <HomeDesktopCotatoReviewContainer reviews={COTATO_REVIEWS_DATA} />
-      </div>
+    <section className='flex flex-col' aria-label='찐감자들의 후기'>
+      <motion.div
+        variants={FADE_IN_UP_CONTAINER}
+        initial='hidden'
+        whileInView='visible'
+        viewport={{once: false, amount: 0.1, margin: '0px 0px -100px 0px'}}
+        className='flex w-full flex-col gap-10 lg:gap-17.5'>
+        <motion.div variants={FADE_IN_UP_ITEM}>
+          <HomeSectionDescription
+            title='찐감자들의 후기'
+            descriptions={[
+              '열정 가득한 찐감자들의 생생한 후기를 통해 코테이토를 만나보세요!',
+            ]}
+            align='end'
+          />
+        </motion.div>
+
+        <motion.div variants={FADE_IN_UP_ITEM}>
+          <div className='xl:hidden'>
+            <HomeMobileCotatoReviewContainer reviews={COTATO_REVIEWS_DATA} />
+          </div>
+          <div className='hidden xl:block'>
+            <HomeDesktopCotatoReviewContainer reviews={COTATO_REVIEWS_DATA} />
+          </div>
+        </motion.div>
+      </motion.div>
     </section>
   );
 };

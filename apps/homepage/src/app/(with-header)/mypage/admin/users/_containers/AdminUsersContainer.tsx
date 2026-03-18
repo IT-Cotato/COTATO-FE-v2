@@ -40,7 +40,9 @@ export const AdminUsersContainer = () => {
 
   return (
     <div className='w-full'>
-      <div role='tablist' className='flex items-end gap-6'>
+      <div
+        role='tablist'
+        className='relative z-10 flex items-end gap-8.5 lg:gap-6'>
         {MEMBER_TABS.map(({label, value}) => (
           <button
             key={value}

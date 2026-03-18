@@ -1,13 +1,6 @@
 'use client';
 
 import {useRef} from 'react';
-import {
-  useSensor,
-  useSensors,
-  PointerSensor,
-  KeyboardSensor,
-} from '@dnd-kit/core';
-import {sortableKeyboardCoordinates} from '@dnd-kit/sortable';
 import {FullButton} from '@repo/ui/components/buttons/FullButton';
 import {ImageInfo} from '@/schemas/project/project-type';
 import {ImagePreviewer} from './ImagePreviewer';
@@ -32,31 +25,35 @@ export const ImageUploadField = ({
     handleRemove,
   } = useImageUpload(onImagesChange, initialImages);
 
-  const sensors = useSensors(
-    useSensor(PointerSensor, {activationConstraint: {distance: 8}}),
-    useSensor(KeyboardSensor, {coordinateGetter: sortableKeyboardCoordinates})
-  );
-
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) handleUpload(e.target.files);
     if (fileInputRef.current) fileInputRef.current.value = '';
   };
 
   return (
-    <div className='flex w-full gap-4'>
-      <div className='flex flex-col gap-4.75'>
-        <ImagePreviewer selectedImage={selectedImage} onRemove={handleRemove} />
-        <FullButton
-          type='button'
-          label='이미지 업로드'
-          labelTypo='body_l_sb'
-          height={46}
-          borderRadius={5}
-          backgroundColor='neutral-400'
-          textColor='neutral-50'
-          onClick={() => fileInputRef.current?.click()}
-          aria-haspopup='dialog'
-        />
+    <div className='flex w-full flex-col gap-4 lg:flex-row'>
+      <div className='flex flex-col gap-4.75 lg:w-100 lg:shrink-0'>
+        <div className='flex flex-col gap-4.75 lg:w-100 lg:shrink-0'>
+          <ImagePreviewer
+            images={images}
+            selectedImage={selectedImage}
+            onSelect={setSelectedId}
+            onRemove={handleRemove}
+          />
+        </div>
+        <div className='hidden lg:block'>
+          <FullButton
+            type='button'
+            label='이미지 업로드'
+            labelTypo='body_l_sb'
+            height={46}
+            borderRadius={5}
+            backgroundColor='neutral-400'
+            textColor='neutral-50'
+            onClick={() => fileInputRef.current?.click()}
+            aria-haspopup='dialog'
+          />
+        </div>
         <input
           id='project-image-input'
           type='file'
@@ -68,12 +65,14 @@ export const ImageUploadField = ({
           aria-label='이미지 파일 선택'
         />
       </div>
-      <ImageSortableList
-        images={images}
-        sensors={sensors}
-        onDragEnd={handleReorder}
-        onSelect={setSelectedId}
-      />
+      <div className='min-w-0 flex-1'>
+        <ImageSortableList
+          images={images}
+          onDragEnd={handleReorder}
+          onSelect={setSelectedId}
+          onAddClick={() => fileInputRef.current?.click()}
+        />
+      </div>
     </div>
   );
 };

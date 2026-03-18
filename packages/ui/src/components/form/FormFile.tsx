@@ -140,7 +140,7 @@ export const FormFile = forwardRef<HTMLInputElement, FormFileProps>(
                   {file.name}
                 </span>
                 <button type='button' onClick={() => handleDelete(index)}>
-                  <DeleteIcon />
+                  <DeleteIcon className='h-6 w-6 text-neutral-800' />
                 </button>
               </>
             )}

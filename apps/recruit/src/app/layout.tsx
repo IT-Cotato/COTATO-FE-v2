@@ -1,4 +1,3 @@
-import {Header} from '@/components/layout/Header';
 import {Metadata} from 'next';
 import '@repo/ui/styles.css';
 import '@/styles/globals.css';
@@ -8,6 +7,7 @@ import {ConditionalAuthProvider} from '@/components/providers/ConditionalAuthPro
 import {GoogleAnalytics} from '@/lib/GoogleAnalytics';
 import {BeUsableRum} from '@/lib/BeUsableRum';
 import {GoogleTagManager, GtmNoscript} from '@/lib/GoogleTagManager';
+import {HeaderContainer} from '@/app/_containers/HeaderContainer';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://recruit.cotato.kr'),
@@ -92,7 +92,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
               />
             ) : null}
             <BeUsableRum />
-            <Header />
+            <HeaderContainer />
             <main className='w-full flex-1'>{children}</main>
           </ConditionalAuthProvider>
         </Providers>

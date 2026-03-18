@@ -19,19 +19,22 @@ export const AllMembersActionBar = ({
   isLoading,
 }: AllMembersActionBarProps) => {
   return (
-    <div className='flex items-end gap-5 pt-7.5'>
-      <button
-        disabled={!hasSelection}
-        onClick={() => onBatchStatusChange('RETIRED')}
-        className='text-body-m h-8 w-23.25 rounded-lg bg-neutral-50 font-semibold text-neutral-600'>
-        수료로 변경
-      </button>
-      <button
-        disabled={!hasSelection}
-        onClick={() => onBatchStatusChange('APPROVED')}
-        className='text-primary text-body-m h-8 w-23.25 rounded-lg bg-neutral-50 font-semibold'>
-        활동 중으로 변경
-      </button>
+    <div className='flex flex-col gap-2.5 pt-7.5 lg:flex-row lg:items-end'>
+      <div className='flex gap-5'>
+        <button
+          disabled={!hasSelection}
+          onClick={() => onBatchStatusChange('RETIRED')}
+          className='text-body-m h-8 w-full rounded-lg bg-neutral-50 font-semibold text-neutral-600 lg:w-23.25'>
+          수료로 변경
+        </button>
+        <button
+          disabled={!hasSelection}
+          onClick={() => onBatchStatusChange('APPROVED')}
+          className='text-primary text-body-m h-8 w-full rounded-lg bg-neutral-50 font-semibold lg:w-23.25'>
+          활동 중으로 변경
+        </button>
+      </div>
+
       <SearchBar
         keyword={keyword}
         onKeywordChange={onKeywordChange}

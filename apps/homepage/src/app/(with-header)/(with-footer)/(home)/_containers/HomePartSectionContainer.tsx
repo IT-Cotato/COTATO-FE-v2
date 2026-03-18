@@ -6,6 +6,10 @@ import {useState, useRef, useEffect} from 'react';
 import {HomeSectionDescription} from '@/app/(with-header)/(with-footer)/(home)/_components/HomeSectionDescription';
 import Image from 'next/image';
 import clsx from 'clsx';
+import {
+  FADE_IN_UP_CONTAINER,
+  FADE_IN_UP_ITEM,
+} from '@/constants/animation/motion-variants';
 
 const PARTS = ['pm', 'design', 'frontend', 'backend'] as const;
 type PartType = (typeof PARTS)[number];
@@ -43,19 +47,25 @@ export const HomePartSectionContainer = () => {
   };
 
   return (
-    <section className='flex flex-col gap-10 lg:gap-17.5'>
-      <HomeSectionDescription
-        title='성장의 시작, 코테이토의 4가지 파트'
-        descriptions={[
-          '코테이토는 기획, 디자인, 프론트엔드, 백엔드 파트로 이루어져 있어요. ',
-          '다양한 스터디와 프로젝트를 통해 실무 역량을 키울 수 있습니다.',
-          '열정만 있다면 누구나 성장할 수 있습니다!',
-        ]}
-        align='start'
-      />
+    <motion.section
+      className='flex flex-col gap-10 lg:gap-17.5'
+      variants={FADE_IN_UP_CONTAINER}
+      initial='hidden'
+      whileInView='visible'
+      viewport={{once: false, amount: 0.1}}>
+      <motion.div variants={FADE_IN_UP_ITEM}>
+        <HomeSectionDescription
+          title='성장의 시작, 코테이토의 4가지 파트'
+          descriptions={[
+            '코테이토는 기획, 디자인, 프론트엔드, 백엔드 파트로 이루어져 있어요. ',
+            '다양한 스터디와 프로젝트를 통해 실무 역량을 키울 수 있습니다.',
+            '열정만 있다면 누구나 성장할 수 있습니다!',
+          ]}
+          align='start'
+        />
+      </motion.div>
 
-      <div className='flex flex-col gap-7.5'>
-        {/* 탭 리스트 */}
+      <motion.div variants={FADE_IN_UP_ITEM} className='flex flex-col gap-7.5'>
         <div
           className='hidden flex-row gap-6 lg:flex'
           role='tablist'
@@ -89,7 +99,6 @@ export const HomePartSectionContainer = () => {
           ))}
         </div>
 
-        {/* 메인 탭 패널 */}
         <div
           className='relative h-60 w-full overflow-hidden rounded-lg bg-neutral-900 lg:h-140 xl:rounded-[40px]'
           id={`tabpanel-${currentPart}`}
@@ -148,39 +157,19 @@ export const HomePartSectionContainer = () => {
           </AnimatePresence>
         </div>
 
-        <div
-          className='flex justify-center lg:hidden'
-          role='tablist'
-          aria-label='파트 선택'>
+        <div className='flex justify-center gap-3 py-2 lg:hidden'>
           {PARTS.map((partKey) => (
-            <button
+            <div
               key={partKey}
-              id={`tab-mobile-${partKey}`}
-              role='tab'
-              aria-selected={currentPart === partKey}
-              aria-controls={`tabpanel-${currentPart}`}
-              onClick={() => handlePartClick(partKey)}
-              className='group relative flex h-5 w-5 items-center justify-center transition-all'
-              aria-label={
-                partKey === 'pm'
-                  ? '기획 파트 보기'
-                  : partKey === 'design'
-                    ? '디자인 파트 보기'
-                    : partKey === 'frontend'
-                      ? '프론트엔드 파트 보기'
-                      : '백엔드 파트 보기'
-              }>
-              <span
-                className={clsx(
-                  'h-1 w-1 rounded-full transition-all duration-300',
-                  currentPart === partKey ? 'bg-neutral-600' : 'bg-neutral-300'
-                )}
-              />
-            </button>
+              className={clsx(
+                'h-1 w-1 rounded-full transition-all duration-300',
+                currentPart === partKey ? 'bg-neutral-600' : 'bg-neutral-300'
+              )}
+            />
           ))}
         </div>
-      </div>
-    </section>
+      </motion.div>
+    </motion.section>
   );
 };
 

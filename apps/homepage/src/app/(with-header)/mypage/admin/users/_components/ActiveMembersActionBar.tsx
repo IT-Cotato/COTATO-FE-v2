@@ -17,7 +17,7 @@ export const ActiveMembersActionBar = ({
   onAddGeneration,
 }: ActiveMembersActionBarProps) => {
   return (
-    <div className='mt-2.5 flex flex-col gap-3.5'>
+    <div className='flex flex-col gap-3.5 lg:mt-2.5'>
       <AddGenerationContainer
         generations={generations}
         selectedGeneration={selectedGeneration}
