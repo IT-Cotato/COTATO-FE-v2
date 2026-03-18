@@ -19,7 +19,6 @@ export const MailSelect = ({activeTab, onTabChange}: MailSelectProps) => {
             <li key={tab}>
               <FullButton
                 label={tab}
-                height={40}
                 borderRadius={0}
                 backgroundColor='white'
                 textColor={isActive ? 'neutral-800' : 'neutral-500'}
@@ -27,6 +26,7 @@ export const MailSelect = ({activeTab, onTabChange}: MailSelectProps) => {
                   'border-none px-0',
                   'text-body-l-b! lg:text-h5!'
                 )}
+                wrapperClassName='h-5.5 lg:h-10'
                 onClick={() => onTabChange(tab)}
               />
             </li>
