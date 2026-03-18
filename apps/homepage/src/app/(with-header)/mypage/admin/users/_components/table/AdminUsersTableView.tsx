@@ -75,7 +75,7 @@ export const AdminUsersTableView = ({
                 <th
                   key={col.key}
                   className={clsx(
-                    'text-body-m lg:text-body-l border-0 py-3 text-center align-middle font-semibold text-neutral-600 lg:px-3 lg:py-4',
+                    'text-body-m lg:text-body-l border-0 bg-neutral-200 py-3 text-center align-middle font-semibold text-neutral-600 lg:px-3 lg:py-4',
                     (col.key === 'school' || col.key === 'phone') &&
                       'hidden lg:table-cell'
                   )}>

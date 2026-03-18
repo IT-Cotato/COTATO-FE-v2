@@ -64,7 +64,7 @@ export const StatusDropdown = <T extends string>({
         aria-haspopup='listbox'
         aria-expanded={isOpen}
         className={clsx(
-          'text-body-m-sb inline-flex w-full items-center justify-center gap-1 rounded-[10px] py-1.5 whitespace-nowrap',
+          'text-body-m-sb inline-flex w-full items-center justify-center gap-1 rounded-[10px] px-1.5 py-1.5 whitespace-nowrap',
           className
         )}
         style={textColor ? {color: textColor} : undefined}

@@ -47,7 +47,7 @@ export const ApprovalTableView = ({
               <th
                 key={col.key}
                 className={clsx(
-                  'text-body-l-sb px-2.5 py-3 text-center align-middle text-neutral-600 lg:px-3 lg:py-4',
+                  'text-body-l-sb bg-neutral-200 px-2.5 py-3 text-center align-middle text-neutral-600 lg:px-3 lg:py-4',
                   (col.key === 'phone' || col.key === 'applicationDate') &&
                     'hidden lg:table-cell'
                 )}>
