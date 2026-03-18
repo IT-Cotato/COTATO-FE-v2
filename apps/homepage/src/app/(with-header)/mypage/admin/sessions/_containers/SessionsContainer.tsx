@@ -75,7 +75,7 @@ export const SessionsContainer = () => {
     : sortedSessions;
 
   return (
-    <div className='flex min-h-125 flex-col gap-2.5'>
+    <div className='flex flex-col gap-2.5 lg:min-h-125'>
       {!isAddingMode && <AddSessionButton onClick={handleAdd} />}
       {displaySessions.length > 0 ? (
         displaySessions.map((adminSession) => (
