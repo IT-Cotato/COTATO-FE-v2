@@ -10,6 +10,8 @@ import {FullButton} from '@repo/ui/components/buttons/FullButton';
 import {getJosa} from '@/utils/getJosa';
 import {formatDateToDot} from '@repo/ui/utils/date';
 import {useSessionForm} from '@/app/(with-header)/mypage/admin/sessions/_hooks/useSessionForm';
+import {useIsMobile} from '@/app/(with-header)/mypage/admin/sessions/_hooks/useIsMobile';
+import {BottomSheet} from './BottomSheet';
 
 const SESSION_MENU_ITEMS = [
   {key: 'edit', label: '수정하기'},
@@ -34,6 +36,7 @@ export const SessionCard = ({
   onUpdate,
 }: SessionCardProps) => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const isMobile = useIsMobile();
 
   const {isEditing, setIsEditing, form, setForm, activeSessionData} =
     useSessionForm(session, isExpanded);
@@ -61,6 +64,41 @@ export const SessionCard = ({
     }
   };
 
+  const handleBottomSheetClose = () => {
+    if (session.sessionId === -1) {
+      onDelete(session.sessionId);
+    } else {
+      onToggle();
+    }
+  };
+
+  const cancelHandler = () => {
+    if (session.sessionId === -1) {
+      onDelete(session.sessionId);
+    } else {
+      setIsEditing(false);
+    }
+  };
+
+  const expandedContent = (
+    <div onClick={(e) => e.stopPropagation()}>
+      {isEditing ? (
+        <SessionExpandedContent
+          key='edit'
+          mode='edit'
+          form={form}
+          onChange={setForm}
+        />
+      ) : (
+        <SessionExpandedContent
+          key='view'
+          mode='view'
+          session={activeSessionData}
+        />
+      )}
+    </div>
+  );
+
   return (
     <div
       className='flex cursor-pointer flex-col gap-5 rounded-[10px] bg-neutral-50 px-5.5 py-6'
@@ -77,26 +115,22 @@ export const SessionCard = ({
         <div
           className='flex items-center gap-2.5'
           onClick={(e) => e.stopPropagation()}>
-          {isEditing ? (
+          {isEditing && !isMobile ? (
             <ActionButtons
-              onCancel={() => {
-                if (session.sessionId === -1) {
-                  onDelete(session.sessionId);
-                } else {
-                  setIsEditing(false);
-                }
-              }}
+              onCancel={cancelHandler}
               onConfirm={handleConfirm}
               confirmLabel='등록'
               cancelVariant='dark'
             />
           ) : (
-            <ActionMenu
-              items={SESSION_MENU_ITEMS}
-              onAction={handleMenuAction}
-              iconClassName='rotate-90'
-              align='right'
-            />
+            !isEditing && (
+              <ActionMenu
+                items={SESSION_MENU_ITEMS}
+                onAction={handleMenuAction}
+                iconClassName='rotate-90'
+                align='right'
+              />
+            )
           )}
         </div>
       </div>
@@ -118,23 +152,25 @@ export const SessionCard = ({
         }
       />
 
-      {isExpanded && (
-        <div onClick={(e) => e.stopPropagation()}>
-          {isEditing ? (
-            <SessionExpandedContent
-              key='edit'
-              mode='edit'
-              form={form}
-              onChange={setForm}
-            />
-          ) : (
-            <SessionExpandedContent
-              key='view'
-              mode='view'
-              session={activeSessionData}
-            />
-          )}
-        </div>
+      {isMobile ? (
+        <BottomSheet
+          isOpen={isExpanded}
+          onClose={handleBottomSheetClose}
+          isEditing={isEditing}
+          footer={
+            isEditing && (
+              <ActionButtons
+                onCancel={cancelHandler}
+                onConfirm={handleConfirm}
+                confirmLabel='등록'
+                cancelVariant='dark'
+              />
+            )
+          }>
+          {expandedContent}
+        </BottomSheet>
+      ) : (
+        isExpanded && expandedContent
       )}
     </div>
   );
