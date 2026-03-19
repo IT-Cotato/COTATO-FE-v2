@@ -1,4 +1,11 @@
+'use client';
+
+import {motion} from 'framer-motion';
 import clsx from 'clsx';
+import {
+  FADE_IN_UP_CONTAINER,
+  FADE_IN_UP_ITEM,
+} from '../../constants/motion-variants';
 
 interface HeroMainBannerProps {
   subheading?: string;
@@ -20,29 +27,38 @@ const HeroMainBanner = ({
     <aside
       role='banner'
       className={clsx(
-        'relative w-full px-10 lg:h-61 lg:px-60',
+        'relative w-full overflow-hidden px-10 lg:h-61 lg:px-60',
         paddingVertical ? 'h-50 py-[59px] lg:py-[79px]' : 'h-auto py-[104px]'
       )}>
       {bannerImage && <>{bannerImage}</>}
+
       <div
         className='absolute inset-0 h-full w-full bg-[#000000]/60'
         aria-hidden='true'
       />
 
-      <div className='relative z-10 flex flex-col gap-2.5 lg:gap-6'>
+      <motion.div
+        className='relative z-10 flex flex-col gap-2.5 lg:gap-6'
+        variants={FADE_IN_UP_CONTAINER}
+        initial='hidden'
+        animate='visible'>
         {subheading && (
-          <p className='text-h5 lg:text-h4 whitespace-nowrap text-neutral-400'>
+          <motion.p
+            className='text-h5 lg:text-h4 whitespace-nowrap text-neutral-400'
+            variants={FADE_IN_UP_ITEM}>
             {subheading}
-          </p>
+          </motion.p>
         )}
-        <h1
+
+        <motion.h1
           className={clsx(
             'text-h5 lg:text-h3 w-min font-bold whitespace-nowrap text-neutral-100',
             headingStyle
-          )}>
+          )}
+          variants={FADE_IN_UP_ITEM}>
           {heading}
-        </h1>
-      </div>
+        </motion.h1>
+      </motion.div>
     </aside>
   );
 };

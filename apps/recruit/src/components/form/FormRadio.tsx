@@ -12,7 +12,7 @@ export const FormRadio = forwardRef<HTMLInputElement, FormRadioProps>(
     return (
       <label
         className={clsx(
-          'flex cursor-pointer items-center gap-6 whitespace-nowrap',
+          'flex cursor-pointer items-center gap-3 whitespace-nowrap lg:gap-6',
           readOnly && 'pointer-events-none cursor-default',
           className
         )}>
@@ -36,7 +36,7 @@ export const FormRadio = forwardRef<HTMLInputElement, FormRadioProps>(
           <div className='bg-active pointer-events-none absolute size-3.5 scale-0 rounded-full transition-transform duration-200 peer-checked:scale-100' />
         </div>
 
-        <span className='sm:text-h5 text-body-l-b font-semibold text-neutral-600'>
+        <span className='lg:text-h5 text-body-l-b font-semibold text-neutral-600'>
           {label}
         </span>
       </label>
