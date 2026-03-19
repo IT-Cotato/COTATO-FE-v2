@@ -6,7 +6,7 @@ interface SessionDetailViewProps {
 
 export const SessionDetailView = ({session}: SessionDetailViewProps) => {
   return (
-    <div className='flex w-full flex-col gap-3.75 rounded-[10px] bg-white px-8.5 py-9'>
+    <div className='flex w-full flex-col gap-3.75 rounded-[10px] bg-white px-5.5 py-6 lg:px-8.5 lg:py-9'>
       <div className='flex flex-col gap-1'>
         <p className='text-h5 text-neutral-400'>{session.generation}</p>
         <p className='text-h3 text-neutral-800'>{session.title}</p>

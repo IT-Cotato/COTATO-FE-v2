@@ -46,9 +46,9 @@ export const SessionImageCarouselEdit = ({
   } = useSessionImageCarousel({sessionId, images, onChange});
 
   return (
-    <div className='flex w-87.5 flex-col'>
+    <div className='flex w-full max-w-87.5 mx-auto flex-col md:w-87.5 md:max-w-none md:mx-0'>
       {/* 큰 미리보기 영역 */}
-      <div className='relative h-57.5 w-87.5 overflow-hidden rounded-[10px] bg-neutral-200'>
+      <div className='relative aspect-video w-full overflow-hidden rounded-[10px] bg-neutral-200 md:aspect-auto md:h-57.5 md:w-87.5'>
         {currentImage ? (
           <>
             {currentImage.imageId < 0 ? (
