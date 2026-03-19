@@ -67,10 +67,12 @@ export const SessionCard = ({
       onClick={handleToggleClick}>
       <div className='flex items-center justify-between'>
         <div className='flex flex-col'>
-          <p className='text-h5 text-neutral-400'>
+          <p className='text-body-l lg:text-h5 text-neutral-400'>
             {formatDateToDot(form.date)}
           </p>
-          <p className='text-h3 text-neutral-800'>{session.title}</p>
+          <p className='text-h5 lg:text-h3 font-bold text-neutral-800'>
+            {session.title}
+          </p>
         </div>
         <div
           className='flex items-center gap-2.5'
