@@ -26,7 +26,7 @@ export const SessionExpandedContent = (props: SessionExpandedContentProps) => {
     ) => onChange((prev) => ({...prev, images: updater(prev.images)}));
 
     return (
-      <div className='flex gap-7'>
+      <div className='flex flex-col justify-center md:flex-row md:gap-7'>
         <SessionImageCarousel
           mode='edit'
           sessionId={form.sessionId}
@@ -39,7 +39,7 @@ export const SessionExpandedContent = (props: SessionExpandedContentProps) => {
   }
 
   return (
-    <div className='flex gap-7'>
+    <div className='flex flex-col md:flex-row md:gap-7'>
       <SessionImageCarousel mode='view' images={props.session.images} />
       <SessionDetail mode='view' session={props.session} />
     </div>
