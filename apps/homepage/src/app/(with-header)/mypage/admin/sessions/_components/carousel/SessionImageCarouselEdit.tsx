@@ -9,7 +9,7 @@ import {
 } from '@dnd-kit/sortable';
 import ChevronLeftIcon from '@/assets/chevrons/chevron-left.svg';
 import ChevronRightIcon from '@/assets/chevrons/chevron-right.svg';
-import PlusIcon from '@repo/ui/assets/icons/plus-nobackground.svg';
+import CameraIcon from '@/assets/camera/camera.svg';
 import ThumbnailImage from '@/assets/thumbnail/thumbnail.svg';
 import ThumbnailMobileImage from '@/assets/thumbnail/thumbnail-mobile.svg';
 import XIcon from '@repo/ui/assets/icons/cancel.svg';
@@ -47,7 +47,7 @@ export const SessionImageCarouselEdit = ({
   } = useSessionImageCarousel({sessionId, images, onChange});
 
   return (
-    <div className='flex w-full max-w-81.75 mx-auto flex-col md:w-87.5 md:max-w-none md:mx-0'>
+    <div className='mx-auto flex w-full max-w-81.75 flex-col md:mx-0 md:w-87.5 md:max-w-none'>
       {/* 큰 미리보기 영역 */}
       <div className='relative aspect-327/186 w-full overflow-hidden rounded-[10px] bg-neutral-200 md:aspect-auto md:h-57.5 md:w-87.5'>
         {currentImage ? (
@@ -148,15 +148,15 @@ export const SessionImageCarouselEdit = ({
             title={`최대 ${MAX_IMAGES}장`}
             aria-disabled={!canAddMore}
             className={clsx(
-              'flex h-20 w-20 shrink-0 flex-col items-center justify-center gap-1 rounded-lg border border-dashed border-neutral-300 bg-neutral-50',
+              'flex h-20 w-20 shrink-0 flex-col items-center justify-center gap-1 rounded-lg border border-neutral-200',
               {
                 'cursor-pointer': canAddMore,
                 'cursor-not-allowed opacity-50': !canAddMore,
               }
             )}
             aria-label='이미지 추가'>
-            <PlusIcon className='h-5 w-5 text-neutral-600' />
-            <span className='text-h5 text-neutral-600'>추가</span>
+            <CameraIcon className='h-5 w-5 text-neutral-600' />
+            <span className='text-h5 text-neutral-200'>추가</span>
           </button>
 
           {/* 숨겨진 파일 input */}
