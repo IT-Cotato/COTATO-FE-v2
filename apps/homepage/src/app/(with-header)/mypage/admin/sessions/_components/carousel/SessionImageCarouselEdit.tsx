@@ -11,6 +11,7 @@ import ChevronLeftIcon from '@/assets/chevrons/chevron-left.svg';
 import ChevronRightIcon from '@/assets/chevrons/chevron-right.svg';
 import PlusIcon from '@repo/ui/assets/icons/plus-nobackground.svg';
 import ThumbnailImage from '@/assets/thumbnail/thumbnail.svg';
+import ThumbnailMobileImage from '@/assets/thumbnail/thumbnail-mobile.svg';
 import XIcon from '@repo/ui/assets/icons/cancel.svg';
 import {SessionImage} from '@/schemas/admin/admin-sessions.schema';
 import {SortableThumbnail} from '@/app/(with-header)/mypage/admin/sessions/_components/carousel/SortableThumbnail';
@@ -46,9 +47,9 @@ export const SessionImageCarouselEdit = ({
   } = useSessionImageCarousel({sessionId, images, onChange});
 
   return (
-    <div className='flex w-full max-w-87.5 mx-auto flex-col md:w-87.5 md:max-w-none md:mx-0'>
+    <div className='flex w-full max-w-81.75 mx-auto flex-col md:w-87.5 md:max-w-none md:mx-0'>
       {/* 큰 미리보기 영역 */}
-      <div className='relative aspect-video w-full overflow-hidden rounded-[10px] bg-neutral-200 md:aspect-auto md:h-57.5 md:w-87.5'>
+      <div className='relative aspect-327/186 w-full overflow-hidden rounded-[10px] bg-neutral-200 md:aspect-auto md:h-57.5 md:w-87.5'>
         {currentImage ? (
           <>
             {currentImage.imageId < 0 ? (
@@ -101,9 +102,14 @@ export const SessionImageCarouselEdit = ({
             )}
           </>
         ) : (
-          <div className='flex h-full w-full items-center justify-center'>
-            <ThumbnailImage />
-          </div>
+          <>
+            <div className='absolute inset-0 flex items-center justify-center md:hidden'>
+              <ThumbnailMobileImage width='100%' height='100%' />
+            </div>
+            <div className='absolute inset-0 hidden items-center justify-center md:flex'>
+              <ThumbnailImage width='100%' height='100%' />
+            </div>
+          </>
         )}
       </div>
 
