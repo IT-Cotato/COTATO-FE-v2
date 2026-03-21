@@ -116,25 +116,6 @@ export const SessionImageCarouselEdit = ({
       {/* 썸네일 목록 */}
       <div className='mt-3.25 flex flex-col gap-3'>
         <div className='session-scrollbar flex gap-2.25 overflow-x-scroll pb-2'>
-          <DndContext
-            sensors={sensors}
-            collisionDetection={closestCenter}
-            onDragEnd={handleDragEnd}>
-            <SortableContext
-              items={images.map((img) => img.imageId)}
-              strategy={horizontalListSortingStrategy}>
-              {images.map((image, index) => (
-                <SortableThumbnail
-                  key={image.imageId}
-                  image={image}
-                  index={index}
-                  isSelected={index === safeIndex}
-                  onClick={() => handleThumbnailClick(index)}
-                />
-              ))}
-            </SortableContext>
-          </DndContext>
-
           {/* 추가 버튼 */}
           <button
             type='button'
@@ -158,6 +139,25 @@ export const SessionImageCarouselEdit = ({
             <CameraIcon className='h-5 w-5 text-neutral-600' />
             <span className='text-h5 text-neutral-200'>추가</span>
           </button>
+
+          <DndContext
+            sensors={sensors}
+            collisionDetection={closestCenter}
+            onDragEnd={handleDragEnd}>
+            <SortableContext
+              items={images.map((img) => img.imageId)}
+              strategy={horizontalListSortingStrategy}>
+              {images.map((image, index) => (
+                <SortableThumbnail
+                  key={image.imageId}
+                  image={image}
+                  index={index}
+                  isSelected={index === safeIndex}
+                  onClick={() => handleThumbnailClick(index)}
+                />
+              ))}
+            </SortableContext>
+          </DndContext>
 
           {/* 숨겨진 파일 input */}
           <input
