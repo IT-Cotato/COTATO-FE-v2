@@ -118,8 +118,14 @@
 
 @utility modal-scrollbar {
   &::-webkit-scrollbar {
-    width: 12px !important;
+    width: 7px !important;
     display: block !important;
+  }
+
+  @media (min-width: 1024px) {
+    &::-webkit-scrollbar {
+      width: 12px !important;
+    }
   }
 
   &::-webkit-scrollbar-track {
