@@ -5,12 +5,11 @@ import TrashIcon from '@/assets/trash/trash.svg';
 import SearchIcon from '@repo/ui/assets/icons/search.svg';
 import ClockIcon from '@/assets/clock/clock.svg';
 import {SessionData} from '@/schemas/admin/admin-sessions.schema';
-import {LocationSearchModal} from './LocationSearchModal';
+import {LocationSearchModal} from '@/app/(with-header)/mypage/admin/sessions/_components/LocationSearchModal';
 
 interface SessionEditFormProps {
   form: SessionData;
   onChange: (updater: (prev: SessionData) => SessionData) => void;
-  actions?: React.ReactNode;
 }
 
 const INPUT_BASE =
@@ -19,7 +18,7 @@ const INPUT_BASE =
 const RADIO_BASE =
   'checked:after:bg-active relative h-6.5 w-6.5 appearance-none rounded-full border-2 border-neutral-300 after:absolute after:top-1/2 after:left-1/2 after:h-4 after:w-4 after:-translate-x-1/2 after:-translate-y-1/2 after:rounded-full after:content-[""] focus:outline-none';
 
-export const SessionEditForm = ({form, onChange, actions}: SessionEditFormProps) => {
+export const SessionEditForm = ({form, onChange}: SessionEditFormProps) => {
   const [isLocationModalOpen, setIsLocationModalOpen] = useState(false);
 
   const set = <K extends keyof SessionData>(field: K, value: SessionData[K]) =>

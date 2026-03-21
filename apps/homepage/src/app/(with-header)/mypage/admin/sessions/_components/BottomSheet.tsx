@@ -29,12 +29,15 @@ export const BottomSheet = ({
 
   return (
     <>
-      <div className='fixed inset-0 z-40 bg-black/50' onClick={onClose} />
+      <div className='fixed inset-0 z-40 bg-black/50' onClick={(e) => { e.stopPropagation(); onClose(); }} />
       <div
         className={`fixed right-0 bottom-0 left-0 z-50 rounded-t-2xl bg-white px-6 ${isEditing ? 'top-34.5 flex flex-col' : ''}`}
         onClick={(e) => e.stopPropagation()}>
         <div className={`relative py-5 ${isEditing ? 'shrink-0' : ''}`}>
-          <button type='button' onClick={onClose} className='absolute right-0'>
+          <button
+            type='button'
+            onClick={onClose}
+            className='absolute right-0 p-1.25'>
             <CancelIcon className='h-2.5 w-2.5 md:h-5 md:w-5' />
           </button>
         </div>

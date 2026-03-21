@@ -1,8 +1,8 @@
 'use client';
 
 import {useState} from 'react';
-import {AddSessionButton} from '../_components/AddSessionButton';
-import {SessionCard} from '../_components/SessionCard';
+import {AddSessionButton} from '@/app/(with-header)/mypage/admin/sessions/_components/AddSessionButton';
+import {SessionCard} from '@/app/(with-header)/mypage/admin/sessions/_components/SessionCard';
 import {useAdminSessionsQuery} from '@/hooks/queries/useSession.query';
 import {useGenerationQuery} from '@/hooks/queries/useGeneration.query';
 import {AdminSession} from '@/schemas/admin/admin-sessions.schema';
@@ -78,18 +78,25 @@ export const SessionsContainer = () => {
     <div className='flex flex-col gap-2.5 lg:min-h-125'>
       {!isAddingMode && <AddSessionButton onClick={handleAdd} />}
       {displaySessions.length > 0 ? (
-        displaySessions.map((adminSession) => (
-          <SessionCard
-            key={adminSession.sessionId === -1 ? 'new' : adminSession.sessionId}
-            session={adminSession}
-            isExpanded={expandedCardId === adminSession.sessionId}
-            onToggle={() => handleToggle(adminSession.sessionId)}
-            onDelete={handleDelete}
-            onUpdate={handleUpdate}
-          />
+        displaySessions.map((adminSession, index) => (
+          <div
+            key={
+              adminSession.sessionId === -1 ? 'new' : adminSession.sessionId
+            }>
+            <SessionCard
+              session={adminSession}
+              isExpanded={expandedCardId === adminSession.sessionId}
+              onToggle={() => handleToggle(adminSession.sessionId)}
+              onDelete={handleDelete}
+              onUpdate={handleUpdate}
+            />
+            {index === displaySessions.length - 1 && (
+              <div className='mt-2.5 h-px bg-neutral-50' />
+            )}
+          </div>
         ))
       ) : (
-        <div className='flex flex-1 items-center justify-center text-center text-neutral-400'>
+        <div className='text-h5 flex flex-1 items-center justify-center text-center font-normal text-neutral-400'>
           아직 등록된 세션이 없습니다.
         </div>
       )}
