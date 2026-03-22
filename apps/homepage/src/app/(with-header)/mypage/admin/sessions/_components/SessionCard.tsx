@@ -68,7 +68,7 @@ export const SessionCard = ({
     if (session.sessionId === -1) {
       onDelete(session.sessionId);
     } else {
-      onToggle();
+      setIsEditing(false);
     }
   };
 
@@ -80,7 +80,7 @@ export const SessionCard = ({
     }
   };
 
-  const expandedContent = (
+  const makeExpandedContent = (showCarousel: boolean) => (
     <div onClick={(e) => e.stopPropagation()}>
       {isEditing ? (
         <SessionExpandedContent
@@ -88,12 +88,14 @@ export const SessionCard = ({
           mode='edit'
           form={form}
           onChange={setForm}
+          showCarousel={showCarousel}
         />
       ) : (
         <SessionExpandedContent
           key='view'
           mode='view'
           session={activeSessionData}
+          showCarousel={showCarousel}
         />
       )}
     </div>
@@ -138,6 +140,7 @@ export const SessionCard = ({
         isOpen={isDeleteModalOpen}
         onClose={() => setIsDeleteModalOpen(false)}
         title={`${session.title}${getJosa(session.title, '을/를')} 삭제하시겠습니까?`}
+        titleStyle='text-h5 font-bold text-neutral-800 lg:text-h4'
         noContent={true}
         contentWrapperClassName='gap-18'
         actions={
@@ -152,25 +155,23 @@ export const SessionCard = ({
         }
       />
 
-      {isMobile ? (
+      {isMobile && isEditing ? (
         <BottomSheet
-          isOpen={isExpanded}
+          isOpen={isEditing}
           onClose={handleBottomSheetClose}
           isEditing={isEditing}
           footer={
-            isEditing && (
-              <ActionButtons
-                onCancel={cancelHandler}
-                onConfirm={handleConfirm}
-                confirmLabel='등록'
-                cancelVariant='dark'
-              />
-            )
+            <ActionButtons
+              onCancel={cancelHandler}
+              onConfirm={handleConfirm}
+              confirmLabel='등록'
+              cancelVariant='dark'
+            />
           }>
-          {expandedContent}
+          {makeExpandedContent(true)}
         </BottomSheet>
       ) : (
-        isExpanded && expandedContent
+        isExpanded && makeExpandedContent(false)
       )}
     </div>
   );

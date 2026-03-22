@@ -5,12 +5,14 @@ import {SessionImageCarousel} from '@/app/(with-header)/mypage/admin/sessions/_c
 interface SessionExpandedContentViewProps {
   mode: 'view';
   session: SessionData;
+  showCarousel?: boolean;
 }
 
 interface SessionExpandedContentEditProps {
   mode: 'edit';
   form: SessionData;
   onChange: (updater: (prev: SessionData) => SessionData) => void;
+  showCarousel?: boolean;
 }
 
 type SessionExpandedContentProps =
@@ -18,6 +20,8 @@ type SessionExpandedContentProps =
   | SessionExpandedContentEditProps;
 
 export const SessionExpandedContent = (props: SessionExpandedContentProps) => {
+  const {showCarousel = true} = props;
+
   if (props.mode === 'edit') {
     const {form, onChange} = props;
 
@@ -27,12 +31,14 @@ export const SessionExpandedContent = (props: SessionExpandedContentProps) => {
 
     return (
       <div className='flex flex-col justify-center md:flex-row md:gap-7'>
-        <SessionImageCarousel
-          mode='edit'
-          sessionId={form.sessionId}
-          images={form.images}
-          onChange={handleImagesChange}
-        />
+        {showCarousel && (
+          <SessionImageCarousel
+            mode='edit'
+            sessionId={form.sessionId}
+            images={form.images}
+            onChange={handleImagesChange}
+          />
+        )}
         <SessionDetail mode='edit' form={form} onChange={onChange} />
       </div>
     );
@@ -40,7 +46,9 @@ export const SessionExpandedContent = (props: SessionExpandedContentProps) => {
 
   return (
     <div className='flex flex-col md:flex-row md:gap-7'>
-      <SessionImageCarousel mode='view' images={props.session.images} />
+      {showCarousel && (
+        <SessionImageCarousel mode='view' images={props.session.images} />
+      )}
       <SessionDetail mode='view' session={props.session} />
     </div>
   );
