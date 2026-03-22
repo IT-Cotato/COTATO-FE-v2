@@ -63,15 +63,7 @@ export const SessionCard = ({
     }
   };
 
-  const handleBottomSheetClose = () => {
-    if (session.sessionId === -1) {
-      onDelete(session.sessionId);
-    } else {
-      setIsEditing(false);
-    }
-  };
-
-  const cancelHandler = () => {
+  const handleCancel = () => {
     if (session.sessionId === -1) {
       onDelete(session.sessionId);
     } else {
@@ -118,7 +110,7 @@ export const SessionCard = ({
           onClick={(e) => e.stopPropagation()}>
           {isEditing && !isMobile ? (
             <ActionButtons
-              onCancel={cancelHandler}
+              onCancel={handleCancel}
               onConfirm={handleConfirm}
               confirmLabel='등록'
               cancelVariant='dark'
@@ -150,11 +142,11 @@ export const SessionCard = ({
       {isMobile && isEditing ? (
         <BottomSheet
           isOpen={isEditing}
-          onClose={handleBottomSheetClose}
+          onClose={handleCancel}
           isEditing={isEditing}
           footer={
             <ActionButtons
-              onCancel={cancelHandler}
+              onCancel={handleCancel}
               onConfirm={handleConfirm}
               confirmLabel='등록'
               cancelVariant='dark'
