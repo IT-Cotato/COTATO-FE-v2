@@ -122,7 +122,7 @@ export const FormFile = forwardRef<HTMLInputElement, FormFileProps>(
             key={index}
             className={clsx(
               formFieldStyles.field,
-              'sm:text-h5 text-body-l mb-2 flex flex-row items-center rounded-[10px] px-[25px] py-4 text-black sm:px-10'
+              'lg:text-h5 text-body-l mb-2 flex flex-row items-center rounded-[10px] px-[25px] text-black lg:px-10 lg:py-4'
             )}>
             <FolderIcon />
             {props.readOnly ? (
@@ -150,7 +150,7 @@ export const FormFile = forwardRef<HTMLInputElement, FormFileProps>(
         {!props.readOnly && (
           <label
             className={clsx(
-              'sm:text-h5 text-body-l flex h-19 items-center justify-center rounded-[10px] bg-neutral-400 px-10 py-4 text-center text-white',
+              'lg:text-h5 text-body-l flex h-19 items-center justify-center rounded-[10px] bg-neutral-400 px-10 py-4 text-center text-white',
               isUploading ? 'cursor-not-allowed opacity-60' : 'cursor-pointer'
             )}>
             <span>{isUploading ? '파일 업로드 중입니다' : placeholder}</span>
