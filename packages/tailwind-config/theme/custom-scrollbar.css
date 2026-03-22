@@ -120,10 +120,8 @@
   &::-webkit-scrollbar {
     width: 7px !important;
     display: block !important;
-  }
 
-  @media (min-width: 1024px) {
-    &::-webkit-scrollbar {
+    `@media` (min-width: 1024px) {
       width: 12px !important;
     }
   }
