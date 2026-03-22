@@ -28,14 +28,14 @@ export const ConfirmModal = ({
 
   return (
     <div
-      className='z-modal fixed inset-0 flex items-center justify-center bg-black/50 backdrop-blur-sm'
+      className='z-modal fixed inset-0 flex items-center justify-center bg-black/50 px-6 backdrop-blur-sm'
       role='dialog'
       aria-modal='true'
       aria-labelledby='confirm-modal-title'
       aria-describedby={description ? 'confirm-modal-description' : undefined}
       onClick={onClose}>
       <div
-        className='relative w-81.25 rounded-[20px] bg-white px-5 py-8 lg:w-127.5 lg:px-10 lg:py-12'
+        className='relative h-50 w-81.25 rounded-[20px] bg-white px-5 py-8 lg:h-auto lg:w-127.5 lg:px-10 lg:py-12'
         onClick={(e) => e.stopPropagation()}>
         <button
           type='button'
@@ -44,8 +44,8 @@ export const ConfirmModal = ({
           aria-label='닫기'>
           <XIcon className='h-2.25 w-2.25 cursor-pointer text-neutral-800 lg:h-3 lg:w-3' />
         </button>
-        <div className='flex flex-col items-center gap-4 text-center lg:gap-6'>
-          <div className='flex flex-col items-center gap-1.25 lg:gap-4'>
+        <div className='flex h-full flex-col items-center gap-6 text-center lg:gap-6'>
+          <div className='flex flex-1 flex-col items-center justify-center gap-1.25 lg:flex-none lg:justify-start lg:gap-4'>
             <h4
               id='confirm-modal-title'
               className='text-h5 lg:text-h4 font-bold text-neutral-700'>
@@ -59,7 +59,7 @@ export const ConfirmModal = ({
               </p>
             )}
           </div>
-          <div className='flex w-full justify-center gap-2'>
+          <div className='mt-auto flex w-full justify-center gap-2 lg:mt-auto'>
             {cancelLabel && (
               <button
                 type='button'
