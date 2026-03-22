@@ -5,8 +5,7 @@ import {AdminSession, SessionData} from '@/schemas/admin/admin-sessions.schema';
 import {ActionMenu} from '@/app/(with-header)/mypage/admin/_components/ActionMenu';
 import {ActionButtons} from '@/app/(with-header)/mypage/admin/_components/ActionButtons';
 import {SessionExpandedContent} from './SessionExpandedContent';
-import {Modal} from '@repo/ui/components/modal/Modal';
-import {FullButton} from '@repo/ui/components/buttons/FullButton';
+import {ConfirmModal} from '@/app/(with-header)/mypage/admin/_components/ConfirmModal';
 import {getJosa} from '@/utils/getJosa';
 import {formatDateToDot} from '@repo/ui/utils/date';
 import {useSessionForm} from '@/app/(with-header)/mypage/admin/sessions/_hooks/useSessionForm';
@@ -136,23 +135,16 @@ export const SessionCard = ({
           )}
         </div>
       </div>
-      <Modal
+      <ConfirmModal
         isOpen={isDeleteModalOpen}
         onClose={() => setIsDeleteModalOpen(false)}
         title={`${session.title}${getJosa(session.title, '을/를')} 삭제하시겠습니까?`}
-        titleStyle='text-h5 font-bold text-neutral-800 lg:text-h4'
-        noContent={true}
-        contentWrapperClassName='gap-18'
-        actions={
-          <FullButton
-            variant='primary'
-            label='확인'
-            onClick={() => {
-              onDelete(session.sessionId);
-              setIsDeleteModalOpen(false);
-            }}
-          />
-        }
+        onConfirm={() => {
+          onDelete(session.sessionId);
+          setIsDeleteModalOpen(false);
+        }}
+        confirmLabel='확인'
+        cancelLabel={false}
       />
 
       {isMobile && isEditing ? (
@@ -171,7 +163,7 @@ export const SessionCard = ({
           {makeExpandedContent(true)}
         </BottomSheet>
       ) : (
-        isExpanded && makeExpandedContent(false)
+        isExpanded && makeExpandedContent(!isMobile)
       )}
     </div>
   );
