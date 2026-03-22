@@ -10,7 +10,7 @@ export const GenerationField = ({
   disabled,
 }: GenerationFieldProps) => {
   return (
-    <div className='flex w-23.75 flex-col gap-2'>
+    <div className='flex w-26.75 flex-col gap-2 lg:w-23.75'>
       <label className='text-body-l text-neutral-600'>기수 정보</label>
       <div className='flex items-center gap-2'>
         <input

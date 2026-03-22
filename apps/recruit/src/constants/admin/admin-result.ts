@@ -8,6 +8,6 @@ export const RESULT_PARTS = [
 
 export const STATUS_LABEL_MAP = {
   PASS: '합격',
-  WAITLISTED: '예비 합격',
+  WAITLISTED: '예비합격',
   FAIL: '불합격',
 } as const;

@@ -1,8 +1,9 @@
 'use client';
 
 import {AdminUsersTableView} from '@/app/(with-header)/mypage/admin/users/_components/table/AdminUsersTableView';
-import {ConfirmDeleteModal} from '@/app/(with-header)/mypage/admin/users/_components/table/ConfirmDeleteModal';
+import {ConfirmModal} from '@/app/(with-header)/mypage/admin/_components/ConfirmModal';
 import {MemberDetailModal} from '@/app/(with-header)/mypage/admin/users/_components/table/MemberDetailModal';
+import {getJosa} from '@/utils/getJosa';
 import {ActiveMembersActionBar} from '@/app/(with-header)/mypage/admin/users/_components/ActiveMembersActionBar';
 import {SearchBar} from '@/app/(with-header)/mypage/admin/_components/SearchBar';
 import {Pagination} from '@repo/ui/components/pagination/Pagination';
@@ -81,11 +82,21 @@ export const ActiveMembersTableContainer = () => {
         />
       </div>
 
-      <ConfirmDeleteModal
+      <ConfirmModal
         isOpen={isDeleteModalOpen}
         onClose={() => setIsDeleteModalOpen(false)}
         onConfirm={handleConfirmDelete}
-        itemName={memberToDelete?.name ?? ''}
+        title={
+          <span className='text-h4 text-neutral-700'>
+            정말로{' '}
+            <span className='text-primary font-semibold'>
+              {memberToDelete?.name ?? ''}
+            </span>
+            {getJosa(memberToDelete?.name ?? '', '을/를')} 삭제하시겠습니까?
+          </span>
+        }
+
+        confirmLabel='삭제'
       />
 
       <MemberDetailModal

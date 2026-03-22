@@ -1,7 +1,7 @@
-import {MemberTabType} from '@/constants/admin/admin';
 import {MemberType} from '@/schemas/admin/admin-members.schema';
 import {formatPhoneNumber} from '@/utils/formatPhoneNumber';
 import {
+  MemberTabType,
   MEMBER_COLUMNS,
   MEMBER_ROLE_CONFIG,
   MEMBER_ROLE_OPTIONS,
@@ -23,7 +23,7 @@ import {Checkbox} from '@repo/ui/components/checkbox/CheckBox';
 import {useClickOutside} from '@repo/ui/hooks/useClickOutside';
 import {StatusDropdown} from '@repo/ui/components/dropdown/StatusDropdown';
 import {ActionMenu} from '@/app/(with-header)/mypage/admin/_components/ActionMenu';
-import {SelectedMemberChip} from '../../../_components/SelectedMemberChip';
+import {SelectedMembersBar} from '@/app/(with-header)/mypage/admin/_components/SelectedMembersBar';
 import clsx from 'clsx';
 
 interface AdminUsersTableViewProps {
@@ -75,12 +75,12 @@ export const AdminUsersTableView = ({
                 <th
                   key={col.key}
                   className={clsx(
-                    'text-body-m lg:text-body-l border-0 py-3 text-center align-middle font-semibold text-neutral-600 lg:px-3 lg:py-4',
+                    'text-body-m lg:text-body-l border-0 bg-neutral-200 py-3 text-center align-middle font-semibold text-neutral-600 lg:px-3 lg:py-4',
                     (col.key === 'school' || col.key === 'phone') &&
                       'hidden lg:table-cell'
                   )}>
                   {isNameColumn && isAllTab ? (
-                    <div className='flex items-center px-2'>
+                    <div className='flex items-center gap-0.5 px-2'>
                       <span className='shrink-0'>
                         <Checkbox
                           checked={isAllSelected}
@@ -137,8 +137,8 @@ export const AdminUsersTableView = ({
             <tr
               key={member.memberId}
               className='text-body-m lg:text-body-l text-neutral-600'>
-              <td className='truncate border-0 py-3 lg:px-3 lg:py-4'>
-                <div className='flex items-center px-2'>
+              <td className='truncate border-0 px-2.5 py-3 lg:px-3 lg:py-4'>
+                <div className='flex items-center gap-0.5 px-2'>
                   {isAllTab && (
                     <span className='shrink-0'>
                       <Checkbox
@@ -166,7 +166,7 @@ export const AdminUsersTableView = ({
               <td className='hidden truncate border-0 py-3 text-center lg:table-cell lg:px-3 lg:py-4'>
                 {formatPhoneNumber(member.phoneNumber)}
               </td>
-              <td className='border-0 py-3 lg:px-3 lg:py-4'>
+              <td className='border-0 px-2.5 py-3 lg:px-3 lg:py-4'>
                 <div className='flex items-center justify-center lg:gap-2'>
                   {isAllTab ? (
                     <StatusDropdown
@@ -209,23 +209,12 @@ export const AdminUsersTableView = ({
           ))}
         </tbody>
       </table>
-      {isAllTab && selectedIds.length > 0 && (
-        <div className='bg-neutral-100 px-6 py-3 lg:px-12 lg:py-2.75'>
-          <div className='flex flex-wrap items-center gap-5.5'>
-            <span className='text-body-l pr-1.25 text-neutral-600'>
-              선택 {selectedIds.length}
-            </span>
-            {allItems
-              .filter((m) => selectedIds.includes(m.memberId))
-              .map((m) => (
-                <SelectedMemberChip
-                  key={m.memberId}
-                  name={m.name}
-                  onRemove={() => onSelect(m.memberId, false)}
-                />
-              ))}
-          </div>
-        </div>
+      {isAllTab && (
+        <SelectedMembersBar
+          selectedIds={selectedIds}
+          allItems={allItems}
+          onRemove={(id) => onSelect(id, false)}
+        />
       )}
     </>
   );

@@ -12,6 +12,10 @@
   }
 }
 
+.react-datepicker-wrapper {
+  width: 100% !important;
+}
+
 .react-datepicker {
   border: none !important;
   border-radius: 16px !important;

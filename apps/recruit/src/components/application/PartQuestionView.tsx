@@ -49,7 +49,7 @@ export const PartQuestionView = ({
     questionsWithAnswers[questionsWithAnswers.length - 1]?.sequence;
 
   return (
-    <div className='flex flex-col gap-3.5 sm:gap-10'>
+    <div className='flex flex-col gap-3.5 py-5 lg:gap-10'>
       {questionsWithAnswers.map((data) => {
         const isLastQuestion = data.sequence === lastSequence;
 
@@ -95,20 +95,20 @@ export const PartQuestionView = ({
         );
       })}
 
-      <div className='flex flex-row gap-7.5'>
+      <div className='flex flex-row gap-3 lg:gap-7.5'>
         <FullButton
           label='이전'
           backgroundColor='neutral-600'
           onClick={onPrev}
-          height={54}
-          className='sm:text-h4 text-h5'
+          wrapperClassName='lg:h-[54px] h-[42px]'
+          className='lg:text-h4 text-h5'
         />
 
         <FullButton
           label='다음'
           onClick={onNext}
-          height={54}
-          className='sm:text-h4 text-h5'
+          wrapperClassName='lg:h-[54px] h-[42px]'
+          className='lg:text-h4 text-h5'
         />
       </div>
     </div>

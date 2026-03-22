@@ -5,7 +5,7 @@ import {SuspenseWrapper} from '@/components/wrappers/SuspenseWrapper';
 export default function AddProjectPage() {
   return (
     <ProtectedRoute requireRole='ADMIN'>
-      <div className='flex min-w-275 flex-col'>
+      <div className='flex w-full flex-col'>
         <SuspenseWrapper>
           <AddProjectFormContainer />
         </SuspenseWrapper>

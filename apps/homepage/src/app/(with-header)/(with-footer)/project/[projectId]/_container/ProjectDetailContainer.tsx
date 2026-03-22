@@ -8,7 +8,7 @@ import {useAuthStore} from '@/store/useAuthStore';
 import {useDeleteProjectMutation} from '@/hooks/mutations/useProject.mutation';
 import {ProjectDeleteModal} from '@/app/(with-header)/(with-footer)/project/[projectId]/_components/ProjectDeleteModal';
 import {ROUTES} from '@/constants/routes';
-import {ProjectDetailMobile} from '@/app/(with-header)/(with-footer)/project/[projectId]/mobile/ProjectDetailMobile';
+import {ProjectDetailMobile} from '@/app/(with-header)/(with-footer)/project/[projectId]/_mobile/ProjectDetailMobile';
 import {ProjectDetailDesktop} from '@/app/(with-header)/(with-footer)/project/[projectId]/_container/ProjectDetailDesktop';
 
 export const ProjectDetailContainer = () => {
