@@ -9,7 +9,6 @@ import {ConfirmModal} from '@/app/(with-header)/mypage/admin/_components/Confirm
 import {getJosa} from '@/utils/getJosa';
 import {formatDateToDot} from '@repo/ui/utils/date';
 import {useSessionForm} from '@/app/(with-header)/mypage/admin/sessions/_hooks/useSessionForm';
-import {useIsMobile} from '@/app/(with-header)/mypage/admin/sessions/_hooks/useIsMobile';
 import {BottomSheet} from './BottomSheet';
 
 const SESSION_MENU_ITEMS = [
@@ -35,9 +34,7 @@ export const SessionCard = ({
   onUpdate,
 }: SessionCardProps) => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const isMobile = useIsMobile();
-
-  const {isEditing, setIsEditing, form, setForm, activeSessionData} =
+const {isEditing, setIsEditing, form, setForm, activeSessionData} =
     useSessionForm(session, isExpanded);
 
   const handleToggleClick = () => {
@@ -108,22 +105,22 @@ export const SessionCard = ({
         <div
           className='flex items-center gap-2.5'
           onClick={(e) => e.stopPropagation()}>
-          {isEditing && !isMobile ? (
-            <ActionButtons
-              onCancel={handleCancel}
-              onConfirm={handleConfirm}
-              confirmLabel='등록'
-              cancelVariant='dark'
-            />
-          ) : (
-            !isEditing && (
-              <ActionMenu
-                items={SESSION_MENU_ITEMS}
-                onAction={handleMenuAction}
-                iconClassName='rotate-90'
-                align='right'
+          {isEditing ? (
+            <div className='hidden md:block'>
+              <ActionButtons
+                onCancel={handleCancel}
+                onConfirm={handleConfirm}
+                confirmLabel='등록'
+                cancelVariant='dark'
               />
-            )
+            </div>
+          ) : (
+            <ActionMenu
+              items={SESSION_MENU_ITEMS}
+              onAction={handleMenuAction}
+              iconClassName='rotate-90'
+              align='right'
+            />
           )}
         </div>
       </div>
@@ -139,24 +136,29 @@ export const SessionCard = ({
         cancelLabel={false}
       />
 
-      {isMobile && isEditing ? (
-        <BottomSheet
-          isOpen={isEditing}
-          onClose={handleCancel}
-          isEditing={isEditing}
-          footer={
-            <ActionButtons
-              onCancel={handleCancel}
-              onConfirm={handleConfirm}
-              confirmLabel='등록'
-              cancelVariant='dark'
-            />
-          }>
-          {makeExpandedContent(true)}
-        </BottomSheet>
-      ) : (
-        isExpanded && makeExpandedContent(!isMobile)
-      )}
+      <div className='md:hidden'>
+        {isEditing ? (
+          <BottomSheet
+            isOpen={isEditing}
+            onClose={handleCancel}
+            isEditing={isEditing}
+            footer={
+              <ActionButtons
+                onCancel={handleCancel}
+                onConfirm={handleConfirm}
+                confirmLabel='등록'
+                cancelVariant='dark'
+              />
+            }>
+            {makeExpandedContent(true)}
+          </BottomSheet>
+        ) : (
+          isExpanded && makeExpandedContent(false)
+        )}
+      </div>
+      <div className='hidden md:block'>
+        {isExpanded && makeExpandedContent(true)}
+      </div>
     </div>
   );
 };
