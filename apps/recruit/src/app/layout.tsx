@@ -82,7 +82,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
       lang='ko'
       className={`${pretendard.variable} ${roboto.variable} antialiased`}>
       {gtmId && <GoogleTagManager gtmId={gtmId} />}
-      <body className='flex min-h-screen w-full flex-col bg-black'>
+      <body className='flex min-h-screen w-full flex-col'>
         <Providers>
           <ConditionalAuthProvider>
             {gtmId && <GtmNoscript gtmId={gtmId} />}
