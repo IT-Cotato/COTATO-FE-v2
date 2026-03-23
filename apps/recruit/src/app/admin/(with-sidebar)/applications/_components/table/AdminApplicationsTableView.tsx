@@ -68,9 +68,8 @@ export const AdminApplicationsTableView = ({
 
             const isResultColumn = col.key === 'result';
 
-            {
-              /** 모바일뷰에서 전화번호, 제출일자 숨김 처리 */
-            }
+            // 모바일뷰에서 전화번호, 제출일자 숨김 처리
+
             const isHiddenOnMobile =
               col.key === 'phone' || col.key === 'submitDate';
 
