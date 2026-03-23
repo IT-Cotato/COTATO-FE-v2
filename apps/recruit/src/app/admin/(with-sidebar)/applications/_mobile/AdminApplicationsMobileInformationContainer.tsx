@@ -76,10 +76,10 @@ export const AdminApplicationsMobileInformationContainer = ({
               ) : (
                 <>
                   <p className='rounded-[10px] bg-neutral-50 px-2.5 py-1.25'>
-                    {recruitmentPeriod?.recruitmentStart?.slice(0, 10)}
+                    {recruitmentPeriod?.recruitmentStart?.slice(0, 10) ?? '-'}
                   </p>
                   <p className='rounded-[10px] bg-neutral-50 px-2.5 py-1.25'>
-                    {recruitmentPeriod?.recruitmentEnd?.slice(0, 10)}
+                    {recruitmentPeriod?.recruitmentEnd?.slice(0, 10) ?? '-'}
                   </p>
                 </>
               )}
