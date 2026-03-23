@@ -53,7 +53,10 @@ export const AdminApplicationsTabContainer = ({
   };
 
   return (
-    <div className='flex gap-7.5' role='tablist' aria-label='지원 파트 선택'>
+    <div
+      className='flex gap-5 lg:gap-7.5'
+      role='tablist'
+      aria-label='지원 파트 선택'>
       {APPLICATIONS_PART_TABS.map(({label, value}, index) => {
         const countKey = PART_COUNT_MAP[value];
         const applyNumber = summary?.[countKey];
@@ -61,6 +64,7 @@ export const AdminApplicationsTabContainer = ({
         return (
           <AdminApplicationsTabPart
             key={value}
+            value={value}
             partName={label}
             applyNumber={isLoading ? undefined : applyNumber}
             isActive={isActive}

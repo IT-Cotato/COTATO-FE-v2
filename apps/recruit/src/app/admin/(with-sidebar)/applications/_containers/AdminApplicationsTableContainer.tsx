@@ -98,7 +98,9 @@ export const AdminApplicationsTableContainer = ({
             {/* 쿼리 갱신 로딩 */}
             {isLoading && (
               <div className='absolute inset-0 z-10 flex items-center justify-center'>
-                <Spinner size='lg' />
+                <Spinner size='sm' className='block lg:hidden' />
+
+                <Spinner size='lg' className='hidden lg:block' />
               </div>
             )}
 
