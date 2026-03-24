@@ -53,7 +53,7 @@ export const AdminApplicationsMobileInformationContainer = ({
   return (
     <aside className='flex flex-col gap-2.5 rounded-[10px] bg-neutral-100 px-5 py-3.25 lg:hidden'>
       <h2 className='text-body-l-b text-neutral-800'>활동 정보</h2>
-      <div className='flex flex-row justify-between gap-2.5'>
+      <div className='flex flex-row gap-2.5'>
         <div className='flex flex-col gap-2'>
           <p className='text-body-l flex flex-row gap-2.5 text-neutral-600'>
             기수 정보
