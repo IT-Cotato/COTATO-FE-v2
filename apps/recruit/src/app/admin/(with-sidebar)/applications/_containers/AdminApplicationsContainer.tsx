@@ -16,7 +16,8 @@ export const AdminApplicationsContainer = () => {
   const searchParams = useSearchParams();
 
   /** 기수 목록 조회 */
-  const {data: generationsData} = useAdminGenerationsQuery();
+  const {data: generationsData, isLoading: isGenerationLoading} =
+    useAdminGenerationsQuery();
   const {setGenerations, generations} = useGenerationStore();
   const generationList = generations.map((g) => String(g.generationId));
   const currentGeneration =
@@ -47,15 +48,7 @@ export const AdminApplicationsContainer = () => {
 
   const {data, isLoading, isFetching} = useAdminApplicationsQuery(filter);
 
-  if (!currentGeneration) {
-    return (
-      <div className='flex h-100 w-full items-center justify-center'>
-        <p className='text-neutral-500'>등록된 기수 정보가 없습니다.</p>
-      </div>
-    );
-  }
-
-  const isInitialLoading = isLoading && !data;
+  const isInitialLoading = isGenerationLoading && isLoading && !data;
   const isRefreshing = isFetching && !!data;
 
   if (isInitialLoading) {
@@ -63,6 +56,14 @@ export const AdminApplicationsContainer = () => {
       <div className='flex h-[calc(100vh-200px)] items-center justify-center'>
         <Spinner size='sm' className='block lg:hidden' />
         <Spinner size='lg' className='hidden lg:block' />
+      </div>
+    );
+  }
+
+  if (!currentGeneration) {
+    return (
+      <div className='flex h-100 w-full items-center justify-center'>
+        <p className='text-neutral-500'>등록된 기수 정보가 없습니다.</p>
       </div>
     );
   }
