@@ -54,7 +54,7 @@ export const AdminApplicationsTabContainer = ({
 
   return (
     <div
-      className='flex gap-5 lg:gap-7.5'
+      className='flex gap-3.5 lg:gap-7.5'
       role='tablist'
       aria-label='지원 파트 선택'>
       {APPLICATIONS_PART_TABS.map(({label, value}, index) => {
