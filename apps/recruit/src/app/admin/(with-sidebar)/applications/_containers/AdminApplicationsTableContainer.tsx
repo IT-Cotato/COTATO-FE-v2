@@ -139,7 +139,7 @@ export const AdminApplicationsTableContainer = ({
 
       {/* 로딩 끝 + 데이터 없음 */}
       {isEmpty && (
-        <div className='text-body-l flex w-full justify-center pt-56.5 font-normal'>
+        <div className='text-body-l flex w-full justify-center pt-30 font-normal text-neutral-500 lg:pt-56.5'>
           아직 지원자가 없습니다.
         </div>
       )}
