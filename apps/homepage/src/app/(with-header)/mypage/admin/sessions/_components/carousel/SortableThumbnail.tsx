@@ -44,6 +44,9 @@ export const SortableThumbnail = ({
         sizes='80px'
         className='object-cover'
       />
+      <span className='text-h5 absolute top-1/2 left-1/2 flex h-7.5 w-7.5 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-sm bg-neutral-400/60 font-bold text-white'>
+        {index + 1}
+      </span>
     </button>
   );
 };
