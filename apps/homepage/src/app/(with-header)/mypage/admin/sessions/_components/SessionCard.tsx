@@ -1,6 +1,7 @@
 'use client';
 
 import {useState} from 'react';
+import {useIsMobile} from '@/app/(with-header)/mypage/admin/sessions/_hooks/useIsMobile';
 import {AdminSession, SessionData} from '@/schemas/admin/admin-sessions.schema';
 import {ActionMenu} from '@/app/(with-header)/mypage/admin/_components/ActionMenu';
 import {ActionButtons} from '@/app/(with-header)/mypage/admin/_components/ActionButtons';
@@ -34,7 +35,8 @@ export const SessionCard = ({
   onUpdate,
 }: SessionCardProps) => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-const {isEditing, setIsEditing, form, setForm, activeSessionData} =
+  const {isMobile, mounted} = useIsMobile();
+  const {isEditing, setIsEditing, form, setForm, activeSessionData} =
     useSessionForm(session, isExpanded);
 
   const handleToggleClick = () => {
@@ -105,22 +107,22 @@ const {isEditing, setIsEditing, form, setForm, activeSessionData} =
         <div
           className='flex items-center gap-2.5'
           onClick={(e) => e.stopPropagation()}>
-          {isEditing ? (
-            <div className='hidden md:block'>
-              <ActionButtons
-                onCancel={handleCancel}
-                onConfirm={handleConfirm}
-                confirmLabel='등록'
-                cancelVariant='dark'
-              />
-            </div>
-          ) : (
-            <ActionMenu
-              items={SESSION_MENU_ITEMS}
-              onAction={handleMenuAction}
-              iconClassName='rotate-90'
-              align='right'
+          {isEditing && mounted && !isMobile ? (
+            <ActionButtons
+              onCancel={handleCancel}
+              onConfirm={handleConfirm}
+              confirmLabel='등록'
+              cancelVariant='dark'
             />
+          ) : (
+            !isEditing && (
+              <ActionMenu
+                items={SESSION_MENU_ITEMS}
+                onAction={handleMenuAction}
+                iconClassName='rotate-90'
+                align='right'
+              />
+            )
           )}
         </div>
       </div>
@@ -136,8 +138,8 @@ const {isEditing, setIsEditing, form, setForm, activeSessionData} =
         cancelLabel={false}
       />
 
-      <div className='md:hidden'>
-        {isEditing ? (
+      {mounted && isMobile ? (
+        isEditing ? (
           <BottomSheet
             isOpen={isEditing}
             onClose={handleCancel}
@@ -154,11 +156,10 @@ const {isEditing, setIsEditing, form, setForm, activeSessionData} =
           </BottomSheet>
         ) : (
           isExpanded && makeExpandedContent(false)
-        )}
-      </div>
-      <div className='hidden md:block'>
-        {isExpanded && makeExpandedContent(true)}
-      </div>
+        )
+      ) : (
+        isExpanded && makeExpandedContent(true)
+      )}
     </div>
   );
 };
