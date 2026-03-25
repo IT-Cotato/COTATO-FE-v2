@@ -7,19 +7,19 @@ import {RecruitmentPeriodSchemaType} from '@/schemas/admin/admin-applications.sc
 import {useRouter, useSearchParams} from 'next/navigation';
 import {useState} from 'react';
 
-interface AdminApplicationsInformationProps {
+interface AdminApplicationsDesktopInformationContainerProps {
   generation: string;
   generations: string[];
   recruitmentPeriod?: RecruitmentPeriodSchemaType;
   isLoading: boolean;
 }
 
-export const AdminApplicationsInformation = ({
+export const AdminApplicationsDesktopInformationContainer = ({
   generation,
   generations,
   recruitmentPeriod,
   isLoading,
-}: AdminApplicationsInformationProps) => {
+}: AdminApplicationsDesktopInformationContainerProps) => {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -52,7 +52,7 @@ export const AdminApplicationsInformation = ({
 
   return (
     <div
-      className='flex w-full justify-between gap-50 gap-y-4 rounded-[10px] bg-neutral-100 p-4'
+      className='hidden w-full justify-between gap-50 gap-y-4 rounded-[10px] bg-neutral-100 p-4 lg:flex'
       aria-busy={isLoading}>
       <div className='flex flex-row gap-7.25'>
         <div

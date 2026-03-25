@@ -94,7 +94,7 @@ export const StatusDropdown = <T extends string>({
                 aria-selected={isSelected}
                 tabIndex={isSelected ? 0 : -1}
                 className={clsx(
-                  'cursor-pointer px-3 py-1.5 text-center',
+                  'cursor-pointer py-1.5 text-center lg:px-3',
                   isSelected ? 'text-primary' : 'hover:text-primary',
                   disabled && 'pointer-events-none opacity-60'
                 )}
