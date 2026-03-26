@@ -1,4 +1,4 @@
-import {AdminDatePicker} from '@/app/admin/(with-sidebar)/application-edit/_components/calendar/AdminDatePicker';
+import {AdminDatePickerButtonContainer} from '@/app/admin/(with-sidebar)/application-edit/_containers/AdminDatePickerButtonContainer';
 import RightArrowIcon from '@/assets/icons/arrow-right.svg';
 import clsx from 'clsx';
 
@@ -19,13 +19,13 @@ export const RecruitmentInfoEditRow = ({
   const isRange = type === 'range';
 
   return (
-    <div className='flex items-center gap-7.5'>
-      <div className='text-h5 w-42.5 shrink-0 rounded-[10px] border-2 border-neutral-100 py-2 text-center'>
+    <div className='flex items-center gap-1.75 lg:gap-7.5'>
+      <div className='text-body-l-b lg:text-h5 w-25.5 shrink-0 rounded-[10px] border-2 border-neutral-100 py-2 text-center lg:w-42.5'>
         {label}
       </div>
 
       <div className='flex flex-1 items-center gap-3'>
-        <AdminDatePicker
+        <AdminDatePickerButtonContainer
           value={start}
           onChange={(nextStart) =>
             onChange({
@@ -37,7 +37,7 @@ export const RecruitmentInfoEditRow = ({
 
         <RightArrowIcon
           className={clsx(
-            'text-neutral-400 transition-opacity',
+            'hidden text-neutral-400 transition-opacity lg:block',
             !isRange && 'opacity-0'
           )}
         />
@@ -47,7 +47,7 @@ export const RecruitmentInfoEditRow = ({
             !isRange && 'pointer-events-none opacity-0',
             'flex flex-1'
           )}>
-          <AdminDatePicker
+          <AdminDatePickerButtonContainer
             value={end}
             onChange={(nextEnd) =>
               onChange({
