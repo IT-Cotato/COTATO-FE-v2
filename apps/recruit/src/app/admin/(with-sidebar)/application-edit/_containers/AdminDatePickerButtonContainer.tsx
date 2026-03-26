@@ -8,13 +8,15 @@ import {formatRecruitmentDate} from '@/utils/formatDate';
 import clsx from 'clsx';
 import {useClickOutside} from '@repo/ui/hooks/useClickOutside';
 
-interface AdminDatePickerProps {
+interface AdminDatePickerButtonContainerProps {
   value?: string | null;
-
   onChange: (value: string | null) => void;
 }
 
-export const AdminDatePicker = ({value, onChange}: AdminDatePickerProps) => {
+export const AdminDatePickerButtonContainer = ({
+  value,
+  onChange,
+}: AdminDatePickerButtonContainerProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const selectedDate = useMemo(
     () => (value ? new Date(value) : new Date()),
@@ -29,21 +31,21 @@ export const AdminDatePicker = ({value, onChange}: AdminDatePickerProps) => {
     <div className='relative max-w-[556.5px] flex-1' ref={calendarRef}>
       <button
         type='button'
-        className='flex w-full items-center justify-between gap-3 rounded-[10px] bg-neutral-100 px-4 py-3'
+        className='flex w-full items-center justify-between rounded-[10px] bg-neutral-100 px-2 py-2 lg:gap-3 lg:px-4 lg:py-3'
         onClick={() => setIsOpen((prev) => !prev)}>
-        <span className='text-body-l font-normal text-neutral-600'>
+        <span className='text-body-m lg:text-body-l max-w-13 truncate font-normal text-neutral-600 sm:max-w-none'>
           {formatRecruitmentDate(value ?? toLocalISOString(new Date()))}
         </span>
         <CalendarIcon
           className={clsx(
             isOpen ? 'text-primary' : 'text-neutral-600',
-            'h-6 w-6'
+            'h-4 w-4 lg:h-6 lg:w-6'
           )}
         />
       </button>
 
       {isOpen && (
-        <div className='absolute top-full left-1/2 z-50 mt-2 -translate-x-1/2'>
+        <div className='absolute top-full left-1/2 z-50 mt-2 -translate-x-5/7 lg:-translate-1/2'>
           <CustomDateTimePicker
             selected={selectedDate}
             onChange={(date: Date | null) => {
