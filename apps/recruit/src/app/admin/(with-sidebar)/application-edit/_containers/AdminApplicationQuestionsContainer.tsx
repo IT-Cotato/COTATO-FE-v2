@@ -129,7 +129,8 @@ export const AdminApplicationQuestionsContainer = ({
         <div className='flex flex-col lg:gap-7.5'>
           {isLoading ? (
             <div className='flex items-center justify-center py-20'>
-              <Spinner />
+              <Spinner className='hidden lg:block' />
+              <Spinner className='lg:hidden' size='sm' />
             </div>
           ) : isEditing ? (
             <AdminApplicationQuestionsEditContainer
