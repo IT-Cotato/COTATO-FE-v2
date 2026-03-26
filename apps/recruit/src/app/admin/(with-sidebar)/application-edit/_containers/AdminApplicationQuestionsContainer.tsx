@@ -1,7 +1,5 @@
 'use client';
 
-import {ApplicationQuestionsEdit} from '@/app/admin/(with-sidebar)/application-edit/_components/questions/ApplicationQuestionsEdit';
-import {ApplicationQuestionsView} from '@/app/admin/(with-sidebar)/application-edit/_components/questions/ApplicationQuestionsView';
 import {AdminApplicationQuestionsTabContainer} from '@/app/admin/(with-sidebar)/application-edit/_containers/AdminApplicationQuestionsTabContainer';
 import {Button} from '@repo/ui/components/buttons/Button';
 import {Spinner} from '@repo/ui/components/spinner/Spinner';
@@ -13,6 +11,8 @@ import {
   PartType,
 } from '@/schemas/admin/admin-application-questions.schema';
 import {useState} from 'react';
+import {AdminApplicationQuestionsEditContainer} from '@/app/admin/(with-sidebar)/application-edit/_containers/AdminApplicationQuestionsEditContainer';
+import {AdminApplicationQuestionsViewList} from '@/app/admin/(with-sidebar)/application-edit/_components/questions/AdminApplicationQuestionsViewList';
 
 interface AdminApplicationQuestionsContainerProps {
   generationId: number;
@@ -89,10 +89,10 @@ export const AdminApplicationQuestionsContainer = ({
               borderRadius={5}
               backgroundColor='alert'
               textColor='neutral-50'
-              width={64}
-              height={36}
+              width='100%'
               disabled={!isFormValid || isPending}
               onClick={handleSave}
+              wrapperClassName='w-[56px] lg:w-[64px] h-[30px] lg:h-[36px]'
             />
 
             <Button
@@ -104,8 +104,8 @@ export const AdminApplicationQuestionsContainer = ({
               borderRadius={5}
               backgroundColor='white'
               textColor='neutral-400'
-              width={64}
-              height={36}
+              width='100%'
+              wrapperClassName='w-[56px] lg:w-[64px] h-[30px] lg:h-[36px]'
             />
           </div>
         ) : (
@@ -116,23 +116,23 @@ export const AdminApplicationQuestionsContainer = ({
             borderRadius={5}
             backgroundColor='secondary'
             textColor='neutral-50'
-            width={145}
-            height={36}
+            width='100%'
             onClick={handleEditStart}
+            wrapperClassName='w-[120px] lg:w-[145px] h-[30px] lg:h-[36px]'
           />
         )}
       </div>
-      <div className='flex flex-col gap-11.75 rounded-[10px] border border-neutral-300 px-6 py-5'>
+      <div className='flex flex-col gap-5 rounded-[10px] border border-neutral-300 px-6.25 py-7.5 lg:gap-11.75 lg:px-6 lg:py-5'>
         <SuspenseWrapper>
           <AdminApplicationQuestionsTabContainer />
         </SuspenseWrapper>
-        <div className='flex flex-col gap-7.5'>
+        <div className='flex flex-col lg:gap-7.5'>
           {isLoading ? (
             <div className='flex items-center justify-center py-20'>
               <Spinner />
             </div>
           ) : isEditing ? (
-            <ApplicationQuestionsEdit
+            <AdminApplicationQuestionsEditContainer
               questions={draftQuestions}
               onChange={setDraftQuestions}
               onValidChange={setIsFormValid}
@@ -144,7 +144,7 @@ export const AdminApplicationQuestionsContainer = ({
               </p>
             </div>
           ) : (
-            <ApplicationQuestionsView data={questions} />
+            <AdminApplicationQuestionsViewList data={questions} />
           )}
         </div>
       </div>
