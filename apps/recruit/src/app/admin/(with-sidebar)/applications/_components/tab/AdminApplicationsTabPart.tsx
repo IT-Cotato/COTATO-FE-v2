@@ -1,6 +1,7 @@
 import clsx from 'clsx';
 
 interface AdminApplicationsTabPartProps {
+  value?: string;
   partName?: string;
   applyNumber?: number;
   isActive?: boolean;
@@ -10,6 +11,7 @@ interface AdminApplicationsTabPartProps {
 }
 
 export const AdminApplicationsTabPart = ({
+  value,
   partName,
   applyNumber,
   isActive = false,
@@ -36,7 +38,10 @@ export const AdminApplicationsTabPart = ({
         'border-b-2 transition-colors',
         isActive ? 'border-primary' : 'border-transparent'
       )}>
-      <span className='text-body-m font-bold text-neutral-800'>{partName}</span>
+      <span className='text-body-m hidden font-bold text-neutral-800 lg:block'>
+        {partName}
+      </span>
+      <span className='text-h5 text-neutral-800 lg:hidden'>{value}</span>
 
       <span
         aria-hidden='true'

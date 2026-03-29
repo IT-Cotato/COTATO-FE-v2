@@ -1,15 +1,16 @@
 'use client';
 
 import {useState} from 'react';
+import {useIsMobile} from '@/app/(with-header)/mypage/admin/sessions/_hooks/useIsMobile';
 import {AdminSession, SessionData} from '@/schemas/admin/admin-sessions.schema';
 import {ActionMenu} from '@/app/(with-header)/mypage/admin/_components/ActionMenu';
 import {ActionButtons} from '@/app/(with-header)/mypage/admin/_components/ActionButtons';
 import {SessionExpandedContent} from './SessionExpandedContent';
-import {Modal} from '@repo/ui/components/modal/Modal';
-import {FullButton} from '@repo/ui/components/buttons/FullButton';
+import {ConfirmModal} from '@/app/(with-header)/mypage/admin/_components/ConfirmModal';
 import {getJosa} from '@/utils/getJosa';
 import {formatDateToDot} from '@repo/ui/utils/date';
 import {useSessionForm} from '@/app/(with-header)/mypage/admin/sessions/_hooks/useSessionForm';
+import {BottomSheet} from './BottomSheet';
 
 const SESSION_MENU_ITEMS = [
   {key: 'edit', label: '수정하기'},
@@ -34,7 +35,7 @@ export const SessionCard = ({
   onUpdate,
 }: SessionCardProps) => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-
+  const {isMobile, mounted} = useIsMobile();
   const {isEditing, setIsEditing, form, setForm, activeSessionData} =
     useSessionForm(session, isExpanded);
 
@@ -61,78 +62,103 @@ export const SessionCard = ({
     }
   };
 
+  const handleCancel = () => {
+    if (session.sessionId === -1) {
+      onDelete(session.sessionId);
+    } else {
+      setIsEditing(false);
+    }
+  };
+
+  const makeExpandedContent = (showCarousel: boolean) => (
+    <div onClick={(e) => e.stopPropagation()}>
+      {isEditing ? (
+        <SessionExpandedContent
+          key='edit'
+          mode='edit'
+          form={form}
+          onChange={setForm}
+          showCarousel={showCarousel}
+        />
+      ) : (
+        <SessionExpandedContent
+          key='view'
+          mode='view'
+          session={activeSessionData}
+          showCarousel={showCarousel}
+        />
+      )}
+    </div>
+  );
+
   return (
     <div
       className='flex cursor-pointer flex-col gap-5 rounded-[10px] bg-neutral-50 px-5.5 py-6'
       onClick={handleToggleClick}>
       <div className='flex items-center justify-between'>
         <div className='flex flex-col'>
-          <p className='text-h5 text-neutral-400'>
+          <p className='text-body-l lg:text-h5 text-neutral-400'>
             {formatDateToDot(form.date)}
           </p>
-          <p className='text-h3 text-neutral-800'>{session.title}</p>
+          <p className='text-h5 lg:text-h3 font-bold text-neutral-800'>
+            {session.title}
+          </p>
         </div>
         <div
           className='flex items-center gap-2.5'
           onClick={(e) => e.stopPropagation()}>
-          {isEditing ? (
+          {isEditing && mounted && !isMobile ? (
             <ActionButtons
-              onCancel={() => {
-                if (session.sessionId === -1) {
-                  onDelete(session.sessionId);
-                } else {
-                  setIsEditing(false);
-                }
-              }}
+              onCancel={handleCancel}
               onConfirm={handleConfirm}
               confirmLabel='등록'
               cancelVariant='dark'
             />
           ) : (
-            <ActionMenu
-              items={SESSION_MENU_ITEMS}
-              onAction={handleMenuAction}
-              iconClassName='rotate-90'
-              align='right'
-            />
+            !isEditing && (
+              <ActionMenu
+                items={SESSION_MENU_ITEMS}
+                onAction={handleMenuAction}
+                iconClassName='rotate-90'
+                align='right'
+              />
+            )
           )}
         </div>
       </div>
-      <Modal
+      <ConfirmModal
         isOpen={isDeleteModalOpen}
         onClose={() => setIsDeleteModalOpen(false)}
         title={`${session.title}${getJosa(session.title, '을/를')} 삭제하시겠습니까?`}
-        noContent={true}
-        contentWrapperClassName='gap-18'
-        actions={
-          <FullButton
-            variant='primary'
-            label='확인'
-            onClick={() => {
-              onDelete(session.sessionId);
-              setIsDeleteModalOpen(false);
-            }}
-          />
-        }
+        onConfirm={() => {
+          onDelete(session.sessionId);
+          setIsDeleteModalOpen(false);
+        }}
+        confirmLabel='확인'
+        cancelLabel={false}
       />
 
-      {isExpanded && (
-        <div onClick={(e) => e.stopPropagation()}>
-          {isEditing ? (
-            <SessionExpandedContent
-              key='edit'
-              mode='edit'
-              form={form}
-              onChange={setForm}
-            />
-          ) : (
-            <SessionExpandedContent
-              key='view'
-              mode='view'
-              session={activeSessionData}
-            />
-          )}
-        </div>
+      {mounted && isMobile ? (
+        isEditing ? (
+          <BottomSheet
+            isOpen={isEditing}
+            onClose={handleCancel}
+            isEditing={isEditing}
+            footer={
+              <ActionButtons
+                onCancel={handleCancel}
+                onConfirm={handleConfirm}
+                confirmLabel='등록'
+                cancelVariant='dark'
+              />
+            }>
+            {makeExpandedContent(true)}
+          </BottomSheet>
+        ) : (
+          isExpanded && makeExpandedContent(false)
+        )
+      ) : (
+        isExpanded && makeExpandedContent(true)
       )}
     </div>
   );

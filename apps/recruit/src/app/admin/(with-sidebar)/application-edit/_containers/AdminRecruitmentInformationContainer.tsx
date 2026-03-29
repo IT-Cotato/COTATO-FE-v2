@@ -91,12 +91,17 @@ export const AdminRecruitmentInformationContainer = ({
   };
 
   if (isLoading || !data) {
-    return <Spinner />;
+    return (
+      <div className='flex w-full items-center justify-center'>
+        <Spinner className='hidden lg:block' />
+        <Spinner className='lg:hidden' size='sm' />
+      </div>
+    );
   }
 
   return (
     <>
-      <div className='flex flex-row justify-between'>
+      <div className='flex flex-row items-center justify-between'>
         <label id='generation-label' className='sr-only'>
           기수 선택
         </label>
@@ -118,9 +123,9 @@ export const AdminRecruitmentInformationContainer = ({
               disabled={isPending}
               backgroundColor='alert'
               textColor='neutral-50'
-              width={64}
-              height={36}
-              onClick={handleSave}></Button>
+              width='100%'
+              onClick={handleSave}
+              wrapperClassName='w-[56px] lg:w-[64px] h-[30px] lg:h-[36px]'></Button>
             <Button
               variant='outline'
               onClick={handleCancel}
@@ -129,8 +134,8 @@ export const AdminRecruitmentInformationContainer = ({
               borderRadius={5}
               backgroundColor='white'
               textColor='neutral-400'
-              width={64}
-              height={36}></Button>
+              width='100%'
+              wrapperClassName='w-[56px] lg:w-[64px] h-[30px] lg:h-[36px]'></Button>
           </div>
         ) : (
           <Button
@@ -139,9 +144,9 @@ export const AdminRecruitmentInformationContainer = ({
             borderRadius={5}
             backgroundColor='secondary'
             textColor='neutral-50'
-            width={145}
-            height={36}
+            width='100%'
             onClick={handleEditStart}
+            wrapperClassName='lg:h-[36px] h-[30px] w-30 lg:w-[145px]'
           />
         )}
       </div>

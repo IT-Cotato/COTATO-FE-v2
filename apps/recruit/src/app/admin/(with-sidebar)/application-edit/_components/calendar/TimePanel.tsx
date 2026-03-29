@@ -15,9 +15,9 @@ export const TimePanel = ({
   onMinuteChange,
 }: TimePanelProps) => {
   return (
-    <div className='mt-2 ml-2 flex border-l border-neutral-200 px-4 py-3'>
+    <div className='mt-2 ml-2 flex items-center justify-center border-t border-neutral-200 py-2 lg:border-t-0 lg:border-l lg:px-4 lg:py-3'>
       <div className='flex gap-4'>
-        <div className='flex flex-col items-center gap-3'>
+        <div className='flex flex-col items-center lg:gap-3'>
           <TimeButton value={hour} />
           <TimeList
             values={Array.from({length: 24}, (_, i) => i)}
@@ -25,7 +25,7 @@ export const TimePanel = ({
           />
         </div>
 
-        <div className='flex flex-col items-center gap-3'>
+        <div className='flex flex-col items-center lg:gap-3'>
           <TimeButton value={minute} />
           <TimeList
             values={Array.from({length: 60}, (_, i) => i)}

@@ -44,6 +44,7 @@
     "react-dom": "^19.2.0"
   },
   "dependencies": {
-    "focus-trap-react": "^11.0.4"
+    "focus-trap-react": "^11.0.4",
+    "framer-motion": "^12.31.0"
   }
 }

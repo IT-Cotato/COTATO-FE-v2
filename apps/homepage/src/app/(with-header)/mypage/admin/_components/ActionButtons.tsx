@@ -18,17 +18,17 @@ export const ActionButtons = ({
   confirmLabel = '저장',
   cancelVariant = 'light',
 }: ActionButtonsProps) => (
-  <div className='flex gap-2.5'>
+  <div className='flex gap-4 md:gap-2.5'>
     <button
       type='button'
       onClick={onCancel}
-      className={`text-body-m w-18.75 rounded-[10px] px-5 py-2 font-semibold ${CANCEL_VARIANTS[cancelVariant]}`}>
+      className={`text-body-m w-full rounded-[10px] py-2.5 font-semibold md:w-18.75 md:px-5 md:py-2 ${CANCEL_VARIANTS[cancelVariant]}`}>
       {cancelLabel}
     </button>
     <button
       type='button'
       onClick={onConfirm}
-      className='bg-primary text-body-m w-18.75 rounded-[10px] px-5 py-2 font-semibold text-white'>
+      className='bg-primary text-body-m w-full rounded-[10px] py-2.5 font-semibold text-white md:w-18.75 md:px-5 md:py-2'>
       {confirmLabel}
     </button>
   </div>

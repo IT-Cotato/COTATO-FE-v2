@@ -3,8 +3,7 @@
 import {ApprovalTableView} from '../_components/table/ApprovalTableView';
 import {SearchBar} from '../../_components/SearchBar';
 import {Pagination} from '@repo/ui/components/pagination/Pagination';
-import {Modal} from '@repo/ui/components/modal/Modal';
-import {Button} from '@repo/ui/components/buttons/Button';
+import {ConfirmModal} from '@/app/(with-header)/mypage/admin/_components/ConfirmModal';
 import {ApprovalTabType} from '@/constants/admin/admin';
 import {useRouter, useSearchParams} from 'next/navigation';
 import {useEffect} from 'react';
@@ -70,21 +69,21 @@ export const ApprovalTableContainer = ({
 
   return (
     <div className='flex flex-col gap-3.5'>
-      <div className='flex items-end gap-5 pt-7.5'>
+      <div className='flex flex-nowrap items-end gap-4 pt-4 lg:gap-5 lg:pt-7.5'>
         {activeTab === 'REQUESTED' ? (
           <>
             <button
               type='button'
               disabled={isLoading}
               onClick={handleApproveSelected}
-              className='text-primary text-body-m h-8 w-23.25 cursor-pointer rounded-lg bg-neutral-50 font-semibold disabled:cursor-not-allowed disabled:opacity-50'>
+              className='text-primary text-body-m h-8 w-17 cursor-pointer rounded-lg bg-neutral-50 font-semibold disabled:cursor-not-allowed disabled:opacity-50 lg:w-23.25'>
               가입 승인
             </button>
             <button
               type='button'
               disabled={isLoading}
               onClick={handleRejectSelected}
-              className='text-body-m h-8 w-23.25 cursor-pointer rounded-lg bg-neutral-50 font-semibold text-neutral-600 disabled:cursor-not-allowed disabled:opacity-50'>
+              className='text-body-m h-8 w-17 cursor-pointer rounded-lg bg-neutral-50 font-semibold text-neutral-600 disabled:cursor-not-allowed disabled:opacity-50 lg:w-23.25'>
               가입 거절
             </button>
           </>
@@ -94,29 +93,32 @@ export const ApprovalTableContainer = ({
               type='button'
               disabled={selectedIds.length === 0 || isLoading}
               onClick={handleRestoreSelected}
-              className='text-body-m h-8 w-23.25 cursor-pointer rounded-lg bg-neutral-50 font-semibold text-neutral-600 disabled:cursor-not-allowed disabled:opacity-50'>
+              className='text-body-m text-primary h-8 w-17 cursor-pointer rounded-lg bg-neutral-50 font-semibold lg:w-23.25'>
               복원하기
             </button>
             <button
               type='button'
               disabled={selectedIds.length === 0 || isLoading}
               onClick={handleDeleteSelected}
-              className='text-primary text-body-m h-8 w-23.25 cursor-pointer rounded-lg bg-neutral-50 font-semibold disabled:cursor-not-allowed disabled:opacity-50'>
+              className='text-body-m h-8 w-17 cursor-pointer rounded-lg bg-neutral-50 font-semibold text-neutral-600 lg:w-23.25'>
               영구 삭제
             </button>
           </>
         )}
-        <SearchBar
-          keyword={keyword}
-          onKeywordChange={onKeywordChange}
-          onSearch={onSearch}
-        />
+        <div className='min-w-0 flex-1 [&>form]:h-8 [&>form]:py-1.25 [&>form]:md:h-12.5 [&>form]:md:py-2.75'>
+          <SearchBar
+            keyword={keyword}
+            onKeywordChange={onKeywordChange}
+            onSearch={onSearch}
+          />
+        </div>
       </div>
 
       <ApprovalTableView
         items={members}
         allItems={members}
         selectedIds={selectedIds}
+        activeTab={activeTab}
         onSelectAll={handleSelectAll}
         onSelect={handleSelect}
         onApprove={handleApprove}
@@ -134,23 +136,13 @@ export const ApprovalTableContainer = ({
       </div>
 
       {modalConfig && (
-        <Modal
+        <ConfirmModal
           isOpen
           onClose={() => setModalConfig(null)}
-          containerStyle={{width: 510, height: 300}}
-          contentWrapperClassName='justify-around'
           title={modalConfig.title}
-          content={modalConfig.description}
-          actions={
-            <div className='flex w-full justify-center'>
-              <Button
-                variant='primary'
-                onClick={modalConfig.onConfirm}
-                label={isLoading ? '처리 중...' : '확인'}
-                disabled={isLoading}
-              />
-            </div>
-          }
+          description={modalConfig.description}
+          onConfirm={modalConfig.onConfirm}
+          isLoading={isLoading}
         />
       )}
     </div>

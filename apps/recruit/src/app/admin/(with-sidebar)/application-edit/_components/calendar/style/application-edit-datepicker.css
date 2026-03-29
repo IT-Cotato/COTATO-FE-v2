@@ -8,3 +8,52 @@
   color: #000 !important;
   border: none !important;
 }
+
+@media screen and (min-width: 1024px) {
+  div.custom-datetime-picker {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    margin: 0 auto !important;
+  }
+  div.custom-datetime-picker .react-datepicker__month {
+    display: flex !important;
+    flex-direction: column !important;
+    margin: 0 !important;
+  }
+
+  /* 주(week) 레이아웃 */
+  div.custom-datetime-picker .react-datepicker__week {
+    display: flex !important;
+    justify-content: center !important;
+    gap: 5px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* 일(day) 레이아웃 */
+  div.custom-datetime-picker .react-datepicker__day {
+    width: 40px !important;
+    height: 40px !important;
+    line-height: 40px !important;
+    margin: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  /* 요일 헤더(월화수목...) */
+  div.custom-datetime-picker .react-datepicker__day-names {
+    display: flex !important;
+    justify-content: center !important;
+    gap: 10px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  div.custom-datetime-picker .react-datepicker__day-name {
+    width: 40px !important;
+    margin: 0 !important;
+    text-align: center !important;
+  }
+}

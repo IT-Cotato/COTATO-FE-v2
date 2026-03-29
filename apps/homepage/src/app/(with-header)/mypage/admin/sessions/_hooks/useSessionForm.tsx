@@ -44,10 +44,10 @@ export const useSessionForm = (session: AdminSession, isExpanded: boolean) => {
   const [form, setForm] = useState<SessionData>(activeSessionData);
 
   useEffect(() => {
-    if (sessionDetail) {
+    if (sessionDetail && !isEditing) {
       setForm(sessionDetail);
     }
-  }, [sessionDetail]);
+  }, [sessionDetail, isEditing]);
 
   useEffect(() => {
     if (session.sessionId === -1) {

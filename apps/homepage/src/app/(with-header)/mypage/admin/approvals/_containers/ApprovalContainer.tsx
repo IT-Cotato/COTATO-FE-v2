@@ -68,9 +68,9 @@ export const ApprovalContainer = () => {
             type='button'
             aria-selected={activeTab === value}
             className={clsx(
-              'text-body-l-sb cursor-pointer pb-2 transition-colors',
+              'text-body-l-b lg:text-body-l-sb cursor-pointer pb-2 transition-colors',
               activeTab === value
-                ? 'border-primary text-primary border-b-2 px-3'
+                ? 'border-primary text-primary border-b px-3 lg:border-b-2'
                 : 'px-3 text-neutral-800'
             )}
             onClick={() => handleTabClick(value)}>

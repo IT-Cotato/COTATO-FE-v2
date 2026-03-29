@@ -11,22 +11,22 @@ interface BasicInfoViewProps {
 
 export const BasicInfoView = ({onNext, basicInfo}: BasicInfoViewProps) => {
   return (
-    <div className='flex flex-col gap-4 sm:gap-6'>
+    <div className='flex flex-col gap-4 py-5 lg:gap-6'>
       <FormInput
         label={BASIC_INFO_LABELS.name}
         readOnly
         value={basicInfo.name}
       />
 
-      <div className='flex flex-col gap-4 sm:flex-row sm:gap-10'>
-        <div className='flex-1'>
+      <div className='flex flex-row gap-10 lg:gap-10'>
+        <div className='min-w-0 flex-1'>
           <FormInput
             label={BASIC_INFO_LABELS.gender}
             readOnly
             value={getGenderLabel(basicInfo.gender)}
           />
         </div>
-        <div className='flex-1'>
+        <div className='min-w-0 flex-1'>
           <FormInput
             label={BASIC_INFO_LABELS.birthDate}
             readOnly
@@ -41,7 +41,7 @@ export const BasicInfoView = ({onNext, basicInfo}: BasicInfoViewProps) => {
         value={basicInfo.phoneNumber}
       />
 
-      <div className='flex flex-col gap-4 sm:flex-row sm:gap-11.75'>
+      <div className='flex flex-col gap-4 lg:flex-row lg:gap-11.75'>
         <div className='flex-1'>
           <FormInput
             label={BASIC_INFO_LABELS.school}
@@ -50,7 +50,7 @@ export const BasicInfoView = ({onNext, basicInfo}: BasicInfoViewProps) => {
           />
         </div>
 
-        <div className='flex flex-row items-end gap-6 sm:gap-11.75'>
+        <div className='flex flex-row items-end gap-6 lg:gap-11.75'>
           <FormRadio
             readOnly
             label={BASIC_INFO_LABELS.enrollmentStatus}
@@ -70,15 +70,15 @@ export const BasicInfoView = ({onNext, basicInfo}: BasicInfoViewProps) => {
         value={basicInfo.major}
       />
 
-      <div className='flex flex-col gap-4 sm:flex-row sm:gap-17.5'>
-        <div className='flex-1'>
+      <div className='flex flex-row gap-10 lg:gap-17.5'>
+        <div className='min-w-0 flex-1'>
           <FormInput
             label={BASIC_INFO_LABELS.completedSemesters}
             readOnly
             value={basicInfo.completedSemesters}
           />
         </div>
-        <div className='flex-1'>
+        <div className='min-w-0 flex-1'>
           <FormInput
             label={BASIC_INFO_LABELS.isPrevActivity}
             readOnly
@@ -91,8 +91,8 @@ export const BasicInfoView = ({onNext, basicInfo}: BasicInfoViewProps) => {
         <FullButton
           label='다음'
           onClick={onNext}
-          height={54}
-          className='text-h4'
+          wrapperClassName='lg:h-[54px] h-[42px]'
+          className='text-h5 lg:text-h4'
         />
       </div>
     </div>

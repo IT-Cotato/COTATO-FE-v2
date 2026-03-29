@@ -67,9 +67,9 @@ export const AddGenerationContainer = () => {
     );
 
   return (
-    <div className='flex w-full flex-col items-start gap-2.5 rounded-[10px] bg-neutral-100 px-8 py-3'>
-      <div className='flex items-center gap-5.75 self-stretch'>
-        <p className='text-body-l shrink-0 font-medium text-neutral-600'>
+    <div className='flex w-full flex-col items-start gap-2.5 rounded-[10px] bg-neutral-100 px-5 py-3 lg:px-8 lg:py-3'>
+      <div className='flex items-center gap-2.5 self-stretch lg:gap-5.75'>
+        <p className='text-body-l-b lg:text-body-l shrink-0 text-neutral-600 lg:font-medium'>
           기수 추가하기
         </p>
         <div className='scrollbar-hide flex items-center gap-2.5 overflow-x-auto'>
@@ -98,7 +98,7 @@ export const AddGenerationContainer = () => {
                 }}
                 disabled={isRecruiting}
                 className={clsx(
-                  'text-body-l flex h-9.5 w-15.75 shrink-0 items-center justify-center rounded-[5px] font-semibold transition-all',
+                  'text-body-m lg:text-body-l flex h-7 w-12.5 shrink-0 items-center justify-center rounded-[5px] transition-all lg:h-9.5 lg:w-15.75 lg:font-semibold',
                   isSelected
                     ? 'bg-neutral-200 text-neutral-800'
                     : 'bg-white text-neutral-600',

@@ -2,21 +2,22 @@
 
 import {AdminApplicationsTableContainer} from '@/app/admin/(with-sidebar)/applications/_containers/AdminApplicationsTableContainer';
 import {AdminApplicationsTabContainer} from '@/app/admin/(with-sidebar)/applications/_containers/AdminApplicationsTabContainer';
-
 import {GetAdminApplicationsParamsSchema} from '@/schemas/admin/admin-applications.schema';
 import {useSearchParams} from 'next/navigation';
 import {useAdminApplicationsQuery} from '@/hooks/queries/useAdminApplications.query';
 import {useEffect} from 'react';
-import {AdminApplicationsInformation} from '@/app/admin/(with-sidebar)/applications/_components/info/AdminApplicationsInformation';
 import {Spinner} from '@repo/ui/components/spinner/Spinner';
 import {useGenerationStore} from '@/store/useGenerationStore';
 import {useAdminGenerationsQuery} from '@/hooks/queries/useAdminGeneration.query';
+import {AdminApplicationsDesktopInformationContainer} from '@/app/admin/(with-sidebar)/applications/_desktop/AdminApplicationsDesktopInformationContainer';
+import {AdminApplicationsMobileInformationContainer} from '@/app/admin/(with-sidebar)/applications/_mobile/AdminApplicationsMobileInformationContainer';
 
 export const AdminApplicationsContainer = () => {
   const searchParams = useSearchParams();
 
   /** 기수 목록 조회 */
-  const {data: generationsData} = useAdminGenerationsQuery();
+  const {data: generationsData, isLoading: isGenerationLoading} =
+    useAdminGenerationsQuery();
   const {setGenerations, generations} = useGenerationStore();
   const generationList = generations.map((g) => String(g.generationId));
   const currentGeneration =
@@ -47,6 +48,18 @@ export const AdminApplicationsContainer = () => {
 
   const {data, isLoading, isFetching} = useAdminApplicationsQuery(filter);
 
+  const isInitialLoading = isGenerationLoading && isLoading && !data;
+  const isRefreshing = isFetching && !!data;
+
+  if (isInitialLoading) {
+    return (
+      <div className='flex h-[calc(100vh-200px)] items-center justify-center'>
+        <Spinner size='sm' className='block lg:hidden' />
+        <Spinner size='lg' className='hidden lg:block' />
+      </div>
+    );
+  }
+
   if (!currentGeneration) {
     return (
       <div className='flex h-100 w-full items-center justify-center'>
@@ -55,20 +68,15 @@ export const AdminApplicationsContainer = () => {
     );
   }
 
-  const isInitialLoading = isLoading && !data;
-  const isRefreshing = isFetching && !!data;
-
-  if (isInitialLoading) {
-    return (
-      <div className='flex h-[calc(100vh-200px)] items-center justify-center'>
-        <Spinner />
-      </div>
-    );
-  }
-
   return (
     <div className='flex flex-col gap-7.25'>
-      <AdminApplicationsInformation
+      <AdminApplicationsDesktopInformationContainer
+        generation={currentGeneration}
+        generations={generationList}
+        recruitmentPeriod={data?.data.recruitmentPeriodResponse}
+        isLoading={isInitialLoading}
+      />
+      <AdminApplicationsMobileInformationContainer
         generation={currentGeneration}
         generations={generationList}
         recruitmentPeriod={data?.data.recruitmentPeriodResponse}

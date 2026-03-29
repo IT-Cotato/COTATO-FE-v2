@@ -12,7 +12,7 @@ export const CustomHeader = ({
   onPrevMonth,
   onNextMonth,
 }: CustomHeaderProps) => (
-  <div className='flex items-center justify-between border-b border-neutral-200 pb-3'>
+  <div className='flex w-full items-center justify-between border-neutral-200 lg:border-b lg:pb-3'>
     <button onClick={onPrevMonth}>
       <ChevronLeftIcon className='h-4 w-4 text-[#848A95]' />
     </button>

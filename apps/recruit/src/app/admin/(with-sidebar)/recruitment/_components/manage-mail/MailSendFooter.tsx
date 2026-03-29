@@ -1,5 +1,7 @@
 import {Button} from '@repo/ui/components/buttons/Button';
 import {clsx} from 'clsx';
+import RefreshIcon from '@/assets/refresh/refresh.svg';
+import {ColorKey} from '@repo/ui/components/buttons/button.types';
 
 interface MailSendFooterProps {
   waitingCount: number;
@@ -28,43 +30,48 @@ export const MailSendFooter = ({
 }: MailSendFooterProps) => {
   const shouldShowStatus = true;
 
-  const getButtonColor = () => {
-    if (isSent || isInProgress) return 'text-disabled';
-    return canSendMail ? 'primary' : 'text-disabled';
+  const isDisabled = isSent || isInProgress || !canSendMail;
+
+  const getButtonColor = (): ColorKey => {
+    if (isSent) return 'neutral-500';
+    if (isInProgress || !canSendMail) return 'text-disabled';
+    return 'primary';
   };
 
   return (
-    <div className='flex w-full flex-col items-end gap-3'>
-      <div className='text-body-l flex items-center gap-2.5 text-neutral-500'>
-        <p>
-          ({waitingLabel} 수: {waitingCount}명)
-        </p>
-        {shouldShowStatus && (
-          <div className='flex items-center gap-4 rounded-lg border border-neutral-200 bg-neutral-50 px-4 py-2'>
-            <div className='text-body-m flex gap-3 font-bold'>
-              <span className='text-primary'>성공: {successCount}</span>
-              <span className='text-alert'>실패: {failCount}</span>
+    <div className='mt-1 flex w-full flex-col items-end gap-3 lg:mt-0'>
+      <div className='text-body-l mb-2.5 flex w-full flex-col items-end gap-3.5 text-neutral-500 lg:mb-0 lg:w-auto lg:flex-row lg:items-center lg:gap-2.5'>
+        <div className='flex items-center gap-2.5'>
+          <p>
+            ({waitingLabel} 수: {waitingCount}명)
+          </p>
+          {shouldShowStatus && (
+            <div className='flex items-center gap-2 rounded-[5px] border border-neutral-200 bg-neutral-50 px-5.75 py-1.75 lg:gap-4 lg:rounded-lg lg:px-4 lg:py-2'>
+              <div className='text-body-m flex gap-2 font-bold lg:gap-3'>
+                <span className='text-primary'>성공: {successCount}</span>
+                <span className='text-alert'>실패: {failCount}</span>
+              </div>
+              {isInProgress && (
+                <button
+                  type='button'
+                  aria-label='메일 전송 상태 새로고침'
+                  title='새로고침'
+                  onClick={onRefresh}
+                  disabled={isRefreshing}
+                  className={clsx(
+                    'flex items-center gap-1 text-neutral-500 transition-colors hover:text-neutral-800',
+                    {'animate-spin': isRefreshing}
+                  )}>
+                  <RefreshIcon className='h-4 w-4 text-neutral-600' />
+                </button>
+              )}
             </div>
-            {isInProgress && (
-              <button
-                type='button'
-                onClick={onRefresh}
-                disabled={isRefreshing}
-                className={clsx(
-                  'flex items-center gap-1 text-neutral-500 transition-colors hover:text-neutral-800',
-                  {'animate-spin': isRefreshing}
-                )}>
-                <span className='text-[18px]'>↻</span>
-              </button>
-            )}
-          </div>
-        )}
-        <div
-          className={clsx({
-            'pointer-events-none': isSent || isInProgress || !canSendMail,
-          })}>
+          )}
+        </div>
+        <div className='w-full lg:w-auto'>
           <Button
-            width={145}
+            width='100%'
+            wrapperClassName='w-full lg:w-[145px]'
             height={36}
             label={
               isInProgress
@@ -75,7 +82,10 @@ export const MailSendFooter = ({
             }
             borderRadius={5}
             labelTypo='body_l'
+            fontWeight={600}
+            disabled={isDisabled}
             backgroundColor={getButtonColor()}
+            disabledBackgroundColor={getButtonColor()}
             textColor='neutral-50'
             onClick={onSend}
           />
