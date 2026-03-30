@@ -5,6 +5,7 @@ export const RecruitmentInactive = () => {
     <RecruitmentLayout
       isRecruiting={false}
       visualStripSrc='/images/visual/recruitment-visual-strip-white.webp'
+      mobileVisualStripSrc='/images/visual/visual-strip-mobile.webp'
     />
   );
 };
