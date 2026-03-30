@@ -10,6 +10,7 @@ interface GenerationDropdownProps {
   generations: string[];
   onSelect: (generation: string) => void;
   disabled?: boolean;
+  className?: string;
 }
 
 export const GenerationDropdown = ({
@@ -17,6 +18,7 @@ export const GenerationDropdown = ({
   generations,
   onSelect,
   disabled,
+  className,
 }: GenerationDropdownProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
@@ -42,10 +44,14 @@ export const GenerationDropdown = ({
           onClick={handleToggle}
           disabled={disabled}
           className={clsx(
-            'shadow-default text-body-l flex items-center gap-2 rounded-[30px] px-3.75 py-1.5 lg:px-5 lg:py-2',
+            // 기본 스타일
+            'shadow-default text-body-l flex items-center justify-between gap-2 rounded-[30px] transition-all',
+            'px-3.75 py-1.5 lg:px-5 lg:py-2',
             disabled
               ? 'cursor-not-allowed bg-neutral-100 text-neutral-400'
-              : 'bg-white text-neutral-700'
+              : 'bg-white text-neutral-700',
+            // 외부에서 주입된 클래스 (for 지원서 열람)
+            className
           )}
           aria-expanded={isOpen}
           aria-haspopup='listbox'>

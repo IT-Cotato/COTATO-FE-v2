@@ -44,11 +44,12 @@ export const CustomDateTimePicker = ({
         if (!date) return;
         updateTime(date, {});
       }}
+      calendarClassName='custom-datetime-picker'
       inline
       customInput={<CustomInput />}
       calendarContainer={(props) => (
         <CalendarContainer>
-          <div className='custom-datetime-picker shadow-card rounded-2xl bg-white p-6'>
+          <div className='custom-datetime-picker lg:shadow-card shadow-mobile-dropdown rounded-2xl bg-white px-1 py-2 lg:p-4'>
             <CustomHeader
               date={selected}
               onPrevMonth={() =>
@@ -75,7 +76,7 @@ export const CustomDateTimePicker = ({
               }
             />
 
-            <div className='flex'>
+            <div className='flex flex-col lg:flex-row'>
               <div>{props.children}</div>
 
               <TimePanel
