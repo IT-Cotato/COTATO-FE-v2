@@ -1,5 +1,6 @@
 'use client';
 
+import {useState} from 'react';
 import Image from 'next/image';
 import {Button} from '@repo/ui/components/buttons/Button';
 import {LoginModal} from '@/components/modal/LoginModal';
@@ -10,6 +11,8 @@ interface RecruitmentActiveProps {
 }
 
 export const RecruitmentActive = ({generation}: RecruitmentActiveProps) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const {
     notices,
     hasSubmitted,
@@ -19,10 +22,8 @@ export const RecruitmentActive = ({generation}: RecruitmentActiveProps) => {
     isScheduleError,
     isInPeriod,
     isAfterEnd,
-    isModalOpen,
-    setIsModalOpen,
     handleApplyClick,
-  } = useRecruitmentApply();
+  } = useRecruitmentApply({onLoginRequired: () => setIsModalOpen(true)});
 
   return (
     <>

@@ -1,6 +1,5 @@
 'use client';
 
-import {useState} from 'react';
 import {useRouter} from 'next/navigation';
 import {useAuthStore} from '@/store/useAuthStore';
 import {useApplicationStatusQuery} from '@/hooks/queries/useApply.query';
@@ -9,11 +8,13 @@ import {useRecruitmentScheduleQuery} from '@/hooks/queries/useRecruitmentSchedul
 import {buildRecruitmentNotices} from '@/constants/home/recruitment';
 import {ROUTES} from '@/constants/routes';
 
-export function useRecruitmentApply() {
+interface UseRecruitmentApplyOptions {
+  onLoginRequired: () => void;
+}
+
+export function useRecruitmentApply({onLoginRequired}: UseRecruitmentApplyOptions) {
   const router = useRouter();
   const {isAuthenticated} = useAuthStore();
-
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const {data: applicationStatus, isLoading: isStatusLoading} =
     useApplicationStatusQuery(isAuthenticated);
@@ -52,7 +53,7 @@ export function useRecruitmentApply() {
     }
 
     if (!isAuthenticated) {
-      setIsModalOpen(true);
+      onLoginRequired();
       return;
     }
 
@@ -84,8 +85,6 @@ export function useRecruitmentApply() {
     isInPeriod,
     isBeforeStart,
     isAfterEnd,
-    isModalOpen,
-    setIsModalOpen,
     handleApplyClick,
   };
 }
