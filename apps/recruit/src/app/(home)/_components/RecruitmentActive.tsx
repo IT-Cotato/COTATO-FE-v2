@@ -1,112 +1,33 @@
 'use client';
 
+import {useState} from 'react';
 import Image from 'next/image';
 import {Button} from '@repo/ui/components/buttons/Button';
-import {RECRUITMENT_NOTICES} from '@/constants/home/recruitment';
-import {useRouter} from 'next/navigation';
-import {ROUTES} from '@/constants/routes';
-import {useState} from 'react';
 import {LoginModal} from '@/components/modal/LoginModal';
-import {useAuthStore} from '@/store/useAuthStore';
-import {useApplicationStatusQuery} from '@/hooks/queries/useApply.query';
-import {useStartApplicationMutation} from '@/hooks/mutations/useApply.mutation';
-import {useRecruitmentScheduleQuery} from '@/hooks/queries/useRecruitmentSchedule.query';
-import {useRecruitmentStatusQuery} from '@/hooks/queries/useRecruitmentStatus.query';
-import {formatRecruitmentDate} from '@/utils/formatDate';
+import {useRecruitmentApply} from '@/hooks/useRecruitmentApply';
 
-export const RecruitmentActive = () => {
-  const router = useRouter();
+interface RecruitmentActiveProps {
+  generation: number | null | undefined;
+}
 
+export const RecruitmentActive = ({generation}: RecruitmentActiveProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const {data: recruitmentStatus} = useRecruitmentStatusQuery();
-  const generation = recruitmentStatus?.generationId ?? '';
 
-  const {isAuthenticated} = useAuthStore();
-
-  const {data: applicationStatus, isLoading: isStatusLoading} =
-    useApplicationStatusQuery(isAuthenticated);
-  const {mutate: startApplication, isPending: isStarting} =
-    useStartApplicationMutation();
   const {
-    data: schedule,
-    isLoading: isScheduleLoading,
-    isError: isScheduleError,
-  } = useRecruitmentScheduleQuery();
-  const hasSubmitted = applicationStatus?.isSubmitted ?? false;
-
-  const now = new Date();
-  const start = schedule?.recruitmentStart
-    ? new Date(schedule.recruitmentStart)
-    : null;
-  const end = schedule?.recruitmentEnd
-    ? new Date(schedule.recruitmentEnd)
-    : null;
-
-  const isBeforeStart = start != null && now < start;
-  const isAfterEnd = end != null && now > end;
-  const isInPeriod = start != null && end != null && now >= start && now <= end;
-
-  const handleApplyClick = () => {
-    // 모집 기간 체크
-    if (!isInPeriod) {
-      if (isBeforeStart) {
-        alert('아직 모집 기간이 아닙니다.');
-      } else if (isAfterEnd) {
-        alert('모집이 마감되었습니다.');
-      }
-      return;
-    }
-
-    if (!isAuthenticated) {
-      setIsModalOpen(true);
-      return;
-    }
-
-    if (applicationStatus) {
-      // 기존 지원서가 있으면 바로 이동
-      router.push(`${ROUTES.APPLY}?id=${applicationStatus.applicationId}`);
-    } else {
-      // 신규 지원: 지원서 생성 후 이동
-      startApplication(undefined, {
-        onSuccess: (data) => {
-          if (!data.applicationId || data.isSubmitted) {
-            alert('이미 제출된 지원서가 있습니다.');
-            return;
-          }
-          router.push(`${ROUTES.APPLY}?id=${data.applicationId}`);
-        },
-        onError: () => {
-          alert('지원서 생성에 실패했습니다. 잠시 후 다시 시도해주세요.');
-        },
-      });
-    }
-  };
-
-  const oldOtNotice = RECRUITMENT_NOTICES[2];
-  const notices = RECRUITMENT_NOTICES.map((notice) => {
-    if (
-      notice === oldOtNotice &&
-      schedule?.ot &&
-      schedule?.cokerthon &&
-      schedule?.demoDay
-    ) {
-      return `OT(${formatRecruitmentDate(
-        schedule.ot,
-        false
-      )}), 코커톤(${formatRecruitmentDate(
-        schedule.cokerthon,
-        false
-      )}), 데모데이(${formatRecruitmentDate(
-        schedule.demoDay,
-        false
-      )}) 필수 참석 일정입니다. 불참 시 지원이 제한될 수 있습니다.`;
-    }
-    return notice;
-  });
+    notices,
+    hasSubmitted,
+    isStarting,
+    isStatusLoading,
+    isScheduleLoading,
+    isScheduleError,
+    isInPeriod,
+    isAfterEnd,
+    handleApplyClick,
+  } = useRecruitmentApply({onLoginRequired: () => setIsModalOpen(true)});
 
   return (
     <>
-      <section className='relative flex min-h-[calc(100dvh-88px)] w-full flex-col items-center justify-center overflow-hidden bg-black px-4'>
+      <section className='relative flex min-h-[calc(100dvh-50px)] w-full flex-1 flex-col items-center justify-center overflow-hidden bg-black px-6 py-12.5 lg:min-h-[calc(100dvh-88px)] lg:py-16'>
         <Image
           src='/background/background.svg'
           alt='배경 이미지'
@@ -115,13 +36,15 @@ export const RecruitmentActive = () => {
           className='object-cover object-center'
         />
         <div className='relative z-10 flex w-full max-w-240 flex-col gap-5'>
-          <h1 className='text-h4 text-white'>
+          <h1 className='text-h3 lg:text-h4 text-white'>
             🥔 코테이토 {generation}기 지원서 🥔
           </h1>
-          <div className='flex flex-col gap-8 rounded-[10px] bg-white px-20.5 pt-11 pb-21'>
-            <h4 className='text-h4 text-black'>⚠️ 지원 전 유의 사항 ⚠️</h4>
+          <div className='flex flex-col gap-4.5 rounded-[10px] bg-white p-5 lg:gap-8 lg:px-20.5 lg:pt-11 lg:pb-21'>
+            <h4 className='text-h5 lg:text-h4 font-bold text-black'>
+              ⚠️ 지원 전 유의 사항 ⚠️
+            </h4>
 
-            <ul className='list-disc space-y-3 pl-6 text-neutral-800'>
+            <ul className='list-disc space-y-2.5 pl-5 text-neutral-800 marker:text-[10px] lg:space-y-3 lg:pl-6'>
               {notices.map((notice, index) => (
                 <li key={index} className='text-body-l leading-relaxed'>
                   {notice}
@@ -129,7 +52,7 @@ export const RecruitmentActive = () => {
               ))}
             </ul>
           </div>
-          <div className='flex justify-end'>
+          <div className='flex w-full md:justify-end'>
             <Button
               label={
                 isStatusLoading || isScheduleLoading
@@ -145,6 +68,8 @@ export const RecruitmentActive = () => {
                         : '지원하기'
               }
               onClick={handleApplyClick}
+              width='100%'
+              wrapperClassName='w-full lg:w-[313px]'
               disabled={
                 hasSubmitted ||
                 isStarting ||

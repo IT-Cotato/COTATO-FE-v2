@@ -18,6 +18,7 @@ export const HomeClient = () => {
   const {data: recruitmentStatus, isLoading} = useRecruitmentStatusQuery();
   const {data: schedule} = useRecruitmentScheduleQuery();
   const isRecruiting = recruitmentStatus?.isActive ?? false;
+  const generation = recruitmentStatus?.generationId;
 
   const submittedParam = searchParams.get('submitted');
 
@@ -46,9 +47,7 @@ export const HomeClient = () => {
 
   return (
     <>
-      <main>
-        {isRecruiting ? <RecruitmentActive /> : <RecruitmentInactive />}
-      </main>
+      {isRecruiting ? <RecruitmentActive generation={generation} /> : <RecruitmentInactive />}
       <SubmissionCompleteModal
         isOpen={isSubmissionCompleteModalOpen}
         onClose={closeSubmissionCompleteModal}

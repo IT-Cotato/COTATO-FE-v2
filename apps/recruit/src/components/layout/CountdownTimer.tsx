@@ -58,37 +58,67 @@ export const CountdownTimer = ({
   if (isLoading) return <Spinner />;
 
   return (
-    <div className='flex items-end gap-10'>
-      <div className='flex flex-col'>
-        <p className={clsx(textColor, 'text-body-l-sb text-center')}>DAY</p>
-        <span className='text-h1 text-center text-neutral-400'>
+    <div className='flex w-full max-w-240 items-end gap-2.5 md:gap-10'>
+      <div className='flex flex-1 flex-col'>
+        <p
+          className={clsx(
+            textColor,
+            'text-body-l-b md:text-body-l-sb text-center'
+          )}>
+          DAY
+        </p>
+        <span className='text-h5 font-bold md:text-h1 text-center text-neutral-400 tabular-nums whitespace-nowrap'>
           {timeLeft.d}일
         </span>
       </div>
 
-      <span className='text-h1 text-center text-neutral-400'>:</span>
+      <span className='text-h5 font-bold md:text-h1 text-center text-neutral-400'>
+        :
+      </span>
 
-      <div className='flex flex-col'>
-        <p className={clsx(textColor, 'text-body-l-sb text-center')}>HOUR</p>
-        <span className='text-h1 text-center text-neutral-400'>
+      <div className='flex flex-1 flex-col'>
+        <p
+          className={clsx(
+            textColor,
+            'text-body-l-b md:text-body-l-sb text-center'
+          )}>
+          HOUR
+        </p>
+        <span className='text-h5 font-bold md:text-h1 text-center text-neutral-400 tabular-nums whitespace-nowrap'>
           {timeLeft.h}시간
         </span>
       </div>
 
-      <span className='text-h1 text-center text-neutral-400'>:</span>
+      <span className='text-h5 font-bold md:text-h1 text-center text-neutral-400'>
+        :
+      </span>
 
-      <div className='flex flex-col'>
-        <p className={clsx(textColor, 'text-body-l-sb text-center')}>MINUTE</p>
-        <span className='text-h1 text-center text-neutral-400'>
+      <div className='flex flex-1 flex-col'>
+        <p
+          className={clsx(
+            textColor,
+            'text-body-l-b md:text-body-l-sb text-center'
+          )}>
+          MINUTE
+        </p>
+        <span className='text-h5 font-bold md:text-h1 text-center text-neutral-400 tabular-nums whitespace-nowrap'>
           {timeLeft.m}분
         </span>
       </div>
 
-      <span className='text-h1 text-center text-neutral-400'>:</span>
+      <span className='text-h5 font-bold md:text-h1 text-center text-neutral-400'>
+        :
+      </span>
 
-      <div className='flex flex-col'>
-        <p className={clsx(textColor, 'text-body-l-sb text-center')}>SECOND</p>
-        <span className='text-h1 text-center text-neutral-400'>
+      <div className='flex flex-1 flex-col'>
+        <p
+          className={clsx(
+            textColor,
+            'text-body-l-b md:text-body-l-sb text-center'
+          )}>
+          SECOND
+        </p>
+        <span className='text-h5 font-bold md:text-h1 text-center text-neutral-400 tabular-nums whitespace-nowrap'>
           {timeLeft.s}초
         </span>
       </div>
