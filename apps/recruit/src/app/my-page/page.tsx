@@ -1,7 +1,7 @@
 import HeroMainBanner from '@repo/ui/components/banner/HeroMainBanner';
 import Image from 'next/image';
 import HeroBanner from '@/assets/backgrounds/banners/hero-main.webp';
-import {MyPageSubmittedApplicationsContainer} from '@/app/(with-footer)/my-page/_containers/MyPageSubmittedApplicationsContainer';
+import {MyPageSubmittedApplicationsContainer} from '@/app/my-page/_containers/MyPageSubmittedApplicationsContainer';
 
 export default function Mypage() {
   return (
