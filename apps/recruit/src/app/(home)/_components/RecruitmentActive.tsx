@@ -27,7 +27,7 @@ export const RecruitmentActive = ({generation}: RecruitmentActiveProps) => {
 
   return (
     <>
-      <section className='relative flex min-h-[calc(100dvh-50px)] w-full flex-1 flex-col items-center justify-center overflow-hidden bg-black px-6 py-12.5 lg:min-h-[calc(100dvh-88px)] lg:py-16'>
+      <section className='relative flex min-h-[calc(100dvh-var(--header-height))] w-full flex-1 flex-col items-center justify-center overflow-hidden bg-black px-6 py-12.5 lg:min-h-[calc(100dvh-var(--header-height-lg))] lg:py-16'>
         <Image
           src='/background/background.svg'
           alt='배경 이미지'

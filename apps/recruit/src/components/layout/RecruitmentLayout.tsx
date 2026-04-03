@@ -3,7 +3,6 @@
 import clsx from 'clsx';
 import Image from 'next/image';
 import {useRouter} from 'next/navigation';
-import {HEADER_HEIGHT,MOBILE_HEADER_HEIGHT} from '@repo/ui/constants/ui';
 import {Button} from '@repo/ui/components/buttons/Button';
 import {CountdownTimer} from '@/components/layout/CountdownTimer';
 import {NotifyInput} from '@/components/layout/NotifyInput';
@@ -31,14 +30,8 @@ export default function RecruitmentLayout({
 
   return (
     <div
-      style={
-        {
-          '--header-height': `${MOBILE_HEADER_HEIGHT}px`,
-          '--desktop-header-height': `${HEADER_HEIGHT}px`,
-        } as React.CSSProperties
-      }
       className={clsx(
-        'relative flex w-full flex-col items-center h-[calc(100dvh-var(--header-height))] lg:h-[calc(100dvh-var(--desktop-header-height))]',
+        'relative flex min-h-[calc(100dvh-var(--header-height))] w-full flex-col items-center lg:min-h-[calc(100dvh-var(--header-height-lg))]',
         backgroundColor
       )}>
       {backgroundSrc && (
@@ -80,36 +73,38 @@ export default function RecruitmentLayout({
         </div>
       )}
 
-      <div className='px-6 relative flex min-h-fit flex-col items-center justify-center pb-[185px] lg:pb-[240px] flex-1'>
+      <div className='relative flex min-h-fit flex-1 flex-col items-center justify-center px-6 pb-[185px] lg:pb-[240px]'>
         <h1
-          className='text-h3 font-semibold md:text-h1 mb-7.5 bg-clip-text text-center text-transparent whitespace-nowrap tracking-tight'
+          className='text-h3 md:text-h1 mb-7.5 bg-clip-text text-center font-semibold tracking-tight whitespace-nowrap text-transparent'
           style={{backgroundImage: 'var(--branding-gradient)'}}>
           COde Together, Arrive TOgether
         </h1>
 
         <p
-          className={`text-h5 font-bold md:text-body-l text-primary md:mb-1.25 text-center md:font-semibold`}>
+          className={`text-h5 md:text-body-l text-primary text-center font-bold md:mb-1.25 md:font-semibold`}>
           {isRecruiting
             ? RECRUITMENT_TEXT.isInProgressRecruiting.statusText
             : RECRUITMENT_TEXT.isDoneRecruiting.statusText}
         </p>
 
-        <p className='text-body-l mb-7.5 md:mb-9 text-center whitespace-pre-line text-neutral-300'>
+        <p className='text-body-l mb-7.5 text-center whitespace-pre-line text-neutral-300 md:mb-9'>
           {isRecruiting
             ? RECRUITMENT_TEXT.isInProgressRecruiting.descriptionText
             : RECRUITMENT_TEXT.isDoneRecruiting.descriptionText}
         </p>
 
         {!isRecruiting && (
-          <div className='mb-7.5 md:mb-15.25 w-full flex justify-center'>
+          <div className='mb-7.5 flex w-full justify-center md:mb-15.25'>
             <NotifyInput />
           </div>
         )}
 
-<div className={clsx(
-  'w-full flex justify-center',
-  isRecruiting ? 'mb-11.5' : 'mb-0'
-)}>          <CountdownTimer highlightUnits={isRecruiting} />
+        <div
+          className={clsx(
+            'flex w-full justify-center',
+            isRecruiting ? 'mb-11.5' : 'mb-0'
+          )}>
+          <CountdownTimer highlightUnits={isRecruiting} />
         </div>
 
         {isRecruiting && (
