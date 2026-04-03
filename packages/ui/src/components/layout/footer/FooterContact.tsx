@@ -4,18 +4,12 @@ import Insta from '@repo/ui/assets/footer/insta/insta.svg';
 import Kakao from '@repo/ui/assets/footer/kakao/kakao.svg';
 import NaverCafe from '@repo/ui/assets/footer/naver-cafe/naver-cafe.svg';
 import {SocialLink} from './SocialLink';
-import {TERMS_LINK} from '../../../constants/terms-link';
-
 interface FooterContactProps {
-  isRecruit: boolean;
+  termsHref: string;
+  termsText: string;
 }
 
-export const FooterContact = ({isRecruit}: FooterContactProps) => {
-  const linkHref = isRecruit ? TERMS_LINK.recruit : TERMS_LINK.homepage;
-  const linkText = isRecruit
-    ? '서비스 이용약관 및 개인정보 처리방침'
-    : '서비스 이용약관';
-
+export const FooterContact = ({termsHref, termsText}: FooterContactProps) => {
   return (
     <section className='flex flex-col gap-6 lg:items-end lg:gap-0'>
       <div className='flex flex-col gap-4 lg:flex-row lg:gap-5.25'>
@@ -47,11 +41,11 @@ export const FooterContact = ({isRecruit}: FooterContactProps) => {
 
       <div className='flex flex-col gap-2 lg:items-end lg:gap-[3px]'>
         <a
-          href={linkHref}
+          href={termsHref}
           target='_blank'
           rel='noopener noreferrer'
           className='text-body-m lg:text-body-m-sb mt-4 text-neutral-400 underline decoration-neutral-500 underline-offset-4 lg:mt-7.5'>
-          {linkText}
+          {termsText}
         </a>
 
         <p className='text-body-m text-center text-neutral-400 lg:text-right'>
