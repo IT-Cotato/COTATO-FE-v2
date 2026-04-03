@@ -4,17 +4,14 @@ import Insta from '@repo/ui/assets/footer/insta/insta.svg';
 import Kakao from '@repo/ui/assets/footer/kakao/kakao.svg';
 import NaverCafe from '@repo/ui/assets/footer/naver-cafe/naver-cafe.svg';
 import {SocialLink} from './SocialLink';
-import {TERMS_LINK} from '../../../constants/terms-link';
-
 interface FooterContactProps {
-  isRecruit: boolean;
+  termsHref: string;
+  termsText: string;
 }
 
-export const FooterContact = ({isRecruit}: FooterContactProps) => {
-  const linkHref = isRecruit ? TERMS_LINK.recruit : TERMS_LINK.homepage;
-  const linkText = isRecruit
-    ? '서비스 이용약관 및 개인정보 처리방침'
-    : '서비스 이용약관';
+export const FooterContact = ({termsHref, termsText}: FooterContactProps) => {
+  const linkHref = termsHref;
+  const linkText = termsText;
 
   return (
     <section className='flex flex-col gap-6 lg:items-end lg:gap-0'>
