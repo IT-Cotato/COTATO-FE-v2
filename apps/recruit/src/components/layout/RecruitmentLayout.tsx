@@ -3,10 +3,11 @@
 import clsx from 'clsx';
 import Image from 'next/image';
 import {useRouter} from 'next/navigation';
-import {HEADER_HEIGHT} from '@repo/ui/constants/ui';
 import {Button} from '@repo/ui/components/buttons/Button';
 import {CountdownTimer} from '@/components/layout/CountdownTimer';
 import {NotifyInput} from '@/components/layout/NotifyInput';
+import {ROUTES} from '@/constants/routes';
+import {RECRUITMENT_TEXT} from '@/constants/home/recruitment';
 
 type bgColorKey = 'bg-transparent' | 'bg-neutral-50' | 'bg-[#010101]';
 
@@ -15,7 +16,7 @@ interface RecruitmentLayoutProps {
   backgroundColor?: bgColorKey;
   backgroundSrc?: string;
   visualStripSrc?: string;
-  limitVisualStripWidth?: boolean;
+  mobileVisualStripSrc?: string;
 }
 
 export default function RecruitmentLayout({
@@ -23,17 +24,16 @@ export default function RecruitmentLayout({
   backgroundColor,
   backgroundSrc,
   visualStripSrc,
-  limitVisualStripWidth = false,
+  mobileVisualStripSrc,
 }: RecruitmentLayoutProps) {
   const router = useRouter();
 
   return (
     <div
       className={clsx(
-        'relative flex min-h-fit w-full min-w-360 flex-col items-center justify-center',
+        'relative flex min-h-[calc(100dvh-var(--header-height))] w-full flex-col items-center lg:min-h-[calc(100dvh-var(--header-height-lg))]',
         backgroundColor
-      )}
-      style={{height: `calc(100vh - ${HEADER_HEIGHT}px)`}}>
+      )}>
       {backgroundSrc && (
         <Image
           src={backgroundSrc}
@@ -42,37 +42,68 @@ export default function RecruitmentLayout({
           sizes='100vw'
           aria-hidden={true}
           draggable={false}
-          className='object-contain object-center'
+          className='object-cover object-center'
         />
       )}
 
-      <div className='relative flex min-h-fit min-w-360 flex-1 flex-col items-center justify-center'>
+      {(visualStripSrc || mobileVisualStripSrc) && (
+        <div className='absolute bottom-0 w-full'>
+          {mobileVisualStripSrc && (
+            <Image
+              src={mobileVisualStripSrc}
+              alt=''
+              aria-hidden={true}
+              draggable={false}
+              width={375}
+              height={185}
+              className='block h-auto w-full md:hidden'
+            />
+          )}
+          {visualStripSrc && (
+            <Image
+              src={visualStripSrc}
+              alt=''
+              aria-hidden={true}
+              draggable={false}
+              width={7680}
+              height={240}
+              className='hidden h-auto w-full md:block'
+            />
+          )}
+        </div>
+      )}
+
+      <div className='relative flex min-h-fit flex-1 flex-col items-center justify-center px-6 pb-[185px] lg:pb-[240px]'>
         <h1
-          className='text-h1 mb-7.5 bg-clip-text text-center text-transparent'
+          className='text-h3 md:text-h1 mb-7.5 bg-clip-text text-center font-semibold tracking-tight whitespace-nowrap text-transparent'
           style={{backgroundImage: 'var(--branding-gradient)'}}>
           COde Together, Arrive TOgether
         </h1>
 
         <p
-          className={`text-body-l text-primary mb-1.25 text-center font-semibold`}>
+          className={`text-h5 md:text-body-l text-primary text-center font-bold md:mb-1.25 md:font-semibold`}>
           {isRecruiting
-            ? recruitmentText.isInProgressRecruiting.statusText
-            : recruitmentText.isDoneRecruiting.statusText}
+            ? RECRUITMENT_TEXT.isInProgressRecruiting.statusText
+            : RECRUITMENT_TEXT.isDoneRecruiting.statusText}
         </p>
 
-        <p className='text-body-l mb-9 text-center whitespace-pre-line text-neutral-300'>
+        <p className='text-body-l mb-7.5 text-center whitespace-pre-line text-neutral-300 md:mb-9'>
           {isRecruiting
-            ? recruitmentText.isInProgressRecruiting.descriptionText
-            : recruitmentText.isDoneRecruiting.descriptionText}
+            ? RECRUITMENT_TEXT.isInProgressRecruiting.descriptionText
+            : RECRUITMENT_TEXT.isDoneRecruiting.descriptionText}
         </p>
 
         {!isRecruiting && (
-          <div className='mb-15.25'>
+          <div className='mb-7.5 flex w-full justify-center md:mb-15.25'>
             <NotifyInput />
           </div>
         )}
 
-        <div className='mb-11.5'>
+        <div
+          className={clsx(
+            'flex w-full justify-center',
+            isRecruiting ? 'mb-11.5' : 'mb-0'
+          )}>
           <CountdownTimer highlightUnits={isRecruiting} />
         </div>
 
@@ -82,36 +113,11 @@ export default function RecruitmentLayout({
               label='지원하러 가기'
               width={240}
               height={48}
-              onClick={() => router.push('/apply')}
+              onClick={() => router.push(ROUTES.APPLY)}
             />
           </div>
         )}
       </div>
-
-      {visualStripSrc && (
-        <div className={limitVisualStripWidth ? 'w-360' : 'w-full'}>
-          <Image
-            src={visualStripSrc}
-            alt=''
-            aria-hidden={true}
-            draggable={false}
-            width={7680}
-            height={240}
-          />
-        </div>
-      )}
     </div>
   );
 }
-
-const recruitmentText = {
-  isInProgressRecruiting: {
-    statusText: '코테이토 모집이 시작되었습니다!',
-    descriptionText: '지금 바로 지원하고 코테이토와 당신의 여정을 함께하세요!',
-  },
-  isDoneRecruiting: {
-    statusText: '코테이토 모집이 종료되었습니다!',
-    descriptionText:
-      '모집 안내 예약 신청을 해주시면 누구보다 먼저 코테이토에 지원하실 수 있어요.',
-  },
-};

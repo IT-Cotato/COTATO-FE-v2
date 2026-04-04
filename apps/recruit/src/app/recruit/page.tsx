@@ -1,5 +1,5 @@
-import {ActionContainer} from '@/app/(with-footer)/recruit/_containers/ActionContainer';
-import {ContentContainer} from '@/app/(with-footer)/recruit/_containers/ContentContainer';
+import {ActionContainer} from '@/app/recruit/_containers/ActionContainer';
+import {ContentContainer} from '@/app/recruit/_containers/ContentContainer';
 
 export default function RecruitmentNoticePage() {
   return (

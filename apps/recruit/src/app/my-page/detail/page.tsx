@@ -1,4 +1,4 @@
-import {MyPageApplicationDetailContainer} from '@/app/(with-footer)/my-page/detail/_containers/MyPageApplicationDetailContainer';
+import {MyPageApplicationDetailContainer} from '@/app/my-page/detail/_containers/MyPageApplicationDetailContainer';
 import {SuspenseWrapper} from '@/components/wrappers/SuspenseWrapper';
 
 export default function MyPageApplicationDetailPage() {
