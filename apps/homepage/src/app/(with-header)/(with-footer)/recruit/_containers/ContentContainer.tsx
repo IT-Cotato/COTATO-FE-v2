@@ -14,9 +14,9 @@ export const ContentContainer = () => {
   const dataActivity = data?.activities;
 
   return (
-    <div className='relative min-w-360 overflow-hidden'>
+    <div className='relative w-full overflow-hidden'>
       {/* dimd */}
-      <div className='absolute h-271.25 w-full bg-linear-to-b from-[#010101] from-20% to-transparent to-100%' />
+      <div className='absolute hidden h-271.25 w-full bg-linear-to-b from-[#010101] from-20% to-transparent to-100% lg:block' />
 
       {/* object */}
       <Image
@@ -26,7 +26,7 @@ export const ContentContainer = () => {
         draggable={false}
         width={817}
         height={1052}
-        className='absolute top-144.25 left-0'
+        className='absolute top-144.25 left-0 hidden lg:block'
       />
       <Image
         src='/images/recruitment/recruitment-background-object-2.webp'
@@ -35,7 +35,7 @@ export const ContentContainer = () => {
         draggable={false}
         width={817}
         height={1052}
-        className='absolute top-401.25 right-0'
+        className='absolute top-401.25 right-0 hidden lg:block'
       />
 
       {/* content */}
