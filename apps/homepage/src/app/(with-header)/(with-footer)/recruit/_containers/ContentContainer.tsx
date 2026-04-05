@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import {useRecruitmentNoticeQuery} from '@/hooks/queries/useRecruit.query';
 import {DesktopContentContainer} from '@/app/(with-header)/(with-footer)/recruit/_desktop/_containers/DesktopContentContainer';
+import {MobileContentContainer} from '@/app/(with-header)/(with-footer)/recruit/_mobile/_containers/MobileContentContainer';
 
 export const ContentContainer = () => {
   const {data} = useRecruitmentNoticeQuery();
@@ -37,6 +38,7 @@ export const ContentContainer = () => {
 
       {/* content */}
       <DesktopContentContainer parts={dataPosition} activities={dataActivity} />
+      <MobileContentContainer parts={dataPosition} activities={dataActivity} />
     </div>
   );
 };
