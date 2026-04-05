@@ -7,12 +7,15 @@ interface PositionListProps {
 
 export const PositionList = ({parts}: PositionListProps) => {
   return (
-    <div className='flex flex-col gap-12.5'>
+    <div className='flex w-full flex-col items-center gap-12.5'>
       <p className='text-h2 text-center text-neutral-800'>모집 파트</p>
-      <div className='flex justify-center gap-4.5'>
-        {parts?.map((item) => (
-          <PositionCard key={item.short} item={item} />
-        ))}
+
+      <div className='flex w-full overflow-x-scroll'>
+        <div className='mx-auto flex gap-4.5'>
+          {parts?.map((item) => (
+            <PositionCard key={item.short} item={item} />
+          ))}
+        </div>
       </div>
     </div>
   );

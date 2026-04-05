@@ -1,8 +1,8 @@
 'use client';
 
 import Image from 'next/image';
-import {QualificationList} from '@/app/(with-header)/(with-footer)/recruit/_components/QualificationList';
-import {PositionList} from '@/app/(with-header)/(with-footer)/recruit/_components/PositionList';
+import {QualificationList} from '@/app/(with-header)/(with-footer)/recruit/_desktop/_components/QualificationList';
+import {PositionList} from '@/app/(with-header)/(with-footer)/recruit/_desktop/_components/PositionList';
 import {ActivityList} from '@/app/(with-header)/(with-footer)/recruit/_components/ActivityList';
 import {FaqContainer} from '@/app/(with-header)/(with-footer)/recruit/_containers/FaqContainer';
 import {useRecruitmentNoticeQuery} from '@/hooks/queries/useRecruit.query';
@@ -39,7 +39,7 @@ export const ContentContainer = () => {
       />
 
       {/* content */}
-      <div className='relative z-1 m-auto flex w-360 flex-col gap-45 px-30.25 pt-73 pb-23'>
+      <div className='relative z-1 flex w-full flex-col gap-45 pt-73 pb-23'>
         <QualificationList />
         <PositionList parts={dataPosition} />
         <ActivityList activities={dataActivity} />
