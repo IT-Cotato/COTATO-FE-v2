@@ -98,8 +98,8 @@ export const TabContainer = () => {
   };
 
   return (
-    <div className='flex items-end'>
-      <div className='flex flex-col gap-2.5'>
+    <div className='flex flex-col gap-5 lg:flex-row lg:items-end lg:gap-0'>
+      <div className='flex w-full flex-col gap-2.5 overflow-x-scroll'>
         <div role='tablist' className='flex gap-7.5' aria-label='파트 선택'>
           {ATTENDANCE_PART_TAB.map(({label, value}, index) => {
             const isActive = activePart === value;
@@ -132,6 +132,7 @@ export const TabContainer = () => {
           </div>
         )}
       </div>
+
       <SearchBar
         keyword={keyword}
         onKeywordChange={setKeyword}
