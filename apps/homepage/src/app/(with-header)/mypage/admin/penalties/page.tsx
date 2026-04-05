@@ -4,9 +4,11 @@ import {TableContainer} from '@/app/(with-header)/mypage/admin/penalties/_contai
 
 export default function AdminPenaltiesPage() {
   return (
-    <section className='px-11.25'>
-      <div className='flex min-w-275 flex-col gap-4.5 py-13.5'>
-        <h1 className='text-h2 text-neutral-800'>상벌점 관리</h1>
+    <section className='px-6 lg:px-11.25'>
+      <div className='flex w-full flex-col gap-3 overflow-hidden py-10 pb-7.5 lg:gap-4.5 lg:py-13.5 lg:pb-0'>
+        <h1 className='text-h2 hidden text-neutral-800 lg:block'>
+          상벌점 관리
+        </h1>
         <SuspenseWrapper>
           <DropdownContainer />
           <TableContainer />
