@@ -7,9 +7,9 @@ interface ActivityListProps {
 
 export const ActivityList = ({activities}: ActivityListProps) => {
   return (
-    <div className='flex flex-col gap-12.5'>
+    <div className='flex flex-col gap-12.5 px-6 py-12.5 lg:px-0 lg:py-0'>
       <div className='flex flex-col'>
-        <p className='text-h2 mb-2.5 text-center text-neutral-800'>
+        <p className='text-h3 lg:text-h2 mb-2.5 text-center text-neutral-800'>
           주요 활동 일정
         </p>
         <p className='text-h5 mb-1 text-center text-neutral-600'>
@@ -21,7 +21,7 @@ export const ActivityList = ({activities}: ActivityListProps) => {
         </p>
       </div>
 
-      <div className='flex flex-wrap justify-center gap-x-5 gap-y-6'>
+      <div className='flex flex-wrap justify-center gap-2.5 lg:gap-x-5 lg:gap-y-6'>
         {activities?.map((item) => (
           <ActivityCard key={item.id} item={item} />
         ))}
