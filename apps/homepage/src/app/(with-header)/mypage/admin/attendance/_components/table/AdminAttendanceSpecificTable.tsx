@@ -30,7 +30,7 @@ export const AdminAttendanceSpecificTable = ({
           {ATTENDANCE_SPECIFIC_TABLE_HEADER.map((col) => (
             <th
               key={col.key}
-              className='text-body-l-sb px-3 py-4 text-neutral-600'>
+              className='text-body-m-sb lg:text-body-l-sb px-3 py-4 text-neutral-600'>
               <div className='flex items-center justify-center gap-2.5'>
                 {col.label}
               </div>
@@ -49,7 +49,7 @@ export const AdminAttendanceSpecificTable = ({
           items.map((row) => (
             <tr
               key={row.memberInfo.memberId}
-              className='text-body-l-sb text-center text-neutral-600'>
+              className='text-body-m lg:text-body-l-sb text-center text-neutral-600'>
               <td className='truncate px-3 py-4'>{row.memberInfo.name}</td>
               <td className='truncate px-3 py-4'>
                 {row.memberInfo.generationId}기

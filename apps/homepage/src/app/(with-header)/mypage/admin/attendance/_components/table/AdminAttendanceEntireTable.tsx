@@ -19,9 +19,11 @@ export const AdminAttendanceEntireTable = ({
           {ATTENDANCE_FULL_TABLE_HEADER.map((col) => (
             <th
               key={col.key}
-              className='text-body-l-sb px-3 py-4 text-neutral-600'>
+              className='text-body-m-sb lg:text-body-l-sb overflow-hidden px-3 py-4 text-neutral-600'>
               <div className='flex items-center justify-center gap-2.5'>
-                {col.icon && <col.icon />}
+                <span className='hidden lg:block'>
+                  {col.icon && <col.icon />}
+                </span>
                 {col.label}
               </div>
             </th>
@@ -39,7 +41,7 @@ export const AdminAttendanceEntireTable = ({
           items.map((row) => (
             <tr
               key={row.memberInfo.memberId}
-              className='text-body-l-sb text-neutral-600'>
+              className='text-body-m lg:text-body-l-sb text-neutral-600'>
               <td className='truncate px-3 py-4 text-center'>
                 {row.memberInfo.name}
               </td>
