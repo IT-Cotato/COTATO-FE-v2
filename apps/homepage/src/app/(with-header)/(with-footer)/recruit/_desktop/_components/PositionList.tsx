@@ -10,7 +10,7 @@ export const PositionList = ({parts}: PositionListProps) => {
     <div className='flex w-full flex-col items-center gap-12.5'>
       <p className='text-h2 text-center text-neutral-800'>모집 파트</p>
 
-      <div className='flex w-full overflow-x-scroll'>
+      <div className='flex w-full overflow-x-scroll [&::-webkit-scrollbar]:hidden'>
         <div className='mx-auto flex gap-4.5'>
           {parts?.map((item) => (
             <PositionCard key={item.short} item={item} />

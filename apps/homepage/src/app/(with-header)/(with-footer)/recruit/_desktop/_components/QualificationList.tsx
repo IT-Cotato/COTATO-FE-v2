@@ -15,7 +15,7 @@ export const QualificationList = () => {
         </p>
       </div>
 
-      <div className='flex w-full overflow-x-scroll'>
+      <div className='flex w-full overflow-x-scroll [&::-webkit-scrollbar]:hidden'>
         <div className='mx-auto flex gap-20'>
           {QUALIFICATIONS_CARD_ITEMS.map((item) => (
             <QualificationsCard key={item.qualification} item={item} />

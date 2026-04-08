@@ -69,7 +69,7 @@ export function RecruitLayout({
           </div>
         )}
 
-        <div className='mb-11.5 w-full overflow-scroll'>
+        <div className='mb-11.5 w-full overflow-scroll [&::-webkit-scrollbar]:hidden'>
           <div className='flex w-full min-w-fit justify-center'>
             <CountdownTimer highlightUnits={isRecruiting} />
           </div>
