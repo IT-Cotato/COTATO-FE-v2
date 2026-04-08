@@ -58,7 +58,7 @@ export const CountdownTimer = ({
   if (isLoading) return <Spinner />;
 
   return (
-    <div className='flex w-full max-w-240 items-end gap-2.5 md:gap-10'>
+    <div className='flex w-fit justify-center gap-2.5 md:gap-10'>
       <div className='flex flex-1 flex-col'>
         <p
           className={clsx(
@@ -67,12 +67,12 @@ export const CountdownTimer = ({
           )}>
           DAY
         </p>
-        <span className='text-h5 font-bold md:text-h1 text-center text-neutral-400 tabular-nums whitespace-nowrap'>
+        <span className='text-h5 md:text-h1 text-center font-bold whitespace-nowrap text-neutral-400 tabular-nums'>
           {timeLeft.d}일
         </span>
       </div>
 
-      <span className='text-h5 font-bold md:text-h1 text-center text-neutral-400'>
+      <span className='text-h5 md:text-h1 text-center font-bold text-neutral-400'>
         :
       </span>
 
@@ -84,12 +84,12 @@ export const CountdownTimer = ({
           )}>
           HOUR
         </p>
-        <span className='text-h5 font-bold md:text-h1 text-center text-neutral-400 tabular-nums whitespace-nowrap'>
+        <span className='text-h5 md:text-h1 text-center font-bold whitespace-nowrap text-neutral-400 tabular-nums'>
           {timeLeft.h}시간
         </span>
       </div>
 
-      <span className='text-h5 font-bold md:text-h1 text-center text-neutral-400'>
+      <span className='text-h5 md:text-h1 text-center font-bold text-neutral-400'>
         :
       </span>
 
@@ -101,12 +101,12 @@ export const CountdownTimer = ({
           )}>
           MINUTE
         </p>
-        <span className='text-h5 font-bold md:text-h1 text-center text-neutral-400 tabular-nums whitespace-nowrap'>
+        <span className='text-h5 md:text-h1 text-center font-bold whitespace-nowrap text-neutral-400 tabular-nums'>
           {timeLeft.m}분
         </span>
       </div>
 
-      <span className='text-h5 font-bold md:text-h1 text-center text-neutral-400'>
+      <span className='text-h5 md:text-h1 text-center font-bold text-neutral-400'>
         :
       </span>
 
@@ -118,7 +118,7 @@ export const CountdownTimer = ({
           )}>
           SECOND
         </p>
-        <span className='text-h5 font-bold md:text-h1 text-center text-neutral-400 tabular-nums whitespace-nowrap'>
+        <span className='text-h5 md:text-h1 text-center font-bold whitespace-nowrap text-neutral-400 tabular-nums'>
           {timeLeft.s}초
         </span>
       </div>
