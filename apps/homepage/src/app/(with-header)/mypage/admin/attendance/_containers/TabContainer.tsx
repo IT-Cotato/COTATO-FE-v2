@@ -100,7 +100,7 @@ export const TabContainer = () => {
   return (
     <div className='flex flex-col gap-5 lg:flex-row lg:items-end lg:gap-0'>
       <div className='flex w-full flex-col gap-2.5'>
-        <div className='overflow-x-scroll'>
+        <div className='overflow-x-scroll [&::-webkit-scrollbar]:hidden'>
           <div role='tablist' className='flex gap-7.5' aria-label='파트 선택'>
             {ATTENDANCE_PART_TAB.map(({label, value}, index) => {
               const isActive = activePart === value;
@@ -117,7 +117,7 @@ export const TabContainer = () => {
             })}
           </div>
         </div>
-        <div className='overflow-x-scroll'>
+        <div className='overflow-x-scroll [&::-webkit-scrollbar]:hidden'>
           {selectedSessionType === 'SPECIFIC' && (
             <div className='flex gap-2.5' aria-label='출석 상태 선택'>
               {ATTENDANCE_STATUS_OPTION.map((item) => {
