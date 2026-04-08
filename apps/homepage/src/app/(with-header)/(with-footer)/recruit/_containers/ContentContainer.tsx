@@ -5,16 +5,11 @@ import {useRecruitmentNoticeQuery} from '@/hooks/queries/useRecruit.query';
 import {DesktopContentContainer} from '@/app/(with-header)/(with-footer)/recruit/_desktop/_containers/DesktopContentContainer';
 import {MobileContentContainer} from '@/app/(with-header)/(with-footer)/recruit/_mobile/_containers/MobileContentContainer';
 
-// UI 띄우기 위한 임시 mock data
-import {ActivityCardsDummy, PositionCardsDummy} from '../dummy';
-
 export const ContentContainer = () => {
   const {data} = useRecruitmentNoticeQuery();
 
-  // const dataPosition = data?.parts;
-  // const dataActivity = data?.activities;
-  const dataPosition = PositionCardsDummy;
-  const dataActivity = ActivityCardsDummy;
+  const dataPosition = data?.parts;
+  const dataActivity = data?.activities;
 
   return (
     <div className='relative w-full overflow-hidden'>
