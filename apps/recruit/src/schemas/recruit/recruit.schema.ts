@@ -1,5 +1,8 @@
 import z from 'zod';
 
+/** 상수 배열 선언 */
+export const POSITION_OPTIONS = ['PM', 'DE', 'FE', 'BE'] as const;
+
 /** 일정 타임라인 */
 export const TimelineSchema = z.object({
   title: z.string(),
@@ -7,7 +10,7 @@ export const TimelineSchema = z.object({
 });
 
 /** 모집 포지션 - 직무 */
-export const PositionSchema = z.enum(['PM', 'DE', 'FE', 'BE']);
+export const PositionSchema = z.enum(POSITION_OPTIONS);
 
 /** 모집 포지션 */
 export const PositionCardSchema = z.object({
