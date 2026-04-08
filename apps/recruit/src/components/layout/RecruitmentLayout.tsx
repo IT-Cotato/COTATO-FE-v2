@@ -2,7 +2,6 @@
 
 import clsx from 'clsx';
 import Image from 'next/image';
-import {HEADER_HEIGHT} from '@repo/ui/constants/ui';
 import {Button} from '@repo/ui/components/buttons/Button';
 import {CountdownTimer} from '@/components/layout/CountdownTimer';
 import {NotifyInput} from '@/components/layout/NotifyInput';
