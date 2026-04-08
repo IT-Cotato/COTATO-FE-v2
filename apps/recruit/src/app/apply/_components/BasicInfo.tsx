@@ -2,7 +2,7 @@
 
 import {useEffect, useRef, useCallback} from 'react';
 import {useSearchParams} from 'next/navigation';
-import {useFormContext, Controller} from 'react-hook-form';
+import {useFormContext, Controller, type Path} from 'react-hook-form';
 import {useQuery, useQueryClient} from '@tanstack/react-query';
 import {FormDropdown} from '@/components/form/FormDropdown';
 import {FormInput} from '@repo/ui/components/form/FormInput';
@@ -64,7 +64,7 @@ export const BasicInfo = ({
     const currentValues = getValues();
     Object.keys(currentValues).forEach((key) => {
       if (key.startsWith('ans_')) {
-        unregister(key as any);
+        unregister(key as Path<ApplyFormData>);
       }
     });
     setValue('pdfFileKey', undefined);
@@ -139,14 +139,14 @@ export const BasicInfo = ({
 
     if (type === 'radio') {
       return (
-        <fieldset key={name} className='flex flex-1 flex-col gap-2'>
-          <legend className='text-h5 mb-3.5 text-neutral-600'>{label}</legend>
+        <fieldset key={name} className='flex flex-col lg:flex-1 lg:self-end'>
+          {label && <legend className='text-h5 mb-3.5 text-neutral-600'>{label}</legend>}
           <Controller
             name={name}
             control={control}
             render={({field, fieldState: {error}}) => (
-              <>
-                <div className='flex gap-14.5 pt-11'>
+              <div className='flex flex-col gap-2'>
+                <div className='flex gap-14.5'>
                   {options?.map((opt) => (
                     <FormRadio
                       key={opt.value}
@@ -158,14 +158,12 @@ export const BasicInfo = ({
                     />
                   ))}
                 </div>
-                <div>
-                  {error && (
-                    <span className='text-body-l text-alert'>
-                      {error.message ?? ''}
-                    </span>
-                  )}
-                </div>
-              </>
+                {error && (
+                  <span className='text-body-l text-alert'>
+                    {error.message ?? ''}
+                  </span>
+                )}
+              </div>
             )}
           />
         </fieldset>
@@ -266,7 +264,9 @@ export const BasicInfo = ({
           const key =
             'row' in item ? item.row.map((f) => f.name).join('-') : item.name;
           return (
-            <div key={key} className='flex w-full flex-row gap-6'>
+            <div
+              key={key}
+              className='flex w-full flex-col gap-2.5 lg:flex-row lg:items-start lg:gap-6'>
               {'row' in item
                 ? item.row.map((field) => renderField(field))
                 : renderField(item)}

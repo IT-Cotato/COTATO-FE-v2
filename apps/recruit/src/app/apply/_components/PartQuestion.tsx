@@ -67,7 +67,7 @@ export const PartQuestion = ({
   return (
     <div className='flex w-full flex-col gap-7.5'>
       <div className='flex flex-col gap-3.5'>
-        <h3 className='text-h3 text-primary'>
+        <h3 className='text-h5 lg:text-h3 text-primary font-bold'>
           {activePartLabel
             ? `${activePartLabel} 파트에 관한 질문입니다.`
             : '파트별 질문을 불러오는 중...'}
