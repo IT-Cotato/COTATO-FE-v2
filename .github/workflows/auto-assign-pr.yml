@@ -8,6 +8,9 @@ jobs:
   auto-assign:
     name: PR Assignees 지정
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+      contents: read
     steps:
       - uses: hkusu/review-assign-action@v1
         with:
