@@ -20,17 +20,18 @@ export const PositionList = ({parts = []}: PositionListProps) => {
   const cardWidth = 285;
   const gap = 21;
   const singleItemDistance = cardWidth + gap;
+  const maxIndex = Math.max(0, parts.length - 1);
 
   const animateTo = useCallback(
     async (index: number) => {
-      const clampedIndex = Math.max(0, Math.min(index, parts.length - 1 || 0));
+      const clampedIndex = Math.max(0, Math.min(index, maxIndex));
       setCurrentIndex(clampedIndex);
       await controls.start({
         x: -clampedIndex * singleItemDistance,
         transition: {duration: 0.4, ease: 'easeOut'},
       });
     },
-    [controls, parts.length, singleItemDistance]
+    [controls, maxIndex, singleItemDistance]
   );
 
   const handleDragEnd = (
@@ -52,7 +53,7 @@ export const PositionList = ({parts = []}: PositionListProps) => {
           className='flex gap-5'
           drag='x'
           dragConstraints={{
-            left: -(parts.length - 1 || 0) * singleItemDistance,
+            left: -maxIndex * singleItemDistance,
             right: 0,
           }}
           dragElastic={0.2}
