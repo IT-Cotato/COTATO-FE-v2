@@ -5,6 +5,7 @@ import Image from 'next/image';
 import ChevronLeftIcon from '@/assets/chevrons/chevron-left.svg';
 import ChevronRightIcon from '@/assets/chevrons/chevron-right.svg';
 import ThumbnailImage from '@/assets/thumbnail/thumbnail.svg';
+import ThumbnailMobileImage from '@/assets/thumbnail/thumbnail-mobile.svg';
 import {SessionImage} from '@/schemas/admin/admin-sessions.schema';
 
 interface SessionImageCarouselViewProps {
@@ -25,8 +26,8 @@ export const SessionImageCarouselView = ({
     setCurrentIndex((prev) => Math.min(images.length - 1, prev + 1));
 
   return (
-    <div className='flex flex-col'>
-      <div className='relative h-57.5 w-87.5 overflow-hidden rounded-[10px] bg-neutral-200'>
+    <div className='mx-auto flex w-full max-w-81.75 flex-col md:mx-0 md:w-87.5 md:max-w-none'>
+      <div className='relative aspect-327/186 w-full overflow-hidden rounded-[10px] bg-neutral-200 md:aspect-auto md:h-57.5 md:w-87.5'>
         {currentImage ? (
           <>
             <Image
@@ -59,9 +60,14 @@ export const SessionImageCarouselView = ({
             )}
           </>
         ) : (
-          <div className='flex h-full w-full items-center justify-center'>
-            <ThumbnailImage />
-          </div>
+          <>
+            <div className='absolute inset-0 flex items-center justify-center md:hidden'>
+              <ThumbnailMobileImage width='100%' height='100%' />
+            </div>
+            <div className='absolute inset-0 hidden items-center justify-center md:flex'>
+              <ThumbnailImage width='100%' height='100%' />
+            </div>
+          </>
         )}
       </div>
     </div>

@@ -8,6 +8,10 @@ import {GoogleAnalytics} from '@/lib/GoogleAnalytics';
 import {BeUsableRum} from '@/lib/BeUsableRum';
 import {GoogleTagManager, GtmNoscript} from '@/lib/GoogleTagManager';
 import {HeaderContainer} from '@/app/_containers/HeaderContainer';
+import {Footer} from '@repo/ui/components/layout/footer/Footer';
+import {TERMS_LINK} from '@repo/ui/constants/terms-link';
+import {HEADER_HEIGHT, MOBILE_HEADER_HEIGHT} from '@repo/ui/constants/ui';
+import type {CSSProperties} from 'react';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://recruit.cotato.kr'),
@@ -80,9 +84,15 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
   return (
     <html
       lang='ko'
-      className={`${pretendard.variable} ${roboto.variable} antialiased`}>
+      className={`${pretendard.variable} ${roboto.variable} antialiased`}
+      style={
+        {
+          '--header-height': `${MOBILE_HEADER_HEIGHT}px`,
+          '--header-height-lg': `${HEADER_HEIGHT}px`,
+        } as CSSProperties
+      }>
       {gtmId && <GoogleTagManager gtmId={gtmId} />}
-      <body className='flex min-h-screen w-full flex-col bg-black'>
+      <body className='flex min-h-screen w-full flex-col'>
         <Providers>
           <ConditionalAuthProvider>
             {gtmId && <GtmNoscript gtmId={gtmId} />}
@@ -93,7 +103,11 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
             ) : null}
             <BeUsableRum />
             <HeaderContainer />
-            <main className='w-full flex-1'>{children}</main>
+            <main className='flex w-full flex-1 flex-col'>{children}</main>
+            <Footer
+              termsHref={TERMS_LINK.recruit}
+              termsText='서비스 이용약관 및 개인정보 처리방침'
+            />
           </ConditionalAuthProvider>
         </Providers>
       </body>

@@ -33,7 +33,7 @@ export const NotifyInput = () => {
     <>
       <form
         onSubmit={handleSubmit}
-        className='flex w-152.75 gap-3 rounded-[10px] bg-neutral-100 px-3 py-2.75'>
+        className='flex w-full max-w-152.75 gap-3 rounded-[10px] bg-neutral-100 px-3 py-2.75'>
         <input
           type='email'
           value={email}

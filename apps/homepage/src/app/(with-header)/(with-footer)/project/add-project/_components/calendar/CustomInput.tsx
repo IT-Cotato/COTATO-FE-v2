@@ -30,7 +30,7 @@ export function CustomInput({
       aria-haspopup='dialog'
       aria-label={label}
       className={clsx(
-        'text-h5 flex h-11.5 w-57 items-center justify-between gap-2 rounded-[10px] bg-white py-3 pr-7.5 pl-4 text-neutral-800',
+        'text-body-m lg:text-h5 flex h-11.5 w-full items-center justify-between gap-2 rounded-[10px] bg-neutral-50 py-3 pr-2 pl-2 text-neutral-800 lg:w-57 lg:bg-white lg:pr-7.5 lg:pl-4',
         {
           'cursor-pointer': !disabled,
           'cursor-default': disabled,

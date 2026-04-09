@@ -64,7 +64,7 @@ export const StatusDropdown = <T extends string>({
         aria-haspopup='listbox'
         aria-expanded={isOpen}
         className={clsx(
-          'text-body-m-sb inline-flex w-full items-center justify-center gap-1 rounded-[10px] py-1.5 whitespace-nowrap',
+          'text-body-m-sb inline-flex w-full items-center justify-center gap-1 rounded-[10px] px-1.5 py-1.5 whitespace-nowrap',
           className
         )}
         style={textColor ? {color: textColor} : undefined}
@@ -94,7 +94,7 @@ export const StatusDropdown = <T extends string>({
                 aria-selected={isSelected}
                 tabIndex={isSelected ? 0 : -1}
                 className={clsx(
-                  'cursor-pointer px-3 py-1.5 text-center',
+                  'cursor-pointer py-1.5 text-center lg:px-3',
                   isSelected ? 'text-primary' : 'hover:text-primary',
                   disabled && 'pointer-events-none opacity-60'
                 )}

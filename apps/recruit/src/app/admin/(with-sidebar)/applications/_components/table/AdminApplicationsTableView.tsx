@@ -10,7 +10,6 @@ import {ROUTES} from '@/constants/routes';
 import DefaultFilterIcon from '@repo/ui/assets/icons/filter-default.svg';
 import FinishFilterIcon from '@repo/ui/assets/icons/filter-finish.svg';
 import DownArrowIcon from '@/assets/arrow/down-arrow.svg';
-
 import clsx from 'clsx';
 import {
   ApplicantType,
@@ -69,10 +68,18 @@ export const AdminApplicationsTableView = ({
 
             const isResultColumn = col.key === 'result';
 
+            // 모바일뷰에서 전화번호, 제출일자 숨김 처리
+
+            const isHiddenOnMobile =
+              col.key === 'phone' || col.key === 'submitDate';
+
             return (
               <th
                 key={col.key}
-                className='text-body-l px-3 py-4 text-center align-middle font-semibold text-neutral-600'>
+                className={clsx(
+                  'text-body-l bg-neutral-200 py-4 text-center align-middle font-semibold text-neutral-600 lg:px-3',
+                  isHiddenOnMobile && 'hidden lg:table-cell'
+                )}>
                 <div className='flex items-center justify-center gap-2.5'>
                   <span>{col.label}</span>
 
@@ -92,7 +99,7 @@ export const AdminApplicationsTableView = ({
                       </button>
 
                       {isFilterOpen && (
-                        <div className='absolute top-full left-0 z-50 mt-2 w-27 -translate-x-3/4'>
+                        <div className='absolute top-full left-0 z-50 mt-4 w-27 -translate-x-3/4 lg:mt-2'>
                           <CheckboxFilter
                             options={RESULT_OPTIONS}
                             selected={selectedResults}
@@ -131,7 +138,7 @@ export const AdminApplicationsTableView = ({
           <tr
             key={app.applicationId}
             className='text-body-l font-semibold text-neutral-600'>
-            <td className='flex items-center justify-center px-3 py-4'>
+            <td className='truncate px-3 py-4 text-center'>
               <a
                 href={`${ROUTES.ADMIN_APPLICATIONS}/${app.applicationId}?generationId=${generationId}`}
                 target='_blank'
@@ -151,10 +158,10 @@ export const AdminApplicationsTableView = ({
             <td className='truncate px-3 py-4'>
               <p className='text-center'>{app.university}</p>
             </td>
-            <td className='truncate px-3 py-4'>
+            <td className='hidden truncate px-3 py-4 lg:table-cell'>
               <p className='text-center'>{app.phoneNumber}</p>
             </td>
-            <td className='truncate px-3 py-4'>
+            <td className='hidden truncate px-3 py-4 lg:table-cell'>
               <p className='text-center'>{formatKoreanDate(app.submittedAt)}</p>
             </td>
             <td className='px-3 py-4'>

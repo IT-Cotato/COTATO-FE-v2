@@ -11,6 +11,7 @@
     -ms-overflow-style: none;
     scrollbar-width: none;
     overflow-wrap: break-word;
+    background-color: black;
   }
   html::-webkit-scrollbar,
   body::-webkit-scrollbar {
