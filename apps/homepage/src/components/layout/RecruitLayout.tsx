@@ -2,7 +2,6 @@
 
 import clsx from 'clsx';
 import Image from 'next/image';
-import {HEADER_HEIGHT} from '@repo/ui/constants/ui';
 import {Button} from '@repo/ui/components/buttons/Button';
 import {CountdownTimer} from '@/components/layout/CountdownTimer';
 import {NotifyInput} from '@/components/layout/NotifyInput';
@@ -27,10 +26,9 @@ export function RecruitLayout({
   return (
     <div
       className={clsx(
-        'relative flex min-h-fit w-full flex-col items-center justify-center',
+        'relative flex min-h-[calc(100dvh-var(--header-height))] w-full flex-col items-center justify-center lg:min-h-[calc(100dvh-var(--header-height-lg))]',
         backgroundColor
-      )}
-      style={{height: `calc(100vh - ${HEADER_HEIGHT}px)`}}>
+      )}>
       {backgroundSrc && (
         <Image
           src={backgroundSrc}
