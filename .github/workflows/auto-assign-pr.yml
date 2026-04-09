@@ -12,8 +12,4 @@ jobs:
       - uses: hkusu/review-assign-action@v1
         with:
           assignees: ${{ github.actor }}
-          reviewers: |
-            kimminna
-            DandelionQZ
-            JiiminHa
-            choyeon2e
+          reviewers: kimminna, DandelionQZ, JiiminHa, choyeon2e
