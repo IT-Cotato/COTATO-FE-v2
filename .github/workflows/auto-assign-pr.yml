@@ -2,7 +2,7 @@ name: PR Assignees 지정
 
 on:
   pull_request:
-    types: [opened, ready_for_review, synchronize]
+    types: [opened, ready_for_review]
 
 jobs:
   auto-assign:
@@ -17,7 +17,7 @@ jobs:
           PR_URL: ${{ github.event.pull_request.html_url }}
         run: |
           gh pr edit $PR_URL --add-assignee "${{ github.actor }}"
-          
+
           REVIEWERS="kimminna,DandelionQZ,JiiminHa,choyeon2e"
 
           gh pr edit $PR_URL --add-reviewer "$REVIEWERS"
