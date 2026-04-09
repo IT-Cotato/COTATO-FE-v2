@@ -5,9 +5,9 @@ import {
 } from '@/schemas/recruit/recruit.schema';
 
 export const TimelineDummy: TimelineType[] = [
-  {title: 'test1', date: '2026.01.01'},
-  {title: 'test2', date: '2026.01.02'},
-  {title: 'test3', date: '2026.01.03'},
+  {title: 'test1test1test1', date: '2026.01.01'},
+  {title: 'test2', date: '2026.01.022026.01.02'},
+  {title: 'test\n3', date: '2026.01.03\n2026.01.03\n2026.01.03'},
   {title: 'test4', date: '2026.01.04'},
   {title: 'test5', date: '2026.01.05'},
   {title: 'test6', date: '2026.01.06'},
