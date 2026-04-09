@@ -140,7 +140,9 @@ export const BasicInfo = ({
     if (type === 'radio') {
       return (
         <fieldset key={name} className='flex flex-col lg:flex-1 lg:self-end'>
-          {label && <legend className='text-h5 mb-3.5 text-neutral-600'>{label}</legend>}
+          {label && (
+            <legend className='text-h5 mb-3.5 text-neutral-600'>{label}</legend>
+          )}
           <Controller
             name={name}
             control={control}
