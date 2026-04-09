@@ -1,9 +1,6 @@
 'use client';
 
-import {
-  POSITION_OPTIONS,
-  PositionCardType,
-} from '@/schemas/recruit/recruit.schema';
+import {PositionCardType} from '@/schemas/recruit/recruit.schema';
 import clsx from 'clsx';
 import {motion, useAnimationControls, PanInfo} from 'framer-motion';
 import {useCallback, useState} from 'react';
@@ -76,12 +73,12 @@ export const PositionList = ({parts = []}: PositionListProps) => {
       </div>
 
       <div className='flex w-full justify-center gap-2.25 py-0.5'>
-        {POSITION_OPTIONS?.map((option) => (
+        {parts.map((part) => (
           <div
-            key={option}
+            key={part.short}
             className={clsx(
               'h-1 w-1 rounded-full transition-all duration-300',
-              option === parts?.[currentIndex]?.short
+              part.short === parts[currentIndex]?.short
                 ? 'bg-neutral-600'
                 : 'bg-neutral-300'
             )}
