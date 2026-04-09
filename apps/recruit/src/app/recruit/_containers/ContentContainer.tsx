@@ -1,6 +1,6 @@
 'use client';
 
-// import {useRecruitmentNoticeQuery} from '@/hooks/queries/useRecruitmentNotice.query';
+import {useRecruitmentNoticeQuery} from '@/hooks/queries/useRecruitmentNotice.query';
 import {Button} from '@repo/ui/components/buttons/Button';
 import {useRouter} from 'next/navigation';
 import {ROUTES} from '@/constants/routes';
@@ -8,21 +8,15 @@ import {useRecruitmentStatusQuery} from '@/hooks/queries/useRecruitmentStatus.qu
 import {DesktopContentContainer} from '@/app/recruit/_desktop/_containers/DesktopContentContainer';
 import {MobileContentContainer} from '@/app/recruit/_mobile/_containers/MobileContentContainer';
 
-// ui 확인을 위한 임시 dummy data
-import {ActivityCardsDummy, PositionCardsDummy, TimelineDummy} from '../dummy';
-
 export const ContentContainer = () => {
-  // const {data} = useRecruitmentNoticeQuery();
+  const {data} = useRecruitmentNoticeQuery();
   const router = useRouter();
   const {data: recruitmentStatus} = useRecruitmentStatusQuery();
   const isRecruiting = recruitmentStatus?.isActive ?? false;
 
-  // const dataTimeline = data?.schedule;
-  // const dataPosition = data?.parts;
-  // const dataActivity = data?.activities;
-  const dataTimeline = TimelineDummy;
-  const dataPosition = PositionCardsDummy;
-  const dataActivity = ActivityCardsDummy;
+  const dataTimeline = data?.schedule;
+  const dataPosition = data?.parts;
+  const dataActivity = data?.activities;
 
   return (
     <div className='w-full lg:pt-10 lg:pb-30'>
