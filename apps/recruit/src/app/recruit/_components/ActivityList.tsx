@@ -20,7 +20,7 @@ export const ActivityList = ({activities}: ActivityListProps) => {
           세부 일정은 추후 변경될 수 있습니다.
         </p>
       </div>
-      <div className='flex flex-wrap justify-center gap-2.5 lg:gap-x-5 lg:gap-y-6'>
+      <div className='mx-auto flex w-full max-w-299.5 flex-wrap justify-center gap-2.5 lg:gap-x-5 lg:gap-y-6'>
         {activities?.map((item) => (
           <ActivityCard key={item.id} item={item} />
         ))}
