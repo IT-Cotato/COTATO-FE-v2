@@ -6,6 +6,7 @@ import {useRouter} from 'next/navigation';
 import {ROUTES} from '@/constants/routes';
 import {useRecruitmentStatusQuery} from '@/hooks/queries/useRecruitmentStatus.query';
 import {DesktopContentContainer} from '@/app/recruit/_desktop/_containers/DesktopContentContainer';
+import {MobileContentContainer} from '@/app/recruit/_mobile/_containers/MobileContentContainer';
 
 // ui 확인을 위한 임시 dummy data
 import {ActivityCardsDummy, PositionCardsDummy, TimelineDummy} from '../dummy';
@@ -31,13 +32,20 @@ export const ContentContainer = () => {
         parts={dataPosition}
         activities={dataActivity}
       />
-
-      <Button
-        label={isRecruiting ? '지원하러 가기' : '알림 신청 바로가기'}
-        onClick={() => {
-          router.push(isRecruiting ? ROUTES.APPLY : ROUTES.HOME);
-        }}
+      <MobileContentContainer
+        timelines={dataTimeline}
+        parts={dataPosition}
+        activities={dataActivity}
       />
+
+      <div className='mb-12.5 lg:mb-0'>
+        <Button
+          label={isRecruiting ? '지원하러 가기' : '알림 신청 바로가기'}
+          onClick={() => {
+            router.push(isRecruiting ? ROUTES.APPLY : ROUTES.HOME);
+          }}
+        />
+      </div>
     </div>
   );
 };
