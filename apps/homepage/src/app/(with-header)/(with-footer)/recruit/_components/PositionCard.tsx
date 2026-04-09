@@ -21,7 +21,8 @@ export const PositionCard = ({item}: PositionCardProps) => {
         POSITION_CARD_STYLES[item.short]
       )}
       onTouchStart={() => setIsActive(true)}
-      onTouchEnd={() => setIsActive(false)}>
+      onTouchEnd={() => setIsActive(false)}
+      onTouchCancel={() => setIsActive(false)}>
       <Image
         src='/images/position-card/position-card-bg.webp'
         alt=''
