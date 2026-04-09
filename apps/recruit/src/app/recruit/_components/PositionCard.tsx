@@ -21,7 +21,8 @@ export const PositionCard = ({item}: PositionCardProps) => {
         POSITION_CARD_STYLES[item.short]
       )}
       onTouchStart={() => setIsActive(true)}
-      onTouchEnd={() => setIsActive(false)}>
+      onTouchEnd={() => setIsActive(false)}
+      onTouchCancel={() => setIsActive(false)}>
       <Image
         src='/images/position-card/position-card-bg.webp'
         alt=''
@@ -35,7 +36,6 @@ export const PositionCard = ({item}: PositionCardProps) => {
       />
 
       <div className='flex flex-col gap-2.5'>
-        {' '}
         <SmallLogo
           className={clsx(
             'z-10 h-5 w-5 transition-colors duration-300',
