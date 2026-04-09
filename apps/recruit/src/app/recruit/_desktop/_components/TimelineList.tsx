@@ -14,7 +14,7 @@ export const TimelineList = ({timelines}: TimelineListProps) => {
         <div className='mx-auto flex w-max gap-10'>
           {timelines?.map((item, index) => (
             <TimelineItem
-              key={item.title}
+              key={`${item.title}-${item.date}`}
               item={item}
               isLast={index === timelines?.length - 1}
             />

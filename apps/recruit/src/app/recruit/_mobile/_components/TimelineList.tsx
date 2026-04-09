@@ -16,7 +16,11 @@ export const TimelineList = ({timelines}: TimelineListProps) => {
 
           <div className='flex gap-10'>
             {timelines?.map((item) => (
-              <TimelineItem key={item.title} item={item} isLast={true} />
+              <TimelineItem
+                key={`${item.title}-${item.date}`}
+                item={item}
+                isLast={true}
+              />
             ))}
           </div>
         </div>
