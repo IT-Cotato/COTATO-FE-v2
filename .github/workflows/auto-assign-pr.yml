@@ -1,0 +1,19 @@
+name: PR Assignees 지정
+
+on:
+  pull_request:
+    types: [opened, ready_for_review]
+
+jobs:
+  auto-assign:
+    name: PR Assignees 지정
+    runs-on: ubuntu-latest
+    steps:
+      - uses: hkusu/review-assign-action@v1
+        with:
+          assignees: ${{ github.actor }}
+          reviewers: |
+            kimminna
+            DandelionQZ
+            JiiminHa
+            choyeon2e
