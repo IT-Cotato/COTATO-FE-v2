@@ -18,7 +18,7 @@ export const PositionList = ({parts = []}: PositionListProps) => {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
 
   const cardWidth = 285;
-  const gap = 21;
+  const gap = 20;
   const singleItemDistance = cardWidth + gap;
   const maxIndex = Math.max(0, parts.length - 1);
 
