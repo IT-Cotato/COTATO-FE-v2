@@ -18,6 +18,7 @@ interface UseApplyStepGuardProps {
  * 지원서 단계별 접근 제어 (Step Guard) 훅
  * - 이전 단계 완료 여부를 확인하여 건너뛰기 방지
  * - 완료되지 않은 경우 이전 단계로 리다이렉트
+ * - isGuardReady: guard 판단이 끝났으면 true (로딩 중엔 false)
  */
 export const useApplyStepGuard = ({
   step,
@@ -29,6 +30,12 @@ export const useApplyStepGuard = ({
 }: UseApplyStepGuardProps) => {
   const router = useRouter();
   const searchParams = useSearchParams();
+
+  const isGuardReady =
+    !applicationId ||
+    (step <= 1) ||
+    (step === 2 && isBasicInfoFetched) ||
+    (step >= 3 && isBasicInfoFetched && isPartQuestionsFetched);
 
   useEffect(() => {
     if (!applicationId) return;
@@ -94,4 +101,6 @@ export const useApplyStepGuard = ({
     searchParams,
     router,
   ]);
+
+  return {isGuardReady};
 };

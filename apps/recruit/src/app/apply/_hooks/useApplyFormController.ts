@@ -15,13 +15,12 @@ import {useApplyStep} from './useApplyStep';
 import {useApplyForm} from './useApplyForm';
 import {useApplyURLSync} from './useApplyURLSync';
 import {useApplySubmitHandler} from './useApplySubmitHandler';
-import {useAuthStore} from '@/store/useAuthStore';
-import {useApplicationStatusQuery} from '@/hooks/queries/useApply.query';
 import {QUERY_KEYS} from '@/constants/query-keys';
 import {getApplicationStatus} from '@/services/api/apply/apply.api';
 
 interface UseApplyFormControllerReturn {
   step: number;
+  isGuardReady: boolean;
   methods: UseFormReturn<ApplyFormData>;
   handleNext: () => Promise<void>;
   handlePrev: () => void;
@@ -40,7 +39,6 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
   const numericApplicationId = applicationId ? Number(applicationId) : null;
 
   const queryClient = useQueryClient();
-  const {isAuthenticated} = useAuthStore();
 
   // 1. 폼 및 스텝 관리
   const methods = useApplyForm();
@@ -55,7 +53,7 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
 
   // 3. 가드 및 동기화
   usePreventNavigation(methods.formState.isDirty);
-  useApplyStepGuard({
+  const {isGuardReady} = useApplyStepGuard({
     step,
     applicationId,
     basicInfo,
@@ -135,6 +133,7 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
 
   return {
     step,
+    isGuardReady,
     methods,
     handleNext,
     handlePrev,

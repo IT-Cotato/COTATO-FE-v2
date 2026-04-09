@@ -52,6 +52,7 @@ export const ApplyFormContainer = () => {
 
   const {
     step,
+    isGuardReady,
     methods,
     handleNext,
     handlePrev,
@@ -99,7 +100,7 @@ export const ApplyFormContainer = () => {
     }
   }, [isError, error, router]);
 
-  if (isLoading) {
+  if (isLoading || !isGuardReady) {
     return (
       <div className='flex h-screen items-center justify-center'>
         <Spinner />
