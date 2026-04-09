@@ -21,7 +21,7 @@ export const ActivityList = ({activities}: ActivityListProps) => {
         </p>
       </div>
 
-      <div className='flex flex-wrap justify-center gap-2.5 lg:gap-x-5 lg:gap-y-6'>
+      <div className='mx-auto flex w-full max-w-299.5 flex-wrap justify-center gap-2.5 lg:gap-x-5 lg:gap-y-6'>
         {activities?.map((item) => (
           <ActivityCard key={item.id} item={item} />
         ))}
