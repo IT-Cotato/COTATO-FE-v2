@@ -61,35 +61,65 @@ export const CountdownTimer = ({
   return (
     <div className='flex w-fit justify-center gap-10'>
       <div className='flex flex-col'>
-        <p className={clsx(textColor, 'text-body-l-sb text-center')}>DAY</p>
-        <span className='text-h1 text-center text-neutral-400'>
+        <p
+          className={clsx(
+            textColor,
+            'text-body-l-b md:text-body-l-sb text-center'
+          )}>
+          DAY
+        </p>
+        <span className='text-h5 md:text-h1 text-center font-bold whitespace-nowrap text-neutral-400 tabular-nums'>
           {timeLeft.d}일
         </span>
       </div>
 
-      <span className='text-h1 text-center text-neutral-400'>:</span>
+      <span className='text-h5 md:text-h1 text-center font-bold text-neutral-400'>
+        :
+      </span>
 
       <div className='flex flex-col'>
-        <p className={clsx(textColor, 'text-body-l-sb text-center')}>HOUR</p>
-        <span className='text-h1 text-center text-neutral-400'>
+        <p
+          className={clsx(
+            textColor,
+            'text-body-l-b md:text-body-l-sb text-center'
+          )}>
+          HOUR
+        </p>
+        <span className='text-h5 md:text-h1 text-center font-bold whitespace-nowrap text-neutral-400 tabular-nums'>
           {timeLeft.h}시간
         </span>
       </div>
 
-      <span className='text-h1 text-center text-neutral-400'>:</span>
+      <span className='text-h5 md:text-h1 text-center font-bold text-neutral-400'>
+        :
+      </span>
 
       <div className='flex flex-col'>
-        <p className={clsx(textColor, 'text-body-l-sb text-center')}>MINUTE</p>
-        <span className='text-h1 text-center text-neutral-400'>
+        <p
+          className={clsx(
+            textColor,
+            'text-body-l-b md:text-body-l-sb text-center'
+          )}>
+          MINUTE
+        </p>
+        <span className='text-h5 md:text-h1 text-center font-bold whitespace-nowrap text-neutral-400 tabular-nums'>
           {timeLeft.m}분
         </span>
       </div>
 
-      <span className='text-h1 text-center text-neutral-400'>:</span>
+      <span className='text-h5 md:text-h1 text-center font-bold text-neutral-400'>
+        :
+      </span>
 
       <div className='flex flex-col'>
-        <p className={clsx(textColor, 'text-body-l-sb text-center')}>SECOND</p>
-        <span className='text-h1 text-center text-neutral-400'>
+        <p
+          className={clsx(
+            textColor,
+            'text-body-l-b md:text-body-l-sb text-center'
+          )}>
+          SECOND
+        </p>
+        <span className='text-h5 md:text-h1 text-center font-bold whitespace-nowrap text-neutral-400 tabular-nums'>
           {timeLeft.s}초
         </span>
       </div>
