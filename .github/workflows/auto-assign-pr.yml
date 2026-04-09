@@ -13,7 +13,7 @@ jobs:
         with:
           assignees: ${{ github.actor }}
           reviewers: |
-            kimminna 
-            DandelionQZ 
-            JiiminHa 
-            choyeon2e 
+            kimminna
+            DandelionQZ
+            JiiminHa
+            choyeon2e
