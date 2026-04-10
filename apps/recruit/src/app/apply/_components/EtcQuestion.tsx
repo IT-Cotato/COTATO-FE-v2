@@ -2,22 +2,16 @@
 
 import {useEffect, useRef} from 'react';
 import {useSearchParams} from 'next/navigation';
-import {useFormContext, Controller} from 'react-hook-form';
-import clsx from 'clsx';
-import {FormTextarea} from '@repo/ui/components/form/FormTextarea';
-import {FormDropdown} from '@/components/form/FormDropdown';
+import {useFormContext} from 'react-hook-form';
 import {FullButton} from '@repo/ui/components/buttons/FullButton';
-import {FormRadio} from '@/components/form/FormRadio';
-import {FormInput} from '@repo/ui/components/form/FormInput';
 import {getEtcFields} from '@/constants/form/formConfig';
-import {EtcFieldConfig} from '@/schemas/apply/apply-type';
 import {ApplyFormData} from '@/schemas/apply/apply-schema';
 import {useGetEtcQuestionsQuery} from '@/hooks/queries/useApply.query';
 import {useRecruitmentScheduleQuery} from '@/hooks/queries/useRecruitmentSchedule.query';
 import {formatRecruitmentDate} from '@/utils/formatDate';
 import {StepIndicator} from '@/components/navigation/StepIndicator';
 import {Spinner} from '@repo/ui/components/spinner/Spinner';
-import {formFieldStyles} from '@repo/ui/components/form/form.styles';
+import {EtcQuestionFieldList} from '@/app/apply/_components/EtcQuestionFieldList';
 
 export const EtcInfo = ({
   step,
@@ -37,13 +31,7 @@ export const EtcInfo = ({
     ? Number(searchParams.get('id'))
     : null;
 
-  const {
-    register,
-    control,
-    watch,
-    setValue,
-    formState: {errors},
-  } = useFormContext<ApplyFormData>();
+  const {watch, setValue} = useFormContext<ApplyFormData>();
 
   const discovery = watch('discovery');
   const sessionAgree = watch('sessionAgree');
@@ -103,192 +91,61 @@ export const EtcInfo = ({
     }
   }, [etcQuestions, setValue]);
 
-  const renderField = (field: EtcFieldConfig) => {
-    const {
-      type,
-      name,
-      label,
-      options,
-      placeholder,
-      maxLength,
-      readOnly,
-      defaultValue,
-      className,
-    } = field;
-    const error = name ? (errors as Record<string, any>)[name] : undefined;
 
-    switch (type) {
-      case 'group_label':
-        if (!label) return null;
-        return (
-          <label className={formFieldStyles.label}>{label ?? ''}</label>
-        );
-      case 'textarea':
-        return (
-          <FormTextarea
-            key={name}
-            label={label ?? ''}
-            placeholder={placeholder}
-            maxLength={name === 'unavailableInterviewTimes' ? 200 : maxLength}
-            readOnly={readOnly}
-            defaultValue={defaultValue}
-            currentLength={name ? (watch(name as any) || '').length : 0}
-            error={error?.message as string}
-            className={className}
-            required={field.required}
-            {...(name &&
-              register(
-                name as any,
-                field.required ? {required: '필수 항목입니다'} : {}
-              ))}
-          />
-        );
-      case 'dropdown':
-        return (
-          <Controller
-            key={name}
-            name={(name ?? '') as any}
-            control={control}
-            rules={field.required ? {required: '필수 항목입니다'} : {}}
-            render={({field: controllerField}) => (
-              <FormDropdown
-                label={label ?? ''}
-                placeholder={placeholder}
-                options={options || []}
-                value={controllerField.value}
-                onChange={controllerField.onChange}
-                error={error?.message as string}
-                required={field.required}
-              />
-            )}
-          />
-        );
-      case 'input':
-        return (
-          <FormInput
-            key={name}
-            label={label ?? ''}
-            placeholder={placeholder}
-            error={error?.message as string}
-            required={field.required}
-            {...(name &&
-              register(
-                name as any,
-                field.required ? {required: '필수 항목입니다'} : {}
-              ))}
-          />
-        );
-      case 'radio':
-        return (
-          <div key={name} className='flex flex-col gap-2'>
-            {label && (
-              <label className={formFieldStyles.label}>
-                {label}
-                {field.required && (
-                  <span className={formFieldStyles.required}>*</span>
-                )}
-              </label>
-            )}
-            {name && (
-              <Controller
-                name={name as any}
-                control={control}
-                rules={field.required ? {required: '필수 항목입니다'} : {}}
-                render={({field: controllerField}) => (
-                  <div className={clsx('flex w-full gap-14.5', className)}>
-                    {options?.map((opt) => (
-                      <FormRadio
-                        key={opt.value}
-                        label={opt.label}
-                        value={opt.value}
-                        checked={controllerField.value === opt.value}
-                        onChange={() => controllerField.onChange(opt.value)}
-                      />
-                    ))}
-                  </div>
-                )}
-              />
-            )}
-            {error && (
-              <span className='text-body-l text-alert'>
-                {error.message as string}
-              </span>
-            )}
-          </div>
-        );
-      default:
-        return null;
-    }
-  };
 
-  if (isLoading) {
-    return (
-      <div className='flex w-full flex-col items-center gap-5'>
-        <div className='flex justify-center'>
-          <StepIndicator currentStep={step} totalSteps={3} />
-        </div>
-        <div className='py-[60px]'>
-          <Spinner />
-        </div>
-      </div>
-    );
-  }
   return (
     <div className='flex w-full flex-col gap-5'>
       <div className='flex justify-center'>
         <StepIndicator currentStep={step} totalSteps={3} />
       </div>
-      <div className='flex flex-col gap-3.5'>
-        {etcFields.map((field, idx) => {
-          if (field.type === 'row' && 'row' in field) {
-            return (
-              <div key={`row-${idx}`} className='flex w-full flex-row gap-4'>
-                {field.row.map(renderField)}
-              </div>
-            );
-          }
-          const fieldKey = field.name || `${field.type}-${idx}`;
-          return <div key={fieldKey}>{renderField(field)}</div>;
-        })}
-      </div>
 
-      <div className='flex flex-col gap-3.5 lg:gap-6.5'>
-        <div className='flex gap-3 lg:gap-6.5'>
-          <FullButton
-            label='이전'
-            variant='primary'
-            backgroundColor='neutral-600'
-            labelTypo='h4'
-            onClick={onPrev}
-            type='button'
-            wrapperClassName='!h-[42px]'
-          />
-          <FullButton
-            label='제출하기'
-            variant='primary'
-            labelTypo='h4'
-            type='submit'
-            backgroundColor={isAllRequiredFilled ? 'primary' : 'text-disabled'}
-            wrapperClassName='!h-[42px]'
-          />
+      {isLoading ? (
+        <div className='flex h-full w-full items-center justify-center py-[60px]'>
+          <Spinner />
         </div>
-        <FullButton
-          label='저장하기'
-          variant='outline'
-          textColor='primary'
-          labelTypo='h4'
-          type='button'
-          onClick={onSave}
-          disabled={isSaving}
-          wrapperClassName='!h-[46px]'
-        />
-        <p className='text-alert text-center'>
-          * 제출 후 마이페이지에서 확인 가능합니다.
-        </p>
-        {showSaveSuccess && (
-          <p className='text-primary text-center'>저장이 완료되었습니다</p>
-        )}
-      </div>
+      ) : (
+        <>
+          <EtcQuestionFieldList etcFields={etcFields} />
+
+          <div className='flex flex-col gap-3.5 lg:gap-6.5'>
+            <div className='flex gap-3 lg:gap-6.5'>
+              <FullButton
+                label='이전'
+                variant='primary'
+                backgroundColor='neutral-600'
+                labelTypo='h4'
+                onClick={onPrev}
+                type='button'
+                wrapperClassName='!h-[42px]'
+              />
+              <FullButton
+                label='제출하기'
+                variant='primary'
+                labelTypo='h4'
+                type='submit'
+                backgroundColor={isAllRequiredFilled ? 'primary' : 'text-disabled'}
+                wrapperClassName='!h-[42px]'
+              />
+            </div>
+            <FullButton
+              label='저장하기'
+              variant='outline'
+              textColor='primary'
+              labelTypo='h4'
+              type='button'
+              onClick={onSave}
+              disabled={isSaving}
+              wrapperClassName='!h-[46px]'
+            />
+            <p className='text-alert text-center'>
+              * 제출 후 마이페이지에서 확인 가능합니다.
+            </p>
+            {showSaveSuccess && (
+              <p className='text-primary text-center'>저장이 완료되었습니다</p>
+            )}
+          </div>
+        </>
+      )}
     </div>
   );
 };
