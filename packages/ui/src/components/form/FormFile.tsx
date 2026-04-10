@@ -8,8 +8,8 @@ import {
   type InputHTMLAttributes,
 } from 'react';
 import clsx from 'clsx';
-import FolderIcon from '@/assets/icons/folder.svg';
-import DeleteIcon from '@/assets/icons/delete.svg';
+import FolderIcon from '../../assets/icons/folder.svg';
+import DeleteIcon from '../../assets/icons/delete.svg';
 import {formFieldStyles} from './form.styles';
 import {extractFileName} from '../../utils/extractFileName';
 
