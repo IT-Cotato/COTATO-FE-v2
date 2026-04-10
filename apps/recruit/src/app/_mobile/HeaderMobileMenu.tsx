@@ -1,5 +1,5 @@
 import SmallLogoIcon from '@/assets/small-logo/small-logo.svg';
-import CancelIcon from '@/assets/icons/delete.svg';
+import CancelIcon from '@repo/ui/assets/icons/delete.svg';
 import Link from 'next/link';
 import {ROUTES} from '@/constants/routes';
 import {useState} from 'react';
