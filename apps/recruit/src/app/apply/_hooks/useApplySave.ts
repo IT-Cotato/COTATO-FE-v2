@@ -2,7 +2,6 @@ import {useState} from 'react';
 import {UseFormReturn} from 'react-hook-form';
 import {useQueryClient} from '@tanstack/react-query';
 import {
-  ApplyFormData,
   ApplyFormValues,
   BasicInfoRequest,
   PartQuestionRequest,
@@ -24,7 +23,7 @@ interface UseApplySaveReturn {
     step: number,
     methods: UseFormReturn<ApplyFormValues>,
     showToast?: boolean
-  ) => Promise<void>;
+  ) => Promise<boolean>;
   showSaveSuccess: boolean;
   isSaving: boolean;
 }
@@ -72,7 +71,7 @@ export const useApplySave = (
       throw new Error(errorMessage);
     }
 
-    if (isSaving) return;
+    if (isSaving) return false;
 
     const data = methods.getValues();
 
@@ -148,6 +147,7 @@ export const useApplySave = (
       if (showToast) {
         showSuccessMessage();
       }
+      return true;
     } catch (e) {
       console.error(
         '지원서 저장에 실패했습니다. 잠시 후 다시 시도해주세요.',

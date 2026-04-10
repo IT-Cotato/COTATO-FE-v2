@@ -66,10 +66,11 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
 
   // 4. 핵심 로직 훅
   const {validateStep} = useApplyValidation();
-  const {handleSave: saveForm, showSaveSuccess, isSaving} = useApplySave(
-    numericApplicationId,
-    basicInfo?.applicationPartType
-  );
+  const {
+    handleSave: saveForm,
+    showSaveSuccess,
+    isSaving,
+  } = useApplySave(numericApplicationId, basicInfo?.applicationPartType);
 
   // 5. 이벤트 핸들러
   const handleSave = async () => {
@@ -86,11 +87,15 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
     handleConfirmSubmit,
   } = useApplySubmitHandler({
     applicationId: numericApplicationId,
-    onSave: () => saveForm(SUBMIT_STEP, methods, false),
+    onSave: async () => {
+      await saveForm(SUBMIT_STEP, methods, false);
+    },
     onValidate: () => validateStep(3, methods),
   });
 
   const handleNext = async () => {
+    if (isSaving) return;
+
     const isValid = await validateStep(
       step,
       methods,
@@ -100,7 +105,8 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
     if (!isValid) return;
 
     try {
-      await saveForm(step, methods, false);
+      const saved = await saveForm(step, methods, false);
+      if (!saved) return;
     } catch (error) {
       console.error(error);
 
