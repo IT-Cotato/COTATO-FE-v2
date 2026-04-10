@@ -3,7 +3,7 @@
 import {useFormContext, useWatch} from 'react-hook-form';
 import {FormTextarea} from '@repo/ui/components/form/FormTextarea';
 import {FullButton} from '@repo/ui/components/buttons/FullButton';
-import {ApplyFormData, ApplyFormValues} from '@/schemas/apply/apply-schema';
+import {ApplyFormValues} from '@/schemas/apply/apply-schema';
 import {Spinner} from '@repo/ui/components/spinner/Spinner';
 import {StepIndicator} from '@/components/navigation/StepIndicator';
 import {PortfolioField} from '@/app/apply/_components/PortfolioField';
@@ -24,6 +24,7 @@ export const PartQuestion = ({
   onNext,
   onSave,
   showSaveSuccess,
+  isSaving,
 }: PartQuestionProps) => {
   const {
     register,
@@ -96,9 +97,7 @@ export const PartQuestion = ({
                       ((watchedFields[index] as string) || '').length
                     }
                     placeholder='내용을 입력해주세요'
-                    error={
-                      errors[`ans_${q.questionId}`]?.message as string
-                    }
+                    error={errors[`ans_${q.questionId}`]?.message as string}
                     required
                     {...register(`ans_${q.questionId}` as `ans_${string}`, {
                       validate: (value) =>
@@ -168,6 +167,7 @@ export const PartQuestion = ({
           type='button'
           labelTypo='h4'
           onClick={onSave}
+          disabled={isSaving}
           wrapperClassName='!h-[46px]'
         />
         {showSaveSuccess && (

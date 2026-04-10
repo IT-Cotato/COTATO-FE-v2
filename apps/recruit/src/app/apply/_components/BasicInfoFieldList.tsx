@@ -18,7 +18,9 @@ interface BasicInfoFieldListProps {
   readOnly?: boolean;
 }
 
-export const BasicInfoFieldList = ({readOnly = false}: BasicInfoFieldListProps) => {
+export const BasicInfoFieldList = ({
+  readOnly = false,
+}: BasicInfoFieldListProps) => {
   const {isMobile} = useIsMobile();
   const {
     register,
@@ -35,7 +37,7 @@ export const BasicInfoFieldList = ({readOnly = false}: BasicInfoFieldListProps) 
       placeholder,
       mobilePlaceholder,
       autocomplete,
-    } = field as BasicInfoFieldConfig & {autocomplete?: string};
+    } = field;
     const resolvedPlaceholder =
       isMobile && mobilePlaceholder ? mobilePlaceholder : placeholder;
 
@@ -142,6 +144,7 @@ export const BasicInfoFieldList = ({readOnly = false}: BasicInfoFieldListProps) 
             formatter={formatDigitsToPhoneNumber}
             maxLength={11}
             required
+            error={errors.contact?.message}
           />
         </div>
       );

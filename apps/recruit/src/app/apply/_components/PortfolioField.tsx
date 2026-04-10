@@ -3,7 +3,7 @@
 import {Controller, useFormContext} from 'react-hook-form';
 import {FormLink} from '@repo/ui/components/form/FormLink';
 import {FormFile} from '@repo/ui/components/form/FormFile';
-import {ApplyFormData, ApplyFormValues} from '@/schemas/apply/apply-schema';
+import {ApplyFormValues} from '@/schemas/apply/apply-schema';
 import {PartType} from '@/schemas/admin/admin-application-questions.schema';
 
 interface PortfolioFieldProps {

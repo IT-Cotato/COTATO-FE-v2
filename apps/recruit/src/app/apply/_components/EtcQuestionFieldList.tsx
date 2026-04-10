@@ -14,7 +14,9 @@ interface EtcQuestionFieldListProps {
   etcFields: EtcFormItem[];
 }
 
-export const EtcQuestionFieldList = ({etcFields}: EtcQuestionFieldListProps) => {
+export const EtcQuestionFieldList = ({
+  etcFields,
+}: EtcQuestionFieldListProps) => {
   const {
     register,
     control,
@@ -39,9 +41,7 @@ export const EtcQuestionFieldList = ({etcFields}: EtcQuestionFieldListProps) => 
     switch (type) {
       case 'group_label':
         if (!label) return null;
-        return (
-          <label className={formFieldStyles.label}>{label ?? ''}</label>
-        );
+        return <label className={formFieldStyles.label}>{label ?? ''}</label>;
       case 'textarea':
         return (
           <FormTextarea
@@ -57,7 +57,10 @@ export const EtcQuestionFieldList = ({etcFields}: EtcQuestionFieldListProps) => 
             required={field.required}
             {...(!readOnly &&
               name &&
-              register(name, field.required ? {required: '필수 항목입니다'} : {}))}
+              register(
+                name,
+                field.required ? {required: '필수 항목입니다'} : {}
+              ))}
           />
         );
       case 'dropdown':
@@ -89,7 +92,11 @@ export const EtcQuestionFieldList = ({etcFields}: EtcQuestionFieldListProps) => 
             placeholder={placeholder}
             error={error?.message as string}
             required={field.required}
-            {...(name && register(name, field.required ? {required: '필수 항목입니다'} : {}))}
+            {...(name &&
+              register(
+                name,
+                field.required ? {required: '필수 항목입니다'} : {}
+              ))}
           />
         );
       case 'radio':
@@ -141,7 +148,11 @@ export const EtcQuestionFieldList = ({etcFields}: EtcQuestionFieldListProps) => 
         if (field.type === 'row' && 'row' in field) {
           return (
             <div key={`row-${idx}`} className='flex w-full flex-row gap-4'>
-              {field.row.map(renderField)}
+              {field.row.map((f, fieldIdx) => (
+                <div key={f.name ?? `row-${idx}-field-${fieldIdx}`}>
+                  {renderField(f)}
+                </div>
+              ))}
             </div>
           );
         }

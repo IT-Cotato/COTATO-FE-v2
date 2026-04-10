@@ -14,13 +14,18 @@ export interface BasicInfoFieldConfig {
 
 export type BasicInfoFormItem =
   | BasicInfoFieldConfig
-  | {row: readonly BasicInfoFieldConfig[]; colOnMobile?: boolean; name?: never; type?: never};
+  | {
+      row: readonly BasicInfoFieldConfig[];
+      colOnMobile?: boolean;
+      name?: never;
+      type?: never;
+    };
 
 // EtcQuestion
 export interface EtcFieldConfig {
   name?: Path<ApplyFormData>;
   label?: string;
-  type: 'input' | 'dropdown' | 'radio' | 'textarea' | 'group_label' | 'display';
+  type: 'input' | 'dropdown' | 'radio' | 'textarea' | 'group_label';
   placeholder?: string;
   options?: {value: string; label: string}[];
   maxLength?: number;
