@@ -180,12 +180,10 @@ export const getEtcFields = (
       required: true,
     },
     {
-      name: 'privacyPolicy',
       label: '개인정보 수집 및 이용 동의',
       type: 'textarea',
       readOnly: true,
       defaultValue: PRIVACY_POLICY,
-      required: true,
     },
     {
       name: 'privacyAgree',
@@ -193,7 +191,7 @@ export const getEtcFields = (
       options: [
         {label: '개인정보의 수집 및 이용에 동의합니다.', value: 'agree'},
       ],
-      className: 'justify-end',
+      className: 'lg:justify-end',
       required: true,
     },
   ];
