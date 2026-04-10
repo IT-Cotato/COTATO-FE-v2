@@ -1,7 +1,7 @@
 'use client';
 
 import {ReactNode} from 'react';
-import XIcon from '@repo/ui/assets/icons/cancel.svg';
+import XIcon from '../../assets/icons/cancel.svg';
 
 interface ConfirmModalProps {
   isOpen: boolean;

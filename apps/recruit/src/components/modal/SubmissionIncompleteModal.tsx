@@ -1,5 +1,4 @@
-import {FullButton} from '@repo/ui/components/buttons/FullButton';
-import {Modal} from '@repo/ui/components/modal/Modal';
+import {ConfirmModal} from '@repo/ui/components/modal/ConfirmModal';
 
 interface SubmissionIncompleteModalProps {
   isOpen: boolean;
@@ -13,29 +12,20 @@ export const SubmissionIncompleteModal = ({
   onConfirm,
 }: SubmissionIncompleteModalProps) => {
   return (
-    <Modal
+    <ConfirmModal
       isOpen={isOpen}
       onClose={onClose}
-      titleStyle='text-h4 text-neutral-800'
+      onConfirm={onConfirm}
       title='지원 기간이 종료되었습니다.'
-      content={
-        <p>
+      description={
+        <>
           현재는 지원서 제출이 불가능합니다.
           <br />
           다음 모집을 기다려 주세요.
-        </p>
+        </>
       }
-      actionsAlign='stretch'
-      actions={
-        <FullButton
-          variant='primary'
-          wrapperClassName='flex-1'
-          onClick={onConfirm}
-          label='확인'
-          labelTypo='body_l'
-        />
-      }
-      contentWrapperClassName='gap-[57px]'
+      confirmLabel='확인'
+      cancelLabel={false}
     />
   );
 };

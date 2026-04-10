@@ -3,7 +3,7 @@
 import {ApprovalTableView} from '../_components/table/ApprovalTableView';
 import {SearchBar} from '../../_components/SearchBar';
 import {Pagination} from '@repo/ui/components/pagination/Pagination';
-import {ConfirmModal} from '@/app/(with-header)/mypage/admin/_components/ConfirmModal';
+import {ConfirmModal} from '@repo/ui/components/modal/ConfirmModal';
 import {ApprovalTabType} from '@/constants/admin/admin';
 import {useRouter, useSearchParams} from 'next/navigation';
 import {useEffect} from 'react';
