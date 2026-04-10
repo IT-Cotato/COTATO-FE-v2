@@ -29,8 +29,12 @@
     background-color: var(--color-primary);
     border-radius: 20px;
   }
+  textarea {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-primary) var(--color-neutral-200);
+  }
 
-body {
+  body {
     font-family: var(--font-pretendard), sans-serif;
     width: 100%;
     min-height: 100vh;

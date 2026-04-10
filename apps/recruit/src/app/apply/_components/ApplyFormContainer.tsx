@@ -114,6 +114,7 @@ export const ApplyFormContainer = () => {
     return (
       <AlreadySubmittedModal
         isOpen={true}
+        onClose={() => router.push(ROUTES.HOME)}
         onConfirm={() => router.push(ROUTES.HOME)}
       />
     );
