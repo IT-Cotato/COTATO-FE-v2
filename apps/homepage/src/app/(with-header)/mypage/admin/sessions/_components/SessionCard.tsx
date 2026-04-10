@@ -1,7 +1,7 @@
 'use client';
 
 import {useState} from 'react';
-import {useIsMobile} from '@/app/(with-header)/mypage/admin/sessions/_hooks/useIsMobile';
+import {useIsMobile} from '@repo/ui/hooks/useIsMobile';
 import {AdminSession, SessionData} from '@/schemas/admin/admin-sessions.schema';
 import {ActionMenu} from '@/app/(with-header)/mypage/admin/_components/ActionMenu';
 import {ActionButtons} from '@/app/(with-header)/mypage/admin/_components/ActionButtons';
