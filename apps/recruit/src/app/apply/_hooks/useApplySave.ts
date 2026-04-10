@@ -126,6 +126,10 @@ export const useApplySave = (
         };
 
         await savePartQuestions(requestData);
+
+        await queryClient.refetchQueries({
+          queryKey: QUERY_KEYS.APPLY.PART_QUESTIONS(applicationId),
+        });
       } else if (step === 3) {
         const discoveryPath =
           (data.discovery as EtcQuestionRequest['discoveryPath']) || 'NONE';
