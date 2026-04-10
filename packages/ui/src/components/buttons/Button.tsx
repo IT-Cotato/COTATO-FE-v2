@@ -21,6 +21,7 @@ interface ButtonComponentProps extends ButtonProps {
   borderRadius?: number;
   backgroundColor?: ColorKey;
   disabledBackgroundColor?: ColorKey;
+  disabledBorderColor?: ColorKey;
   borderColor?: ColorKey;
   textColor?: ColorKey;
   wrapperClassName?: string;
@@ -99,6 +100,7 @@ export const Button = ({
   borderRadius = BUTTON_DEFAULT_BORDER_RADIUS,
   backgroundColor,
   disabledBackgroundColor = 'neutral-500',
+  disabledBorderColor = 'neutral-300',
   borderColor,
   textColor,
   wrapperClassName,
@@ -106,7 +108,9 @@ export const Button = ({
   ...props
 }: ButtonComponentProps) => {
   const isOutline = variant === 'outline';
-  const resolvedTextColor = toColorVar(textColor);
+  const resolvedDisabledBorderColor = toColorVar(disabledBorderColor);
+  const resolvedTextColor =
+    isOutline && disabled ? resolvedDisabledBorderColor : toColorVar(textColor);
   const resolvedBorderColor = borderColor
     ? toColorVar(borderColor)
     : resolvedTextColor;
@@ -132,11 +136,13 @@ export const Button = ({
               ? `${height}px`
               : (height ?? `${BUTTON_DEFAULT_HEIGHT}px`),
           backgroundColor:
-            disabled && backgroundColor === 'alert'
-              ? 'rgba(229, 72, 77, 1.0)'
-              : disabled && disabledBackgroundColor
-                ? toColorVar(disabledBackgroundColor)
-                : toColorVar(backgroundColor),
+            isOutline && disabled
+              ? undefined
+              : disabled && backgroundColor === 'alert'
+                ? 'rgba(229, 72, 77, 1.0)'
+                : disabled && disabledBackgroundColor
+                  ? toColorVar(disabledBackgroundColor)
+                  : toColorVar(backgroundColor),
           border:
             disabled && backgroundColor === 'alert'
               ? '1px solid var(--alert, #E5484D)'

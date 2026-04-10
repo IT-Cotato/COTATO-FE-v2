@@ -1,6 +1,7 @@
 'use client';
 
 import {useEffect, useRef, useCallback} from 'react';
+import {useIsMobile} from '@repo/ui/hooks/useIsMobile';
 import {useSearchParams} from 'next/navigation';
 import {useFormContext, Controller, type Path} from 'react-hook-form';
 import {useQuery, useQueryClient} from '@tanstack/react-query';
@@ -25,6 +26,7 @@ interface BasicInfoProps {
   onNext: () => void;
   readOnly?: boolean;
   showSaveSuccess: boolean;
+  isSaving: boolean;
   step: number;
 }
 
@@ -34,7 +36,9 @@ export const BasicInfo = ({
   onSave,
   readOnly = false,
   showSaveSuccess,
+  isSaving,
 }: BasicInfoProps) => {
+  const {isMobile} = useIsMobile();
   const searchParams = useSearchParams();
   const applicationId = searchParams.get('id');
 
@@ -134,12 +138,23 @@ export const BasicInfo = ({
   ].some((field) => !allValues[field as keyof ApplyFormData]);
 
   const renderField = (field: BasicInfoFieldConfig) => {
-    const {type, name, label, options, placeholder, autocomplete} =
-      field as BasicInfoFieldConfig & {autocomplete?: string};
+    const {
+      type,
+      name,
+      label,
+      options,
+      placeholder,
+      mobilePlaceholder,
+      autocomplete,
+    } = field as BasicInfoFieldConfig & {autocomplete?: string};
+    const resolvedPlaceholder =
+      isMobile && mobilePlaceholder ? mobilePlaceholder : placeholder;
 
     if (type === 'radio') {
       return (
-        <fieldset key={name} className='flex flex-col lg:flex-1 lg:self-end'>
+        <fieldset
+          key={name}
+          className='flex w-full flex-col lg:flex-1 lg:self-end'>
           {label && (
             <legend className='text-h5 mb-3.5 text-neutral-600'>{label}</legend>
           )}
@@ -161,7 +176,7 @@ export const BasicInfo = ({
                   ))}
                 </div>
                 {error && (
-                  <span className='text-body-l text-alert'>
+                  <span className='text-body-m lg:text-body-l text-alert'>
                     {error.message ?? ''}
                   </span>
                 )}
@@ -174,7 +189,7 @@ export const BasicInfo = ({
 
     if (type === 'dropdown') {
       return (
-        <div key={name} className='flex flex-1 flex-col'>
+        <div key={name} className='flex min-w-0 flex-1 flex-col'>
           <Controller
             name={name}
             control={control}
@@ -183,7 +198,7 @@ export const BasicInfo = ({
                 <FormDropdown
                   id={name}
                   label={label}
-                  placeholder={placeholder}
+                  placeholder={resolvedPlaceholder}
                   options={options || []}
                   value={field.value}
                   onChange={field.onChange}
@@ -206,7 +221,7 @@ export const BasicInfo = ({
 
     if (name === 'birthDate') {
       return (
-        <div key={name} className='flex flex-1 flex-col gap-2'>
+        <div key={name} className='flex min-w-0 flex-1 flex-col gap-2'>
           <FormattedInput
             name={name}
             label={label}
@@ -216,6 +231,11 @@ export const BasicInfo = ({
             formatter={formatDigitsToYYYYMMDD}
             maxLength={8}
             required
+            error={
+              isMobile && errors.birthDate
+                ? '형식에 맞게 입력해주세요'
+                : undefined
+            }
           />
         </div>
       );
@@ -257,18 +277,19 @@ export const BasicInfo = ({
   };
 
   return (
-    <div className='flex w-full flex-col gap-5 pb-14'>
-      <div className='flex justify-center pt-5'>
+    <div className='flex w-full flex-col gap-5'>
+      <div className='flex justify-center'>
         <StepIndicator currentStep={step} totalSteps={3} />
       </div>
-      <div className='flex flex-col gap-3.5'>
+      <div className='flex flex-col gap-2.5 lg:gap-3.5'>
         {BASIC_INFO_FIELDS.map((item) => {
           const key =
             'row' in item ? item.row.map((f) => f.name).join('-') : item.name;
+          const colOnMobile = 'row' in item && item.colOnMobile;
           return (
             <div
               key={key}
-              className='flex w-full flex-col gap-2.5 lg:flex-row lg:items-start lg:gap-6'>
+              className={`flex w-full gap-2.5 lg:gap-6 ${colOnMobile ? 'flex-col lg:flex-row lg:items-start' : 'flex-row items-start'}`}>
               {'row' in item
                 ? item.row.map((field) => renderField(field))
                 : renderField(item)}
@@ -285,6 +306,7 @@ export const BasicInfo = ({
           onClick={onNext}
           type='button'
           backgroundColor={isAllFieldsFilled ? 'primary' : 'text-disabled'}
+          wrapperClassName='!h-[42px]'
         />
         <FullButton
           label='저장하기'
@@ -293,6 +315,8 @@ export const BasicInfo = ({
           labelTypo='h4'
           onClick={onSave}
           type='button'
+          disabled={isSaving}
+          wrapperClassName='!h-[46px]'
         />
         {showSaveSuccess && (
           <p className='text-primary text-center'>저장이 완료되었습니다</p>

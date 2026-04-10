@@ -24,11 +24,13 @@ export const EtcInfo = ({
   onPrev,
   onSave,
   showSaveSuccess,
+  isSaving,
 }: {
   step: number;
   onPrev: () => void;
   onSave: () => void;
   showSaveSuccess: boolean;
+  isSaving: boolean;
 }) => {
   const searchParams = useSearchParams();
   const applicationId = searchParams.get('id')
@@ -119,7 +121,7 @@ export const EtcInfo = ({
       case 'group_label':
         if (!label) return null;
         return (
-          <label className='text-h5 text-neutral-800'>{label ?? ''}</label>
+          <label className={formFieldStyles.label}>{label ?? ''}</label>
         );
       case 'textarea':
         return (
@@ -221,17 +223,19 @@ export const EtcInfo = ({
 
   if (isLoading) {
     return (
-      <div className='flex w-full flex-col items-center gap-20.25'>
-        <div className='flex justify-center py-4'>
+      <div className='flex w-full flex-col items-center gap-5'>
+        <div className='flex justify-center'>
           <StepIndicator currentStep={step} totalSteps={3} />
         </div>
-        <Spinner />
+        <div className='py-[60px]'>
+          <Spinner />
+        </div>
       </div>
     );
   }
   return (
-    <div className='flex w-full flex-col gap-3.5'>
-      <div className='flex justify-center py-4'>
+    <div className='flex w-full flex-col gap-5'>
+      <div className='flex justify-center'>
         <StepIndicator currentStep={step} totalSteps={3} />
       </div>
       <div className='flex flex-col gap-3.5'>
@@ -248,8 +252,8 @@ export const EtcInfo = ({
         })}
       </div>
 
-      <div className='flex flex-col gap-6.5'>
-        <div className='flex gap-6.5'>
+      <div className='flex flex-col gap-3.5 lg:gap-6.5'>
+        <div className='flex gap-3 lg:gap-6.5'>
           <FullButton
             label='이전'
             variant='primary'
@@ -257,6 +261,7 @@ export const EtcInfo = ({
             labelTypo='h4'
             onClick={onPrev}
             type='button'
+            wrapperClassName='!h-[42px]'
           />
           <FullButton
             label='제출하기'
@@ -264,6 +269,7 @@ export const EtcInfo = ({
             labelTypo='h4'
             type='submit'
             backgroundColor={isAllRequiredFilled ? 'primary' : 'text-disabled'}
+            wrapperClassName='!h-[42px]'
           />
         </div>
         <FullButton
@@ -273,8 +279,10 @@ export const EtcInfo = ({
           labelTypo='h4'
           type='button'
           onClick={onSave}
+          disabled={isSaving}
+          wrapperClassName='!h-[46px]'
         />
-        <p className='text-alert -mt-4.5 text-center'>
+        <p className='text-alert text-center'>
           * 제출 후 마이페이지에서 확인 가능합니다.
         </p>
         {showSaveSuccess && (

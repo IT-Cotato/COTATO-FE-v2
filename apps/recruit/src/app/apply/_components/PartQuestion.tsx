@@ -15,6 +15,7 @@ interface PartQuestionProps {
   onNext: () => void;
   onSave: () => void;
   showSaveSuccess: boolean;
+  isSaving: boolean;
 }
 
 export const PartQuestion = ({
@@ -23,6 +24,7 @@ export const PartQuestion = ({
   onNext,
   onSave,
   showSaveSuccess,
+  isSaving,
 }: PartQuestionProps) => {
   const {
     register,
@@ -65,15 +67,15 @@ export const PartQuestion = ({
   const isAllRequiredAnswersFilled = allTextAnswered && lastAnswered;
 
   return (
-    <div className='flex w-full flex-col gap-7.5'>
-      <div className='flex flex-col gap-3.5'>
+    <div className='flex w-full flex-col gap-3.5'>
+      <div className='flex flex-col gap-2.5 lg:gap-3.5'>
         <h3 className='text-h5 lg:text-h3 text-primary font-bold'>
           {activePartLabel
             ? `${activePartLabel} 파트에 관한 질문입니다.`
             : '파트별 질문을 불러오는 중...'}
         </h3>
 
-        <div className='flex justify-center py-4'>
+        <div className='flex justify-center'>
           <StepIndicator currentStep={step} totalSteps={3} />
         </div>
 
@@ -137,8 +139,8 @@ export const PartQuestion = ({
         )}
       </div>
 
-      <div className='flex flex-col gap-6.5'>
-        <div className='flex gap-6.5'>
+      <div className='flex flex-col gap-3.5 lg:gap-6.5'>
+        <div className='flex gap-3 lg:gap-6.5'>
           <FullButton
             label='이전'
             variant='primary'
@@ -146,6 +148,7 @@ export const PartQuestion = ({
             labelTypo='h4'
             onClick={onPrev}
             type='button'
+            wrapperClassName='!h-[42px]'
           />
           <FullButton
             label='다음'
@@ -156,6 +159,7 @@ export const PartQuestion = ({
             backgroundColor={
               isAllRequiredAnswersFilled ? 'primary' : 'text-disabled'
             }
+            wrapperClassName='!h-[42px]'
           />
         </div>
 
@@ -166,6 +170,7 @@ export const PartQuestion = ({
           type='button'
           labelTypo='h4'
           onClick={onSave}
+          wrapperClassName='!h-[46px]'
         />
         {showSaveSuccess && (
           <p className='text-primary text-center'>저장이 완료되었습니다</p>

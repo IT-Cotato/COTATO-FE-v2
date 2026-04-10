@@ -54,20 +54,22 @@ export const FormTextarea = forwardRef<HTMLTextAreaElement, FormTextareaProps>(
               'flex min-h-54.5 flex-col rounded-[10px] border border-neutral-200 bg-white',
               error && formFieldStyles.error
             )}>
-            <textarea
-              ref={ref}
-              id={inputId}
-              spellCheck='false'
-              className={clsx(
-                'sm:placeholder-body-l placeholder-h5 min-h-0 w-full flex-1 resize-none bg-transparent px-4.75 pt-4.5 placeholder:text-neutral-400 focus:outline-none',
-                'read-only:cursor-default read-only:focus:ring-0',
-                props.readOnly && formFieldStyles.readOnlyTextarea,
-                className
-              )}
-              maxLength={maxLength}
-              {...props}
-              onChange={handleChange}
-            />
+            <div className="flex w-full flex-1 px-[11.5px]">
+              <textarea
+                ref={ref}
+                id={inputId}
+                spellCheck='false'
+                className={clsx(
+                  'sm:placeholder-body-l placeholder-h5 min-h-0 w-full flex-1 resize-none bg-transparent pr-[7px] my-[16px] placeholder:text-neutral-400 focus:outline-none',
+                  'read-only:cursor-default read-only:focus:ring-0',
+                  props.readOnly && formFieldStyles.readOnlyTextarea,
+                  className
+                )}
+                maxLength={maxLength}
+                {...props}
+                onChange={handleChange}
+              />
+            </div>
             <div className='text-h5 shrink-0 px-4 pb-3 text-right text-neutral-400'>
               <span
                 className={clsx(
@@ -79,28 +81,30 @@ export const FormTextarea = forwardRef<HTMLTextAreaElement, FormTextareaProps>(
             </div>
           </div>
         ) : (
-          <div className='relative w-full'>
-            <textarea
-              ref={ref}
-              id={inputId}
-              spellCheck='false'
-              className={clsx(
-                'w-full resize-none transition-all',
-                formFieldStyles.field,
-                'read-only:cursor-default read-only:focus:ring-0',
-                isProject
-                  ? 'h-24 min-h-24 px-4 py-3.5'
-                  : 'min-h-54.5 px-4.75 py-4.5',
-                error && formFieldStyles.error,
-                error && formFieldStyles.errorFocus,
-                props.readOnly && formFieldStyles.readOnlyTextarea,
-                isProject && 'text-h5 placeholder:text-neutral-400',
-                className
-              )}
-              maxLength={maxLength}
-              {...props}
-              onChange={handleChange}
-            />
+          <div
+            className={clsx(
+              'flex flex-col w-full rounded-[10px] border-[1px] border-neutral-200 bg-white transition-all',
+              isProject ? 'min-h-24' : 'min-h-54.5',
+              error && formFieldStyles.error
+            )}>
+            <div className="flex w-full flex-1 px-[11.5px]">
+              <textarea
+                ref={ref}
+                id={inputId}
+                spellCheck='false'
+                className={clsx(
+                  'w-full flex-1 resize-none bg-transparent pr-[7px] focus:outline-none',
+                  isProject ? 'my-3.5' : 'my-[16px]',
+                  'read-only:cursor-default read-only:focus:ring-0',
+                  props.readOnly && formFieldStyles.readOnlyTextarea,
+                  isProject && 'text-h5 placeholder:text-neutral-400',
+                  className
+                )}
+                maxLength={maxLength}
+                {...props}
+                onChange={handleChange}
+              />
+            </div>
           </div>
         )}
         {error && <span className={formFieldStyles.errorMessage}>{error}</span>}
