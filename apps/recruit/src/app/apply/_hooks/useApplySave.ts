@@ -3,6 +3,7 @@ import {UseFormReturn} from 'react-hook-form';
 import {useQueryClient} from '@tanstack/react-query';
 import {
   ApplyFormData,
+  ApplyFormValues,
   BasicInfoRequest,
   PartQuestionRequest,
   EtcQuestionRequest,
@@ -21,7 +22,7 @@ import {QUERY_KEYS} from '@/constants/query-keys';
 interface UseApplySaveReturn {
   handleSave: (
     step: number,
-    methods: UseFormReturn<ApplyFormData>,
+    methods: UseFormReturn<ApplyFormValues>,
     showToast?: boolean
   ) => Promise<void>;
   showSaveSuccess: boolean;
@@ -47,11 +48,11 @@ export const useApplySave = (
     }, 3000);
   };
 
-  const clearPartQuestionFields = (methods: UseFormReturn<ApplyFormData>) => {
+  const clearPartQuestionFields = (methods: UseFormReturn<ApplyFormValues>) => {
     const currentValues = methods.getValues();
     Object.keys(currentValues).forEach((key) => {
       if (key.startsWith('ans_')) {
-        methods.unregister(String(key) as any);
+        methods.unregister(key as `ans_${string}`);
       }
     });
     // PDF 파일 필드는 명시적으로 undefined로 설정
@@ -62,7 +63,7 @@ export const useApplySave = (
 
   const handleSave = async (
     step: number,
-    methods: UseFormReturn<ApplyFormData>,
+    methods: UseFormReturn<ApplyFormValues>,
     showToast: boolean = true
   ) => {
     if (applicationId === null) {

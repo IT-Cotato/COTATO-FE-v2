@@ -3,7 +3,7 @@
 import {useFormContext, useWatch} from 'react-hook-form';
 import {FormTextarea} from '@repo/ui/components/form/FormTextarea';
 import {FullButton} from '@repo/ui/components/buttons/FullButton';
-import {ApplyFormData} from '@/schemas/apply/apply-schema';
+import {ApplyFormData, ApplyFormValues} from '@/schemas/apply/apply-schema';
 import {Spinner} from '@repo/ui/components/spinner/Spinner';
 import {StepIndicator} from '@/components/navigation/StepIndicator';
 import {PortfolioField} from '@/app/apply/_components/PortfolioField';
@@ -24,12 +24,11 @@ export const PartQuestion = ({
   onNext,
   onSave,
   showSaveSuccess,
-  isSaving,
 }: PartQuestionProps) => {
   const {
     register,
     formState: {errors},
-  } = useFormContext<ApplyFormData>();
+  } = useFormContext<ApplyFormValues>();
 
   const {
     activePart,
@@ -98,11 +97,10 @@ export const PartQuestion = ({
                     }
                     placeholder='내용을 입력해주세요'
                     error={
-                      (errors as Record<string, any>)[`ans_${q.questionId}`]
-                        ?.message as string
+                      errors[`ans_${q.questionId}`]?.message as string
                     }
                     required
-                    {...register(`ans_${q.questionId}` as any, {
+                    {...register(`ans_${q.questionId}` as `ans_${string}`, {
                       validate: (value) =>
                         (value && value.trim().length > 0) ||
                         '답변을 작성해주세요',

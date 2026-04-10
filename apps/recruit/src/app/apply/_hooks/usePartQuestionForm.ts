@@ -8,11 +8,11 @@ import {
 } from '@/hooks/queries/useApply.query';
 import {useUploadFile} from '@/hooks/mutations/useApply.mutation';
 import {PartType} from '@/schemas/admin/admin-application-questions.schema';
-import {ApplyFormData} from '@/schemas/apply/apply-schema';
+import {ApplyFormValues} from '@/schemas/apply/apply-schema';
 import {PART_TABS} from '@/constants/common/part';
 
 export const usePartQuestionForm = () => {
-  const {register, setValue} = useFormContext<ApplyFormData>();
+  const {register, setValue} = useFormContext<ApplyFormValues>();
   const searchParams = useSearchParams();
 
   const applicationId = searchParams.get('id')
@@ -65,7 +65,10 @@ export const usePartQuestionForm = () => {
       if (isMatchingPart) {
         questionsData.questionsWithAnswers.forEach((q) => {
           if (q.savedAnswer?.content) {
-            setValue(`ans_${q.questionId}` as any, q.savedAnswer.content);
+            setValue(
+              `ans_${q.questionId}` as `ans_${string}`,
+              q.savedAnswer.content
+            );
           }
         });
 
@@ -104,7 +107,7 @@ export const usePartQuestionForm = () => {
         setValue('pdfFileKey', pdfFileKey);
         setValue('pdfFileName', file.name);
       },
-      onError: (error: any) => {
+      onError: (error: Error) => {
         alert('파일 업로드에 실패했습니다. 잠시 후 다시 시도해주세요.');
         setValue('pdfFileKey', undefined);
         setValue('pdfFileName', undefined);
