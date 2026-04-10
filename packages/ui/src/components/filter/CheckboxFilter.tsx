@@ -1,5 +1,5 @@
 import {useEffect, useState} from 'react';
-import {Checkbox} from '@repo/ui/components/checkbox/CheckBox';
+import {Checkbox} from '../checkbox/CheckBox';
 
 interface CheckboxFilterProps<T extends string> {
   options: T[];
