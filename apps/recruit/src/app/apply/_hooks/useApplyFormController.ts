@@ -25,6 +25,7 @@ interface UseApplyFormControllerReturn {
   handleNext: () => Promise<void>;
   handlePrev: () => void;
   handleSave: () => Promise<void>;
+  isSaving: boolean;
   handleFinalSubmit: (e?: React.BaseSyntheticEvent) => Promise<void>;
   isConfirmModalOpen: boolean;
   openConfirmModal: () => void;
@@ -65,7 +66,7 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
 
   // 4. 핵심 로직 훅
   const {validateStep} = useApplyValidation();
-  const {handleSave: saveForm, showSaveSuccess} = useApplySave(
+  const {handleSave: saveForm, showSaveSuccess, isSaving} = useApplySave(
     numericApplicationId,
     basicInfo?.applicationPartType
   );
@@ -138,6 +139,7 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
     handleNext,
     handlePrev,
     handleSave,
+    isSaving,
     showSaveSuccess,
     isConfirmModalOpen,
     openConfirmModal,

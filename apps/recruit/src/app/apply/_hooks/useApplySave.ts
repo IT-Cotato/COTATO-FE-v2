@@ -25,6 +25,7 @@ interface UseApplySaveReturn {
     showToast?: boolean
   ) => Promise<void>;
   showSaveSuccess: boolean;
+  isSaving: boolean;
 }
 
 export const useApplySave = (
@@ -32,6 +33,7 @@ export const useApplySave = (
   basicInfoPart?: string
 ): UseApplySaveReturn => {
   const [showSaveSuccess, setShowSaveSuccess] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
   const queryClient = useQueryClient();
 
   const {mutateAsync: saveBasicInfo} = useSaveBasicInfo(applicationId);
@@ -69,8 +71,11 @@ export const useApplySave = (
       throw new Error(errorMessage);
     }
 
+    if (isSaving) return;
+
     const data = methods.getValues();
 
+    setIsSaving(true);
     try {
       if (step === 1) {
         const requestData: BasicInfoRequest = {
@@ -144,8 +149,10 @@ export const useApplySave = (
         e
       );
       throw e;
+    } finally {
+      setIsSaving(false);
     }
   };
 
-  return {handleSave, showSaveSuccess};
+  return {handleSave, showSaveSuccess, isSaving};
 };

@@ -30,7 +30,7 @@ export const PortfolioField = ({
 
   return (
     <div className='flex flex-col gap-2.5'>
-      <label className='text-h5 text-neutral-800'>
+      <label className='text-body-l-b lg:text-h5 text-neutral-800'>
         {sequence}. {content}
         {isRequired && <span className='text-alert ml-1'>*</span>}
       </label>

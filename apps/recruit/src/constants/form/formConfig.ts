@@ -29,6 +29,7 @@ export const BASIC_INFO_FIELDS: BasicInfoFormItem[] = [
         label: '성별',
         type: 'dropdown',
         placeholder: '성별을 선택해주세요',
+        mobilePlaceholder: '선택',
         options: [
           {value: 'MALE', label: '남'},
           {value: 'FEMALE', label: '여'},
@@ -66,6 +67,7 @@ export const BASIC_INFO_FIELDS: BasicInfoFormItem[] = [
         ],
       },
     ],
+    colOnMobile: true,
   },
   {
     name: 'department',
@@ -80,6 +82,7 @@ export const BASIC_INFO_FIELDS: BasicInfoFormItem[] = [
         label: '수료한 학기 수',
         type: 'dropdown',
         placeholder: '3학년 1학기일 경우 4학기 수료입니다.',
+        mobilePlaceholder: '선택',
         options: SEMESTER_OPTIONS,
       },
       {
@@ -87,6 +90,7 @@ export const BASIC_INFO_FIELDS: BasicInfoFormItem[] = [
         label: '이전 기수 활동 여부',
         type: 'dropdown',
         placeholder: '이전 기수 활동 여부를 선택해주세요',
+        mobilePlaceholder: '선택',
         options: [
           {value: 'yes', label: '예'},
           {value: 'no', label: '아니오'},

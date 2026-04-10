@@ -6,13 +6,14 @@ export interface BasicInfoFieldConfig {
   label: string;
   type: 'input' | 'dropdown' | 'radio';
   placeholder?: string;
+  mobilePlaceholder?: string;
   options?: {value: string; label: string}[];
   autocomplete?: string;
 }
 
 export type BasicInfoFormItem =
   | BasicInfoFieldConfig
-  | {row: readonly BasicInfoFieldConfig[]; name?: never; type?: never};
+  | {row: readonly BasicInfoFieldConfig[]; colOnMobile?: boolean; name?: never; type?: never};
 
 // EtcQuestion
 export interface EtcFieldConfig {
