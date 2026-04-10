@@ -34,7 +34,7 @@ export const EtcQuestionFieldList = ({etcFields}: EtcQuestionFieldListProps) => 
       defaultValue,
       className,
     } = field;
-    const error = name ? (errors as Record<string, any>)[name] : undefined;
+    const error = name ? errors[name] : undefined;
 
     switch (type) {
       case 'group_label':
@@ -51,22 +51,21 @@ export const EtcQuestionFieldList = ({etcFields}: EtcQuestionFieldListProps) => 
             maxLength={name === 'unavailableInterviewTimes' ? 200 : maxLength}
             readOnly={readOnly}
             defaultValue={defaultValue}
-            currentLength={name ? (watch(name as any) || '').length : 0}
+            currentLength={!readOnly && name ? (watch(name) || '').length : 0}
             error={error?.message as string}
             className={className}
             required={field.required}
-            {...(name &&
-              register(
-                name as any,
-                field.required ? {required: '필수 항목입니다'} : {}
-              ))}
+            {...(!readOnly &&
+              name &&
+              register(name, field.required ? {required: '필수 항목입니다'} : {}))}
           />
         );
       case 'dropdown':
+        if (!name) return null;
         return (
           <Controller
             key={name}
-            name={(name ?? '') as any}
+            name={name}
             control={control}
             rules={field.required ? {required: '필수 항목입니다'} : {}}
             render={({field: controllerField}) => (
@@ -90,11 +89,7 @@ export const EtcQuestionFieldList = ({etcFields}: EtcQuestionFieldListProps) => 
             placeholder={placeholder}
             error={error?.message as string}
             required={field.required}
-            {...(name &&
-              register(
-                name as any,
-                field.required ? {required: '필수 항목입니다'} : {}
-              ))}
+            {...(name && register(name, field.required ? {required: '필수 항목입니다'} : {}))}
           />
         );
       case 'radio':
@@ -110,7 +105,7 @@ export const EtcQuestionFieldList = ({etcFields}: EtcQuestionFieldListProps) => 
             )}
             {name && (
               <Controller
-                name={name as any}
+                name={name}
                 control={control}
                 rules={field.required ? {required: '필수 항목입니다'} : {}}
                 render={({field: controllerField}) => (

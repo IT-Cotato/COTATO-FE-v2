@@ -1,4 +1,5 @@
-import {BasicInfoFields} from '@/schemas/apply/apply-schema';
+import {Path} from 'react-hook-form';
+import {BasicInfoFields, ApplyFormData} from '@/schemas/apply/apply-schema';
 
 // BasicInfo
 export interface BasicInfoFieldConfig {
@@ -17,9 +18,9 @@ export type BasicInfoFormItem =
 
 // EtcQuestion
 export interface EtcFieldConfig {
-  name?: string;
+  name?: Path<ApplyFormData>;
   label?: string;
-  type: string;
+  type: 'input' | 'dropdown' | 'radio' | 'textarea' | 'group_label' | 'display';
   placeholder?: string;
   options?: {value: string; label: string}[];
   maxLength?: number;
