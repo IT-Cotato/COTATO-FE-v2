@@ -35,7 +35,7 @@ export const SessionCard = ({
   onUpdate,
 }: SessionCardProps) => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const {isMobile, mounted} = useIsMobile();
+  const {isMobile, mounted} = useIsMobile(768);
   const {isEditing, setIsEditing, form, setForm, activeSessionData} =
     useSessionForm(session, isExpanded);
 
