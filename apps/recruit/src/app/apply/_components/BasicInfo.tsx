@@ -1,9 +1,8 @@
 'use client';
 
 import {useEffect, useRef, useCallback} from 'react';
-import {useIsMobile} from '@repo/ui/hooks/useIsMobile';
 import {useSearchParams} from 'next/navigation';
-import {useFormContext, Controller, type Path} from 'react-hook-form';
+import {useFormContext, type Path} from 'react-hook-form';
 import {useQuery, useQueryClient} from '@tanstack/react-query';
 import {FullButton} from '@repo/ui/components/buttons/FullButton';
 import {ApplyFormData} from '@/schemas/apply/apply-schema';
@@ -30,17 +29,11 @@ export const BasicInfo = ({
   showSaveSuccess,
   isSaving,
 }: BasicInfoProps) => {
-  const {isMobile} = useIsMobile();
   const searchParams = useSearchParams();
   const applicationId = searchParams.get('id');
 
-  const {
-    watch,
-    setValue,
-    getValues,
-    unregister,
-    reset,
-  } = useFormContext<ApplyFormData>();
+  const {watch, setValue, getValues, unregister, reset} =
+    useFormContext<ApplyFormData>();
 
   const queryClient = useQueryClient();
   const hasInitializedRef = useRef(false);
@@ -126,8 +119,6 @@ export const BasicInfo = ({
     'part',
   ].some((field) => !allValues[field as keyof ApplyFormData]);
 
-
-
   return (
     <div className='flex w-full flex-col gap-5'>
       <div className='flex justify-center'>
@@ -135,7 +126,7 @@ export const BasicInfo = ({
       </div>
 
       {isLoading ? (
-        <div className='flex h-full w-full items-center justify-center py-[60px]'>
+        <div className='flex h-full w-full items-center justify-center py-15'>
           <Spinner />
         </div>
       ) : (
