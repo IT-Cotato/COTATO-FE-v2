@@ -1,0 +1,23 @@
+name: PR Assignees 지정
+
+on:
+  pull_request:
+    types: [opened, ready_for_review]
+
+jobs:
+  auto-assign:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    
+    steps:
+      - name: PR Assignees 지정
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_URL: ${{ github.event.pull_request.html_url }}
+        run: |
+          gh pr edit $PR_URL --add-assignee "${{ github.actor }}"
+
+          REVIEWERS="kimminna,DandelionQZ,JiiminHa,choyeon2e"
+
+          gh pr edit $PR_URL --add-reviewer "$REVIEWERS"
