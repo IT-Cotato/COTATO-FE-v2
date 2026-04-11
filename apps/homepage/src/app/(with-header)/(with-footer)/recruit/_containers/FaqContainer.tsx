@@ -3,7 +3,6 @@
 import {useState} from 'react';
 import {FaqSideBar} from '@/app/(with-header)/(with-footer)/recruit/_components/FaqSideBar';
 import {FaqAccordion} from '@/app/(with-header)/(with-footer)/recruit/_components/FaqAccordion';
-import {Button} from '@repo/ui/components/buttons/Button';
 import {faqParametersType} from '@/schemas/faq/faq.schema';
 import {useFaqQuery} from '@/hooks/queries/useFaq.query';
 
@@ -26,43 +25,21 @@ export const FaqContainer = () => {
         </div>
       </div>
 
-      <div>
+      <div className='flex flex-col items-center'>
         <p className='text-body-l lg:text-h4 mb-4 text-center text-neutral-600'>
           더 자세한 궁금한 내용이 있다면?
         </p>
-        <div className='hidden lg:block'>
-          <Button
-            label='카카오톡 채널 문의하기'
-            labelTypo='h3'
-            width={393}
-            height={74}
-            backgroundColor='primary'
-            textColor='neutral-50'
-            onClick={() =>
-              window.open(
-                'https://pf.kakao.com/_LQLyG',
-                '_blank',
-                'noopener,noreferrer'
-              )
-            }
-          />
-        </div>
-        <div className='lg:hidden'>
-          <Button
-            label='카카오톡 채널 문의하기'
-            labelTypo='body_l_sb'
-            width={327}
-            backgroundColor='primary'
-            textColor='neutral-800'
-            onClick={() =>
-              window.open(
-                'https://pf.kakao.com/_LQLyG',
-                '_blank',
-                'noopener,noreferrer'
-              )
-            }
-          />
-        </div>
+        <button
+          className='text-body-l-b lg:text-h3 bg-primary h-10.5 w-full rounded-[20px] p-2.5 text-neutral-800 lg:h-18.5 lg:w-75.75 lg:rounded-[10px] lg:p-0 lg:text-neutral-50'
+          onClick={() =>
+            window.open(
+              'https://pf.kakao.com/_LQLyG',
+              '_blank',
+              'noopener,noreferrer'
+            )
+          }>
+          카카오톡 채널 문의하기
+        </button>
       </div>
     </div>
   );
