@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useState, useRef} from 'react';
 import {UseFormReturn} from 'react-hook-form';
 import {useQueryClient} from '@tanstack/react-query';
 import {
@@ -34,6 +34,7 @@ export const useApplySave = (
 ): UseApplySaveReturn => {
   const [showSaveSuccess, setShowSaveSuccess] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
+  const savingRef = useRef(false);
   const queryClient = useQueryClient();
 
   const {mutateAsync: saveBasicInfo} = useSaveBasicInfo(applicationId);
@@ -71,10 +72,11 @@ export const useApplySave = (
       throw new Error(errorMessage);
     }
 
-    if (isSaving) return false;
+    if (savingRef.current) return false;
 
     const data = methods.getValues();
 
+    savingRef.current = true;
     setIsSaving(true);
     try {
       if (step === 1) {
@@ -155,6 +157,7 @@ export const useApplySave = (
       );
       throw e;
     } finally {
+      savingRef.current = false;
       setIsSaving(false);
     }
   };
