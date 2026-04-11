@@ -38,7 +38,7 @@ export const AdminPenaltiesSpecificTableRow = ({
 
   return (
     <tr className='text-body-l-sb text-center text-neutral-600'>
-      <td className='truncate px-3 py-4'>{row.name}</td>
+      <td className='px-3 py-4'>{row.name}</td>
 
       <td className='overflow-hidden px-3 py-4'>
         <StatusChip
