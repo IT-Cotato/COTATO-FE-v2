@@ -42,24 +42,22 @@ export const AdminAttendanceEntireTable = ({
             <tr
               key={row.memberInfo.memberId}
               className='text-body-m lg:text-body-l-sb text-neutral-600'>
-              <td className='truncate px-3 py-4 text-center'>
-                {row.memberInfo.name}
-              </td>
+              <td className='px-3 py-4 text-center'>{row.memberInfo.name}</td>
               <td className='truncate px-3 py-4 text-center'>
                 {MEMBER_POSITION_LABEL[
                   row.memberInfo.position as MemberPositionKey
                 ] ?? row.memberInfo.position}
               </td>
-              <td className='text-primary truncate px-3 py-4 text-center'>
+              <td className='text-primary px-3 py-4 text-center'>
                 {row.statistic.present}
               </td>
-              <td className='text-disabled truncate px-3 py-4 text-center'>
+              <td className='text-disabled px-3 py-4 text-center'>
                 {row.statistic.late}
               </td>
-              <td className='truncate px-3 py-4 text-center text-neutral-500'>
+              <td className='px-3 py-4 text-center text-neutral-500'>
                 {row.statistic.absent}
               </td>
-              <td className='text-alert truncate px-3 py-4 text-center'>
+              <td className='text-alert px-3 py-4 text-center'>
                 {row.statistic.unauthorizedAbsent}
               </td>
             </tr>

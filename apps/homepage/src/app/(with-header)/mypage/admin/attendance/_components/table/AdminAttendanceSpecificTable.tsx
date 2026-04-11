@@ -48,10 +48,8 @@ export const AdminAttendanceSpecificTable = ({
             <tr
               key={row.memberInfo.memberId}
               className='text-body-m lg:text-body-l-sb text-center text-neutral-600'>
-              <td className='truncate px-3 py-4'>{row.memberInfo.name}</td>
-              <td className='truncate px-3 py-4'>
-                {row.memberInfo.generationId}기
-              </td>
+              <td className='px-3 py-4'>{row.memberInfo.name}</td>
+              <td className='px-3 py-4'>{row.memberInfo.generationId}기</td>
               <td className='px-3 py-4'>
                 <div className='flex items-center justify-center'>
                   <StatusDropdown
