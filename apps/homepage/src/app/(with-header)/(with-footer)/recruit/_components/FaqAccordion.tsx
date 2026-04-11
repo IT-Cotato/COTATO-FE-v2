@@ -36,7 +36,7 @@ export const FaqAccordion = ({item}: FaqAccordionProps) => {
             width={24}
             height={24}
             className={clsx(
-              'absolute inset-0 transition-all duration-300',
+              'absolute inset-0 fill-neutral-600 transition-all duration-300',
               isOpen ? 'opacity-0' : 'opacity-100'
             )}
           />
@@ -45,7 +45,7 @@ export const FaqAccordion = ({item}: FaqAccordionProps) => {
             width={24}
             height={24}
             className={clsx(
-              'absolute inset-0 transition-all duration-300',
+              'absolute inset-0 fill-neutral-600 transition-all duration-300',
               isOpen ? 'rotate-0 opacity-100' : 'opacity-0'
             )}
           />
