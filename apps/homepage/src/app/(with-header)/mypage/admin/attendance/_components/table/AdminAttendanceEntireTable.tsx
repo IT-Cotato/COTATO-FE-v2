@@ -20,7 +20,7 @@ export const AdminAttendanceEntireTable = ({
             <th
               key={col.key}
               className='text-body-m-sb lg:text-body-l-sb overflow-hidden px-3 py-4 text-neutral-600'>
-              <div className='flex items-center justify-center gap-2.5'>
+              <div className='flex min-w-min items-center justify-center gap-2.5 whitespace-nowrap'>
                 <span className='hidden lg:block'>
                   {col.icon && <col.icon />}
                 </span>

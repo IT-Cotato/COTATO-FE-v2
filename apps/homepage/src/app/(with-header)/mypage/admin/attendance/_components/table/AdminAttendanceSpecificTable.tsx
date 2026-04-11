@@ -30,10 +30,8 @@ export const AdminAttendanceSpecificTable = ({
           {ATTENDANCE_SPECIFIC_TABLE_HEADER.map((col) => (
             <th
               key={col.key}
-              className='text-body-m-sb lg:text-body-l-sb px-3 py-4 text-neutral-600'>
-              <div className='flex items-center justify-center gap-2.5'>
-                {col.label}
-              </div>
+              className='text-body-m-sb lg:text-body-l-sb w-max overflow-hidden px-3 py-4 whitespace-nowrap text-neutral-600'>
+              <div>{col.label}</div>
             </th>
           ))}
         </tr>
