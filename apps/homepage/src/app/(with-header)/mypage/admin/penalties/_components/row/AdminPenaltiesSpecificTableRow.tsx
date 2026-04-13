@@ -38,9 +38,9 @@ export const AdminPenaltiesSpecificTableRow = ({
 
   return (
     <tr className='text-body-l-sb text-center text-neutral-600'>
-      <td className='truncate px-3 py-4'>{row.name}</td>
+      <td className='px-3 py-4'>{row.name}</td>
 
-      <td className='truncate px-3 py-4'>
+      <td className='overflow-hidden px-3 py-4'>
         <StatusChip
           value={row.attendanceResult}
           config={ATTENDANCE_STATUS_CONFIG}
@@ -49,7 +49,7 @@ export const AdminPenaltiesSpecificTableRow = ({
         />
       </td>
 
-      <td className='px-3 py-4'>
+      <td className='overflow-hidden px-3 py-4'>
         <StatusChip
           value={row.beerNetworkingParticipated ? 'PRESENT' : 'ABSENT'}
           config={BEER_NETWORKING_ATTENDANCE_CONFIG}

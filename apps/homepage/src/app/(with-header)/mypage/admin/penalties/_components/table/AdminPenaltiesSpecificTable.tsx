@@ -22,7 +22,7 @@ export const AdminPenaltiesSpecificTable = ({
           {PENALTY_SPECIFIC_TABLE_HEADER.map((col) => (
             <th
               key={col.key}
-              className='text-body-l-sb px-3 py-4 text-neutral-600'>
+              className='text-body-m lg:text-body-l-sb py-4 font-bold text-neutral-600'>
               <div className='flex items-center justify-center gap-2.5'>
                 {col.label}
               </div>
