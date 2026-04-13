@@ -47,7 +47,11 @@ export const HomeClient = () => {
 
   return (
     <>
-      {isRecruiting ? <RecruitmentActive generation={generation} /> : <RecruitmentInactive />}
+      {isRecruiting ? (
+        <RecruitmentActive generation={generation} />
+      ) : (
+        <RecruitmentInactive />
+      )}
       <SubmissionCompleteModal
         isOpen={isSubmissionCompleteModalOpen}
         onClose={closeSubmissionCompleteModal}

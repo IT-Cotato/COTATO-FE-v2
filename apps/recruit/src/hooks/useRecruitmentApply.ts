@@ -12,7 +12,9 @@ interface UseRecruitmentApplyOptions {
   onLoginRequired: () => void;
 }
 
-export function useRecruitmentApply({onLoginRequired}: UseRecruitmentApplyOptions) {
+export function useRecruitmentApply({
+  onLoginRequired,
+}: UseRecruitmentApplyOptions) {
   const router = useRouter();
   const {isAuthenticated} = useAuthStore();
 

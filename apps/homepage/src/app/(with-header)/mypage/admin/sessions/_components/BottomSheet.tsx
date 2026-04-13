@@ -29,7 +29,13 @@ export const BottomSheet = ({
 
   return (
     <>
-      <div className='fixed inset-0 z-40 bg-black/50' onClick={(e) => { e.stopPropagation(); onClose(); }} />
+      <div
+        className='fixed inset-0 z-40 bg-black/50'
+        onClick={(e) => {
+          e.stopPropagation();
+          onClose();
+        }}
+      />
       <div
         className={`fixed right-0 bottom-0 left-0 z-50 rounded-t-2xl bg-white px-6 ${isEditing ? 'top-34.5 flex flex-col' : ''}`}
         onClick={(e) => e.stopPropagation()}>

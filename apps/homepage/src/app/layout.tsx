@@ -7,6 +7,8 @@ import {AuthProvider} from '@/components/providers/AuthProvider';
 import {GoogleAnalytics} from '@/lib/GoogleAnalytics';
 import {BeUsableRum} from '@/lib/BeUsableRum';
 import {GoogleTagManager, GtmNoscript} from '@/lib/GoogleTagManager';
+import {HEADER_HEIGHT, MOBILE_HEADER_HEIGHT} from '@repo/ui/constants/ui';
+import type {CSSProperties} from 'react';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.cotato.kr'),
@@ -83,7 +85,13 @@ export default function RootLayout({
   return (
     <html
       lang='ko'
-      className={`${pretendard.variable} ${roboto.variable} antialiased`}>
+      className={`${pretendard.variable} ${roboto.variable} antialiased`}
+      style={
+        {
+          '--header-height': `${MOBILE_HEADER_HEIGHT}px`,
+          '--header-height-lg': `${HEADER_HEIGHT}px`,
+        } as CSSProperties
+      }>
       {gtmId && <GoogleTagManager gtmId={gtmId} />}
       <Providers>
         <AuthProvider>
