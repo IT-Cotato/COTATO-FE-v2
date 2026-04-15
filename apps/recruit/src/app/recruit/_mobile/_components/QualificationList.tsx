@@ -11,8 +11,9 @@ export const QualificationList = () => {
           함께 도달하는 성장의 종착지
         </p>
         <p className='text-h5 w-full text-center text-neutral-600'>
-          코테이토에서, &apos;말하는 감자&apos;에서 &apos;행동하는 감자&apos;로
-          도약할 당신을 기다립니다.
+          코테이토에서, &apos;말하는 감자&apos;에서
+          <br />
+          &apos;행동하는 감자&apos;로 도약할 당신을 기다립니다.
         </p>
       </div>
 

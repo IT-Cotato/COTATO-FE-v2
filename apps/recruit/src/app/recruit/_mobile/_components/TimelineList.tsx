@@ -7,7 +7,7 @@ interface TimelineListProps {
 
 export const TimelineList = ({timelines}: TimelineListProps) => {
   return (
-    <div className='flex h-dvh w-full flex-col items-center justify-center gap-15 overflow-hidden px-5'>
+    <div className='flex h-dvh w-full flex-col items-center justify-center gap-15 overflow-hidden px-6'>
       <p className='text-h3 text-center text-neutral-800'>모집 일정</p>
 
       <div className='w-full overflow-x-scroll [&::-webkit-scrollbar]:hidden'>
