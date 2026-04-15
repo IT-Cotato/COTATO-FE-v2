@@ -74,7 +74,7 @@ export const AttendanceCheckContainer = ({activeTab}: {activeTab: TabType}) => {
           isBorder
         />
       </div>
-      <div className='flex flex-col justify-center rounded-[10px] bg-neutral-50 px-2.5 py-2.5 text-center lg:min-h-75 lg:px-15.75 lg:py-7'>
+      <div className='flex min-h-55.75 flex-col justify-center rounded-[10px] bg-neutral-50 px-2.5 py-2.5 text-center lg:min-h-75 lg:px-15.75 lg:py-7'>
         {isDataLoading ? (
           <div className='flex h-full items-center justify-center'>
             <Spinner />
