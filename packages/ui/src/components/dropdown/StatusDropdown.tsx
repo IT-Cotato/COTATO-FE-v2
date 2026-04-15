@@ -1,7 +1,7 @@
 import {useEffect, useRef, useState} from 'react';
 import clsx from 'clsx';
-import ChevronDown from '@repo/ui/assets/chevrons/chevron-down.svg';
-import {useClickOutside} from '@repo/ui/hooks/useClickOutside';
+import ChevronDown from '../../assets/chevrons/chevron-down.svg';
+import {useClickOutside} from '../../hooks/useClickOutside';
 
 interface StatusDropdownConfig {
   label: string;

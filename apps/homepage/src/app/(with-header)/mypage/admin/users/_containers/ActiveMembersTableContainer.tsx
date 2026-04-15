@@ -1,7 +1,7 @@
 'use client';
 
 import {AdminUsersTableView} from '@/app/(with-header)/mypage/admin/users/_components/table/AdminUsersTableView';
-import {ConfirmModal} from '@/app/(with-header)/mypage/admin/_components/ConfirmModal';
+import {ConfirmModal} from '@repo/ui/components/modal/ConfirmModal';
 import {MemberDetailModal} from '@/app/(with-header)/mypage/admin/users/_components/table/MemberDetailModal';
 import {getJosa} from '@/utils/getJosa';
 import {ActiveMembersActionBar} from '@/app/(with-header)/mypage/admin/users/_components/ActiveMembersActionBar';
@@ -95,7 +95,6 @@ export const ActiveMembersTableContainer = () => {
             {getJosa(memberToDelete?.name ?? '', '을/를')} 삭제하시겠습니까?
           </span>
         }
-
         confirmLabel='삭제'
       />
 

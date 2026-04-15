@@ -2,7 +2,7 @@
 
 import {useState, useEffect} from 'react';
 import clsx from 'clsx';
-import ChevronLeft from '@/assets/chevrons/chevron-left.svg';
+import ChevronLeft from '../../assets/chevrons/chevron-left.svg';
 import {usePagination} from '../../hooks/usePagination';
 
 interface PaginationProps {

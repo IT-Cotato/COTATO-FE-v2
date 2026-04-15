@@ -25,12 +25,12 @@ export const PartTab = ({
       onKeyDown={onKeyDown}
       aria-label={partName}
       className={clsx(
-        'flex flex-row items-center gap-2 border-b-3 py-2.75 transition-colors duration-300',
+        'flex w-fit shrink-0 flex-row items-center gap-2 border-b-3 py-2.75 transition-colors duration-300',
         isActive
           ? 'border-primary text-neutral-800'
           : 'border-transparent text-neutral-500'
       )}>
-      <span className='text-h5'>{partName}</span>
+      <span className='text-h5 shrink-0'>{partName}</span>
     </button>
   );
 };

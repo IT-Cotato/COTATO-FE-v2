@@ -2,7 +2,6 @@
 
 import {useAdminPassStatusQuery} from '@/hooks/queries/useAdminResult.query';
 import {GenerationDropdown} from '@/components/dropdown/GenerationDropdown';
-import {Spinner} from '@repo/ui/components/spinner/Spinner';
 import {useGenerationStore} from '@/store/useGenerationStore';
 import {ResultTable} from '@/app/admin/(with-sidebar)/results/_components/result-manage/ResultTable';
 
@@ -15,16 +14,9 @@ export const ManageResult = ({
   generation,
   onGenerationChange,
 }: ManageResultProps) => {
-  const {data, isLoading} = useAdminPassStatusQuery(generation);
+  const {data} = useAdminPassStatusQuery(generation);
   const {generations} = useGenerationStore();
   const generationList = generations.map((g) => String(g.generationId));
-
-  if (isLoading)
-    return (
-      <div className='flex justify-center py-10'>
-        <Spinner />
-      </div>
-    );
 
   return (
     <div className='flex w-full flex-col gap-2.5 lg:gap-3.5'>

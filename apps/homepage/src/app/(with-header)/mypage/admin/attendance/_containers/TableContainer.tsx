@@ -87,18 +87,28 @@ export const TableContainer = () => {
       {selectedSessionType === 'FULL' ? (
         <AdminAttendanceEntireTable items={fullAttendanceList} />
       ) : (
-        <div className='flex gap-5'>
-          <AdminAttendanceSpecificTable
-            items={specificAttendanceList.slice(0, half)}
-            onChangeAttendanceStatus={handleChangeAttendanceStatus}
-            isUpdating={isUpdatingAttendanceStatus}
-          />
-          <AdminAttendanceSpecificTable
-            items={specificAttendanceList.slice(half)}
-            onChangeAttendanceStatus={handleChangeAttendanceStatus}
-            isUpdating={isUpdatingAttendanceStatus}
-          />
-        </div>
+        <>
+          <div className='hidden gap-5 lg:flex'>
+            <AdminAttendanceSpecificTable
+              items={specificAttendanceList.slice(0, half)}
+              onChangeAttendanceStatus={handleChangeAttendanceStatus}
+              isUpdating={isUpdatingAttendanceStatus}
+            />
+            <AdminAttendanceSpecificTable
+              items={specificAttendanceList.slice(half)}
+              onChangeAttendanceStatus={handleChangeAttendanceStatus}
+              isUpdating={isUpdatingAttendanceStatus}
+            />
+          </div>
+
+          <div className='lg:hidden'>
+            <AdminAttendanceSpecificTable
+              items={specificAttendanceList}
+              onChangeAttendanceStatus={handleChangeAttendanceStatus}
+              isUpdating={isUpdatingAttendanceStatus}
+            />
+          </div>
+        </>
       )}
     </>
   );

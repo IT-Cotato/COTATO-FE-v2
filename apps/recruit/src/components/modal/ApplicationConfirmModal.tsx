@@ -1,42 +1,33 @@
-import {FullButton} from '@repo/ui/components/buttons/FullButton';
-import {Modal} from '@repo/ui/components/modal/Modal';
+import {ConfirmModal} from '@repo/ui/components/modal/ConfirmModal';
 
 interface ApplicationConfirmModalProps {
   isOpen: boolean;
   onClose: () => void;
   onConfirm: () => void;
+  isLoading?: boolean;
 }
 
 export const ApplicationConfirmModal = ({
   isOpen,
   onClose,
   onConfirm,
+  isLoading,
 }: ApplicationConfirmModalProps) => {
   return (
-    <Modal
+    <ConfirmModal
       isOpen={isOpen}
       onClose={onClose}
+      onConfirm={onConfirm}
       title='지원서를 제출하시겠습니까?'
-      titleStyle='text-h4 text-neutral-800'
-      content={
+      description={
         <>
-          <p>제출 후에는 수정이 불가능합니다.</p>
-          <p>입력하신 내용이 모두 정확한지 다시 한번 확인해주세요.</p>
+          제출 후에는 수정이 불가능합니다.
+          <br />
+          입력하신 내용이 모두 정확한지 다시 한번 확인해주세요.
         </>
       }
-      actionsAlign='stretch'
-      actions={
-        <>
-          <FullButton
-            variant='primary'
-            wrapperClassName='flex-1'
-            onClick={onConfirm}
-            label='확인'
-            labelTypo='body_l'
-          />
-        </>
-      }
-      contentWrapperClassName='gap-[57px]'
+      cancelLabel={false}
+      isLoading={isLoading}
     />
   );
 };

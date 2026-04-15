@@ -13,8 +13,7 @@ import clsx from 'clsx';
 
 const mobileCenterX = {
   name: 'mobileCenterX',
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  fn({rects}: any) {
+  fn({rects}: {rects: {floating: {width: number}}}) {
     if (typeof window === 'undefined' || window.innerWidth >= 1024) return {};
     return {
       x: Math.round(window.innerWidth / 2 - rects.floating.width / 2),

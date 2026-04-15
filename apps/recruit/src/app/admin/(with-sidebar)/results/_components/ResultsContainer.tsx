@@ -7,6 +7,7 @@ import {useGenerationStore} from '@/store/useGenerationStore';
 import {useRecruitmentStatusQuery} from '@/hooks/queries/useRecruitmentStatus.query';
 import {Spinner} from '@repo/ui/components/spinner/Spinner';
 import {useAdminGenerationsQuery} from '@/hooks/queries/useAdminGeneration.query';
+import {useAdminPassStatusQuery} from '@/hooks/queries/useAdminResult.query';
 
 export const ResultsContainer = () => {
   const {isLoading: isStatusLoading} = useRecruitmentStatusQuery();
@@ -15,6 +16,12 @@ export const ResultsContainer = () => {
 
   const {setGenerations} = useGenerationStore();
   const [selectedGen, setSelectedGen] = useState<string | null>(null);
+  const generations = generationsData?.data || [];
+  const currentGeneration =
+    selectedGen ||
+    (generations.length > 0 ? String(generations[0].generationId) : '');
+  const {isLoading: isPassStatusLoading} =
+    useAdminPassStatusQuery(currentGeneration);
 
   useEffect(() => {
     if (generationsData?.data) {
@@ -22,18 +29,13 @@ export const ResultsContainer = () => {
     }
   }, [generationsData, setGenerations]);
 
-  if (isStatusLoading || isGenerationsLoading) {
+  if (isStatusLoading || isGenerationsLoading || isPassStatusLoading) {
     return (
-      <div className='flex h-100 w-full items-center justify-center'>
+      <div className='flex h-[calc(100vh)] w-full items-center justify-center'>
         <Spinner size='lg' />
       </div>
     );
   }
-
-  const generations = generationsData?.data || [];
-  const currentGeneration =
-    selectedGen ||
-    (generations.length > 0 ? String(generations[0].generationId) : '');
 
   if (!currentGeneration) {
     return (

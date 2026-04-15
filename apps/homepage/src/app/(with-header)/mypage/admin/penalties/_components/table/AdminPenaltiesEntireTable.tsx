@@ -1,3 +1,5 @@
+'use client';
+
 import {
   PenaltyFullTableKey,
   SortDirection,
@@ -5,8 +7,12 @@ import {
 import MinusIcon from '@repo/ui/assets/icons/minus-round.svg';
 import ArrowDownIcon from '@repo/ui/assets/icons/arrow-down.svg';
 import clsx from 'clsx';
+import {useEffect, useState} from 'react';
 import {AdminPenaltiesEntireTableRowType} from '@/schemas/admin/admin-penalties.schema';
-import {PENALTY_FULL_TABLE_HEADER} from '@/constants/admin/admin-penalties';
+import {
+  PENALTY_FULL_TABLE_HEADER,
+  PENALTY_FULL_TABLE_HEADER_MOBILE,
+} from '@/constants/admin/admin-penalties';
 
 interface AdminPenaltiesEntireTableProps {
   items: AdminPenaltiesEntireTableRowType[];
@@ -19,15 +25,29 @@ export const AdminPenaltiesEntireTable = ({
   onSort,
   sortedDirection,
 }: AdminPenaltiesEntireTableProps) => {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 1024);
+
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  const tableHeader = isMobile
+    ? PENALTY_FULL_TABLE_HEADER_MOBILE
+    : PENALTY_FULL_TABLE_HEADER;
+
   return (
     <table className='h-fit w-full table-fixed border-collapse'>
       <thead className='bg-neutral-200'>
         <tr>
-          {PENALTY_FULL_TABLE_HEADER.map((col) => (
+          {tableHeader.map((col) => (
             <th
               key={col.key}
-              className='text-body-l-sb px-3 py-4 text-neutral-600'>
-              <div className='flex items-center justify-center gap-2.5'>
+              className='text-body-m lg:text-body-l-sb py-1 font-bold text-neutral-600 lg:px-3 lg:py-4'>
+              <div className='flex flex-wrap items-center justify-center gap-2.5 whitespace-pre-line'>
                 {col.label}
                 {col.key === ('total-minus-point' as PenaltyFullTableKey) &&
                   (sortedDirection ? (
@@ -67,7 +87,7 @@ export const AdminPenaltiesEntireTable = ({
         {items.length === 0 ? (
           <tr>
             <td
-              colSpan={PENALTY_FULL_TABLE_HEADER.length}
+              colSpan={tableHeader.length}
               className='py-15 text-center text-neutral-400'>
               상벌점 내역이 없습니다.
             </td>
@@ -75,22 +95,22 @@ export const AdminPenaltiesEntireTable = ({
         ) : (
           items.map((row) => (
             <tr key={row.memberId} className='text-body-l-sb'>
-              <td className='truncate px-3 py-4 text-center text-neutral-600'>
+              <td className='px-3 py-4 text-center text-neutral-600'>
                 {row.name}
               </td>
-              <td className='text-alert truncate px-3 py-4 text-center'>
+              <td className='text-alert px-3 py-4 text-center'>
                 {row.attendanceMinusPoint}
               </td>
-              <td className='text-alert truncate px-3 py-4 text-center'>
+              <td className='text-alert px-3 py-4 text-center'>
                 {row.sessionMinusPoint}
               </td>
-              <td className='truncate px-3 py-4 text-center text-neutral-800'>
+              <td className='px-3 py-4 text-center text-neutral-800'>
                 {row.beerNetworkingCount}
               </td>
-              <td className='text-secondary truncate px-3 py-4 text-center'>
+              <td className='text-secondary px-3 py-4 text-center'>
                 {row.beerNetworkingBonusPoint}
               </td>
-              <td className='truncate px-3 py-4 text-center text-neutral-800'>
+              <td className='px-3 py-4 text-center text-neutral-800'>
                 {row.totalMinusPoint}
               </td>
             </tr>

@@ -79,8 +79,9 @@ export const HeaderContainer = () => {
 
   return (
     <header
+      style={{height: 'var(--header-h)'}}
       className={clsx(
-        'z-header sticky top-0 flex h-12.5 w-full items-center justify-between bg-black px-6 py-3.75 lg:h-22 lg:pr-26.25 lg:pl-6.25',
+        'z-header sticky top-0 flex w-full items-center justify-between bg-black px-6 py-3.75 lg:pr-26.25 lg:pl-6.25',
         {'lg:min-w-360': isAdmin}
       )}>
       <div>
@@ -118,7 +119,7 @@ export const HeaderContainer = () => {
                 key={item.href}
                 href={item.href}
                 className={clsx(
-                  'text-body-l-sb px-4.25 text-center transition-colors duration-300',
+                  'text-body-l-sb px-4.25 py-6 text-center transition-colors duration-300',
                   isActive ? 'text-white' : 'text-neutral-300 hover:text-white'
                 )}>
                 {item.label}
@@ -133,7 +134,7 @@ export const HeaderContainer = () => {
               trigger={
                 <button
                   type='button'
-                  className='text-body-l-sb flex cursor-pointer items-center justify-center gap-2.5 px-4.25 py-8 text-white'>
+                  className='text-body-l-sb flex cursor-pointer items-center justify-center gap-2.5 px-4.25 py-6 text-white'>
                   <SmallLogo className='h-4 w-4 text-white' /> {user.name}
                 </button>
               }

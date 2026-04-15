@@ -3,7 +3,7 @@ import {ContentContainer} from '@/app/recruit/_containers/ContentContainer';
 
 export default function RecruitmentNoticePage() {
   return (
-    <section className='flex w-full min-w-min flex-col items-center bg-white'>
+    <section className='flex w-full flex-col items-center bg-white'>
       <ActionContainer />
       <ContentContainer />
     </section>

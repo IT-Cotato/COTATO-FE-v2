@@ -3,7 +3,7 @@
 import React, {ReactNode} from 'react';
 import clsx from 'clsx';
 import {FocusTrap} from 'focus-trap-react';
-import XIcon from '@repo/ui/assets/icons/cancel.svg';
+import XIcon from '../../assets/icons/cancel.svg';
 
 interface ModalProps {
   isOpen: boolean; /** 모달의 열림/닫힘 상태를 제어합니다. */

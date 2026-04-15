@@ -1,8 +1,8 @@
-import {useState} from 'react';
+import {useState, useRef} from 'react';
 import {UseFormReturn} from 'react-hook-form';
 import {useQueryClient} from '@tanstack/react-query';
 import {
-  ApplyFormData,
+  ApplyFormValues,
   BasicInfoRequest,
   PartQuestionRequest,
   EtcQuestionRequest,
@@ -21,10 +21,11 @@ import {QUERY_KEYS} from '@/constants/query-keys';
 interface UseApplySaveReturn {
   handleSave: (
     step: number,
-    methods: UseFormReturn<ApplyFormData>,
+    methods: UseFormReturn<ApplyFormValues>,
     showToast?: boolean
-  ) => Promise<void>;
+  ) => Promise<boolean>;
   showSaveSuccess: boolean;
+  isSaving: boolean;
 }
 
 export const useApplySave = (
@@ -32,6 +33,8 @@ export const useApplySave = (
   basicInfoPart?: string
 ): UseApplySaveReturn => {
   const [showSaveSuccess, setShowSaveSuccess] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+  const savingRef = useRef(false);
   const queryClient = useQueryClient();
 
   const {mutateAsync: saveBasicInfo} = useSaveBasicInfo(applicationId);
@@ -45,11 +48,11 @@ export const useApplySave = (
     }, 3000);
   };
 
-  const clearPartQuestionFields = (methods: UseFormReturn<ApplyFormData>) => {
+  const clearPartQuestionFields = (methods: UseFormReturn<ApplyFormValues>) => {
     const currentValues = methods.getValues();
     Object.keys(currentValues).forEach((key) => {
       if (key.startsWith('ans_')) {
-        methods.unregister(String(key) as any);
+        methods.unregister(key as `ans_${string}`);
       }
     });
     // PDF 파일 필드는 명시적으로 undefined로 설정
@@ -60,7 +63,7 @@ export const useApplySave = (
 
   const handleSave = async (
     step: number,
-    methods: UseFormReturn<ApplyFormData>,
+    methods: UseFormReturn<ApplyFormValues>,
     showToast: boolean = true
   ) => {
     if (applicationId === null) {
@@ -69,8 +72,12 @@ export const useApplySave = (
       throw new Error(errorMessage);
     }
 
+    if (savingRef.current) return false;
+
     const data = methods.getValues();
 
+    savingRef.current = true;
+    setIsSaving(true);
     try {
       if (step === 1) {
         const requestData: BasicInfoRequest = {
@@ -120,6 +127,10 @@ export const useApplySave = (
         };
 
         await savePartQuestions(requestData);
+
+        await queryClient.refetchQueries({
+          queryKey: QUERY_KEYS.APPLY.PART_QUESTIONS(applicationId),
+        });
       } else if (step === 3) {
         const discoveryPath =
           (data.discovery as EtcQuestionRequest['discoveryPath']) || 'NONE';
@@ -138,14 +149,18 @@ export const useApplySave = (
       if (showToast) {
         showSuccessMessage();
       }
+      return true;
     } catch (e) {
       console.error(
         '지원서 저장에 실패했습니다. 잠시 후 다시 시도해주세요.',
         e
       );
       throw e;
+    } finally {
+      savingRef.current = false;
+      setIsSaving(false);
     }
   };
 
-  return {handleSave, showSaveSuccess};
+  return {handleSave, showSaveSuccess, isSaving};
 };

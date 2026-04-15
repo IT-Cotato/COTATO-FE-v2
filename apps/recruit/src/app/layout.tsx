@@ -85,7 +85,12 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
     <html
       lang='ko'
       className={`${pretendard.variable} ${roboto.variable} antialiased`}
-      style={{'--header-height': `${MOBILE_HEADER_HEIGHT}px`, '--header-height-lg': `${HEADER_HEIGHT}px`} as CSSProperties}>
+      style={
+        {
+          '--header-height': `${MOBILE_HEADER_HEIGHT}px`,
+          '--header-height-lg': `${HEADER_HEIGHT}px`,
+        } as CSSProperties
+      }>
       {gtmId && <GoogleTagManager gtmId={gtmId} />}
       <body className='flex min-h-screen w-full flex-col'>
         <Providers>
@@ -99,7 +104,10 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
             <BeUsableRum />
             <HeaderContainer />
             <main className='flex w-full flex-1 flex-col'>{children}</main>
-            <Footer termsHref={TERMS_LINK.recruit} termsText='서비스 이용약관 및 개인정보 처리방침' />
+            <Footer
+              termsHref={TERMS_LINK.recruit}
+              termsText='서비스 이용약관 및 개인정보 처리방침'
+            />
           </ConditionalAuthProvider>
         </Providers>
       </body>

@@ -3,6 +3,7 @@
 import {forwardRef, useState, type InputHTMLAttributes} from 'react';
 import clsx from 'clsx';
 import {formFieldStyles} from './form.styles';
+import {useIsMobile} from '../../hooks/useIsMobile';
 
 interface FormLinkProps extends Omit<
   InputHTMLAttributes<HTMLInputElement>,
@@ -29,6 +30,7 @@ export const FormLink = forwardRef<HTMLInputElement, FormLinkProps>(
     },
     ref
   ) {
+    const {isMobile} = useIsMobile();
     const [internalLinks, setInternalLinks] = useState<string[]>(['']);
     const rawLinks = value ?? internalLinks;
 
@@ -99,7 +101,10 @@ export const FormLink = forwardRef<HTMLInputElement, FormLinkProps>(
               ref={ref}
               type='text'
               placeholder={
-                placeholder ?? '쉼표(,)로 여러 링크를 구분할 수 있습니다.'
+                placeholder ?? 
+                (isMobile 
+                  ? '링크를 입력해주세요' 
+                  : '쉼표(,)로 여러 링크를 구분할 수 있습니다.')
               }
               value={rawLinks[0] || ''}
               onChange={handleChange}

@@ -1,7 +1,7 @@
 'use client';
 
 import {ReactNode} from 'react';
-import XIcon from '@repo/ui/assets/icons/cancel.svg';
+import XIcon from '../../assets/icons/cancel.svg';
 
 interface ConfirmModalProps {
   isOpen: boolean;
@@ -35,7 +35,7 @@ export const ConfirmModal = ({
       aria-describedby={description ? 'confirm-modal-description' : undefined}
       onClick={onClose}>
       <div
-        className='relative h-50 w-81.25 rounded-[20px] bg-white px-5 py-8 lg:h-auto lg:w-127.5 lg:px-10 lg:py-12'
+        className='relative flex min-h-50 w-81.25 flex-col rounded-[20px] bg-white px-5 py-8 lg:w-127.5 lg:px-10 lg:py-12'
         onClick={(e) => e.stopPropagation()}>
         <button
           type='button'
@@ -44,7 +44,7 @@ export const ConfirmModal = ({
           aria-label='닫기'>
           <XIcon className='h-2.25 w-2.25 cursor-pointer text-neutral-800 lg:h-3 lg:w-3' />
         </button>
-        <div className='flex h-full flex-col items-center gap-6 text-center lg:gap-6'>
+        <div className='flex flex-1 flex-col items-center gap-6 text-center lg:gap-6'>
           <div className='flex flex-1 flex-col items-center justify-center gap-1.25 lg:flex-none lg:justify-start lg:gap-4'>
             <h4
               id='confirm-modal-title'

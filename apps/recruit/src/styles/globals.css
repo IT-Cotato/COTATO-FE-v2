@@ -2,6 +2,16 @@
 @import '@repo/tailwind-config';
 @source '../../../../packages/ui/src/**/*.{ts,tsx}';
 
+:root {
+  --header-h: var(--header-height);
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --header-h: var(--header-height-lg);
+  }
+}
+
 @layer base {
   html,
   body {
@@ -16,6 +26,22 @@
   html::-webkit-scrollbar,
   body::-webkit-scrollbar {
     display: none;
+  }
+
+  textarea::-webkit-scrollbar {
+    width: 8px;
+  }
+  textarea::-webkit-scrollbar-track {
+    background: var(--color-neutral-200);
+    border-radius: 20px;
+  }
+  textarea::-webkit-scrollbar-thumb {
+    background-color: var(--color-primary);
+    border-radius: 20px;
+  }
+  textarea {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-primary) var(--color-neutral-200);
   }
 
   body {

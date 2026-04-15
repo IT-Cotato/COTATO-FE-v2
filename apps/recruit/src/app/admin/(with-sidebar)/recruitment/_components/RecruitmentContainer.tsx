@@ -6,14 +6,16 @@ import {ActiveRecruitment} from './active-recruitment/ActiveRecruitment';
 import {ManageMail} from './manage-mail/ManageMail';
 import {useRecruitmentStatusQuery} from '@/hooks/queries/useRecruitmentStatus.query';
 import {Spinner} from '@repo/ui/components/spinner/Spinner';
+import {useAdminGenerationsQuery} from '@/hooks/queries/useAdminGeneration.query';
 
 export const RecruitmentContainer = () => {
-  const {isLoading} = useRecruitmentStatusQuery();
+  const {isLoading: isStatusLoading} = useRecruitmentStatusQuery();
+  const {isLoading: isGenerationsLoading} = useAdminGenerationsQuery();
   const {generation} = useRecruitmentStore();
 
-  if (isLoading)
+  if (isStatusLoading || isGenerationsLoading)
     return (
-      <div className='flex w-full justify-center'>
+      <div className='flex h-full w-full items-center justify-center'>
         <Spinner size='lg' />
       </div>
     );
