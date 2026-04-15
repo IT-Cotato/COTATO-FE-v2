@@ -101,14 +101,14 @@ export const FormLink = forwardRef<HTMLInputElement, FormLinkProps>(
               ref={ref}
               type='text'
               placeholder={
-                placeholder ?? 
-                (isMobile 
-                  ? '링크를 입력해주세요' 
+                placeholder ??
+                (isMobile
+                  ? '링크를 입력해주세요'
                   : '쉼표(,)로 여러 링크를 구분할 수 있습니다.')
               }
               value={rawLinks[0] || ''}
               onChange={handleChange}
-              className='flex-1 outline-none'
+              className='min-w-0 flex-1 outline-none'
               {...props}
             />
           </div>
