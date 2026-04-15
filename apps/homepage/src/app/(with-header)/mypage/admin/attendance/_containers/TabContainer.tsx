@@ -98,40 +98,46 @@ export const TabContainer = () => {
   };
 
   return (
-    <div className='flex items-end'>
-      <div className='flex flex-col gap-2.5'>
-        <div role='tablist' className='flex gap-7.5' aria-label='파트 선택'>
-          {ATTENDANCE_PART_TAB.map(({label, value}, index) => {
-            const isActive = activePart === value;
-            return (
-              <PartTab
-                key={value}
-                partName={label}
-                isActive={isActive}
-                tabIndex={isActive ? 0 : -1}
-                onClick={() => handleTabClick(value)}
-                onKeyDown={(e) => handleKeyDown(e, index)}
-              />
-            );
-          })}
-        </div>
-        {selectedSessionType === 'SPECIFIC' && (
-          <div className='flex gap-2.5' aria-label='출석 상태 선택'>
-            {ATTENDANCE_STATUS_OPTION.map((item) => {
-              const isActive = isAllSelected || activeStatusList.includes(item);
+    <div className='flex flex-col gap-5 lg:flex-row lg:items-end lg:gap-0'>
+      <div className='flex w-full flex-col gap-2.5'>
+        <div className='overflow-x-scroll [&::-webkit-scrollbar]:hidden'>
+          <div role='tablist' className='flex gap-7.5' aria-label='파트 선택'>
+            {ATTENDANCE_PART_TAB.map(({label, value}, index) => {
+              const isActive = activePart === value;
               return (
-                <StatusChip
-                  key={item}
-                  value={item}
-                  config={ATTENDANCE_STATUS_CONFIG}
+                <PartTab
+                  key={value}
+                  partName={label}
                   isActive={isActive}
-                  onClick={() => handleChipClick(item)}
+                  tabIndex={isActive ? 0 : -1}
+                  onClick={() => handleTabClick(value)}
+                  onKeyDown={(e) => handleKeyDown(e, index)}
                 />
               );
             })}
           </div>
-        )}
+        </div>
+        <div className='overflow-x-scroll [&::-webkit-scrollbar]:hidden'>
+          {selectedSessionType === 'SPECIFIC' && (
+            <div className='flex gap-2.5' aria-label='출석 상태 선택'>
+              {ATTENDANCE_STATUS_OPTION.map((item) => {
+                const isActive =
+                  isAllSelected || activeStatusList.includes(item);
+                return (
+                  <StatusChip
+                    key={item}
+                    value={item}
+                    config={ATTENDANCE_STATUS_CONFIG}
+                    isActive={isActive}
+                    onClick={() => handleChipClick(item)}
+                  />
+                );
+              })}
+            </div>
+          )}
+        </div>
       </div>
+
       <SearchBar
         keyword={keyword}
         onKeywordChange={setKeyword}
