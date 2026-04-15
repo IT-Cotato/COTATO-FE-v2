@@ -19,8 +19,8 @@ export const FaqSideBar = () => {
   const searchParams = useSearchParams();
 
   return (
-    <nav className='w-62.5 shrink-0 bg-neutral-50 px-6.25 py-12.5'>
-      <ul className='flex flex-col gap-2.5'>
+    <nav className='w-full shrink-0 lg:w-62.5 lg:bg-neutral-50 lg:px-6.25 lg:py-12.5'>
+      <ul className='flex flex-wrap gap-2.5 lg:flex-col'>
         {FAQ_NAV_ITEMS.map(({label, searchParams: part}) => {
           const isActive =
             searchParams.get('faq') === part ||
@@ -37,10 +37,10 @@ export const FaqSideBar = () => {
                 aria-current={isActive ? 'page' : undefined}>
                 <p
                   className={clsx(
-                    'text-h5 w-45.25 rounded-[5px] px-2 py-1.25 transition-colors duration-300',
+                    'text-h5 w-36 rounded-[5px] px-2 py-1.25 transition-colors duration-300 lg:w-45.25',
                     isActive
                       ? 'bg-neutral-800 text-neutral-100'
-                      : 'text-neutral-800'
+                      : 'bg-neutral-50 text-neutral-800 lg:bg-transparent'
                   )}>
                   {label}
                 </p>
