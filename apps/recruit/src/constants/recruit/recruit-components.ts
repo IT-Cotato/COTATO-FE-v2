@@ -22,10 +22,10 @@ export const QUALIFICATIONS_CARD_ITEMS = [
 ];
 
 export const POSITION_CARD_STYLES: Record<PositionType, string> = {
-  PM: 'hover:bg-[conic-gradient(from_0deg_at_50%_50%,#D9D9D9_0%,var(--color-neutral-300)_2%,var(--color-neutral-50)_98%,#D9D9D9_100%)]',
-  DE: 'hover:bg-[conic-gradient(from_108deg_at_50%_50%,#D9D9D9_0%,var(--color-neutral-300)_2%,var(--color-neutral-50)_98%,#D9D9D9_100%)]',
-  FE: 'hover:bg-[conic-gradient(from_194deg_at_50%_50%,#D9D9D9_0%,var(--color-neutral-300)_2%,var(--color-neutral-50)_98%,#D9D9D9_100%)]',
-  BE: 'hover:bg-[conic-gradient(from_293deg_at_50%_50%,#D9D9D9_0%,var(--color-neutral-50)_2%,var(--color-neutral-300)_98%,#D9D9D9_100%)]',
+  PM: 'hover:bg-[conic-gradient(from_0deg_at_50%_50%,#D9D9D9_0%,var(--color-neutral-300)_2%,var(--color-neutral-50)_98%,#D9D9D9_100%)] active:bg-[conic-gradient(from_0deg_at_50%_50%,#D9D9D9_0%,var(--color-neutral-300)_2%,var(--color-neutral-50)_98%,#D9D9D9_100%)]',
+  DE: 'hover:bg-[conic-gradient(from_108deg_at_50%_50%,#D9D9D9_0%,var(--color-neutral-300)_2%,var(--color-neutral-50)_98%,#D9D9D9_100%)] active:bg-[conic-gradient(from_108deg_at_50%_50%,#D9D9D9_0%,var(--color-neutral-300)_2%,var(--color-neutral-50)_98%,#D9D9D9_100%)]',
+  FE: 'hover:bg-[conic-gradient(from_194deg_at_50%_50%,#D9D9D9_0%,var(--color-neutral-300)_2%,var(--color-neutral-50)_98%,#D9D9D9_100%)] active:bg-[conic-gradient(from_194deg_at_50%_50%,#D9D9D9_0%,var(--color-neutral-300)_2%,var(--color-neutral-50)_98%,#D9D9D9_100%)]',
+  BE: 'hover:bg-[conic-gradient(from_293deg_at_50%_50%,#D9D9D9_0%,var(--color-neutral-50)_2%,var(--color-neutral-300)_98%,#D9D9D9_100%)] active:bg-[conic-gradient(from_293deg_at_50%_50%,#D9D9D9_0%,var(--color-neutral-50)_2%,var(--color-neutral-300)_98%,#D9D9D9_100%)]',
 };
 
 export const ACTIVITY_CARD_STYLES: Record<

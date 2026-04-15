@@ -58,7 +58,7 @@ export const CountdownTimer = ({
   if (isLoading) return <Spinner />;
 
   return (
-    <div className='flex w-full max-w-240 items-end gap-2.5 md:gap-10'>
+    <div className='flex w-fit justify-center gap-2.5 md:gap-10'>
       <div className='flex flex-1 flex-col'>
         <p
           className={clsx(
