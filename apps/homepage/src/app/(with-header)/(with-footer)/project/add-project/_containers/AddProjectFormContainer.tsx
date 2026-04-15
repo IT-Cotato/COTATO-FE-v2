@@ -59,7 +59,7 @@ export const AddProjectFormContainer = () => {
   if (isGenLoading || (editId && isDetailLoading)) {
     return (
       <div
-        className='flex min-h-100 items-center justify-center'
+        className='flex min-h-screen items-center justify-center'
         role='status'
         aria-live='polite'
         aria-busy='true'>

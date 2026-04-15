@@ -10,6 +10,8 @@ import {ACTIVITY_MAP} from '@/constants/project/project-activity';
 import {useGenerationQuery} from '@/hooks/queries/useGeneration.query';
 import {Spinner} from '@repo/ui/components/spinner/Spinner';
 import {useAuthStore} from '@/store/useAuthStore';
+import {useProjectListQuery} from '@/hooks/queries/useProject.query';
+import {ProjectType} from '@/schemas/project/project-type';
 
 export const ProjectContainer = () => {
   const router = useRouter();
@@ -21,7 +23,13 @@ export const ProjectContainer = () => {
   const actParam = searchParams.get('act'); // null이면 전체
   const isAdmin = user?.isAdmin === true;
 
-  const {data: generations = [], isLoading} = useGenerationQuery();
+  const {data: generations = [], isLoading: isGenLoading} =
+    useGenerationQuery();
+
+  const {isLoading: isProjectLoading} = useProjectListQuery({
+    generationId: genParam ? Number(genParam) : undefined,
+    projectType: actParam ? (actParam.toUpperCase() as ProjectType) : undefined,
+  });
 
   const sortedGenerations = useMemo(() => {
     return [...generations].sort((a, b) => b.generationId - a.generationId);
@@ -71,12 +79,9 @@ export const ProjectContainer = () => {
     [updateQuery]
   );
 
-  if (isLoading) {
+  if (isGenLoading || isProjectLoading) {
     return (
-      <div
-        className='flex min-h-100 items-center justify-center'
-        aria-live='polite'
-        aria-busy='true'>
+      <div className='flex min-h-screen w-full items-center justify-center'>
         <Spinner />
       </div>
     );
