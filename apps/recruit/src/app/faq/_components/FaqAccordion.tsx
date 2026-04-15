@@ -34,14 +34,14 @@ export const FaqAccordion = ({item}: FaqAccordionProps) => {
           <PlusIcon
             aria-hidden={isOpen}
             className={clsx(
-              'absolute inset-0 h-6 w-6 transition-all duration-300',
+              'absolute inset-0 h-6 w-6 fill-neutral-600 transition-all duration-300',
               isOpen ? 'opacity-0' : 'opacity-100'
             )}
           />
           <MinusIcon
             aria-hidden={!isOpen}
             className={clsx(
-              'absolute inset-0 h-6 w-6 transition-all duration-300',
+              'absolute inset-0 h-6 w-6 fill-neutral-600 transition-all duration-300',
               isOpen ? 'rotate-0 opacity-100' : 'opacity-0'
             )}
           />
