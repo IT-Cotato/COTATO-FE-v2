@@ -7,7 +7,6 @@ import {MailHeader} from './MailHeader';
 import {MailField} from './MailField';
 import {MailSendFooter} from './MailSendFooter';
 import {MailConfirmModal} from '@/components/modal/MailConfirmModal';
-import {Spinner} from '@repo/ui/components/spinner/Spinner';
 import {useGenerationStore} from '@/store/useGenerationStore';
 
 interface ManageMailProps {
@@ -29,7 +28,6 @@ export const ManageMail = ({
   );
 
   const {
-    isLoading,
     isEditing,
     content,
     setContent,
@@ -63,13 +61,6 @@ export const ManageMail = ({
   const finalCanEdit = canAccess && !isSent;
   const finalCanSend =
     canAccess && hasPermission && !isSent && waitingCount > 0;
-
-  if (isLoading)
-    return (
-      <div className='flex w-full justify-center'>
-        <Spinner size='lg' />
-      </div>
-    );
 
   return (
     <div className='flex w-full flex-col gap-2.5 lg:gap-3.5'>
