@@ -155,7 +155,7 @@ export const SessionCard = ({
                   <span className='lg:text-h5 text-body-l-b text-neutral-400'>
                     세션 설명
                   </span>
-                  <p className='lg:text-h5 text-body-m wrap-break-words whitespace-normal text-neutral-600'>
+                  <p className='lg:text-h5 text-body-m wrap-break-word whitespace-normal text-neutral-600'>
                     {session.description || '설명이 없습니다.'}
                   </p>
                 </div>
@@ -163,7 +163,7 @@ export const SessionCard = ({
                   <span className='lg:text-h5 text-body-l-b text-neutral-400'>
                     세션 장소
                   </span>
-                  <p className='lg:text-h5 text-body-m wrap-break-words whitespace-normal text-neutral-600'>
+                  <p className='lg:text-h5 text-body-m wrap-break-word whitespace-normal text-neutral-600'>
                     {session.sessionType === 'ONLINE' && !session.placeName ? (
                       '온라인 세션'
                     ) : (
