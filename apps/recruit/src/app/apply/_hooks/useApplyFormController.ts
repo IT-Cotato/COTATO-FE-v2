@@ -15,17 +15,17 @@ import {useApplyStep} from './useApplyStep';
 import {useApplyForm} from './useApplyForm';
 import {useApplyURLSync} from './useApplyURLSync';
 import {useApplySubmitHandler} from './useApplySubmitHandler';
-import {useAuthStore} from '@/store/useAuthStore';
-import {useApplicationStatusQuery} from '@/hooks/queries/useApply.query';
 import {QUERY_KEYS} from '@/constants/query-keys';
 import {getApplicationStatus} from '@/services/api/apply/apply.api';
 
 interface UseApplyFormControllerReturn {
   step: number;
+  isGuardReady: boolean;
   methods: UseFormReturn<ApplyFormData>;
   handleNext: () => Promise<void>;
   handlePrev: () => void;
   handleSave: () => Promise<void>;
+  isSaving: boolean;
   handleFinalSubmit: (e?: React.BaseSyntheticEvent) => Promise<void>;
   isConfirmModalOpen: boolean;
   openConfirmModal: () => void;
@@ -40,7 +40,6 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
   const numericApplicationId = applicationId ? Number(applicationId) : null;
 
   const queryClient = useQueryClient();
-  const {isAuthenticated} = useAuthStore();
 
   // 1. 폼 및 스텝 관리
   const methods = useApplyForm();
@@ -55,7 +54,7 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
 
   // 3. 가드 및 동기화
   usePreventNavigation(methods.formState.isDirty);
-  useApplyStepGuard({
+  const {isGuardReady} = useApplyStepGuard({
     step,
     applicationId,
     basicInfo,
@@ -67,10 +66,11 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
 
   // 4. 핵심 로직 훅
   const {validateStep} = useApplyValidation();
-  const {handleSave: saveForm, showSaveSuccess} = useApplySave(
-    numericApplicationId,
-    basicInfo?.applicationPartType
-  );
+  const {
+    handleSave: saveForm,
+    showSaveSuccess,
+    isSaving,
+  } = useApplySave(numericApplicationId, basicInfo?.applicationPartType);
 
   // 5. 이벤트 핸들러
   const handleSave = async () => {
@@ -87,11 +87,15 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
     handleConfirmSubmit,
   } = useApplySubmitHandler({
     applicationId: numericApplicationId,
-    onSave: () => saveForm(SUBMIT_STEP, methods, false),
+    onSave: async () => {
+      await saveForm(SUBMIT_STEP, methods, false);
+    },
     onValidate: () => validateStep(3, methods),
   });
 
   const handleNext = async () => {
+    if (isSaving) return;
+
     const isValid = await validateStep(
       step,
       methods,
@@ -101,7 +105,8 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
     if (!isValid) return;
 
     try {
-      await saveForm(step, methods, false);
+      const saved = await saveForm(step, methods, false);
+      if (!saved) return;
     } catch (error) {
       console.error(error);
 
@@ -135,10 +140,12 @@ export const useApplyFormController = (): UseApplyFormControllerReturn => {
 
   return {
     step,
+    isGuardReady,
     methods,
     handleNext,
     handlePrev,
     handleSave,
+    isSaving,
     showSaveSuccess,
     isConfirmModalOpen,
     openConfirmModal,

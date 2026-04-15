@@ -3,7 +3,7 @@
 import {useFormContext, useWatch} from 'react-hook-form';
 import {FormTextarea} from '@repo/ui/components/form/FormTextarea';
 import {FullButton} from '@repo/ui/components/buttons/FullButton';
-import {ApplyFormData} from '@/schemas/apply/apply-schema';
+import {ApplyFormValues} from '@/schemas/apply/apply-schema';
 import {Spinner} from '@repo/ui/components/spinner/Spinner';
 import {StepIndicator} from '@/components/navigation/StepIndicator';
 import {PortfolioField} from '@/app/apply/_components/PortfolioField';
@@ -15,6 +15,7 @@ interface PartQuestionProps {
   onNext: () => void;
   onSave: () => void;
   showSaveSuccess: boolean;
+  isSaving: boolean;
 }
 
 export const PartQuestion = ({
@@ -23,11 +24,12 @@ export const PartQuestion = ({
   onNext,
   onSave,
   showSaveSuccess,
+  isSaving,
 }: PartQuestionProps) => {
   const {
     register,
     formState: {errors},
-  } = useFormContext<ApplyFormData>();
+  } = useFormContext<ApplyFormValues>();
 
   const {
     activePart,
@@ -65,15 +67,15 @@ export const PartQuestion = ({
   const isAllRequiredAnswersFilled = allTextAnswered && lastAnswered;
 
   return (
-    <div className='flex w-full flex-col gap-7.5'>
-      <div className='flex flex-col gap-3.5'>
-        <h3 className='text-h3 text-primary'>
+    <div className='flex w-full flex-col gap-3.5'>
+      <div className='flex flex-col gap-2.5 lg:gap-3.5'>
+        <h3 className='text-h5 lg:text-h3 text-primary font-bold'>
           {activePartLabel
             ? `${activePartLabel} 파트에 관한 질문입니다.`
             : '파트별 질문을 불러오는 중...'}
         </h3>
 
-        <div className='flex justify-center py-4'>
+        <div className='flex justify-center'>
           <StepIndicator currentStep={step} totalSteps={3} />
         </div>
 
@@ -95,12 +97,9 @@ export const PartQuestion = ({
                       ((watchedFields[index] as string) || '').length
                     }
                     placeholder='내용을 입력해주세요'
-                    error={
-                      (errors as Record<string, any>)[`ans_${q.questionId}`]
-                        ?.message as string
-                    }
+                    error={errors[`ans_${q.questionId}`]?.message as string}
                     required
-                    {...register(`ans_${q.questionId}` as any, {
+                    {...register(`ans_${q.questionId}` as `ans_${string}`, {
                       validate: (value) =>
                         (value && value.trim().length > 0) ||
                         '답변을 작성해주세요',
@@ -137,8 +136,8 @@ export const PartQuestion = ({
         )}
       </div>
 
-      <div className='flex flex-col gap-6.5'>
-        <div className='flex gap-6.5'>
+      <div className='flex flex-col gap-3.5 lg:gap-6.5'>
+        <div className='flex gap-3 lg:gap-6.5'>
           <FullButton
             label='이전'
             variant='primary'
@@ -146,6 +145,7 @@ export const PartQuestion = ({
             labelTypo='h4'
             onClick={onPrev}
             type='button'
+            wrapperClassName='!h-[42px]'
           />
           <FullButton
             label='다음'
@@ -156,6 +156,7 @@ export const PartQuestion = ({
             backgroundColor={
               isAllRequiredAnswersFilled ? 'primary' : 'text-disabled'
             }
+            wrapperClassName='!h-[42px]'
           />
         </div>
 
@@ -166,6 +167,8 @@ export const PartQuestion = ({
           type='button'
           labelTypo='h4'
           onClick={onSave}
+          disabled={isSaving}
+          wrapperClassName='!h-[46px]'
         />
         {showSaveSuccess && (
           <p className='text-primary text-center'>저장이 완료되었습니다</p>

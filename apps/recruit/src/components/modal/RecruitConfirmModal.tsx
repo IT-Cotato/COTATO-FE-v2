@@ -1,7 +1,6 @@
 'use client';
 
-import {Button} from '@repo/ui/components/buttons/Button';
-import {Modal} from '@repo/ui/components/modal/Modal';
+import {ConfirmModal} from '@repo/ui/components/modal/ConfirmModal';
 
 interface RecruitmentConfirmModalProps {
   isOpen: boolean;
@@ -28,38 +27,13 @@ export const RecruitmentConfirmModal = ({
   };
 
   return (
-    <Modal
+    <ConfirmModal
       isOpen={isOpen}
       onClose={onClose}
+      onConfirm={onConfirm}
       title={getTitle()}
-      titleStyle='text-h5 font-bold lg:text-h4 text-neutral-800'
-      noContent
-      containerStyle={{borderRadius: '12px'}}
-      contentWrapperClassName='my-5 lg:my-0 gap-12.25 lg:gap-26.75'
-      actions={
-        <>
-          <Button
-            width='100%'
-            wrapperClassName='w-full lg:w-51.5'
-            height={47}
-            onClick={onClose}
-            label='취소'
-            textColor='neutral-50'
-            labelTypo='body_l'
-            backgroundColor='neutral-300'
-          />
-          <Button
-            width='100%'
-            wrapperClassName='w-full lg:w-51.5'
-            height={47}
-            onClick={onConfirm}
-            label='확인'
-            textColor='neutral-50'
-            labelTypo='body_l'
-            backgroundColor='neutral-600'
-          />
-        </>
-      }
+      confirmLabel='확인'
+      cancelLabel='취소'
     />
   );
 };

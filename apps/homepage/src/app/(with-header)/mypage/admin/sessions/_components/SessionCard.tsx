@@ -1,12 +1,12 @@
 'use client';
 
 import {useState} from 'react';
-import {useIsMobile} from '@/app/(with-header)/mypage/admin/sessions/_hooks/useIsMobile';
+import {useIsMobile} from '@repo/ui/hooks/useIsMobile';
 import {AdminSession, SessionData} from '@/schemas/admin/admin-sessions.schema';
 import {ActionMenu} from '@/app/(with-header)/mypage/admin/_components/ActionMenu';
 import {ActionButtons} from '@/app/(with-header)/mypage/admin/_components/ActionButtons';
 import {SessionExpandedContent} from './SessionExpandedContent';
-import {ConfirmModal} from '@/app/(with-header)/mypage/admin/_components/ConfirmModal';
+import {ConfirmModal} from '@repo/ui/components/modal/ConfirmModal';
 import {getJosa} from '@/utils/getJosa';
 import {formatDateToDot} from '@repo/ui/utils/date';
 import {useSessionForm} from '@/app/(with-header)/mypage/admin/sessions/_hooks/useSessionForm';
@@ -35,7 +35,7 @@ export const SessionCard = ({
   onUpdate,
 }: SessionCardProps) => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const {isMobile, mounted} = useIsMobile();
+  const {isMobile, mounted} = useIsMobile(768);
   const {isEditing, setIsEditing, form, setForm, activeSessionData} =
     useSessionForm(session, isExpanded);
 

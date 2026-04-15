@@ -97,6 +97,29 @@ export const ApplyFormSchema = BasicInfoFieldsSchema.extend(
   PartQuestionFieldsSchema.shape
 ).extend(EtcQuestionFieldsSchema.shape);
 
+const DynamicAnswerKeySchema = z.string().regex(/^ans_\d+$/);
+
+export const DynamicAnswerMapSchema = z.record(
+  DynamicAnswerKeySchema,
+  z.string().optional()
+);
+
+export const createRequiredDynamicAnswerSchema = (
+  requiredKeys: Array<`ans_${string}`>
+) =>
+  DynamicAnswerMapSchema.superRefine((answers, ctx) => {
+    requiredKeys.forEach((key) => {
+      const value = answers[key];
+      if (!value || value.trim().length === 0) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          path: [key],
+          message: '답변을 작성해주세요',
+        });
+      }
+    });
+  });
+
 export const StartApplicationResponseSchema = z.object({
   applicationId: z.number(),
   isSubmitted: z.boolean(),
@@ -209,7 +232,16 @@ export const GetFileUrlResponseSchema = z.object({
   pdfUrl: z.string(),
 });
 
+/**
+ * 동적 ans_{questionId} 필드를 포함한 실제 폼 값 타입
+ * react-hook-form의 register / setValue / setError / unregister에 사용
+ */
+export type ApplyFormValues = ApplyFormData & {
+  [key: `ans_${string}`]: string | undefined;
+};
+
 export type BasicInfoFields = z.infer<typeof BasicInfoFieldsSchema>;
+export type DynamicAnswerMap = z.infer<typeof DynamicAnswerMapSchema>;
 export type StartApplicationResponse = z.infer<
   typeof StartApplicationResponseSchema
 >;

@@ -1,32 +1,24 @@
-import {FullButton} from '@repo/ui/components/buttons/FullButton';
-import {Modal} from '@repo/ui/components/modal/Modal';
+import {ConfirmModal} from '@repo/ui/components/modal/ConfirmModal';
 
 interface AlreadySubmittedModalProps {
   isOpen: boolean;
+  onClose: () => void;
   onConfirm: () => void;
 }
 
 export const AlreadySubmittedModal = ({
   isOpen,
+  onClose,
   onConfirm,
 }: AlreadySubmittedModalProps) => {
   return (
-    <Modal
+    <ConfirmModal
       isOpen={isOpen}
-      title={'이미 제출된 지원서입니다.'}
-      titleStyle='text-h4 text-neutral-800'
-      noContent
-      contentWrapperClassName='gap-18'
-      actionsAlign='stretch'
-      actions={
-        <FullButton
-          variant='primary'
-          wrapperClassName='flex-1'
-          onClick={onConfirm}
-          label='확인'
-          labelTypo='body_l'
-        />
-      }
+      onClose={onClose}
+      onConfirm={onConfirm}
+      title='이미 제출된 지원서입니다.'
+      confirmLabel='확인'
+      cancelLabel={false}
     />
   );
 };

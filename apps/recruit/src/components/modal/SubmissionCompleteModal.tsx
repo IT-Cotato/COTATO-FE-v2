@@ -1,7 +1,6 @@
 import Link from 'next/link';
-import {FullButton} from '@repo/ui/components/buttons/FullButton';
-import {Modal} from '@repo/ui/components/modal/Modal';
 import {ROUTES} from '@/constants/routes';
+import {ConfirmModal} from '@repo/ui/components/modal/ConfirmModal';
 
 interface SubmissionCompleteModalProps {
   isOpen: boolean;
@@ -17,16 +16,16 @@ export const SubmissionCompleteModal = ({
   announcementDate,
 }: SubmissionCompleteModalProps) => {
   return (
-    <Modal
+    <ConfirmModal
       isOpen={isOpen}
       onClose={onClose}
+      onConfirm={onConfirm}
       title='제출이 완료되었습니다!'
-      titleStyle='text-h4 text-neutral-800'
-      content={
-        <p>
+      description={
+        <>
           합격 발표 여부는
           {announcementDate ? (
-            <span className='text-primary'> {announcementDate}</span>
+            <span className='text-primary font-bold'> {announcementDate}</span>
           ) : (
             ' 추후'
           )}
@@ -37,20 +36,12 @@ export const SubmissionCompleteModal = ({
             마이페이지
           </Link>
           에서 확인하실 수 있습니다. <br />
+          <br />
           코테이토에 지원해 주셔서 감사합니다!
-        </p>
+        </>
       }
-      actionsAlign='stretch'
-      actions={
-        <FullButton
-          variant='primary'
-          wrapperClassName='flex-1'
-          onClick={onConfirm}
-          label='확인'
-          labelTypo='body_l'
-        />
-      }
-      contentWrapperClassName='gap-[37px]'
+      confirmLabel='확인'
+      cancelLabel={false}
     />
   );
 };

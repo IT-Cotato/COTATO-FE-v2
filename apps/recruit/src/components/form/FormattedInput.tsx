@@ -14,6 +14,7 @@ export const FormattedInput = ({
   name,
   formatter,
   maxLength,
+  error: errorOverride,
   ...props
 }: FormattedInputProps) => {
   const {control} = useFormContext();
@@ -115,7 +116,7 @@ export const FormattedInput = ({
             {...props}
             ref={inputRef}
             id={name}
-            error={error?.message ?? ''}
+            error={errorOverride ?? error?.message ?? ''}
             value={displayValue}
             onChange={handleChange}
             onKeyDown={handleKeyDown}

@@ -80,7 +80,7 @@ export const FormDropdown = forwardRef<HTMLInputElement, FormDropdownProps>(
             )}>
             <span
               className={
-                !selectedOption ? 'text-neutral-300' : 'text-neutral-800'
+                !selectedOption ? 'text-neutral-400' : 'text-neutral-800'
               }>
               {selectedOption?.label || placeholder}
             </span>

@@ -52,6 +52,7 @@ export const ApplyFormContainer = () => {
 
   const {
     step,
+    isGuardReady,
     methods,
     handleNext,
     handlePrev,
@@ -61,6 +62,7 @@ export const ApplyFormContainer = () => {
     closeConfirmModal,
     handleConfirmSubmit,
     showSaveSuccess,
+    isSaving,
   } = useApplyFormController();
 
   const {data: recruitmentStatus, isLoading} = useRecruitmentStatusQuery();
@@ -99,7 +101,7 @@ export const ApplyFormContainer = () => {
     }
   }, [isError, error, router]);
 
-  if (isLoading) {
+  if (isLoading || !isGuardReady) {
     return (
       <div className='flex h-screen items-center justify-center'>
         <Spinner />
@@ -112,6 +114,7 @@ export const ApplyFormContainer = () => {
     return (
       <AlreadySubmittedModal
         isOpen={true}
+        onClose={() => router.push(ROUTES.HOME)}
         onConfirm={() => router.push(ROUTES.HOME)}
       />
     );
@@ -122,7 +125,7 @@ export const ApplyFormContainer = () => {
       <div
         ref={pageTopRef}
         style={{scrollMarginTop: HEADER_HEIGHT}}
-        className='flex w-full min-w-360 flex-col items-center bg-neutral-50'>
+        className='flex w-full flex-col items-center bg-neutral-50'>
         {step === 1 && (
           <HeroMainBanner
             heading='COde Together, Arrive TOgether'
@@ -142,9 +145,9 @@ export const ApplyFormContainer = () => {
         <div
           ref={formContainerRef}
           style={{scrollMarginTop: HEADER_HEIGHT}}
-          className='flex w-full max-w-275 flex-col py-[42.5px]'>
+          className='flex w-full max-w-275 flex-col gap-5 px-6 pt-5 pb-17.5 lg:max-w-275 lg:pt-[42.5px]'>
           <div className='flex flex-col gap-3.5'>
-            <h1 className='text-h1 text-neutral-800'>
+            <h1 className='text-h5 lg:text-h1 font-bold text-neutral-800'>
               <span aria-hidden='true'>🥔</span>
               &nbsp;코테이토 {generation}기 지원서&nbsp;
               <span aria-hidden='true'>🥔</span>
@@ -161,42 +164,43 @@ export const ApplyFormContainer = () => {
           </div>
 
           {STEP_TITLES[step] && (
-            <h2 className='text-h2 pt-4 text-neutral-800'>
+            <h2 className='text-h5 lg:text-h2 font-bold text-neutral-800'>
               {STEP_TITLES[step]}
             </h2>
           )}
 
-          <div className='flex w-full flex-col gap-3.5'>
-            <FormProvider {...methods}>
-              <form onSubmit={handleFinalSubmit}>
-                {step === 1 && (
-                  <BasicInfo
-                    step={step}
-                    onNext={handleNext}
-                    onSave={handleSave}
-                    showSaveSuccess={showSaveSuccess}
-                  />
-                )}
-                {step === 2 && (
-                  <PartQuestion
-                    step={step}
-                    onPrev={handlePrev}
-                    onNext={handleNext}
-                    onSave={handleSave}
-                    showSaveSuccess={showSaveSuccess}
-                  />
-                )}
-                {step === 3 && (
-                  <EtcInfo
-                    step={step}
-                    onPrev={handlePrev}
-                    onSave={handleSave}
-                    showSaveSuccess={showSaveSuccess}
-                  />
-                )}
-              </form>
-            </FormProvider>
-          </div>
+          <FormProvider {...methods}>
+            <form onSubmit={handleFinalSubmit}>
+              {step === 1 && (
+                <BasicInfo
+                  step={step}
+                  onNext={handleNext}
+                  onSave={handleSave}
+                  showSaveSuccess={showSaveSuccess}
+                  isSaving={isSaving}
+                />
+              )}
+              {step === 2 && (
+                <PartQuestion
+                  step={step}
+                  onPrev={handlePrev}
+                  onNext={handleNext}
+                  onSave={handleSave}
+                  showSaveSuccess={showSaveSuccess}
+                  isSaving={isSaving}
+                />
+              )}
+              {step === 3 && (
+                <EtcInfo
+                  step={step}
+                  onPrev={handlePrev}
+                  onSave={handleSave}
+                  showSaveSuccess={showSaveSuccess}
+                  isSaving={isSaving}
+                />
+              )}
+            </form>
+          </FormProvider>
         </div>
       </div>
       <ApplicationConfirmModal

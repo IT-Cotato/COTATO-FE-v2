@@ -3,7 +3,7 @@
 import {Controller, useFormContext} from 'react-hook-form';
 import {FormLink} from '@repo/ui/components/form/FormLink';
 import {FormFile} from '@repo/ui/components/form/FormFile';
-import {ApplyFormData} from '@/schemas/apply/apply-schema';
+import {ApplyFormValues} from '@/schemas/apply/apply-schema';
 import {PartType} from '@/schemas/admin/admin-application-questions.schema';
 
 interface PortfolioFieldProps {
@@ -25,18 +25,18 @@ export const PortfolioField = ({
   pdfFileName,
   onFileChange,
 }: PortfolioFieldProps) => {
-  const {control, setValue} = useFormContext<ApplyFormData>();
+  const {control, setValue} = useFormContext<ApplyFormValues>();
   const isRequired = activePart !== 'PM';
 
   return (
     <div className='flex flex-col gap-2.5'>
-      <label className='text-h5 text-neutral-800'>
+      <label className='text-body-l-b lg:text-h5 text-neutral-800'>
         {sequence}. {content}
         {isRequired && <span className='text-alert ml-1'>*</span>}
       </label>
       <Controller
         control={control}
-        name={`ans_${questionId}` as any}
+        name={`ans_${questionId}` as `ans_${string}`}
         render={({field: {onChange, value}}) => (
           <FormLink
             value={value ? [value] : ['']}

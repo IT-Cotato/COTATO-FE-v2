@@ -8,8 +8,8 @@ import {
   type InputHTMLAttributes,
 } from 'react';
 import clsx from 'clsx';
-import FolderIcon from '@/assets/icons/folder.svg';
-import DeleteIcon from '@/assets/icons/delete.svg';
+import FolderIcon from '../../assets/icons/folder.svg';
+import DeleteIcon from '../../assets/icons/delete.svg';
 import {formFieldStyles} from './form.styles';
 import {extractFileName} from '../../utils/extractFileName';
 
@@ -150,7 +150,7 @@ export const FormFile = forwardRef<HTMLInputElement, FormFileProps>(
         {!props.readOnly && (
           <label
             className={clsx(
-              'lg:text-h5 text-body-l flex h-19 items-center justify-center rounded-[10px] bg-neutral-400 px-10 py-4 text-center text-white',
+              'lg:text-h5 text-body-l flex h-11 items-center justify-center rounded-[10px] bg-neutral-400 px-10 text-center text-white lg:h-12.5',
               isUploading ? 'cursor-not-allowed opacity-60' : 'cursor-pointer'
             )}>
             <span>{isUploading ? '파일 업로드 중입니다' : placeholder}</span>
