@@ -24,7 +24,7 @@ export const FaqAccordion = ({item}: FaqAccordionProps) => {
       <div className='flex w-full items-center justify-between self-stretch'>
         <p
           className={clsx(
-            'text-h5 transition-colors duration-300',
+            'text-h5 font-semibold transition-colors duration-300',
             isOpen ? 'text-neutral-800' : 'text-neutral-600'
           )}>
           {item.question}
