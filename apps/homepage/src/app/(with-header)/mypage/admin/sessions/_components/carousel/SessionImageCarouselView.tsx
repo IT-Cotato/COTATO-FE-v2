@@ -26,7 +26,7 @@ export const SessionImageCarouselView = ({
     setCurrentIndex((prev) => Math.min(images.length - 1, prev + 1));
 
   return (
-    <div className='flex w-full max-w-81.75 mx-auto flex-col md:w-87.5 md:max-w-none md:mx-0'>
+    <div className='mx-auto flex w-full max-w-81.75 flex-col md:mx-0 md:w-87.5 md:max-w-none'>
       <div className='relative aspect-327/186 w-full overflow-hidden rounded-[10px] bg-neutral-200 md:aspect-auto md:h-57.5 md:w-87.5'>
         {currentImage ? (
           <>

@@ -28,7 +28,7 @@ const BASE_RECRUITMENT_NOTICES = [
 ];
 
 export function buildRecruitmentNotices(
-  schedule: RecruitmentInformationType | null | undefined,
+  schedule: RecruitmentInformationType | null | undefined
 ): string[] {
   const otNotice =
     schedule?.ot && schedule?.cokerthon && schedule?.demoDay
@@ -36,6 +36,6 @@ export function buildRecruitmentNotices(
       : OT_NOTICE_FALLBACK;
 
   return BASE_RECRUITMENT_NOTICES.map((notice) =>
-    notice === OT_NOTICE_FALLBACK ? otNotice : notice,
+    notice === OT_NOTICE_FALLBACK ? otNotice : notice
   );
 }

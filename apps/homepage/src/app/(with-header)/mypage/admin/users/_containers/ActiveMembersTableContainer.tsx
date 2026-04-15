@@ -95,7 +95,6 @@ export const ActiveMembersTableContainer = () => {
             {getJosa(memberToDelete?.name ?? '', '을/를')} 삭제하시겠습니까?
           </span>
         }
-
         confirmLabel='삭제'
       />
 
