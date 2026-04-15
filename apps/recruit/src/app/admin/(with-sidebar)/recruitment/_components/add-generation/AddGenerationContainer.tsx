@@ -8,15 +8,13 @@ import {PlusButton} from '@/app/admin/(with-sidebar)/recruitment/_components/add
 import {AddGenerationModal} from './AddGenerationModal';
 import clsx from 'clsx';
 import {useAdminGenerationsQuery} from '@/hooks/queries/useAdminGeneration.query';
-import {Spinner} from '@repo/ui/components/spinner/Spinner';
 
 export const AddGenerationContainer = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const {data: statusData, isLoading: isStatusLoading} =
     useRecruitmentStatusQuery();
-  const {data: generationsData, isLoading: isGenerationsLoading} =
-    useAdminGenerationsQuery();
+  const {data: generationsData} = useAdminGenerationsQuery();
 
   const {
     generations,
@@ -58,13 +56,6 @@ export const AddGenerationContainer = () => {
 
   const isRecruiting = statusData?.isActive ?? false;
   const currentGeneration = statusData?.generationId;
-
-  if (isStatusLoading || isGenerationsLoading)
-    return (
-      <div className='flex w-full justify-center'>
-        <Spinner size='lg' />
-      </div>
-    );
 
   return (
     <div className='flex w-full flex-col items-start gap-2.5 rounded-[10px] bg-neutral-100 px-5 py-3 lg:px-8 lg:py-3'>
