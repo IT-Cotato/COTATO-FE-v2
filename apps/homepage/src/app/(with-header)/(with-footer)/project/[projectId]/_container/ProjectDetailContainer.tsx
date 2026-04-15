@@ -43,7 +43,7 @@ export const ProjectDetailContainer = () => {
 
   if (isLoading)
     return (
-      <div className='flex min-h-100 items-center justify-center'>
+      <div className='flex min-h-screen items-center justify-center'>
         <Spinner />
         <span className='sr-only'>프로젝트 상세 정보를 불러오는 중입니다.</span>
       </div>
