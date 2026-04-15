@@ -2,6 +2,16 @@
 @import '@repo/tailwind-config';
 @source '../../../../packages/ui/src/**/*.{ts,tsx}';
 
+:root {
+  --header-h: var(--header-height);
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --header-h: var(--header-height-lg);
+  }
+}
+
 @layer base {
   html,
   body {
