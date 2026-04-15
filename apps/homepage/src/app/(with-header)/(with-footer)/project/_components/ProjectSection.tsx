@@ -6,7 +6,6 @@ import {ProjectCard} from './ProjectCard';
 import {Pagination} from '@repo/ui/components/pagination/Pagination';
 import {useProjectListQuery} from '@/hooks/queries/useProject.query';
 import {ProjectType} from '@/schemas/project/project-type';
-import {Spinner} from '@repo/ui/components/spinner/Spinner';
 
 interface ProjectSectionProps {
   generation?: string;
@@ -36,7 +35,7 @@ export const ProjectSection = ({generation, activity}: ProjectSectionProps) => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  const {data: projects = [], isLoading} = useProjectListQuery({
+  const {data: projects = []} = useProjectListQuery({
     generationId: generation ? Number(generation) : undefined,
     projectType: activity ? (activity.toUpperCase() as ProjectType) : undefined,
   });
@@ -61,17 +60,6 @@ export const ProjectSection = ({generation, activity}: ProjectSectionProps) => {
       handlePageChange(totalPages);
     }
   }, [totalPages, currentPage, handlePageChange]);
-
-  if (isLoading) {
-    return (
-      <div
-        className='flex min-h-100 items-center justify-center'
-        aria-live='polite'
-        aria-busy='true'>
-        <Spinner />
-      </div>
-    );
-  }
 
   return (
     <div className='flex w-full flex-col items-center gap-10'>
