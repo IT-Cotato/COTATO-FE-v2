@@ -8,7 +8,9 @@ import {AttendanceStatusContainer} from '@/app/(with-header)/mypage/activity/_co
 import {TabType} from '@/schemas/mypage-mem/activity/mypage-mem-type';
 import {
   useAttendanceDashboardQuery,
+  useAttendanceRecordsQuery,
   usePenaltyDashboardQuery,
+  usePenaltyRecordsQuery,
 } from '@/hooks/queries/useActivity.queries';
 import {ErrorResponse} from '@/schemas/common/common-schema';
 import {NotActiveMemberView} from '@/app/(with-header)/mypage/activity/_components/NotActiveMemberView';
@@ -24,7 +26,25 @@ export const AttendanceContainer = () => {
   const {error: penaltyError, isLoading: isPenaltyLoading} =
     usePenaltyDashboardQuery({enabled: !isAttendance});
 
-  const isLoading = isAttendance ? isAttendLoading : isPenaltyLoading;
+  const currentMonth = new Date().getMonth() + 1;
+
+  const {isLoading: isAttendRecordLoading} = useAttendanceRecordsQuery(
+    currentMonth,
+    {
+      enabled: isAttendance,
+    }
+  );
+  const {isLoading: isPenaltyRecordLoading} = usePenaltyRecordsQuery(
+    currentMonth,
+    {
+      enabled: !isAttendance,
+    }
+  );
+
+  const isLoading = isAttendance
+    ? isAttendLoading || isAttendRecordLoading
+    : isPenaltyLoading || isPenaltyRecordLoading;
+
   const currentError = (
     isAttendance ? attendError : penaltyError
   ) as AxiosError<ErrorResponse> | null;
