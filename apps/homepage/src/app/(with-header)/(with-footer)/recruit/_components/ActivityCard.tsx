@@ -58,14 +58,14 @@ export const ActivityCard = ({item}: ActivityCardProps) => {
       <div className='relative z-20 flex justify-between'>
         <p
           className={clsx(
-            'text-h4 text-neutral-50 transition-colors duration-300',
+            'text-h4 font-bold text-neutral-50 transition-colors duration-300',
             isActive ? 'text-neutral-800' : 'group-hover:text-neutral-800'
           )}>
           {item.name}
         </p>
         <p
           className={clsx(
-            'text-h5 text-neutral-200 transition-colors duration-300',
+            'text-h5 font-semibold text-neutral-200 transition-colors duration-300',
             isActive ? 'text-neutral-600' : 'group-hover:text-neutral-600'
           )}>
           {item.date}
