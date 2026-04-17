@@ -106,7 +106,7 @@ export const TableContainer = () => {
   };
 
   return (
-    <div className='overflow-scroll [&::-webkit-scrollbar]:hidden'>
+    <div className='overflow-scroll px-6 lg:px-11.25 [&::-webkit-scrollbar]:hidden'>
       {selectedSessionType === 'FULL' ? (
         <AdminPenaltiesEntireTable
           items={allStatistics}

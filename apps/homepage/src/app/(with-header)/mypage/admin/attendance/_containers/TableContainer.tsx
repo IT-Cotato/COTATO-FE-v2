@@ -83,7 +83,7 @@ export const TableContainer = () => {
   const half = Math.ceil(specificAttendanceList.length / 2);
 
   return (
-    <div className='overflow-scroll [&::-webkit-scrollbar]:hidden'>
+    <div className='overflow-scroll px-6 lg:px-11.25 [&::-webkit-scrollbar]:hidden'>
       {selectedSessionType === 'FULL' ? (
         <AdminAttendanceEntireTable items={fullAttendanceList} />
       ) : (
