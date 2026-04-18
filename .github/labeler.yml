@@ -1,0 +1,16 @@
+🥔 RECRUIT:
+  - changed-files:
+      - any-glob-to-any-file: 'apps/recruit/**/*'
+
+🥔 HOMEPAGE:
+  - changed-files:
+      - any-glob-to-any-file: 'apps/homepage/**/*'
+
+"🍟 COMMON":
+  - changed-files:
+      # 1. packages 내부의 공통 폴더가 수정되었을 때
+      - any-glob-to-any-file: 'packages/**/*'
+      # 2. apps/recruit과 apps/homepage가 동시에 수정되었을 때
+      - all-globs-to-all-files:
+          - 'apps/recruit/**/*'
+          - 'apps/homepage/**/*'
