@@ -1,8 +1,8 @@
-🥔 RECRUIT:
+"🥔 RECRUIT":
   - changed-files:
       - any-glob-to-any-file: 'apps/recruit/**/*'
 
-🥔 HOMEPAGE:
+"🥔 HOMEPAGE":
   - changed-files:
       - any-glob-to-any-file: 'apps/homepage/**/*'
 
