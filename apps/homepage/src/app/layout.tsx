@@ -104,6 +104,7 @@ export default function RootLayout({
             ) : null}
             <BeUsableRum />
             <main>{children}</main>
+            <div id='datepicker-portal' className='z-datepicker relative' />
           </body>
         </AuthProvider>
       </Providers>

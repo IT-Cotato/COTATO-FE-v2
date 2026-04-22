@@ -150,20 +150,20 @@ export const SessionCard = ({
                 </h4>
               </div>
               <div className='h-px w-full shrink-0 bg-neutral-200' />
-              <div className='flex flex-row gap-2.75 lg:gap-10'>
-                <div className='flex flex-1 flex-col gap-1.75 lg:gap-1'>
+              <div className='flex w-full items-start gap-2.75 self-stretch lg:gap-10'>
+                <div className='flex min-w-0 flex-1 flex-col items-start gap-1.75'>
                   <span className='lg:text-h5 text-body-l-b text-neutral-400'>
                     세션 설명
                   </span>
-                  <p className='lg:text-h5 text-body-m text-neutral-600'>
+                  <p className='lg:text-h5 text-body-m wrap-break-word whitespace-normal text-neutral-600'>
                     {session.description || '설명이 없습니다.'}
                   </p>
                 </div>
-                <div className='flex flex-col gap-1 lg:w-94.25 lg:shrink-0'>
+                <div className='flex min-w-0 flex-1 flex-col items-start gap-1.75'>
                   <span className='lg:text-h5 text-body-l-b text-neutral-400'>
                     세션 장소
                   </span>
-                  <p className='lg:text-h5 text-body-m text-neutral-600'>
+                  <p className='lg:text-h5 text-body-m wrap-break-word whitespace-normal text-neutral-600'>
                     {session.sessionType === 'ONLINE' && !session.placeName ? (
                       '온라인 세션'
                     ) : (
