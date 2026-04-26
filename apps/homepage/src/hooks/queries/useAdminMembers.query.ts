@@ -15,7 +15,6 @@ export const useAdminMembersQuery = (params: GetAdminMembersParams) => {
   return useQuery({
     queryKey: QUERY_KEYS.ADMIN_MEMBERS.LIST(params),
     queryFn: () => getAdminMembers(params),
-    placeholderData: (prev) => prev,
   });
 };
 
@@ -36,7 +35,6 @@ export const useActiveMembersQuery = (
   return useQuery({
     queryKey: QUERY_KEYS.ADMIN_MEMBERS.ACTIVE_LIST(params),
     queryFn: () => getActiveMembers(params),
-    placeholderData: (prev) => prev,
     enabled,
   });
 };
