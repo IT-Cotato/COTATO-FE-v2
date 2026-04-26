@@ -13,8 +13,8 @@ export const useActiveMembersTable = () => {
   const {data, isLoading: isQueryLoading} = useActiveMembersQuery(
     {
       generationId: generation.selectedGeneration ?? 0,
-      page: urlState.currentPage - 1,
-      size: 10,
+      page: 0,
+      size: 1000,
     },
     isGenerationReady
   );
@@ -23,7 +23,7 @@ export const useActiveMembersTable = () => {
   const isLoading = !isGenerationReady || isQueryLoading;
   const keyword = urlState.searchParam?.toLowerCase() ?? '';
   const allMembers: MemberType[] = data?.content ?? [];
-  const members: MemberType[] = keyword
+  const filteredMembers: MemberType[] = keyword
     ? allMembers.filter(
         (m) =>
           m.name.toLowerCase().includes(keyword) ||
@@ -31,10 +31,17 @@ export const useActiveMembersTable = () => {
           m.position.toLowerCase().includes(keyword)
       )
     : allMembers;
+
   const isCurrentGeneration =
     generation.selectedGeneration !== null &&
     generation.selectedGeneration === generation.defaultGenerationId;
-  const totalPages = data?.totalPages ?? 1;
+
+  const pageSize = 10;
+  const totalPages = Math.ceil(filteredMembers.length / pageSize) || 1;
+  const members = filteredMembers.slice(
+    (urlState.currentPage - 1) * pageSize,
+    urlState.currentPage * pageSize
+  );
 
   const modals = useActiveMembersModals({members, isCurrentGeneration});
   const {mutate: patchRoleMutate} = usePatchActiveMemberRole();
