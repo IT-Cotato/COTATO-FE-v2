@@ -1,4 +1,4 @@
-import {useQuery} from '@tanstack/react-query';
+import {useQuery, useInfiniteQuery} from '@tanstack/react-query';
 import {QUERY_KEYS} from '@/constants/query-keys';
 import {
   getAdminMemberDetail,
@@ -35,6 +35,25 @@ export const useActiveMembersQuery = (
   return useQuery({
     queryKey: QUERY_KEYS.ADMIN_MEMBERS.ACTIVE_LIST(params),
     queryFn: () => getActiveMembers(params),
+    enabled,
+  });
+};
+
+/** 활동 회원 목록 무한 스크롤 조회 (전체 데이터 확보용) */
+export const useInfiniteActiveMembersQuery = (
+  params: Omit<GetActiveMembersParams, 'page'>,
+  enabled = true
+) => {
+  return useInfiniteQuery({
+    queryKey: QUERY_KEYS.ADMIN_MEMBERS.ACTIVE_LIST({
+      ...params,
+      type: 'infinite',
+    }),
+    queryFn: ({pageParam = 0}) =>
+      getActiveMembers({...params, page: pageParam}),
+    getNextPageParam: (lastPage) =>
+      lastPage?.hasNext ? lastPage.page + 1 : undefined,
+    initialPageParam: 0,
     enabled,
   });
 };
