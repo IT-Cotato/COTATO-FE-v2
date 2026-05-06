@@ -55,6 +55,7 @@ export const PeriodField = ({
           formatWeekDay={(nameOfDay) => nameOfDay.toLowerCase().slice(0, 3)}
           renderCustomHeader={(props) => <CustomHeader {...props} />}
           disabledKeyboardNavigation
+          portalId='datepicker-portal'
         />
       </div>
       <div
@@ -77,6 +78,7 @@ export const PeriodField = ({
           formatWeekDay={(nameOfDay) => nameOfDay.toLowerCase().slice(0, 3)}
           renderCustomHeader={(props) => <CustomHeader {...props} />}
           disabledKeyboardNavigation
+          portalId='datepicker-portal'
         />
       </div>
     </div>

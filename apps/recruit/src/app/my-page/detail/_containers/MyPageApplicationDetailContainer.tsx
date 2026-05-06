@@ -19,8 +19,10 @@ import {ROUTES} from '@/constants/routes';
 export const MyPageApplicationDetailContainer = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
+
   const {selectedId: applicationId} = useApplicationStore();
 
+  /** 지원서 ID가 없을 경우 마이페이지 메인으로 리다이렉트 */
   useEffect(() => {
     if (!applicationId) {
       router.replace(ROUTES.MYPAGE);

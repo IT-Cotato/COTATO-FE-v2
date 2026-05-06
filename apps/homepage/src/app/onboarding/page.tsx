@@ -2,6 +2,7 @@ import {OnboardingContainer} from '@/app/onboarding/_containers/OnboardingContai
 import OnboardingBackground from '@/assets/onboarding/onboarding-background.svg';
 import {CotatoLogo} from '@repo/ui/components/logo/CotatoLogo';
 import clsx from 'clsx';
+
 export default function OnboardingPage() {
   return (
     <section className='relative h-screen w-full overflow-hidden bg-black'>

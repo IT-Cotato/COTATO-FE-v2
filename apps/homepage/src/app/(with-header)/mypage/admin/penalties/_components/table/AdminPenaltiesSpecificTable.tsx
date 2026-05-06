@@ -16,16 +16,14 @@ export const AdminPenaltiesSpecificTable = ({
   onChangeExtraMinusPoint,
 }: AdminPenaltiesSpecificTableProps) => {
   return (
-    <table className='h-fit w-full table-fixed border-collapse'>
+    <table className='h-fit w-full table-auto border-collapse'>
       <thead className='bg-neutral-200'>
         <tr>
           {PENALTY_SPECIFIC_TABLE_HEADER.map((col) => (
             <th
               key={col.key}
-              className='text-body-m lg:text-body-l-sb py-4 font-bold text-neutral-600'>
-              <div className='flex items-center justify-center gap-2.5'>
-                {col.label}
-              </div>
+              className='text-body-m lg:text-body-l-sb min-w-max py-2.5 font-bold whitespace-nowrap text-neutral-600 lg:py-4'>
+              {col.label}
             </th>
           ))}
         </tr>

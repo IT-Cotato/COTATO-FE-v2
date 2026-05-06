@@ -41,7 +41,7 @@ export const EtcQuestionView = ({
       />
 
       <div>
-        <FormInput
+        <FormTextarea
           readOnly
           label={`${etcQuestions.interviewStartDate}부터 ${etcQuestions.interviewEndDate}까지 면접이 진행됩니다. 참여가 불가능한 시간이 있다면 모두 작성해 주세요.`}
           value={etcQuestions.unavailableInterviewTimes ?? '-'}

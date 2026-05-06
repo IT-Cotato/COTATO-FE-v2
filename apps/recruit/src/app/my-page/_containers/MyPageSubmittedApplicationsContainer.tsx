@@ -10,7 +10,9 @@ import {useRouter} from 'next/navigation';
 
 export const MyPageSubmittedApplicationsContainer = () => {
   const router = useRouter();
+
   const {data: applications, isLoading, isError} = useSubmittedApplications();
+
   const setSelectedId = useApplicationStore((state) => state.setSelectedId);
 
   const handleApplicationClick = (id: number) => {
@@ -24,6 +26,7 @@ export const MyPageSubmittedApplicationsContainer = () => {
         <Spinner />
       </div>
     );
+
   if (isError)
     return (
       <div className='text-alert py-20 text-center'>

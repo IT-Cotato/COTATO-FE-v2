@@ -43,13 +43,13 @@ export function RecruitLayout({
 
       <div className='flex min-h-fit w-full max-w-152.5 flex-1 flex-col items-center justify-center px-6'>
         <h1
-          className='text-h1 mb-7.5 bg-clip-text text-center text-transparent'
+          className='text-h3 lg:text-h1 mb-7.5 bg-clip-text text-center whitespace-nowrap text-transparent'
           style={{backgroundImage: 'var(--branding-gradient)'}}>
           COde Together, Arrive TOgether
         </h1>
 
         <p
-          className={`text-body-l text-primary mb-1.25 text-center font-semibold`}>
+          className={`text-h5 lg:text-body-l text-primary mb-1.25 text-center font-bold lg:font-semibold`}>
           {isRecruiting
             ? recruitmentText.isInProgressRecruiting.statusText
             : recruitmentText.isDoneRecruiting.statusText}

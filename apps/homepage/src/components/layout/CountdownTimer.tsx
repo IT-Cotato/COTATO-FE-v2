@@ -59,8 +59,8 @@ export const CountdownTimer = ({
   if (isLoading) return <Spinner />;
 
   return (
-    <div className='flex w-fit justify-center gap-10'>
-      <div className='flex flex-col'>
+    <div className='flex w-fit justify-center gap-2.5 lg:gap-7.5'>
+      <div className='flex min-w-15 flex-col'>
         <p
           className={clsx(
             textColor,
@@ -73,11 +73,11 @@ export const CountdownTimer = ({
         </span>
       </div>
 
-      <span className='text-h5 md:text-h1 text-center font-bold text-neutral-400'>
+      <span className='text-h2 lg:text-h5 md:text-h1 text-center leading-[130%] font-bold text-neutral-400 lg:leading-6.5'>
         :
       </span>
 
-      <div className='flex flex-col'>
+      <div className='flex min-w-15 flex-col'>
         <p
           className={clsx(
             textColor,
@@ -90,34 +90,34 @@ export const CountdownTimer = ({
         </span>
       </div>
 
-      <span className='text-h5 md:text-h1 text-center font-bold text-neutral-400'>
+      <span className='text-h2 lg:text-h5 md:text-h1 text-center leading-[130%] font-bold text-neutral-400 lg:leading-6.5'>
         :
       </span>
 
-      <div className='flex flex-col'>
+      <div className='flex min-w-15 flex-col'>
         <p
           className={clsx(
             textColor,
             'text-body-l-b md:text-body-l-sb text-center'
           )}>
-          MINUTE
+          MIN
         </p>
         <span className='text-h5 md:text-h1 text-center font-bold whitespace-nowrap text-neutral-400 tabular-nums'>
           {timeLeft.m}분
         </span>
       </div>
 
-      <span className='text-h5 md:text-h1 text-center font-bold text-neutral-400'>
+      <span className='text-h2 lg:text-h5 md:text-h1 text-center leading-[130%] font-bold text-neutral-400 lg:leading-6.5'>
         :
       </span>
 
-      <div className='flex flex-col'>
+      <div className='flex min-w-15 flex-col'>
         <p
           className={clsx(
             textColor,
             'text-body-l-b md:text-body-l-sb text-center'
           )}>
-          SECOND
+          SEC
         </p>
         <span className='text-h5 md:text-h1 text-center font-bold whitespace-nowrap text-neutral-400 tabular-nums'>
           {timeLeft.s}초
