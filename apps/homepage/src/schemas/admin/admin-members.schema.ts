@@ -117,6 +117,7 @@ export type GetAdminMembersParams = {
 };
 
 export type GetActiveMembersParams = {
+  search?: string;
   generationId: number;
   page?: number;
   size?: number;
