@@ -89,3 +89,10 @@ Import from `@repo/ui`. Key exports: `Button`, `FullButton`, `FormInput`, `FormT
 - ESLint `max-warnings: 0` — zero warnings allowed
 - Prettier: `singleQuote: true`, `printWidth: 80`, Tailwind class ordering via plugin
 - Device-specific layouts go in `_desktop/` and `_mobile/` sub-folders when needed
+
+### Pull Requests
+
+- **Template Compliance**: Before creating a Pull Request, always read and strictly follow the format defined in `.github/PULL_REQUEST_TEMPLATE.md`.
+- **Content**: Ensure all sections (Description, Key Changes, Screenshots, etc.) are populated based on the current changes.
+- **Checklists**: Mark checkboxes as completed only if the criteria are genuinely met.
+- **Automation**: When using `gh pr create`, use the template content for the `--body` or `--body-file` flag.
