@@ -28,7 +28,7 @@ export const FaqSideBar = ({activatedMenu, onActive}: FaqSideBarProps) => {
               onClick={() => onActive(dataKey as faqParametersType)}>
               <p
                 className={clsx(
-                  'text-h5 w-36 cursor-pointer rounded-[5px] px-2 py-1.25 transition-colors duration-300 lg:w-45.25',
+                  'text-h5 w-36 cursor-pointer rounded-[5px] px-2 py-1.25 font-semibold transition-colors duration-300 lg:w-45.25',
                   dataKey === activatedMenu
                     ? 'bg-neutral-800 text-neutral-100'
                     : 'bg-neutral-50 text-neutral-800 lg:bg-transparent'

@@ -98,7 +98,7 @@ export const TabContainer = () => {
   };
 
   return (
-    <div className='flex flex-col gap-5 lg:flex-row lg:items-end lg:gap-0'>
+    <div className='flex flex-col gap-5 px-6 lg:flex-row lg:items-end lg:gap-0 lg:px-11.25'>
       <div className='flex w-full flex-col gap-2.5'>
         <div className='overflow-x-scroll [&::-webkit-scrollbar]:hidden'>
           <div role='tablist' className='flex gap-7.5' aria-label='파트 선택'>

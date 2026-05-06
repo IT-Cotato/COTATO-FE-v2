@@ -103,7 +103,7 @@ export const DropdownContainer = () => {
   };
 
   return (
-    <div className='flex flex-col gap-5 lg:flex-row lg:items-end lg:gap-0'>
+    <div className='flex flex-col gap-5 px-6 lg:flex-row lg:items-end lg:gap-0 lg:px-11.25'>
       <div className='flex gap-5'>
         <Dropdown
           placeholder='기수'

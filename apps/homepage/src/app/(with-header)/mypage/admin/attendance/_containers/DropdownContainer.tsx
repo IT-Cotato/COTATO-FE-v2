@@ -84,7 +84,7 @@ export const DropdownContainer = () => {
   }, [selectedSession, sessions, setAttendanceId, setSelectedSessionType]);
 
   return (
-    <div className='flex gap-5'>
+    <div className='flex gap-5 px-6 lg:px-11.25'>
       <Dropdown
         placeholder='기수'
         value={selectedGeneration}
