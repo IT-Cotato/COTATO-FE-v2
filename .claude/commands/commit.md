@@ -47,7 +47,7 @@
 **예시 - Resizable 컴포넌트 추가 시:**
 
 ```
-밋 1: chore(homepage): react-resizable-panels 의존성 추가 (#12)
+커밋 1: chore(homepage): react-resizable-panels 의존성 추가 (#12)
   - apps/homepage/package.json
   - pnpm-lock.yaml
 
@@ -90,7 +90,7 @@
 
 ### 커밋 3: chore(root): Turborepo 파이프라인 캐시 설정 최적화 (#12)
 - turbo.json
-- 빌드 시간 단축을 위해 글로벌 캐시 테스크 설정을 변경했습니다
+- 빌드 시간 단축을 위해 글로벌 캐시 태스크 설정을 변경했습니다
 
 계속 진행할까요?
 ```
