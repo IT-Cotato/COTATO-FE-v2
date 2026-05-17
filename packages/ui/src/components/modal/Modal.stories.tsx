@@ -13,6 +13,11 @@ const meta = {
     noContent: {control: 'boolean'},
     fullHeight: {control: 'boolean'},
   },
+  args: {
+    isOpen: false,
+    title: '',
+    onClose: () => {},
+  },
 } satisfies Meta<typeof Modal>;
 
 export default meta;

@@ -13,6 +13,12 @@ const meta = {
     cancelLabel: {control: 'text'},
     isLoading: {control: 'boolean'},
   },
+  args: {
+    isOpen: false,
+    title: '',
+    onClose: () => {},
+    onConfirm: () => {},
+  },
 } satisfies Meta<typeof ConfirmModal>;
 
 export default meta;

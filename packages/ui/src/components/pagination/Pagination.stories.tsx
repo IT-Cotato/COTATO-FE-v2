@@ -11,6 +11,11 @@ const meta = {
     variant: {control: 'select', options: ['default', 'admin']},
     disabled: {control: 'boolean'},
   },
+  args: {
+    currentPage: 1,
+    totalPages: 10,
+    onPageChange: () => {},
+  },
 } satisfies Meta<typeof Pagination>;
 
 export default meta;

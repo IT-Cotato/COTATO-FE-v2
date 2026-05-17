@@ -5,7 +5,7 @@ import clsx from 'clsx';
 import {FocusTrap} from 'focus-trap-react';
 import XIcon from '../../assets/icons/cancel.svg';
 
-interface ModalProps {
+export interface ModalProps {
   isOpen: boolean; /** 모달의 열림/닫힘 상태를 제어합니다. */
   onClose?: () => void; /** 모달을 닫는 함수입니다. 배경 클릭 또는 닫기 버튼 클릭 시 호출됩니다. */
   title: ReactNode; /** 모달의 제목입니다. (필수) */
