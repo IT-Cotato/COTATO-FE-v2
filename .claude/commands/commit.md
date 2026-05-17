@@ -47,11 +47,11 @@
 **예시 - Resizable 컴포넌트 추가 시:**
 
 ```
-밋 1: chore(homepage): react-resizable-panels 의존성 추가
+밋 1: chore(homepage): react-resizable-panels 의존성 추가 (#12)
   - apps/homepage/package.json
   - pnpm-lock.yaml
 
-커밋 2: feat(homepage): Resizable 컴포넌트 추가
+커밋 2: feat(homepage): Resizable 컴포넌트 추가 (#12)
   - apps/homepage/src/components/Resizable/index.tsx
   - apps/homepage/src/components/Resizable/Resizable.styles.ts
 ```
@@ -74,21 +74,21 @@
 
 ## 커밋 계획표 출력 형식
 
-커밋 실행 전 반드시 아래 형식의 계획표를 사용자에게 보여주고 승인을 받습니다.
+커밋 실행 전 반드시 아래 형식의 계획표를 사용자에게 보여주고 승인을 받습니다. (이슈 번호 컨텍스트가 확인되면 제목 끝에 함께 명시합니다.)
 
 ```
 ## 커밋 계획
 
-### 커밋 1: feat(homepage): 사용자 프로필 컴포넌트 추가
+### 커밋 1: feat(homepage): 사용자 프로필 컴포넌트 추가 (#12)
 - apps/homepage/src/components/UserProfile/index.tsx
 - apps/homepage/src/components/UserProfile/UserProfile.styles.ts
 - 홈페이지 전용 사용자 프로필 카드 컴포넌트를 새로 생성했습니다
 
-### 커밋 2: fix(recruit): 로그인 토큰 갱신 오류 수정
+### 커밋 2: fix(recruit): 로그인 토큰 갱신 오류 수정 (#12)
 - apps/recruit/src/hooks/useAuth.ts
 - 리쿠르트 페이지에서 토큰 만료 시 발생하던 무한 루프 오류를 수정했습니다
 
-### 커밋 3: chore(root): Turborepo 파이프라인 캐시 설정 최적화
+### 커밋 3: chore(root): Turborepo 파이프라인 캐시 설정 최적화 (#12)
 - turbo.json
 - 빌드 시간 단축을 위해 글로벌 캐시 테스크 설정을 변경했습니다
 
@@ -98,7 +98,7 @@
 ## 커밋 메시지 형식
 
 ```
-<타입>(<스코프>): <한국어 제목>
+<타입>(<스코프>): <한국어 제목> (#이슈번호)
 
 - <서술형 변경사항 1>
 - <서술형 변경사항 2>
@@ -108,10 +108,10 @@
 
 ### 커밋 메시지 규칙
 
-- **제목**: <타입>(<스코프>): <한국어 제목> 형식을 엄격히 준수합니다. 소괄호 안에는 오직 지정된 스코프만 들어갑니다.
-  - 좋은 예: `feat(homepage): 메인 배너 컴포넌트 추가`
-  - 나쁜 예: `feat: [homepage] 메인 배너 추가` (대괄호 금지)
-  - 나쁜 예: `feat(homepage): 메인 배너 추가 (Banner)` (제목 뒤 추가 괄호 금지)
+- **제목**: <타입>(<스코프>): <한국어 제목> (#이슈번호) 형식을 엄격히 준수합니다. 소괄호 안에는 오직 지정된 스코프만 들어갑니다.
+  - 좋은 예: `feat(homepage): 메인 배너 컴포넌트 추가 (#12)`
+  - 나쁜 예: `feat: [homepage] 메인 배너 추가 (#12)` (대괄호 금지)
+  - 나쁜 예: `feat(homepage): 메인 배너 추가 (Banner) (#12)` (제목 뒤 추가 괄호 금지)
 - **본문**: 각 항목은 반드시 **"~했습니다"** 체의 서술형으로 종결합니다.
   - 좋은 예: `- 프로필 카드 컴포넌트를 추가했습니다`
   - 좋은 예: `- 토큰 갱신 시 무한 루프 문제를 수정했습니다`
