@@ -1,0 +1,68 @@
+import {Meta} from '@storybook/blocks';
+
+<Meta title='Introduction' />
+
+# Cotato Design System
+
+**COde Together, Arrive TOgether**
+
+## 개요
+
+Cotato 디자인 시스템 스토리북입니다.
+`@repo/ui` 공통 컴포넌트 라이브러리를 시각화한 카탈로그입니다.
+
+## 색상 팔레트
+
+| 토큰        | 값        | 용도           |
+| ----------- | --------- | -------------- |
+| primary     | `#f87d02` | 주요 CTA, 강조 |
+| secondary   | `#ffb800` | 보조 강조      |
+| neutral-800 | `#1f1f1f` | 기본 배경      |
+| neutral-700 | `#2a2a2a` | 카드 배경      |
+| neutral-600 | `#343434` | 보더, 구분선   |
+| alert       | `#e5484d` | 에러, 경고     |
+
+## 타이포그래피
+
+Cotato 디자인 시스템은 Pretendard 폰트를 기반으로 합니다.
+
+## 컴포넌트 카탈로그
+
+| 카테고리   | 컴포넌트                                    |
+| ---------- | ------------------------------------------- |
+| Buttons    | Button, FullButton                          |
+| Form       | FormInput, FormTextarea, FormFile, FormLink |
+| Overlay    | Modal, ConfirmModal                         |
+| Navigation | Pagination                                  |
+| Selection  | CheckBox, CheckboxFilter, StatusDropdown    |
+| Feedback   | StatusChip, Spinner                         |
+| Brand      | CotatoLogo, HeroMainBanner                  |
+
+## 사용법
+
+```tsx
+import {Button} from '@repo/ui/components/buttons/Button';
+import '@repo/ui/styles.css';
+
+export function App() {
+  return <Button>클릭하기</Button>;
+}
+```
+
+## 개발 가이드
+
+스토리 파일은 컴포넌트 폴더 내부에 위치합니다.
+
+```
+packages/ui/src/components/
+  buttons/
+    Button.tsx
+    Button.stories.tsx    ← 스토리 파일
+  form/
+    FormInput.tsx
+    FormInput.stories.tsx
+```
+
+## 크로마틱 배포
+
+`main` 브랜치에 `packages/ui/**` 경로의 변경사항이 push되면 GitHub Actions를 통해 Chromatic에 자동 배포됩니다.
