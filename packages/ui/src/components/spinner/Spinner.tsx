@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 
-interface SpinnerProps {
+export interface SpinnerProps {
   size?: 'sm' | 'md' | 'lg';
   className?: string;
 }

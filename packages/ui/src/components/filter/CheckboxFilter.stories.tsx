@@ -8,6 +8,12 @@ const meta = {
   title: 'Components/Selection/CheckboxFilter',
   component: CheckboxFilter,
   tags: ['autodocs'],
+  args: {
+    options: [] as Part[],
+    selected: [] as Part[],
+    onChange: () => {},
+    onClose: () => {},
+  },
 } satisfies Meta<typeof CheckboxFilter<Part>>;
 
 export default meta;

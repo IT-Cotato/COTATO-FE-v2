@@ -11,6 +11,10 @@ const meta = {
     disabled: {control: 'boolean'},
     isRecruitment: {control: 'boolean'},
   },
+  args: {
+    checked: false,
+    onChange: () => {},
+  },
 } satisfies Meta<typeof Checkbox>;
 
 export default meta;

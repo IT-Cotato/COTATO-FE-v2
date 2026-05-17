@@ -1,7 +1,7 @@
 import {useEffect, useState} from 'react';
 import {Checkbox} from '../checkbox/CheckBox';
 
-interface CheckboxFilterProps<T extends string> {
+export interface CheckboxFilterProps<T extends string> {
   options: T[];
   selected: T[];
   getLabel?: (option: T) => string;

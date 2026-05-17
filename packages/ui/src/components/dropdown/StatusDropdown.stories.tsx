@@ -17,6 +17,12 @@ const meta = {
   argTypes: {
     disabled: {control: 'boolean'},
   },
+  args: {
+    value: 'WAITING' as ApplyStatus,
+    options: ['WAITING', 'PASS', 'FAIL'] as ApplyStatus[],
+    config: applyConfig,
+    onChange: () => {},
+  },
 } satisfies Meta<typeof StatusDropdown<ApplyStatus>>;
 
 export default meta;
