@@ -18,7 +18,7 @@ jobs:
       - name: 주간 협업 리포트 생성
         uses: actions/github-script@v7
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ secrets.ANALYTICS_TOKEN }}
           script: |
             const fn = require('./.github/scripts/weekly-analytics.js')
             await fn({ github, context, core })
