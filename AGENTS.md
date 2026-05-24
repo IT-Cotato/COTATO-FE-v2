@@ -86,7 +86,8 @@ Import from `@repo/ui`. Key exports: `Button`, `FullButton`, `FormInput`, `FormT
 
 - Branch: `prefix/scope/issue-number-description` (e.g., `fix/recruit/363-mypage-fix`)
 - Commit: `prefix(scope): description (#issue-number)` (e.g., `fix(recruit): 버그 수정 (#363)`)
-- Prefixes: `feat` `fix` `refactor` `hotfix` `docs` `chore`
+- Branch prefixes: `feat` `fix` `refactor` `hotfix` `docs` `chore`
+- Commit types (commitlint enforced): `feat` `fix` `docs` `style` `refactor` `test` `revert` `chore` `security` `ui` `comment` `name` `file`
 - Scopes: `recruit` `homepage` `root` `ui`
 - Husky pre-commit runs ESLint + Prettier auto-fix; commitlint validates message format
 
