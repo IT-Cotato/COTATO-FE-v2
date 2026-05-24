@@ -1,9 +1,9 @@
-import {create} from '@storybook/theming/create';
+import {create} from '@storybook/theming';
 
 export const cotatoTheme = create({
-  base: 'dark',
+  base: 'light',
 
-  brandTitle: 'Cotato Design System',
+  brandTitle: 'COTATO DESIGN SYSTEM',
   brandUrl: 'https://cotato.kr',
   brandTarget: '_blank',
 
@@ -12,30 +12,30 @@ export const cotatoTheme = create({
   colorSecondary: '#ffb800',
 
   // UI
-  appBg: '#1f1f1f',
-  appContentBg: '#2a2a2a',
-  appPreviewBg: '#2a2a2a',
-  appBorderColor: '#343434',
+  appBg: '#f5f5f5',
+  appContentBg: '#ffffff',
+  appPreviewBg: '#ffffff',
+  appBorderColor: '#e5e5e5',
   appBorderRadius: 10,
 
   // 텍스트
-  textColor: '#f5f5f5',
-  textMutedColor: '#9e9e9e',
-  textInverseColor: '#1f1f1f',
+  textColor: '#1f1f1f',
+  textMutedColor: '#757575',
+  textInverseColor: '#ffffff',
 
   // 툴바
-  barTextColor: '#9e9e9e',
+  barTextColor: '#525252',
   barHoverColor: '#f87d02',
   barSelectedColor: '#f87d02',
-  barBg: '#1f1f1f',
+  barBg: '#ffffff',
 
   // 인풋
-  inputBg: '#2a2a2a',
-  inputBorder: '#343434',
-  inputTextColor: '#f5f5f5',
+  inputBg: '#ffffff',
+  inputBorder: '#e5e5e5',
+  inputTextColor: '#1f1f1f',
   inputBorderRadius: 6,
 
   // 버튼
-  buttonBg: '#343434',
-  buttonBorder: '#525252',
+  buttonBg: '#f5f5f5',
+  buttonBorder: '#e5e5e5',
 });

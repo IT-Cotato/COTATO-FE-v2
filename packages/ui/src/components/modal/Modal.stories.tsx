@@ -1,5 +1,4 @@
-import type {Meta, StoryObj} from '@storybook/react';
-import {useState} from 'react';
+import type {Meta} from '@storybook/react';
 import {Modal} from './Modal';
 import {Button} from '../buttons/Button';
 
@@ -13,25 +12,26 @@ const meta = {
     noContent: {control: 'boolean'},
     fullHeight: {control: 'boolean'},
   },
-  args: {
-    isOpen: false,
-    title: '',
-    onClose: () => {},
+  parameters: {
+    layout: 'fullscreen',
+    docs: {
+      story: {
+        inline: false,
+        height: '520px',
+      },
+    },
   },
 } satisfies Meta<typeof Modal>;
 
 export default meta;
-type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {
+export const Default = {
   render: () => {
-    const [isOpen, setIsOpen] = useState(false);
     return (
-      <>
-        <Button label='모달 열기' onClick={() => setIsOpen(true)} />
+      <div className='w-full'>
         <Modal
-          isOpen={isOpen}
-          onClose={() => setIsOpen(false)}
+          isOpen={true}
+          onClose={() => {}}
           title='알림'
           content='정말로 진행하시겠습니까?'
           actions={
@@ -40,31 +40,20 @@ export const Default: Story = {
                 label='취소'
                 variant='outline'
                 textColor='neutral-400'
-                onClick={() => setIsOpen(false)}
+                wrapperClassName='flex-1'
+                width='100%'
+                onClick={() => {}}
               />
-              <Button label='확인' onClick={() => setIsOpen(false)} />
+              <Button
+                label='확인'
+                wrapperClassName='flex-1'
+                width='100%'
+                onClick={() => {}}
+              />
             </>
           }
         />
-      </>
-    );
-  },
-};
-
-export const NoContent: Story = {
-  render: () => {
-    const [isOpen, setIsOpen] = useState(false);
-    return (
-      <>
-        <Button label='모달 열기' onClick={() => setIsOpen(true)} />
-        <Modal
-          isOpen={isOpen}
-          onClose={() => setIsOpen(false)}
-          title='저장되었습니다'
-          noContent
-          actions={<Button label='확인' onClick={() => setIsOpen(false)} />}
-        />
-      </>
+      </div>
     );
   },
 };

@@ -8,11 +8,12 @@ const preview: Preview = {
       theme: cotatoTheme,
     },
     backgrounds: {
-      default: 'neutral-800',
+      default: 'white',
       values: [
+        {name: 'white', value: '#ffffff'},
+        {name: 'neutral-50', value: '#f5f5f5'},
         {name: 'neutral-800', value: '#2a2a2a'},
         {name: 'dark', value: '#1f1f1f'},
-        {name: 'white', value: '#ffffff'},
       ],
     },
     viewport: {
