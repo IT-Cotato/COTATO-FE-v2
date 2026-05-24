@@ -1,11 +1,11 @@
 import clsx from 'clsx';
 
-interface StatusChipConfig {
+export interface StatusChipConfig {
   label: string;
   className: string;
 }
 
-interface StatusChipProps<T extends string> {
+export interface StatusChipProps<T extends string> {
   value: T;
   config: Record<T, StatusChipConfig>;
   isActive?: boolean;

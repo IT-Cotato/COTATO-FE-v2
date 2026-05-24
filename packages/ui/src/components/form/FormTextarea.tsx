@@ -4,7 +4,7 @@ import {forwardRef, useId, type TextareaHTMLAttributes} from 'react';
 import clsx from 'clsx';
 import {formFieldStyles} from './form.styles';
 
-interface FormTextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
+export interface FormTextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
   label?: string;
   error?: string;
   currentLength?: number;
@@ -54,13 +54,13 @@ export const FormTextarea = forwardRef<HTMLTextAreaElement, FormTextareaProps>(
               'flex min-h-54.5 flex-col rounded-[10px] border border-neutral-200 bg-white',
               error && formFieldStyles.error
             )}>
-            <div className="flex w-full flex-1 px-[11.5px]">
+            <div className='flex w-full flex-1 px-[11.5px]'>
               <textarea
                 ref={ref}
                 id={inputId}
                 spellCheck='false'
                 className={clsx(
-                  'sm:placeholder-body-l placeholder-h5 min-h-0 w-full flex-1 resize-none bg-transparent pr-[7px] my-[16px] placeholder:text-neutral-400 focus:outline-none',
+                  'sm:placeholder-body-l placeholder-h5 my-[16px] min-h-0 w-full flex-1 resize-none bg-transparent pr-[7px] placeholder:text-neutral-400 focus:outline-none',
                   'read-only:cursor-default read-only:focus:ring-0',
                   props.readOnly && formFieldStyles.readOnlyTextarea,
                   className
@@ -83,11 +83,11 @@ export const FormTextarea = forwardRef<HTMLTextAreaElement, FormTextareaProps>(
         ) : (
           <div
             className={clsx(
-              'flex flex-col w-full rounded-[10px] border-[1px] border-neutral-200 bg-white transition-all',
+              'flex w-full flex-col rounded-[10px] border-[1px] border-neutral-200 bg-white transition-all',
               isProject ? 'min-h-24' : 'min-h-54.5',
               error && formFieldStyles.error
             )}>
-            <div className="flex w-full flex-1 px-[11.5px]">
+            <div className='flex w-full flex-1 px-[11.5px]'>
               <textarea
                 ref={ref}
                 id={inputId}

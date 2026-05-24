@@ -1,0 +1,206 @@
+import {Meta} from '@storybook/blocks';
+
+<Meta title='Introduction' />
+
+# COTATO DESIGN SYSTEM
+
+**COde Together, Arrive TOgether**
+
+---
+
+## 개요
+
+Cotato 디자인 시스템 스토리북입니다.
+`@repo/ui` 공통 컴포넌트 라이브러리를 시각화하여 한눈에 확인하고 테스트할 수 있는 카탈로그입니다.
+
+색상 팔레트는 **Design Tokens/Colors**, 타이포그래피는 **Design Tokens/Typography** 페이지에서 확인할 수 있습니다.
+
+---
+
+## 컴포넌트 카탈로그
+
+<table>
+  <thead>
+    <tr>
+      <th>카테고리</th>
+      <th>컴포넌트</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <strong>Buttons</strong>
+      </td>
+      <td>
+        <code>Button</code>, <code>FullButton</code>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <strong>Form</strong>
+      </td>
+      <td>
+        <code>FormInput</code>, <code>FormTextarea</code>, <code>FormFile</code>
+        , <code>FormLink</code>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <strong>Overlay</strong>
+      </td>
+      <td>
+        <code>Modal</code>, <code>ConfirmModal</code>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <strong>Navigation</strong>
+      </td>
+      <td>
+        <code>Pagination</code>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <strong>Selection</strong>
+      </td>
+      <td>
+        <code>CheckBox</code>, <code>CheckboxFilter</code>,{' '}
+        <code>StatusDropdown</code>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <strong>Feedback</strong>
+      </td>
+      <td>
+        <code>StatusChip</code>, <code>Spinner</code>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <strong>Brand</strong>
+      </td>
+      <td>
+        <code>CotatoLogo</code>, <code>HeroMainBanner</code>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+---
+
+## 컨벤션
+
+### 임포트
+
+```tsx
+import {Button} from '@repo/ui/components/buttons/Button';
+import '@repo/ui/styles.css';
+```
+
+### 색상 토큰
+
+Tailwind 클래스에서 `bg-*` / `text-*` / `border-*` 접두사와 함께 토큰명을 사용합니다.
+
+<table>
+  <thead>
+    <tr>
+      <th>토큰</th>
+      <th>클래스 예시</th>
+      <th>용도</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>primary</code>
+      </td>
+      <td>
+        <code>bg-primary</code>, <code>text-primary</code>
+      </td>
+      <td>주요 CTA, 강조</td>
+    </tr>
+    <tr>
+      <td>
+        <code>secondary</code>
+      </td>
+      <td>
+        <code>bg-secondary</code>, <code>text-secondary</code>
+      </td>
+      <td>보조 강조</td>
+    </tr>
+    <tr>
+      <td>
+        <code>alert</code>
+      </td>
+      <td>
+        <code>text-alert</code>, <code>border-alert</code>
+      </td>
+      <td>에러, 경고</td>
+    </tr>
+    <tr>
+      <td>
+        <code>neutral-*</code>
+      </td>
+      <td>
+        <code>bg-neutral-800</code>, <code>border-neutral-600</code>
+      </td>
+      <td>배경, 보더 (50–800)</td>
+    </tr>
+    <tr>
+      <td>
+        <code>text-default</code>
+      </td>
+      <td>
+        <code>text-text-default</code>
+      </td>
+      <td>기본 텍스트</td>
+    </tr>
+  </tbody>
+</table>
+
+### 타이포그래피
+
+기본 폰트는 **Pretendard**입니다. Tailwind의 `text-*` 유틸리티 클래스로 토큰을 적용합니다.
+
+```tsx
+<h1 className="text-h1 font-bold">제목</h1>
+<p className="text-body-l">본문 텍스트</p>
+```
+
+### 컴포넌트 작성 규칙
+
+<table>
+  <thead>
+    <tr>
+      <th>규칙</th>
+      <th>설명</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>네이밍</td>
+      <td>
+        <code>PascalCase</code> 사용
+      </td>
+    </tr>
+    <tr>
+      <td>선언 방식</td>
+      <td>
+        <code>export const ComponentName = () =&gt; {'{}'}</code>{' '}
+        (페이지·레이아웃 제외)
+      </td>
+    </tr>
+    <tr>
+      <td>Props 타입</td>
+      <td>
+        컴포넌트 파일 내부에 <code>interface ComponentNameProps</code>로 선언
+      </td>
+    </tr>
+    <tr>
+      <td>스타일</td>
+      <td>Tailwind CSS 유틸리티 클래스 우선 사용</td>
+    </tr>
+  </tbody>
+</table>

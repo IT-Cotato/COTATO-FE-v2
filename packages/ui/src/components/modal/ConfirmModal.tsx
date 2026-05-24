@@ -3,7 +3,7 @@
 import {ReactNode} from 'react';
 import XIcon from '../../assets/icons/cancel.svg';
 
-interface ConfirmModalProps {
+export interface ConfirmModalProps {
   isOpen: boolean;
   title: ReactNode;
   description?: ReactNode;

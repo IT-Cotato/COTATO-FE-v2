@@ -13,7 +13,7 @@ import DeleteIcon from '../../assets/icons/delete.svg';
 import {formFieldStyles} from './form.styles';
 import {extractFileName} from '../../utils/extractFileName';
 
-interface FormFileProps extends InputHTMLAttributes<HTMLInputElement> {
+export interface FormFileProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
   error?: string;
   placeholder?: string;

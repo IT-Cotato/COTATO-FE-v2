@@ -7,7 +7,7 @@ import {
   FADE_IN_UP_ITEM,
 } from '../../constants/motion-variants';
 
-interface HeroMainBannerProps {
+export interface HeroMainBannerProps {
   subheading?: string;
   heading: React.ReactNode;
   headingStyle?: string;

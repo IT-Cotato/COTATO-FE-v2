@@ -3,14 +3,14 @@ import clsx from 'clsx';
 import ChevronDown from '../../assets/chevrons/chevron-down.svg';
 import {useClickOutside} from '../../hooks/useClickOutside';
 
-interface StatusDropdownConfig {
+export interface StatusDropdownConfig {
   label: string;
   className: string;
   textColor?: string;
   chevronColor?: string;
 }
 
-interface StatusDropdownProps<T extends string> {
+export interface StatusDropdownProps<T extends string> {
   value: T;
   options: T[];
   config: Record<T, StatusDropdownConfig>;

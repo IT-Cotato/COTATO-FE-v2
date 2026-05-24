@@ -5,7 +5,7 @@ import clsx from 'clsx';
 import ChevronLeft from '../../assets/chevrons/chevron-left.svg';
 import {usePagination} from '../../hooks/usePagination';
 
-interface PaginationProps {
+export interface PaginationProps {
   currentPage: number;
   totalPages: number;
   onPageChange: (page: number) => void;
