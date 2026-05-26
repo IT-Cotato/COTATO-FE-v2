@@ -61,7 +61,7 @@ export const HomeCoreValue = () => {
             ref={scrollRef}
             onScroll={handleScroll}
             variants={FADE_IN_UP_CONTAINER}
-            className='scrollbar-hide flex snap-x snap-mandatory flex-row gap-7.5 overflow-x-auto lg:justify-center lg:overflow-x-visible'
+            className='scrollbar-hide flex snap-x snap-mandatory flex-row gap-7.5 overflow-x-auto overscroll-x-contain lg:justify-center lg:overflow-x-visible'
             role='list'>
             {items.map((item, idx) => (
               <motion.li
