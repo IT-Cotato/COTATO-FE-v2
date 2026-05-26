@@ -13,6 +13,7 @@ const Configuration = {
         'test',
         'revert',
         'chore',
+        'ci',
         'security',
         'ui',
         'comment',
