@@ -13,7 +13,7 @@
 ## 핵심 원칙
 
 1. **전체 커밋 히스토리 기준**: `develop` 브랜치에서 갈라진 전체 변경을 분석한다. 최신 커밋 하나만 보지 않는다.
-2. **제목은 [TYPE]: 한국어 요약** 형식 (예: `[FEAT]: 로그인 API 연동`)
+2. **제목은 `[TYPE]: 한국어 요약` 형식** — 콜론(:)은 필수다. (예: `[FEAT]: 로그인 API 연동`)
 3. **WHY 중심**: 무엇을 바꿨는지는 diff가 대신한다. 본문에는 왜 이 변경이 필요했는지를 적는다.
 4. **base 브랜치는 반드시 확인**: 기본값은 `develop`. 다르면 사용자에게 먼저 물어본다.
 
@@ -23,28 +23,73 @@
 
 1. `git log develop...HEAD --oneline`으로 포함될 커밋 전체 확인
 2. `git diff develop...HEAD --stat`으로 전체 변경 파악
-3. 브랜치 push 여부 확인 → 없으면 `git push -u origin <branch>` 수행
-4. PR 본문 초안 작성 (아래 템플릿 참고)
-5. draft PR로 열지 일반 PR로 열지 사용자에게 확인
-6. `gh pr create` 실행
+3. 브랜치 이름에서 `{type}`과 `{scope}` 추출 → 라벨 결정
+4. 브랜치 push 여부 확인 → 없으면 `git push -u origin <branch>` 수행
+5. PR 본문 초안 작성 (아래 템플릿 참고)
+6. draft PR로 열지 일반 PR로 열지 사용자에게 확인
+7. `gh pr create` 실행
 
 ---
 
 ## PR 제목 형식
 
+> **⚠️ CRITICAL: PR 제목은 반드시 `[TYPE]:` 형태로 콜론(:)을 포함한다. `[TYPE]` 단독으로 쓰는 것은 금지.**
+
 ```
 [TYPE]: <전체 변경사항을 아우르는 한국어 요약>
 ```
 
-| 커밋 타입  | TYPE       |
-| ---------- | ---------- |
-| `feat`     | `FEAT`     |
-| `fix`      | `FIX`      |
-| `design`   | `DESIGN`   |
-| `refactor` | `REFACTOR` |
-| `docs`     | `DOCS`     |
-| `test`     | `TEST`     |
-| `chore`    | `CHORE`    |
+| 커밋 타입  | TYPE          |
+| ---------- | ------------- |
+| `feat`     | `[FEAT]:`     |
+| `fix`      | `[FIX]:`      |
+| `design`   | `[DESIGN]:`   |
+| `style`    | `[STYLE]:`    |
+| `ui`       | `[UI]:`       |
+| `refactor` | `[REFACTOR]:` |
+| `docs`     | `[DOCS]:`     |
+| `test`     | `[TEST]:`     |
+| `chore`    | `[CHORE]:`    |
+| `ci`       | `[CI]:`       |
+| `perf`     | `[PERF]:`     |
+| `security` | `[SECURITY]:` |
+
+---
+
+## 라벨 자동 지정
+
+> **PR 라벨은 GitHub Actions workflow 두 개가 자동 처리한다. `--label`은 아래 기준으로만 추가한다.**
+>
+> - **type 라벨**: `.github/workflows/type-labeler.yml` — PR 제목의 `[TYPE]:` 패턴 감지 후 자동 부착
+> - **scope 라벨**: `.github/labeler.yml` — 변경된 파일 경로 기반 자동 부착
+>
+> 따라서 `gh pr create` 실행 시 `--label`을 별도로 지정하지 않아도 된다.
+> workflow가 실패하는 경우에만 아래 표를 참고해 수동으로 추가한다.
+
+### 타입 라벨 (참고용)
+
+| type       | 라벨               |
+| ---------- | ------------------ |
+| `feat`     | `✨ Feature`       |
+| `fix`      | `🐛 Bug`           |
+| `refactor` | `💦 Refactor`      |
+| `design`   | `🎨 Style`         |
+| `style`    | `🎨 Style`         |
+| `ui`       | `📷 UI`            |
+| `docs`     | `📄 Documentation` |
+| `test`     | `🌊 TEST`          |
+| `chore`    | `🧹 CHORE`         |
+| `ci`       | `😎 DevOps`        |
+| `perf`     | `💦 Refactor`      |
+| `security` | `🐛 Bug`           |
+
+### 스코프 라벨 (참고용)
+
+| scope         | 라벨          |
+| ------------- | ------------- |
+| `homepage`    | `🥔 HOMEPAGE` |
+| `recruit`     | `🥔 RECRUIT`  |
+| `root` / `ui` | `🍟 COMMON`   |
 
 ---
 
@@ -146,10 +191,14 @@ EOF
 )"
 ```
 
+> 라벨은 `type-labeler.yml` / `labeler.yml` workflow가 자동 처리하므로 `--label` 생략.
+
 ---
 
 ## 금지
 
 - PR을 merge하지 않는다 (사용자가 명시적으로 요청해도 확인 절차를 거친다)
 - force-push로 base 브랜치를 덮어쓰지 않는다
-- reviewer, label, milestone은 사용자가 명시한 경우에만 추가한다
+- **`[TYPE]` 뒤에 콜론(:)을 빠뜨리지 않는다 — `[FEAT]`은 틀렸고 `[FEAT]:`이 맞다**
+- `--label` 없이 PR을 생성하지 않는다
+- reviewer, milestone은 사용자가 명시한 경우에만 추가한다

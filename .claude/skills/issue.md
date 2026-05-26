@@ -13,23 +13,42 @@
 
 ## 이슈 타입
 
-| 타입       | 이슈 제목 prefix | GitHub 라벨 |
-| ---------- | ---------------- | ----------- |
-| `feat`     | `[FEAT]`         | ✨ Feature  |
-| `fix`      | `[FIX]`          | 🐛 Bug      |
-| `refactor` | `[REFACTOR]`     | ✨ Feature  |
-| `design`   | `[DESIGN]`       | ✨ Feature  |
-| `docs`     | `[DOCS]`         | ✨ Feature  |
-| `test`     | `[TEST]`         | ✨ Feature  |
-| `chore`    | `[CHORE]`        | ✨ Feature  |
-| `ci`       | `[CI]`           | ✨ Feature  |
-| `perf`     | `[PERF]`         | ✨ Feature  |
+> **⚠️ CRITICAL: 이슈 제목 prefix는 반드시 `[TYPE]:` 형태로 콜론(:)을 포함한다. `[TYPE]` 단독으로 쓰는 것은 금지.**
+
+| 타입       | 이슈 제목 prefix | 타입 라벨          |
+| ---------- | ---------------- | ------------------ |
+| `feat`     | `[FEAT]:`        | `✨ Feature`       |
+| `fix`      | `[FIX]:`         | `🐛 Bug`           |
+| `refactor` | `[REFACTOR]:`    | `💦 Refactor`      |
+| `design`   | `[DESIGN]:`      | `🎨 Style`         |
+| `style`    | `[STYLE]:`       | `🎨 Style`         |
+| `ui`       | `[UI]:`          | `📷 UI`            |
+| `docs`     | `[DOCS]:`        | `📄 Documentation` |
+| `test`     | `[TEST]:`        | `🌊 TEST`          |
+| `chore`    | `[CHORE]:`       | `🧹 CHORE`         |
+| `ci`       | `[CI]:`          | `😎 DevOps`        |
+| `perf`     | `[PERF]:`        | `💦 Refactor`      |
+| `security` | `[SECURITY]:`    | `🐛 Bug`           |
+
+## 라벨 자동화 구조
+
+> - **type 라벨**: `.github/workflows/type-labeler.yml` — 이슈/PR 제목의 `[TYPE]:` 패턴 감지 후 **자동** 부착
+> - **scope 라벨 (이슈)**: workflow로 처리되지 않으므로 `--label`로 직접 지정
+> - **scope 라벨 (PR)**: `.github/labeler.yml` 이 변경 파일 기반으로 **자동** 부착
+
+이슈 생성 시 `--label`은 scope 라벨만 지정한다. type 라벨은 workflow가 자동으로 붙여준다.
+
+| scope         | 스코프 라벨   |
+| ------------- | ------------- |
+| `homepage`    | `🥔 HOMEPAGE` |
+| `recruit`     | `🥔 RECRUIT`  |
+| `root` / `ui` | `🍟 COMMON`   |
 
 ---
 
 ## 이슈 본문 템플릿
 
-### Feature Request — feat / refactor / design / docs / test / chore / ci / perf
+### Feature Request — feat / refactor / design / style / ui / docs / test / chore / ci / perf
 
 ```markdown
 ### 🛠️ 만들고자 한 기능 설명
@@ -53,7 +72,7 @@
 ### 📸 피그마 스크린샷
 ```
 
-### Bug Report — fix
+### Bug Report — fix / security
 
 ```markdown
 ## 어떤 버그인가요?
@@ -117,8 +136,9 @@ chore/ui/15-storybook-config-update
 ## 이슈 생성 계획
 
 타입: feat
-제목: [FEAT] 사용자 로그인 구현
+제목: [FEAT]: 사용자 로그인 구현
 Assignee: @me
+라벨: ✨ Feature, 🥔 HOMEPAGE
 
 ### 이슈 본문 미리보기
 ---
@@ -133,15 +153,21 @@ Base 브랜치: develop
 
 ### Phase 2 — 이슈 생성
 
+> 제목은 반드시 `[TYPE]:` 형태로 콜론을 포함한다.
+
 ```bash
 gh issue create \
-  --title "[FEAT] 제목" \
+  --title "[FEAT]: 제목" \
   --body "$(cat <<'EOF'
 ...
 EOF
 )" \
-  --assignee "@me"
+  --assignee "@me" \
+  --label "🥔 HOMEPAGE"
 ```
+
+> type 라벨(`✨ Feature` 등)은 `type-labeler.yml` workflow가 자동 부착하므로 생략.
+> scope 라벨(`🥔 HOMEPAGE` 등)은 이슈에 workflow가 없으므로 직접 지정.
 
 출력된 이슈 URL에서 번호 파싱.
 
@@ -174,5 +200,7 @@ git checkout -b {type}/{scope}/{번호}-{description} origin/develop
 ## 금지
 
 - 사용자 승인 없이 이슈를 생성하지 않는다
+- **`[TYPE]` 뒤에 콜론(:)을 빠뜨리지 않는다 — `[FEAT]`은 틀렸고 `[FEAT]:`이 맞다**
 - 브랜치 설명에 한국어를 그대로 쓰지 않는다 (반드시 영어 kebab-case 변환)
 - `gh` 인증 상태를 확인하지 않고 실행하지 않는다
+- `--label` 없이 이슈를 생성하지 않는다
