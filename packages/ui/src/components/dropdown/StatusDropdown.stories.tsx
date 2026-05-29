@@ -28,18 +28,20 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
+const DefaultTemplate = () => {
+  const [value, setValue] = useState<ApplyStatus>('WAITING');
+  return (
+    <StatusDropdown
+      value={value}
+      options={['WAITING', 'PASS', 'FAIL']}
+      config={applyConfig}
+      onChange={setValue}
+    />
+  );
+};
+
 export const Default: Story = {
-  render: () => {
-    const [value, setValue] = useState<ApplyStatus>('WAITING');
-    return (
-      <StatusDropdown
-        value={value}
-        options={['WAITING', 'PASS', 'FAIL']}
-        config={applyConfig}
-        onChange={setValue}
-      />
-    );
-  },
+  render: DefaultTemplate,
 };
 
 export const Disabled: Story = {

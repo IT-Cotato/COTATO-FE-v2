@@ -8,7 +8,7 @@ export const extractFileName = (url: string) => {
     const encodedName = urlWithoutQuery?.split('/').pop() || '';
     // 3. URL 인코딩(한글 등) 복원
     return decodeURIComponent(encodedName);
-  } catch (error) {
+  } catch (_error) {
     return url; // 실패 시 원본 반환
   }
 };

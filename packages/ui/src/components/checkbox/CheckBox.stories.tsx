@@ -20,18 +20,22 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
+const UncheckedTemplate = () => {
+  const [checked, setChecked] = useState(false);
+  return <Checkbox checked={checked} onChange={setChecked} />;
+};
+
+const CheckedTemplate = () => {
+  const [checked, setChecked] = useState(true);
+  return <Checkbox checked={checked} onChange={setChecked} />;
+};
+
 export const Unchecked: Story = {
-  render: () => {
-    const [checked, setChecked] = useState(false);
-    return <Checkbox checked={checked} onChange={setChecked} />;
-  },
+  render: UncheckedTemplate,
 };
 
 export const Checked: Story = {
-  render: () => {
-    const [checked, setChecked] = useState(true);
-    return <Checkbox checked={checked} onChange={setChecked} />;
-  },
+  render: CheckedTemplate,
 };
 
 export const Disabled: Story = {

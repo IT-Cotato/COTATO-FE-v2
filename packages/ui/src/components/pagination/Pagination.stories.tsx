@@ -21,34 +21,40 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
+const DefaultTemplate = () => {
+  const [page, setPage] = useState(1);
+  return (
+    <Pagination currentPage={page} totalPages={10} onPageChange={setPage} />
+  );
+};
+
+const AdminTemplate = () => {
+  const [page, setPage] = useState(1);
+  return (
+    <Pagination
+      currentPage={page}
+      totalPages={10}
+      onPageChange={setPage}
+      variant='admin'
+    />
+  );
+};
+
+const FewPagesTemplate = () => {
+  const [page, setPage] = useState(1);
+  return (
+    <Pagination currentPage={page} totalPages={3} onPageChange={setPage} />
+  );
+};
+
 export const Default: Story = {
-  render: () => {
-    const [page, setPage] = useState(1);
-    return (
-      <Pagination currentPage={page} totalPages={10} onPageChange={setPage} />
-    );
-  },
+  render: DefaultTemplate,
 };
 
 export const Admin: Story = {
-  render: () => {
-    const [page, setPage] = useState(1);
-    return (
-      <Pagination
-        currentPage={page}
-        totalPages={10}
-        onPageChange={setPage}
-        variant='admin'
-      />
-    );
-  },
+  render: AdminTemplate,
 };
 
 export const FewPages: Story = {
-  render: () => {
-    const [page, setPage] = useState(1);
-    return (
-      <Pagination currentPage={page} totalPages={3} onPageChange={setPage} />
-    );
-  },
+  render: FewPagesTemplate,
 };
