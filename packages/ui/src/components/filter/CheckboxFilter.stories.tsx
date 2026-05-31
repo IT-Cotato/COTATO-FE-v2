@@ -27,17 +27,19 @@ const labelMap: Record<Part, string> = {
   PM: 'PM',
 };
 
+const DefaultTemplate = () => {
+  const [selected, setSelected] = useState<Part[]>([]);
+  return (
+    <CheckboxFilter
+      options={options}
+      selected={selected}
+      getLabel={(opt) => labelMap[opt]}
+      onChange={setSelected}
+      onClose={() => {}}
+    />
+  );
+};
+
 export const Default: Story = {
-  render: () => {
-    const [selected, setSelected] = useState<Part[]>([]);
-    return (
-      <CheckboxFilter
-        options={options}
-        selected={selected}
-        getLabel={(opt) => labelMap[opt]}
-        onChange={setSelected}
-        onClose={() => {}}
-      />
-    );
-  },
+  render: DefaultTemplate,
 };
