@@ -22,3 +22,6 @@ jobs:
           script: |
             const fn = require('./.github/scripts/weekly-analytics.js')
             await fn({ github, context, core })
+        env:
+          NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
+          NOTION_REPORTS_DATABASE_ID: ${{ secrets.NOTION_REPORTS_DATABASE_ID }}

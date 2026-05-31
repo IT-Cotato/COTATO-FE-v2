@@ -1,0 +1,26 @@
+name: 📋 Notion 이슈 동기화
+
+on:
+  issues:
+    types: [opened, closed, reopened]
+
+permissions:
+  issues: read
+
+jobs:
+  sync:
+    name: Notion 동기화
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: GitHub 이슈 → Notion 칸반 동기화
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const fn = require('./.github/scripts/notion-issue-sync.js')
+            await fn({ github, context, core })
+        env:
+          NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
+          NOTION_DATABASE_ID: ${{ secrets.NOTION_DATABASE_ID }}

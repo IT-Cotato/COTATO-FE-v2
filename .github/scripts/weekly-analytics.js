@@ -346,4 +346,49 @@ ${trafficSection}
   });
 
   core.info(`리포트 이슈 생성 완료: ${issue.html_url}`);
+
+  // ──────────────────────────────────────────────
+  // 8. Notion 리포트 페이지 생성
+  // ──────────────────────────────────────────────
+  const notionToken = process.env.NOTION_TOKEN;
+  const notionReportsDbId = process.env.NOTION_REPORTS_DATABASE_ID;
+
+  if (!notionToken || !notionReportsDbId) {
+    core.warning('NOTION_TOKEN 또는 NOTION_REPORTS_DATABASE_ID가 없어 Notion 동기화를 건너뜁니다.');
+    return;
+  }
+
+  await safe('notionReport', async () => {
+    const res = await fetch('https://api.notion.com/v1/pages', {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${notionToken}`,
+        'Content-Type': 'application/json',
+        'Notion-Version': '2022-06-28',
+      },
+      body: JSON.stringify({
+        parent: {database_id: notionReportsDbId},
+        properties: {
+          이름: {
+            title: [{text: {content: `📊 주간 협업 리포트 — ${kst(now)}`}}],
+          },
+          'PR 오픈': {number: openedPRs.length},
+          'PR 머지': {number: mergedPRs.length},
+          '새 이슈': {number: newIssues.length},
+          '해결 이슈': {number: closedIssues.length},
+          '평균 머지 시간': {
+            rich_text: [
+              {text: {content: avgMergeMs > 0 ? formatMs(avgMergeMs) : '-'}},
+            ],
+          },
+          'GitHub 링크': {url: issue.html_url},
+          '기간 시작': {date: {start: weekAgo.toISOString()}},
+          '기간 종료': {date: {start: now.toISOString()}},
+        },
+      }),
+    });
+    if (!res.ok) throw new Error(`Notion API ${res.status}: ${await res.text()}`);
+    const page = await res.json();
+    core.info(`Notion 리포트 페이지 생성 완료: ${page.url}`);
+  });
 };
