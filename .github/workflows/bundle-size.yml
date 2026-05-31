@@ -37,12 +37,20 @@ jobs:
           echo "NEXT_PUBLIC_S3_HOSTNAME=${{ secrets.HOMEPAGE_S3_HOSTNAME }}" >> apps/homepage/.env
 
       - name: Build homepage
-        run: pnpm turbo run build --filter=homepage 2>&1 | tee /tmp/homepage-build.txt
+        run: pnpm turbo run build --filter=homepage --log-output=full 2>&1 | tee /tmp/homepage-build.txt
         continue-on-error: true
 
       - name: Build recruit
-        run: pnpm turbo run build --filter=recruit 2>&1 | tee /tmp/recruit-build.txt
+        run: pnpm turbo run build --filter=recruit --log-output=full 2>&1 | tee /tmp/recruit-build.txt
         continue-on-error: true
+
+      - name: Debug - 빌드 출력 확인
+        if: always()
+        run: |
+          echo "=== homepage (마지막 40줄) ==="
+          tail -40 /tmp/homepage-build.txt 2>/dev/null || echo "(파일 없음)"
+          echo "=== recruit (마지막 40줄) ==="
+          tail -40 /tmp/recruit-build.txt 2>/dev/null || echo "(파일 없음)"
 
       - name: 번들 사이즈 PR 코멘트 게시
         uses: actions/github-script@v7

@@ -9,6 +9,9 @@ const fs = require('fs');
 const parseBuildOutput = (rawOutput) => {
   const output = rawOutput
     .split('\n')
+    // ANSI 이스케이프 코드 제거 (Next.js 컬러 출력 대응)
+    .map((line) => line.replace(/\[[0-9;]*m/g, ''))
+    // turbo run 접두사 제거 (예: "homepage:build: ")
     .map((line) => line.replace(/^[^\s]+:build:\s?/, ''))
     .join('\n');
 
