@@ -9,8 +9,9 @@ const fs = require('fs');
 const parseBuildOutput = (rawOutput) => {
   const output = rawOutput
     .split('\n')
-    // ANSI 이스케이프 코드 제거 (Next.js 컬러 출력 대응)
-    .map((line) => line.replace(/\[[0-9;]*m/g, ''))
+    // ANSI/VT100 제어 시퀀스 전체 제거 (GitHub Actions FORCE_COLOR=1 대응)
+    // \x1B[ 로 시작하는 모든 터미널 제어 코드 제거 (색상, 커서 이동, 화면 지우기 등)
+    .map((line) => line.replace(/\x1B\[[0-9;?]*[A-Za-z]/g, ''))
     // turbo run 접두사 제거 (예: "homepage:build: ")
     .map((line) => line.replace(/^[^\s]+:build:\s?/, ''))
     .join('\n');
