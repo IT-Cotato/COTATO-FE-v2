@@ -36,9 +36,16 @@ const sizeIcon = (firstLoadStr) => {
   return '🟢';
 };
 
+const overallIcon = (routes) => {
+  const icons = routes.map((r) => sizeIcon(r.firstLoad));
+  if (icons.includes('🔴')) return '🔴';
+  if (icons.includes('🟡')) return '🟡';
+  return '🟢';
+};
+
 const formatRouteTable = (appLabel, { routes, sharedSize }) => {
   if (!routes.length) {
-    return `### ${appLabel}\n\n> ⚠️ 빌드 출력을 파싱하지 못했습니다.\n`;
+    return `<details>\n<summary>${appLabel} — ⚠️ 빌드 출력을 파싱하지 못했습니다.</summary>\n\n파싱 실패\n\n</details>`;
   }
 
   const rows = routes
@@ -49,13 +56,17 @@ const formatRouteTable = (appLabel, { routes, sharedSize }) => {
     .join('\n');
 
   const sharedLine = sharedSize ? `\n> 공유 번들: **${sharedSize}**\n` : '';
+  const icon = overallIcon(routes);
+  const summary = `${icon} ${appLabel} — ${routes.length}개 라우트 | 공유: ${sharedSize ?? '-'}`;
 
-  return `### ${appLabel}
+  return `<details>
+<summary>${summary}</summary>
 
 | 라우트 | 크기 | First Load JS | 상태 |
 |--------|------|---------------|------|
 ${rows}
-${sharedLine}`;
+${sharedLine}
+</details>`;
 };
 
 module.exports = async ({ github, context, core }) => {
@@ -84,8 +95,6 @@ module.exports = async ({ github, context, core }) => {
 ${formatRouteTable('🏠 Homepage (cotato.kr)', homepageBuild)}
 
 ${formatRouteTable('📝 Recruit (recruit.cotato.kr)', recruitBuild)}
-
----
 
 ${legend}
 
