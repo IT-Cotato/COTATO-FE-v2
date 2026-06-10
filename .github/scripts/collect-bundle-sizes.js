@@ -10,9 +10,6 @@ const formatKb = (bytes) => {
   return `${kb.toFixed(2)} kB`;
 };
 
-/**
- * .next/static 디렉터리의 모든 JS 파일 크기를 재귀적으로 수집합니다.
- */
 const walkJsFiles = (dir, staticDir) => {
   const result = {};
   if (!fs.existsSync(dir)) return result;
@@ -28,40 +25,63 @@ const walkJsFiles = (dir, staticDir) => {
   return result;
 };
 
-/**
- * app-build-manifest.json을 읽어 라우트별 번들 크기를 계산합니다.
- */
 const collectSizes = (appDir) => {
   const nextDir = path.join(appDir, '.next');
   const staticDir = path.join(nextDir, 'static');
 
   if (!fs.existsSync(nextDir)) {
+    console.log(`[debug] ${appDir}: .next 디렉터리 없음`);
     return { routes: [], sharedSize: null };
   }
 
-  // .next/static 하위 모든 JS 파일 크기 수집
   const allChunks = walkJsFiles(staticDir, staticDir);
+  console.log(`[debug] ${appDir}: JS 청크 ${Object.keys(allChunks).length}개`);
 
-  // 공유 청크 크기 (app/ 디렉터리 제외한 chunks)
+  // 공유 청크 = app/ 라우트 전용 청크를 제외한 프레임워크 + 공유 번들
   const sharedBytes = Object.entries(allChunks)
     .filter(([k]) => !k.startsWith('chunks/app/'))
     .reduce((sum, [, v]) => sum + v, 0);
 
-  // app-build-manifest.json: 라우트 → 청크 매핑
-  const manifestPath = path.join(nextDir, 'app-build-manifest.json');
-  if (!fs.existsSync(manifestPath)) {
-    return { routes: [], sharedSize: formatKb(sharedBytes) };
-  }
+  // server/app-paths-manifest.json: 모든 App Router 라우트 (서버+클라이언트)
+  const appPathsManifestPath = path.join(nextDir, 'server', 'app-paths-manifest.json');
+  // app-build-manifest.json: 클라이언트 JS가 있는 라우트만 포함
+  const appBuildManifestPath = path.join(nextDir, 'app-build-manifest.json');
 
-  const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
+  console.log(`[debug] app-paths-manifest: ${fs.existsSync(appPathsManifestPath)}`);
+  console.log(`[debug] app-build-manifest: ${fs.existsSync(appBuildManifestPath)}`);
 
-  const routes = Object.entries(manifest.pages || {})
-    .map(([route, chunks]) => {
-      const pageBytes = (chunks || []).reduce((sum, chunk) => {
-        // 청크 경로가 "static/..."로 시작하면 접두사 제거
+  // app-build-manifest에서 라우트별 클라이언트 청크 크기 수집
+  const clientChunks = {};
+  if (fs.existsSync(appBuildManifestPath)) {
+    const buildManifest = JSON.parse(fs.readFileSync(appBuildManifestPath, 'utf8'));
+    const pages = buildManifest.pages || {};
+    console.log(`[debug] app-build-manifest 라우트 수: ${Object.keys(pages).length}`);
+    for (const [route, chunks] of Object.entries(pages)) {
+      clientChunks[route] = (chunks || []).reduce((sum, chunk) => {
         const rel = chunk.replace(/^static\//, '');
         return sum + (allChunks[rel] || 0);
       }, 0);
+    }
+  }
+
+  // app-paths-manifest에서 전체 라우트 목록 가져오기
+  let allRouteKeys = [];
+  if (fs.existsSync(appPathsManifestPath)) {
+    const appPaths = JSON.parse(fs.readFileSync(appPathsManifestPath, 'utf8'));
+    // API 라우트(/route로 끝나는 것) 제외
+    allRouteKeys = Object.keys(appPaths).filter(
+      (r) => !r.endsWith('/route') && !r.includes('/robots') && !r.includes('/sitemap')
+    );
+    console.log(`[debug] app-paths 라우트: ${JSON.stringify(allRouteKeys)}`);
+  }
+
+  // app-paths에 없으면 app-build-manifest 라우트를 사용
+  const routeKeys =
+    allRouteKeys.length > 0 ? allRouteKeys : Object.keys(clientChunks);
+
+  const routes = routeKeys
+    .map((route) => {
+      const pageBytes = clientChunks[route] || 0;
       return {
         path: route,
         size: formatKb(pageBytes),
