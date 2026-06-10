@@ -3,37 +3,14 @@
 const fs = require('fs');
 
 /**
- * Next.js 빌드 출력에서 라우트별 번들 크기를 파싱합니다.
- * turbo run 출력 형식 (앱명:build: 접두사 포함/미포함 모두 처리)
+ * collect-bundle-sizes.js가 생성한 JSON 파일을 읽습니다.
  */
-const parseBuildOutput = (rawOutput) => {
-  const output = rawOutput
-    .split('\n')
-    // ANSI 이스케이프 코드 제거 (Next.js 컬러 출력 대응)
-    .map((line) => line.replace(/\[[0-9;]*m/g, ''))
-    // turbo run 접두사 제거 (예: "homepage:build: ")
-    .map((line) => line.replace(/^[^\s]+:build:\s?/, ''))
-    .join('\n');
-
-  const routes = [];
-  // ┌ ○ /path    5.56 kB    93.2 kB 형식 매칭
-  const routeRegex =
-    /[┌├└│]\s+[○●λ◑ƒ]\s+(\/\S*)\s+([\d.]+\s*[kMGT]?B)\s+([\d.]+\s*[kMGT]?B)/g;
-
-  let match;
-  while ((match = routeRegex.exec(output)) !== null) {
-    routes.push({
-      path: match[1],
-      size: match[2].trim(),
-      firstLoad: match[3].trim(),
-    });
+const readBundleSizes = (filePath) => {
+  try {
+    return JSON.parse(fs.readFileSync(filePath, 'utf8'));
+  } catch {
+    return { routes: [], sharedSize: null };
   }
-
-  const sharedMatch = output.match(
-    /First Load JS shared by all\s+([\d.]+\s*[kMGT]?B)/
-  );
-
-  return { routes, sharedSize: sharedMatch?.[1]?.trim() ?? null };
 };
 
 /**
@@ -59,9 +36,16 @@ const sizeIcon = (firstLoadStr) => {
   return '🟢';
 };
 
+const overallIcon = (routes) => {
+  const icons = routes.map((r) => sizeIcon(r.firstLoad));
+  if (icons.includes('🔴')) return '🔴';
+  if (icons.includes('🟡')) return '🟡';
+  return '🟢';
+};
+
 const formatRouteTable = (appLabel, { routes, sharedSize }) => {
   if (!routes.length) {
-    return `### ${appLabel}\n\n> ⚠️ 빌드 출력을 파싱하지 못했습니다.\n`;
+    return `<details>\n<summary>${appLabel} — ⚠️ 빌드 출력을 파싱하지 못했습니다.</summary>\n\n파싱 실패\n\n</details>`;
   }
 
   const rows = routes
@@ -72,13 +56,17 @@ const formatRouteTable = (appLabel, { routes, sharedSize }) => {
     .join('\n');
 
   const sharedLine = sharedSize ? `\n> 공유 번들: **${sharedSize}**\n` : '';
+  const icon = overallIcon(routes);
+  const summary = `${icon} ${appLabel} — ${routes.length}개 라우트 | 공유: ${sharedSize ?? '-'}`;
 
-  return `### ${appLabel}
+  return `<details>
+<summary>${summary}</summary>
 
 | 라우트 | 크기 | First Load JS | 상태 |
 |--------|------|---------------|------|
 ${rows}
-${sharedLine}`;
+${sharedLine}
+</details>`;
 };
 
 module.exports = async ({ github, context, core }) => {
@@ -90,16 +78,8 @@ module.exports = async ({ github, context, core }) => {
 
   const { owner, repo } = context.repo;
 
-  const readBuild = (filePath) => {
-    try {
-      return fs.readFileSync(filePath, 'utf8');
-    } catch {
-      return '';
-    }
-  };
-
-  const homepageBuild = parseBuildOutput(readBuild('/tmp/homepage-build.txt'));
-  const recruitBuild = parseBuildOutput(readBuild('/tmp/recruit-build.txt'));
+  const homepageBuild = readBundleSizes('/tmp/homepage-sizes.json');
+  const recruitBuild = readBundleSizes('/tmp/recruit-sizes.json');
 
   const hasAnyRoute =
     homepageBuild.routes.length > 0 || recruitBuild.routes.length > 0;
@@ -115,8 +95,6 @@ module.exports = async ({ github, context, core }) => {
 ${formatRouteTable('🏠 Homepage (cotato.kr)', homepageBuild)}
 
 ${formatRouteTable('📝 Recruit (recruit.cotato.kr)', recruitBuild)}
-
----
 
 ${legend}
 
