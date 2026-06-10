@@ -2,6 +2,16 @@
 
 const fs = require('fs');
 const path = require('path');
+const zlib = require('zlib');
+
+const gzipSize = (filePath) => {
+  if (!fs.existsSync(filePath)) return 0;
+  try {
+    return zlib.gzipSync(fs.readFileSync(filePath)).length;
+  } catch {
+    return 0;
+  }
+};
 
 const formatKb = (bytes) => {
   if (bytes === 0) return '0 B';
@@ -10,19 +20,15 @@ const formatKb = (bytes) => {
   return `${kb.toFixed(2)} kB`;
 };
 
-const walkJsFiles = (dir, staticDir) => {
-  const result = {};
-  if (!fs.existsSync(dir)) return result;
-  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
-    const full = path.join(dir, entry.name);
-    if (entry.isDirectory()) {
-      Object.assign(result, walkJsFiles(full, staticDir));
-    } else if (entry.name.endsWith('.js')) {
-      const rel = path.relative(staticDir, full);
-      result[rel] = fs.statSync(full).size;
-    }
-  }
-  return result;
+// Next.js 내부 경로 → URL 경로 변환
+// "/(with-header)/(with-footer)/(home)/page" → "/"
+const toUrlPath = (internalPath) => {
+  let p = internalPath;
+  p = p.replace(/\/page$/, '');
+  p = p.replace(/\/\([^)]+\)/g, '');
+  p = p.replace(/\/+/g, '/') || '/';
+  if (!p.startsWith('/')) p = '/' + p;
+  return p || '/';
 };
 
 const collectSizes = (appDir) => {
@@ -30,67 +36,72 @@ const collectSizes = (appDir) => {
   const staticDir = path.join(nextDir, 'static');
 
   if (!fs.existsSync(nextDir)) {
-    console.log(`[debug] ${appDir}: .next 디렉터리 없음`);
+    console.log(`[debug] ${appDir}: .next 없음`);
     return { routes: [], sharedSize: null };
   }
 
-  const allChunks = walkJsFiles(staticDir, staticDir);
-  console.log(`[debug] ${appDir}: JS 청크 ${Object.keys(allChunks).length}개`);
+  // build-manifest.json에서 rootMainFiles(항상 로드되는 공유 프레임워크 청크) 추출
+  const buildManifestPath = path.join(nextDir, 'build-manifest.json');
+  let rootMainBytes = 0;
+  if (fs.existsSync(buildManifestPath)) {
+    const buildManifest = JSON.parse(fs.readFileSync(buildManifestPath, 'utf8'));
+    const rootFiles = buildManifest.rootMainFiles || [];
+    console.log(`[debug] ${appDir} rootMainFiles(${rootFiles.length}): ${JSON.stringify(rootFiles)}`);
+    for (const chunk of rootFiles) {
+      const filePath = path.join(nextDir, chunk);
+      rootMainBytes += gzipSize(filePath);
+    }
+  } else {
+    console.log(`[debug] ${appDir}: build-manifest.json 없음`);
+  }
+  console.log(`[debug] ${appDir} 공유 번들(gzip): ${formatKb(rootMainBytes)}`);
 
-  // 공유 청크 = app/ 라우트 전용 청크를 제외한 프레임워크 + 공유 번들
-  const sharedBytes = Object.entries(allChunks)
-    .filter(([k]) => !k.startsWith('chunks/app/'))
-    .reduce((sum, [, v]) => sum + v, 0);
-
-  // server/app-paths-manifest.json: 모든 App Router 라우트 (서버+클라이언트)
-  const appPathsManifestPath = path.join(nextDir, 'server', 'app-paths-manifest.json');
-  // app-build-manifest.json: 클라이언트 JS가 있는 라우트만 포함
+  // app-build-manifest.json에서 라우트별 클라이언트 청크 크기 (URL 경로 기준)
   const appBuildManifestPath = path.join(nextDir, 'app-build-manifest.json');
-
-  console.log(`[debug] app-paths-manifest: ${fs.existsSync(appPathsManifestPath)}`);
-  console.log(`[debug] app-build-manifest: ${fs.existsSync(appBuildManifestPath)}`);
-
-  // app-build-manifest에서 라우트별 클라이언트 청크 크기 수집
   const clientChunks = {};
   if (fs.existsSync(appBuildManifestPath)) {
-    const buildManifest = JSON.parse(fs.readFileSync(appBuildManifestPath, 'utf8'));
-    const pages = buildManifest.pages || {};
-    console.log(`[debug] app-build-manifest 라우트 수: ${Object.keys(pages).length}`);
+    const manifest = JSON.parse(fs.readFileSync(appBuildManifestPath, 'utf8'));
+    const pages = manifest.pages || {};
+    console.log(`[debug] ${appDir} app-build-manifest 라우트: ${JSON.stringify(Object.keys(pages))}`);
     for (const [route, chunks] of Object.entries(pages)) {
       clientChunks[route] = (chunks || []).reduce((sum, chunk) => {
-        const rel = chunk.replace(/^static\//, '');
-        return sum + (allChunks[rel] || 0);
+        const filePath = path.join(nextDir, chunk);
+        return sum + gzipSize(filePath);
       }, 0);
     }
+  } else {
+    console.log(`[debug] ${appDir}: app-build-manifest.json 없음`);
   }
 
-  // app-paths-manifest에서 전체 라우트 목록 가져오기
-  let allRouteKeys = [];
+  // app-paths-manifest에서 전체 라우트 목록 (내부 경로 → URL 경로 변환)
+  const appPathsManifestPath = path.join(nextDir, 'server', 'app-paths-manifest.json');
+  let routes = [];
   if (fs.existsSync(appPathsManifestPath)) {
     const appPaths = JSON.parse(fs.readFileSync(appPathsManifestPath, 'utf8'));
-    // API 라우트(/route로 끝나는 것) 제외
-    allRouteKeys = Object.keys(appPaths).filter(
-      (r) => !r.endsWith('/route') && !r.includes('/robots') && !r.includes('/sitemap')
-    );
-    console.log(`[debug] app-paths 라우트: ${JSON.stringify(allRouteKeys)}`);
+    const seen = new Set();
+    const routeEntries = [];
+
+    for (const internalPath of Object.keys(appPaths)) {
+      if (internalPath.endsWith('/route')) continue;
+      if (/\/(robots|sitemap|manifest)/.test(internalPath)) continue;
+      const urlPath = toUrlPath(internalPath);
+      if (seen.has(urlPath)) continue;
+      seen.add(urlPath);
+      const pageBytes = clientChunks[urlPath] || 0;
+      routeEntries.push({
+        path: urlPath,
+        size: formatKb(pageBytes),
+        firstLoad: formatKb(pageBytes + rootMainBytes),
+      });
+    }
+
+    console.log(`[debug] ${appDir} URL 라우트: ${JSON.stringify(routeEntries.map((r) => r.path))}`);
+    routes = routeEntries.sort((a, b) => a.path.localeCompare(b.path));
+  } else {
+    console.log(`[debug] ${appDir}: app-paths-manifest.json 없음`);
   }
 
-  // app-paths에 없으면 app-build-manifest 라우트를 사용
-  const routeKeys =
-    allRouteKeys.length > 0 ? allRouteKeys : Object.keys(clientChunks);
-
-  const routes = routeKeys
-    .map((route) => {
-      const pageBytes = clientChunks[route] || 0;
-      return {
-        path: route,
-        size: formatKb(pageBytes),
-        firstLoad: formatKb(pageBytes + sharedBytes),
-      };
-    })
-    .sort((a, b) => a.path.localeCompare(b.path));
-
-  return { routes, sharedSize: formatKb(sharedBytes) };
+  return { routes, sharedSize: formatKb(rootMainBytes) };
 };
 
 const homepage = collectSizes('apps/homepage');
