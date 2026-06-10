@@ -3,38 +3,14 @@
 const fs = require('fs');
 
 /**
- * Next.js 빌드 출력에서 라우트별 번들 크기를 파싱합니다.
- * turbo run 출력 형식 (앱명:build: 접두사 포함/미포함 모두 처리)
+ * collect-bundle-sizes.js가 생성한 JSON 파일을 읽습니다.
  */
-const parseBuildOutput = (rawOutput) => {
-  const output = rawOutput
-    .split('\n')
-    // ANSI/VT100 제어 시퀀스 전체 제거 (GitHub Actions FORCE_COLOR=1 대응)
-    // \x1B[ 로 시작하는 모든 터미널 제어 코드 제거 (색상, 커서 이동, 화면 지우기 등)
-    .map((line) => line.replace(/\x1B\[[0-9;?]*[A-Za-z]/g, ''))
-    // turbo run 접두사 제거 (예: "homepage:build: ")
-    .map((line) => line.replace(/^[^\s]+:build:\s?/, ''))
-    .join('\n');
-
-  const routes = [];
-  // ┌ ○ /path    5.56 kB    93.2 kB 형식 매칭
-  const routeRegex =
-    /[┌├└│]\s+[○●λ◑ƒ]\s+(\/\S*)\s+([\d.]+\s*[kMGT]?B)\s+([\d.]+\s*[kMGT]?B)/g;
-
-  let match;
-  while ((match = routeRegex.exec(output)) !== null) {
-    routes.push({
-      path: match[1],
-      size: match[2].trim(),
-      firstLoad: match[3].trim(),
-    });
+const readBundleSizes = (filePath) => {
+  try {
+    return JSON.parse(fs.readFileSync(filePath, 'utf8'));
+  } catch {
+    return { routes: [], sharedSize: null };
   }
-
-  const sharedMatch = output.match(
-    /First Load JS shared by all\s+([\d.]+\s*[kMGT]?B)/
-  );
-
-  return { routes, sharedSize: sharedMatch?.[1]?.trim() ?? null };
 };
 
 /**
@@ -91,16 +67,8 @@ module.exports = async ({ github, context, core }) => {
 
   const { owner, repo } = context.repo;
 
-  const readBuild = (filePath) => {
-    try {
-      return fs.readFileSync(filePath, 'utf8');
-    } catch {
-      return '';
-    }
-  };
-
-  const homepageBuild = parseBuildOutput(readBuild('/tmp/homepage-build.txt'));
-  const recruitBuild = parseBuildOutput(readBuild('/tmp/recruit-build.txt'));
+  const homepageBuild = readBundleSizes('/tmp/homepage-sizes.json');
+  const recruitBuild = readBundleSizes('/tmp/recruit-sizes.json');
 
   const hasAnyRoute =
     homepageBuild.routes.length > 0 || recruitBuild.routes.length > 0;
