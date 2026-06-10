@@ -20,7 +20,7 @@ export const HomeMobileMainSchedule = () => {
         <BlackRowKeycap
           imageSrc='/images/main-schedule/cokerthon.webp'
           title='코커톤'
-          subTitle='2026.07.24'
+          subTitle='2026.07.10'
         />
       </div>
 
