@@ -108,14 +108,23 @@ Import from `@repo/ui`. Key exports: `Button`, `FullButton`, `FormInput`, `FormT
 
 ## Skills
 
-이 프로젝트의 스킬은 `.claude/skills/` 에 정의되어 있습니다.
+스킬은 `.agents/skills/` 에 canonical 형태로 정의되어 있습니다.
 트리거가 발생하면 해당 파일을 읽고 그 지시를 따릅니다.
 
-| 트리거                                      | 스킬 파일                       |
-| ------------------------------------------- | ------------------------------- |
-| "커밋해줘", "commit", `/commit`             | `.claude/skills/commit.md`      |
-| "PR 만들어줘", "pull request", `/pr`        | `.claude/skills/pr.md`          |
-| "이슈 만들어줘", `/issue`                   | `.claude/skills/issue.md`       |
-| "코드 리뷰해줘", "review"                   | `.claude/skills/code-review.md` |
-| "스토리 만들어줘", "스토리북", `/storybook` | `.claude/skills/storybook.md`   |
-| "문서 만들어줘", "README"                   | `.claude/skills/doc-writer.md`  |
+**도구별 스킬 위치:**
+
+| 도구         | 위치                                             |
+| ------------ | ------------------------------------------------ |
+| Claude Code  | `.claude/skills/cotato-{name}/SKILL.md` (심링크) |
+| Cursor       | `.cursor/skills/cotato-{name}/SKILL.md` (심링크) |
+| Codex / 기타 | `.agents/skills/cotato-{name}/SKILL.md` (원본)   |
+
+| 트리거                                      | 스킬 이름            | canonical 경로                               |
+| ------------------------------------------- | -------------------- | -------------------------------------------- |
+| "커밋해줘", "commit", `/commit`             | `cotato-commit`      | `.agents/skills/cotato-commit/SKILL.md`      |
+| "PR 만들어줘", "pull request", `/pr`        | `cotato-pr`          | `.agents/skills/cotato-pr/SKILL.md`          |
+| "이슈 만들어줘", `/issue`                   | `cotato-issue`       | `.agents/skills/cotato-issue/SKILL.md`       |
+| "코드 리뷰해줘", "review"                   | `cotato-code-review` | `.agents/skills/cotato-code-review/SKILL.md` |
+| "스토리 만들어줘", "스토리북", `/storybook` | `cotato-storybook`   | `.agents/skills/cotato-storybook/SKILL.md`   |
+| "문서 만들어줘", "README"                   | `cotato-doc-writer`  | `.agents/skills/cotato-doc-writer/SKILL.md`  |
+| "릴리즈해줘", "release PR", `/release`      | `cotato-release`     | `.agents/skills/cotato-release/SKILL.md`     |

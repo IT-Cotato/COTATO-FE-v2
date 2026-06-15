@@ -1,3 +1,12 @@
+---
+name: cotato-pr
+description: COTATO 프로젝트 PR 생성 워크플로우. "PR 만들어줘", "pull request", /pr 입력 시 사용. [TYPE]: 제목 형식, PR 템플릿 준수, develop 기준.
+license: MIT
+metadata:
+  author: cotato
+  version: '1.0.0'
+---
+
 # pr 스킬
 
 ## 트리거
@@ -100,13 +109,11 @@
 ```markdown
 ## ISSUE 🔗
 
-close #<이슈번호> <!-- 이슈 번호가 확인되면 작성, 없으면 빈 칸 -->
+close #<이슈번호>
 
 <br><br>
 
 ## What is this PR? 🔍
-
-<!-- 커밋 수에 따라 아래 구조 적용 -->
 
 <br><br>
 
@@ -200,5 +207,4 @@ EOF
 - PR을 merge하지 않는다 (사용자가 명시적으로 요청해도 확인 절차를 거친다)
 - force-push로 base 브랜치를 덮어쓰지 않는다
 - **`[TYPE]` 뒤에 콜론(:)을 빠뜨리지 않는다 — `[FEAT]`은 틀렸고 `[FEAT]:`이 맞다**
-- `--label` 없이 PR을 생성하지 않는다
 - reviewer, milestone은 사용자가 명시한 경우에만 추가한다
