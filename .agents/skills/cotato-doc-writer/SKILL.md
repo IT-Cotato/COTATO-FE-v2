@@ -1,3 +1,12 @@
+---
+name: cotato-doc-writer
+description: COTATO 프로젝트 문서 작성 워크플로우. "문서 만들어줘", "README 써줘" 입력 시 사용. README/설계문서/ADR 구조, Why 중심 서술.
+license: MIT
+metadata:
+  author: cotato
+  version: '1.0.0'
+---
+
 # doc-writer 스킬
 
 ## 트리거

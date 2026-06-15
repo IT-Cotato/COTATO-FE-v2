@@ -1,3 +1,12 @@
+---
+name: cotato-code-review
+description: COTATO 프로젝트 코드 리뷰 워크플로우. "코드 리뷰해줘", "review" 입력 시 사용. CRITICAL/HIGH/MEDIUM/LOW 심각도 분류, 프로젝트 컨벤션 준수 확인.
+license: MIT
+metadata:
+  author: cotato
+  version: '1.0.0'
+---
+
 # code-review 스킬
 
 ## 트리거

@@ -1,3 +1,12 @@
+---
+name: cotato-issue
+description: COTATO 프로젝트 GitHub 이슈 생성 워크플로우. "이슈 만들어줘", /issue 입력 시 사용. [TYPE]: 제목 형식, 템플릿 준수, 브랜치 자동 생성.
+license: MIT
+metadata:
+  author: cotato
+  version: '1.0.0'
+---
+
 # issue 스킬
 
 ## 트리거
@@ -165,9 +174,6 @@ EOF
   --assignee "@me" \
   --label "🥔 HOMEPAGE"
 ```
-
-> type 라벨(`✨ Feature` 등)은 `type-labeler.yml` workflow가 자동 부착하므로 생략.
-> scope 라벨(`🥔 HOMEPAGE` 등)은 이슈에 workflow가 없으므로 직접 지정.
 
 출력된 이슈 URL에서 번호 파싱.
 

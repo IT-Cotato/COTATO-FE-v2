@@ -1,3 +1,12 @@
+---
+name: cotato-commit
+description: COTATO 프로젝트 커밋 워크플로우. "커밋해줘", "commit", /commit 입력 시 사용. atomic 단위 커밋 분리, secret guard, 계획 승인 후 실행.
+license: MIT
+metadata:
+  author: cotato
+  version: '1.0.0'
+---
+
 # commit 스킬
 
 ## 트리거

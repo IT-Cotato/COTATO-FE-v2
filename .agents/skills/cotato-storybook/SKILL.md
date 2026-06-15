@@ -1,3 +1,12 @@
+---
+name: cotato-storybook
+description: COTATO UI 패키지 Storybook 스토리 작성 워크플로우. "스토리 만들어줘", "스토리북", /storybook 입력 시 사용. CSF3 패턴, packages/ui 구조 준수.
+license: MIT
+metadata:
+  author: cotato
+  version: '1.0.0'
+---
+
 # storybook 스킬
 
 ## 트리거
