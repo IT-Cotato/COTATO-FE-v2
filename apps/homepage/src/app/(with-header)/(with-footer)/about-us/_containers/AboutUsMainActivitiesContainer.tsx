@@ -2,17 +2,23 @@
 
 import Image from 'next/image';
 import {useEffect, useState} from 'react';
+import dynamic from 'next/dynamic';
 import AboutUsBackgroundSecond from '@/assets/about-us/background-about-us-second.webp';
 import {AboutUsDescription} from '@/app/(with-header)/(with-footer)/about-us/_components/AboutUsDescription';
 import {motion} from 'framer-motion';
-import 'swiper/css';
-import 'swiper/css/pagination';
 import {
   FADE_IN_UP_CONTAINER,
   FADE_IN_UP_ITEM,
 } from '@/constants/animation/motion-variants';
-import {AboutUsMobileMainActivitiesContainer} from '@/app/(with-header)/(with-footer)/about-us/_mobile/_containers/AboutUsMobileMainActivitiesContainer';
 import {AboutUsDesktopMainActivitiesContainer} from '@/app/(with-header)/(with-footer)/about-us/_desktop/_containers/AboutUsDesktopMainActivitiesContainer';
+
+const AboutUsMobileMainActivitiesContainer = dynamic(
+  () =>
+    import('@/app/(with-header)/(with-footer)/about-us/_mobile/_containers/AboutUsMobileMainActivitiesContainer').then(
+      (m) => m.AboutUsMobileMainActivitiesContainer
+    ),
+  {ssr: false}
+);
 
 export interface AboutUsActivity {
   id: number;

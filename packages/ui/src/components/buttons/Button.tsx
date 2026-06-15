@@ -14,7 +14,7 @@ import {
   buttonVariantStyles,
 } from './button.styles';
 
-interface ButtonComponentProps extends ButtonProps {
+export interface ButtonComponentProps extends ButtonProps {
   enableHover?: boolean;
   defaultWidth?: number | string;
   subLabelSpacing?: number;

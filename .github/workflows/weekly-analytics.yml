@@ -1,0 +1,27 @@
+name: 📊 주간 협업 리포트
+
+on:
+  schedule:
+    - cron: '0 0 * * 1' # 월요일 00:00 UTC = 09:00 KST
+  workflow_dispatch:
+
+permissions:
+  issues: write
+  contents: read
+
+jobs:
+  weekly-report:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 주간 협업 리포트 생성
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const fn = require('./.github/scripts/weekly-analytics.js')
+            await fn({ github, context, core })
+        env:
+          NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
+          NOTION_REPORTS_DATABASE_ID: ${{ secrets.NOTION_REPORTS_DATABASE_ID }}

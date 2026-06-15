@@ -1,0 +1,109 @@
+import {Meta, ColorPalette, ColorItem} from '@storybook/blocks';
+
+<Meta title='Design Tokens/Colors' />
+
+# 색상 토큰
+
+`packages/tailwind-config/theme/color.css`에 정의된 전체 색상 토큰입니다.
+
+---
+
+## Brand
+
+<ColorPalette>
+  <ColorItem
+    title='primary'
+    subtitle='주요 CTA, 강조 — #f87d02'
+    colors={{'primary': '#f87d02'}}
+  />
+  <ColorItem
+    title='primary-30'
+    subtitle='primary 연한 배경 — #fff0bd'
+    colors={{'primary-30': '#fff0bd'}}
+  />
+  <ColorItem
+    title='secondary'
+    subtitle='보조 강조 — #ffb800'
+    colors={{'secondary': '#ffb800'}}
+  />
+</ColorPalette>
+
+## Neutral
+
+<ColorPalette>
+  <ColorItem
+    title='neutral'
+    subtitle='50 → 800 (밝은 순)'
+    colors={{
+      '50': '#f5f5f5',
+      '100': '#e5e5e5',
+      '200': '#d4d4d4',
+      '300': '#bdbdbd',
+      '400': '#9e9e9e',
+      '500': '#757575',
+      '600': '#525252',
+      '700': '#343434',
+      '800': '#1f1f1f',
+    }}
+  />
+  <ColorItem
+    title='white'
+    subtitle='텍스트, 아이콘 — #ffffff'
+    colors={{'white': '#ffffff'}}
+  />
+</ColorPalette>
+
+## Text
+
+<ColorPalette>
+  <ColorItem
+    title='text-default'
+    subtitle='기본 텍스트 — #f5f5f5'
+    colors={{'default': '#f5f5f5'}}
+  />
+  <ColorItem
+    title='text-muted'
+    subtitle='보조 텍스트 — #9e9e9e'
+    colors={{'muted': '#9e9e9e'}}
+  />
+  <ColorItem
+    title='text-disabled'
+    subtitle='비활성 텍스트 — #9e9e9e'
+    colors={{'disabled': '#9e9e9e'}}
+  />
+</ColorPalette>
+
+## Interaction
+
+<ColorPalette>
+  <ColorItem
+    title='hover'
+    subtitle='호버 상태 — #ffa726'
+    colors={{'hover': '#ffa726'}}
+  />
+  <ColorItem
+    title='active'
+    subtitle='활성 상태 — #ff9000'
+    colors={{'active': '#ff9000'}}
+  />
+  <ColorItem
+    title='disabled'
+    subtitle='비활성 요소 — #5a4a3a'
+    colors={{'disabled': '#5a4a3a'}}
+  />
+</ColorPalette>
+
+## Semantic
+
+<ColorPalette>
+  <ColorItem
+    title='alert'
+    subtitle='에러, 경고 — #e5484d'
+    colors={{'alert': '#e5484d'}}
+  />
+  <ColorItem
+    title='chip'
+    subtitle='상태 칩 (완료 등) — #68ca3a'
+    colors={{'chip': '#68ca3a'}}
+  />
+</ColorPalette>

@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import CheckIcon from '../../assets/checkbox/check.svg';
 
-interface CheckboxProps {
+export interface CheckboxProps {
   checked: boolean;
   onChange: (checked: boolean) => void;
   disabled?: boolean;

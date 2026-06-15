@@ -5,7 +5,7 @@ import clsx from 'clsx';
 import {formFieldStyles} from './form.styles';
 import {useIsMobile} from '../../hooks/useIsMobile';
 
-interface FormLinkProps extends Omit<
+export interface FormLinkProps extends Omit<
   InputHTMLAttributes<HTMLInputElement>,
   'value' | 'onChange'
 > {

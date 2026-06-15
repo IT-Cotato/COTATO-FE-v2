@@ -1,0 +1,89 @@
+import {Meta, Typeset} from '@storybook/blocks';
+
+<Meta title='Design Tokens/Typography' />
+
+# 타이포그래피 토큰
+
+`packages/tailwind-config/theme/typography.css`에 정의된 전체 타이포그래피 토큰입니다.
+기본 폰트는 **Pretendard**이며, `≤ 640px` 뷰포트에서 모바일 값이 적용됩니다.
+
+---
+
+## Heading
+
+### Bold 700
+
+`text-h1` 32px / 52px · `text-h2` 28px / 40px · `text-h3` 22px / 36px · `text-h4` 18px / 32px
+
+<Typeset
+  fontFamily='"Pretendard", sans-serif'
+  fontSizes={[32, 28, 22, 18]}
+  fontWeight={700}
+  sampleText='Cotato Design System'
+/>
+
+> **모바일**: h1 행간 38px · h2 행간 32px · h3 행간 26px · h4 행간 30px / 굵기 400
+
+### SemiBold 600
+
+`text-h5` 16px / 26px
+
+<Typeset
+  fontFamily='"Pretendard", sans-serif'
+  fontSizes={[16]}
+  fontWeight={600}
+  sampleText='Cotato Design System'
+/>
+
+> **모바일**: h5 행간 24px / 굵기 400
+
+---
+
+## Body
+
+### Regular 400
+
+`text-body-l` 14px / 22px · `text-body-m` 12px / 20px · `text-body-s` 10px / 18px
+
+<Typeset
+  fontFamily='"Pretendard", sans-serif'
+  fontSizes={[14, 12, 10]}
+  fontWeight={400}
+  sampleText='Cotato Design System'
+/>
+
+> **모바일**: body-m → 13px / 21px
+
+### SemiBold 600
+
+`text-body-l-sb` 14px / 22px · `text-body-m-sb` 12px / 20px
+
+<Typeset
+  fontFamily='"Pretendard", sans-serif'
+  fontSizes={[14, 12]}
+  fontWeight={600}
+  sampleText='Cotato Design System'
+/>
+
+### Bold 700
+
+`text-body-l-b` 14px / 22px
+
+<Typeset
+  fontFamily='"Pretendard", sans-serif'
+  fontSizes={[14]}
+  fontWeight={700}
+  sampleText='Cotato Design System'
+/>
+
+> **모바일 전용**: `text-body-m-b` → 13px / 21px / 굵기 700
+
+---
+
+## 사용 예시
+
+```tsx
+<h1 className="text-h1 font-bold">제목</h1>
+<p className="text-body-l">본문 텍스트</p>
+<span className="text-body-m-sb">반굵기 중간 텍스트</span>
+```
