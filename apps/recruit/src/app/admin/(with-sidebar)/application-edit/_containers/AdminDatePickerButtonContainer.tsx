@@ -1,6 +1,14 @@
 'use client';
 
-import {CustomDateTimePicker} from '@/app/admin/(with-sidebar)/application-edit/_components/calendar/CustomDateTimePicker';
+import dynamic from 'next/dynamic';
+
+const CustomDateTimePicker = dynamic(
+  () =>
+    import(
+      '@/app/admin/(with-sidebar)/application-edit/_components/calendar/CustomDateTimePicker'
+    ).then((m) => m.CustomDateTimePicker),
+  {ssr: false}
+);
 import CalendarIcon from '@repo/ui/assets/icons/calendar.svg';
 import 'react-datepicker/dist/react-datepicker.css';
 import {useMemo, useRef, useState} from 'react';

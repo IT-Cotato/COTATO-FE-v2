@@ -1,6 +1,14 @@
 'use client';
 
-import {RecruitmentInfoEditRow} from '@/app/admin/(with-sidebar)/application-edit/_components/recruitment/RecruitmentInfoEditRow';
+import dynamic from 'next/dynamic';
+
+const RecruitmentInfoEditRow = dynamic(
+  () =>
+    import(
+      '@/app/admin/(with-sidebar)/application-edit/_components/recruitment/RecruitmentInfoEditRow'
+    ).then((m) => m.RecruitmentInfoEditRow),
+  {ssr: false}
+);
 import {RecruitmentInfoViewRow} from '@/components/recruitment/RecruitmentInfoViewRow';
 import {scheduleSections} from '@/constants/admin/admin-application-questions';
 import {RecruitmentInformationType} from '@/schemas/admin/admin-recruitment-information.schema';
