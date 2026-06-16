@@ -4,7 +4,15 @@ import {useRouter} from 'next/navigation';
 import {ROUTES} from '@/constants/routes';
 import {FormInput} from '@repo/ui/components/form/FormInput';
 import {FormLink} from '@repo/ui/components/form/FormLink';
-import {PeriodField} from '@/app/(with-header)/(with-footer)/project/add-project/_components/PeriodField';
+import dynamic from 'next/dynamic';
+
+const PeriodField = dynamic(
+  () =>
+    import(
+      '@/app/(with-header)/(with-footer)/project/add-project/_components/PeriodField'
+    ).then((m) => m.PeriodField),
+  {ssr: false}
+);
 import {TeamSection} from '@/app/(with-header)/(with-footer)/project/add-project/_components/TeamSection';
 import {useTeamMembers} from '@/app/(with-header)/(with-footer)/project/add-project/_hooks/useTeamMember';
 import {FormField} from '@/app/(with-header)/(with-footer)/project/add-project/_components/FormField';

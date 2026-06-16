@@ -1,7 +1,12 @@
 'use client';
 
 import {AddGenerationContainer} from './add-generation/AddGenerationContainer';
-import {GenerationInfoSection} from './GenerationInfoSection';
+import dynamic from 'next/dynamic';
+
+const GenerationInfoSection = dynamic(
+  () => import('./GenerationInfoSection').then((m) => m.GenerationInfoSection),
+  {ssr: false}
+);
 
 interface ActiveMembersActionBarProps {
   generations: number[];
