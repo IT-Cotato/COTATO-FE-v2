@@ -1,3 +1,5 @@
+'use client';
+
 import {useState, useEffect} from 'react';
 import {CustomHeader} from '@/app/(with-header)/(with-footer)/project/add-project/_components/calendar/CustomHeader';
 import {CustomInput} from '@/app/(with-header)/(with-footer)/project/add-project/_components/calendar/CustomInput';
@@ -55,7 +57,6 @@ export const PeriodField = ({
           formatWeekDay={(nameOfDay) => nameOfDay.toLowerCase().slice(0, 3)}
           renderCustomHeader={(props) => <CustomHeader {...props} />}
           disabledKeyboardNavigation
-          portalId='datepicker-portal'
         />
       </div>
       <div
@@ -78,7 +79,6 @@ export const PeriodField = ({
           formatWeekDay={(nameOfDay) => nameOfDay.toLowerCase().slice(0, 3)}
           renderCustomHeader={(props) => <CustomHeader {...props} />}
           disabledKeyboardNavigation
-          portalId='datepicker-portal'
         />
       </div>
     </div>
