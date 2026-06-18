@@ -60,6 +60,10 @@ jobs:
           lhci assert --config=apps/homepage/.lighthouserc.json
         continue-on-error: true
 
+      - name: Save homepage LHCI results
+        if: always()
+        run: cp -r .lighthouseci /tmp/lhci-homepage
+
       - name: Stop homepage server
         if: always()
         run: kill $(cat /tmp/homepage.pid) 2>/dev/null || true
@@ -76,6 +80,10 @@ jobs:
           lhci collect --config=apps/recruit/.lighthouserc.json
           lhci assert --config=apps/recruit/.lighthouserc.json
         continue-on-error: true
+
+      - name: Save recruit LHCI results
+        if: always()
+        run: cp -r .lighthouseci /tmp/lhci-recruit
 
       - name: Stop recruit server
         if: always()

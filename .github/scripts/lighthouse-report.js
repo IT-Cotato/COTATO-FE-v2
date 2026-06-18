@@ -15,19 +15,17 @@ const scoreIcon = (s) => {
 const ms = (val) => (val == null ? '-' : `${Math.round(val)} ms`);
 const cls = (val) => (val == null ? '-' : val.toFixed(3));
 
-const readAllLhrs = (core) => {
+const readLhrsFromDir = (dir, core) => {
   try {
-    const lhciDir = path.join(process.cwd(), '.lighthouseci');
-    core.info(`Reading LHRs from: ${lhciDir}`);
-    const files = fs.readdirSync(lhciDir).filter((f) => f.startsWith('lhr-') && f.endsWith('.json'));
-    core.info(`Found LHR files: ${files.length}`);
+    const files = fs.readdirSync(dir).filter((f) => f.startsWith('lhr-') && f.endsWith('.json'));
+    core.info(`Reading ${files.length} LHR(s) from ${dir}`);
     return files.map((file) => {
-      const lhr = JSON.parse(fs.readFileSync(path.join(lhciDir, file), 'utf8'));
+      const lhr = JSON.parse(fs.readFileSync(path.join(dir, file), 'utf8'));
       const url = lhr.requestedUrl || lhr.finalUrl || '';
       return { url, lhr };
     });
   } catch (e) {
-    core.warning(`Failed to read LHRs: ${e.message}`);
+    core.warning(`Failed to read LHRs from ${dir}: ${e.message}`);
     return [];
   }
 };
@@ -81,11 +79,8 @@ module.exports = async ({ github, context, core }) => {
 
   const { owner, repo } = context.repo;
 
-  // 포트로 앱 구분: 3001 = homepage, 3000 = recruit
-  const allRuns = readAllLhrs(core);
-  const homepageRuns = allRuns.filter((r) => r.url.includes(':3001'));
-  const recruitRuns = allRuns.filter((r) => r.url.includes(':3000'));
-
+  const homepageRuns = readLhrsFromDir('/tmp/lhci-homepage', core);
+  const recruitRuns = readLhrsFromDir('/tmp/lhci-recruit', core);
   core.info(`Homepage runs: ${homepageRuns.length}, Recruit runs: ${recruitRuns.length}`);
 
   const body = `## ⚡ Lighthouse CI 리포트
