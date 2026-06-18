@@ -108,7 +108,8 @@ ${recruitTable}
 
   const existing = comments.find(
     (c) =>
-      c.user.type === 'Bot' && c.body.includes('⚡ Lighthouse CI 리포트')
+      c.user.login === 'github-actions[bot]' &&
+      c.body.includes('⚡ Lighthouse CI 리포트')
   );
 
   if (existing) {
