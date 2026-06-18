@@ -2,7 +2,7 @@
   "ci": {
     "collect": {
       "numberOfRuns": 1,
-      "url": ["http://localhost:3001/", "http://localhost:3001/about-us"]
+      "url": ["http://localhost:3001/", "http://localhost:3001/about-us", "http://localhost:3001/project", "http://localhost:3001/recruit"]
     },
     "assert": {
       "assertions": {
