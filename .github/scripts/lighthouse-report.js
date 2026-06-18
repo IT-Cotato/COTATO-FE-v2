@@ -81,12 +81,12 @@ module.exports = async ({ github, context, core }) => {
   core.info(`CWD: ${process.cwd()}`);
   const homepageTable = formatAppTable(
     'Homepage',
-    path.join(process.cwd(), '.lighthouseci/homepage'),
+    path.join(process.cwd(), 'apps/homepage/.lighthouseci'),
     core
   );
   const recruitTable = formatAppTable(
     'Recruit',
-    path.join(process.cwd(), '.lighthouseci/recruit'),
+    path.join(process.cwd(), 'apps/recruit/.lighthouseci'),
     core
   );
 

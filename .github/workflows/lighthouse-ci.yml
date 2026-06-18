@@ -55,13 +55,10 @@ jobs:
           npx wait-on http://localhost:3001 --timeout 60000
 
       - name: Run Lighthouse CI — homepage
+        working-directory: apps/homepage
         run: |
-          lhci collect \
-            --config=apps/homepage/.lighthouserc.json \
-            --outputDir=.lighthouseci/homepage
-          lhci assert \
-            --config=apps/homepage/.lighthouserc.json \
-            --outputDir=.lighthouseci/homepage
+          lhci collect --config=.lighthouserc.json
+          lhci assert --config=.lighthouserc.json
         continue-on-error: true
 
       - name: Stop homepage server
@@ -76,13 +73,10 @@ jobs:
           npx wait-on http://localhost:3000 --timeout 60000
 
       - name: Run Lighthouse CI — recruit
+        working-directory: apps/recruit
         run: |
-          lhci collect \
-            --config=apps/recruit/.lighthouserc.json \
-            --outputDir=.lighthouseci/recruit
-          lhci assert \
-            --config=apps/recruit/.lighthouserc.json \
-            --outputDir=.lighthouseci/recruit
+          lhci collect --config=.lighthouserc.json
+          lhci assert --config=.lighthouserc.json
         continue-on-error: true
 
       - name: Stop recruit server
