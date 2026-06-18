@@ -1,0 +1,98 @@
+name: ⚡ Lighthouse CI
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches: [main, develop]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+concurrency:
+  group: lighthouse-ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lighthouse:
+    name: Lighthouse Report
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Create env files
+        run: |
+          echo "NEXT_PUBLIC_API_BASE_URL=${{ secrets.RECRUIT_API_BASE_URL }}" > apps/recruit/.env
+          echo "NEXT_PUBLIC_API_BASE_URL=${{ secrets.HOMEPAGE_API_BASE_URL }}" > apps/homepage/.env
+          echo "NEXT_PUBLIC_S3_HOSTNAME=${{ secrets.HOMEPAGE_S3_HOSTNAME }}" >> apps/homepage/.env
+
+      - name: Build homepage
+        run: pnpm turbo run build --filter=homepage
+
+      - name: Build recruit
+        run: pnpm turbo run build --filter=recruit
+
+      - name: Install Lighthouse CI
+        run: pnpm add -g @lhci/cli@0.14.x
+
+      # ── Homepage ──────────────────────────────────────────────
+      - name: Start homepage server
+        run: |
+          pnpm --filter=homepage start -- --port 3001 &
+          echo $! > /tmp/homepage.pid
+          npx wait-on http://localhost:3001 --timeout 60000
+
+      - name: Run Lighthouse CI — homepage
+        run: |
+          lhci collect \
+            --config=apps/homepage/.lighthouserc.json \
+            --outputDir=.lighthouseci/homepage
+          lhci assert \
+            --config=apps/homepage/.lighthouserc.json \
+            --outputDir=.lighthouseci/homepage
+        continue-on-error: true
+
+      - name: Stop homepage server
+        if: always()
+        run: kill $(cat /tmp/homepage.pid) 2>/dev/null || true
+
+      # ── Recruit ───────────────────────────────────────────────
+      - name: Start recruit server
+        run: |
+          pnpm --filter=recruit start -- --port 3000 &
+          echo $! > /tmp/recruit.pid
+          npx wait-on http://localhost:3000 --timeout 60000
+
+      - name: Run Lighthouse CI — recruit
+        run: |
+          lhci collect \
+            --config=apps/recruit/.lighthouserc.json \
+            --outputDir=.lighthouseci/recruit
+          lhci assert \
+            --config=apps/recruit/.lighthouserc.json \
+            --outputDir=.lighthouseci/recruit
+        continue-on-error: true
+
+      - name: Stop recruit server
+        if: always()
+        run: kill $(cat /tmp/recruit.pid) 2>/dev/null || true
+
+      # ── PR Comment ────────────────────────────────────────────
+      - name: Lighthouse 결과 PR 코멘트 게시
+        if: always()
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const fn = require('./.github/scripts/lighthouse-report.js')
+            await fn({ github, context, core })
