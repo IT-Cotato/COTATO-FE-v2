@@ -60,14 +60,6 @@ jobs:
           lhci assert --config=apps/homepage/.lighthouserc.json
         continue-on-error: true
 
-      - name: Debug — lhci 저장 위치 확인
-        if: always()
-        run: |
-          echo "=== find manifest.json ==="
-          find /home/runner -name "manifest.json" 2>/dev/null | grep -i light || echo "not found"
-          echo "=== workspace .lighthouseci ==="
-          ls -la .lighthouseci 2>/dev/null || echo "not found"
-
       - name: Stop homepage server
         if: always()
         run: kill $(cat /tmp/homepage.pid) 2>/dev/null || true

@@ -3,8 +3,6 @@
 const fs = require('fs');
 const path = require('path');
 
-const LHCI_DIR = path.join(process.cwd(), '.lighthouseci');
-
 const score = (val) => (val == null ? null : Math.round(val * 100));
 
 const scoreIcon = (s) => {
@@ -19,16 +17,14 @@ const cls = (val) => (val == null ? '-' : val.toFixed(3));
 
 const readAllLhrs = (core) => {
   try {
-    const manifestPath = path.join(LHCI_DIR, 'manifest.json');
-    core.info(`Reading manifest: ${manifestPath}`);
-    const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
-    core.info(`Manifest entries: ${manifest.length}`);
-    return manifest.map((entry) => {
-      const jsonPath = path.isAbsolute(entry.jsonPath)
-        ? entry.jsonPath
-        : path.join(LHCI_DIR, entry.jsonPath);
-      const lhr = JSON.parse(fs.readFileSync(jsonPath, 'utf8'));
-      return { url: entry.url, lhr };
+    const lhciDir = path.join(process.cwd(), '.lighthouseci');
+    core.info(`Reading LHRs from: ${lhciDir}`);
+    const files = fs.readdirSync(lhciDir).filter((f) => f.startsWith('lhr-') && f.endsWith('.json'));
+    core.info(`Found LHR files: ${files.length}`);
+    return files.map((file) => {
+      const lhr = JSON.parse(fs.readFileSync(path.join(lhciDir, file), 'utf8'));
+      const url = lhr.requestedUrl || lhr.finalUrl || '';
+      return { url, lhr };
     });
   } catch (e) {
     core.warning(`Failed to read LHRs: ${e.message}`);
