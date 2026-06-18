@@ -56,13 +56,11 @@ jobs:
 
       - name: Run Lighthouse CI — homepage
         run: |
-          lhci collect --config=apps/homepage/.lighthouserc.json
+          lhci collect \
+            --config=apps/homepage/.lighthouserc.json \
+            --output-dir=/tmp/lhci-homepage
           lhci assert --config=apps/homepage/.lighthouserc.json
         continue-on-error: true
-
-      - name: Save homepage LHCI results
-        if: always()
-        run: mv .lighthouseci .lighthouseci-homepage 2>/dev/null || true
 
       - name: Stop homepage server
         if: always()
@@ -77,13 +75,11 @@ jobs:
 
       - name: Run Lighthouse CI — recruit
         run: |
-          lhci collect --config=apps/recruit/.lighthouserc.json
+          lhci collect \
+            --config=apps/recruit/.lighthouserc.json \
+            --output-dir=/tmp/lhci-recruit
           lhci assert --config=apps/recruit/.lighthouserc.json
         continue-on-error: true
-
-      - name: Save recruit LHCI results
-        if: always()
-        run: mv .lighthouseci .lighthouseci-recruit 2>/dev/null || true
 
       - name: Stop recruit server
         if: always()
