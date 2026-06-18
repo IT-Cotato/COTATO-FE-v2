@@ -15,18 +15,22 @@ const scoreIcon = (s) => {
 const ms = (val) => (val == null ? '-' : `${Math.round(val)} ms`);
 const cls = (val) => (val == null ? '-' : val.toFixed(3));
 
-const readLhrs = (outputDir) => {
+const readLhrs = (outputDir, core) => {
   try {
-    const manifest = JSON.parse(
-      fs.readFileSync(path.join(outputDir, 'manifest.json'), 'utf8')
-    );
-    return manifest
-      .filter((entry) => entry.isRepresentativeRun)
-      .map((entry) => {
-        const lhr = JSON.parse(fs.readFileSync(entry.jsonPath, 'utf8'));
-        return { url: entry.url, lhr };
-      });
-  } catch {
+    const manifestPath = path.join(outputDir, 'manifest.json');
+    core.info(`Reading manifest: ${manifestPath}`);
+    const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
+    core.info(`Manifest entries: ${manifest.length}, representative: ${manifest.filter((e) => e.isRepresentativeRun).length}`);
+    return manifest.map((entry) => {
+      const jsonPath = path.isAbsolute(entry.jsonPath)
+        ? entry.jsonPath
+        : path.join(outputDir, entry.jsonPath);
+      core.info(`Reading LHR: ${jsonPath}`);
+      const lhr = JSON.parse(fs.readFileSync(jsonPath, 'utf8'));
+      return { url: entry.url, lhr };
+    });
+  } catch (e) {
+    core.warning(`Failed to read LHRs from ${outputDir}: ${e.message}`);
     return [];
   }
 };
@@ -39,8 +43,8 @@ const formatUrlPath = (url) => {
   }
 };
 
-const formatAppTable = (appLabel, outputDir) => {
-  const runs = readLhrs(outputDir);
+const formatAppTable = (appLabel, outputDir, core) => {
+  const runs = readLhrs(outputDir, core);
 
   if (!runs.length) {
     return `<details>\n<summary>${appLabel} — ⚠️ Lighthouse 결과를 불러오지 못했습니다.</summary>\n\n결과 없음\n\n</details>`;
@@ -74,13 +78,16 @@ ${rows.join('\n')}
 };
 
 module.exports = async ({ github, context, core }) => {
+  core.info(`CWD: ${process.cwd()}`);
   const homepageTable = formatAppTable(
     'Homepage',
-    path.join(process.cwd(), '.lighthouseci/homepage')
+    path.join(process.cwd(), '.lighthouseci/homepage'),
+    core
   );
   const recruitTable = formatAppTable(
     'Recruit',
-    path.join(process.cwd(), '.lighthouseci/recruit')
+    path.join(process.cwd(), '.lighthouseci/recruit'),
+    core
   );
 
   const body = `## ⚡ Lighthouse CI 리포트
