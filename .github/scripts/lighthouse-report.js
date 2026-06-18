@@ -3,6 +3,8 @@
 const fs = require('fs');
 const path = require('path');
 
+const LHCI_DIR = path.join(process.cwd(), '.lighthouseci');
+
 const score = (val) => (val == null ? null : Math.round(val * 100));
 
 const scoreIcon = (s) => {
@@ -15,21 +17,21 @@ const scoreIcon = (s) => {
 const ms = (val) => (val == null ? '-' : `${Math.round(val)} ms`);
 const cls = (val) => (val == null ? '-' : val.toFixed(3));
 
-const readLhrs = (outputDir, core) => {
+const readAllLhrs = (core) => {
   try {
-    const manifestPath = path.join(outputDir, 'manifest.json');
+    const manifestPath = path.join(LHCI_DIR, 'manifest.json');
     core.info(`Reading manifest: ${manifestPath}`);
     const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
     core.info(`Manifest entries: ${manifest.length}`);
     return manifest.map((entry) => {
       const jsonPath = path.isAbsolute(entry.jsonPath)
         ? entry.jsonPath
-        : path.join(outputDir, entry.jsonPath);
+        : path.join(LHCI_DIR, entry.jsonPath);
       const lhr = JSON.parse(fs.readFileSync(jsonPath, 'utf8'));
       return { url: entry.url, lhr };
     });
   } catch (e) {
-    core.warning(`Failed to read LHRs from ${outputDir}: ${e.message}`);
+    core.warning(`Failed to read LHRs: ${e.message}`);
     return [];
   }
 };
@@ -42,9 +44,7 @@ const formatUrlPath = (url) => {
   }
 };
 
-const formatAppTable = (appLabel, outputDir, core) => {
-  const runs = readLhrs(outputDir, core);
-
+const formatAppTable = (appLabel, runs) => {
   if (!runs.length) {
     return `<details>\n<summary>${appLabel} — ⚠️ Lighthouse 결과를 불러오지 못했습니다.</summary>\n\n결과 없음\n\n</details>`;
   }
@@ -85,20 +85,24 @@ module.exports = async ({ github, context, core }) => {
 
   const { owner, repo } = context.repo;
 
-  const homepageTable = formatAppTable('Homepage', '/tmp/lhci-homepage', core);
-  const recruitTable = formatAppTable('Recruit', '/tmp/lhci-recruit', core);
+  // 포트로 앱 구분: 3001 = homepage, 3000 = recruit
+  const allRuns = readAllLhrs(core);
+  const homepageRuns = allRuns.filter((r) => r.url.includes(':3001'));
+  const recruitRuns = allRuns.filter((r) => r.url.includes(':3000'));
+
+  core.info(`Homepage runs: ${homepageRuns.length}, Recruit runs: ${recruitRuns.length}`);
 
   const body = `## ⚡ Lighthouse CI 리포트
 
-${homepageTable}
+${formatAppTable('Homepage', homepageRuns)}
 
-${recruitTable}
+${formatAppTable('Recruit', recruitRuns)}
 
 > 🟢 ≥ 90 · 🟡 ≥ 70 · 🔴 < 70 &nbsp;|&nbsp; Performance 70 미만은 경고이며 CI를 실패시키지 않습니다.
 
 *빌드 커밋: \`${context.sha.slice(0, 7)}\`*`;
 
-  // 기존 댓글 삭제 후 재게시 (번들 사이즈 리포트 방식 동일)
+  // 기존 댓글 삭제 후 재게시
   const comments = await github.paginate(github.rest.issues.listComments, {
     owner,
     repo,

@@ -56,9 +56,7 @@ jobs:
 
       - name: Run Lighthouse CI — homepage
         run: |
-          lhci collect \
-            --config=apps/homepage/.lighthouserc.json \
-            --output-dir=/tmp/lhci-homepage
+          lhci collect --config=apps/homepage/.lighthouserc.json
           lhci assert --config=apps/homepage/.lighthouserc.json
         continue-on-error: true
 
@@ -75,9 +73,7 @@ jobs:
 
       - name: Run Lighthouse CI — recruit
         run: |
-          lhci collect \
-            --config=apps/recruit/.lighthouserc.json \
-            --output-dir=/tmp/lhci-recruit
+          lhci collect --config=apps/recruit/.lighthouserc.json
           lhci assert --config=apps/recruit/.lighthouserc.json
         continue-on-error: true
 
