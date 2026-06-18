@@ -48,7 +48,7 @@ jobs:
       # ── Homepage ──────────────────────────────────────────────
       - name: Start homepage server
         run: |
-          pnpm --filter=homepage start -- --port 3001 &
+          pnpm --filter=homepage exec next start -p 3001 &
           echo $! > /tmp/homepage.pid
           npx wait-on http://localhost:3001 --timeout 60000
 
@@ -69,7 +69,7 @@ jobs:
       # ── Recruit ───────────────────────────────────────────────
       - name: Start recruit server
         run: |
-          pnpm --filter=recruit start -- --port 3000 &
+          pnpm --filter=recruit exec next start -p 3000 &
           echo $! > /tmp/recruit.pid
           npx wait-on http://localhost:3000 --timeout 60000
 
