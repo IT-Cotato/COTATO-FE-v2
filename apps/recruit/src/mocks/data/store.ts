@@ -1,5 +1,11 @@
 import {ApplicationType} from '@/schemas/my-page/my-page.schema';
-import {BasicInfoResponse, PartQuestionResponse} from '@/schemas/apply/apply-schema';
+import {
+  BasicInfoResponse,
+  PartQuestionResponse,
+} from '@/schemas/apply/apply-schema';
+import {EvaluatorType} from '@/schemas/admin/admin-application.schema';
+import {ApplicationPassStatus} from '@/schemas/admin/admin-applications.schema';
+import {RecruitmentInformationType} from '@/schemas/admin/admin-recruitment-information.schema';
 
 export type MockRole = 'APPLICANT' | 'STAFF';
 
@@ -22,6 +28,9 @@ export interface MockApplication {
     privacyPolicy: boolean | null;
   };
   generationNumber: number;
+  passStatus: ApplicationPassStatus;
+  submittedAt: string | null;
+  evaluations: Partial<Record<EvaluatorType, string>>;
 }
 
 export interface MockUser {
@@ -76,6 +85,9 @@ export const createMockApplication = (ownerUserId: number): MockApplication => {
       privacyPolicy: null,
     },
     generationNumber: 9,
+    passStatus: 'PENDING',
+    submittedAt: null,
+    evaluations: {},
   };
   mockApplications.set(application.applicationId, application);
   return application;
@@ -95,7 +107,12 @@ export const toMyPageApplication = (app: MockApplication): ApplicationType => ({
 
 export const mockPartQuestionDefinitions = [
   {questionId: 1, sequence: 1, content: '자기소개를 해주세요.', maxLength: 500},
-  {questionId: 2, sequence: 2, content: '지원 동기를 작성해주세요.', maxLength: 500},
+  {
+    questionId: 2,
+    sequence: 2,
+    content: '지원 동기를 작성해주세요.',
+    maxLength: 500,
+  },
 ];
 
 export const toPartQuestionResponse = (
@@ -121,14 +138,45 @@ export const toPartQuestionResponse = (
   pdfFileKey: app.partQuestions.pdfFileKey,
 });
 
-export const mockFaqByType: Record<string, {id: number; question: string; answer: string}[]> = {
+export const mockFaqByType: Record<
+  string,
+  {id: number; question: string; answer: string}[]
+> = {
   COMMON: [
-    {id: 1, question: '코테이토는 어떤 동아리인가요?', answer: 'IT 연합 동아리입니다.'},
+    {
+      id: 1,
+      question: '코테이토는 어떤 동아리인가요?',
+      answer: 'IT 연합 동아리입니다.',
+    },
   ],
-  PM: [{id: 2, question: 'PM 파트는 무슨 일을 하나요?', answer: '기획 전반을 담당합니다.'}],
-  DE: [{id: 3, question: 'DE 파트는 무슨 일을 하나요?', answer: '디자인 전반을 담당합니다.'}],
-  FE: [{id: 4, question: 'FE 파트는 무슨 일을 하나요?', answer: '프론트엔드 개발을 담당합니다.'}],
-  BE: [{id: 5, question: 'BE 파트는 무슨 일을 하나요?', answer: '백엔드 개발을 담당합니다.'}],
+  PM: [
+    {
+      id: 2,
+      question: 'PM 파트는 무슨 일을 하나요?',
+      answer: '기획 전반을 담당합니다.',
+    },
+  ],
+  DE: [
+    {
+      id: 3,
+      question: 'DE 파트는 무슨 일을 하나요?',
+      answer: '디자인 전반을 담당합니다.',
+    },
+  ],
+  FE: [
+    {
+      id: 4,
+      question: 'FE 파트는 무슨 일을 하나요?',
+      answer: '프론트엔드 개발을 담당합니다.',
+    },
+  ],
+  BE: [
+    {
+      id: 5,
+      question: 'BE 파트는 무슨 일을 하나요?',
+      answer: '백엔드 개발을 담당합니다.',
+    },
+  ],
 };
 
 export const mockRecruitmentState = {
@@ -138,3 +186,172 @@ export const mockRecruitmentState = {
 };
 
 export const mockSubscribedEmails = new Set<string>();
+
+/** ───────────── Admin mock data ───────────── */
+
+export const mockGenerations = [9, 8, 7];
+
+export const mockRecruitmentInformationByGeneration = new Map<
+  number,
+  RecruitmentInformationType
+>([
+  [
+    9,
+    {
+      recruitmentStart: '2026-03-01T00:00:00',
+      recruitmentEnd: '2026-03-14T23:59:59',
+      documentAnnouncement: '2026-03-17',
+      interviewStart: '2026-03-19',
+      interviewEnd: '2026-03-20',
+      finalAnnouncement: '2026-03-22',
+      ot: '2026-03-21',
+      cokerthon: '2026-04-11',
+      demoDay: '2026-05-09',
+    },
+  ],
+]);
+
+const questionKey = (generationId: number, part: string) =>
+  `${generationId}-${part}`;
+
+export const mockApplicationQuestionsByPart = new Map<
+  string,
+  {sequence: number; content: string; maxLength: number}[]
+>(
+  (['PM', 'DE', 'FE', 'BE'] as const).map((part) => [
+    questionKey(9, part),
+    [
+      {sequence: 1, content: '자기소개를 해주세요.', maxLength: 500},
+      {sequence: 2, content: '지원 동기를 작성해주세요.', maxLength: 500},
+    ],
+  ])
+);
+
+export const getApplicationQuestions = (generationId: number, part: string) =>
+  mockApplicationQuestionsByPart.get(questionKey(generationId, part)) ?? [];
+
+export const setApplicationQuestions = (
+  generationId: number,
+  part: string,
+  questions: {sequence: number; content: string; maxLength: number}[]
+) =>
+  mockApplicationQuestionsByPart.set(
+    questionKey(generationId, part),
+    questions
+  );
+
+export interface MockMailTemplate {
+  templateId: number | null;
+  content: string;
+  isSent: boolean;
+  sentAt: string | null;
+  generationId: number;
+  successCount: number;
+  failCount: number;
+}
+
+export const mockNotificationMailByGeneration = new Map<
+  number,
+  MockMailTemplate & {subscriberCount: number}
+>();
+
+const resultMailKey = (generationId: number, templateType: string) =>
+  `${generationId}-${templateType}`;
+
+export const mockResultMailByGenerationAndType = new Map<
+  string,
+  MockMailTemplate & {
+    templateType: string;
+    templateTypeDescription: string;
+    recipientCount: number;
+  }
+>();
+
+export const getResultMail = (generationId: number, templateType: string) =>
+  mockResultMailByGenerationAndType.get(
+    resultMailKey(generationId, templateType)
+  );
+
+export const setResultMail = (
+  generationId: number,
+  templateType: string,
+  mail: MockMailTemplate & {
+    templateType: string;
+    templateTypeDescription: string;
+    recipientCount: number;
+  }
+) =>
+  mockResultMailByGenerationAndType.set(
+    resultMailKey(generationId, templateType),
+    mail
+  );
+
+export const toAdminApplicant = (app: MockApplication) => ({
+  applicationId: app.applicationId,
+  name: app.basicInfo?.name ?? '이름없음',
+  gender: app.basicInfo?.gender ?? 'MALE',
+  applicationPartType: app.basicInfo?.applicationPartType ?? null,
+  university: app.basicInfo?.university ?? '',
+  phoneNumber: app.basicInfo?.phoneNumber ?? null,
+  passStatus: app.passStatus,
+  submittedAt: app.submittedAt ?? new Date().toISOString(),
+});
+
+let nextSeedApplicationId = 1;
+
+/** 어드민 지원서 목록/상세 화면 시연용 더미 지원자를 만들어 둔다. */
+const seedMockApplicants = () => {
+  const seeds: {
+    name: string;
+    part: 'PM' | 'DE' | 'FE' | 'BE';
+    passStatus: ApplicationPassStatus;
+  }[] = [
+    {name: '김백엔드', part: 'BE', passStatus: 'PASS'},
+    {name: '이프론트', part: 'FE', passStatus: 'PASS'},
+    {name: '박기획', part: 'PM', passStatus: 'WAITLISTED'},
+    {name: '최디자인', part: 'DE', passStatus: 'FAIL'},
+    {name: '정백엔드', part: 'BE', passStatus: 'PENDING'},
+    {name: '한프론트', part: 'FE', passStatus: 'PENDING'},
+  ];
+
+  seeds.forEach((seed, index) => {
+    const applicationId = nextSeedApplicationId++;
+    mockApplications.set(applicationId, {
+      applicationId,
+      ownerUserId: 100 + index,
+      isSubmitted: true,
+      basicInfo: {
+        applicationId,
+        name: seed.name,
+        gender: index % 2 === 0 ? 'MALE' : 'FEMALE',
+        birthDate: '2002-01-01',
+        phoneNumber: '010-1234-5678',
+        university: '코테이토대학교',
+        major: '컴퓨터공학과',
+        completedSemesters: 6,
+        isPrevActivity: false,
+        isEnrolled: true,
+        applicationPartType: seed.part,
+      },
+      partQuestions: {
+        answers: {1: '자기소개 답변입니다.', 2: '지원 동기 답변입니다.'},
+        pdfFileUrl: null,
+        pdfFileKey: null,
+      },
+      etcQuestions: {
+        discoveryPath: 'INSTAGRAM',
+        parallelActivities: '',
+        unavailableInterviewTimes: '',
+        sessionAttendance: true,
+        mandatoryEvents: true,
+        privacyPolicy: true,
+      },
+      generationNumber: 9,
+      passStatus: seed.passStatus,
+      submittedAt: '2026-03-10T12:00:00',
+      evaluations: {},
+    });
+  });
+};
+
+seedMockApplicants();
