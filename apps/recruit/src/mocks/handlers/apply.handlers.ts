@@ -48,7 +48,8 @@ export const applyHandlers = [
     if (!role) return ERROR.UNAUTHORIZED();
 
     const existing = findApplicationByOwner(mockUsers[role].userId);
-    const application = existing ?? createMockApplication(mockUsers[role].userId);
+    const application =
+      existing ?? createMockApplication(mockUsers[role].userId);
 
     return success({
       applicationId: application.applicationId,
@@ -56,92 +57,110 @@ export const applyHandlers = [
     });
   }),
 
-  http.get('*/api/applications/:applicationId/basic-info', ({request, params}) => {
-    const applicationId = Number(params.applicationId);
-    const result = requireOwnApplication(request, applicationId);
-    if ('error' in result) return result.error;
+  http.get(
+    '*/api/applications/:applicationId/basic-info',
+    ({request, params}) => {
+      const applicationId = Number(params.applicationId);
+      const result = requireOwnApplication(request, applicationId);
+      if ('error' in result) return result.error;
 
-    if (!result.application.basicInfo) return ERROR.APPLICATION_NOT_FOUND();
-    return success(result.application.basicInfo);
-  }),
+      if (!result.application.basicInfo) return ERROR.APPLICATION_NOT_FOUND();
+      return success(result.application.basicInfo);
+    }
+  ),
 
-  http.post('*/api/applications/:applicationId/basic-info', async ({request, params}) => {
-    const applicationId = Number(params.applicationId);
-    const result = requireOwnApplication(request, applicationId);
-    if ('error' in result) return result.error;
+  http.post(
+    '*/api/applications/:applicationId/basic-info',
+    async ({request, params}) => {
+      const applicationId = Number(params.applicationId);
+      const result = requireOwnApplication(request, applicationId);
+      if ('error' in result) return result.error;
 
-    const body = (await request.json()) as BasicInfoRequest;
-    result.application.basicInfo = {...body, applicationId};
-    return success(null);
-  }),
+      const body = (await request.json()) as BasicInfoRequest;
+      result.application.basicInfo = {...body, applicationId};
+      return success(null);
+    }
+  ),
 
-  http.get('*/api/applications/:applicationId/part-questions', ({request, params}) => {
-    const applicationId = Number(params.applicationId);
-    const result = requireOwnApplication(request, applicationId);
-    if ('error' in result) return result.error;
+  http.get(
+    '*/api/applications/:applicationId/part-questions',
+    ({request, params}) => {
+      const applicationId = Number(params.applicationId);
+      const result = requireOwnApplication(request, applicationId);
+      if ('error' in result) return result.error;
 
-    return success(toPartQuestionResponse(result.application));
-  }),
+      return success(toPartQuestionResponse(result.application));
+    }
+  ),
 
-  http.post('*/api/applications/:applicationId/answers', async ({request, params}) => {
-    const applicationId = Number(params.applicationId);
-    const result = requireOwnApplication(request, applicationId);
-    if ('error' in result) return result.error;
+  http.post(
+    '*/api/applications/:applicationId/answers',
+    async ({request, params}) => {
+      const applicationId = Number(params.applicationId);
+      const result = requireOwnApplication(request, applicationId);
+      if ('error' in result) return result.error;
 
-    const body = (await request.json()) as PartQuestionRequest;
-    body.answers.forEach(({questionId, content}) => {
-      result.application.partQuestions.answers[questionId] = content;
-    });
-    result.application.partQuestions.pdfFileUrl = body.pdfFileUrl ?? null;
-    result.application.partQuestions.pdfFileKey = body.pdfFileKey ?? null;
-    return success(null);
-  }),
+      const body = (await request.json()) as PartQuestionRequest;
+      body.answers.forEach(({questionId, content}) => {
+        result.application.partQuestions.answers[questionId] = content;
+      });
+      result.application.partQuestions.pdfFileUrl = body.pdfFileUrl ?? null;
+      result.application.partQuestions.pdfFileKey = body.pdfFileKey ?? null;
+      return success(null);
+    }
+  ),
 
-  http.get('*/api/applications/:applicationId/etc-questions', ({request, params}) => {
-    const applicationId = Number(params.applicationId);
-    const result = requireOwnApplication(request, applicationId);
-    if ('error' in result) return result.error;
+  http.get(
+    '*/api/applications/:applicationId/etc-questions',
+    ({request, params}) => {
+      const applicationId = Number(params.applicationId);
+      const result = requireOwnApplication(request, applicationId);
+      if ('error' in result) return result.error;
 
-    const {etcQuestions} = result.application;
-    return success({
-      discoveryPath: {
-        options: [
-          {value: 'INSTAGRAM', label: '인스타그램'},
-          {value: 'EVERYTIME', label: '에브리타임'},
-          {value: 'NAVER_CAFE', label: '네이버 카페'},
-          {value: 'OTHER_SNS', label: '기타 SNS'},
-          {value: 'FRIEND_REFERRAL', label: '지인 추천'},
-          {value: 'NONE', label: '기타'},
-        ],
-        selectedAnswer: etcQuestions.discoveryPath,
-      },
-      parallelActivities: etcQuestions.parallelActivities,
-      unavailableInterviewTimes: etcQuestions.unavailableInterviewTimes,
-      sessionAttendance: etcQuestions.sessionAttendance,
-      mandatoryEvents: etcQuestions.mandatoryEvents,
-      privacyPolicy: etcQuestions.privacyPolicy,
-      interviewStartDate: '3월 19일',
-      interviewEndDate: '3월 20일',
-      otDate: '3월 21일',
-    });
-  }),
+      const {etcQuestions} = result.application;
+      return success({
+        discoveryPath: {
+          options: [
+            {value: 'INSTAGRAM', label: '인스타그램'},
+            {value: 'EVERYTIME', label: '에브리타임'},
+            {value: 'NAVER_CAFE', label: '네이버 카페'},
+            {value: 'OTHER_SNS', label: '기타 SNS'},
+            {value: 'FRIEND_REFERRAL', label: '지인 추천'},
+            {value: 'NONE', label: '기타'},
+          ],
+          selectedAnswer: etcQuestions.discoveryPath,
+        },
+        parallelActivities: etcQuestions.parallelActivities,
+        unavailableInterviewTimes: etcQuestions.unavailableInterviewTimes,
+        sessionAttendance: etcQuestions.sessionAttendance,
+        mandatoryEvents: etcQuestions.mandatoryEvents,
+        privacyPolicy: etcQuestions.privacyPolicy,
+        interviewStartDate: '3월 19일',
+        interviewEndDate: '3월 20일',
+        otDate: '3월 21일',
+      });
+    }
+  ),
 
-  http.post('*/api/applications/:applicationId/etc-answers', async ({request, params}) => {
-    const applicationId = Number(params.applicationId);
-    const result = requireOwnApplication(request, applicationId);
-    if ('error' in result) return result.error;
+  http.post(
+    '*/api/applications/:applicationId/etc-answers',
+    async ({request, params}) => {
+      const applicationId = Number(params.applicationId);
+      const result = requireOwnApplication(request, applicationId);
+      if ('error' in result) return result.error;
 
-    const body = (await request.json()) as EtcQuestionRequest;
-    result.application.etcQuestions = {
-      discoveryPath: body.discoveryPath,
-      parallelActivities: body.parallelActivities,
-      unavailableInterviewTimes: body.unavailableInterviewTimes,
-      sessionAttendance: body.sessionAttendanceAgreed,
-      mandatoryEvents: body.mandatoryEventsAgreed,
-      privacyPolicy: body.privacyPolicyAgreed,
-    };
-    return success(null);
-  }),
+      const body = (await request.json()) as EtcQuestionRequest;
+      result.application.etcQuestions = {
+        discoveryPath: body.discoveryPath,
+        parallelActivities: body.parallelActivities,
+        unavailableInterviewTimes: body.unavailableInterviewTimes,
+        sessionAttendance: body.sessionAttendanceAgreed,
+        mandatoryEvents: body.mandatoryEventsAgreed,
+        privacyPolicy: body.privacyPolicyAgreed,
+      };
+      return success(null);
+    }
+  ),
 
   http.post('*/api/applications/:applicationId/submit', ({request, params}) => {
     const applicationId = Number(params.applicationId);

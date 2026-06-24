@@ -3,7 +3,8 @@ import {ERROR, getRoleFromRequest, success} from '@/mocks/utils';
 import {MOCK_LOGIN_CODE_TO_ROLE, mockUsers} from '@/mocks/data/store';
 import {OAuthLoginRequest} from '@/schemas/auth/auth-schema';
 
-const tokenFor = (role: 'APPLICANT' | 'STAFF') => `mock-access-token-${role.toLowerCase()}`;
+const tokenFor = (role: 'APPLICANT' | 'STAFF') =>
+  `mock-access-token-${role.toLowerCase()}`;
 
 export const authHandlers = [
   http.post('*/api/auth/login/google', async ({request}) => {

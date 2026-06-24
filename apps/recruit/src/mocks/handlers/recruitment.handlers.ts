@@ -16,7 +16,11 @@ export const recruitmentHandlers = [
       ],
       parts: [
         {short: 'BE', name: '백엔드', detail: '서버 개발을 담당합니다.'},
-        {short: 'FE', name: '프론트엔드', detail: '클라이언트 개발을 담당합니다.'},
+        {
+          short: 'FE',
+          name: '프론트엔드',
+          detail: '클라이언트 개발을 담당합니다.',
+        },
       ],
       activities: [
         {id: 1, short: 'OT', name: 'OT', date: '2026-03-21'},
