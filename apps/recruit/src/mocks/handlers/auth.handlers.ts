@@ -1,19 +1,14 @@
 import {http} from 'msw';
 import {ERROR, getRoleFromRequest, success} from '@/mocks/utils';
-import {MOCK_LOGIN_CODE_TO_ROLE, mockUsers} from '@/mocks/data/store';
-import {OAuthLoginRequest} from '@/schemas/auth/auth-schema';
-
-const tokenFor = (role: 'APPLICANT' | 'STAFF') =>
-  `mock-access-token-${role.toLowerCase()}`;
+import {getAccessTokenForRole, mockUsers} from '@/mocks/data/store';
 
 export const authHandlers = [
-  http.post('*/api/auth/login/google', async ({request}) => {
-    const body = (await request.json()) as OAuthLoginRequest;
-    const role = MOCK_LOGIN_CODE_TO_ROLE[body.code] ?? 'APPLICANT';
-
+  http.post('*/api/auth/login/google', () => {
+    // 구글이 돌려주는 인증 코드는 통제할 수 없어 항상 APPLICANT로 로그인된다.
+    // STAFF로 테스트하려면 NEXT_PUBLIC_MSW_STAFF_TOKEN을 accessToken으로 직접 주입해야 한다.
     return success({
-      accessToken: tokenFor(role),
-      refreshToken: `mock-refresh-token-${role.toLowerCase()}`,
+      accessToken: getAccessTokenForRole('APPLICANT'),
+      refreshToken: 'mock-refresh-token-applicant',
       tokenType: 'Bearer',
     });
   }),
@@ -27,7 +22,7 @@ export const authHandlers = [
     }
 
     return success({
-      accessToken: tokenFor(role),
+      accessToken: getAccessTokenForRole(role),
       refreshToken: `mock-refresh-token-${role.toLowerCase()}`,
       tokenType: 'Bearer',
     });

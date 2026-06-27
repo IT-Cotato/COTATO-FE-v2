@@ -40,10 +40,20 @@ export interface MockUser {
   role: MockRole;
 }
 
-/** code 값으로 로그인할 역할을 고른다. 그 외 값은 모두 APPLICANT로 로그인된다. */
-export const MOCK_LOGIN_CODE_TO_ROLE: Record<string, MockRole> = {
-  STAFF_LOGIN: 'STAFF',
+/**
+ * 실제 구글 로그인은 항상 APPLICANT로 처리된다 (구글이 돌려주는 인증 코드는 우리가 통제할 수 없음).
+ * STAFF로 테스트하려면 NEXT_PUBLIC_MSW_STAFF_TOKEN 값을 accessToken으로 직접 주입해야 한다.
+ * env가 설정되지 않으면 STAFF 토큰으로 인증할 방법이 전혀 없다.
+ */
+const STAFF_ACCESS_TOKEN = process.env.NEXT_PUBLIC_MSW_STAFF_TOKEN;
+
+const ACCESS_TOKEN_BY_ROLE: Partial<Record<MockRole, string>> = {
+  APPLICANT: 'mock-access-token-applicant',
+  ...(STAFF_ACCESS_TOKEN ? {STAFF: STAFF_ACCESS_TOKEN} : {}),
 };
+
+export const getAccessTokenForRole = (role: MockRole) =>
+  ACCESS_TOKEN_BY_ROLE[role] ?? ACCESS_TOKEN_BY_ROLE.APPLICANT!;
 
 export const mockUsers: Record<MockRole, MockUser> = {
   APPLICANT: {
@@ -60,10 +70,11 @@ export const mockUsers: Record<MockRole, MockUser> = {
   },
 };
 
-export const mockTokenToRole = new Map<string, MockRole>([
-  ['mock-access-token-applicant', 'APPLICANT'],
-  ['mock-access-token-staff', 'STAFF'],
-]);
+export const mockTokenToRole = new Map<string, MockRole>(
+  (Object.entries(ACCESS_TOKEN_BY_ROLE) as [MockRole, string][]).map(
+    ([role, token]) => [token, role]
+  )
+);
 
 export const mockApplications = new Map<number, MockApplication>();
 
