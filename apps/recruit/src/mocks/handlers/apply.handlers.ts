@@ -4,6 +4,7 @@ import {
   createMockApplication,
   findApplicationByOwner,
   mockApplications,
+  mockRecruitmentState,
   mockUsers,
   toPartQuestionResponse,
 } from '@/mocks/data/store';
@@ -33,7 +34,10 @@ export const applyHandlers = [
     const role = getRoleFromRequest(request);
     if (!role) return ERROR.UNAUTHORIZED();
 
-    const application = findApplicationByOwner(mockUsers[role].userId);
+    const application = findApplicationByOwner(
+      mockUsers[role].userId,
+      mockRecruitmentState.generationId
+    );
     if (!application) return success(null);
 
     return success({
@@ -47,7 +51,10 @@ export const applyHandlers = [
     const role = getRoleFromRequest(request);
     if (!role) return ERROR.UNAUTHORIZED();
 
-    const existing = findApplicationByOwner(mockUsers[role].userId);
+    const existing = findApplicationByOwner(
+      mockUsers[role].userId,
+      mockRecruitmentState.generationId
+    );
     const application =
       existing ?? createMockApplication(mockUsers[role].userId);
 
