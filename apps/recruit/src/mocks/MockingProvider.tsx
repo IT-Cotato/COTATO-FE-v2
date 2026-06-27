@@ -13,9 +13,22 @@ export const MockingProvider = ({children}: {children: React.ReactNode}) => {
   useEffect(() => {
     if (!isMockingEnabled) return;
 
-    import('@/mocks/browser').then(({worker}) => {
-      worker.start({onUnhandledRequest: 'bypass'}).then(() => setIsReady(true));
-    });
+    import('@/mocks/browser')
+      .then(({worker}) =>
+        worker.start({
+          onUnhandledRequest(request, print) {
+            // Next.js 개발 도구, GTM 등 외부 요청은 모킹 대상이 아니므로 통과시키고,
+            // 우리 앱의 API 요청만 누락된 핸들러를 에러로 드러낸다.
+            if (new URL(request.url).pathname.startsWith('/api/')) {
+              print.error();
+            }
+          },
+        })
+      )
+      .catch((error) => {
+        console.error('Failed to start MSW worker:', error);
+      })
+      .finally(() => setIsReady(true));
   }, []);
 
   if (!isReady) return null;
