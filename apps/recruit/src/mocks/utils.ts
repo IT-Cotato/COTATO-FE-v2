@@ -10,6 +10,13 @@ export const success = <T>(data: T, status = 200) =>
 export const failure = (code: string, message: string, status: number) =>
   HttpResponse.json({code, message}, {status});
 
+/** ISO 날짜 문자열을 'M월 D일' 형식으로 변환한다. */
+export const formatKoreanDate = (isoDate: string | null) => {
+  if (!isoDate) return null;
+  const date = new Date(isoDate);
+  return `${date.getMonth() + 1}월 ${date.getDate()}일`;
+};
+
 /** Authorization 헤더에서 role을 추출한다. 토큰이 없거나 알 수 없으면 null. */
 export const getRoleFromRequest = (request: Request): MockRole | null => {
   const header = request.headers.get('Authorization');

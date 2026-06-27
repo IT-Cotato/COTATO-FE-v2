@@ -1,6 +1,12 @@
 import {http} from 'msw';
-import {ERROR, getRoleFromRequest, success} from '@/mocks/utils';
 import {
+  ERROR,
+  formatKoreanDate,
+  getRoleFromRequest,
+  success,
+} from '@/mocks/utils';
+import {
+  getRecruitmentInformation,
   mockApplications,
   mockUsers,
   toMyPageApplication,
@@ -99,7 +105,8 @@ export const myPageHandlers = [
       );
       if ('error' in result) return result.error;
 
-      const {etcQuestions} = result.application;
+      const {etcQuestions, generationNumber} = result.application;
+      const info = getRecruitmentInformation(generationNumber);
       return success({
         discoveryPath: {
           options: [{value: etcQuestions.discoveryPath ?? 'NONE'}],
@@ -110,11 +117,11 @@ export const myPageHandlers = [
         sessionAttendance: etcQuestions.sessionAttendance,
         mandatoryEvents: etcQuestions.mandatoryEvents,
         privacyPolicy: etcQuestions.privacyPolicy,
-        interviewStartDate: '3월 19일',
-        interviewEndDate: '3월 20일',
-        otDate: '3월 21일',
-        cokerthonDate: '4월 11일',
-        demoDayDate: '5월 9일',
+        interviewStartDate: formatKoreanDate(info.interviewStart),
+        interviewEndDate: formatKoreanDate(info.interviewEnd),
+        otDate: formatKoreanDate(info.ot),
+        cokerthonDate: formatKoreanDate(info.cokerthon),
+        demoDayDate: formatKoreanDate(info.demoDay),
       });
     }
   ),

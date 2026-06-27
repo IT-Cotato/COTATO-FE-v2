@@ -1,8 +1,14 @@
 import {http} from 'msw';
-import {ERROR, getRoleFromRequest, success} from '@/mocks/utils';
+import {
+  ERROR,
+  formatKoreanDate,
+  getRoleFromRequest,
+  success,
+} from '@/mocks/utils';
 import {
   createMockApplication,
   findApplicationByOwner,
+  getRecruitmentInformation,
   mockApplications,
   mockRecruitmentState,
   mockUsers,
@@ -43,7 +49,9 @@ export const applyHandlers = [
     return success({
       applicationId: application.applicationId,
       isSubmitted: application.isSubmitted,
-      isEnd: false,
+      isEnd:
+        !mockRecruitmentState.isActive &&
+        !mockRecruitmentState.isAdditionalRecruitmentActive,
     });
   }),
 
@@ -124,7 +132,8 @@ export const applyHandlers = [
       const result = requireOwnApplication(request, applicationId);
       if ('error' in result) return result.error;
 
-      const {etcQuestions} = result.application;
+      const {etcQuestions, generationNumber} = result.application;
+      const info = getRecruitmentInformation(generationNumber);
       return success({
         discoveryPath: {
           options: [
@@ -142,9 +151,9 @@ export const applyHandlers = [
         sessionAttendance: etcQuestions.sessionAttendance,
         mandatoryEvents: etcQuestions.mandatoryEvents,
         privacyPolicy: etcQuestions.privacyPolicy,
-        interviewStartDate: '3월 19일',
-        interviewEndDate: '3월 20일',
-        otDate: '3월 21일',
+        interviewStartDate: formatKoreanDate(info.interviewStart),
+        interviewEndDate: formatKoreanDate(info.interviewEnd),
+        otDate: formatKoreanDate(info.ot),
       });
     }
   ),

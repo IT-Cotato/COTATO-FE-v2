@@ -1,6 +1,10 @@
 import {http} from 'msw';
-import {ERROR, requireStaff, success} from '@/mocks/utils';
-import {mockApplications} from '@/mocks/data/store';
+import {ERROR, formatKoreanDate, requireStaff, success} from '@/mocks/utils';
+import {
+  getApplicationQuestions,
+  getRecruitmentInformation,
+  mockApplications,
+} from '@/mocks/data/store';
 import {
   EvaluatorType,
   PostAdminApplicationEvaluationRequest,
@@ -48,24 +52,20 @@ export const adminApplicationHandlers = [
       const result = findApplicationOrError(Number(params.applicationId));
       if ('error' in result) return result.error;
 
-      const {partQuestions} = result.application;
+      const {partQuestions, generationNumber, basicInfo} = result.application;
+      const questions = getApplicationQuestions(
+        generationNumber,
+        basicInfo?.applicationPartType ?? ''
+      );
+
       return success({
-        questionsWithAnswers: [
-          {
-            sequence: 1,
-            questionContent: '자기소개를 해주세요.',
-            content: partQuestions.answers[1] ?? null,
-            length: (partQuestions.answers[1] ?? '').length,
-            maxLength: 500,
-          },
-          {
-            sequence: 2,
-            questionContent: '지원 동기를 작성해주세요.',
-            content: partQuestions.answers[2] ?? null,
-            length: (partQuestions.answers[2] ?? '').length,
-            maxLength: 500,
-          },
-        ],
+        questionsWithAnswers: questions.map((question) => ({
+          sequence: question.sequence,
+          questionContent: question.content,
+          content: partQuestions.answers[question.sequence] ?? null,
+          length: (partQuestions.answers[question.sequence] ?? '').length,
+          maxLength: question.maxLength,
+        })),
         pdfFileUrl: partQuestions.pdfFileUrl,
         pdfFileKey: partQuestions.pdfFileKey,
       });
@@ -81,7 +81,8 @@ export const adminApplicationHandlers = [
       const result = findApplicationOrError(Number(params.applicationId));
       if ('error' in result) return result.error;
 
-      const {etcQuestions} = result.application;
+      const {etcQuestions, generationNumber} = result.application;
+      const info = getRecruitmentInformation(generationNumber);
       return success({
         discoveryPath: {
           options: [{value: etcQuestions.discoveryPath ?? 'NONE'}],
@@ -92,11 +93,11 @@ export const adminApplicationHandlers = [
         sessionAttendance: etcQuestions.sessionAttendance,
         mandatoryEvents: etcQuestions.mandatoryEvents,
         privacyPolicy: etcQuestions.privacyPolicy,
-        interviewStartDate: '3월 19일',
-        interviewEndDate: '3월 20일',
-        otDate: '3월 21일',
-        cokerthonDate: '4월 11일',
-        demoDayDate: '5월 9일',
+        interviewStartDate: formatKoreanDate(info.interviewStart),
+        interviewEndDate: formatKoreanDate(info.interviewEnd),
+        otDate: formatKoreanDate(info.ot),
+        cokerthonDate: formatKoreanDate(info.cokerthon),
+        demoDayDate: formatKoreanDate(info.demoDay),
       });
     }
   ),

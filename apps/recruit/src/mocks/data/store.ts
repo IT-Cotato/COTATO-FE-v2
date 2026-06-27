@@ -249,6 +249,23 @@ export const mockRecruitmentInformationByGeneration = new Map<
   ],
 ]);
 
+/** 어드민에서 수정한 모집 정보가 없으면 쓸 기본값 */
+const FALLBACK_RECRUITMENT_INFO: RecruitmentInformationType = {
+  recruitmentStart: '2026-06-01T00:00:00',
+  recruitmentEnd: '2026-06-30T23:59:59',
+  documentAnnouncement: '2026-07-03',
+  interviewStart: '2026-07-05',
+  interviewEnd: '2026-07-06',
+  finalAnnouncement: '2026-07-08',
+  ot: '2026-07-07',
+  cokerthon: '2026-08-01',
+  demoDay: '2026-09-01',
+};
+
+export const getRecruitmentInformation = (generationNumber: number) =>
+  mockRecruitmentInformationByGeneration.get(generationNumber) ??
+  FALLBACK_RECRUITMENT_INFO;
+
 const questionKey = (generationId: number, part: string) =>
   `${generationId}-${part}`;
 

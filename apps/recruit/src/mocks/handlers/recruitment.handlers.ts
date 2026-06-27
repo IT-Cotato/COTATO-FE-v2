@@ -1,38 +1,24 @@
 import {http} from 'msw';
 import {ERROR, success} from '@/mocks/utils';
 import {
-  mockRecruitmentInformationByGeneration,
+  getRecruitmentInformation,
   mockRecruitmentState,
   mockSubscribedEmails,
 } from '@/mocks/data/store';
 import {RecruitmentNotifyRequest} from '@/schemas/recruitment/recruitment.schema';
 
-/** 어드민에서 수정한 모집 정보가 없으면 쓸 기본값 */
-const FALLBACK_RECRUITMENT_INFO = {
-  recruitmentStart: '2026-06-01T00:00:00',
-  recruitmentEnd: '2026-06-30T23:59:59',
-  documentAnnouncement: '2026-07-03',
-  interviewStart: '2026-07-05',
-  interviewEnd: '2026-07-06',
-  finalAnnouncement: '2026-07-08',
-  ot: '2026-07-07',
-  cokerthon: '2026-08-01',
-  demoDay: '2026-09-01',
-};
-
-const getCurrentRecruitmentInformation = () =>
-  mockRecruitmentInformationByGeneration.get(mockRecruitmentState.generationId) ??
-  FALLBACK_RECRUITMENT_INFO;
-
 export const recruitmentHandlers = [
   http.get('*/api/recruitment', () => {
-    const info = getCurrentRecruitmentInformation();
+    const info = getRecruitmentInformation(mockRecruitmentState.generationId);
     return success({
       generationId: mockRecruitmentState.generationId,
       startDate: info.recruitmentStart,
       endDate: info.recruitmentEnd,
       schedule: [
-        {title: '서류 접수', date: `${info.recruitmentStart} ~ ${info.recruitmentEnd}`},
+        {
+          title: '서류 접수',
+          date: `${info.recruitmentStart} ~ ${info.recruitmentEnd}`,
+        },
         {title: '서류 발표', date: info.documentAnnouncement},
         {title: '면접', date: `${info.interviewStart} ~ ${info.interviewEnd}`},
       ],
@@ -54,7 +40,7 @@ export const recruitmentHandlers = [
   http.get('*/api/recruitment/status', () => success(mockRecruitmentState)),
 
   http.get('*/api/recruitment/schedule', () => {
-    const info = getCurrentRecruitmentInformation();
+    const info = getRecruitmentInformation(mockRecruitmentState.generationId);
     return success({
       generationId: mockRecruitmentState.generationId,
       applicationStartDate: info.recruitmentStart,
