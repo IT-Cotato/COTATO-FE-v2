@@ -14,12 +14,14 @@ export const authHandlers = [
   }),
 
   http.post('*/api/auth/refresh', async ({request}) => {
-    const body = (await request.json()) as {refreshToken: string};
-    const role = body.refreshToken.includes('staff') ? 'STAFF' : 'APPLICANT';
-
-    if (!body.refreshToken.startsWith('mock-refresh-token-')) {
+    const body = (await request.json()) as {refreshToken?: unknown};
+    if (
+      typeof body.refreshToken !== 'string' ||
+      !body.refreshToken.startsWith('mock-refresh-token-')
+    ) {
       return ERROR.UNAUTHORIZED();
     }
+    const role = body.refreshToken.includes('staff') ? 'STAFF' : 'APPLICANT';
 
     return success({
       accessToken: getAccessTokenForRole(role),
