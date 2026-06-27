@@ -3,7 +3,12 @@
 import {useState} from 'react';
 import Close from '@/assets/modal/close.svg';
 import {Button} from '@repo/ui/components/buttons/Button';
-import {DateField} from './DateField';
+import dynamic from 'next/dynamic';
+
+const DateField = dynamic(
+  () => import('./DateField').then((m) => m.DateField),
+  {ssr: false}
+);
 
 interface AddGenerationModalProps {
   isOpen: boolean;

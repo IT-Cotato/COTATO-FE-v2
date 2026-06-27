@@ -1,3 +1,5 @@
+'use client';
+
 import {useState, useEffect} from 'react';
 import {CustomHeader} from '@/app/(with-header)/(with-footer)/project/add-project/_components/calendar/CustomHeader';
 import {CustomInput} from '@/app/(with-header)/(with-footer)/project/add-project/_components/calendar/CustomInput';
