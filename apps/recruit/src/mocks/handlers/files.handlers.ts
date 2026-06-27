@@ -14,6 +14,8 @@ export const filesHandlers = [
   }),
 
   http.get('*/api/files/geturl', ({request}) => {
+    if (!getRoleFromRequest(request)) return ERROR.UNAUTHORIZED();
+
     const fileKey =
       new URL(request.url).searchParams.get('fileKey') ?? 'unknown.pdf';
     return success({
