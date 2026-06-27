@@ -17,8 +17,12 @@ export const adminApplicationsHandlers = [
     const partViewType = url.searchParams.get('partViewType') ?? 'ALL';
     const passViewStatuses = url.searchParams.getAll('passViewStatuses');
     const searchKeyword = url.searchParams.get('searchKeyword') ?? '';
-    const page = Number(url.searchParams.get('page') ?? '0');
-    const size = Number(url.searchParams.get('size') ?? '10');
+    const parsedPage = Number(url.searchParams.get('page') ?? '0');
+    const parsedSize = Number(url.searchParams.get('size') ?? '10');
+    const page =
+      Number.isInteger(parsedPage) && parsedPage >= 0 ? parsedPage : 0;
+    const size =
+      Number.isInteger(parsedSize) && parsedSize > 0 ? parsedSize : 10;
 
     const allApplicants = [...mockApplications.values()]
       .filter((app) => app.isSubmitted && app.generationNumber === generationId)
