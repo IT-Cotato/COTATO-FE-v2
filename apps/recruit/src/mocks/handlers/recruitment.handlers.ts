@@ -1,18 +1,40 @@
 import {http} from 'msw';
 import {ERROR, success} from '@/mocks/utils';
-import {mockRecruitmentState, mockSubscribedEmails} from '@/mocks/data/store';
+import {
+  mockRecruitmentInformationByGeneration,
+  mockRecruitmentState,
+  mockSubscribedEmails,
+} from '@/mocks/data/store';
 import {RecruitmentNotifyRequest} from '@/schemas/recruitment/recruitment.schema';
 
+/** 어드민에서 수정한 모집 정보가 없으면 쓸 기본값 */
+const FALLBACK_RECRUITMENT_INFO = {
+  recruitmentStart: '2026-06-01T00:00:00',
+  recruitmentEnd: '2026-06-30T23:59:59',
+  documentAnnouncement: '2026-07-03',
+  interviewStart: '2026-07-05',
+  interviewEnd: '2026-07-06',
+  finalAnnouncement: '2026-07-08',
+  ot: '2026-07-07',
+  cokerthon: '2026-08-01',
+  demoDay: '2026-09-01',
+};
+
+const getCurrentRecruitmentInformation = () =>
+  mockRecruitmentInformationByGeneration.get(mockRecruitmentState.generationId) ??
+  FALLBACK_RECRUITMENT_INFO;
+
 export const recruitmentHandlers = [
-  http.get('*/api/recruitment', () =>
-    success({
+  http.get('*/api/recruitment', () => {
+    const info = getCurrentRecruitmentInformation();
+    return success({
       generationId: mockRecruitmentState.generationId,
-      startDate: '2026-03-01',
-      endDate: '2026-03-14',
+      startDate: info.recruitmentStart,
+      endDate: info.recruitmentEnd,
       schedule: [
-        {title: '서류 접수', date: '2026-03-01 ~ 2026-03-14'},
-        {title: '서류 발표', date: '2026-03-17'},
-        {title: '면접', date: '2026-03-19 ~ 2026-03-20'},
+        {title: '서류 접수', date: `${info.recruitmentStart} ~ ${info.recruitmentEnd}`},
+        {title: '서류 발표', date: info.documentAnnouncement},
+        {title: '면접', date: `${info.interviewStart} ~ ${info.interviewEnd}`},
       ],
       parts: [
         {short: 'BE', name: '백엔드', detail: '서버 개발을 담당합니다.'},
@@ -23,28 +45,29 @@ export const recruitmentHandlers = [
         },
       ],
       activities: [
-        {id: 1, short: 'OT', name: 'OT', date: '2026-03-21'},
-        {id: 2, short: 'COKERTHON', name: '코커톤', date: '2026-04-11'},
+        {id: 1, short: 'OT', name: 'OT', date: info.ot},
+        {id: 2, short: 'COKERTHON', name: '코커톤', date: info.cokerthon},
       ],
-    })
-  ),
+    });
+  }),
 
   http.get('*/api/recruitment/status', () => success(mockRecruitmentState)),
 
-  http.get('*/api/recruitment/schedule', () =>
-    success({
+  http.get('*/api/recruitment/schedule', () => {
+    const info = getCurrentRecruitmentInformation();
+    return success({
       generationId: mockRecruitmentState.generationId,
-      applicationStartDate: '2026-03-01T00:00:00',
-      applicationEndDate: '2026-03-14T23:59:59',
-      documentAnnouncement: '2026-03-17',
-      interviewStartDate: '2026-03-19',
-      interviewEndDate: '2026-03-20',
-      finalAnnouncement: '2026-03-22',
-      otDate: '2026-03-21',
-      cokerthonDate: '2026-04-11',
-      demoDayDate: '2026-05-09',
-    })
-  ),
+      applicationStartDate: info.recruitmentStart,
+      applicationEndDate: info.recruitmentEnd,
+      documentAnnouncement: info.documentAnnouncement,
+      interviewStartDate: info.interviewStart,
+      interviewEndDate: info.interviewEnd,
+      finalAnnouncement: info.finalAnnouncement,
+      otDate: info.ot,
+      cokerthonDate: info.cokerthon,
+      demoDayDate: info.demoDay,
+    });
+  }),
 
   http.post('*/api/recruitment/subscribe', async ({request}) => {
     const body = (await request.json()) as RecruitmentNotifyRequest;
