@@ -213,7 +213,7 @@ export const mockSubscribedEmails = new Set<string>();
 
 /** ───────────── Admin mock data ───────────── */
 
-export const mockGenerations = [9, 8, 7];
+export const mockGenerations = [9, 8];
 
 export const mockRecruitmentInformationByGeneration = new Map<
   number,
@@ -231,6 +231,20 @@ export const mockRecruitmentInformationByGeneration = new Map<
       ot: '2026-07-07',
       cokerthon: '2026-08-01',
       demoDay: '2026-09-01',
+    },
+  ],
+  [
+    8,
+    {
+      recruitmentStart: '2025-12-01T00:00:00',
+      recruitmentEnd: '2025-12-09T23:59:59',
+      documentAnnouncement: '2025-12-12',
+      interviewStart: '2025-12-13',
+      interviewEnd: '2025-12-14',
+      finalAnnouncement: '2025-12-16',
+      ot: '2025-12-15',
+      cokerthon: '2026-01-10',
+      demoDay: '2026-02-07',
     },
   ],
 ]);
