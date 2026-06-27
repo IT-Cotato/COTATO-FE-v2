@@ -52,8 +52,15 @@ const ACCESS_TOKEN_BY_ROLE: Partial<Record<MockRole, string>> = {
   ...(STAFF_ACCESS_TOKEN ? {STAFF: STAFF_ACCESS_TOKEN} : {}),
 };
 
-export const getAccessTokenForRole = (role: MockRole) =>
-  ACCESS_TOKEN_BY_ROLE[role] ?? ACCESS_TOKEN_BY_ROLE.APPLICANT!;
+export const getAccessTokenForRole = (role: MockRole) => {
+  const token = ACCESS_TOKEN_BY_ROLE[role];
+
+  if (!token) {
+    throw new Error(`MSW token for role "${role}" is not configured.`);
+  }
+
+  return token;
+};
 
 export const mockUsers: Record<MockRole, MockUser> = {
   APPLICANT: {
