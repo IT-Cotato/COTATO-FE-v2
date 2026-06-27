@@ -71,6 +71,7 @@ export const adminMailHandlers = [
       const body = (await request.json()) as {generationId: number};
       const mail = mockNotificationMailByGeneration.get(body.generationId);
       if (!mail) return ERROR.EMAIL_TEMPLATE_NOT_FOUND();
+      if (mail.isSent) return ERROR.EMAIL_ALREADY_SENT();
 
       mail.isSent = true;
       mail.sentAt = new Date().toISOString();
@@ -147,6 +148,7 @@ export const adminMailHandlers = [
     };
     const mail = getResultMail(body.generationId, body.templateType);
     if (!mail) return ERROR.EMAIL_TEMPLATE_NOT_FOUND();
+    if (mail.isSent) return ERROR.EMAIL_ALREADY_SENT();
 
     mail.isSent = true;
     mail.sentAt = new Date().toISOString();
