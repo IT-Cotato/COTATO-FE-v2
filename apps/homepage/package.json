@@ -17,6 +17,7 @@
     "@dnd-kit/utilities": "^3.2.2",
     "@hookform/resolvers": "^5.2.2",
     "@repo/ui": "workspace:*",
+    "@sentry/nextjs": "^10.62.0",
     "@tanstack/react-query": "^5.90.12",
     "@use-funnel/browser": "^0.0.16",
     "@use-funnel/next": "^0.0.22",
