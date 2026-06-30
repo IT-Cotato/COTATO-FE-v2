@@ -1,6 +1,15 @@
 {
   "$schema": "https://turborepo.dev/schema.json",
   "ui": "tui",
+  "globalEnv": [
+    "NODE_ENV",
+    "NEXT_RUNTIME",
+    "CI",
+    "SENTRY_ORG",
+    "SENTRY_PROJECT",
+    "SENTRY_AUTH_TOKEN",
+    "NEXT_PUBLIC_SENTRY_DSN"
+  ],
   "tasks": {
     "build:css": {
       "outputs": ["packages/ui/dist/**"]
