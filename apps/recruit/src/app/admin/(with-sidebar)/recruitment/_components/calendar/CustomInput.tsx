@@ -24,7 +24,7 @@ export const CustomInput = forwardRef<HTMLButtonElement, CustomInputProps>(
           }
         )}>
         <span>{value}</span>
-        <CalendarIcon />
+        <CalendarIcon className='h-4 w-4' />
       </button>
     );
   }
