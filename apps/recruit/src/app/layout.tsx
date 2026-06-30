@@ -62,6 +62,9 @@ export const metadata: Metadata = {
       'max-snippet': -1,
     },
   },
+  verification: {
+    google: 'U9oZYgH8MZIHDHHr9HptzFTZIjUgHHXaB5es3_D76hY',
+  },
 };
 
 const pretendard = localFont({
