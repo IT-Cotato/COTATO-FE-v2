@@ -8,6 +8,7 @@ import {GoogleAnalytics} from '@/lib/GoogleAnalytics';
 import {BeUsableRum} from '@/lib/BeUsableRum';
 import {GoogleTagManager, GtmNoscript} from '@/lib/GoogleTagManager';
 import {HeaderContainer} from '@/app/_containers/HeaderContainer';
+import {MockingProvider} from '@/mocks/MockingProvider';
 import {Footer} from '@repo/ui/components/layout/footer/Footer';
 import {TERMS_LINK} from '@repo/ui/constants/terms-link';
 import {HEADER_HEIGHT, MOBILE_HEADER_HEIGHT} from '@repo/ui/constants/ui';
@@ -93,23 +94,25 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
       }>
       {gtmId && <GoogleTagManager gtmId={gtmId} />}
       <body className='flex min-h-screen w-full flex-col'>
-        <Providers>
-          <ConditionalAuthProvider>
-            {gtmId && <GtmNoscript gtmId={gtmId} />}
-            {process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS ? (
-              <GoogleAnalytics
-                gaId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}
+        <MockingProvider>
+          <Providers>
+            <ConditionalAuthProvider>
+              {gtmId && <GtmNoscript gtmId={gtmId} />}
+              {process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS ? (
+                <GoogleAnalytics
+                  gaId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}
+                />
+              ) : null}
+              <BeUsableRum />
+              <HeaderContainer />
+              <main className='flex w-full flex-1 flex-col'>{children}</main>
+              <Footer
+                termsHref={TERMS_LINK.recruit}
+                termsText='서비스 이용약관 및 개인정보 처리방침'
               />
-            ) : null}
-            <BeUsableRum />
-            <HeaderContainer />
-            <main className='flex w-full flex-1 flex-col'>{children}</main>
-            <Footer
-              termsHref={TERMS_LINK.recruit}
-              termsText='서비스 이용약관 및 개인정보 처리방침'
-            />
-          </ConditionalAuthProvider>
-        </Providers>
+            </ConditionalAuthProvider>
+          </Providers>
+        </MockingProvider>
       </body>
     </html>
   );

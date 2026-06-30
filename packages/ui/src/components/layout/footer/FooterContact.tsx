@@ -16,7 +16,7 @@ export const FooterContact = ({termsHref, termsText}: FooterContactProps) => {
         <h3 className='text-h5 hidden text-white lg:block'>Contact Us</h3>
         <div className='flex items-center gap-5 lg:gap-3'>
           <SocialLink href='mailto:itcotato@gmail.com' ariaLabel='이메일'>
-            <Email className='w-6' />
+            <Email className='h-6 w-6' />
           </SocialLink>
           <SocialLink href='https://github.com/IT-Cotato' ariaLabel='GitHub'>
             <Github className='h-6 w-6' />
