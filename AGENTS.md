@@ -57,7 +57,9 @@ Both apps use **Next.js App Router** with route groups for layout composition:
 ### Auth & routing
 
 - `ProtectedRoute` component wraps role-gated pages (roles: `ADMIN`, `MEMBER`)
-- Token management via `services/utils/tokenManager`
+- Token management
+  - homepage: `services/utils/tokenManager`
+  - recruit: HttpOnly cookies handled only on the server — OAuth Route Handlers (`app/oauth2/*`), BFF proxy (`app/api/[...path]`), and `proxy.ts` route guard; shared logic in `lib/auth/*`. Client code never reads tokens.
 - Route constants centralized in `constants/routes.ts`
 
 ### Shared UI (@repo/ui)
