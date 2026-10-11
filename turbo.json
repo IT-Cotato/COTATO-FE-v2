@@ -10,6 +10,14 @@
     "SENTRY_AUTH_TOKEN",
     "NEXT_PUBLIC_SENTRY_DSN"
   ],
+  "globalPassThroughEnv": [
+    "API_BASE_URL",
+    "AUTH_ALLOWED_ORIGINS",
+    "VERCEL",
+    "VERCEL_URL",
+    "VERCEL_BRANCH_URL",
+    "VERCEL_PROJECT_PRODUCTION_URL"
+  ],
   "tasks": {
     "build:css": {
       "outputs": ["packages/ui/dist/**"]
