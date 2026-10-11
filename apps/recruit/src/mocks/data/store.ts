@@ -1,3 +1,4 @@
+import {MOCK_APPLICANT_TOKEN} from '@/mocks/session';
 import {ApplicationType} from '@/schemas/my-page/my-page.schema';
 import {
   BasicInfoResponse,
@@ -41,25 +42,16 @@ export interface MockUser {
 }
 
 /**
- * 실제 구글 로그인은 항상 APPLICANT로 처리된다 (구글이 돌려주는 인증 코드는 우리가 통제할 수 없음).
- * STAFF로 테스트하려면 NEXT_PUBLIC_MSW_STAFF_TOKEN 값을 accessToken으로 직접 주입해야 한다.
+ * MSW 모드의 로그인 버튼은 항상 APPLICANT 목 세션으로 로그인한다.
+ * STAFF로 테스트하려면 NEXT_PUBLIC_MSW_STAFF_TOKEN 값을 목 세션 쿠키로 직접 주입해야 한다.
+ * (브라우저 콘솔: document.cookie = 'msw_access_token=<STAFF 토큰>; path=/')
  * env가 설정되지 않으면 STAFF 토큰으로 인증할 방법이 전혀 없다.
  */
 const STAFF_ACCESS_TOKEN = process.env.NEXT_PUBLIC_MSW_STAFF_TOKEN;
 
 const ACCESS_TOKEN_BY_ROLE: Partial<Record<MockRole, string>> = {
-  APPLICANT: 'mock-access-token-applicant',
+  APPLICANT: MOCK_APPLICANT_TOKEN,
   ...(STAFF_ACCESS_TOKEN ? {STAFF: STAFF_ACCESS_TOKEN} : {}),
-};
-
-export const getAccessTokenForRole = (role: MockRole) => {
-  const token = ACCESS_TOKEN_BY_ROLE[role];
-
-  if (!token) {
-    throw new Error(`MSW token for role "${role}" is not configured.`);
-  }
-
-  return token;
 };
 
 export const mockUsers: Record<MockRole, MockUser> = {
