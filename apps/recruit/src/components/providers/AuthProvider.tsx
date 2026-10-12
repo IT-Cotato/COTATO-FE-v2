@@ -1,57 +1,59 @@
 'use client';
 
-import {useEffect, ReactNode, useRef} from 'react';
+import {useEffect, ReactNode} from 'react';
 import {useAuthStore} from '@/store/useAuthStore';
 import {getMe} from '@/services/api/auth.api';
-import {
-  getAccessToken,
-  ACCESS_TOKEN_KEY,
-  REFRESH_TOKEN_KEY,
-} from '@/services/utils/tokenManager';
+import {removeLegacyTokens, resetAuthState} from '@/services/utils/authState';
+import {broadcastAuthEvent, subscribeAuthEvent} from '@/lib/authChannel';
+import {LOGIN_ERROR, LOGIN_ERROR_PARAM, LoginError} from '@/lib/auth/constants';
 
 interface AuthProviderProps {
   children: ReactNode;
 }
 
+const LOGIN_ERROR_MESSAGES: Record<LoginError, string> = {
+  [LOGIN_ERROR.STATE]: '잘못된 요청입니다. 처음부터 다시 시도해주세요.',
+  [LOGIN_ERROR.OAUTH]: '로그인 중 오류가 발생했습니다. 다시 시도해주세요.',
+  [LOGIN_ERROR.CODE]: '인증 코드를 찾을 수 없습니다.',
+  [LOGIN_ERROR.LOGIN]: '로그인에 실패했습니다. 다시 시도해주세요.',
+};
+
+/** OAuth 콜백(서버)이 실패 사유를 쿼리로 넘기면 알림 후 URL에서 제거한다. */
+const notifyLoginError = () => {
+  const url = new URL(window.location.href);
+  const error = url.searchParams.get(LOGIN_ERROR_PARAM) as LoginError | null;
+  if (!error) return;
+
+  url.searchParams.delete(LOGIN_ERROR_PARAM);
+  window.history.replaceState(window.history.state, '', url);
+  alert(LOGIN_ERROR_MESSAGES[error] ?? LOGIN_ERROR_MESSAGES.login);
+};
+
 /**
  * 인증 상태 관리 Provider
- * ConditionalAuthProvider에서 사용됨
+ *
+ * 토큰은 HttpOnly 쿠키로 서버(BFF)만 다루므로, 클라이언트는 토큰을 저장하거나 읽지 않는다.
+ * OAuth 콜백이 리다이렉트 응답에서 쿠키를 설정한 뒤 페이지가 로드되므로,
+ * 이 Provider가 초기화되는 시점에는 이미 세션이 확정되어 있다.
  *
  * 핵심 역할:
- * 1. 앱 시작/새 탭 오픈 시 localStorage의 토큰으로 Zustand 상태 복구
- * 2. 다른 탭에서 로그인/로그아웃 시 현재 탭의 Zustand 상태 동기화
- *
- * 참고:
- * - localStorage 자체는 모든 탭에서 자동 공유됨 (브라우저 기본 기능)
- * - 하지만 Zustand 같은 메모리 상태는 탭마다 독립적
- * - 이 Provider가 localStorage ↔ Zustand 동기화 담당
+ * 1. 앱 시작/새 탭 오픈 시 /api/auth/me로 Zustand 사용자 상태 복구
+ * 2. 다른 탭의 로그인/로그아웃을 BroadcastChannel로 받아 현재 탭 상태 동기화
  */
 export const AuthProvider = ({children}: AuthProviderProps) => {
   const {setUser, setInitialized} = useAuthStore();
 
-  const isSyncing = useRef(false);
-
   useEffect(() => {
-    /**
-     * 초기 인증 상태 복구
-     *
-     * 시나리오:
-     * - 새로고침
-     * - 새 탭 오픈
-     * - 브라우저 재시작 후 접속
-     */
-    const initializeAuth = async () => {
-      const storedAccessToken = getAccessToken();
-      if (!storedAccessToken) {
-        setInitialized(true);
-        return;
-      }
+    removeLegacyTokens();
+    notifyLoginError();
 
+    const initializeAuth = async () => {
       try {
         const userResponse = await getMe();
         setUser(userResponse);
-      } catch (error) {
-        console.error('[AuthProvider - Failed to initialize auth]', error);
+        broadcastAuthEvent('login');
+      } catch {
+        // 비로그인 상태 (세션 쿠키가 없거나 만료됨)
       } finally {
         setInitialized(true);
       }
@@ -59,50 +61,20 @@ export const AuthProvider = ({children}: AuthProviderProps) => {
 
     initializeAuth();
 
-    /**
-     * 탭 간 인증 상태 동기화
-     *
-     * localStorage는 모든 탭에서 자동 공유되지만,
-     * Zustand 상태는 탭마다 독립적이므로 수동 동기화 필요
-     *
-     * 시나리오:
-     * - 탭 A에서 로그인 → localStorage에 토큰 저장
-     * - storage 이벤트 발생 → 탭 B 감지
-     * - 탭 B가 getMe() 호출 → Zustand 상태 업데이트
-     * - 탭 B도 로그인 UI로 변경
-     */
-    const handleStorageChange = async (e: StorageEvent) => {
-      if (!e.key || ![ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY].includes(e.key))
-        return;
-
-      if (e.newValue === null) {
-        if (useAuthStore.getState().isAuthenticated) {
-          useAuthStore.getState().logout();
-        }
+    return subscribeAuthEvent(async (event) => {
+      if (event === 'logout') {
+        if (useAuthStore.getState().isAuthenticated) await resetAuthState();
         return;
       }
 
-      if (e.key === ACCESS_TOKEN_KEY && e.newValue && !isSyncing.current) {
+      if (!useAuthStore.getState().isAuthenticated) {
         try {
-          isSyncing.current = true;
-          // 저장 시차 대비 대기
-          await new Promise((r) => setTimeout(r, 200));
-
-          const userResponse = await getMe();
-          setUser(userResponse);
+          setUser(await getMe());
         } catch (error) {
           console.error('[AuthProvider - Sync failed]', error);
-        } finally {
-          isSyncing.current = false;
         }
       }
-    };
-
-    window.addEventListener('storage', handleStorageChange);
-
-    return () => {
-      window.removeEventListener('storage', handleStorageChange);
-    };
+    });
   }, [setInitialized, setUser]);
 
   return <>{children}</>;

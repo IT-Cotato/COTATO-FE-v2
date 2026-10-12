@@ -3,7 +3,7 @@ import '@repo/ui/styles.css';
 import '@/styles/globals.css';
 import localFont from 'next/font/local';
 import Providers from '@/app/providers';
-import {ConditionalAuthProvider} from '@/components/providers/ConditionalAuthProvider';
+import {AuthProvider} from '@/components/providers/AuthProvider';
 import {GoogleAnalytics} from '@/lib/GoogleAnalytics';
 import {BeUsableRum} from '@/lib/BeUsableRum';
 import {GoogleTagManager, GtmNoscript} from '@/lib/GoogleTagManager';
@@ -99,7 +99,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
       <body className='flex min-h-screen w-full flex-col'>
         <MockingProvider>
           <Providers>
-            <ConditionalAuthProvider>
+            <AuthProvider>
               {gtmId && <GtmNoscript gtmId={gtmId} />}
               {process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS ? (
                 <GoogleAnalytics
@@ -113,7 +113,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
                 termsHref={TERMS_LINK.recruit}
                 termsText='서비스 이용약관 및 개인정보 처리방침'
               />
-            </ConditionalAuthProvider>
+            </AuthProvider>
           </Providers>
         </MockingProvider>
       </body>

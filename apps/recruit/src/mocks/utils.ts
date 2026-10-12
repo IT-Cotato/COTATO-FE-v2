@@ -1,5 +1,6 @@
 import {HttpResponse} from 'msw';
 import {mockTokenToRole, MockRole} from '@/mocks/data/store';
+import {getMockSessionToken} from '@/mocks/session';
 
 export const success = <T>(data: T, status = 200) =>
   HttpResponse.json(
@@ -18,11 +19,15 @@ export const formatKoreanDate = (isoDate: string | null) => {
   return `${Number(month)}월 ${Number(day)}일`;
 };
 
-/** Authorization 헤더에서 role을 추출한다. 토큰이 없거나 알 수 없으면 null. */
-export const getRoleFromRequest = (request: Request): MockRole | null => {
-  const header = request.headers.get('Authorization');
-  if (!header?.startsWith('Bearer ')) return null;
-  const token = header.slice('Bearer '.length);
+/**
+ * 목 세션 쿠키에서 role을 추출한다. 토큰이 없거나 알 수 없으면 null.
+ * 실제 토큰은 HttpOnly 쿠키라 클라이언트 요청에 Authorization 헤더가 없으므로 목 세션 쿠키를 읽는다.
+ * (MSW 핸들러는 브라우저 메인 스레드에서 실행된다)
+ */
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export const getRoleFromRequest = (_request: Request): MockRole | null => {
+  const token = getMockSessionToken();
+  if (!token) return null;
   return mockTokenToRole.get(token) ?? null;
 };
 
