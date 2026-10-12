@@ -1,4 +1,5 @@
 import type {NextRequest} from 'next/server';
+import {CSRF_HEADER, CSRF_HEADER_VALUE} from '@/lib/auth/constants';
 
 const PRODUCTION_ORIGIN = 'https://recruit.cotato.kr';
 const LOCAL_ORIGIN = 'http://localhost:3000';
@@ -36,11 +37,13 @@ export const isTrustedOrigin = (origin: string) =>
 const UNSAFE_METHODS = new Set(['POST', 'PUT', 'PATCH', 'DELETE']);
 
 /**
- * 상태 변경 요청의 CSRF 방어
+ * BFF 요청의 CSRF 방어
  * SameSite=Lax는 cotato.kr의 다른 하위 도메인(same-site)에서 오는 요청까지는 막지 못하므로,
- * 쿠키로 인증되는 상태 변경 요청은 Origin이 자기 자신과 같을 때만 허용한다.
+ * 1. 모든 요청에 커스텀 헤더를 요구하고 (RFC 10017 권고)
+ * 2. 상태 변경 요청은 Origin이 자기 자신과 같을 때만 허용한다. (심층 방어)
  */
-export const isAllowedRequestOrigin = (request: NextRequest) => {
+export const isAllowedBffRequest = (request: NextRequest) => {
+  if (request.headers.get(CSRF_HEADER) !== CSRF_HEADER_VALUE) return false;
   if (!UNSAFE_METHODS.has(request.method)) return true;
   return request.headers.get('origin') === request.nextUrl.origin;
 };

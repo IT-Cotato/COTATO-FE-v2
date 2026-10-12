@@ -3,7 +3,11 @@ import axios, {
   AxiosInstance,
   InternalAxiosRequestConfig,
 } from 'axios';
-import {AUTH_RETRY_HEADER} from '@/lib/auth/constants';
+import {
+  AUTH_RETRY_HEADER,
+  CSRF_HEADER,
+  CSRF_HEADER_VALUE,
+} from '@/lib/auth/constants';
 import {ENDPOINT} from '@/services/constant/endpoint';
 import {resetAuthState} from '@/services/utils/authState';
 
@@ -22,6 +26,8 @@ const createAxiosInstance = (): AxiosInstance => {
   const instance = axios.create({
     headers: {
       'Content-Type': 'application/json',
+      // BFF는 이 헤더가 없는 요청을 CSRF로 보고 거부한다.
+      [CSRF_HEADER]: CSRF_HEADER_VALUE,
     },
     timeout: 10000,
   });

@@ -1,7 +1,7 @@
 import {NextRequest, NextResponse} from 'next/server';
 import {AUTH_RETRY_HEADER} from '@/lib/auth/constants';
 import {backendFetch} from '@/lib/auth/backend';
-import {isAllowedRequestOrigin} from '@/lib/auth/origin';
+import {isAllowedBffRequest} from '@/lib/auth/origin';
 import {
   applySessionUpdate,
   getSessionTokens,
@@ -46,7 +46,7 @@ const unavailableResponse = () =>
   errorResponse(503, 'BFF503', '인증 서버에 연결할 수 없습니다.');
 
 export const proxyToBackend = async (request: NextRequest) => {
-  if (!isAllowedRequestOrigin(request)) {
+  if (!isAllowedBffRequest(request)) {
     return errorResponse(403, 'C005', '접근이 거부되었습니다.');
   }
 

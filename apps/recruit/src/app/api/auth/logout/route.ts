@@ -1,6 +1,6 @@
 import {NextRequest, NextResponse} from 'next/server';
 import {proxyToBackend} from '@/lib/auth/bff';
-import {isAllowedRequestOrigin} from '@/lib/auth/origin';
+import {isAllowedBffRequest} from '@/lib/auth/origin';
 import {clearSessionCookies, getSessionTokens} from '@/lib/auth/session';
 
 /**
@@ -8,7 +8,7 @@ import {clearSessionCookies, getSessionTokens} from '@/lib/auth/session';
  * 백엔드 로그아웃(Redis refresh 토큰 삭제)은 최선 노력으로 호출하고, 결과와 관계없이 세션 쿠키를 지운다.
  */
 export const POST = async (request: NextRequest) => {
-  if (!isAllowedRequestOrigin(request)) {
+  if (!isAllowedBffRequest(request)) {
     return NextResponse.json(
       {code: 'C005', message: '접근이 거부되었습니다.'},
       {status: 403}

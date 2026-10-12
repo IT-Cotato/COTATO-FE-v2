@@ -35,6 +35,14 @@ export const OAUTH_STATE_MAX_AGE_SECONDS = 5 * 60;
  */
 export const AUTH_RETRY_HEADER = 'x-auth-retry';
 
+/**
+ * CSRF 방어용 커스텀 요청 헤더 (RFC 10017 §6.1.3.3.2)
+ * 다른 origin의 페이지는 CORS 사전 요청(preflight) 허락 없이 이 헤더를 붙일 수 없으므로,
+ * BFF는 이 헤더가 있는 요청만 쿠키로 인증해 처리한다.
+ */
+export const CSRF_HEADER = 'x-csrf';
+export const CSRF_HEADER_VALUE = '1';
+
 /** OAuth 콜백 실패 시 홈으로 돌려보내며 붙이는 쿼리 파라미터 */
 export const LOGIN_ERROR_PARAM = 'loginError';
 
