@@ -7,6 +7,7 @@ export const ROUTES = {
   FAQ: '/faq',
   MYPAGE: '/my-page',
   // oauth routes
+  OAUTH2_LOGIN: '/oauth2/login',
   OAUTH2_CALLBACK: '/oauth2/callback',
 
   //admin routes

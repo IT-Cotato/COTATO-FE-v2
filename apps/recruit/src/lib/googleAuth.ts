@@ -1,36 +1,30 @@
 import {ROUTES} from '@/constants/routes';
+import {
+  isMockingEnabled,
+  MOCK_APPLICANT_TOKEN,
+  setMockSessionToken,
+} from '@/mocks/session';
 
-export const OAUTH_STATE_KEY = 'oauth_state';
-
+/**
+ * 구글 로그인 시작
+ * state 생성·저장은 서버(/oauth2/login)가 HttpOnly 쿠키로 처리하고,
+ * 로그인 후에는 현재 페이지로 돌아온다.
+ */
 export const startGoogleLogin = () => {
   if (typeof window === 'undefined') {
     console.error('startGoogleLogin can only be called in browser environment');
     return;
   }
 
-  const clientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID;
-  if (!clientId) {
-    console.error('NEXT_PUBLIC_GOOGLE_CLIENT_ID is not configured');
-    throw new Error(
-      '구글 로그인 설정이 올바르지 않습니다. 관리자에게 문의해주세요.'
-    );
+  if (isMockingEnabled) {
+    // MSW 모드: 구글/백엔드 대신 APPLICANT 목 세션으로 로그인 (STAFF는 mocks/data/store.ts 참고)
+    setMockSessionToken(MOCK_APPLICANT_TOKEN);
+    window.location.reload();
+    return;
   }
 
-  const redirectUri = window.location.origin + ROUTES.OAUTH2_CALLBACK;
-
-  const state = crypto.randomUUID();
-  sessionStorage.setItem(OAUTH_STATE_KEY, state);
-
-  const params = new URLSearchParams({
-    client_id: clientId,
-    redirect_uri: redirectUri,
-    response_type: 'code',
-    scope: 'openid email profile',
-    state: state,
-    prompt: 'consent',
-  });
-
-  const googleAuthUrl = `https://accounts.google.com/o/oauth2/v2/auth?${params.toString()}`;
-
-  window.open(googleAuthUrl, '_self');
+  const returnTo = window.location.pathname + window.location.search;
+  window.location.assign(
+    `${ROUTES.OAUTH2_LOGIN}?${new URLSearchParams({returnTo})}`
+  );
 };

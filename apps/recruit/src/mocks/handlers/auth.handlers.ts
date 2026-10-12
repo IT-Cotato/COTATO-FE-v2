@@ -1,38 +1,17 @@
 import {http} from 'msw';
 import {ERROR, getRoleFromRequest, success} from '@/mocks/utils';
-import {getAccessTokenForRole, mockUsers} from '@/mocks/data/store';
+import {mockUsers} from '@/mocks/data/store';
+import {setMockSessionToken} from '@/mocks/session';
 
+/**
+ * 로그인(코드 교환)과 토큰 갱신은 서버 Route Handler/BFF가 처리해 브라우저 MSW로 가로챌 수 없으므로,
+ * 목 세션 쿠키 기반의 로그아웃·내 정보 조회만 모킹한다. (로그인은 lib/googleAuth.ts 참고)
+ */
 export const authHandlers = [
-  http.post('*/api/auth/login/google', () => {
-    // 구글이 돌려주는 인증 코드는 통제할 수 없어 항상 APPLICANT로 로그인된다.
-    // STAFF로 테스트하려면 NEXT_PUBLIC_MSW_STAFF_TOKEN을 accessToken으로 직접 주입해야 한다.
-    return success({
-      accessToken: getAccessTokenForRole('APPLICANT'),
-      refreshToken: 'mock-refresh-token-applicant',
-      tokenType: 'Bearer',
-    });
-  }),
-
-  http.post('*/api/auth/refresh', async ({request}) => {
-    const body = (await request.json()) as {refreshToken?: unknown};
-    if (
-      typeof body.refreshToken !== 'string' ||
-      !body.refreshToken.startsWith('mock-refresh-token-')
-    ) {
-      return ERROR.UNAUTHORIZED();
-    }
-    const role = body.refreshToken.includes('staff') ? 'STAFF' : 'APPLICANT';
-
-    return success({
-      accessToken: getAccessTokenForRole(role),
-      refreshToken: `mock-refresh-token-${role.toLowerCase()}`,
-      tokenType: 'Bearer',
-    });
-  }),
-
   http.post('*/api/auth/logout', ({request}) => {
     const role = getRoleFromRequest(request);
     if (!role) return ERROR.UNAUTHORIZED();
+    setMockSessionToken(null);
     return success(null);
   }),
 

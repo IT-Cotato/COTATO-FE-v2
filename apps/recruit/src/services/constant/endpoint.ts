@@ -1,13 +1,8 @@
-const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
-
-if (!baseUrl) {
-  throw new Error(
-    'NEXT_PUBLIC_API_BASE_URL is not defined. Please check your .env file.'
-  );
-}
-
-export const API_BASE_URL = baseUrl;
-
+/**
+ * API 엔드포인트
+ * 클라이언트는 같은 origin의 BFF(/api/*)로 요청하고, BFF가 같은 경로로 백엔드에 전달한다.
+ * (백엔드 주소는 서버 전용 lib/auth/backend.ts에서 관리)
+ */
 export const ENDPOINT = {
   AUTH: {
     LOGIN_GOOGLE: '/api/auth/login/google',
@@ -15,7 +10,7 @@ export const ENDPOINT = {
     LOGOUT: '/api/auth/logout',
     ME: '/api/auth/me',
   },
-  FAQ: 'api/faq',
+  FAQ: '/api/faq',
   RECRUITMENT: {
     NOTICE: '/api/recruitment',
     STATUS: '/api/recruitment/status',
