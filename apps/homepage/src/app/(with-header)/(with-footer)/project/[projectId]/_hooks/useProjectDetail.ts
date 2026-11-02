@@ -19,6 +19,7 @@ export const useProjectDetail = (projectId: number) => {
       generationId: apiData.generationId,
       imageInfos: apiData.imageInfos.map((img) => ({
         imageId: img.imageId,
+        s3Key: img.s3Key,
         imageUrl: img.imageUrl,
         imageOrder: img.imageOrder,
       })),

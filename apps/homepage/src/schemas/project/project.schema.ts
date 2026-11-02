@@ -46,6 +46,7 @@ export const ProjectDetailSchema = z.object({
   imageInfos: z.array(
     z.object({
       imageId: z.number().int(),
+      s3Key: z.string(),
       imageUrl: z.string(),
       imageOrder: z.number().int(),
     })
