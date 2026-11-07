@@ -6,6 +6,7 @@ import {
 import {
   MyMinusPointDashboardResponse,
   MyMinusPointRecordsResponse,
+  MyPointTimelineResponseSchema,
 } from '@/schemas/mypage-mem/activity/penalty.schema';
 import {ENDPOINT} from '@/services/constant/endpoint';
 
@@ -41,4 +42,12 @@ export const getMyPenaltyRecords = async (
     params: {month},
   });
   return data;
+};
+
+/** 새 통합 내역만 별도 엔드포인트로 읽어 기존 세션 내역 API의 형식을 보존한다. */
+export const getMyPenaltyTimeline = async (month?: number) => {
+  const {data} = await privateAxios.get(ENDPOINT.PENALTY.MY_TIMELINE, {
+    params: {month},
+  });
+  return MyPointTimelineResponseSchema.parse(data);
 };
