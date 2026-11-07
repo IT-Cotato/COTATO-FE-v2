@@ -5,14 +5,14 @@ import {Dropdown} from '@/components/dropdown/Dropdown';
 import {TabType} from '@/schemas/mypage-mem/activity/mypage-mem-type';
 import {
   useAttendanceRecordsQuery,
-  usePenaltyRecordsQuery,
+  usePenaltyTimelineQuery,
   useAttendanceDashboardQuery,
 } from '@/hooks/queries/useActivity.queries';
 import {Spinner} from '@repo/ui/components/spinner/Spinner';
 import {AttendanceRows} from '@/app/(with-header)/mypage/activity/_components/AttendanceRow';
 import {PenaltyRows} from '@/app/(with-header)/mypage/activity/_components/PenaltyRow';
 import {MemberAttendResponse} from '@/schemas/mypage-mem/activity/attendance.schema';
-import {PenaltyRecord} from '@/schemas/mypage-mem/activity/penalty.schema';
+import {PointTimelineRecord} from '@/schemas/mypage-mem/activity/penalty.schema';
 
 export const AttendanceCheckContainer = ({activeTab}: {activeTab: TabType}) => {
   const {data: dashboardData, isLoading: isDashboardLoading} =
@@ -50,7 +50,7 @@ export const AttendanceCheckContainer = ({activeTab}: {activeTab: TabType}) => {
     });
 
   const {data: penaltyRecords, isLoading: isPenaltyLoading} =
-    usePenaltyRecordsQuery(monthNumber, {
+    usePenaltyTimelineQuery(monthNumber, {
       enabled: !isAttendance && !!selectedMonth,
     });
 
@@ -83,7 +83,7 @@ export const AttendanceCheckContainer = ({activeTab}: {activeTab: TabType}) => {
           <table className='w-full table-fixed border-separate border-spacing-y-2.5'>
             <thead>
               <tr className='text-body-l-b lg:text-h5 h-8 bg-white text-neutral-800 lg:h-12.25'>
-                <th>회차</th>
+                <th>{isAttendance ? '회차' : '회차·일자'}</th>
                 {isAttendance ? (
                   <>
                     <th className='w-1/4'>장소</th>
@@ -116,7 +116,7 @@ export const AttendanceCheckContainer = ({activeTab}: {activeTab: TabType}) => {
                   data={currentRecords as MemberAttendResponse[]}
                 />
               ) : (
-                <PenaltyRows data={currentRecords as PenaltyRecord[]} />
+                <PenaltyRows data={currentRecords as PointTimelineRecord[]} />
               )}
             </tbody>
           </table>

@@ -10,7 +10,7 @@ import {
   useAttendanceDashboardQuery,
   useAttendanceRecordsQuery,
   usePenaltyDashboardQuery,
-  usePenaltyRecordsQuery,
+  usePenaltyTimelineQuery,
 } from '@/hooks/queries/useActivity.queries';
 import {ErrorResponse} from '@/schemas/common/common-schema';
 import {NotActiveMemberView} from '@/app/(with-header)/mypage/activity/_components/NotActiveMemberView';
@@ -34,7 +34,7 @@ export const AttendanceContainer = () => {
       enabled: isAttendance,
     }
   );
-  const {isLoading: isPenaltyRecordLoading} = usePenaltyRecordsQuery(
+  const {isLoading: isPenaltyRecordLoading} = usePenaltyTimelineQuery(
     currentMonth,
     {
       enabled: !isAttendance,
