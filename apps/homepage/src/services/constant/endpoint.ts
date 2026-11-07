@@ -62,6 +62,10 @@ export const ENDPOINT = {
 
   /** 상벌점 API */
   PENALTY: {
+    MANUAL_BONUS: '/v1/api/admin/manual-bonus-points',
+    CANCEL_MANUAL_BONUS: (id: number) =>
+      `/v1/api/admin/manual-bonus-points/${id}/cancel`,
+    MY_TIMELINE: '/v1/api/minus-points/my/timeline',
     MY_DASHBOARD: '/v1/api/minus-points/my/dashboard',
     MY_RECORDS: '/v1/api/minus-points/my',
     EDIT_EXTRA_MINUS_POINT: (sessionId: number) =>

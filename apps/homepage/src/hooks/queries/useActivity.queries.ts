@@ -5,6 +5,7 @@ import {
   getMyAttendanceRecords,
   getMyPenaltyDashboard,
   getMyPenaltyRecords,
+  getMyPenaltyTimeline,
 } from '@/services/api/activity/activity.api';
 
 /** 내 출석 대시보드 조회 */
@@ -48,3 +49,14 @@ export const usePenaltyRecordsQuery = (
     ...options,
   });
 };
+
+/** 기존 주차 내역 캐시와 분리하여 서로 다른 응답 형식이 섞이지 않게 한다. */
+export const usePenaltyTimelineQuery = (
+  month?: number,
+  options?: {enabled?: boolean}
+) =>
+  useQuery({
+    queryKey: QUERY_KEYS.PENALTY.TIMELINE(month),
+    queryFn: () => getMyPenaltyTimeline(month),
+    ...options,
+  });

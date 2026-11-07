@@ -8,6 +8,7 @@ export const AdminPenaltiesEntireTableRowSchema = z.object({
   sessionMinusPoint: z.number(),
   beerNetworkingCount: z.number(),
   beerNetworkingBonusPoint: z.number(),
+  manualBonusPoint: z.number().default(0),
   totalMinusPoint: z.number(),
 });
 

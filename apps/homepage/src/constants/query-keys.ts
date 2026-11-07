@@ -52,6 +52,12 @@ export const QUERY_KEYS = {
     ],
   },
   PENALTY: {
+    MANUAL_BONUS: (generationId: number, memberId: number) => [
+      'penalty',
+      'manual-bonus',
+      {generationId, memberId},
+    ],
+    TIMELINE: (month?: number) => ['penalty', 'timeline', {month}],
     BASE: 'penalty',
     DASHBOARD: ['penalty', 'dashboard'],
     RECORDS: (month?: number) => ['penalty', 'records', {month}],

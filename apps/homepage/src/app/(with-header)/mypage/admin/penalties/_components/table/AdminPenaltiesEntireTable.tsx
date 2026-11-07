@@ -35,12 +35,14 @@ interface AdminPenaltiesEntireTableProps {
   items: AdminPenaltiesEntireTableRowType[];
   onSort: () => void;
   sortedDirection?: SortDirection;
+  onGrantBonus: (member: AdminPenaltiesEntireTableRowType) => void;
 }
 
 export const AdminPenaltiesEntireTable = ({
   items,
   onSort,
   sortedDirection,
+  onGrantBonus,
 }: AdminPenaltiesEntireTableProps) => {
   const [isMobile, setIsMobile] = useState(false);
 
@@ -127,8 +129,20 @@ export const AdminPenaltiesEntireTable = ({
               <td className='text-secondary min-w-max px-3 py-4 text-center whitespace-nowrap'>
                 {row.beerNetworkingBonusPoint}
               </td>
+              <td className='text-secondary min-w-max px-3 py-4 text-center whitespace-nowrap'>
+                {row.manualBonusPoint}
+              </td>
               <td className='min-w-max px-3 py-4 text-center whitespace-nowrap text-neutral-800'>
                 {row.totalMinusPoint}
+              </td>
+              <td className='min-w-max px-3 py-4 text-center whitespace-nowrap'>
+                <button
+                  type='button'
+                  aria-label={`${row.name} 상점 부여`}
+                  onClick={() => onGrantBonus(row)}
+                  className='text-body-m-sb text-primary hover:bg-primary/5 focus-visible:outline-primary cursor-pointer rounded-[10px] border border-neutral-200 px-3 py-2 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2'>
+                  상점 부여
+                </button>
               </td>
             </tr>
           ))
