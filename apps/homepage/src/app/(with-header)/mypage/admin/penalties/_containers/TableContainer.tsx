@@ -1,5 +1,9 @@
 'use client';
 
+import {useState} from 'react';
+import {AdminPenaltiesEntireTableRowType} from '@/schemas/admin/admin-penalties.schema';
+import {ManualBonusPointModal} from '@/app/(with-header)/mypage/admin/penalties/_components/ManualBonusPointModal';
+
 import {Spinner} from '@repo/ui/components/spinner/Spinner';
 import {useRouter, useSearchParams} from 'next/navigation';
 import {useAdminPenaltiesStore} from '@/store/useAdminPenaltiesStore';
@@ -16,6 +20,8 @@ import {AdminPenaltiesEntireTable} from '@/app/(with-header)/mypage/admin/penalt
 import {AdminPenaltiesSpecificTable} from '@/app/(with-header)/mypage/admin/penalties/_components/table/AdminPenaltiesSpecificTable';
 
 export const TableContainer = () => {
+  const [bonusMember, setBonusMember] =
+    useState<AdminPenaltiesEntireTableRowType | null>(null);
   const router = useRouter();
   const searchParams = useSearchParams();
   const rawSort = searchParams.get('sort');
@@ -112,6 +118,7 @@ export const TableContainer = () => {
           items={allStatistics}
           onSort={handleSort}
           sortedDirection={sortDirection}
+          onGrantBonus={setBonusMember}
         />
       ) : (
         <div className='flex gap-5'>
@@ -122,6 +129,15 @@ export const TableContainer = () => {
             onChangeExtraMinusPoint={handleChangeExtraMinusPoint}
           />
         </div>
+      )}
+      {bonusMember && selectedGenerationNumber && (
+        <ManualBonusPointModal
+          key={`${selectedGenerationNumber}-${bonusMember.memberId}`}
+          generationId={selectedGenerationNumber}
+          memberId={bonusMember.memberId}
+          memberName={bonusMember.name}
+          onClose={() => setBonusMember(null)}
+        />
       )}
     </div>
   );

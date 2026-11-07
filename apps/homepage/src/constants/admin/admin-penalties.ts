@@ -5,7 +5,9 @@ export const PENALTY_FULL_TABLE_HEADER = [
   {key: 'session-minus-point', label: '기타 벌점'},
   {key: 'beer-networking-count', label: '뒷풀이 참여 수'},
   {key: 'beer-networking-bonus-point', label: '뒷풀이 참여 상점'},
+  {key: 'manual-bonus-point', label: '수동 상점'},
   {key: 'total-minus-point', label: '누계'},
+  {key: 'manual-bonus-action', label: '상점 관리'},
 ] as const;
 
 export const PENALTY_FULL_TABLE_HEADER_MOBILE = [
@@ -14,7 +16,9 @@ export const PENALTY_FULL_TABLE_HEADER_MOBILE = [
   {key: 'session-minus-point', label: '기타\n벌점'},
   {key: 'beer-networking-count', label: '비·네\n참여 수'},
   {key: 'beer-networking-bonus-point', label: '비·네\n상점'},
+  {key: 'manual-bonus-point', label: '수동\n상점'},
   {key: 'total-minus-point', label: '누계'},
+  {key: 'manual-bonus-action', label: '상점 관리'},
 ] as const;
 
 export const PENALTY_SPECIFIC_TABLE_HEADER = [

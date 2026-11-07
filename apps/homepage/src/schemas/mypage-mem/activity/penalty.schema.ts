@@ -30,6 +30,25 @@ export const MyMinusPointRecordsResponseSchema = z.object({
 });
 
 export type PointType = z.infer<typeof PointTypeEnum>;
+
+/** 세션 없는 기록은 주차가 null이며 기존 주차 전용 스키마와 별도로 검증한다. */
+export const PointTimelineRecordSchema = z.object({
+  recordId: z.string(),
+  source: z.enum(['SESSION', 'MANUAL']),
+  week: z.number().nullable(),
+  occurredAt: z.string().nullable(),
+  content: z.string(),
+  pointType: PointTypeEnum,
+  point: z.number(),
+  cumulativePoint: z.number(),
+});
+
+export const MyPointTimelineResponseSchema = z.object({
+  generationId: z.number().nullable(),
+  records: z.array(PointTimelineRecordSchema),
+});
+
+export type PointTimelineRecord = z.infer<typeof PointTimelineRecordSchema>;
 export type MyMinusPointDashboardResponse = z.infer<
   typeof MyMinusPointDashboardResponseSchema
 >;
