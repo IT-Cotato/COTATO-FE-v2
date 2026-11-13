@@ -1,0 +1,163 @@
+{
+  "runId": "repository-docker-deploy-02",
+  "sourceScriptSHA256": "19a7bb54e00ff38518cbce06f4abf5b355a4bcc9925a9367af61d5ce24ef7ae7",
+  "purpose": "Runtime policy validation, real isolated Docker replacement, and rollback",
+  "executionLocation": "Local Docker AMD64 emulation; internal test network; synthetic settings only",
+  "startedAtKST": "2026-11-14T02:56:47.413465+09:00",
+  "successCriteria": "Missing policy rejected; new image inherits limits/cache/auth fixture; failed replacement restores prior frontend; production actions0; cleanup succeeds",
+  "controlledSubstitutes": [
+    "Backend health check is a local test substitute; no real backend or DB",
+    "New image changes source-revision metadata only; application filesystem is unchanged"
+  ],
+  "passedCases": 9,
+  "failedCases": 0,
+  "events": [
+    {
+      "atKST": "2026-11-14T02:56:47.483026+09:00",
+      "stage": "case-passed",
+      "case": "valid-runtime-policy"
+    },
+    {
+      "atKST": "2026-11-14T02:56:47.483269+09:00",
+      "stage": "case-passed",
+      "case": "reject-missing-memoryMiB"
+    },
+    {
+      "atKST": "2026-11-14T02:56:47.483429+09:00",
+      "stage": "case-passed",
+      "case": "reject-missing-nodeOldSpaceMiB"
+    },
+    {
+      "atKST": "2026-11-14T02:56:47.483758+09:00",
+      "stage": "case-passed",
+      "case": "reject-missing-environment"
+    },
+    {
+      "atKST": "2026-11-14T02:56:47.484059+09:00",
+      "stage": "case-passed",
+      "case": "reject-missing-generatedImageCache"
+    },
+    {
+      "atKST": "2026-11-14T02:57:04.457221+09:00",
+      "stage": "preflight-passed",
+      "mode": "check",
+      "memoryMiB": 768,
+      "oldSpaceMiB": 192,
+      "allocatorArenas": 2,
+      "workerPool": 2,
+      "persistentCache": true,
+      "sourceRevision": "6e3fa59377d53bfd4f28995c0171fee5e18860a4",
+      "databaseCommands": 0
+    },
+    {
+      "atKST": "2026-11-14T02:57:07.464234+09:00",
+      "stage": "case-passed",
+      "case": "check-does-not-restart-or-create"
+    },
+    {
+      "atKST": "2026-11-14T02:57:17.152521+09:00",
+      "stage": "preflight-passed",
+      "mode": "verify-candidate",
+      "memoryMiB": 768,
+      "oldSpaceMiB": 192,
+      "allocatorArenas": 2,
+      "workerPool": 2,
+      "persistentCache": true,
+      "sourceRevision": "6e3fa59377d53bfd4f28995c0171fee5e18860a4",
+      "databaseCommands": 0
+    },
+    {
+      "atKST": "2026-11-14T02:57:17.173880+09:00",
+      "stage": "candidate-policy-verified",
+      "candidateStarted": false,
+      "memoryMiB": 768,
+      "cacheMountVerified": true,
+      "authEnvironmentPreserved": true
+    },
+    {
+      "atKST": "2026-11-14T02:57:17.177038+09:00",
+      "stage": "temporary-candidate-removed",
+      "productionFrontendRestarted": false
+    },
+    {
+      "atKST": "2026-11-14T02:57:23.189128+09:00",
+      "stage": "case-passed",
+      "case": "candidate-inherits-policy-without-start"
+    },
+    {
+      "atKST": "2026-11-14T02:57:29.874480+09:00",
+      "stage": "preflight-passed",
+      "mode": "apply",
+      "memoryMiB": 768,
+      "oldSpaceMiB": 192,
+      "allocatorArenas": 2,
+      "workerPool": 2,
+      "persistentCache": true,
+      "sourceRevision": "6e3fa59377d53bfd4f28995c0171fee5e18860a4",
+      "databaseCommands": 0
+    },
+    {
+      "atKST": "2026-11-14T02:57:29.893909+09:00",
+      "stage": "candidate-policy-verified",
+      "candidateStarted": false,
+      "memoryMiB": 768,
+      "cacheMountVerified": true,
+      "authEnvironmentPreserved": true
+    },
+    {
+      "atKST": "2026-11-14T02:57:39.880092+09:00",
+      "stage": "deployment-passed",
+      "sourceRevision": "6e3fa59377d53bfd4f28995c0171fee5e18860a4",
+      "memoryMiB": 768,
+      "persistentCache": true,
+      "previousFrontendPreserved": true,
+      "otherContainersChanged": 0,
+      "databaseCommands": 0
+    },
+    {
+      "atKST": "2026-11-14T02:57:42.889630+09:00",
+      "stage": "case-passed",
+      "case": "new-immutable-image-replacement-retains-runtime"
+    },
+    {
+      "atKST": "2026-11-14T02:57:52.610350+09:00",
+      "stage": "preflight-passed",
+      "mode": "apply",
+      "memoryMiB": 768,
+      "oldSpaceMiB": 192,
+      "allocatorArenas": 2,
+      "workerPool": 2,
+      "persistentCache": true,
+      "sourceRevision": "ba3ee101a74e3d4d1a335cb99333ecfcb5940402",
+      "databaseCommands": 0
+    },
+    {
+      "atKST": "2026-11-14T02:57:52.630865+09:00",
+      "stage": "candidate-policy-verified",
+      "candidateStarted": false,
+      "memoryMiB": 768,
+      "cacheMountVerified": true,
+      "authEnvironmentPreserved": true
+    },
+    {
+      "atKST": "2026-11-14T02:57:59.706233+09:00",
+      "stage": "previous-frontend-restored",
+      "databaseCommands": 0
+    },
+    {
+      "atKST": "2026-11-14T02:57:59.712625+09:00",
+      "stage": "temporary-candidate-removed",
+      "productionFrontendRestarted": true
+    },
+    {
+      "atKST": "2026-11-14T02:58:02.716471+09:00",
+      "stage": "case-passed",
+      "case": "failed-health-restores-previous-frontend"
+    }
+  ],
+  "productionActions": 0,
+  "passed": true,
+  "cleanupErrorTypes": [],
+  "fixtureContainersRemaining": 0,
+  "finishedAtKST": "2026-11-14T02:58:03.067062+09:00"
+}

@@ -1,0 +1,28 @@
+{
+  "runId": "repository-docker-deploy-01",
+  "sourceScriptSHA256": "19a7bb54e00ff38518cbce06f4abf5b355a4bcc9925a9367af61d5ce24ef7ae7",
+  "purpose": "Runtime policy validation, real isolated Docker replacement, and rollback",
+  "executionLocation": "Local Docker AMD64 emulation; internal test network; synthetic settings only",
+  "startedAtKST": "2026-11-14T02:55:56.987295+09:00",
+  "successCriteria": "Missing policy rejected; new image inherits limits/cache/auth fixture; failed replacement restores prior frontend; production actions0; cleanup succeeds",
+  "controlledSubstitutes": [
+    "Backend health check is a local test substitute; no real backend or DB",
+    "New image changes source-revision metadata only; application filesystem is unchanged"
+  ],
+  "passedCases": 0,
+  "failedCases": 0,
+  "events": [
+    {
+      "atKST": "2026-11-14T02:55:57.148003+09:00",
+      "stage": "run-stopped",
+      "errorType": "RuntimeError",
+      "sourceFile": "docker_deployment.py",
+      "sourceLine": 47
+    }
+  ],
+  "productionActions": 0,
+  "passed": false,
+  "cleanupErrorTypes": [],
+  "fixtureContainersRemaining": 0,
+  "finishedAtKST": "2026-11-14T02:55:59.399338+09:00"
+}
