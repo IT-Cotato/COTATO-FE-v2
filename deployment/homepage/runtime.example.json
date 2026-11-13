@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "memoryMiB": 768,
+  "memorySwapTotalMiB": 768,
+  "nodeOldSpaceMiB": 192,
+  "environment": {
+    "MALLOC_ARENA_MAX": "2",
+    "UV_THREADPOOL_SIZE": "2"
+  },
+  "readonlyRootfs": true,
+  "generatedImageCache": {
+    "source": "/var/lib/cotato/homepage-image-cache-v108",
+    "target": "/app/apps/homepage/.next/cache/images",
+    "cleanupTriggerMiB": 512,
+    "cleanupTargetMiB": 384,
+    "quietSeconds": 60,
+    "cleanupTimer": "cotato-homepage-image-cache-clean.timer"
+  }
+}
