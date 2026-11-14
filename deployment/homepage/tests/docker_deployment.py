@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
 """Exercise the real Docker replacement flow with isolated synthetic frontend containers only."""
 import argparse
-import contextlib
 import copy
 from datetime import datetime
 import hashlib
 import importlib.util
-import io
 import json
 import os
 import re
@@ -18,7 +16,6 @@ import tempfile
 import time
 import traceback
 from types import SimpleNamespace
-from urllib.request import urlopen
 from zoneinfo import ZoneInfo
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -69,7 +66,7 @@ def case(name, function):
 
 
 assert not OUTPUT.exists() and not EVENTS.exists()
-result = {'runId': RUN, 'sourceScriptSHA256': hashlib.sha256((ROOT/'homepage_frontend_deploy.py').read_bytes()).hexdigest(), 'purpose': 'Runtime policy validation, real isolated Docker replacement, and rollback', 'executionLocation': 'Local Docker AMD64 emulation; internal test network; synthetic settings only', 'startedAtKST': now(), 'successCriteria': 'Missing policy rejected; new image inherits limits/cache/auth fixture; failed replacement restores prior frontend; production actions0; cleanup succeeds', 'controlledSubstitutes': ['Backend health check is a local test substitute; no real backend or DB', 'New image changes source-revision metadata only; application filesystem is unchanged'], 'passedCases': 0, 'failedCases': 0, 'events': [], 'productionActions': 0}
+result = {'runId': RUN, 'sourceScriptSHA256': hashlib.sha256((ROOT/'homepage_frontend_deploy.py').read_bytes()).hexdigest(), 'purpose': 'Runtime policy, cache permissions, image environment merge, replacement and rollback', 'executionLocation': 'Local Docker AMD64 emulation; internal test network; synthetic settings only', 'startedAtKST': now(), 'successCriteria': 'Missing policy and denied cache rejected before replacement; new image defaults merged with active settings; failed health and lost stop reply restore prior frontend; production actions0; cleanup succeeds', 'controlledSubstitutes': ['Backend health check is a local test substitute; no real backend or DB', 'New image adds a synthetic default environment variable and source-revision metadata; application filesystem is unchanged', 'Stop reply loss is injected only after the local Docker daemon actually stops the fixture'], 'passedCases': 0, 'failedCases': 0, 'events': [], 'productionActions': 0}
 OUTPUT.write_text(json.dumps(result, ensure_ascii=False, indent=2), encoding='utf8')
 token = uuid.uuid4().hex[:12]
 network = 'cotato-deployment-test-' + token
@@ -133,9 +130,9 @@ try:
                     policy_file.write_text(json.dumps(policy))
             case('reject-missing-' + field, invalid_policy)
 
-        # Build a second immutable image with identical application bits and a distinct revision label.
+        # Keep application bits identical while adding the image-default regression condition.
         revision = hashlib.sha1(b'controlled-deployment-fixture-20261114').hexdigest()
-        (temp/'Dockerfile').write_text('FROM ' + args.base_image + '\nLABEL org.opencontainers.image.revision="' + revision + '"\n')
+        (temp/'Dockerfile').write_text('FROM ' + args.base_image + '\nENV PR448_NEW_DEFAULT=fixture\nLABEL org.opencontainers.image.revision="' + revision + '"\n')
         cmd(['docker', 'build', '--platform', 'linux/amd64', '--network', 'none', '--pull=false', '-t', image_name, str(temp)])
         image_created = True
         old_image = json.loads(cmd(['docker', 'image', 'inspect', args.base_image]))[0]['Id']
@@ -185,6 +182,26 @@ try:
 
         case('check-does-not-restart-or-create', plan_only)
 
+        def denied_cache():
+            before = deploy.fingerprint(deploy.inspect(original['Id']))
+            args.mode = 'apply'
+            cache.chmod(0o555)
+            try:
+                try:
+                    deploy.run(args)
+                except RuntimeError:
+                    pass
+                else:
+                    raise AssertionError('App-user cache write denial must block replacement.')
+            finally:
+                cache.chmod(0o777)
+            assert before == deploy.fingerprint(deploy.inspect(original['Id']))
+            assert not list(cache.glob('.deployment-write-probe-*'))
+            fixtures = deploy.docker('GET', '/containers/json?all=true')
+            assert {item['Id'] for item in fixtures} == {original['Id'], canary}
+
+        case('denied-app-cache-write-blocks-before-replacement', denied_cache)
+
         def candidate_only():
             before = deploy.fingerprint(deploy.inspect(original['Id']))
             args.mode = 'verify-candidate'
@@ -203,6 +220,7 @@ try:
             assert env['TEST_AUTH_FIXTURE'] == 'synthetic-only'
             assert env['MALLOC_ARENA_MAX'] == env['UV_THREADPOOL_SIZE'] == '2'
             assert env['NODE_OPTIONS'] == '--max-old-space-size=192'
+            assert env['PR448_NEW_DEFAULT'] == 'fixture'
             assert current['HostConfig']['Memory'] == current['HostConfig']['MemorySwap'] == 768*1024**2
             assert current['Config']['Labels']['org.opencontainers.image.revision'] == revision
             assert not deploy.inspect(original['Id'])['State']['Running']
@@ -213,9 +231,8 @@ try:
             current = deploy.docker('GET', '/containers/' + name + '/json')
             restart = copy.deepcopy(current['HostConfig']['RestartPolicy'])
             args.image = old_image
-            ticks = iter([0, 1000])
-            old_time = deploy.time
-            deploy.time = SimpleNamespace(monotonic=lambda: next(ticks, 1000), sleep=time.sleep)
+            wait = deploy.wait_for_home
+            deploy.wait_for_home = lambda identifier, timeout: False if timeout == 90 else wait(identifier, timeout)
             try:
                 try:
                     deploy.run(args)
@@ -224,13 +241,46 @@ try:
                 else:
                     raise AssertionError('Failed health must reject deployment.')
             finally:
-                deploy.time = old_time
+                deploy.wait_for_home = wait
             restored = deploy.docker('GET', '/containers/' + name + '/json')
             assert restored['Id'] == current['Id'] and restored['State']['Running']
             assert restored['HostConfig']['RestartPolicy'] == restart
             assert restored['Image'] == new_image
 
         case('failed-health-restores-previous-frontend', rollback)
+
+        def lost_stop_reply():
+            current = deploy.docker('GET', '/containers/' + name + '/json')
+            restart = copy.deepcopy(current['HostConfig']['RestartPolicy'])
+            injected = []
+
+            def lose_reply(method, path, body=None):
+                value = scoped_docker(method, path, body)
+                if method == 'POST' and path == '/containers/' + current['Id'] + '/stop?t=20' and not injected:
+                    assert not deploy.inspect(current['Id'])['State']['Running']
+                    injected.append(True)
+                    emit('fault-injected-after-daemon-stop', actualRunning=False)
+                    raise OSError('Synthetic response loss after local daemon stop.')
+                return value
+
+            deploy.docker = lose_reply
+            try:
+                try:
+                    deploy.run(args)
+                except OSError:
+                    pass
+                else:
+                    raise AssertionError('Lost reply must fail deployment and restore old frontend.')
+            finally:
+                deploy.docker = scoped_docker
+            assert len(injected) == 1
+            restored = deploy.docker('GET', '/containers/' + name + '/json')
+            assert restored['Id'] == current['Id'] and restored['State']['Running']
+            assert restored['HostConfig']['RestartPolicy'] == restart
+            assert original_health(deploy.HOME)
+            assert not any('candidate' in label for item in deploy.docker('GET', '/containers/json?all=true') for label in item['Names'])
+
+        case('lost-reply-after-real-stop-restores-previous-frontend', lost_stop_reply)
         result['passed'] = result['failedCases'] == 0
 except Exception as error:
     result['passed'] = False
