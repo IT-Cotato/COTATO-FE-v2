@@ -1,8 +1,12 @@
 import Image from 'next/image';
+import {HomepageContentImage} from '@/components/homepage-images/HomepageContentImage';
+import type {HomepageImageSlot} from '@/schemas/homepage-images.schema';
 
 interface WhiteOrangeKeycapProps {
   imageSrc: string;
+  imageSlot?: HomepageImageSlot;
   imageSecondSrc: string;
+  secondImageSlot?: HomepageImageSlot;
   title: string;
   secondTitle: string;
   subTitle: string;
@@ -11,7 +15,9 @@ interface WhiteOrangeKeycapProps {
 
 export const WhiteOrangeKeycap = ({
   imageSrc,
+  imageSlot,
   imageSecondSrc,
+  secondImageSlot,
   title,
   secondTitle,
   subTitle,
@@ -31,10 +37,10 @@ export const WhiteOrangeKeycap = ({
         role='button'
         tabIndex={0}>
         <div className='absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus:opacity-100 group-focus-visible:opacity-100'>
-          <Image
-            src={imageSrc}
+          <HomepageContentImage
+            slot={imageSlot}
+            fallbackSrc={imageSrc}
             alt={title}
-            fill
             className='object-cover'
             unoptimized={true}
           />
@@ -71,10 +77,10 @@ export const WhiteOrangeKeycap = ({
               WebkitMaskRepeat: 'no-repeat',
               maskRepeat: 'no-repeat',
             }}>
-            <Image
-              src={imageSecondSrc}
+            <HomepageContentImage
+              slot={secondImageSlot}
+              fallbackSrc={imageSecondSrc}
               alt={secondTitle}
-              fill
               className='object-cover'
               unoptimized={true}
             />

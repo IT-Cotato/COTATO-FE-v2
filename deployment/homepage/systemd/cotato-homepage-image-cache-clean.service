@@ -1,0 +1,18 @@
+[Unit]
+Description=Clean generated Cotato homepage image cache only
+[Service]
+Type=oneshot
+User=1000
+Group=1000
+ExecStart=/usr/bin/python3 /usr/local/libexec/cotato-homepage-image-cache-clean.py
+NoNewPrivileges=yes
+ProtectSystem=strict
+ProtectHome=yes
+PrivateTmp=yes
+PrivateDevices=yes
+PrivateNetwork=yes
+ReadWritePaths=/var/lib/cotato/homepage-image-cache-v108
+MemoryMax=64M
+CPUQuota=5%
+Nice=19
+TimeoutStartSec=30

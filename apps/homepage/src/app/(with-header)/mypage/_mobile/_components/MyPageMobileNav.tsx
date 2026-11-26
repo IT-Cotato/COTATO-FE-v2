@@ -3,7 +3,8 @@
 import {useState, useMemo, useEffect} from 'react';
 import {useRouter, usePathname} from 'next/navigation';
 import ChevronDown from '@/assets/chevrons/chevron-down.svg';
-import {ADMIN_NAV_GROUP, SIDEBAR_NAV_GROUPS} from '@/constants/sidebar';
+import {getSidebarNavGroups, SIDEBAR_NAV_GROUPS} from '@/constants/sidebar';
+import {useHomepageImagePermissionQuery} from '@/hooks/queries/useHomepageImages.query';
 import {ROUTES} from '@/constants/routes';
 
 export const MobileMyPageNav = ({isAdmin}: {isAdmin?: boolean}) => {
@@ -11,16 +12,17 @@ export const MobileMyPageNav = ({isAdmin}: {isAdmin?: boolean}) => {
   const pathname = usePathname();
   const router = useRouter();
   const isDeletePage = pathname === ROUTES.MYPAGE_ACCOUNT_DELETE;
+  const permission = useHomepageImagePermissionQuery(Boolean(isAdmin));
+  const canManageHomepageImages = permission.data?.canEdit === true;
 
   useEffect(() => {
     setIsOpen(false);
   }, [pathname]);
 
-  const allGroups = useMemo(() => {
-    return isAdmin
-      ? [...SIDEBAR_NAV_GROUPS, ADMIN_NAV_GROUP]
-      : SIDEBAR_NAV_GROUPS;
-  }, [isAdmin]);
+  const allGroups = useMemo(
+    () => getSidebarNavGroups(isAdmin, canManageHomepageImages),
+    [isAdmin, canManageHomepageImages]
+  );
 
   const currentItem = useMemo(() => {
     return (

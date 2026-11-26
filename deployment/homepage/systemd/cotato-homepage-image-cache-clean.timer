@@ -1,0 +1,9 @@
+[Unit]
+Description=Maintain bounded generated Cotato image cache
+[Timer]
+OnBootSec=2min
+OnUnitActiveSec=1min
+AccuracySec=5s
+Unit=cotato-homepage-image-cache-clean.service
+[Install]
+WantedBy=timers.target

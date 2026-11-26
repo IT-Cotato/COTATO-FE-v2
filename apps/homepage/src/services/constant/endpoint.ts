@@ -9,6 +9,13 @@ if (!baseUrl) {
 export const API_BASE_URL = baseUrl;
 
 export const ENDPOINT = {
+  /** 홈페이지 사진 API */
+  HOMEPAGE_IMAGES: {
+    PUBLIC: '/v1/api/homepage-images',
+    PERMISSION: '/v1/api/admin/homepage-images/permission',
+    UPLOAD_URL: '/v1/api/admin/homepage-images/upload-url',
+    UPDATE: (slot: string) => `/v1/api/admin/homepage-images/${slot}`,
+  },
   /** 인증 관련 API */
   AUTH: {
     LOGIN: '/v1/api/auth/login',

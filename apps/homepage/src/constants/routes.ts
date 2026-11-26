@@ -20,6 +20,7 @@ export const ROUTES = {
   ADMIN_ATTENDANCE: '/mypage/admin/attendance',
   ADMIN_PENALTIES: '/mypage/admin/penalties',
   ADMIN_RECRUIT: '/mypage/admin/recruit',
+  ADMIN_HOMEPAGE_IMAGES: '/mypage/admin/homepage-images',
 
   ADD_PROJECT: (editId?: number | string) =>
     editId !== undefined

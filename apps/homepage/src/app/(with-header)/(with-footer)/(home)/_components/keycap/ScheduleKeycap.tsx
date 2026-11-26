@@ -1,8 +1,11 @@
 import Image from 'next/image';
+import {HomepageContentImage} from '@/components/homepage-images/HomepageContentImage';
+import type {HomepageImageSlot} from '@/schemas/homepage-images.schema';
 
 interface ScheduleKeycapProps {
   /** 호버 시 보여줄 이미지 경로 */
   imageSrc: string;
+  imageSlot?: HomepageImageSlot;
   /** 이미지 위에 띄울 제목 (예: OT, MT) */
   title: string;
   /** 이미지 위에 띄울 부제목/날짜 (선택 사항) */
@@ -15,6 +18,7 @@ interface ScheduleKeycapProps {
 
 export const ScheduleKeycap = ({
   imageSrc,
+  imageSlot,
   title,
   subTitle,
   className = '',
@@ -33,10 +37,10 @@ export const ScheduleKeycap = ({
         unoptimized={true}
       />
       <div className='absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus:opacity-100 group-focus-visible:opacity-100'>
-        <Image
-          src={imageSrc}
+        <HomepageContentImage
+          slot={imageSlot}
+          fallbackSrc={imageSrc}
           alt={title}
-          fill
           className='object-cover'
           unoptimized={true}
         />
