@@ -1,6 +1,12 @@
 import Script from 'next/script';
 
 export const BeUsableRum = () => {
+  // 로컬 사진 미리보기를 실제 서비스 분석에 전송하지 않는다.
+  if (
+    process.env.NODE_ENV === 'development' &&
+    process.env.NEXT_PUBLIC_HOMEPAGE_IMAGE_PREVIEW === 'true'
+  )
+    return null;
   return (
     <>
       <Script

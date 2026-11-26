@@ -1,0 +1,23 @@
+.image {
+  --homepage-crop-device: mobile;
+  object-fit: cover;
+  object-position: var(--crop-mobile-position);
+  transform: scale(var(--crop-mobile-zoom));
+  transform-origin: var(--crop-mobile-position);
+}
+@media (min-width: 1024px) {
+  .desktopLg {
+    --homepage-crop-device: desktop;
+    object-position: var(--crop-desktop-position);
+    transform: scale(var(--crop-desktop-zoom));
+    transform-origin: var(--crop-desktop-position);
+  }
+}
+@media (min-width: 1280px) {
+  .desktopXl {
+    --homepage-crop-device: desktop;
+    object-position: var(--crop-desktop-position);
+    transform: scale(var(--crop-desktop-zoom));
+    transform-origin: var(--crop-desktop-position);
+  }
+}

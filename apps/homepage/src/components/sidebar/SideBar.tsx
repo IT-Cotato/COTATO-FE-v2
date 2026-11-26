@@ -1,23 +1,21 @@
 'use client';
 
-import Link from 'next/link';
 import {usePathname} from 'next/navigation';
-import clsx from 'clsx';
-import {SIDEBAR_NAV_GROUPS, ADMIN_NAV_GROUP} from '@/constants/sidebar';
 import {useLogoutMutation} from '@/hooks/mutations/auth/useAuth.mutations';
-import {FullButton} from '@repo/ui/components/buttons/FullButton';
+import {SideBarView} from './SideBarView';
 
 interface SideBarProps {
   isAdmin?: boolean;
+  canManageHomepageImages?: boolean;
 }
 
-export const SideBar = ({isAdmin = false}: SideBarProps) => {
+/** 기존 로그인 상태와 로그아웃 동작을 유지하며 공통 마이페이지 메뉴를 표시한다. */
+export const SideBar = ({
+  isAdmin = false,
+  canManageHomepageImages = false,
+}: SideBarProps) => {
   const pathname = usePathname();
   const {mutate: logout} = useLogoutMutation();
-
-  const groups = isAdmin
-    ? [...SIDEBAR_NAV_GROUPS, ADMIN_NAV_GROUP]
-    : SIDEBAR_NAV_GROUPS;
 
   const handleLogout = () => {
     if (confirm('로그아웃 하시겠습니까?')) {
@@ -26,69 +24,11 @@ export const SideBar = ({isAdmin = false}: SideBarProps) => {
   };
 
   return (
-    <nav className='z-sidebar no-scrollbar sticky top-30 flex flex-col gap-6 overflow-y-auto px-6.25 py-10'>
-      {groups.map(({title, items}) => (
-        <div key={title} className='flex flex-col gap-4.75'>
-          <h4 className='text-h4 text-neutral-400'>{title}</h4>
-          <ul className='flex w-50 flex-col gap-2.5'>
-            {items.map(
-              ({
-                label,
-                href,
-                icon: Icon,
-                activeIcon: ActiveIcon,
-                isExternal,
-              }) => {
-                const isActive =
-                  !isExternal &&
-                  (pathname === href || pathname.startsWith(`${href}/`));
-                const DisplayIcon = isActive && ActiveIcon ? ActiveIcon : Icon;
-
-                const itemStyles = clsx(
-                  'text-h5 flex w-full items-center gap-2 rounded-[5px] px-2.5 py-2.25 transition-colors',
-                  isActive
-                    ? 'bg-neutral-800 text-neutral-100'
-                    : 'text-neutral-800 hover:bg-neutral-100'
-                );
-
-                return (
-                  <li key={href}>
-                    {isExternal ? (
-                      <a
-                        href={href}
-                        target='_blank'
-                        rel='noopener noreferrer'
-                        className={itemStyles}>
-                        {Icon && <Icon />}
-                        {label}
-                      </a>
-                    ) : (
-                      <Link
-                        href={href}
-                        aria-current={isActive ? 'page' : undefined}
-                        className={itemStyles}>
-                        {DisplayIcon && <DisplayIcon />}
-                        {label}
-                      </Link>
-                    )}
-                  </li>
-                );
-              }
-            )}
-          </ul>
-        </div>
-      ))}
-      <FullButton
-        label='로그아웃'
-        variant='outline'
-        height={40}
-        backgroundColor='neutral-50'
-        textColor='primary'
-        labelTypo='body_l_sb'
-        borderRadius={30}
-        onClick={handleLogout}
-        wrapperClassName={clsx(isAdmin ? 'mt-[97px]' : 'mt-[481px]')}
-      />
-    </nav>
+    <SideBarView
+      isAdmin={isAdmin}
+      canManageHomepageImages={canManageHomepageImages}
+      pathname={pathname}
+      onLogout={handleLogout}
+    />
   );
 };
