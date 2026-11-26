@@ -4,6 +4,10 @@ import {
 } from '@/schemas/admin/admin-attendance.schema';
 
 export const QUERY_KEYS = {
+  HOMEPAGE_IMAGES: {
+    PUBLIC: ['homepage-images', 'public'],
+    PERMISSION: (actor: string) => ['homepage-images', 'permission', actor],
+  },
   PROJECT: {
     LIST: (params: {generationId?: number; projectType?: string}) => [
       'projects',
