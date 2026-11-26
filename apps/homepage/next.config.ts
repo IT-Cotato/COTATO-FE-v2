@@ -10,6 +10,22 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
+        hostname: 'storage.googleapis.com',
+        pathname: '/*/homepage/**',
+      },
+      ...(process.env.NODE_ENV !== 'production' &&
+      process.env.NEXT_PUBLIC_HOMEPAGE_IMAGE_PREVIEW === 'true'
+        ? [
+            {
+              protocol: 'http' as const,
+              hostname: '127.0.0.1',
+              port: '18110',
+              pathname: '/v1/api/homepage-images/local-file',
+            },
+          ]
+        : []),
+      {
+        protocol: 'https',
         hostname: 'picsum.photos',
         port: '',
         pathname: '/**',

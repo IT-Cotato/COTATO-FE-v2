@@ -1,3 +1,4 @@
+import CameraIcon from '@/assets/sidebar/homepage-images.svg';
 import MyActivityIcon from '@/assets/sidebar/my-activity.svg';
 import AttendanceIcon from '@/assets/sidebar/attendance.svg';
 import CSQuizIcon from '@/assets/sidebar/cs-quiz.svg';
@@ -90,3 +91,26 @@ export const ADMIN_NAV_GROUP: NavGroup = {
     },
   ],
 };
+
+export const HOMEPAGE_IMAGE_NAV_ITEM: NavItem = {
+  label: '홈페이지 사진 관리',
+  href: ROUTES.ADMIN_HOMEPAGE_IMAGES,
+  icon: CameraIcon,
+};
+
+/** PC와 모바일에서 동일한 관리자 메뉴 순서와 사진 수정 권한을 사용한다. */
+export const getSidebarNavGroups = (
+  isAdmin = false,
+  canManageHomepageImages = false
+): NavGroup[] =>
+  isAdmin
+    ? [
+        ...SIDEBAR_NAV_GROUPS,
+        {
+          ...ADMIN_NAV_GROUP,
+          items: canManageHomepageImages
+            ? [...ADMIN_NAV_GROUP.items, HOMEPAGE_IMAGE_NAV_ITEM]
+            : ADMIN_NAV_GROUP.items,
+        },
+      ]
+    : SIDEBAR_NAV_GROUPS;

@@ -11,6 +11,7 @@ export const HomeDesktopMainSchedule = () => {
     <div className='grid grid-cols-[repeat(4,auto)] gap-2'>
       <ScheduleKeycap
         imageSrc='/images/main-schedule/ot.webp'
+        imageSlot='SCHEDULE_OT'
         title='OT'
         subTitle='2026.03.06'
       />
@@ -18,7 +19,9 @@ export const HomeDesktopMainSchedule = () => {
       <div className='col-span-2 col-start-3 row-span-2 row-start-1'>
         <WhiteOrangeKeycap
           imageSrc='/images/main-schedule/mt.webp'
+          imageSlot='SCHEDULE_MT'
           imageSecondSrc='/images/main-schedule/session.webp'
+          secondImageSlot='SCHEDULE_SESSION'
           title='MT'
           subTitle='2026.03.27'
           secondTitle='정기 세션'
@@ -28,6 +31,7 @@ export const HomeDesktopMainSchedule = () => {
       <div className='col-start-1 row-span-2'>
         <OrangeColKeycap
           imageSrc='/images/main-schedule/devtalk.webp'
+          imageSlot='SCHEDULE_DEVTALK'
           title='데브톡'
           subTitle='2026.05.08'
         />
@@ -38,6 +42,7 @@ export const HomeDesktopMainSchedule = () => {
       <div className='col-span-2 col-start-2 row-start-3'>
         <BlackRowKeycap
           imageSrc='/images/main-schedule/cokerthon.webp'
+          imageSlot='SCHEDULE_COKERTHON'
           title='코커톤'
           subTitle='2026.07.10'
         />
@@ -51,6 +56,7 @@ export const HomeDesktopMainSchedule = () => {
       <div className='col-span-3 col-start-2 row-start-4'>
         <OrangeRowKeycap
           imageSrc='/images/main-schedule/demoday.webp'
+          imageSlot='SCHEDULE_DEMODAY'
           title='데모데이'
           subTitle='2026.08.21'
         />

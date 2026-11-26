@@ -1,13 +1,17 @@
 import Image from 'next/image';
+import {HomepageContentImage} from '@/components/homepage-images/HomepageContentImage';
+import type {HomepageImageSlot} from '@/schemas/homepage-images.schema';
 
 interface OrangeRowKeycapProps {
   imageSrc: string;
+  imageSlot?: HomepageImageSlot;
   title: string;
   subTitle: string;
 }
 
 export const OrangeRowKeycap = ({
   imageSrc,
+  imageSlot,
   title,
   subTitle,
 }: OrangeRowKeycapProps) => {
@@ -31,10 +35,10 @@ export const OrangeRowKeycap = ({
         {subTitle}
       </span>
       <div className='absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus:opacity-100 group-focus-visible:opacity-100'>
-        <Image
-          src={imageSrc}
+        <HomepageContentImage
+          slot={imageSlot}
+          fallbackSrc={imageSrc}
           alt={title}
-          fill
           className='object-cover'
           unoptimized={true}
         />

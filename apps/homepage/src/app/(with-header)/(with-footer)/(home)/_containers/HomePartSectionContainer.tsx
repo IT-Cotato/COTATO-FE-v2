@@ -4,7 +4,9 @@ import {Button} from '@repo/ui/components/buttons/Button';
 import {motion, AnimatePresence, Variants, PanInfo} from 'framer-motion';
 import {useState, useRef, useEffect} from 'react';
 import {HomeSectionDescription} from '@/app/(with-header)/(with-footer)/(home)/_components/HomeSectionDescription';
-import Image from 'next/image';
+import {HomepageContentImage} from '@/components/homepage-images/HomepageContentImage';
+import {useHomepageImagesQuery} from '@/hooks/queries/useHomepageImages.query';
+import type {HomepageImageSlot} from '@/schemas/homepage-images.schema';
 import clsx from 'clsx';
 import {
   FADE_IN_UP_CONTAINER,
@@ -13,9 +15,21 @@ import {
 
 const PARTS = ['pm', 'design', 'frontend', 'backend'] as const;
 type PartType = (typeof PARTS)[number];
+const PART_IMAGE_SLOTS: Record<PartType, HomepageImageSlot> = {
+  pm: 'PART_PM',
+  design: 'PART_DESIGN',
+  frontend: 'PART_FRONTEND',
+  backend: 'PART_BACKEND',
+};
 
-export const HomePartSectionContainer = () => {
-  const [currentPart, setCurrentPart] = useState<PartType>('pm');
+/** 공개 화면의 기본 탭을 유지하고, 사진 편집에서는 대상 파트의 실제 사진 영역을 측정한다. */
+export const HomePartSectionContainer = ({
+  initialPart = 'pm',
+}: {
+  initialPart?: PartType;
+}) => {
+  const {data: homepageImages} = useHomepageImagesQuery();
+  const [currentPart, setCurrentPart] = useState<PartType>(initialPart);
   const prevIndexRef = useRef<number>(0);
   const currentIndex = PARTS.indexOf(currentPart);
   const direction = currentIndex > prevIndexRef.current ? 1 : -1;
@@ -23,9 +37,11 @@ export const HomePartSectionContainer = () => {
   useEffect(() => {
     PARTS.forEach((part) => {
       const img = new window.Image();
-      img.src = `/images/part-section/${part}.webp`;
+      img.src =
+        homepageImages?.find((image) => image.slot === PART_IMAGE_SLOTS[part])
+          ?.imageUrl ?? `/images/part-section/${part}.webp`;
     });
-  }, []);
+  }, [homepageImages]);
 
   const handlePartClick = (part: PartType) => {
     prevIndexRef.current = currentIndex;
@@ -127,10 +143,11 @@ export const HomePartSectionContainer = () => {
                   animate='center'
                   exit='exit'
                   className='absolute inset-0'>
-                  <Image
-                    src={`/images/part-section/${currentPart}.webp`}
+                  <HomepageContentImage
+                    slot={PART_IMAGE_SLOTS[currentPart]}
+                    desktopFrom='lg'
+                    fallbackSrc={`/images/part-section/${currentPart}.webp`}
                     alt=''
-                    fill
                     priority
                     className='object-cover'
                   />
