@@ -21,13 +21,17 @@ export const HomepageTextEditor = ({
   onClose: () => void;
   onSaved: () => void;
 }) => {
+  // 편집 시작 시점의 값과 revision을 유지해 충돌 후 재시도가 다른 저장을 덮어쓰지 않게 한다.
+  const [initialSettings] = useState(saved);
   const defaults = getHomepageCopyDefaults(definition);
-  const [title, setTitle] = useState(saved?.displayTitle ?? defaults.title);
+  const [title, setTitle] = useState(
+    initialSettings?.displayTitle ?? defaults.title
+  );
   const [description, setDescription] = useState(
-    saved?.displayDescription ?? defaults.description
+    initialSettings?.displayDescription ?? defaults.description
   );
   const isSchedule = definition.group === 'schedule';
-  const original = saved?.displaySchedule ?? definition.subtitle;
+  const original = initialSettings?.displaySchedule ?? definition.subtitle;
   const [mode, setMode] = useState<'date' | 'text'>(
     /^\d{4}\.\d{2}\.\d{2}$/.test(original) ? 'date' : 'text'
   );
@@ -186,9 +190,12 @@ export const HomepageTextEditor = ({
               title.trim().length > 80 ||
               description.length > 2000 ||
               (isSchedule && (!value || value.length > 80)) ||
-              (title.trim() === (saved?.displayTitle ?? defaults.title) &&
+              (title.trim() ===
+                (initialSettings?.displayTitle ?? defaults.title) &&
                 description.trim() ===
-                  (saved?.displayDescription ?? defaults.description).trim() &&
+                  (
+                    initialSettings?.displayDescription ?? defaults.description
+                  ).trim() &&
                 (!isSchedule || value === original))
             }
             onClick={() =>
@@ -198,7 +205,7 @@ export const HomepageTextEditor = ({
                   displayTitle: title.trim(),
                   displayDescription: description.trim(),
                   displaySchedule: isSchedule ? value : null,
-                  expectedRevision: saved?.revision ?? null,
+                  expectedRevision: initialSettings?.revision ?? null,
                 },
                 {onSuccess: onSaved}
               )

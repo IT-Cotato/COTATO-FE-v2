@@ -32,13 +32,17 @@ export const HomepageImageEditor = ({
   onClose,
   onSaved,
 }: HomepageImageEditorProps) => {
+  // 편집 시작 시점의 값과 revision을 유지해 충돌 후 재시도가 다른 저장을 덮어쓰지 않게 한다.
+  const [initialSettings] = useState(saved);
   const [file, setFile] = useState<File | null>(null);
-  const [source, setSource] = useState(saved?.imageUrl ?? definition.fallback);
+  const [source, setSource] = useState(
+    initialSettings?.imageUrl ?? definition.fallback
+  );
   const [desktop, setDesktop] = useState<HomepageImageCrop>(
-    saved?.desktop ?? CENTERED_IMAGE_CROP
+    initialSettings?.desktop ?? CENTERED_IMAGE_CROP
   );
   const [mobile, setMobile] = useState<HomepageImageCrop>(
-    saved?.mobile ?? CENTERED_IMAGE_CROP
+    initialSettings?.mobile ?? CENTERED_IMAGE_CROP
   );
   const [error, setError] = useState('');
   const [dirty, setDirty] = useState(false);
@@ -144,10 +148,10 @@ export const HomepageImageEditor = ({
       await mutation.mutateAsync({
         slot: definition.slot,
         file,
-        objectKey: saved?.objectKey ?? null,
+        objectKey: initialSettings?.objectKey ?? null,
         desktop,
         mobile,
-        expectedRevision: saved?.revision ?? null,
+        expectedRevision: initialSettings?.revision ?? null,
       });
       onSaved();
     } catch (cause) {
