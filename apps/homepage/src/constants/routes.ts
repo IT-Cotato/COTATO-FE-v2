@@ -2,6 +2,7 @@ export const ROUTES = {
   HOME: '/',
   ABOUTUS: '/about-us',
   PROJECT: '/project',
+  STUDY: '/study',
   MYPAGE: '/mypage',
   ONBOARDING: '/onboarding',
   RECRUIT: '/recruit',
@@ -26,5 +27,10 @@ export const ROUTES = {
     editId !== undefined
       ? `/project/add-project?edit=${editId}`
       : '/project/add-project',
+  ADD_STUDY: (editId?: number | string) =>
+    editId !== undefined
+      ? `/study/add-study?edit=${editId}`
+      : '/study/add-study',
+  STUDY_DETAIL: (studyId: number | string) => `/study/${studyId}`,
   PROJECT_DETAIL: (projectId: number | string) => `/project/${projectId}`,
 };

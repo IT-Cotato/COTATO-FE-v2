@@ -1,6 +1,12 @@
 'use client';
 
 import Image from 'next/image';
+import {
+  ABOUT_US_ACTIVITIES as ACTIVITIES,
+  type AboutUsActivity,
+} from '@/constants/homepage-copy';
+export type {AboutUsActivity} from '@/constants/homepage-copy';
+import {useHomepageImagesQuery} from '@/hooks/queries/useHomepageImages.query';
 import {useEffect, useState} from 'react';
 import dynamic from 'next/dynamic';
 import AboutUsBackgroundSecond from '@/assets/about-us/background-about-us-second.webp';
@@ -20,15 +26,20 @@ const AboutUsMobileMainActivitiesContainer = dynamic(
   {ssr: false}
 );
 
-export interface AboutUsActivity {
-  id: number;
-  title: string;
-  description: string;
-  src: string;
-  gridClass: string;
-}
-
-export const AboutUsMainActivitiesContainer = () => {
+export const AboutUsMainActivitiesContainer = ({
+  initialSlot,
+}: {
+  initialSlot?: AboutUsActivity['slot'];
+}) => {
+  const {data: images} = useHomepageImagesQuery();
+  const activities = ACTIVITIES.map((activity) => {
+    const saved = images?.find((image) => image.slot === activity.slot);
+    return {
+      ...activity,
+      title: saved?.displayTitle ?? activity.title,
+      description: saved?.displayDescription ?? activity.description,
+    };
+  });
   const [selectedId, setSelectedId] = useState<number | null>(null);
 
   useEffect(() => {
@@ -70,57 +81,16 @@ export const AboutUsMainActivitiesContainer = () => {
         <motion.div
           className='flex w-full items-center justify-center'
           variants={FADE_IN_UP_ITEM}>
-          <AboutUsDesktopMainActivitiesContainer activities={ACTIVITIES} />
-          <AboutUsMobileMainActivitiesContainer activities={ACTIVITIES} />
+          <AboutUsDesktopMainActivitiesContainer activities={activities} />
+          <AboutUsMobileMainActivitiesContainer
+            initialSlide={Math.max(
+              0,
+              ACTIVITIES.findIndex((activity) => activity.slot === initialSlot)
+            )}
+            activities={activities}
+          />
         </motion.div>
       </motion.div>
     </section>
   );
 };
-
-/**
- * 활동 소개 데이터
- */
-const ACTIVITIES: AboutUsActivity[] = [
-  {
-    id: 1,
-    title: 'CS 교육',
-    description: `CS 교육은 코테이토 교육팀의 커리큘럼을 기반으로 진행되며
-개발에 필요한 핵심 CS 지식을 단계적으로 학습합니다. 
-기획·디자인 직군 또한 교육에 함께 참여하여, 개발 구조와 기술적 제약을
-이해하고 원활한 협업을 위한 공통된 개발 지식을 습득할 수 있습니다.`,
-
-    src: '/images/main-activities/cs-education.webp',
-    gridClass: 'col-span-12 md:col-span-7',
-  },
-  {
-    id: 2,
-    title: 'CS 퀴즈',
-    description: `CS 교육 이후에는 학습한 내용을 바탕으로 CS 퀴즈 타임이 진행됩니다.
-우수한 성적을 거두거나 성실하게 참여한 분들께는 소정의 상품이 제공됩니다. 
-모든 퀴즈는 교육 내용을 기반으로 출제되어, 기획·디자인 직군도 부담 없이
-개발 지식을 복습하고 재미있게 익힐 수 있습니다.`,
-    src: '/images/main-activities/cs-quiz.webp',
-    gridClass: 'col-span-12 md:col-span-5',
-  },
-  {
-    id: 3,
-    title: '기획 · 디자인 발표',
-    description: `기획과 디자인 관련 다양한 주제를 자유롭게 다루며 
-이를 통해 개인의 시야를 넓히고 지식을 축적하는 것을 목표로 합니다. 
-개발 직군 역시 발표 내용을 함께 들으며 서로의 관점을 이해하고 
-협업의 밀도를 높입니다.`,
-    src: '/images/main-activities/pm-design.webp',
-    gridClass: 'col-span-12 md:col-span-5',
-  },
-  {
-    id: 4,
-    title: '네트워킹',
-    description: `파트별로 모여 관련된 내용을 배우고 과제를 공유하며 피드백을 나눕니다. 
-또한 통합 네트워킹을 통해 다른 파트의 작업 방식과 관점을 익힐 수 있습니다. 
-이 과정을 통해 자신의 작업을 점검하고,
-이후 학습과 프로젝트에 필요한 방향성을 정리하게 됩니다.`,
-    src: '/images/main-activities/networking.webp',
-    gridClass: 'col-span-12 md:col-span-7',
-  },
-];

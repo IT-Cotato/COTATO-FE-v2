@@ -6,11 +6,15 @@ import HeroBanner from '@/assets/backgrounds/banner/hero-main.webp';
 import {usePathname} from 'next/navigation';
 import clsx from 'clsx';
 
-export default function ProjectBanner() {
+export default function ProjectBanner({
+  kind = 'project',
+}: {
+  kind?: 'project' | 'study';
+}) {
   const pathname = usePathname();
 
   // 상세 페이지인지 확인
-  const isProjectDetailPage = /^\/project\/\d+$/.test(pathname);
+  const isProjectDetailPage = /^\/(?:project|study)\/\d+$/.test(pathname);
 
   return (
     <div
@@ -24,7 +28,8 @@ export default function ProjectBanner() {
         heading={
           <>
             함께 만들어 도착한,
-            <br className='lg:hidden' /> COTATO의 프로젝트를 만나보세요
+            <br className='lg:hidden' /> COTATO의{' '}
+            {kind === 'study' ? '스터디' : '프로젝트'}를 만나보세요
           </>
         }
         subheading='COde Together, Arrive TOgether'

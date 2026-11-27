@@ -26,7 +26,11 @@ export const ProjectCard = ({
   const hasThumbnail = !!thumbnailUrl && thumbnailUrl.trim() !== '';
 
   const handleNavigation = () => {
-    router.push(ROUTES.PROJECT_DETAIL(projectId));
+    router.push(
+      projectType === 'STUDY'
+        ? ROUTES.STUDY_DETAIL(projectId)
+        : ROUTES.PROJECT_DETAIL(projectId)
+    );
   };
 
   return (
@@ -41,7 +45,7 @@ export const ProjectCard = ({
         }
       }}
       onClick={handleNavigation}
-      className='shadow-project-card focus-visible:ring-primary flex w-xl cursor-pointer flex-col gap-2.75 rounded-[20px] outline-none focus-visible:ring-2 lg:w-82.5'>
+      className='shadow-project-card focus-visible:ring-primary flex w-full max-w-xl cursor-pointer flex-col gap-2.75 rounded-[20px] outline-none focus-visible:ring-2 lg:w-82.5'>
       <div className='relative h-50 w-full overflow-hidden rounded-t-[20px] bg-neutral-200 lg:w-82.5'>
         {hasThumbnail && (
           <Image
@@ -67,7 +71,11 @@ export const ProjectCard = ({
               {generationId}기
             </span>
             <span className='bg-primary lg:text-body-m shadow-default flex items-center rounded-[5px] px-[4.8px] text-[10px] text-white lg:px-2 lg:py-0.5'>
-              {projectType === 'DEMODAY' ? '데모데이' : '해커톤'}
+              {projectType === 'STUDY'
+                ? '스터디'
+                : projectType === 'DEMODAY'
+                  ? '데모데이'
+                  : '해커톤'}
             </span>
           </div>
         </div>

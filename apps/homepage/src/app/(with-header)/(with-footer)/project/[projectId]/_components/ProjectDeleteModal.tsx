@@ -7,6 +7,7 @@ interface ProjectDeleteModalProps {
   onClose: () => void;
   onConfirm: () => void;
   projectName: string;
+  contentLabel?: string;
 }
 
 export const ProjectDeleteModal = ({
@@ -14,6 +15,7 @@ export const ProjectDeleteModal = ({
   onClose,
   onConfirm,
   projectName,
+  contentLabel = '프로젝트',
 }: ProjectDeleteModalProps) => {
   return (
     <Modal
@@ -23,7 +25,7 @@ export const ProjectDeleteModal = ({
       titleStyle='text-h4 text-neutral-800'
       content={
         <span className='text-body-m lg:text-h5 font-normal text-neutral-600 lg:font-semibold'>
-          확인 버튼 클릭 시 프로젝트가 영구 삭제됩니다.
+          확인 버튼 클릭 시 {contentLabel} 항목이 영구 삭제됩니다.
         </span>
       }
       actions={

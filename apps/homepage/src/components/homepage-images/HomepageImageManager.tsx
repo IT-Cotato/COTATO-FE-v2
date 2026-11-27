@@ -11,15 +11,19 @@ import {
   useHomepageImagesQuery,
   useHomepageImagePermissionQuery,
 } from '@/hooks/queries/useHomepageImages.query';
+import {HomepageTextEditor} from './HomepageTextEditor';
 import {HomepageImageEditor} from './HomepageImageEditor';
 import {homepageImageCropStyle} from '@/utils/homepage-image-crop';
 
 /** 관리자 화면과 로컬 미리보기가 공유하는 사진 관리 UI다. 버튼 표시와 서버 권한 결과를 일치시킨다. */
 export const HomepageImageManager = () => {
-  const [group, setGroup] = useState<'schedule' | 'part'>('schedule');
+  const [group, setGroup] =
+    useState<HomepageImageDefinition['group']>('schedule');
   const [selected, setSelected] = useState<HomepageImageDefinition | null>(
     null
   );
+  const [textSelected, setTextSelected] =
+    useState<HomepageImageDefinition | null>(null);
   const [notice, setNotice] = useState('');
   const images = useHomepageImagesQuery();
   const permission = useHomepageImagePermissionQuery();
@@ -34,7 +38,7 @@ export const HomepageImageManager = () => {
         <div>
           <h1 className='text-h2 text-neutral-800'>홈페이지 사진 관리</h1>
           <p className='mt-3 text-sm leading-6 text-neutral-500'>
-            홈페이지에 표시할 활동 사진과 파트 사진을 관리합니다.
+            홈페이지에 표시할 활동 일정과 홈·ABOUT US 사진을 관리합니다.
             <br className='sm:hidden' /> 사진을 선택해 위치와 크기를 조절해
             주세요.
           </p>
@@ -89,13 +93,14 @@ export const HomepageImageManager = () => {
         </div>
       )}
       <div
-        className='mb-7 flex items-end gap-6 border-b border-neutral-100'
+        className='mb-7 flex items-end gap-3 overflow-x-auto border-b border-neutral-100 sm:gap-6'
         role='tablist'
         aria-label='홈페이지 사진 분류'>
         {(
           [
             {value: 'schedule', label: '주요 활동 일정', count: 6},
             {value: 'part', label: '파트 소개', count: 4},
+            {value: 'about', label: 'ABOUT US 활동', count: 4},
           ] as const
         ).map((tab) => (
           <button
@@ -117,8 +122,12 @@ export const HomepageImageManager = () => {
       </div>
       <div className='mb-4 flex items-center justify-between gap-4'>
         <h2 className='text-sm font-bold text-neutral-700'>
-          {group === 'schedule' ? '주요 활동 일정' : '파트 소개'} 사진{' '}
-          <span className='ml-1 text-[#f87d02]'>{definitions.length}</span>
+          {group === 'schedule'
+            ? '주요 활동 일정'
+            : group === 'part'
+              ? '파트 소개'
+              : 'ABOUT US 활동'}{' '}
+          사진 <span className='ml-1 text-[#f87d02]'>{definitions.length}</span>
         </h2>
         <p className='text-xs text-neutral-400'>
           사진을 저장하면 홈페이지에 반영돼요
@@ -149,34 +158,48 @@ export const HomepageImageManager = () => {
                   {saved?.imageUrl ? '설정된 사진' : '기본 사진'}
                 </span>
                 <p className='absolute right-5 bottom-4 left-5 text-lg font-bold text-white'>
-                  {definition.label}
+                  {saved?.displayTitle ?? definition.label}
                 </p>
               </div>
               <div className='flex items-center justify-between gap-2 px-4 py-4'>
                 <div className='min-w-0'>
                   <p className='text-sm font-semibold text-neutral-700'>
                     {definition.group === 'part'
-                      ? definition.subtitle
-                      : definition.label}
+                      ? (saved?.displayTitle ?? definition.subtitle)
+                      : (saved?.displayTitle ?? definition.label)}
                   </p>
                   <p className='mt-1 text-xs text-neutral-400'>
                     {definition.group === 'part'
                       ? '파트 소개 배경 사진'
-                      : definition.subtitle}
+                      : (saved?.displaySchedule ?? definition.subtitle)}
                   </p>
                 </div>
                 {canEdit && (
-                  <button
-                    type='button'
-                    onClick={() => {
-                      setNotice('');
-                      setSelected(definition);
-                    }}
-                    aria-label={`${definition.label} 사진 수정`}
-                    className='text-body-m hover:border-primary hover:text-primary flex shrink-0 items-center gap-1.5 rounded-[5px] border border-neutral-200 px-3 py-2 font-semibold text-neutral-800 transition-colors'>
-                    <Camera className='h-4 w-4' />
-                    사진 수정
-                  </button>
+                  <div className='flex shrink-0 flex-wrap gap-2'>
+                    {
+                      <button
+                        type='button'
+                        onClick={() => {
+                          setNotice('');
+                          setTextSelected(definition);
+                        }}
+                        aria-label={`${definition.label} 텍스트 수정`}
+                        className='text-body-m hover:border-primary hover:text-primary rounded-[5px] border border-neutral-200 px-3 py-2 font-semibold text-neutral-800'>
+                        텍스트 수정
+                      </button>
+                    }
+                    <button
+                      type='button'
+                      onClick={() => {
+                        setNotice('');
+                        setSelected(definition);
+                      }}
+                      aria-label={`${definition.label} 사진 수정`}
+                      className='text-body-m hover:border-primary hover:text-primary flex shrink-0 items-center gap-1.5 rounded-[5px] border border-neutral-200 px-3 py-2 font-semibold text-neutral-800 transition-colors'>
+                      <Camera className='h-4 w-4' />
+                      사진 수정
+                    </button>
+                  </div>
                 )}
               </div>
             </article>
@@ -184,9 +207,20 @@ export const HomepageImageManager = () => {
         })}
       </div>
       <p className='mt-7 text-xs leading-5 text-neutral-400'>
-        현재 디자인의 제목과 일정은 유지됩니다. 사진을 바꿀 때는 PC·모바일
-        미리보기를 함께 확인해 주세요.
+        텍스트 수정은 홈페이지 표시 문구에만 반영됩니다. 사진을 바꿀 때는
+        PC·모바일 미리보기를 함께 확인해 주세요.
       </p>
+      {textSelected && canEdit && (
+        <HomepageTextEditor
+          definition={textSelected}
+          saved={images.data?.find((value) => value.slot === textSelected.slot)}
+          onClose={() => setTextSelected(null)}
+          onSaved={() => {
+            setNotice(`${textSelected.label} 텍스트를 저장했습니다.`);
+            setTextSelected(null);
+          }}
+        />
+      )}
       {selected && canEdit && (
         <HomepageImageEditor
           definition={selected}

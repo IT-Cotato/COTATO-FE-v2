@@ -14,7 +14,9 @@ export const ProjectInfoMobile = ({
 }: ProjectInfoMobileProps) => (
   <div className='flex flex-col gap-3'>
     <section>
-      <h2 className='text-h5 mb-3 font-bold text-neutral-800'>프로젝트 기간</h2>
+      <h2 className='text-h5 mb-3 font-bold text-neutral-800'>
+        {data.projectType === 'STUDY' ? '스터디' : '프로젝트'} 기간
+      </h2>
       <p className='text-body-l px-2.5 text-neutral-500'>
         {data.startDate.replace(/-/g, '.')} - {data.endDate.replace(/-/g, '.')}
       </p>

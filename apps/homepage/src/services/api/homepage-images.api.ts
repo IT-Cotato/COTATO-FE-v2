@@ -80,7 +80,12 @@ const request = async (
 
 export const getHomepageImages = async (actor?: HomepageImagePreviewActor) =>
   HomepageImageSchema.array().parse(
-    await request(ENDPOINT.HOMEPAGE_IMAGES.PUBLIC, 'GET', undefined, actor)
+    await request(
+      `${ENDPOINT.HOMEPAGE_IMAGES.PUBLIC}?includeAboutUs=true`,
+      'GET',
+      undefined,
+      actor
+    )
   );
 export const getHomepageImagePermission = async (
   actor?: HomepageImagePreviewActor
@@ -103,6 +108,27 @@ export const saveHomepageImage = async (
   HomepageImageSchema.parse(
     await request(
       ENDPOINT.HOMEPAGE_IMAGES.UPDATE(slot),
+      'PUT',
+      settings,
+      actor,
+      true
+    )
+  );
+
+/** 사진·크롭을 다시 보내지 않고 제목·설명·표시 일정만 저장한다. */
+export const saveHomepageText = async (
+  slot: HomepageImageSlot,
+  settings: {
+    displayTitle: string;
+    displayDescription: string;
+    displaySchedule: string | null;
+    expectedRevision: number | null;
+  },
+  actor?: HomepageImagePreviewActor
+) =>
+  HomepageImageSchema.parse(
+    await request(
+      `${ENDPOINT.HOMEPAGE_IMAGES.UPDATE(slot)}/text`,
       'PUT',
       settings,
       actor,

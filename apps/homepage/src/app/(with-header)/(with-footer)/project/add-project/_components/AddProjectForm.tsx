@@ -1,6 +1,7 @@
 'use client';
 
 import {useRouter} from 'next/navigation';
+import {useRef} from 'react';
 import {ROUTES} from '@/constants/routes';
 import {FormInput} from '@repo/ui/components/form/FormInput';
 import {FormLink} from '@repo/ui/components/form/FormLink';
@@ -8,9 +9,9 @@ import dynamic from 'next/dynamic';
 
 const PeriodField = dynamic(
   () =>
-    import(
-      '@/app/(with-header)/(with-footer)/project/add-project/_components/PeriodField'
-    ).then((m) => m.PeriodField),
+    import('@/app/(with-header)/(with-footer)/project/add-project/_components/PeriodField').then(
+      (m) => m.PeriodField
+    ),
   {ssr: false}
 );
 import {TeamSection} from '@/app/(with-header)/(with-footer)/project/add-project/_components/TeamSection';
@@ -22,7 +23,7 @@ import {Button} from '@repo/ui/components/buttons/Button';
 import {useProjectForm} from '../_hooks/useProjectForm';
 import {formatDate} from '@repo/ui/utils/date';
 import {ProjectDetail, Position} from '@/schemas/project/project.schema';
-import {TeamState} from '@/schemas/project/project-type';
+import {ProjectType, TeamState} from '@/schemas/project/project-type';
 import {
   useCreateProjectMutation,
   useUpdateProjectMutation,
@@ -30,7 +31,7 @@ import {
 
 interface AddProjectFormProps {
   generationId: number;
-  projectType: 'DEMODAY' | 'HACKATHON';
+  projectType: ProjectType;
   initialData?: ProjectDetail;
 }
 
@@ -41,11 +42,15 @@ export const AddProjectForm = ({
 }: AddProjectFormProps) => {
   const router = useRouter();
   const isEdit = !!initialData;
+  const isStudy = projectType === 'STUDY';
+  const label = isStudy ? '스터디' : '프로젝트';
 
-  const {mutate: updateProject} = useUpdateProjectMutation(
-    initialData?.projectId || 0
-  );
-  const {mutate: createProject} = useCreateProjectMutation();
+  const {mutate: updateProject, isPending: isUpdating} =
+    useUpdateProjectMutation(initialData?.projectId || 0, label);
+  const {mutate: createProject, isPending: isCreating} =
+    useCreateProjectMutation(label);
+  const submitting = useRef(false);
+  const isSaving = isCreating || isUpdating;
 
   const formatInitialMembers = (
     members: {name: string; position: Position}[] | undefined
@@ -62,17 +67,23 @@ export const AddProjectForm = ({
     useTeamMembers(
       initialData?.memberInfos
         ? formatInitialMembers(initialData.memberInfos)
-        : {PM: ['감직이'], DE: ['감직이'], FE: ['감직이'], BE: ['감직이']}
+        : isStudy
+          ? {PM: [], DE: [], FE: [], BE: []}
+          : {PM: ['감직이'], DE: ['감직이'], FE: ['감직이'], BE: ['감직이']}
     );
 
   const {states, setters, isFormValid} = useProjectForm(
     teamMembers,
-    initialData
+    initialData,
+    isStudy
   );
 
   const handleSubmit = (e?: React.FormEvent) => {
     if (e) e.preventDefault();
-    if (!isFormValid) return;
+    if (!isFormValid || generationId <= 0 || submitting.current || isSaving)
+      return;
+    // 렌더링 전 연속 클릭·Enter 입력도 같은 요청을 두 번 보내지 않게 한다.
+    submitting.current = true;
 
     const requestBody = {
       generationId,
@@ -96,12 +107,22 @@ export const AddProjectForm = ({
 
     if (isEdit) {
       updateProject(requestBody, {
+        onSettled: () => {
+          submitting.current = false;
+        },
         onSuccess: () =>
-          router.push(ROUTES.PROJECT_DETAIL(initialData?.projectId || 0)),
+          router.push(
+            isStudy
+              ? ROUTES.STUDY_DETAIL(initialData?.projectId || 0)
+              : ROUTES.PROJECT_DETAIL(initialData?.projectId || 0)
+          ),
       });
     } else {
       createProject(requestBody, {
-        onSuccess: () => router.push(ROUTES.PROJECT),
+        onSettled: () => {
+          submitting.current = false;
+        },
+        onSuccess: () => router.push(isStudy ? ROUTES.STUDY : ROUTES.PROJECT),
       });
     }
   };
@@ -110,13 +131,13 @@ export const AddProjectForm = ({
     <form
       onSubmit={handleSubmit}
       className='flex flex-col items-end gap-4.5 self-stretch lg:gap-5'
-      aria-label={isEdit ? '프로젝트 수정 폼' : '프로젝트 추가 폼'}>
-      <FormField label='프로젝트 명' id='project-name'>
+      aria-label={`${label} ${isEdit ? '수정' : '추가'} 폼`}>
+      <FormField label={`${label} 명`} id='project-name'>
         <FormInput
           id='project-name'
           value={states.name}
           onChange={(e) => setters.setName(e.target.value)}
-          placeholder='프로젝트 명을 작성해주세요.'
+          placeholder={`${label} 명을 작성해주세요.`}
         />
       </FormField>
       <FormField label='한줄 소개' id='short-desc'>
@@ -150,13 +171,13 @@ export const AddProjectForm = ({
         onDelete={removeMember}
         onUpdate={updateMemberName}
       />
-      <FormField variant='column' label='프로젝트 설명' id='project-intro'>
+      <FormField variant='column' label={`${label} 설명`} id='project-intro'>
         <FormTextarea
           id='project-intro'
           value={states.introduction}
           onChange={(e) => setters.setIntroduction(e.target.value)}
           isProject
-          placeholder='프로젝트 설명을 입력해주세요.'
+          placeholder={`${label} 설명을 입력해주세요.`}
         />
       </FormField>
       <div className='w-full lg:mt-2.5'>
@@ -169,10 +190,10 @@ export const AddProjectForm = ({
       </div>
       <Button
         type='submit'
-        label={isEdit ? '저장하기' : '추가하기'}
+        label={isSaving ? '저장 중' : isEdit ? '저장하기' : '추가하기'}
         width={127}
         height={40}
-        disabled={!isFormValid}
+        disabled={!isFormValid || generationId <= 0 || isSaving}
         borderRadius={10}
       />
     </form>

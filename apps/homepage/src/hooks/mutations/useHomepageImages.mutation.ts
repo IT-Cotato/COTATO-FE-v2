@@ -2,7 +2,9 @@
 
 import {useMutation, useQueryClient} from '@tanstack/react-query';
 import {
+  HomepageImageRequestError,
   saveHomepageImage,
+  saveHomepageText,
   uploadHomepageImage,
 } from '@/services/api/homepage-images.api';
 import {useHomepageImagePreviewActor} from '@/components/homepage-images/HomepageImagePreviewContext';
@@ -13,6 +15,33 @@ import type {
   HomepageImageCrop,
   HomepageImageSlot,
 } from '@/schemas/homepage-images.schema';
+
+/** 일정 저장도 이미지 조회 캐시를 갱신해 PC·모바일·관리 화면이 같은 값을 읽게 한다. */
+export const useSaveHomepageTextMutation = () => {
+  const actor = useHomepageImagePreviewActor();
+  const client = useQueryClient();
+  return useMutation({
+    mutationFn: (draft: {
+      slot: HomepageImageSlot;
+      displayTitle: string;
+      displayDescription: string;
+      displaySchedule: string | null;
+      expectedRevision: number | null;
+    }) => saveHomepageText(draft.slot, draft, actor),
+    onError: async (error) => {
+      if (error instanceof HomepageImageRequestError && error.status === 409) {
+        await client.invalidateQueries({
+          queryKey: QUERY_KEYS.HOMEPAGE_IMAGES.PUBLIC,
+        });
+      }
+    },
+    onSuccess: async () => {
+      await client.invalidateQueries({
+        queryKey: QUERY_KEYS.HOMEPAGE_IMAGES.PUBLIC,
+      });
+    },
+  });
+};
 
 /** 선택한 파일은 저장 시에만 업로드하고 사진과 PC·모바일 위치를 함께 저장한다. */
 export interface HomepageImageDraft {
@@ -61,6 +90,13 @@ export const useSaveHomepageImageMutation = () => {
         },
         actor
       );
+    },
+    onError: async (error) => {
+      if (error instanceof HomepageImageRequestError && error.status === 409) {
+        await client.invalidateQueries({
+          queryKey: QUERY_KEYS.HOMEPAGE_IMAGES.PUBLIC,
+        });
+      }
     },
     onSuccess: async () => {
       await client.invalidateQueries({

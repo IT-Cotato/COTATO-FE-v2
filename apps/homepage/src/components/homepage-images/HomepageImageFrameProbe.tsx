@@ -1,6 +1,7 @@
 'use client';
 
 import {useCallback, useEffect, useRef, useState} from 'react';
+import {AboutUsMainActivitiesContainer} from '@/app/(with-header)/(with-footer)/about-us/_containers/AboutUsMainActivitiesContainer';
 import {HomeContentLayout} from '@/app/(with-header)/(with-footer)/(home)/_components/HomeContentLayout';
 import {HomeMainScheduleContainer} from '@/app/(with-header)/(with-footer)/(home)/_containers/HomeMainScheduleContainer';
 import {HomePartSectionContainer} from '@/app/(with-header)/(with-footer)/(home)/_containers/HomePartSectionContainer';
@@ -163,13 +164,17 @@ export const HomepageImageFrameProbe = ({slot}: {slot: HomepageImageSlot}) => {
           [data-photo-preview-active] [class~="group-hover:text-white"] {color:white!important}
         `}</style>
         <main ref={root}>
-          <HomeContentLayout>
-            {definition.group === 'part' ? (
-              <HomePartSectionContainer initialPart={part} />
-            ) : (
-              <HomeMainScheduleContainer />
-            )}
-          </HomeContentLayout>
+          {definition.group === 'about' ? (
+            <AboutUsMainActivitiesContainer initialSlot={slot} />
+          ) : (
+            <HomeContentLayout>
+              {definition.group === 'part' ? (
+                <HomePartSectionContainer initialPart={part} />
+              ) : (
+                <HomeMainScheduleContainer />
+              )}
+            </HomeContentLayout>
+          )}
         </main>
       </HomepageImageDraftContext.Provider>
     </HomepageImagePreviewContext.Provider>

@@ -1,5 +1,6 @@
 'use client';
 
+import type {ProjectContentKind} from '@/schemas/project/project-type';
 import {useState} from 'react';
 import {useParams, useRouter} from 'next/navigation';
 import {Spinner} from '@repo/ui/components/spinner/Spinner';
@@ -11,23 +12,32 @@ import {ROUTES} from '@/constants/routes';
 import {ProjectDetailMobile} from '@/app/(with-header)/(with-footer)/project/[projectId]/_mobile/ProjectDetailMobile';
 import {ProjectDetailDesktop} from '@/app/(with-header)/(with-footer)/project/[projectId]/_container/ProjectDetailDesktop';
 
-export const ProjectDetailContainer = () => {
+export const ProjectDetailContainer = ({
+  kind = 'project',
+}: {
+  kind?: ProjectContentKind;
+}) => {
+  const isStudy = kind === 'study';
   const params = useParams();
   const router = useRouter();
   const {user} = useAuthStore();
-  const projectId = Number(params?.projectId);
+  const projectId = Number(params?.projectId ?? params?.studyId);
 
   const {data, groupedMembers, positions, isLoading, isError} =
     useProjectDetail(projectId);
   const {mutate: deleteProject, isPending: isDeleting} =
-    useDeleteProjectMutation();
+    useDeleteProjectMutation(isStudy ? '스터디' : '프로젝트');
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const isAdmin = user?.isAdmin === true;
 
   const handleEdit = () => {
     if (!data) return;
-    router.push(ROUTES.ADD_PROJECT(data.projectId));
+    router.push(
+      isStudy
+        ? ROUTES.ADD_STUDY(data.projectId)
+        : ROUTES.ADD_PROJECT(data.projectId)
+    );
   };
 
   const handleConfirmDelete = () => {
@@ -35,7 +45,7 @@ export const ProjectDetailContainer = () => {
     deleteProject(projectId, {
       onSuccess: () => {
         setIsModalOpen(false);
-        router.push(ROUTES.PROJECT);
+        router.push(isStudy ? ROUTES.STUDY : ROUTES.PROJECT);
       },
       onError: () => setIsModalOpen(false),
     });
@@ -48,7 +58,7 @@ export const ProjectDetailContainer = () => {
         <span className='sr-only'>프로젝트 상세 정보를 불러오는 중입니다.</span>
       </div>
     );
-  if (isError || !data)
+  if (isError || !data || (data.projectType === 'STUDY') !== isStudy)
     return (
       <div
         className='flex min-h-100 items-center justify-center text-neutral-400'
@@ -81,6 +91,7 @@ export const ProjectDetailContainer = () => {
         onClose={() => setIsModalOpen(false)}
         onConfirm={handleConfirmDelete}
         projectName={data.name}
+        contentLabel={isStudy ? '스터디' : '프로젝트'}
       />
     </>
   );

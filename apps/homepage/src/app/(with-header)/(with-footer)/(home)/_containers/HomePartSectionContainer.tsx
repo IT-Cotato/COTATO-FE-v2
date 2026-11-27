@@ -8,6 +8,7 @@ import {HomepageContentImage} from '@/components/homepage-images/HomepageContent
 import {useHomepageImagesQuery} from '@/hooks/queries/useHomepageImages.query';
 import type {HomepageImageSlot} from '@/schemas/homepage-images.schema';
 import clsx from 'clsx';
+import {HOMEPAGE_PART_COPY as partData} from '@/constants/homepage-copy';
 import {
   FADE_IN_UP_CONTAINER,
   FADE_IN_UP_ITEM,
@@ -32,6 +33,9 @@ export const HomePartSectionContainer = ({
   const [currentPart, setCurrentPart] = useState<PartType>(initialPart);
   const prevIndexRef = useRef<number>(0);
   const currentIndex = PARTS.indexOf(currentPart);
+  const savedCopy = homepageImages?.find(
+    (image) => image.slot === PART_IMAGE_SLOTS[currentPart]
+  );
   const direction = currentIndex > prevIndexRef.current ? 1 : -1;
 
   useEffect(() => {
@@ -157,14 +161,18 @@ export const HomePartSectionContainer = ({
                 <div className='absolute inset-0 flex flex-col justify-between px-3 py-4 lg:p-17.75'>
                   <motion.p
                     variants={textVariants}
-                    className='text-h4 lg:text-h1 font-bold text-neutral-50'>
-                    {partData[currentPart].title}
+                    className='text-h4 lg:text-h1 line-clamp-2 font-bold text-neutral-50'>
+                    {savedCopy?.displayTitle ?? partData[currentPart].title}
                   </motion.p>
 
                   <motion.div
                     variants={textVariants}
-                    className='text-p2 lg:text-h4 text-neutral-100'>
-                    {partData[currentPart].desc.map((line, idx) => (
+                    className='text-p2 lg:text-h4 pointer-events-auto max-h-[65%] overflow-y-auto overscroll-contain text-neutral-100'>
+                    {(savedCopy?.displayDescription !== undefined &&
+                    savedCopy.displayDescription !== null
+                      ? savedCopy.displayDescription.split('\n')
+                      : partData[currentPart].desc
+                    ).map((line, idx) => (
                       <p key={idx}>{line}</p>
                     ))}
                   </motion.div>
@@ -188,37 +196,6 @@ export const HomePartSectionContainer = ({
       </motion.div>
     </motion.section>
   );
-};
-
-const partData = {
-  pm: {
-    title: 'Product Manager',
-    desc: [
-      '서비스의 비전을 기획하고 팀을 리드하는 역할입니다.',
-      '사용자 중심 사고를 바탕으로 문제를 정의하고, 개발·디자인 파트와의 협업을 통해 서비스를 완성합니다.',
-    ],
-  },
-  design: {
-    title: 'Team Design',
-    desc: [
-      '사용자 여정을 설계하고 와이어프레임, 프로토타입,',
-      '디자인 시스템을 구축하며, 팀과 협업하여 서비스의 완성도를 높입니다.',
-    ],
-  },
-  frontend: {
-    title: 'Team Frontend',
-    desc: [
-      'React를 활용하여 UI/UX를 실제로 구현하고,',
-      '백엔드와의 API 통신 및 상태관리, 배포 과정을 통해 서비스를 구현합니다.',
-    ],
-  },
-  backend: {
-    title: 'Team Backend',
-    desc: [
-      'Spring 기반 서버 개발을 중심으로, API 설계부터 데이터베이스 구조 설계, ',
-      '인증 처리와 배포 환경 구성까지 서비스가 안정적으로 동작하고 성장할 수 있는 기반을 만들어갑니다.',
-    ],
-  },
 };
 
 const variants: Variants = {
