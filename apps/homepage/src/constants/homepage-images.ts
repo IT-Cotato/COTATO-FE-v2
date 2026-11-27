@@ -1,3 +1,4 @@
+import {HOMEPAGE_PART_COPY, ABOUT_US_ACTIVITIES} from './homepage-copy';
 import type {
   HomepageImageCrop,
   HomepageImageSlot,
@@ -7,7 +8,7 @@ import type {
 export interface HomepageImageDefinition {
   slot: HomepageImageSlot;
   label: string;
-  group: 'schedule' | 'part';
+  group: 'schedule' | 'part' | 'about';
   fallback: string;
   subtitle: string;
 }
@@ -85,7 +86,58 @@ export const HOMEPAGE_IMAGE_DEFINITIONS: HomepageImageDefinition[] = [
     fallback: '/images/part-section/backend.webp',
     subtitle: 'Team Backend',
   },
+  {
+    slot: 'ABOUT_CS_EDUCATION',
+    label: 'CS 교육',
+    group: 'about',
+    fallback: '/images/main-activities/cs-education.webp',
+    subtitle: 'ABOUT US 주요 활동',
+  },
+  {
+    slot: 'ABOUT_CS_QUIZ',
+    label: 'CS 퀴즈',
+    group: 'about',
+    fallback: '/images/main-activities/cs-quiz.webp',
+    subtitle: 'ABOUT US 주요 활동',
+  },
+  {
+    slot: 'ABOUT_PM_DESIGN',
+    label: '기획 · 디자인 발표',
+    group: 'about',
+    fallback: '/images/main-activities/pm-design.webp',
+    subtitle: 'ABOUT US 주요 활동',
+  },
+  {
+    slot: 'ABOUT_NETWORKING',
+    label: '네트워킹',
+    group: 'about',
+    fallback: '/images/main-activities/networking.webp',
+    subtitle: 'ABOUT US 주요 활동',
+  },
 ];
 
 export const getHomepageImageDefinition = (slot: HomepageImageSlot) =>
   HOMEPAGE_IMAGE_DEFINITIONS.find((image) => image.slot === slot)!;
+
+/** 편집창과 공개 화면이 같은 기존 기본 문구를 읽도록 한다. */
+export const getHomepageCopyDefaults = (
+  definition: HomepageImageDefinition
+) => {
+  const part =
+    definition.slot === 'PART_PM'
+      ? HOMEPAGE_PART_COPY.pm
+      : definition.slot === 'PART_DESIGN'
+        ? HOMEPAGE_PART_COPY.design
+        : definition.slot === 'PART_FRONTEND'
+          ? HOMEPAGE_PART_COPY.frontend
+          : definition.slot === 'PART_BACKEND'
+            ? HOMEPAGE_PART_COPY.backend
+            : undefined;
+  const activity = ABOUT_US_ACTIVITIES.find(
+    (value) => value.slot === definition.slot
+  );
+  return {
+    title: part?.title ?? activity?.title ?? definition.label,
+    description: part?.desc.join('\n') ?? activity?.description ?? '',
+  };
+};

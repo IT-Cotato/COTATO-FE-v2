@@ -11,6 +11,10 @@ export const HOMEPAGE_IMAGE_SLOTS = [
   'PART_DESIGN',
   'PART_FRONTEND',
   'PART_BACKEND',
+  'ABOUT_CS_EDUCATION',
+  'ABOUT_CS_QUIZ',
+  'ABOUT_PM_DESIGN',
+  'ABOUT_NETWORKING',
 ] as const;
 export const HomepageImageSlotSchema = z.enum(HOMEPAGE_IMAGE_SLOTS);
 export type HomepageImageSlot = z.infer<typeof HomepageImageSlotSchema>;
@@ -24,6 +28,9 @@ export type HomepageImageCrop = z.infer<typeof HomepageImageCropSchema>;
 
 export const HomepageImageSchema = z.object({
   slot: HomepageImageSlotSchema,
+  displayTitle: z.string().max(80).nullable().optional(),
+  displayDescription: z.string().max(2000).nullable().optional(),
+  displaySchedule: z.string().max(80).nullable().optional(),
   objectKey: z.string().nullable(),
   imageUrl: z.string().nullable(),
   desktop: HomepageImageCropSchema,
