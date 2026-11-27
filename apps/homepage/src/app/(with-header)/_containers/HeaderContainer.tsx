@@ -27,6 +27,7 @@ export const HeaderContainer = () => {
   const navItems = [
     {label: 'ABOUT US', href: ROUTES.ABOUTUS},
     {label: 'PROJECT', href: ROUTES.PROJECT},
+    {label: 'STUDY', href: ROUTES.STUDY},
     {
       label: 'RECRUIT',
       href: recruitStatus?.active
@@ -40,6 +41,7 @@ export const HeaderContainer = () => {
     {label: 'HOME', href: ROUTES.HOME},
     {label: 'ABOUT US', href: ROUTES.ABOUTUS},
     {label: 'PROJECT', href: ROUTES.PROJECT},
+    {label: 'STUDY', href: ROUTES.STUDY},
     {
       label: 'RECRUIT',
       href: recruitStatus?.active
