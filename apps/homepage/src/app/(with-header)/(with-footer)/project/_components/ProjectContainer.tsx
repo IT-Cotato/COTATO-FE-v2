@@ -11,9 +11,16 @@ import {useGenerationQuery} from '@/hooks/queries/useGeneration.query';
 import {Spinner} from '@repo/ui/components/spinner/Spinner';
 import {useAuthStore} from '@/store/useAuthStore';
 import {useProjectListQuery} from '@/hooks/queries/useProject.query';
-import {ProjectType} from '@/schemas/project/project-type';
+import {ProjectContentKind} from '@/schemas/project/project-type';
 
-export const ProjectContainer = () => {
+/** 목록 레이아웃은 공유하되 스터디 조회는 항상 STUDY 타입으로 고정한다. */
+export const ProjectContainer = ({
+  kind = 'project',
+}: {
+  kind?: ProjectContentKind;
+}) => {
+  const isStudy = kind === 'study';
+  const label = isStudy ? '스터디' : '프로젝트';
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -23,12 +30,26 @@ export const ProjectContainer = () => {
   const actParam = searchParams.get('act'); // null이면 전체
   const isAdmin = user?.isAdmin === true;
 
-  const {data: generations = [], isLoading: isGenLoading} =
-    useGenerationQuery();
+  const {
+    data: generations = [],
+    isLoading: isGenLoading,
+    isError: isGenError,
+    refetch: reloadGenerations,
+  } = useGenerationQuery();
 
-  const {isLoading: isProjectLoading} = useProjectListQuery({
+  const {
+    isLoading: isProjectLoading,
+    isError: isProjectError,
+    refetch: reloadProjects,
+  } = useProjectListQuery({
     generationId: genParam ? Number(genParam) : undefined,
-    projectType: actParam ? (actParam.toUpperCase() as ProjectType) : undefined,
+    projectType: isStudy
+      ? 'STUDY'
+      : actParam === 'demoday'
+        ? 'DEMODAY'
+        : actParam === 'hackathon'
+          ? 'HACKATHON'
+          : undefined,
   });
 
   const sortedGenerations = useMemo(() => {
@@ -87,12 +108,31 @@ export const ProjectContainer = () => {
     );
   }
 
+  if (isGenError || isProjectError) {
+    return (
+      <div
+        role='alert'
+        className='flex min-h-100 flex-col items-center justify-center gap-4 px-6 text-neutral-500'>
+        <p>{label} 목록을 불러오지 못했습니다.</p>
+        <button
+          type='button'
+          className='text-primary font-semibold underline'
+          onClick={() => {
+            void reloadGenerations();
+            void reloadProjects();
+          }}>
+          다시 시도
+        </button>
+      </div>
+    );
+  }
+
   return (
     <section
       className='flex w-full flex-col gap-6 px-6 py-10 lg:gap-7.5 lg:py-7.5'
       aria-labelledby='project-list-title'>
       <h2 id='project-list-title' className='sr-only'>
-        프로젝트 목록 및 필터
+        {label} 목록 및 필터
       </h2>
       <div className='flex w-full flex-col items-center gap-7.5 lg:flex-row lg:justify-between'>
         <div
@@ -110,14 +150,16 @@ export const ProjectContainer = () => {
             }}
             isBorder
           />
-          <Dropdown
-            placeholder='활동'
-            className='flex-1 lg:flex-none'
-            value={selectedActLabel}
-            options={activityLabels}
-            onSelect={handleActSelect}
-            isBorder
-          />
+          {!isStudy && (
+            <Dropdown
+              placeholder='활동'
+              className='flex-1 lg:flex-none'
+              value={selectedActLabel}
+              options={activityLabels}
+              onSelect={handleActSelect}
+              isBorder
+            />
+          )}
         </div>
         {isAdmin && (
           <div className='w-full lg:w-auto'>
@@ -127,12 +169,15 @@ export const ProjectContainer = () => {
               width='100%'
               height={40}
               className='w-full lg:w-31.75'
-              onClick={() => router.push(ROUTES.ADD_PROJECT())}
+              onClick={() =>
+                router.push(isStudy ? ROUTES.ADD_STUDY() : ROUTES.ADD_PROJECT())
+              }
             />
           </div>
         )}
       </div>
       <ProjectSection
+        kind={kind}
         generation={genParam ?? undefined}
         activity={actParam ?? undefined}
       />

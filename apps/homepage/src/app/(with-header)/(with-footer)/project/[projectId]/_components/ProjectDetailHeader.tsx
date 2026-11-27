@@ -37,7 +37,11 @@ export const ProjectDetailHeader = ({
         </span>
         <span className='bg-primary text-body-m flex h-7.5 w-17.75 items-center justify-center rounded-[5px] text-white'>
           <span className='sr-only'>활동: </span>
-          {data.projectType === 'DEMODAY' ? '데모데이' : '해커톤'}
+          {data.projectType === 'STUDY'
+            ? '스터디'
+            : data.projectType === 'DEMODAY'
+              ? '데모데이'
+              : '해커톤'}
         </span>
       </div>
       <div className='flex w-full items-start justify-between gap-4.5'>

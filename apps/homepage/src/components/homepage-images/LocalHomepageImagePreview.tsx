@@ -91,6 +91,7 @@ const LocalHomepageImageLayout = ({
           {[
             {label: 'ABOUT US', href: ROUTES.ABOUTUS},
             {label: 'PROJECT', href: ROUTES.PROJECT},
+            {label: 'STUDY', href: ROUTES.STUDY},
             {label: 'RECRUIT', href: ROUTES.RECRUIT},
           ].map(({label, href}) => (
             <Link

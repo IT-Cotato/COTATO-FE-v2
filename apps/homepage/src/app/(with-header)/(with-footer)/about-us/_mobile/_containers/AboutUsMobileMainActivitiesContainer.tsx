@@ -1,6 +1,6 @@
 'use client';
 
-import Image from 'next/image';
+import {HomepageContentImage} from '@/components/homepage-images/HomepageContentImage';
 import {Swiper, SwiperSlide} from 'swiper/react';
 import {Pagination} from 'swiper/modules';
 import 'swiper/css';
@@ -9,14 +9,17 @@ import {AboutUsActivity} from '@/app/(with-header)/(with-footer)/about-us/_conta
 
 interface AboutUsMobileMainActivitiesContainerProps {
   activities: AboutUsActivity[];
+  initialSlide?: number;
 }
 
 export const AboutUsMobileMainActivitiesContainer = ({
   activities,
+  initialSlide = 0,
 }: AboutUsMobileMainActivitiesContainerProps) => {
   return (
     <div className='z-10 block w-full px-6 lg:hidden'>
       <Swiper
+        initialSlide={initialSlide}
         modules={[Pagination]}
         spaceBetween={16}
         slidesPerView={1}
@@ -27,10 +30,11 @@ export const AboutUsMobileMainActivitiesContainer = ({
           <SwiperSlide key={activity.id}>
             <div className='relative mx-auto h-114.5 max-w-120 cursor-pointer overflow-hidden rounded-lg'>
               <div className='relative h-full w-full'>
-                <Image
-                  src={activity.src}
+                <HomepageContentImage
+                  slot={activity.slot}
+                  fallbackSrc={activity.src}
+                  desktopFrom='lg'
                   alt=''
-                  fill
                   unoptimized
                   className='object-cover'
                 />
@@ -40,7 +44,7 @@ export const AboutUsMobileMainActivitiesContainer = ({
                     {activity.title}
                   </h3>
 
-                  <p className='text-body-m text-neutral-50'>
+                  <p className='text-body-m max-h-[70%] overflow-y-auto overscroll-contain whitespace-pre-line text-neutral-50'>
                     {activity.description}
                   </p>
                 </div>

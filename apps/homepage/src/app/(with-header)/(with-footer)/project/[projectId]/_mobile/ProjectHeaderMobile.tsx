@@ -18,7 +18,11 @@ export const ProjectHeaderMobile = ({
         {data.generationId}기
       </span>
       <span className='bg-primary text-body-m flex h-7.5 w-17.75 items-center justify-center rounded-[5px] font-bold text-white'>
-        {data.projectType === 'DEMODAY' ? '데모데이' : '해커톤'}
+        {data.projectType === 'STUDY'
+          ? '스터디'
+          : data.projectType === 'DEMODAY'
+            ? '데모데이'
+            : '해커톤'}
       </span>
     </div>
     <div className='flex items-center justify-start gap-4.5'>

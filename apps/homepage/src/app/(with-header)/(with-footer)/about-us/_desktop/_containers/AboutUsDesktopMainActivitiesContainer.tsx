@@ -1,7 +1,7 @@
 'use client';
 
 import {useEffect, useRef, useState} from 'react';
-import Image from 'next/image';
+import {HomepageContentImage} from '@/components/homepage-images/HomepageContentImage';
 import {motion, AnimatePresence} from 'framer-motion';
 import {AboutUsActivity} from '@/app/(with-header)/(with-footer)/about-us/_containers/AboutUsMainActivitiesContainer';
 
@@ -50,13 +50,14 @@ export const AboutUsDesktopMainActivitiesContainer = ({
             <motion.div
               layoutId={`image-container-${activity.id}`}
               className='relative h-full w-full'>
-              <Image
-                src={activity.src}
+              <HomepageContentImage
+                slot={activity.slot}
+                fallbackSrc={activity.src}
+                desktopFrom='lg'
                 alt=''
-                fill
                 unoptimized
                 aria-hidden='true'
-                className='object-cover transition-transform duration-500 group-hover:scale-110'
+                className='object-cover'
               />
               <div className='absolute inset-0 z-10 bg-black/40' />
             </motion.div>
@@ -99,10 +100,11 @@ export const AboutUsDesktopMainActivitiesContainer = ({
                   initial={{scale: 1.2}}
                   animate={{scale: 1.2}}
                   className='relative h-full w-full'>
-                  <Image
-                    src={selectedActivity.src}
+                  <HomepageContentImage
+                    slot={selectedActivity.slot}
+                    fallbackSrc={selectedActivity.src}
+                    desktopFrom='lg'
                     alt=''
-                    fill
                     unoptimized
                     className='object-cover'
                   />

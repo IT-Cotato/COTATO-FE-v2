@@ -1,6 +1,7 @@
 'use client';
 
 import {useRouter} from 'next/navigation';
+import {ROUTES} from '@/constants/routes';
 import ChevronLeft from '@/assets/chevrons/chevron-left.svg';
 import {Button} from '@repo/ui/components/buttons/Button';
 import {ProjectDetailImage} from '@/app/(with-header)/(with-footer)/project/[projectId]/_components/ProjectDetailImage';
@@ -26,6 +27,7 @@ export const ProjectDetailMobile = ({
   onDelete,
 }: ProjectDetailMobileProps) => {
   const router = useRouter();
+  const isStudy = data.projectType === 'STUDY';
   const hasLink = !!data.projectLink && data.projectLink.trim() !== '';
   const normalizedLink = hasLink
     ? data.projectLink.startsWith('http://') ||
@@ -38,10 +40,10 @@ export const ProjectDetailMobile = ({
     <div className='flex w-full flex-col bg-white px-6 py-7.5 lg:hidden'>
       <div className='flex items-center justify-between py-2.5'>
         <button
-          onClick={() => router.push('/project')}
+          onClick={() => router.push(isStudy ? ROUTES.STUDY : ROUTES.PROJECT)}
           className='text-h3 flex items-center gap-2 font-bold text-neutral-800'>
           <ChevronLeft className='h-6 w-6' />
-          Project
+          {isStudy ? 'Study' : 'Project'}
         </button>
       </div>
       <div className='my-2.5 flex items-center justify-end'>
@@ -69,7 +71,7 @@ export const ProjectDetailMobile = ({
           </nav>
         )}
       </div>
-      <ProjectDetailImage data={data} isSingle />
+      {!isStudy && <ProjectDetailImage data={data} isSingle />}
       <div className='mt-5 flex flex-col gap-5 bg-neutral-50 p-5'>
         <ProjectHeaderMobile
           data={data}
@@ -84,12 +86,18 @@ export const ProjectDetailMobile = ({
       </div>
       <section>
         <h2 className='text-h5 mt-7.5 mb-3 font-bold text-neutral-800'>
-          프로젝트 소개
+          {isStudy ? '스터디' : '프로젝트'} 소개
         </h2>
         <div className='text-h5 min-h-35 min-w-65.5 rounded-[10px] border border-neutral-200 bg-white px-6 py-2.5 leading-relaxed text-neutral-600'>
           {data.introduction}
         </div>
       </section>
+      {/* 스터디 카드뉴스는 모바일에서도 첫 장부터 전체 순서로 읽을 수 있게 한다. */}
+      {isStudy && (
+        <div className='mt-7.5'>
+          <ProjectDetailImage data={data} />
+        </div>
+      )}
     </div>
   );
 };

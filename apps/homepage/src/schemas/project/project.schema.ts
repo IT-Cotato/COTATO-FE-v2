@@ -4,7 +4,7 @@ export const PositionEnum = z.enum(['PM', 'DE', 'FE', 'BE']);
 
 export const ProjectRegistrationSchema = z.object({
   generationId: z.number().int(),
-  projectType: z.enum(['HACKATHON', 'DEMODAY']),
+  projectType: z.enum(['HACKATHON', 'DEMODAY', 'STUDY']),
   projectName: z.string().min(1, '프로젝트 명을 입력해주세요.'),
   shortDescription: z.string().min(1, '한줄 소개를 입력해주세요.'),
   projectLink: z.string().min(1, '프로젝트 링크를 입력해주세요.').trim(),
@@ -38,7 +38,7 @@ export const ProjectDetailSchema = z.object({
   name: z.string(),
   shortDescription: z.string(),
   introduction: z.string(),
-  projectType: z.enum(['HACKATHON', 'DEMODAY']),
+  projectType: z.enum(['HACKATHON', 'DEMODAY', 'STUDY']),
   projectLink: z.string(),
   startDate: z.string(),
   endDate: z.string(),

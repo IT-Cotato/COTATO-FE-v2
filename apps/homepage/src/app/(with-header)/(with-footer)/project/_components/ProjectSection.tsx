@@ -5,14 +5,19 @@ import {useSearchParams, useRouter, usePathname} from 'next/navigation';
 import {ProjectCard} from './ProjectCard';
 import {Pagination} from '@repo/ui/components/pagination/Pagination';
 import {useProjectListQuery} from '@/hooks/queries/useProject.query';
-import {ProjectType} from '@/schemas/project/project-type';
+import {ProjectContentKind} from '@/schemas/project/project-type';
 
 interface ProjectSectionProps {
+  kind?: ProjectContentKind;
   generation?: string;
   activity?: string;
 }
 
-export const ProjectSection = ({generation, activity}: ProjectSectionProps) => {
+export const ProjectSection = ({
+  generation,
+  activity,
+  kind = 'project',
+}: ProjectSectionProps) => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -37,7 +42,14 @@ export const ProjectSection = ({generation, activity}: ProjectSectionProps) => {
 
   const {data: projects = []} = useProjectListQuery({
     generationId: generation ? Number(generation) : undefined,
-    projectType: activity ? (activity.toUpperCase() as ProjectType) : undefined,
+    projectType:
+      kind === 'study'
+        ? 'STUDY'
+        : activity === 'demoday'
+          ? 'DEMODAY'
+          : activity === 'hackathon'
+            ? 'HACKATHON'
+            : undefined,
   });
 
   const totalPages = Math.ceil(projects.length / itemsPerPage);
@@ -85,7 +97,7 @@ export const ProjectSection = ({generation, activity}: ProjectSectionProps) => {
           className='flex min-h-100 w-full items-center justify-center text-neutral-400'
           role='status'
           aria-live='polite'>
-          조건에 맞는 프로젝트가 없습니다.
+          조건에 맞는 {kind === 'study' ? '스터디' : '프로젝트'}가 없습니다.
         </div>
       )}
     </div>

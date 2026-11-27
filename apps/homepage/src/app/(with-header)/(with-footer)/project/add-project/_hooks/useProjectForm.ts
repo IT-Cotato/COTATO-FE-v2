@@ -4,7 +4,8 @@ import {ProjectDetail} from '@/schemas/project/project.schema';
 
 export const useProjectForm = (
   teamMembers: TeamState,
-  initialData?: ProjectDetail
+  initialData?: ProjectDetail,
+  isStudy = false
 ) => {
   const [name, setName] = useState(initialData?.name || '');
   const [shortDescription, setShortDescription] = useState(
@@ -71,7 +72,9 @@ export const useProjectForm = (
 
     const teamValues = Object.values(teamMembers);
     const hasValidMembers =
-      teamValues.every((members) => members.length > 0) &&
+      (isStudy
+        ? teamValues.some((members) => members.length > 0)
+        : teamValues.every((members) => members.length > 0)) &&
       teamValues
         .flat()
         .every(
@@ -88,6 +91,7 @@ export const useProjectForm = (
     endDate,
     uploadedImages,
     teamMembers,
+    isStudy,
   ]);
 
   return {
