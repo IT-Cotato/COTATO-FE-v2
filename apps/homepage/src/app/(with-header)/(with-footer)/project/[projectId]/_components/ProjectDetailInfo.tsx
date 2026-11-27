@@ -23,7 +23,7 @@ export const ProjectDetailInfo = ({
         <div
           id='label-duration'
           className='text-h5 w-[171.5px] text-neutral-800'>
-          프로젝트 기간
+          {data.projectType === 'STUDY' ? '스터디' : '프로젝트'} 기간
         </div>
         <div className='text-body-l flex gap-4 text-neutral-600'>
           <p>
@@ -73,7 +73,7 @@ export const ProjectDetailInfo = ({
       <div
         id='label-intro'
         className='text-h5 w-22.25 shrink-0 text-neutral-800'>
-        프로젝트 소개
+        {data.projectType === 'STUDY' ? '스터디' : '프로젝트'} 소개
       </div>
       <div className='text-h5 custom-scrollbar max-h-42.75 flex-1 overflow-y-auto rounded-[10px] bg-neutral-50 px-3.5 py-2.5 text-neutral-600'>
         {data.introduction}

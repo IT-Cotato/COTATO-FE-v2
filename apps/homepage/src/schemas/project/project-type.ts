@@ -9,7 +9,8 @@ export type TeamState = Record<Position, string[]>;
 /**
  * 프로젝트 활동 타입
  */
-export type ProjectType = 'HACKATHON' | 'DEMODAY';
+export type ProjectType = 'HACKATHON' | 'DEMODAY' | 'STUDY';
+export type ProjectContentKind = 'project' | 'study';
 
 export interface ProjectFieldConfig {
   name: keyof ProjectRegistration;

@@ -1,5 +1,9 @@
 'use client';
 
+import type {
+  ProjectContentKind,
+  ProjectType,
+} from '@/schemas/project/project-type';
 import {useSearchParams} from 'next/navigation';
 import {useState, useMemo, useEffect} from 'react';
 import {AddProjectForm} from '../_components/AddProjectForm';
@@ -8,7 +12,13 @@ import {useGenerationQuery} from '@/hooks/queries/useGeneration.query';
 import {useProjectDetailQuery} from '@/hooks/queries/useProject.query';
 import {Spinner} from '@repo/ui/components/spinner/Spinner';
 
-export const AddProjectFormContainer = () => {
+export const AddProjectFormContainer = ({
+  kind = 'project',
+}: {
+  kind?: ProjectContentKind;
+}) => {
+  const isStudy = kind === 'study';
+  const label = isStudy ? '스터디' : '프로젝트';
   const searchParams = useSearchParams();
   const rawEditId = searchParams.get('edit');
   const editId = rawEditId && !isNaN(Number(rawEditId)) ? rawEditId : null;
@@ -53,8 +63,8 @@ export const AddProjectFormContainer = () => {
   const activities = ['데모데이', '해커톤'];
 
   const getGenerationId = (gen: string) => parseInt(gen.replace('기', '')) || 0;
-  const getProjectType = (act: string): 'DEMODAY' | 'HACKATHON' =>
-    act === '데모데이' ? 'DEMODAY' : 'HACKATHON';
+  const getProjectType = (act: string): ProjectType =>
+    isStudy ? 'STUDY' : act === '데모데이' ? 'DEMODAY' : 'HACKATHON';
 
   if (isGenLoading || (editId && isDetailLoading)) {
     return (
@@ -79,12 +89,20 @@ export const AddProjectFormContainer = () => {
     );
   }
 
+  if (editData && (editData.projectType === 'STUDY') !== isStudy) {
+    return (
+      <p role='alert' className='p-10 text-neutral-500'>
+        해당 콘텐츠의 관리 화면에서 수정해 주세요.
+      </p>
+    );
+  }
+
   return (
     <section
       className='flex w-full min-w-0 flex-col gap-7.5 overflow-x-hidden px-6 py-7.5 lg:gap-8.5 lg:px-42.5 lg:py-7.5'
       aria-labelledby='add-project-heading'>
       <h2 id='add-project-heading' className='sr-only'>
-        {editId ? '프로젝트 수정' : '프로젝트 추가'} 설정
+        {label} {editId ? '수정' : '추가'} 설정
       </h2>
       <div className='flex justify-between'>
         <div
@@ -99,14 +117,16 @@ export const AddProjectFormContainer = () => {
             onSelect={(value) => setSelectedGeneration(value)}
             isBorder
           />
-          <Dropdown
-            placeholder='활동'
-            className='flex-1 lg:flex-none'
-            value={selectedActivity}
-            options={activities}
-            onSelect={(value) => setSelectedActivity(value)}
-            isBorder
-          />
+          {!isStudy && (
+            <Dropdown
+              placeholder='활동'
+              className='flex-1 lg:flex-none'
+              value={selectedActivity}
+              options={activities}
+              onSelect={(value) => setSelectedActivity(value)}
+              isBorder
+            />
+          )}
         </div>
       </div>
       <div role='region' aria-label='프로젝트 상세 정보 입력 폼'>
